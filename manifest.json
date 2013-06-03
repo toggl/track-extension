@@ -1,0 +1,44 @@
+{
+  "name": "Toggl Button",
+  "version": "0.2.2",
+  "manifest_version": 2,
+  "description": "Add Official Toggl Online Timer to Popular Web Tools - TeamWeek and Pivotal Tracker",
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "page_action" : {
+    "default_icon"  : "images/icon-19.png",
+    "default_title" : "Toggl Time Tracker"
+  },
+  "permissions" : [
+    "tabs",
+    "*://*.toggl.com/*",
+    "*://*.teamweek.com/*",
+    "*://*.pivotaltracker.com/*"
+  ],
+  "icons" : {
+    "16"  : "images/icon-16.png",
+    "48"  : "images/icon-48.png",
+    "128" : "images/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.teamweek.com/*",
+        "*://*.pivotaltracker.com/*"
+      ],
+      "css": ["styles/style.css"],
+      "js":  ["scripts/common.js"]
+    },
+    {
+      "matches": ["*://*.teamweek.com/*"],
+      "js": ["scripts/content/teamweek.js"]
+    },
+    {
+      "matches": ["*://*.pivotaltracker.com/*"],
+      "js": ["scripts/content/pivotal.js"]
+    }
+  ]
+}

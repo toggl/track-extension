@@ -5,6 +5,7 @@ Add Toggl one-click time tracking to popular web tools.
 ## Compatible services
   - [TeamWeek](https://teamweek.com/)
   - [Pivotal tracker](https://www.pivotaltracker.com/)
+  - [Github](https://github.com/)
 
 ## Installing from the Web Store
 

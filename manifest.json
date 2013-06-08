@@ -16,7 +16,8 @@
     "tabs",
     "*://*.toggl.com/*",
     "*://*.teamweek.com/*",
-    "*://*.pivotaltracker.com/*"
+    "*://*.pivotaltracker.com/*",
+    "*://*.github.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -27,7 +28,8 @@
     {
       "matches": [
         "*://*.teamweek.com/*",
-        "*://*.pivotaltracker.com/*"
+        "*://*.pivotaltracker.com/*",
+        "*://*.github.com/*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -39,6 +41,10 @@
     {
       "matches": ["*://*.pivotaltracker.com/*"],
       "js": ["scripts/content/pivotal.js"]
+    },
+    {
+      "matches": ["*://*.github.com/*"],
+      "js": ["scripts/content/github.js"]
     }
   ]
 }

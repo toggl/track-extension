@@ -5,7 +5,7 @@
 (function () {
 
   function createTimerLink(task, moreClass) {
-    var link = createLink('toggl-button github '+moreClass);
+    var link = createLink('toggl-button github ' + moreClass);
     link.addEventListener("click", function (e) {
       chrome.extension.sendMessage({
         type: 'timeEntry',
@@ -17,14 +17,18 @@
   }
 
   function addLinkToDiscussion() {
-    var titleElem = $('.discussion-topic-title');
-    if (titleElem === null) return;
-    
-    var numElem = $('.pull-head .pull-number > a, .issue-head .number > strong');
-    var title = titleElem.innerHTML;
-    if (numElem !== null) title = numElem.innerHTML + " " + title;
+    var titleElem = $('.discussion-topic-title'), numElem, title, wrap;
+    if (titleElem === null) {
+      return;
+    }
 
-    var wrap = createTag('div', 'toggl infobar-widget');
+    numElem = $('.pull-head .pull-number > a, .issue-head .number > strong');
+    title = titleElem.innerHTML;
+    if (numElem !== null) {
+      title = numElem.innerHTML + " " + title;
+    }
+
+    wrap = createTag('div', 'toggl infobar-widget');
     wrap.appendChild(createTimerLink(title, 'button minibutton'));
     $(".discusion-topic-infobar").appendChild(wrap);
   }

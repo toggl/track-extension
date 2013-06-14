@@ -28,8 +28,8 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
 
-[1]: https://toggl.com/
+[1]: https://www.toggl.com/
 [2]: https://teamweek.com/
-[3]: https://pivotaltracker.com/
+[3]: https://www.pivotaltracker.com/
 [4]: https://github.com/
 [99]: https://github.com/toggl/toggl-button/pulls

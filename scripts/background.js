@@ -34,10 +34,14 @@ var TogglButton = {
           start: start.toISOString(),
           created_with: "Toggl Button",
           description: timeEntry.description,
-          wid: TogglButton.$user.default_wid,
+          pid: timeEntry.pid,
           duration: -(start.getTime() / 1000)
         }
       };
+    if (entry.pid === undefined) {
+      entry.wid = TogglButton.$user.default_wid;
+    }
+
     xhr.open("POST", TogglButton.$apiUrl + "/v8/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
     xhr.send(JSON.stringify(entry));

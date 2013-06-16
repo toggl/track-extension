@@ -16,7 +16,7 @@ var TogglButton = {
 
   fetchUser: function () {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", TogglButton.$apiUrl + "/v7/me.json", true);
+    xhr.open("GET", TogglButton.$apiUrl + "/v7/me.json?with_related_data=true", true);
     xhr.onload = function () {
       if (xhr.status === 200) {
         var resp = JSON.parse(xhr.responseText);
@@ -38,7 +38,7 @@ var TogglButton = {
           duration: -(start.getTime() / 1000)
         }
       };
-    if (entry.pid === undefined) {
+    if (entry.pid === undefined || entry.pid === null) {
       entry.wid = TogglButton.$user.default_wid;
     }
 
@@ -53,7 +53,7 @@ var TogglButton = {
       if (TogglButton.$user !== null) {
         chrome.pageAction.show(sender.tab.id);
       }
-      sendResponse({success: TogglButton.$user !== null});
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
       break;
 
     case 'timeEntry':

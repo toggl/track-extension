@@ -6,6 +6,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [TeamWeek][2]
   - [Pivotal tracker][3]
   - [Github][4]
+  - [Asana][5]
 
 ## Installing from the Web Store
 
@@ -20,7 +21,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 
 ## Using the Button
 1.  Log in to your [Toggl][1] account and keep yourself logged in (no need to keep the tab open).
-2.  Go to your [TeamWeek][2], [Pivotal Tracker][3] or [Github][4] account and start your Toggl timer there.
+2.  Go to your [TeamWeek][2], [Pivotal Tracker][3], [Github][4] or [Asana][5] account and start your Toggl timer there.
 3.  To stop the current running timer:
   - start another time entry inside your account.
   - go to Toggl to stop or edit your time entry.
@@ -32,4 +33,5 @@ Want to contribute? Great! Just fork the project, make your changes and open a [
 [2]: https://teamweek.com/
 [3]: https://www.pivotaltracker.com/
 [4]: https://github.com/
+[5]: http://asana.com/
 [99]: https://github.com/toggl/toggl-button/pulls

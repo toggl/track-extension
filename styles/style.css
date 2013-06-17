@@ -30,3 +30,14 @@
   margin-right: 4px;
 }
 /* End github specific styles. */
+
+/* start asana specific styles */
+.toggl-button.asana {
+  padding-left: 22px;
+  margin-top: 7px;
+  color: #596573;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 600;
+}
+/* End asana specific styles */

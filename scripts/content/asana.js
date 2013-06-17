@@ -17,7 +17,7 @@
   }
 
   function addLinkToDiscussion() {
-    var titleElem = $(".details-pane-top .toolbar-section.left"), numElem, title, wrap;
+    var titleElem = $(".details-pane-top .toolbar-section.left"), title, wrap;
     if (titleElem === null) {
       return;
     }

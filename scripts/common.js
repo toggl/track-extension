@@ -15,7 +15,7 @@ function createTag(name, className) {
 
 function createLink(className) {
   var link = createTag('a', className);
-  link.href = 'javascript:void(0)';
+  link.href = '#';
   link.appendChild(document.createTextNode('Start timer'));
   return link;
 }

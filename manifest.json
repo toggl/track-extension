@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "version": "0.2.3.2",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
     "scripts": [
@@ -48,9 +48,9 @@
       "matches": ["*://*.github.com/*"],
       "js": ["scripts/content/github.js"]
     },
-    { "matches": ["*://app.asana.com/*"],
+    {
+      "matches": ["*://app.asana.com/*"],
       "js": ["scripts/content/asana.js"]
-      
     }
   ]
 }

@@ -1,9 +1,7 @@
 /*jslint indent: 2 */
 /*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
-"use strict";
-
 (function () {
-
+  "use strict";
   function createTimerLink(task, moreClass) {
     var link = createLink('toggl-button github ' + moreClass);
     link.addEventListener("click", function (e) {

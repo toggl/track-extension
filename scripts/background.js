@@ -48,13 +48,20 @@ var TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
-    if (request.type === 'activate') {
+    switch (request.type) {
+    case 'activate':
       if (TogglButton.$user !== null) {
         chrome.pageAction.show(sender.tab.id);
       }
       sendResponse({success: TogglButton.$user !== null});
-    } else if (request.type === 'timeEntry') {
+      break;
+
+    case 'timeEntry':
       TogglButton.createTimeEntry(request);
+      break;
+
+    default:
+      console.warn("Recieved message of unknown type. Request:", request);
     }
   }
 

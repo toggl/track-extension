@@ -7,15 +7,21 @@ function $(s, elem) {
   return elem.querySelector(s);
 }
 
-function createTag(name, className) {
+function createTag(name, className, child) {
   var tag = document.createElement(name);
   tag.className = className;
+  
+  if (child !== undefined) {
+    if (typeof child === 'string') {
+      child = document.createTextNode(child);
+    }
+    tag.appendChild(child);
+  }
   return tag;
 }
 
 function createLink(className) {
-  var link = createTag('a', className);
+  var link = createTag('a', className, 'Start timer');
   link.href = '#';
-  link.appendChild(document.createTextNode('Start timer'));
   return link;
 }

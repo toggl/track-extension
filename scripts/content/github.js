@@ -76,8 +76,6 @@
       }); 
 
       addLinkToDiscussion();
-
-      //TODO Bind to sync changes so we can keep settings up to date.
     }
   });
 

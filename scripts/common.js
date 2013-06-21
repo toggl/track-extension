@@ -34,7 +34,7 @@ function createProjectSelect(userData, className) {
   var select = createTag('select', className);
 
   //add an empty (default) option
-  select.appendChild(createOption(null, null, false, "Select a toggl project"));
+  select.appendChild(createOption("default", null, false, "Select a toggl project"));
 
   userData.projects.forEach(function(project) {
     clientName = userData.clients.filter(function(elem, index, array) { return (elem.id == project.cid); })[0].name;

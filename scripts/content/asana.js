@@ -35,7 +35,15 @@
 
       projectSelect.onchange = function(event) {
         selectedProjectId = event.target.options[event.target.selectedIndex].value;
-        selectedProjectBillable = event.target.options[event.target.selectedIndex].attributes["data-project-billable"].value;
+        if (selectedProjectId !== "default") {
+          selectedProjectBillable = userData.projects.filter(function(elem, index, array) {
+            return (elem.id == selectedProjectId);
+          })[0].billable;
+        }
+        else {
+          selectedProjectId = null;
+          selectedProjectBillable = false;
+        }
       };
 
       taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);

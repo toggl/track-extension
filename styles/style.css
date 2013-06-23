@@ -15,6 +15,16 @@
   margin-right: 4px;
 }
 
+.toggl-project-select {
+  width: 13em;
+}
+.toggl-project-select[empty] {
+  color: gray;
+  font-weight: normal;
+}
+.toggl-project-select:focus {
+  color: inherit;
+}
 .meta-option {
   color: gray;
 }
@@ -33,19 +43,17 @@
   max-width: 100px !important; /* Make sure there is room for our button. */
 }
 
-.toggl-select-project {
+.choose-toggl-project {
   display: block;
 }
-#toggl-project-list {
+.choose-toggl-project option,
+.choose-toggl-project optgroup {
+  background-color: #eee;
+}
+.toggl-project-select.minibutton {
   -webkit-appearance: menulist;
   padding: 3px;
   background: white;
-}
-#toggl-project-list[empty] {
-  color: gray;
-}
-#toggl-project-list:focus {
-  color: black;
 }
 
 /* End github specific styles. */

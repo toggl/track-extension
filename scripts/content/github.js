@@ -43,13 +43,14 @@
   
   function addProjectSelector() {
     var container = $('.pagehead-actions').appendChild(
-        createTag('li', 'toggl-select-project button-group'));
+        createTag('li', 'choose-toggl-project button-group'));
     container.appendChild(createTag('label', 'minibutton with-toggl-icon', "Project"))
         .setAttribute('for', 'toggl-project-list');
 
-    container.appendChild(
-        createProjectSelector(user, settings.projectMappings[CURRENT_REPO], onChooseProject))
-            .className += ' minibutton';
+    var select = container.appendChild(
+        createProjectSelector(user, settings.projectMappings[CURRENT_REPO], onChooseProject));
+    select.className += ' minibutton';
+    select.id = 'toggl-project-list';
   }
 
   function getCurrentRepo() {

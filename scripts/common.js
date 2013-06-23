@@ -9,7 +9,7 @@ function $(s, elem) {
 
 function createTag(name, className, child) {
   var tag = document.createElement(name);
-  tag.className = className;
+  if (className !== undefined) tag.className = className;
   
   if (child !== undefined) {
     if (typeof child === 'string') {
@@ -30,9 +30,8 @@ function createProjectSelector(user, currentProjectId, onChangeFunction) {
   console.log(user);
   var groups = {};
   // Create select.
-  var select = createTag('select', '');
-  select.id = 'toggl-project-list';
-  select.setAttribute('empty');
+  var select = createTag('select', 'toggl-project-select');
+  select.setAttribute('empty', 'empty');
   select.appendChild(createTag('option', 'meta-option', "none")).value = 'default';
   // Create one optgroup per workspace.
   for (var i = 0; i < user.workspaces.length; i++) {
@@ -51,7 +50,7 @@ function createProjectSelector(user, currentProjectId, onChangeFunction) {
   }
   // Bind the onchange event to call the provided onChangeFunction.
   select.onchange = function(event) {
-    if (select.value == 'default') select.setAttribute('empty');
+    if (select.value == 'default') select.setAttribute('empty', 'empty');
     else select.removeAttribute('empty');
     onChangeFunction(select.value == 'default' ? null : Number(select.value));
   }

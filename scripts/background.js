@@ -50,7 +50,7 @@ var TogglButton = {
       if (TogglButton.$user !== null) {
         chrome.pageAction.show(sender.tab.id);
       }
-      sendResponse({success: TogglButton.$user !== null,user: TogglButton.$user});
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request);
     }

@@ -1,12 +1,10 @@
 /*jslint indent: 2 */
-/*global document: false, chrome: false, $: false, createLink: false*/
+/*global document: false, chrome: false, $: false, createLink: false, createProjectSelect: false*/
 
 (function () {
   "use strict";
-  var iframeRegex = /oauth2relay/;
-  var userData = null;
-  var selectedProjectId = null;
-  var selectedProjectBillable = false;
+  var iframeRegex = /oauth2relay/, userData = null,
+    selectedProjectId = null, selectedProjectBillable = false;
 
   function createTimerLink(task) {
     var link = createLink('toggl-button asana');
@@ -27,20 +25,19 @@
     if (e.target.className === "details-pane-redesign" || iframeRegex.test(e.target.name)) {
       var taskDescription = $(".property.description"),
         title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
-        projectSelect = createProjectSelect(userData,"toggl-select asana");
+        projectSelect = createProjectSelect(userData, "toggl-select asana");
 
       //make sure we init the values when switching between tasks
       selectedProjectId = null;
       selectedProjectBillable = false;
 
-      projectSelect.onchange = function(event) {
+      projectSelect.onchange = function (event) {
         selectedProjectId = event.target.options[event.target.selectedIndex].value;
         if (selectedProjectId !== "default") {
-          selectedProjectBillable = userData.projects.filter(function(elem, index, array) {
-            return (elem.id == selectedProjectId);
+          selectedProjectBillable = userData.projects.filter(function (elem, index, array) {
+            return (elem.id === selectedProjectId);
           })[0].billable;
-        }
-        else {
+        } else {
           selectedProjectId = null;
           selectedProjectBillable = false;
         }

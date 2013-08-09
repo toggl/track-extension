@@ -42,7 +42,7 @@
       });
 
       // When started, link to toggl app:
-      timerElem.innerHTML = "<a href="http://toggl.com/" style="color:#333" target="_blank">Timer started...</a>";
+      timerElem.innerHTML = '<a href="http://toggl.com/" style="color:#333" target="_blank">Timer started...</a>';
       return false;
     });
 

@@ -36,6 +36,7 @@ var TogglButton = {
           description: timeEntry.description,
           wid: TogglButton.$user.default_wid,
           pid: timeEntry.projectId || null,
+          tid: timeEntry.taskId || null,
           billable: timeEntry.billable || false,
           duration: -(start.getTime() / 1000)
         }

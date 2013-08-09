@@ -7,9 +7,14 @@ function $(s, elem) {
   return elem.querySelector(s);
 }
 
-function createTag(name, className) {
+function createTag(name, className, innerHTML) {
   var tag = document.createElement(name);
   tag.className = className;
+
+  if (innerHTML) {
+    tag.innerHTML = innerHTML;
+  }
+
   return tag;
 }
 

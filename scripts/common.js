@@ -13,9 +13,18 @@ function createTag(name, className) {
   return tag;
 }
 
-function createLink(className) {
-  var link = createTag('a', className);
-  link.href = '#';
+function createLink(className, tagName, linkHref) {
+  var link;
+
+  // Param defaults
+  tagName  = tagName  || 'a';
+  linkHref = linkHref || '#';
+  link     = createTag(tagName, className);
+
+  if (tagName == 'a') {
+    link.href = '#';
+  }
+
   link.appendChild(document.createTextNode('Start timer'));
   return link;
 }

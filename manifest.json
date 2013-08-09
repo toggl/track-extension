@@ -1,6 +1,6 @@
 {
   "name": "Toggl Button",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -18,7 +18,8 @@
     "*://*.teamweek.com/*",
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
-    "*://app.asana.com/*"
+    "*://app.asana.com/*",
+    "*://*.unfuddle.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -31,7 +32,8 @@
         "*://*.teamweek.com/*",
         "*://*.pivotaltracker.com/*",
         "*://*.github.com/*",
-        "*://app.asana.com/*"
+        "*://app.asana.com/*",
+        "*://*.unfuddle.com/*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -51,6 +53,10 @@
     {
       "matches": ["*://app.asana.com/*"],
       "js": ["scripts/content/asana.js"]
-    }
+    },
+    {
+      "matches": ["*://*.unfuddle.com/*"],
+      "js": ["scripts/content/unfuddle.js"]
+    },
   ]
 }

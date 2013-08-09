@@ -45,14 +45,8 @@
       asanaProject = $(".ancestor-projects > .tag, .property.projects .token_name");
 
     projectSelect = createProjectSelect(userData, "toggl-select asana", asanaProject ? asanaProject.text : '');
-    //taskSelect = createTaskSelect(userData, "toggl-select asana", taskDescription);
-
-    //make sure we init the values when switching between tasks
-    //selectedProjectId = null;
-    //selectedProjectBillable = false;
 
     taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);
-    //taskDescription.parentNode.insertBefore(taskSelect, taskDescription.nextSibling);
     taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
   }
 

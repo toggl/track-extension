@@ -44,18 +44,3 @@ function createProjectSelect(userData, className, projectName) {
   return select;
 }
 
-function createTaskSelect(userData, className, taskName) {
-  var clientName, option,
-    select = createTag('select', className);
-
-  //add an empty (default) option
-  select.appendChild(createOption("default", null, "Select a Toggl task"));
-
-  userData.tasks.forEach(function (task) {
-    clientName = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); })[0].name;
-    select.appendChild(createOption(project.id, project.cid, clientName + " - " + project.name, project.name == projectName));
-  });
-
-  return select;
-}
-

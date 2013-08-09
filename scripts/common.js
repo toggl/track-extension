@@ -7,15 +7,29 @@ function $(s, elem) {
   return elem.querySelector(s);
 }
 
-function createTag(name, className) {
+function createTag(name, className, innerHTML) {
   var tag = document.createElement(name);
   tag.className = className;
+
+  if (innerHTML) {
+    tag.innerHTML = innerHTML;
+  }
+
   return tag;
 }
 
-function createLink(className) {
-  var link = createTag('a', className);
-  link.href = '#';
+function createLink(className, tagName, linkHref) {
+  var link;
+
+  // Param defaults
+  tagName  = tagName  || 'a';
+  linkHref = linkHref || '#';
+  link     = createTag(tagName, className);
+
+  if (tagName == 'a') {
+    link.href = '#';
+  }
+
   link.appendChild(document.createTextNode('Start timer'));
   return link;
 }

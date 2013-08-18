@@ -40,19 +40,27 @@ var TogglButton = {
           duration: -(start.getTime() / 1000)
         }
       };
+
     xhr.open("POST", TogglButton.$apiUrl + "/v8/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
     xhr.send(JSON.stringify(entry));
   },
 
   newMessage: function (request, sender, sendResponse) {
-    if (request.type === 'activate') {
+    switch (request.type) {
+    case 'activate':
       if (TogglButton.$user !== null) {
         chrome.pageAction.show(sender.tab.id);
       }
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
-    } else if (request.type === 'timeEntry') {
+      break;
+
+    case 'timeEntry':
       TogglButton.createTimeEntry(request);
+      break;
+
+    default:
+      console.warn("Recieved message of unknown type. Request:", request);
     }
   }
 

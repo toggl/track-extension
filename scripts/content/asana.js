@@ -14,15 +14,30 @@
       if (projectId == "default") { return; }
 
       // Get project to find billable attribute.
-      var project = userData.projects.filter(function (elem, index, array) {
-        return (elem.id == projectId);
-      })[0];
+      var project = userData.$projectMap[projectId];
 
-      // If the task description prefix matches a Toggl task, use it.
-      var taskDescription = $("#details_pane_title_row textarea#details_property_sheet_title").value;
-      var togglTask = userData.tasks.filter(function (elem, index, array) {
-        return (elem.pid == projectId && taskDescription.substr(0, elem.name.length) == elem.name);
-      })[0];
+      var togglTask;
+      {
+        // If one of the Asana tags matches a Toggl task, use it.
+        var tagList = document.querySelectorAll(".property.tags .token_name");
+        for (var i = 0, end = tagList.length; i < end; ++i) {
+          togglTask = project.$taskNameMap[tagList[i].text];
+          if (togglTask) { break; }
+        }
+
+        if (!togglTask) {
+          // If the task description prefix matches a Toggl task, use it.
+          var taskElem = $("#details_pane_title_row textarea#details_property_sheet_title");
+          var taskDescription = taskElem ? taskElem.value : '';
+
+          for (var taskName in project.$taskNameMap) {
+            if (taskDescription.substr(0, taskName.length) == taskName) {
+              togglTask = project.$taskNameMap[taskName];
+              break;
+            }
+          }
+        }
+      }
 
       chrome.extension.sendMessage({
         type: 'timeEntry',

@@ -21,6 +21,24 @@ var TogglButton = {
       if (xhr.status === 200) {
         var resp = JSON.parse(xhr.responseText);
         TogglButton.$user = resp.data;
+
+        // Compute client, project, and task lookups.
+        var clientMap = {};
+        resp.data.clients.forEach(function (client) { clientMap[client.id] = client; });
+        TogglButton.$user.$clientMap = clientMap;
+
+        var projectMap = {};
+        resp.data.projects.forEach(function (project) { projectMap[project.id] = project; });
+        TogglButton.$user.$projectMap = projectMap;
+
+        // Compute a task-name map for each project.
+        resp.data.tasks.forEach(function (task) {
+          var project = projectMap[task.pid];
+          if (!project) { return; }
+
+          if (!project.$taskNameMap) { project.$taskNameMap = {}; }
+          project.$taskNameMap[task.name] = task;
+        });
       }
     };
     xhr.send();

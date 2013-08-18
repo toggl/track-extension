@@ -37,7 +37,8 @@ function createProjectSelect(userData, className, projectName) {
   select.appendChild(createOption("default", null, "Select a Toggl project"));
 
   userData.projects.forEach(function (project) {
-    clientName = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); })[0].name;
+    var client = userData.$clientMap[project.cid];
+    clientName = client ? client.name : "?";
     select.appendChild(createOption(project.id, project.cid, clientName + " - " + project.name, project.name == projectName));
   });
 

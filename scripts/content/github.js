@@ -17,7 +17,7 @@
       chrome.extension.sendMessage({
         type: 'timeEntry',
         description: task,
-        pid: settings.projectMappings[CURRENT_REPO]
+        projectId: settings.projectMappings[CURRENT_REPO]
       });
       link.innerHTML = "Started...";
     });

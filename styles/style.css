@@ -59,12 +59,26 @@
 /* End github specific styles. */
 
 /* Start asana specific styles. */
-.toggl-button.asana {
-  margin-left: 50px;
+.toggl-billable.asana {
+  margin-left: 10px;
   margin-bottom: 5px;
   color: #596573;
   line-height: 22px;
   font-size: 12px;
   font-weight: 600;
+}
+
+.toggl-button.asana {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  color: #596573;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.toggl-select.asana {
+  margin-left: 50px;
+  color: #596573;
 }
 /* End asana specific styles. */

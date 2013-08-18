@@ -34,7 +34,9 @@ var TogglButton = {
           start: start.toISOString(),
           created_with: "Toggl Button",
           description: timeEntry.description,
-          pid: timeEntry.pid,
+          wid: TogglButton.$user.default_wid,
+          pid: timeEntry.projectId || null,
+          billable: timeEntry.billable || false,
           duration: -(start.getTime() / 1000)
         }
       };

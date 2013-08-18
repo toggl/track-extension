@@ -56,3 +56,26 @@ function createProjectSelector(user, currentProjectId, onChangeFunction) {
   }
   return select;
 }
+
+function createOption(id, cid, text) {
+  var option = document.createElement("option");
+  option.setAttribute("value", id);
+  option.setAttribute("data-client-id", cid);
+  option.text = text;
+  return option;
+}
+
+function createProjectSelect(userData, className) {
+  var clientName, option,
+    select = createTag('select', className);
+
+  //add an empty (default) option
+  select.appendChild(createOption("default", null, "Select a toggl project"));
+
+  userData.projects.forEach(function (project) {
+    clientName = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); })[0].name;
+    select.appendChild(createOption(project.id, project.cid, clientName + " - " + project.name));
+  });
+
+  return select;
+}

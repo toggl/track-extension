@@ -48,7 +48,10 @@
         .setAttribute('for', 'toggl-project-list');
 
     var select = container.appendChild(
-        createGroupedProjectSelect(user, settings.projectMappings[CURRENT_REPO], onChooseProject));
+        createGroupedProjectSelect(user, 'toggl-project-select', settings.projectMappings[CURRENT_REPO]));
+    select.onchange = function(event) {
+      onChooseProject(select.value == 'default' ? null : Number(select.value));
+    };
     select.className += ' minibutton';
     select.id = 'toggl-project-list';
   }

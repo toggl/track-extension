@@ -18,10 +18,6 @@
 .toggl-project-select {
   width: 13em;
 }
-.toggl-project-select[empty] {
-  color: gray;
-  font-weight: normal;
-}
 .toggl-project-select:focus {
   color: inherit;
 }

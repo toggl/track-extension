@@ -26,7 +26,7 @@ function createLink(className) {
   return link;
 }
 
-function createProjectSelector(user, currentProjectId, onChangeFunction) {
+function createGroupedProjectSelect(user, currentProjectId, onChangeFunction) {
   console.log(user);
   var groups = {};
   // Create select.

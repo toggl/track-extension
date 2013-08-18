@@ -48,7 +48,7 @@
         .setAttribute('for', 'toggl-project-list');
 
     var select = container.appendChild(
-        createProjectSelector(user, settings.projectMappings[CURRENT_REPO], onChooseProject));
+        createGroupedProjectSelect(user, settings.projectMappings[CURRENT_REPO], onChooseProject));
     select.className += ' minibutton';
     select.id = 'toggl-project-list';
   }
@@ -58,14 +58,12 @@
   }
 
   function onChooseProject(newPid) {
-    //console.log("set project: ", newPid);
-    if (newPid >= 0) {
+    if (newPid !== null) {
       settings.projectMappings[CURRENT_REPO] = newPid;
     } else {
       delete settings.projectMappings[CURRENT_REPO];
     }
     chrome.storage.sync.set(settings);
-    console.log("settings: ", settings);
   }
   
   chrome.extension.sendMessage({type: 'activate'}, function (response) {

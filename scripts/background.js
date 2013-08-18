@@ -40,9 +40,6 @@ var TogglButton = {
           duration: -(start.getTime() / 1000)
         }
       };
-    if (entry.pid === undefined || entry.pid === null) {
-      entry.wid = TogglButton.$user.default_wid;
-    }
 
     xhr.open("POST", TogglButton.$apiUrl + "/v8/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));

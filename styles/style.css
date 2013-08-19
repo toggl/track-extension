@@ -55,3 +55,20 @@
   color: #596573;
 }
 /* End asana specific styles */
+
+/* start podio specific styles */
+
+.toggl-button-wrapper{
+    display: inline-block !important;
+    width: 100px !important;
+}
+
+.toggl-button-wrapper .color-green{
+    color: #43d541;
+}
+
+.toggl-button-wrapper .disable{
+    cursor: default !important;
+}
+
+/* End asana specific styles */

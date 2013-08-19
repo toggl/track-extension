@@ -18,7 +18,8 @@
     "*://*.teamweek.com/*",
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
-    "*://app.asana.com/*"
+    "*://app.asana.com/*",
+    "*://*.podio.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -31,7 +32,8 @@
         "*://*.teamweek.com/*",
         "*://*.pivotaltracker.com/*",
         "*://*.github.com/*",
-        "*://app.asana.com/*"
+        "*://app.asana.com/*",
+        "*://*.podio.com/*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -51,6 +53,10 @@
     {
       "matches": ["*://app.asana.com/*"],
       "js": ["scripts/content/asana.js"]
+    },
+    {
+      "matches": ["*://*.podio.com/*"],
+      "js": ["scripts/content/podio.js"]
     }
   ]
 }

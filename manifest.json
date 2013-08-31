@@ -19,7 +19,8 @@
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
     "*://app.asana.com/*",
-    "*://*.unfuddle.com/*"
+    "*://*.unfuddle.com/*",
+    "*://*.podio.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -33,7 +34,8 @@
         "*://*.pivotaltracker.com/*",
         "*://*.github.com/*",
         "*://app.asana.com/*",
-        "*://*.unfuddle.com/*"
+        "*://*.unfuddle.com/*",
+        "*://*.podio.com/*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -57,6 +59,10 @@
     {
       "matches": ["*://*.unfuddle.com/*"],
       "js": ["scripts/content/unfuddle.js"]
+    },
+    {
+      "matches": ["*://*.podio.com/*"],
+      "js": ["scripts/content/podio.js"]
     }
   ]
 }

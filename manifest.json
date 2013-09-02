@@ -21,6 +21,7 @@
     "*://app.asana.com/*",
     "*://*.unfuddle.com/*",
     "*://*.podio.com/*"
+    "*://*.teambox.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -36,6 +37,7 @@
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
         "*://*.podio.com/*"
+        "*://*.teambox.com/*"        
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -63,6 +65,10 @@
     {
       "matches": ["*://*.podio.com/*"],
       "js": ["scripts/content/podio.js"]
+    }
+    {
+      "matches": ["*://*.teambox.com/*"],
+      "js": ["scripts/content/teambox.js"]
     }
   ]
 }

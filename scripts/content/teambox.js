@@ -22,8 +22,8 @@
   }
 
   function addButton(e) {
-    if (e.target.className === "taskName" || iframeRegex.test(e.target.name)) {
-      var taskDescription = $(".property.description"),
+    if (e.target.className === ".taskName" || iframeRegex.test(e.target.name)) {
+      var taskDescription = $(".taskName"),
         title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
         projectSelect = createProjectSelect(userData, "toggl-select teambox");
 

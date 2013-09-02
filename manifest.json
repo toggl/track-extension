@@ -65,7 +65,7 @@
     {
       "matches": ["*://*.podio.com/*"],
       "js": ["scripts/content/podio.js"]
-    }
+    },
     {
       "matches": ["*://*.teambox.com/*"],
       "js": ["scripts/content/teambox.js"]

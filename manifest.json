@@ -20,7 +20,7 @@
     "*://*.github.com/*",
     "*://app.asana.com/*",
     "*://*.unfuddle.com/*",
-    "*://*.podio.com/*"
+    "*://*.podio.com/*",
     "*://*.teambox.com/*"
   ],
   "icons" : {
@@ -36,7 +36,7 @@
         "*://*.github.com/*",
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
-        "*://*.podio.com/*"
+        "*://*.podio.com/*",
         "*://*.teambox.com/*"        
       ],
       "css": ["styles/style.css"],

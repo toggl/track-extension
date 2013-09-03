@@ -21,10 +21,7 @@
     "*://app.asana.com/*",
     "*://*.unfuddle.com/*",
     "*://*.podio.com/*",
-    "*://*.teambox.com/*",
-    "*://jira.gettylist.com/*",
-    "*://jira.velopment.at/*",
-    "*://jira.nnpro.at/*"
+    "*://*.teambox.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -40,10 +37,7 @@
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
         "*://*.podio.com/*",
-        "*://*.teambox.com/*",
-          "*://jira.gettylist.com/*",
-          "*://jira.nnpro.at/*",
-          "*://jira.velopment.at/*"
+        "*://*.teambox.com/*"        
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -75,18 +69,6 @@
     {
       "matches": ["*://*.teambox.com/*"],
       "js": ["scripts/content/teambox.js"]
-    },
-    {
-      "matches": ["*://jira.gettylist.com/*"],
-      "js": ["scripts/content/greenhopper.js"]
-    },
-    {
-      "matches": ["*://jira.nnpro.at/*"],
-      "js": ["scripts/content/greenhopper.js"]
-    },
-    {
-      "matches": ["*://jira.velopment.at/*"],
-      "js": ["scripts/content/greenhopper.js"]
     }
   ]
 }

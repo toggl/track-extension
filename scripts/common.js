@@ -53,8 +53,9 @@ function createProjectSelect(userData, className) {
     var result = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); });
     if (!result.length) {
       clientName = '';
+    } else {
+      clientName = result[0].name + ' - ';
     }
-    clientName = result[0].name + ' - ';
     select.appendChild(createOption(project.id, project.cid, clientName + project.name));
   });
 

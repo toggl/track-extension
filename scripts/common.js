@@ -52,10 +52,10 @@ function createProjectSelect(userData, className) {
   userData.projects.forEach(function (project) {
     var result = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); });
     if (!result.length) {
-      return;
+      clientName = '';
     }
-    clientName = result[0].name;
-    select.appendChild(createOption(project.id, project.cid, clientName + " - " + project.name));
+    clientName = result[0].name + ' - ';
+    select.appendChild(createOption(project.id, project.cid, clientName + project.name));
   });
 
   return select;

@@ -22,10 +22,12 @@
   }
 
   function addButton(e) {
-    if (e.target.className === ".taskName" || iframeRegex.test(e.target.name)) {
-      var taskDescription = $(".taskName"),
-        title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
-        projectSelect = createProjectSelect(userData, "toggl-select teambox");
+    if (e.target.className === "comments" || iframeRegex.test(e.target.name)) {
+      var task = e.target.parentNode.parentNode.parentNode,
+          nameHolder = task.querySelector('.name_holder .name'),
+          title = nameHolder.innerHTML;
+
+      var projectSelect = createProjectSelect(userData, "toggl-select teambox");
 
       //make sure we init the values when switching between tasks
       selectedProjectId = null;
@@ -43,14 +45,13 @@
         }
       };
 
-      taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);
-      taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
+      nameHolder.parentNode.insertBefore(createTimerLink(title), nameHolder.nextSibling);
+      nameHolder.parentNode.insertBefore(projectSelect, nameHolder.nextSibling);
     }
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {
     if (response.success) {
-      console.log(response.user);
       userData = response.user;
       document.addEventListener("DOMNodeInserted", addButton);
     }

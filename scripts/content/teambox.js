@@ -11,7 +11,7 @@
     link.addEventListener("click", function (e) {
       chrome.extension.sendMessage({
         type: 'timeEntry',
-        description: task,
+        description: taskName,
         projectId: selectedProjectId,
         billable: selectedProjectBillable
       });

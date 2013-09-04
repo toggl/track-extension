@@ -24,10 +24,19 @@
     function addButton(e) {
         if (e.target.className === "ghx-detail-issue" || iframeRegex.test(e.target.name)) {
             var sidebar = e.target,
+                project = sidebar.querySelector('.ghx-key-group .ghx-project').innerHTML.toLowerCase(),
                 detailsTab = sidebar.querySelector('#ghx-tab-details'),
                 task = sidebar.querySelectorAll('.ghx-detail-description.ghx-fieldtype-textarea.ghx-fieldname-summary')[0].innerHTML;
 
-            var projectSelect = createProjectSelect(userData, "toggl-select teambox");
+            var projectSelect = createProjectSelect(userData, "toggl-select teambox"),
+                options = projectSelect.options;
+
+            // try to select the right project
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute('data-project-name') && options[i].getAttribute('data-project-name').toLowerCase() == project) {
+                    options[i].selected = true;
+                }
+            }
 
             //make sure we init the values when switching between tasks
             selectedProjectId = null;

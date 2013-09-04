@@ -34,11 +34,16 @@ function createLink(className, tagName, linkHref) {
   return link;
 }
 
-function createOption(id, cid, text) {
+function createOption(id, cid, text, projectName) {
   var option = document.createElement("option");
   option.setAttribute("value", id);
   option.setAttribute("data-client-id", cid);
   option.text = text;
+
+  if (projectName) {
+    option.setAttribute("data-project-name", projectName);
+  }
+
   return option;
 }
 
@@ -56,7 +61,7 @@ function createProjectSelect(userData, className) {
     } else {
       clientName = result[0].name + ' - ';
     }
-    select.appendChild(createOption(project.id, project.cid, clientName + project.name));
+    select.appendChild(createOption(project.id, project.cid, clientName + project.name, project.name));
   });
 
   return select;

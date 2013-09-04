@@ -33,6 +33,35 @@
     }
   }
 
+  // pre-select the right project
+  function preselectProject(select, projectName) {
+    var options = select.options,
+        i, option, tmp;
+
+    // first try a match on the project name directly
+    for (i = 0; i < options.length; i++) {
+      option = options[i];
+      if ((tmp = option.getAttribute('data-project-name')) && tmp.toLowerCase() === projectName) {
+        option.selected = true;
+        return;
+      }
+    }
+
+    // nothing found
+    // assume the project name in Teambox equals the client's name in Toggl
+    // and try again
+    for (i = 0; i < options.length; i++) {
+      for (i = 0; i < options.length; i++) {
+        option = options[i];
+        if ((tmp = option.getAttribute('data-client-name')) && tmp.toLowerCase() === projectName) {
+          option.selected = true;
+          return;
+        }
+      }
+    }
+
+  }
+
   function addButton(e) {
     if (e.target.className === "comments" || iframeRegex.test(e.target.name)) {
       var task = e.target.parentNode.parentNode.parentNode,
@@ -43,13 +72,7 @@
       var projectSelect = createProjectSelect(userData, "toggl-select teambox");
 
       if (projectName) {
-        var options = projectSelect.options;
-
-        for (var i = 0; i < options.length; i++) {
-          if (options[i].getAttribute('data-project-name') && options[i].getAttribute('data-project-name').toLowerCase() === projectName) {
-            options[i].selected = true;
-          }
-        }
+        preselectProject(projectSelect, projectName);
       }
 
       //make sure we init the values when switching between tasks

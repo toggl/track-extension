@@ -36,18 +36,18 @@
   // pre-select the right project
   function preselectProject(select, projectName) {
     var options = select.options,
-        i, option, tmp;
+        i, option, tmp, event;
 
     // first try a match on the project name directly
     for (i = 0; i < options.length; i++) {
       option = options[i];
       if ((tmp = option.getAttribute('data-project-name')) && tmp.toLowerCase() === projectName) {
         option.selected = true;
+
         // trigger change event
-        // since we don't care about bubbling, we'll simply call the onchange function
-        if (typeof select.onchange === 'function') {
-          select.onchange();
-        }
+        event = document.createEvent('HTMLEvents');
+        event.initEvent('change', false, true);
+        select.dispatchEvent(event);
         return;
       }
     }
@@ -60,11 +60,11 @@
         option = options[i];
         if ((tmp = option.getAttribute('data-client-name')) && tmp.toLowerCase() === projectName) {
           option.selected = true;
+            
           // trigger change event
-          // since we don't care about bubbling, we'll simply call the onchange function
-          if (typeof select.onchange === 'function') {
-            select.onchange();
-          }
+          event = document.createEvent('HTMLEvents');
+          event.initEvent('change', false, true);
+          select.dispatchEvent(event);
           return;
         }
       }

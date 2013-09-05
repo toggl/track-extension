@@ -53,10 +53,9 @@
               if (options[i].getAttribute('data-project-name') && options[i].getAttribute('data-project-name').toLowerCase() == project) {
                 options[i].selected = true;
                 // trigger change event
-                // since we don't care about bubbling, we'll simply call the onchange function
-                if (typeof select.onchange === 'function') {
-                  select.onchange();
-                }
+                var event = document.createEvent('HTMLEvents');
+                event.initEvent('change', false, true);
+                projectSelect.dispatchEvent(event);
               }
             }
 

@@ -43,6 +43,11 @@
       option = options[i];
       if ((tmp = option.getAttribute('data-project-name')) && tmp.toLowerCase() === projectName) {
         option.selected = true;
+        // trigger change event
+        // since we don't care about bubbling, we'll simply call the onchange function
+        if (typeof select.onchange === 'function') {
+          select.onchange();
+        }
         return;
       }
     }
@@ -55,6 +60,11 @@
         option = options[i];
         if ((tmp = option.getAttribute('data-client-name')) && tmp.toLowerCase() === projectName) {
           option.selected = true;
+          // trigger change event
+          // since we don't care about bubbling, we'll simply call the onchange function
+          if (typeof select.onchange === 'function') {
+            select.onchange();
+          }
           return;
         }
       }
@@ -71,10 +81,6 @@
 
       var projectSelect = createProjectSelect(userData, "toggl-select teambox");
 
-      if (projectName) {
-        preselectProject(projectSelect, projectName);
-      }
-
       //make sure we init the values when switching between tasks
       selectedProjectId = null;
       selectedProjectBillable = false;
@@ -90,6 +96,10 @@
           selectedProjectBillable = false;
         }
       };
+
+      if (projectName) {
+        preselectProject(projectSelect, projectName);
+      }
 
       nameHolder.parentNode.insertBefore(createTimerLink(title), nameHolder.nextSibling);
       nameHolder.parentNode.insertBefore(projectSelect, nameHolder.nextSibling);

@@ -34,11 +34,24 @@ function createLink(className, tagName, linkHref) {
   return link;
 }
 
-function createOption(id, cid, text) {
+function createOption(id, cid, clientName, projectName) {
   var option = document.createElement("option");
   option.setAttribute("value", id);
   option.setAttribute("data-client-id", cid);
-  option.text = text;
+
+  var text = '';
+  if (clientName) {
+    text = clientName + ' - ';
+  }
+  option.text = text + projectName;
+
+  if (projectName) {
+    option.setAttribute("data-project-name", projectName);
+  }
+  if (clientName) {
+    option.setAttribute("data-client-name", clientName);
+  }
+
   return option;
 }
 
@@ -50,8 +63,13 @@ function createProjectSelect(userData, className) {
   select.appendChild(createOption("default", null, "Select a toggl project"));
 
   userData.projects.forEach(function (project) {
-    clientName = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); })[0].name;
-    select.appendChild(createOption(project.id, project.cid, clientName + " - " + project.name));
+    var result = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); });
+    if (!result.length) {
+      clientName = '';
+    } else {
+      clientName = result[0].name;
+    }
+    select.appendChild(createOption(project.id, project.cid, clientName, project.name));
   });
 
   return select;

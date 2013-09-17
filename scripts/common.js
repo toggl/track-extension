@@ -43,8 +43,7 @@ function createOption(id, cid, text) {
 }
 
 function createProjectSelect(userData, className) {
-  var clients, projectLabel, option,
-    select = createTag('select', className);
+  var clients, projectLabel, option, select = createTag('select', className);
 
   //add an empty (default) option
   select.appendChild(createOption("default", null, "Select a toggl project"));

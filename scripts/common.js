@@ -34,11 +34,24 @@ function createLink(className, tagName, linkHref) {
   return link;
 }
 
-function createOption(id, cid, text) {
+function createOption(id, cid, clientName, projectName) {
   var option = document.createElement("option");
   option.setAttribute("value", id);
   option.setAttribute("data-client-id", cid);
-  option.text = text;
+
+  var text = '';
+  if (clientName) {
+    text = clientName + ' - ';
+  }
+  option.text = text + projectName;
+
+  if (projectName) {
+    option.setAttribute("data-project-name", projectName);
+  }
+  if (clientName) {
+    option.setAttribute("data-client-name", clientName);
+  }
+
   return option;
 }
 

@@ -21,6 +21,11 @@
       return;
     }
 
+    // If button already shown, do nothing
+    if( $('.toggl-button.gitlab') !== null ){
+      return;
+    }
+
     numElem = $('body.project .page-title');
     title = titleElem.innerHTML;
     if (numElem !== null) {
@@ -32,6 +37,9 @@
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {
+    // Add event listener to update button when RoR's Turbolink updates the DOM
+    document.addEventListener("page:change", function(e) { addLinkToDiscussion(); } );
+
     if (response.success) {
       addLinkToDiscussion();
     }

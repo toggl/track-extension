@@ -23,7 +23,8 @@
     "*://*.unfuddle.com/*",
     "*://*.podio.com/*",
     "*://*.teambox.com/*",
-    "*://*.trello.com/*"
+    "*://*.trello.com/*",
+    "*://*.worksection.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -41,7 +42,8 @@
         "*://*.unfuddle.com/*",
         "*://*.podio.com/*",
         "*://*.teambox.com/*",
-        "*://*.trello.com/*"
+        "*://*.trello.com/*",
+        "*://*.worksection.com/*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -81,6 +83,10 @@
     {
       "matches": ["*://*.trello.com/*"],
       "js": ["scripts/content/trello.js"]
+    },
+    {
+      "matches": ["*://*.worksection.com/*"],
+      "js": ["scripts/content/worksection.js"]
     }
   ]
 }

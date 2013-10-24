@@ -86,3 +86,11 @@
   margin-right: 4px;
 }
 /* End gitlab specific styles. */
+
+/* Start trello specific styles. */
+.trello{
+	text-decoration: none;
+	cursor: pointer;
+	color: #737373;
+}
+/* End trello specific styles. */

@@ -54,6 +54,7 @@
 
   function addButton(e) {
     if (!(e.target.className === "details-pane-redesign" || iframeRegex.test(e.target.name))) { return; }
+		if ($(".toggl-select")) { return; }
 
     var taskDescription = $(".property.description"),
       title = $("#details_pane_title_row textarea#details_property_sheet_title").value,

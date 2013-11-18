@@ -44,13 +44,12 @@
       };
 
       taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);
-      taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
+      //taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
     }
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {
     if (response.success) {
-      console.log(response.user);
       userData = response.user;
       document.addEventListener("DOMNodeInserted", addButton);
     }

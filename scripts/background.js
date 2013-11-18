@@ -9,18 +9,22 @@ var TogglButton = {
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
       if (/toggl\.com\/track/.test(tab.url)) {
-        TogglButton.fetchUser();
+        TogglButton.fetchUser("/v7");
+      } else if (/toggl\.com\/app/.test(tab.url)) {
+        TogglButton.fetchUser("/v8");
       }
     }
   },
 
-  fetchUser: function () {
+  fetchUser: function (apiVersion) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", TogglButton.$apiUrl + "/v7/me.json?with_related_data=true", true);
+    xhr.open("GET", TogglButton.$apiUrl + apiVersion + "/me?with_related_data=true", true);
     xhr.onload = function () {
       if (xhr.status === 200) {
         var resp = JSON.parse(xhr.responseText);
         TogglButton.$user = resp.data;
+      } else if (apiVersion === "/v7") {
+        TogglButton.fetchUser("/v8");
       }
     };
     xhr.send();
@@ -58,6 +62,6 @@ var TogglButton = {
 
 };
 
-TogglButton.fetchUser();
+TogglButton.fetchUser("/v7");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

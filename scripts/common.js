@@ -26,7 +26,7 @@ function createLink(className, tagName, linkHref) {
   linkHref = linkHref || '#';
   link     = createTag(tagName, className);
 
-  if (tagName == 'a') {
+  if (tagName === 'a') {
     link.href = '#';
   }
 
@@ -35,11 +35,10 @@ function createLink(className, tagName, linkHref) {
 }
 
 function createOption(id, cid, clientName, projectName) {
-  var option = document.createElement("option");
+  var text = '', option = document.createElement("option");
   option.setAttribute("value", id);
   option.setAttribute("data-client-id", cid);
 
-  var text = '';
   if (clientName) {
     text = clientName + ' - ';
   }

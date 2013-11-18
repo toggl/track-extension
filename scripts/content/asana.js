@@ -43,7 +43,9 @@
         }
       };
 
-      taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);
+      if (!$('.toggl-button', taskDescription.parentNode)) {
+        taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);
+      }
       //taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
     }
   }

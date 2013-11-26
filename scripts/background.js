@@ -68,6 +68,12 @@ var TogglButton = {
 
 };
 
+chrome.pageAction.onClicked.addListener(function (tab) {
+  if (TogglButton.$user === null) {
+    chrome.tabs.create({url: 'https://new.toggl.com/#login'});
+  }
+});
+
 TogglButton.fetchUser("/v7");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

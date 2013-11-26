@@ -50,10 +50,16 @@ var TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
+    var imagePath = 'images/inactive-19.png';
     if (request.type === 'activate') {
       if (TogglButton.$user !== null) {
-        chrome.pageAction.show(sender.tab.id);
+        imagePath = 'images/active-19.png';
       }
+      chrome.pageAction.setIcon({
+        path: imagePath,
+        tabId: sender.tab.id
+      });
+      chrome.pageAction.show(sender.tab.id);
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request);

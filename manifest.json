@@ -9,7 +9,6 @@
     ]
   },
   "page_action" : {
-    "default_icon"  : "images/icon-19.png",
     "default_title" : "Toggl Time Tracker"
   },
   "permissions" : [

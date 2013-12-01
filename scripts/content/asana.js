@@ -22,7 +22,7 @@
   }
 
   function addButton(e) {
-    if (e.target.className === "details-pane-redesign" || iframeRegex.test(e.target.name)) {
+    if ((e.target.className === "details-pane-redesign" && e.target.id === "right_pane") || iframeRegex.test(e.target.name)) {
       var taskDescription = $(".property.description"),
         title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
         projectSelect = createProjectSelect(userData, "toggl-select asana");

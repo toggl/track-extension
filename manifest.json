@@ -23,7 +23,8 @@
     "*://*.podio.com/*",
     "*://*.teambox.com/*",
     "*://*.trello.com/*",
-    "*://*.worksection.com/*"
+    "*://*.worksection.com/*",
+    "*://*.basecamp.com/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -42,7 +43,8 @@
         "*://*.podio.com/*",
         "*://*.teambox.com/*",
         "*://*.trello.com/*",
-        "*://*.worksection.com/*"
+        "*://*.worksection.com/*",
+        "*://*.basecamp.com/*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -86,6 +88,10 @@
     {
       "matches": ["*://*.worksection.com/*"],
       "js": ["scripts/content/worksection.js"]
+    },
+    {
+      "matches": ["*://*.basecamp.com/*"],
+      "js": ["scripts/content/basecamp.js"]
     }
   ]
 }

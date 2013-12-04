@@ -1,34 +1,27 @@
 /*jslint indent: 2 */
-/*global document: false, chrome: false, $: false, createTag: false, createLink: false, MutationObserver: false*/
+/*global document: false, chrome: false, $: false, createLink: false, MutationObserver: false*/
 "use strict";
 
 (function () {
 
   function addButtonTo(elem) {
-    var alink, stag, pill = elem.querySelector('.pill');
-    if (pill === null) {
+    var alink, stag, cont = $('.pill', elem);
+    if (cont === null) {
       return;
     }
-    alink = createLink('toggl-button');
-    alink.style.visibility = 'hidden';
-    alink.style.fontSize = '12px';
-    alink.style.height = '14px';
-    alink.style.lineHeight = '14px';
-    alink.style.paddingLeft = '19px';
-    alink.style.marginLeft = '3px';
-    alink.style.backgroundSize = '17px';
+    alink = createLink('toggl-button basecamp');
     alink.setAttribute("data-behavior", "hover_content");
 
     alink.addEventListener("click", function (e) {
       e.preventDefault();
       chrome.extension.sendMessage({
         type: 'timeEntry',
-        description: elem.querySelector('.content_for_perma').textContent
+        description: $('.content_for_perma', elem).textContent
       });
     });
 
     stag = document.createElement("span");
-    pill.parentNode.appendChild(stag.appendChild(alink));
+    cont.parentNode.appendChild(stag.appendChild(alink));
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {

@@ -88,10 +88,20 @@
 }
 /* End gitlab specific styles. */
 
-/* Start trello specific styles. */
+/********* TRELLO *********/
 .trello{
 	text-decoration: none;
 	cursor: pointer;
 	color: #737373;
 }
-/* End trello specific styles. */
+
+/********* BASECAMP *********/
+.toggl-button.basecamp {
+  font-size: 12px;
+  height: 14px;
+  margin-left: 3px;
+  line-height: 14px;
+  padding-left: 19px;
+  background-size: 17px;
+  visibility: hidden;
+}

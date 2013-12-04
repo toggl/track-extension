@@ -18,6 +18,8 @@
         type: 'timeEntry',
         description: $('.content_for_perma', elem).textContent
       });
+      alink.style.color = '#1ab351';
+      alink.textContent = 'Started...';
     });
 
     stag = document.createElement("span");

@@ -6,10 +6,24 @@ var TogglButton = {
   $user: null,
   $apiUrl: "https://www.toggl.com/api/v7",
   $newApiUrl: "https://new.toggl.com/api/v8",
+  $sites: new RegExp([
+    'asana\\.com',
+    'podio\\.com',
+    'trello\\.com',
+    'github\\.com',
+    'gitlab\\.com',
+    'teambox\\.com',
+    'teamweek\\.com',
+    'basecamp\\.com',
+    'unfuddle\\.com',
+    'worksection\\.com',
+    'pivotaltracker\\.com'].join('|')),
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
-      if (/toggl\.com\/track/.test(tab.url)) {
+      if (TogglButton.$sites.test(tab.url)) {
+        TogglButton.setPageAction(tabId);
+      } else if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
@@ -50,7 +64,7 @@ var TogglButton = {
     xhr.send(JSON.stringify(entry));
   },
 
-  setPageAction: function(tabId) {
+  setPageAction: function (tabId) {
     var imagePath = 'images/inactive-19.png';
     if (TogglButton.$user !== null) {
       imagePath = 'images/active-19.png';

@@ -50,17 +50,21 @@ var TogglButton = {
     xhr.send(JSON.stringify(entry));
   },
 
-  newMessage: function (request, sender, sendResponse) {
+  setPageAction: function(tabId) {
     var imagePath = 'images/inactive-19.png';
+    if (TogglButton.$user !== null) {
+      imagePath = 'images/active-19.png';
+    }
+    chrome.pageAction.setIcon({
+      tabId: tabId,
+      path: imagePath
+    });
+    chrome.pageAction.show(tabId);
+  },
+
+  newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
-      if (TogglButton.$user !== null) {
-        imagePath = 'images/active-19.png';
-      }
-      chrome.pageAction.setIcon({
-        path: imagePath,
-        tabId: sender.tab.id
-      });
-      chrome.pageAction.show(sender.tab.id);
+      TogglButton.setPageAction(sender.tab.id);
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request);

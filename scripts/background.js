@@ -4,27 +4,28 @@
 
 var TogglButton = {
   $user: null,
-  $apiUrl: "https://www.toggl.com/api",
+  $apiUrl: "https://www.toggl.com/api/v7",
+  $newApiUrl: "https://new.toggl.com/api/v8",
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
       if (/toggl\.com\/track/.test(tab.url)) {
-        TogglButton.fetchUser("/v7");
+        TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app/.test(tab.url)) {
-        TogglButton.fetchUser("/v8");
+        TogglButton.fetchUser(TogglButton.$newApiUrl);
       }
     }
   },
 
-  fetchUser: function (apiVersion) {
+  fetchUser: function (apiUrl) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", TogglButton.$apiUrl + apiVersion + "/me?with_related_data=true", true);
+    xhr.open("GET", apiUrl + "/me?with_related_data=true", true);
     xhr.onload = function () {
       if (xhr.status === 200) {
         var resp = JSON.parse(xhr.responseText);
         TogglButton.$user = resp.data;
-      } else if (apiVersion === "/v7") {
-        TogglButton.fetchUser("/v8");
+      } else if (apiUrl === TogglButton.$apiUrl) {
+        TogglButton.fetchUser(TogglButton.$newApiUrl);
       }
     };
     xhr.send();
@@ -44,7 +45,7 @@ var TogglButton = {
           duration: -(start.getTime() / 1000)
         }
       };
-    xhr.open("POST", TogglButton.$apiUrl + "/v8/time_entries", true);
+    xhr.open("POST", TogglButton.$newApiUrl + "/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
     xhr.send(JSON.stringify(entry));
   },
@@ -74,6 +75,6 @@ chrome.pageAction.onClicked.addListener(function (tab) {
   }
 });
 
-TogglButton.fetchUser("/v7");
+TogglButton.fetchUser(TogglButton.$apiUrl);
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

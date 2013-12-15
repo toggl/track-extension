@@ -1,6 +1,6 @@
 {
   "name": "Toggl Button",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -25,7 +25,9 @@
     "*://*.teambox.com/*",
     "*://*.trello.com/*",
     "*://*.worksection.com/*",
-    "*://*.basecamp.com/*"
+    "*://*.basecamp.com/*",
+    "*://*.atlassian.net/browse/*",
+    "*://*/browse/*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -45,7 +47,9 @@
         "*://*.teambox.com/*",
         "*://*.trello.com/*",
         "*://*.worksection.com/*",
-        "*://*.basecamp.com/*"
+        "*://*.basecamp.com/*",
+        "*://*.atlassian.net/browse/*",
+        "*://*/browse/*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -93,6 +97,10 @@
     {
       "matches": ["*://*.basecamp.com/*"],
       "js": ["scripts/content/basecamp.js"]
+    },
+    {
+      "matches": ["*://*.atlassian.net/browse/*", "*://*/browse/*"],
+      "js": ["scripts/content/jira.js"]
     }
   ]
 }

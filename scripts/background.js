@@ -18,6 +18,7 @@ var TogglButton = {
     'unfuddle\\.com',
     'worksection\\.com',
     'pivotaltracker\\.com'].join('|')),
+  $curEntryId: null,
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
@@ -61,7 +62,29 @@ var TogglButton = {
       };
     xhr.open("POST", TogglButton.$newApiUrl + "/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
+    // handle response
+    xhr.addEventListener('readystatechange', function(e) {
+      var responseData,
+          entryId;
+      if(this.readyState === 4) {
+        responseData = JSON.parse(xhr.responseText);
+        entryId = responseData && responseData.data && responseData.data.id;
+        TogglButton.$curEntryId = entryId;
+      }
+    });
     xhr.send(JSON.stringify(entry));
+  },
+
+  stopTimeEntry: function(entryId) {
+    entryId = entryId || TogglButton.$curEntryId;
+    if(!entryId) {
+      return;
+    }
+
+    // PUT https://www.toggl.com/api/v8/time_entries/{time_entry_id}/stop
+    xhr.open("PUT", TogglButton.$newApiUrl + "/time_entries/" + entryId + "/stop", true);
+    xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
+    xhr.send();
   },
 
   setPageAction: function (tabId) {
@@ -82,6 +105,8 @@ var TogglButton = {
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request);
+    } else if (request.type === 'stop') {
+      TogglButton.stopTimeEntry();
     }
   }
 

@@ -3,6 +3,7 @@
 "use strict";
 
 (function () {
+  var isStarted = false;
 
   function showNotice(text) {
     var noticeWrap = createTag('div', 'notification-wrap'),
@@ -27,12 +28,27 @@
 
     link = createLink('toggl-button');
     link.addEventListener("click", function (e) {
-      chrome.extension.sendMessage({
-        type: 'timeEntry',
-        pid: $('#toggl-project-id', popup).value,
-        description: $('#event-description', popup).value
-      });
-      showNotice('Toggl timer started');
+      var msg, btnText, notice;
+
+
+      if(isStarted) {
+        msg = {type: 'stop'};
+        btnText = 'Start timer';
+        notice = 'Toggl timer stopped';
+      } else {
+        msg = {
+          type: 'timeEntry',
+          pid: $('#toggl-project-id', popup).value,
+          description: $('#event-description', popup).value
+        };
+        btnText = 'Started...';
+        notice = 'Toggl timer started';
+      }
+      chrome.extension.sendMessage(msg);
+      this.innerHTML = btnText;
+      showNotice(notice);
+      isStarted = !isStarted;
+
       e.preventDefault();
     });
 

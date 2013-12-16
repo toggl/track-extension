@@ -1,23 +1,31 @@
-/*jslint indent: 2 */
+/*jslint indent: 4 */
 /*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
 (function () {
   //"use strict";
+	var isStarted = false;
+
 	function createTimerLink(task, moreClass) {
 		var link = createLink(moreClass, 'span');
 		link.addEventListener("click", function (e) {
-			chrome.extension.sendMessage({
-				type: 'timeEntry',
-				description: task
-			});
-			this.innerHTML = "Started...";
-			this.removeEventListener('click', arguments.callee, false);
-			this.addEventListener("click", function (e) {
-				alert('Already started!');
-			});
+			var msg, btnText;
+
+			if(isStarted) {
+				msg = {type: 'stop'};
+				btnText = 'Start timer';
+			} else {
+				msg = {
+					type: 'timeEntry',
+					description: task
+				};
+				btnText = 'Started...';
+			}
+			chrome.extension.sendMessage(msg);
+			this.innerHTML = btnText;
+			isStarted = !isStarted;
 		});
 		return link;
 	}
-	
+
 	function addLinkToTicket() {
 		if ($('.card-detail-metadata') === null) {
 		}

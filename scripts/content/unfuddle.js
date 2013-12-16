@@ -8,8 +8,8 @@
  * - Detect of the timer for this ticket is already running
  */
 (function () {
-
   "use strict";
+  var isStarted = false;
 
   /**
    * Creates timer link.
@@ -36,13 +36,21 @@
 
     // Bind a click behavior:
     timerElem.addEventListener("click", function (e) {
-      chrome.extension.sendMessage({
-        type:        "timeEntry",
-        description: ticketDesc
-      });
+      var msg, btnText;
 
-      // When started, link to toggl app:
-      timerElem.innerHTML = '<a href="http://toggl.com/" style="color:#333" target="_blank">Timer started...</a>';
+      if(isStarted) {
+        msg = {type: 'stop'};
+        btnText = 'Start timer';
+      } else {
+        msg = {
+          type: 'timeEntry',
+          description: ticketDesc
+        };
+        btnText = 'Started...';
+      }
+      chrome.extension.sendMessage(msg);
+      this.innerHTML = btnText;
+      isStarted = !isStarted;
       return false;
     });
 

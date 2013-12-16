@@ -3,6 +3,7 @@
 "use strict";
 
 (function () {
+  var isStarted = false;
 
   function addButtonTo(elem) {
     var alink, stag, cont = $('.pill', elem);
@@ -13,13 +14,25 @@
     alink.setAttribute("data-behavior", "hover_content");
 
     alink.addEventListener("click", function (e) {
+      var msg, btnText, color = '';
+
       e.preventDefault();
-      chrome.extension.sendMessage({
-        type: 'timeEntry',
-        description: $('.content_for_perma', elem).textContent
-      });
-      alink.style.color = '#1ab351';
-      alink.textContent = 'Started...';
+      if(isStarted) {
+        msg = {type: 'stop'};
+        btnText = 'Start timer';
+      } else {
+        msg = {
+          type: 'timeEntry',
+          description: $('.content_for_perma', elem).textContent
+        };
+        btnText = 'Started...';
+        color = '#1ab351';
+      }
+
+      chrome.extension.sendMessage(msg);
+      isStarted = !isStarted;
+      alink.style.color = color;
+      alink.textContent = btnText;
     });
 
     stag = document.createElement("span");

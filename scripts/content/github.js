@@ -2,14 +2,26 @@
 /*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
 (function () {
   "use strict";
+  var isStarted = false;
+
   function createTimerLink(task, moreClass) {
     var link = createLink('toggl-button github ' + moreClass);
     link.addEventListener("click", function (e) {
-      chrome.extension.sendMessage({
-        type: 'timeEntry',
-        description: task
-      });
-      link.innerHTML = "Started...";
+      var msg, btnText;
+
+      if(isStarted) {
+        msg = {type: 'stop'};
+        btnText = 'Start timer';
+      } else {
+        msg = {
+          type: 'timeEntry',
+          description: task
+        };
+        btnText = 'Started...';
+      }
+      chrome.extension.sendMessage(msg);
+      this.innerHTML = btnText;
+      isStarted = !isStarted;
     });
     return link;
   }

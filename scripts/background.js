@@ -80,6 +80,7 @@ var TogglButton = {
     if(!entryId) {
       return;
     }
+    var xhr = new XMLHttpRequest();
 
     // PUT https://www.toggl.com/api/v8/time_entries/{time_entry_id}/stop
     xhr.open("PUT", TogglButton.$newApiUrl + "/time_entries/" + entryId + "/stop", true);

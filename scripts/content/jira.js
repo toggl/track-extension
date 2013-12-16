@@ -2,9 +2,16 @@
 /*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
 (function () {
   "use strict";
-  function createTimerLink(task, moreClass) {
-    var link = createLink('toggl-button jira ' + moreClass);
+  function createTimerLink(task, moreClass, tag) {
+    var link;
+    if (!tag) {
+      link = createLink('jira ' + moreClass);
+    } else {
+      link = createTag(tag, 'jira ' + moreClass);
+      link.appendChild(document.createTextNode('Start timer'));
+    }
     link.addEventListener("click", function (e) {
+      e.preventDefault();
       chrome.extension.sendMessage({
         type: 'timeEntry',
         description: task
@@ -14,6 +21,35 @@
     return link;
   }
 
+  function observeBoard() {
+    var target = document.querySelector('#ghx-detail-view');
+    var observer = new WebKitMutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if ($('.toggl-button')) {
+          return;
+        }
+
+        var titleElem = $('dd.ghx-fieldname-summary'), numElem, title,wrapSpan, button;
+        if (titleElem === null) {
+          return;
+        }
+
+        numElem = $('.ghx-fieldname-issuekey a');
+        title = titleElem.textContent;
+        if (numElem !== null) {
+          title = numElem.textContent + " " + title;
+        }
+
+        button = createTimerLink(title, 'aui-button ghx-actions aui-button-compact', 'button');
+        wrapSpan = createTag('span', 'toggl-button', button.textContent);
+        button.innerHTML = wrapSpan.outerHTML;
+        $(".ghx-controls").insertBefore(button, $(".ghx-controls").childNodes[0]);
+      });
+    });
+    var config = { attributes: true, childList: true, characterData: true };
+    observer.observe(target, config);
+  }
+
   function addLinkToDiscussion() {
     var titleElem = $('#summary-val'), numElem, title, wrapUl, wrapLi, wrapSpan, a;
     if (titleElem === null) {
@@ -21,16 +57,16 @@
     }
 
     numElem = $('.issue-link');
-    title = titleElem.innerHTML;
+    title = titleElem.textContent;
     if (numElem !== null) {
       title = numElem.getAttribute('data-issue-key') + " " + title;
     }
 
     wrapUl = createTag('ul', 'toggl toolbar-group');
-    wrapLi = createTag('li', 'toolbar-item toggl-button');
+    wrapLi = createTag('li', 'toolbar-item');
     wrapUl.appendChild(wrapLi);
 
-    a = createTimerLink(title, 'button minibutton toolbar-trigger');
+    a = createTimerLink(title, 'button toolbar-trigger');
     wrapSpan = createTag('span', 'toggl-button', a.textContent);
     a.innerHTML = wrapSpan.outerHTML;
     wrapLi.appendChild(a);
@@ -39,7 +75,11 @@
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {
     if (response.success) {
-      addLinkToDiscussion();
+      if ($('#gh')) {
+        observeBoard();
+      } else {
+        addLinkToDiscussion();
+      }
     }
   });
 

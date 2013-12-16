@@ -27,7 +27,9 @@
     "*://*.worksection.com/*",
     "*://*.basecamp.com/*",
     "*://*.atlassian.net/browse/*",
-    "*://*/browse/*"
+    "*://*.atlassian.net/secure/RapidBoard*",
+    "*://*/browse/*",
+    "*://*/*/RapidBoard*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -49,7 +51,9 @@
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/browse/*",
-        "*://*/browse/*"
+        "*://*.atlassian.net/secure/RapidBoard*",
+        "*://*/browse/*",
+        "*://*/*/RapidBoard*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -99,7 +103,10 @@
       "js": ["scripts/content/basecamp.js"]
     },
     {
-      "matches": ["*://*.atlassian.net/browse/*", "*://*/browse/*"],
+      "matches": ["*://*.atlassian.net/browse/*",
+                  "*://*.atlassian.net/secure/RapidBoard*",
+                  "*://*/browse/*",
+                  "*://*/*/RapidBoard*"],
       "js": ["scripts/content/jira.js"]
     }
   ]

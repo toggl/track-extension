@@ -49,5 +49,5 @@ Want to contribute? Great! Just fork the project, make your changes and open a [
 [10]: http://teambox.com/
 [11]: https://podio.com/
 [12]: https://basecamp.com/
-[12]: https://www.atlassian.com/software/jira
+[13]: https://www.atlassian.com/software/jira
 [99]: https://github.com/toggl/toggl-button/pulls

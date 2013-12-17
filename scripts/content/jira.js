@@ -46,7 +46,7 @@
         $(".ghx-controls").insertBefore(button, $(".ghx-controls").childNodes[0]);
       });
     });
-    var config = { attributes: true, childList: true, characterData: true };
+    var config = {childList: true, subtree: true};
     observer.observe(target, config);
   }
 

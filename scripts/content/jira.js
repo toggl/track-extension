@@ -2,8 +2,11 @@
 /*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
 (function () {
   "use strict";
+  var isStarted = false;
+
   function createTimerLink(task, moreClass, tag) {
-    var link;
+    var link, msg, btnText;
+
     if (!tag) {
       link = createLink('jira ' + moreClass);
     } else {
@@ -12,11 +15,21 @@
     }
     link.addEventListener("click", function (e) {
       e.preventDefault();
-      chrome.extension.sendMessage({
-        type: 'timeEntry',
-        description: task
-      });
-      $('span', link).innerHTML = "Started...";
+
+      if(isStarted) {
+        msg = {type: 'stop'};
+        btnText = 'Start timer';
+      } else {
+        msg = {
+          type: 'timeEntry',
+          description: task
+        };
+        btnText = 'Started...';
+      }
+
+      chrome.extension.sendMessage(msg);
+      $('span', link).innerHTML = btnText;
+      isStarted = !isStarted;
     });
     return link;
   }

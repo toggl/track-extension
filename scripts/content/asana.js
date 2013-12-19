@@ -1,18 +1,16 @@
 /*jslint indent: 2 */
-/*global document: false, chrome: false, $: false, createLink: false, createProjectSelect: false*/
+/*global document: false, chrome: false, $: false, createLink: false, MutationObserver: false*/
 
 (function () {
   "use strict";
-  var iframeRegex = /oauth2relay/, userData = null,
-    selectedProjectId = null, selectedProjectBillable = false,
-    isStarted = false;
+  var selectedProjectId = null, selectedProjectBillable = false, isStarted = false;
 
   function createTimerLink(task) {
     var link = createLink('toggl-button asana');
     link.addEventListener("click", function (e) {
       var msg, btnText;
 
-      if(isStarted) {
+      if (isStarted) {
         msg = {type: 'stop'};
         btnText = 'Start timer';
       } else {
@@ -36,39 +34,25 @@
     return link;
   }
 
-  function addButton(e) {
-    if ((e.target.className === "details-pane-redesign" && e.target.id === "right_pane") || iframeRegex.test(e.target.name)) {
-      var taskDescription = $(".property.description"),
-        title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
-        projectSelect = createProjectSelect(userData, "toggl-select asana");
-
-      //make sure we init the values when switching between tasks
-      selectedProjectId = null;
-      selectedProjectBillable = false;
-
-      projectSelect.onchange = function (event) {
-        selectedProjectId = event.target.options[event.target.selectedIndex].value;
-        if (selectedProjectId !== "default") {
-          selectedProjectBillable = userData.projects.filter(function (elem, index, array) {
-            return (elem.id === selectedProjectId);
-          })[0].billable;
-        } else {
-          selectedProjectId = null;
-          selectedProjectBillable = false;
-        }
-      };
-
-      if (!$('.toggl-button', taskDescription.parentNode)) {
-        taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);
-      }
-      //taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
-    }
+  function addButtonTo(elem) {
+    var taskDescription = $(".property.description", elem),
+      link = createTimerLink($('#details_property_sheet_title', elem).value);
+    taskDescription.parentNode.insertBefore(link, taskDescription.nextSibling);
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {
     if (response.success) {
-      userData = response.user;
-      document.addEventListener("DOMNodeInserted", addButton);
+      var observer, elem, i;
+      observer = new MutationObserver(function (mutations) {
+        var elems = document.querySelectorAll(".details-pane-body:not(.toggl)");
+        for (i = 0; i < elems.length; i += 1) {
+          elems[i].classList.add('toggl');
+        }
+        for (i = 0; i < elems.length; i += 1) {
+          addButtonTo(elems[i]);
+        }
+      });
+      observer.observe(document.body, {childList: true, subtree: true});
     }
   });
 

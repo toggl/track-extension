@@ -23,6 +23,10 @@
       this.innerHTML = btnText;
       isStarted = !isStarted;
     });
+
+    // new button created - reset state
+    isStarted = false;
+
     return link;
   }
 

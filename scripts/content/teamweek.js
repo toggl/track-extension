@@ -30,7 +30,6 @@
     link.addEventListener("click", function (e) {
       var msg, btnText, notice;
 
-
       if(isStarted) {
         msg = {type: 'stop'};
         btnText = 'Start timer';
@@ -53,6 +52,9 @@
     });
 
     $('.task_done_buttons', popup).appendChild(link);
+
+    // new button created - reset state
+    isStarted = false;
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {

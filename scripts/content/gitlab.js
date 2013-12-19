@@ -12,6 +12,10 @@
       link.innerHTML = "Started...";
       return false;
     });
+
+    // new button created - reset state
+    isStarted = false;
+
     return link;
   }
 

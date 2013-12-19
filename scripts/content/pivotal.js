@@ -46,6 +46,9 @@
         isStarted = !isStarted;
       });
       cont.appendChild(link);
+
+      // new button created - reset state
+      isStarted = false;
     }
   }
 

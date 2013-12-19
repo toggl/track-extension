@@ -77,8 +77,10 @@
             li.className = 'float-left toggl-button-wrapper';
 
             container.appendChild(li);
-            li.appendChild(link)
+            li.appendChild(link);
 
+            // new button created - reset state
+            isStarted = false;
         }
     }
 

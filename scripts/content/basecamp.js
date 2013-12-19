@@ -37,6 +37,9 @@
 
     stag = document.createElement("span");
     cont.parentNode.appendChild(stag.appendChild(alink));
+
+    // new button created - reset state
+    isStarted = false;
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {

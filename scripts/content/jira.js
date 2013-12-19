@@ -31,6 +31,10 @@
       $('span', link).innerHTML = btnText;
       isStarted = !isStarted;
     });
+
+    // new button created - reset state
+    isStarted = false;
+
     return link;
   }
 
@@ -57,7 +61,6 @@
         wrapSpan = createTag('span', 'toggl-button', button.textContent);
         button.innerHTML = wrapSpan.outerHTML;
         $(".ghx-controls").insertBefore(button, $(".ghx-controls").childNodes[0]);
-        isStarted = false;
       });
     });
     var config = {childList: true, subtree: true};

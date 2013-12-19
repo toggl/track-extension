@@ -37,8 +37,14 @@ var TogglButton = {
     xhr.open("GET", apiUrl + "/me?with_related_data=true", true);
     xhr.onload = function () {
       if (xhr.status === 200) {
-        var resp = JSON.parse(xhr.responseText);
+        var projectMap = {}, resp = JSON.parse(xhr.responseText);
+        if (resp.data.projects) {
+          resp.data.projects.forEach(function (project) {
+            projectMap[project.name] = project.id;
+          });
+        }
         TogglButton.$user = resp.data;
+        TogglButton.$user.projectMap = projectMap;
       } else if (apiUrl === TogglButton.$apiUrl) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
       }
@@ -60,6 +66,9 @@ var TogglButton = {
           duration: -(start.getTime() / 1000)
         }
       };
+    if (timeEntry.projectName !== undefined) {
+      entry.time_entry.pid = TogglButton.$user.projectMap[timeEntry.projectName];
+    }
     xhr.open("POST", TogglButton.$newApiUrl + "/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
     // handle response

@@ -5,10 +5,10 @@
   "use strict";
   var selectedProjectId = null, selectedProjectBillable = false, isStarted = false;
 
-  function createTimerLink(task) {
+  function createTimerLink(description, projectName) {
     var link = createLink('toggl-button asana');
     link.addEventListener("click", function (e) {
-      var msg, btnText;
+      var msg, btnText, color = '';
 
       if (isStarted) {
         msg = {type: 'stop'};
@@ -16,14 +16,17 @@
       } else {
         msg = {
           type: 'timeEntry',
-          description: task,
+          description: description,
+          projectName: projectName,
           projectId: selectedProjectId,
           billable: selectedProjectBillable
         };
-        btnText = 'Started...';
+        color = '#1ab351';
+        btnText = 'Stop timer';
       }
       chrome.extension.sendMessage(msg);
       link.innerHTML = btnText;
+      link.style.color = color;
       isStarted = !isStarted;
       return false;
     });
@@ -36,7 +39,9 @@
 
   function addButtonTo(elem) {
     var taskDescription = $(".property.description", elem),
-      link = createTimerLink($('#details_property_sheet_title', elem).value);
+      description = $('#details_property_sheet_title', elem),
+      project = $('#details_pane_project_tokenizer .token_name', elem),
+      link = createTimerLink(description.value, project && project.textContent);
     taskDescription.parentNode.insertBefore(link, taskDescription.nextSibling);
   }
 

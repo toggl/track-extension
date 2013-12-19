@@ -63,13 +63,11 @@ var TogglButton = {
     xhr.open("POST", TogglButton.$newApiUrl + "/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
     // handle response
-    xhr.addEventListener('readystatechange', function (e) {
+    xhr.addEventListener('load', function (e) {
       var responseData, entryId;
-      if (this.readyState === 4) {
-        responseData = JSON.parse(xhr.responseText);
-        entryId = responseData && responseData.data && responseData.data.id;
-        TogglButton.$curEntryId = entryId;
-      }
+      responseData = JSON.parse(xhr.responseText);
+      entryId = responseData && responseData.data && responseData.data.id;
+      TogglButton.$curEntryId = entryId;
     });
     xhr.send(JSON.stringify(entry));
   },

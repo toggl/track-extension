@@ -31,6 +31,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 1.  Log in to your [Toggl][1] account and keep yourself logged in (no need to keep the tab open).
 2.  Go to your [TeamWeek][2], [Pivotal Tracker][3], [Github][4], [Asana][5], [Unfuddle][6], [Gitlab][7], [Trello][8], [Worksection][9], [Teambox][10], [Podio][11], [Basecamp][12] and [JIRA][13] account and start your Toggl timer there.
 3.  To stop the current running timer:
+  - press the button again
   - start another time entry inside your account.
   - go to Toggl to stop or edit your time entry.
 

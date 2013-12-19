@@ -3,6 +3,7 @@
 "use strict";
 
 (function () {
+  var isStarted = false;
 
   function showNotice(text) {
     var notice = createTag('div', 'message notice alert');
@@ -25,13 +26,29 @@
 
       link = createLink('toggl-button pivotal');
       link.addEventListener("click", function (e) {
-        chrome.extension.sendMessage({
-          type: 'timeEntry',
-          description: $("textarea", elem).value
-        });
-        showNotice('Toggl timer started');
+        var msg, btnText, notice;
+
+        if(isStarted) {
+          msg = {type: 'stop'};
+          btnText = 'Start timer';
+          notice = 'Toggl timer stopped';
+        } else {
+          msg = {
+            type: 'timeEntry',
+            description: $("textarea", elem).value
+          };
+          btnText = 'Started...';
+          notice = 'Toggl timer started';
+        }
+        chrome.extension.sendMessage(msg);
+        this.innerHTML = btnText;
+        showNotice(notice);
+        isStarted = !isStarted;
       });
       cont.appendChild(link);
+
+      // new button created - reset state
+      isStarted = false;
     }
   }
 

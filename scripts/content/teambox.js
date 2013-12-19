@@ -4,20 +4,35 @@
 (function () {
   "use strict";
   var iframeRegex = /oauth2relay/, userData = null,
-      selectedProjectId = null, selectedProjectBillable = false;
+      selectedProjectId = null, selectedProjectBillable = false,
+      isStarted = false;
 
   function createTimerLink(taskName) {
     var link = createLink('toggl-button teambox');
     link.addEventListener("click", function (e) {
-      chrome.extension.sendMessage({
-        type: 'timeEntry',
-        description: taskName,
-        projectId: selectedProjectId,
-        billable: selectedProjectBillable
-      });
-      link.innerHTML = "Started...";
+      var msg, btnText;
+
+      if(isStarted) {
+        msg = {type: 'stop'};
+        btnText = 'Start timer';
+      } else {
+        msg = {
+          type: 'timeEntry',
+          description: taskName,
+          projectId: selectedProjectId,
+          billable: selectedProjectBillable
+        };
+        btnText = 'Started...';
+      }
+      chrome.extension.sendMessage(msg);
+      link.innerHTML = btnText;
+      isStarted = !isStarted;
       return false;
     });
+
+    // new button created - reset state
+    isStarted = false;
+
     return link;
   }
 
@@ -60,7 +75,7 @@
         option = options[i];
         if ((tmp = option.getAttribute('data-client-name')) && tmp.toLowerCase() === projectName) {
           option.selected = true;
-            
+
           // trigger change event
           event = document.createEvent('HTMLEvents');
           event.initEvent('change', false, true);

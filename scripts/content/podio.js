@@ -1,4 +1,4 @@
-/*jslint indent: 2 */
+/*jslint indent: 4 */
 /*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*, createProjectSelect: false*/
 "use strict";
 
@@ -11,6 +11,7 @@
  * @version 1.0
  */
 (function () {
+    var isStarted = false;
 
     function notification(message, type){
         var container, notification;
@@ -49,31 +50,37 @@
 
             link = createLink('toggl-button');
             link.addEventListener("click", function _listener(e) {
-                chrome.extension.sendMessage({
-                    type: 'timeEntry',
-                    description: title
-                });
+                var msg, btnText, notice,
+                    startedCls = 'color-green';
 
-                // Add notification and inform the user that the timer has started
-                notification('Toggl timer started succesfully.', 'notice');
-
-                // Change the timer text to "Started!"
-                link.innerHTML = "Started!";
-
-                // Add green color and remove the hand cursor
-                link.className = 'toggl-button color-green disable';
-
-                // Disable the click event listener  since we already have started the timer
-                link.removeEventListener('click', _listener);
-
+                if(isStarted) {
+                    msg = {type: 'stop'};
+                    btnText = 'Start timer';
+                    notice = 'Toggl timer stopped.';
+                    link.classList.remove(startedCls);
+                } else {
+                    msg = {
+                        type: 'timeEntry',
+                        description: title
+                    };
+                    btnText = 'Started...';
+                    notice = 'Toggl timer started succesfully.';
+                    link.classList.add(startedCls);
+                }
+                chrome.extension.sendMessage(msg);
+                notification(notice, 'notice');
+                link.innerHTML = btnText;
+                isStarted = !isStarted;
             });
 
             var li = document.createElement('li');
             li.className = 'float-left toggl-button-wrapper';
 
             container.appendChild(li);
-            li.appendChild(link)
+            li.appendChild(link);
 
+            // new button created - reset state
+            isStarted = false;
         }
     }
 

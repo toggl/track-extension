@@ -1,22 +1,36 @@
-/*jslint indent: 2 */
+/*jslint indent: 4 */
 /*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
 (function () {
 	"use strict";
+	var isStarted = false;
+
 	function createTimerLink(task, moreClass) {
 		var link = createLink(moreClass);
 		link.addEventListener("click", function (e) {
-			chrome.extension.sendMessage({
-				type: 'timeEntry',
-				description: task
-			});
-			var span = createTag('span', 'norm', 'Started...');
-			span.title = 'Already started!';
-			this.parentNode.replaceChild(span, this);
+			var msg, btnText;
+
+			if(isStarted) {
+				msg = {type: 'stop'};
+				btnText = 'Start timer';
+			} else {
+				msg = {
+					type: 'timeEntry',
+					description: task
+				};
+				btnText = 'Started...';
+			}
+			chrome.extension.sendMessage(msg);
+			this.innerHTML = btnText;
+			isStarted = !isStarted;
 			return false;
 		});
+
+		// new button created - reset state
+    	isStarted = false;
+
 		return link;
 	}
-	
+
 	function addLinkToTask() {
 		if ($('#tasks > .task > #tmenu2') === null) {
 			return;

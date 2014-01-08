@@ -37,7 +37,7 @@
             type: 'timeEntry',
             description: $("textarea", elem).value
           };
-          btnText = 'Started...';
+          btnText = 'Stop timer';
           notice = 'Toggl timer started';
         }
         chrome.extension.sendMessage(msg);

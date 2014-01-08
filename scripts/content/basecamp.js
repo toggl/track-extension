@@ -14,25 +14,28 @@
     alink.setAttribute("data-behavior", "hover_content");
 
     alink.addEventListener("click", function (e) {
-      var msg, btnText, color = '';
+      var msg, btnText, behavior, color = '';
 
       e.preventDefault();
       if (isStarted) {
         msg = {type: 'stop'};
         btnText = 'Start timer';
+        behavior = 'hover_content';
       } else {
         msg = {
           type: 'timeEntry',
           description: $('.content_for_perma', elem).textContent
         };
-        btnText = 'Started...';
+        btnText = 'Stop timer';
         color = '#1ab351';
+        behavior = '';
       }
 
       chrome.extension.sendMessage(msg);
       isStarted = !isStarted;
       alink.style.color = color;
       alink.textContent = btnText;
+      alink.setAttribute("data-behavior", behavior);
     });
 
     stag = document.createElement("span");

@@ -9,7 +9,7 @@
     link.addEventListener("click", function (e) {
       var msg, btnText;
 
-      if(isStarted) {
+      if (isStarted) {
         msg = {type: 'stop'};
         btnText = 'Start timer';
       } else {

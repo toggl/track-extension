@@ -28,7 +28,7 @@
       link.addEventListener("click", function (e) {
         var msg, btnText, notice;
 
-        if(isStarted) {
+        if (isStarted) {
           msg = {type: 'stop'};
           btnText = 'Start timer';
           notice = 'Toggl timer stopped';

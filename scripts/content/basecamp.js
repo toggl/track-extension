@@ -17,7 +17,7 @@
       var msg, btnText, color = '';
 
       e.preventDefault();
-      if(isStarted) {
+      if (isStarted) {
         msg = {type: 'stop'};
         btnText = 'Start timer';
       } else {

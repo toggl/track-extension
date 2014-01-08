@@ -64,14 +64,14 @@
     width: 100px !important;
 }
 
-.toggl-button-wrapper .color-green{
+.toggl-button-wrapper-task{
+    display: block;
+}
+
+.toggl-button-wrapper .color-green,
+.toggl-button-wrapper-task .color-green{
     color: #43d541;
 }
-
-.toggl-button-wrapper .disable{
-    cursor: default !important;
-}
-
 /* End asana specific styles */
 
 /* Start gitlab specific styles. */

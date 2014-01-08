@@ -26,8 +26,8 @@
     "*://*.trello.com/*",
     "*://*.worksection.com/*",
     "*://*.basecamp.com/*",
-    "*://*/browse/*",
-    "*://*/*/RapidBoard*"
+    "*://*.atlassian.net/browse/*",
+    "*://*.atlassian.net/secure/RapidBoard*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -48,8 +48,8 @@
         "*://*.trello.com/*",
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
-        "*://*/browse/*",
-        "*://*/*/RapidBoard*"
+        "*://*.atlassian.net/browse/*",
+        "*://*.atlassian.net/secure/RapidBoard*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -99,8 +99,7 @@
       "js": ["scripts/content/basecamp.js"]
     },
     {
-      "matches": ["*://*/browse/*",
-                  "*://*/*/RapidBoard*"],
+      "matches": ["*://*.atlassian.net/browse/*", "*://*.atlassian.net/secure/RapidBoard*"],
       "js": ["scripts/content/jira.js"]
     }
   ]

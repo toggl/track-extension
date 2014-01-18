@@ -61,9 +61,14 @@
 
 	  alink.addEventListener("click", function (e) {
 	    var msg, btnText, color = '';
-	    console.log('cliced');
-	    window.te = e;
+
 	    e.preventDefault();
+
+	    var i, elems = document.querySelectorAll(".trello-checklist");
+	    for (i = 0; i < elems.length; i += 1) {
+	      !(e.target == elems[i]) && elems[i].classList.remove('active');
+	    }
+
 	    if(isStarted) {
 	      msg = {type: 'stop'};
 	      btnText = '';
@@ -102,12 +107,9 @@
 			  var i, elems = document.querySelectorAll(".checklist-item:not(.toggl)");
 			  for (i = 0; i < elems.length; i += 1) {
 			    elems[i].classList.add('toggl');
-			  }
-
-			  for (i = 0; i < elems.length; i += 1) {
 			    addButtonTo(elems[i]);
 			  }
-			});
+  			});
 
 			card = document.querySelector('.window-wrapper');
 			observer.observe(card, {childList: true, subtree: true});

@@ -49,9 +49,70 @@
 		}, 500);
 	}
 
+
+	function addButtonTo(elem) {
+	  var alink, stag, cont = $('.checklist-item-details', elem);
+	  if (cont === null) {
+	    return;
+	  }
+	  alink = createLink('toggl-button trello-checklist');
+	  alink.innerHTML = "";
+	  alink.setAttribute("data-behavior", "hover_content");
+
+	  alink.addEventListener("click", function (e) {
+	    var msg, btnText, color = '';
+	    console.log('cliced');
+	    window.te = e;
+	    e.preventDefault();
+	    if(isStarted) {
+	      msg = {type: 'stop'};
+	      btnText = '';
+	      alink.classList.remove('active');
+	    } else {
+	      msg = {
+	        type: 'timeEntry',
+	        description: $('.window-title-text').textContent + " - " + $('.checklist-item-details-text', elem).textContent
+	      };
+	      btnText = '';
+	      color = '#5c5c5c';
+	      alink.classList.add('active');
+	    }
+
+	    chrome.extension.sendMessage(msg);
+	    isStarted = !isStarted;
+	    alink.style.color = color;
+	    alink.textContent = btnText;
+	  });
+
+	  stag = document.createElement("span");
+	  cont.parentNode.appendChild(stag.appendChild(alink));
+
+	  // new button created - reset state
+	  isStarted = false;
+	}
+
 	chrome.extension.sendMessage({type: 'activate'}, function (response) {
 		if (response.success) {
-			addLinkToTicket();
+			
+			addLinkToTicket(); 
+			
+			var observer, card;
+
+			observer = new MutationObserver(function (mutations) {
+			  var i, elems = document.querySelectorAll(".checklist-item:not(.toggl)");
+			  for (i = 0; i < elems.length; i += 1) {
+			    elems[i].classList.add('toggl');
+			  }
+
+			  for (i = 0; i < elems.length; i += 1) {
+			    addButtonTo(elems[i]);
+			  }
+			});
+
+			card = document.querySelector('.window-wrapper');
+			observer.observe(card, {childList: true, subtree: true});
+			// Trigger the mutation observer for initial setup
+			setTimeout(card.appendChild(document.createElement('a')), 500);
 		}
 	});
 

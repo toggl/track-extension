@@ -4,6 +4,7 @@
 
 (function () {
   var isStarted = false;
+  
   function addButtonTo(elem) {
     var alink, stag, cont = $('.pill', elem);
     if (cont === null) {

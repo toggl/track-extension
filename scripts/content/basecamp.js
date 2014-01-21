@@ -4,7 +4,6 @@
 
 (function () {
   var isStarted = false;
-
   function addButtonTo(elem) {
     var alink, stag, cont = $('.pill', elem);
     if (cont === null) {
@@ -14,8 +13,12 @@
     alink.setAttribute("data-behavior", "hover_content");
 
     alink.addEventListener("click", function (e) {
-      var msg, btnText, behavior, color = '';
-
+      var msg, 
+        btnText, 
+        behavior, 
+        color = '',
+        projectName = ($(".project > title") || $(".project > header > h1 > a")).innerHTML;
+      
       e.preventDefault();
       if (isStarted) {
         msg = {type: 'stop'};
@@ -24,6 +27,7 @@
       } else {
         msg = {
           type: 'timeEntry',
+          projectName: projectName,
           description: $('.content_for_perma', elem).textContent
         };
         btnText = 'Stop timer';

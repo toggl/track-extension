@@ -8,7 +8,7 @@
       isStarted = false;
 
   function createTimerLink(taskName) {
-    var link = createLink('toggl-button teambox');
+    var link = createLink('toggl-button redbooth');
     link.addEventListener("click", function (e) {
       var msg, btnText;
 
@@ -94,7 +94,7 @@
           title = nameHolder.innerHTML,
           projectName = findProjectName(task);
 
-      var projectSelect = createProjectSelect(userData, "toggl-select teambox");
+      var projectSelect = createProjectSelect(userData, "toggl-select redbooth");
 
       //make sure we init the values when switching between tasks
       selectedProjectId = null;

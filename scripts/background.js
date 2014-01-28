@@ -12,7 +12,7 @@ var TogglButton = {
     'trello\\.com',
     'github\\.com',
     'gitlab\\.com',
-    'teambox\\.com',
+    'redbooth\\.com',
     'teamweek\\.com',
     'basecamp\\.com',
     'unfuddle\\.com',

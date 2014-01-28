@@ -22,7 +22,7 @@
     "*://app.asana.com/*",
     "*://*.unfuddle.com/*",
     "*://*.podio.com/*",
-    "*://*.teambox.com/*",
+    "*://*.redbooth.com/*",
     "*://*.trello.com/*",
     "*://*.worksection.com/*",
     "*://*.basecamp.com/*",
@@ -44,7 +44,7 @@
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
         "*://*.podio.com/*",
-        "*://*.teambox.com/*",
+        "*://*.redbooth.com/*",
         "*://*.trello.com/*",
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
@@ -83,8 +83,8 @@
       "js": ["scripts/content/podio.js"]
     },
     {
-      "matches": ["*://*.teambox.com/*"],
-      "js": ["scripts/content/teambox.js"]
+      "matches": ["*://*.redbooth.com/*"],
+      "js": ["scripts/content/redbooth.js"]
     },
     {
       "matches": ["*://*.trello.com/*"],

@@ -27,7 +27,9 @@
     "*://*.worksection.com/*",
     "*://*.basecamp.com/*",
     "*://*.atlassian.net/browse/*",
-    "*://*.atlassian.net/secure/RapidBoard*"
+    "*://*.atlassian.net/secure/RapidBoard*",
+    "*://backlog.acquia.com/browse/*",
+    "*://backlog.acquia.com/secure/RapidBoard*"
   ],
   "icons" : {
     "16"  : "images/icon-16.png",
@@ -49,7 +51,9 @@
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/browse/*",
-        "*://*.atlassian.net/secure/RapidBoard*"
+        "*://*.atlassian.net/secure/RapidBoard*",
+        "*://backlog.acquia.com/browse/*",
+        "*://backlog.acquia.com/secure/RapidBoard*"
       ],
       "css": ["styles/style.css"],
       "js":  ["scripts/common.js"]
@@ -99,7 +103,7 @@
       "js": ["scripts/content/basecamp.js"]
     },
     {
-      "matches": ["*://*.atlassian.net/browse/*", "*://*.atlassian.net/secure/RapidBoard*"],
+      "matches": ["*://*.atlassian.net/browse/*", "*://*.atlassian.net/secure/RapidBoard*", "*://backlog.acquia.com/browse/*", "*://backlog.acquia.com/secure/RapidBoard*"],
       "js": ["scripts/content/jira.js"]
     }
   ]

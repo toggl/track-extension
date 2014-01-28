@@ -17,7 +17,7 @@
 					type: 'timeEntry',
 					description: task
 				};
-				btnText = 'Started...';
+				btnText = 'Stop timer';
 			}
 			chrome.extension.sendMessage(msg);
 			this.innerHTML = btnText;

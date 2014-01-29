@@ -4,11 +4,10 @@
   "use strict";
   var isStarted = false;
 
-  function createTimerLink(task, moreClass) {
-    var link = createLink('toggl-button github ' + moreClass);
+  function createTimerLink(task) {
+    var link = createLink('toggl-button github');
     link.addEventListener("click", function (e) {
-      var msg, btnText;
-
+      var msg, btnText, color = '';
       if (isStarted) {
         msg = {type: 'stop'};
         btnText = 'Start timer';
@@ -17,34 +16,32 @@
           type: 'timeEntry',
           description: task
         };
-        btnText = 'Started...';
+        color = '#6cc644';
+        btnText = 'Stop timer';
       }
       chrome.extension.sendMessage(msg);
       this.innerHTML = btnText;
+      link.style.color = color;
       isStarted = !isStarted;
+      return false;
     });
 
     // new button created - reset state
     isStarted = false;
-
     return link;
   }
 
   function addLinkToDiscussion() {
-    var titleElem = $('.discussion-topic-title'), numElem, title, wrap;
+    var titleElem = $('.js-issue-title'), numElem, title;
     if (titleElem === null) {
       return;
     }
-
-    numElem = $('.pull-head .pull-number > a, .issue-head .number > strong');
-    title = titleElem.innerHTML;
+    numElem = $('.issue-number');
+    title = titleElem.innerText;
     if (numElem !== null) {
-      title = numElem.innerHTML + " " + title;
+      title = numElem.innerText + " " + title;
     }
-
-    wrap = createTag('div', 'toggl infobar-widget');
-    wrap.appendChild(createTimerLink(title, 'button minibutton'));
-    $(".discusion-topic-infobar").appendChild(wrap);
+    $('.gh-header-meta').appendChild(createTimerLink(title));
   }
 
   chrome.extension.sendMessage({type: 'activate'}, function (response) {

@@ -77,6 +77,7 @@ var togglbutton = {
         linkText = 'Stop timer';
         opts = {
           type: 'timeEntry',
+          projectId: params.projectId,
           description: params.description,
           projectName: params.projectName
         };

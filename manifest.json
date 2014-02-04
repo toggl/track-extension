@@ -59,6 +59,10 @@
       "js": ["scripts/content/teamweek.js"]
     },
     {
+      "matches": ["*://new.teamweek.com/*"],
+      "js": ["scripts/content/teamweek_new.js"]
+    },
+    {
       "matches": ["*://*.pivotaltracker.com/*"],
       "js": ["scripts/content/pivotal.js"]
     },

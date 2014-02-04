@@ -44,7 +44,7 @@ var togglbutton = {
           var observer = new MutationObserver(function (mutations) {
             togglbutton.addaasd(selector, renderer);
           });
-          observer.observe(document.body, {childList: true, subtree: true});
+          observer.observe(document, {childList: true, subtree: true});
         } else {
           togglbutton.addaasd(selector, renderer);
         }

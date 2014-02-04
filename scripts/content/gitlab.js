@@ -1,52 +1,22 @@
 /*jslint indent: 2 */
-/*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
-(function () {
-  "use strict";
-  function createTimerLink(task, moreClass) {
-    var link = createLink('toggl-button gitlab ' + moreClass, 'span');
-    link.addEventListener("click", function (e) {
-      chrome.extension.sendMessage({
-        type: 'timeEntry',
-        description: task
-      });
-      link.innerHTML = "Started...";
-      return false;
-    });
+/*global $: false, document: false, togglbutton: false*/
 
-    // new button created - reset state
-    isStarted = false;
+'use strict';
 
-    return link;
-  }
+togglbutton.render('.content .page-title:not(.toggl)', {observe: true}, function (elem) {
+  var link,  description,
+    numElem = $('.page-title'),
+    titleElem = $(".issue-box .title"),
+    projectElem = $('.project_name').firstChild;
 
-  function addLinkToDiscussion() {
-    var titleElem = $('body.project .ui-box .ui-box-head .box-title'), numElem, title, buttonGroup, wrap;
-    if (titleElem === null) {
-      return;
-    }
+  description = titleElem.textContent;
+  description = numElem.firstChild.textContent + " " + description;
 
-    // If button already shown, do nothing
-    if( $('.toggl-button.gitlab') !== null ){
-      return;
-    }
-
-    numElem = $('body.project .page-title');
-    title = titleElem.innerHTML;
-    if (numElem !== null) {
-      title = numElem.firstChild.textContent + " " + title;
-    }
-
-    buttonGroup = $("body.project .page-title .pull-right");
-    buttonGroup.insertBefore(createTimerLink(title, 'btn grouped'), buttonGroup.firstChild);
-  }
-
-  chrome.extension.sendMessage({type: 'activate'}, function (response) {
-    // Add event listener to update button when RoR's Turbolink updates the DOM
-    document.addEventListener("page:change", function(e) { addLinkToDiscussion(); } );
-
-    if (response.success) {
-      addLinkToDiscussion();
-    }
+  link = togglbutton.createTimerLink({
+    className: 'gitlab',
+    description: description,
+    projectName: projectElem.textContent.split(' / ').pop()
   });
 
-}());
+  $('.content .page-title').appendChild(link);
+});

@@ -4,8 +4,9 @@
 'use strict';
 
 togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (elem) {
-  var link, 
+  var link,
     titleElem = $('input.title', elem),
+    projectNameElem = $('select[name=project_id] option:checked', elem),
     container = $('footer.actions .cancel', elem);
 
   if (titleElem === null || container === null) {
@@ -14,7 +15,8 @@ togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function
 
   link = togglbutton.createTimerLink({
     className: 'teamweek-new',
-    description: titleElem.value
+    description: titleElem.value,
+    projectName: projectNameElem.value ? projectNameElem.text : null
   });
 
   container.parentNode.appendChild(link);

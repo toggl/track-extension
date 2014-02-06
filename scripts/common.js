@@ -77,9 +77,9 @@ var togglbutton = {
         linkText = 'Stop timer';
         opts = {
           type: 'timeEntry',
-          projectId: params.projectId,
-          description: params.description,
-          projectName: params.projectName
+          projectId: invokeIfFunction(params.projectId),
+          description: invokeIfFunction(params.description),
+          projectName: invokeIfFunction(params.projectName)
         };
       }
       chrome.extension.sendMessage(opts);
@@ -94,6 +94,14 @@ var togglbutton = {
     return link;
   }
 };
+
+function invokeIfFunction(trial) {
+  if (trial instanceof Function) {
+    return trial();
+  } else {
+    return trial;
+  }
+}
 
 
 function createOption(id, cid, clientName, projectName) {

@@ -6,7 +6,7 @@
 togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (elem) {
   var link,
     titleElem = $('input.title', elem),
-    projectNameElem = $('select[name=project_id] option:checked', elem),
+    projectNameElem = $('select[name=project_id]', elem),
     container = $('footer.actions .cancel', elem);
 
   if (titleElem === null || container === null) {
@@ -15,8 +15,13 @@ togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function
 
   link = togglbutton.createTimerLink({
     className: 'teamweek-new',
-    description: titleElem.value,
-    projectName: projectNameElem.value ? projectNameElem.text : null
+    description: function () {
+      return titleElem.value;
+    },
+    projectName: function () {
+      var projectSelectedElem = $('option:checked', projectNameElem);
+      return projectSelectedElem.value ? projectSelectedElem.text : null;
+    }
   });
 
   container.parentNode.appendChild(link);

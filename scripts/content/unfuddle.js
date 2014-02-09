@@ -1,23 +1,28 @@
-/* jslint indent: 2 */
-/* global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false */
+/*jslint indent: 2 */
+/*global $: false, document: false, togglbutton: false*/
 
-/**
- * Unfuddle integration for Toggl Button Chrome extension.
- *
- * @todo
- * - Detect of the timer for this ticket is already running
- */
+'use strict';
+
+togglbutton.render('.ticket-fields-panel:not(.toggl)', {observe: true}, function (elem) {
+  var link, description,
+    titleElem = $("h1.summary .number", elem),
+    numElem   = $("h1.summary .text-field-text", elem);
+
+  description = titleElem.innerText + ": " + numElem.innerText;
+
+  link = togglbutton.createTimerLink({
+    className: 'unfuddle',
+    description: description,
+  });
+
+  $(".primary-properties", elem).appendChild(link);
+});
+
+/*
 (function () {
   "use strict";
   var isStarted = false;
 
-  /**
-   * Creates timer link.
-   *
-   * @param  {string} ticketDesc Ticket description.
-   *
-   * @return {string}
-   */
   function createTimerElem(ticketDesc) {
     var wrapperElem = createTag("span", "toggl"),
         timerElem   = createLink("toggl-button unfuddle", "span");
@@ -62,11 +67,6 @@
 
   // ------------------------------------------------------------------------
 
-  /**
-   * Adds timer link to a discussion.
-   *
-   * @return {void}
-   */
   function addLinkToTicket() {
     // Wait for the page to get completely loaded:
     if ($(".ticket-header") === null) {
@@ -108,3 +108,5 @@
   });
 
 }());
+
+*/

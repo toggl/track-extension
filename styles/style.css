@@ -66,6 +66,16 @@
   padding-left: 21px;
 }
 
+
+/********* UNFUDDLE *********/
+
+.toggl-button.unfuddle {
+  margin-left: 4px;
+  line-height: 18px;
+  padding-left: 18px;
+  background-size: 16px;
+}
+
 /********* TRELLO *********/
 
 .trello{

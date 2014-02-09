@@ -35,6 +35,13 @@ function createLink(className, tagName, linkHref) {
   return link;
 }
 
+function invokeIfFunction(trial) {
+  if (trial instanceof Function) {
+    return trial();
+  }
+  return trial;
+}
+
 var togglbutton = {
   isStarted: false,
   render: function (selector, opts, renderer) {
@@ -94,14 +101,6 @@ var togglbutton = {
     return link;
   }
 };
-
-function invokeIfFunction(trial) {
-  if (trial instanceof Function) {
-    return trial();
-  } else {
-    return trial;
-  }
-}
 
 
 function createOption(id, cid, clientName, projectName) {

@@ -3,11 +3,12 @@
  */
 "use strict";
 
-    togglbutton.render('.task:not(.toggl)', {observe: true}, function (elem) {
+    togglbutton.render('.row-fluid:not(.toggl)', {observe: true}, function (elem) {
+    debugger;
     var link,
-        titleElem = $('.title > span', elem),
-        projectElem = $('.project-value', elem),
-        container = $('.task-body > div > div.title', elem);
+        titleElem = $('.span6 > .task.active', elem),
+        projectElem = $('.span6 > .task.active', elem),
+        container = $('.span7 > #task-details-container', elem);
 
     if (titleElem === null || container === null) {
         return;

@@ -17,7 +17,8 @@ var TogglButton = {
     'basecamp\\.com',
     'unfuddle\\.com',
     'worksection\\.com',
-    'pivotaltracker\\.com'].join('|')),
+    'pivotaltracker\\.com',
+    'producteev\\.com'].join('|')),
   $curEntryId: null,
 
   checkUrl: function (tabId, changeInfo, tab) {

@@ -1,20 +1,43 @@
 {
-    "name": "Toggl Button",
-    "version": "0.2.10",
-    "manifest_version": 2,
-    "description": "Add Official Toggl Online Timer to Popular Web Tools",
-    "background": {
-        "scripts": [
-            "scripts/background.js"
-        ]
-    },
-    "page_action": {
-        "default_icon": "images/inactive-19.png",
-        "default_title": "Toggl Time Tracker"
-    },
-    "permissions": [
-        "tabs",
-        "*://*.toggl.com/*",
+  "name": "Toggl Button",
+  "version": "0.2.10",
+  "manifest_version": 2,
+  "description": "Add Official Toggl Online Timer to Popular Web Tools",
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "page_action": {
+    "default_icon": "images/inactive-19.png",
+    "default_title": "Toggl Time Tracker"
+  },
+  "permissions": [
+    "tabs",
+    "*://*.toggl.com/*",
+    "*://*.teamweek.com/*",
+    "*://*.pivotaltracker.com/*",
+    "*://*.github.com/*",
+    "*://*.gitlab.com/*",
+    "*://app.asana.com/*",
+    "*://*.unfuddle.com/*",
+    "*://*.podio.com/*",
+    "*://*.redbooth.com/*",
+    "*://*.trello.com/*",
+    "*://*.worksection.com/*",
+    "*://*.basecamp.com/*",
+    "*://*.atlassian.net/browse/*",
+    "*://*.atlassian.net/secure/RapidBoard*",
+    "*://*.producteev.com/*"
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
         "*://*.teamweek.com/*",
         "*://*.pivotaltracker.com/*",
         "*://*.github.com/*",
@@ -29,88 +52,65 @@
         "*://*.atlassian.net/browse/*",
         "*://*.atlassian.net/secure/RapidBoard*",
         "*://*.producteev.com/*"
-    ],
-    "icons": {
-        "16": "images/icon-16.png",
-        "48": "images/icon-48.png",
-        "128": "images/icon-128.png"
+      ],
+      "css": ["styles/style.css"],
+      "js": ["scripts/common.js"]
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "*://*.teamweek.com/*",
-                "*://*.pivotaltracker.com/*",
-                "*://*.github.com/*",
-                "*://*.gitlab.com/*",
-                "*://app.asana.com/*",
-                "*://*.unfuddle.com/*",
-                "*://*.podio.com/*",
-                "*://*.redbooth.com/*",
-                "*://*.trello.com/*",
-                "*://*.worksection.com/*",
-                "*://*.basecamp.com/*",
-                "*://*.atlassian.net/browse/*",
-                "*://*.atlassian.net/secure/RapidBoard*",
-                "*://*.producteev.com/*"
-            ],
-            "css": ["styles/style.css"],
-            "js": ["scripts/common.js"]
-        },
-        {
-            "matches": ["*://*.teamweek.com/*"],
-            "js": ["scripts/content/teamweek.js"]
-        },
-        {
-            "matches": ["*://new.teamweek.com/*"],
-            "js": ["scripts/content/teamweek_new.js"]
-        },
-        {
-            "matches": ["*://*.pivotaltracker.com/*"],
-            "js": ["scripts/content/pivotal.js"]
-        },
-        {
-            "matches": ["*://*.producteev.com/*"],
-            "js": ["scripts/content/producteev.js"]
-        },
-        {
-            "matches": ["*://*.github.com/*"],
-            "js": ["scripts/content/github.js"]
-        },
-        {
-            "matches": ["*://*.gitlab.com/*"],
-            "js": ["scripts/content/gitlab.js"]
-        },
-        {
-            "matches": ["*://app.asana.com/*"],
-            "js": ["scripts/content/asana.js"]
-        },
-        {
-            "matches": ["*://*.unfuddle.com/*"],
-            "js": ["scripts/content/unfuddle.js"]
-        },
-        {
-            "matches": ["*://*.podio.com/*"],
-            "js": ["scripts/content/podio.js"]
-        },
-        {
-            "matches": ["*://*.redbooth.com/*"],
-            "js": ["scripts/content/redbooth.js"]
-        },
-        {
-            "matches": ["*://*.trello.com/*"],
-            "js": ["scripts/content/trello.js"]
-        },
-        {
-            "matches": ["*://*.worksection.com/*"],
-            "js": ["scripts/content/worksection.js"]
-        },
-        {
-            "matches": ["*://*.basecamp.com/*"],
-            "js": ["scripts/content/basecamp.js"]
-        },
-        {
-            "matches": ["*://*.atlassian.net/browse/*", "*://*.atlassian.net/secure/RapidBoard*"],
-            "js": ["scripts/content/jira.js"]
-        }
-    ]
+    {
+      "matches": ["*://*.teamweek.com/*"],
+      "js": ["scripts/content/teamweek.js"]
+    },
+    {
+      "matches": ["*://new.teamweek.com/*"],
+      "js": ["scripts/content/teamweek_new.js"]
+    },
+    {
+      "matches": ["*://*.pivotaltracker.com/*"],
+      "js": ["scripts/content/pivotal.js"]
+    },
+    {
+      "matches": ["*://*.producteev.com/*"],
+      "js": ["scripts/content/producteev.js"]
+    },
+    {
+      "matches": ["*://*.github.com/*"],
+      "js": ["scripts/content/github.js"]
+    },
+    {
+      "matches": ["*://*.gitlab.com/*"],
+      "js": ["scripts/content/gitlab.js"]
+    },
+    {
+      "matches": ["*://app.asana.com/*"],
+      "js": ["scripts/content/asana.js"]
+    },
+    {
+      "matches": ["*://*.unfuddle.com/*"],
+      "js": ["scripts/content/unfuddle.js"]
+    },
+    {
+      "matches": ["*://*.podio.com/*"],
+      "js": ["scripts/content/podio.js"]
+    },
+    {
+      "matches": ["*://*.redbooth.com/*"],
+      "js": ["scripts/content/redbooth.js"]
+    },
+    {
+      "matches": ["*://*.trello.com/*"],
+      "js": ["scripts/content/trello.js"]
+    },
+    {
+      "matches": ["*://*.worksection.com/*"],
+      "js": ["scripts/content/worksection.js"]
+    },
+    {
+      "matches": ["*://*.basecamp.com/*"],
+      "js": ["scripts/content/basecamp.js"]
+    },
+    {
+      "matches": ["*://*.atlassian.net/browse/*", "*://*.atlassian.net/secure/RapidBoard*"],
+      "js": ["scripts/content/jira.js"]
+    }
+  ]
 }

@@ -6,12 +6,11 @@
 
 togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem) {
   var link, newDiv,
-    taskActive = document.querySelector('.task.active'),
+    taskActive = $('.task.active'),
     titleElem = $('.title > span', taskActive),
-    projectElem = $('.project-value', taskActive),
-    container = elem;//$('.td-attributes', elem);
+    projectElem = $('.project-value', taskActive);
 
-  if (titleElem === null || container === null) {
+  if (titleElem === null) {
     return;
   }
 
@@ -24,5 +23,5 @@ togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem
   newDiv = document.createElement('div');
   newDiv.innerHTML = '&nbsp;&nbsp;&nbsp;';
   newDiv.appendChild(link);
-  container.insertBefore(newDiv, container.firstChild);
+  elem.insertBefore(newDiv, elem.firstChild);
 });

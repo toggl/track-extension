@@ -21,7 +21,5 @@ togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem
   });
 
   newDiv = document.createElement('div');
-  newDiv.innerHTML = '&nbsp;&nbsp;&nbsp;';
-  newDiv.appendChild(link);
-  elem.insertBefore(newDiv, elem.firstChild);
+  elem.insertBefore(newDiv.appendChild(link), elem.firstChild);
 });

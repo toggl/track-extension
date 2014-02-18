@@ -124,3 +124,9 @@
   right: 95px;
   bottom: 14px;
 }
+
+/********* PRODUCTEEV *********/
+.toggl-button.producteev {
+  margin-left: 12px;
+  margin-bottom: 2px;
+}

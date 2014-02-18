@@ -11,7 +11,6 @@ togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem
     projectElem = $('.project-value', taskActive),
     container = elem;//$('.td-attributes', elem);
 
-  debugger;
   if (titleElem === null || container === null) {
     return;
   }

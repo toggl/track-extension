@@ -3,13 +3,14 @@
  */
 "use strict";
 
-    togglbutton.render('.row-fluid:not(.toggl)', {observe: true}, function (elem) {
-    debugger;
+togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem) {
     var link,
-        titleElem = $('.span6 > .task.active', elem),
-        projectElem = $('.span6 > .task.active', elem),
-        container = $('.span7 > #task-details-container', elem);
+        taskActive = document.querySelector('.task.active'),
+        titleElem = $('.title > span', taskActive),
+        projectElem = $('.project-value', taskActive),
+        container = elem;//$('.td-attributes', elem);
 
+    debugger;
     if (titleElem === null || container === null) {
         return;
     }
@@ -19,5 +20,8 @@
         projectName: projectElem.title
     });
 
-    container.appendChild(link);
+    var newDiv = document.createElement('div');
+    newDiv.innerHTML = '&nbsp;&nbsp;&nbsp;';
+    newDiv.appendChild(link);
+    container.insertBefore(newDiv, container.firstChild);
 });

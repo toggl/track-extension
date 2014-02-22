@@ -9,6 +9,13 @@
   margin-top: 10px;
 }
 
+/* Start bitbucket specific styles */
+.toggl-button.bitbucket {
+	border-color: #ccc;
+	margin-left:15px;
+}
+/* End bitbucket specific styls */
+
 /* Start github specific styles. */
 .toggl-button.github {
   padding-left: 21px;

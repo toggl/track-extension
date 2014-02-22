@@ -78,7 +78,7 @@
       "matches": ["*://*.bitbucket.org/*"],
       "js": ["scripts/content/bitbucket.js"]
     },
-	{
+	  {
       "matches": ["*://*.github.com/*"],
       "js": ["scripts/content/github.js"]
     },

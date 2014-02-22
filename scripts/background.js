@@ -11,6 +11,7 @@ var TogglButton = {
     'podio\\.com',
     'trello\\.com',
     'github\\.com',
+    'bitbucket\\.org',
     'gitlab\\.com',
     'redbooth\\.com',
     'teamweek\\.com',

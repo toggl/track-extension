@@ -28,7 +28,8 @@
     "*://*.basecamp.com/*",
     "*://*.atlassian.net/browse/*",
     "*://*.atlassian.net/secure/RapidBoard*",
-    "*://*.producteev.com/*"
+    "*://*.producteev.com/*",
+    "*://*.bitbucket.org/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -42,6 +43,7 @@
         "*://*.pivotaltracker.com/*",
         "*://*.github.com/*",
         "*://*.gitlab.com/*",
+        "*://*.bitbucket.org/*",
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
         "*://*.podio.com/*",
@@ -73,6 +75,10 @@
       "js": ["scripts/content/producteev.js"]
     },
     {
+      "matches": ["*://*.bitbucket.org/*"],
+      "js": ["scripts/content/bitbucket.js"]
+    },
+	{
       "matches": ["*://*.github.com/*"],
       "js": ["scripts/content/github.js"]
     },

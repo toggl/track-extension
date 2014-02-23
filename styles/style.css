@@ -137,3 +137,11 @@
   margin-left: 12px;
   margin-bottom: 2px;
 }
+
+/********* REDBOOTH *********/
+.toggl-button.redbooth {
+  font-size: 12px;
+  line-height: 16px;
+  padding-left: 18px;
+  background-size: 16px;
+}

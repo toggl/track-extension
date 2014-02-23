@@ -1,57 +1,23 @@
-/*jslint indent: 4 */
-/*global window: false, document: false, chrome: false, $: false, createTag: false, createLink: false*/
-(function () {
-	"use strict";
-	var isStarted = false;
+/*jslint indent: 2 */
+/*global $: false, document: false, togglbutton: false*/
 
-	function createTimerLink(task, moreClass) {
-		var link = createLink(moreClass);
-		link.addEventListener("click", function (e) {
-			var msg, btnText;
+'use strict';
 
-			if(isStarted) {
-				msg = {type: 'stop'};
-				btnText = 'Start timer';
-			} else {
-				msg = {
-					type: 'timeEntry',
-					description: task
-				};
-				btnText = 'Started...';
-			}
-			chrome.extension.sendMessage(msg);
-			this.innerHTML = btnText;
-			isStarted = !isStarted;
-			return false;
-		});
+togglbutton.render('.task:not(.toggl)', {}, function (elem) {
+  var link,
+    projectElem = $('#client_name a'),
+    taskElem = $('#tasks > .task > h1');
 
-		// new button created - reset state
-    	isStarted = false;
+  if (taskElem === null || taskElem.firstChild === null) {
+    return;
+  }
 
-		return link;
-	}
+  link = togglbutton.createTimerLink({
+    className: 'worksection',
+    description: taskElem.firstChild.textContent.trim(),
+    projectName: projectElem && projectElem.innerText.trim()
+  });
+  link.classList.add('norm');
 
-	function addLinkToTask() {
-		if ($('#tasks > .task > #tmenu2') === null) {
-			return;
-		}
-		var projectElem = $('#client_name a');
-		var taskElem = $('#tasks > .task > .bold');
-		if ( (projectElem !== null) && (taskElem !== null) ) {
-			var taskElem_clone = taskElem.cloneNode(true);
-			taskElem_clone.removeChild(taskElem_clone.querySelector('a'));
-			var task = taskElem_clone.innerText.trim();
-			var project = projectElem.innerText.trim();
-			console.log(task);
-			var wrap = createTimerLink(project + ' | ' + task, 'worksection norm thickbox wsinit');
-			$('#tmenu2').insertBefore(wrap, $('#tmenu2').firstChild);
-		}
-	}
-
-	chrome.extension.sendMessage({type: 'activate'}, function (response) {
-		if (response.success) {
-			addLinkToTask();
-		}
-	});
-
-}());
+  $('#tmenu2', elem).appendChild(link);
+});

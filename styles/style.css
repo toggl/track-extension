@@ -145,3 +145,11 @@
   padding-left: 18px;
   background-size: 16px;
 }
+
+/********* WORKSECTION *********/
+#tmenu2 .toggl-button.worksection {
+  margin-top: 9px;
+  padding-top: 0px;
+  line-height: 21px;
+  padding-left: 21px;
+}

@@ -60,12 +60,12 @@ var TogglButton = {
       entry = {
         time_entry: {
           start: start.toISOString(),
-          created_with: "Toggl Button",
           description: timeEntry.description,
           wid: TogglButton.$user.default_wid,
           pid: timeEntry.projectId || null,
           billable: timeEntry.billable || false,
-          duration: -(start.getTime() / 1000)
+          duration: -(start.getTime() / 1000),
+          created_with: timeEntry.createdWith || 'TogglButton'
         }
       };
     if (timeEntry.projectName !== undefined) {

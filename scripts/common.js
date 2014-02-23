@@ -86,7 +86,8 @@ var togglbutton = {
           type: 'timeEntry',
           projectId: invokeIfFunction(params.projectId),
           description: invokeIfFunction(params.description),
-          projectName: invokeIfFunction(params.projectName)
+          projectName: invokeIfFunction(params.projectName),
+          createdWith: 'TogglButton - ' + params.className
         };
       }
       chrome.extension.sendMessage(opts);

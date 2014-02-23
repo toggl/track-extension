@@ -5,7 +5,7 @@
 
 togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (elem) {
 
-  var link, behavior = 'hover_content',
+  var link,
     container = $(".property.description", elem),
     description = $('#details_property_sheet_title', elem),
     project = $('#details_pane_project_tokenizer .token_name', elem);

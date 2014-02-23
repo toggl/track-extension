@@ -3,7 +3,7 @@
 (function () {
   //"use strict";
 	var isStarted = false;
-	var userData = false;
+	var userData = null;
 
 	function createTimerLink(task, moreClass) {
 		var link = createLink(moreClass, 'span');

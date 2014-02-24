@@ -3,7 +3,6 @@
 (function () {
   //"use strict";
 	var isStarted = false;
-	var userData = null;
 
 	function createTimerLink(task, moreClass) {
 		var link = createLink(moreClass, 'span');
@@ -14,11 +13,11 @@
 				msg = {type: 'stop'};
 				btnText = 'Start timer';
 			} else {
-				var pid = detectProjectId();
+				var projectName =  $('.board-header-btn-text').textContent.trim();
 				msg = {
 					type: 'timeEntry',
 					description: task,
-					projectId: pid
+					projectName: projectName
 				};
 				btnText = 'Stop timer';
 			}
@@ -32,21 +31,6 @@
 		isStarted = false;
 
 		return link;
-	}
-
-	function detectProjectId(){
-		var projectId = null;
-		var projectName =  $('.board-header-btn-text').textContent.trim();
-
-		if (userData.projects) {
-			userData.projects.forEach(function (project) {
-				if(project.name == projectName){
-					projectId = project.id;
-				}
-			});
-		}
-
-		return projectId;
 	}
 
 	function addLinkToTicket() {
@@ -123,9 +107,6 @@
 			addLinkToTicket(); 
 			
 			var observer, card;
-			
-			//Get the response object in the userData Variable for project ID detection
-			userData = response.user;
 
 			observer = new MutationObserver(function (mutations) {
 			  var i, elems = document.querySelectorAll(".checklist-item:not(.toggl)");

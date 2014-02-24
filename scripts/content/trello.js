@@ -13,12 +13,15 @@
 				msg = {type: 'stop'};
 				btnText = 'Start timer';
 			} else {
+				var projectName =  $('.board-header-btn-text').textContent.trim();
 				msg = {
 					type: 'timeEntry',
-					description: task
+					description: task,
+					projectName: projectName
 				};
 				btnText = 'Stop timer';
 			}
+
 			chrome.extension.sendMessage(msg);
 			this.innerHTML = btnText;
 			isStarted = !isStarted;
@@ -68,15 +71,17 @@
 	    for (i = 0; i < elems.length; i += 1) {
 	      !(e.target == elems[i]) && elems[i].classList.remove('active');
 	    }
-
+		
 	    if(isStarted) {
 	      msg = {type: 'stop'};
 	      btnText = '';
 	      alink.classList.remove('active');
 	    } else {
+		  var pid = detectProjectId();
 	      msg = {
 	        type: 'timeEntry',
-	        description: $('.window-title-text').textContent + " - " + $('.checklist-item-details-text', elem).textContent
+	        description: $('.window-title-text').textContent + " - " + $('.checklist-item-details-text', elem).textContent,
+			projectId: pid
 	      };
 	      btnText = '';
 	      color = '#5c5c5c';

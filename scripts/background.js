@@ -1,7 +1,6 @@
 /*jslint indent: 2 */
 /*global window: false, XMLHttpRequest: false, chrome: false, btoa: false */
 "use strict";
-
 var TogglButton = {
   $user: null,
   $apiUrl: "https://www.toggl.com/api/v7",
@@ -55,6 +54,7 @@ var TogglButton = {
   },
 
   createTimeEntry: function (timeEntry) {
+
     var start = new Date(),
       xhr = new XMLHttpRequest(),
       entry = {
@@ -68,12 +68,21 @@ var TogglButton = {
           duration: -(start.getTime() / 1000)
         }
       };
-    if (timeEntry.projectName !== undefined) {
+
+    if(timeEntry.projectName !== undefined) {
       entry.time_entry.pid = TogglButton.$user.projectMap[timeEntry.projectName];
     }
+
+		//Create a new Project incase the projects map array doesn't already contain the requested project
+		if(timeEntry.projectName !== undefined && timeEntry.projectName != "" && (entry.time_entry.pid == null || entry.time_entry.pid == undefined)) {
+			TogglButton.createNewProject(timeEntry.projectName,timeEntry);
+			return false; //stop here until the new project is created
+		}
+
     xhr.open("POST", TogglButton.$newApiUrl + "/time_entries", true);
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
-    // handle response
+    
+		// handle response
     xhr.addEventListener('load', function (e) {
       var responseData, entryId;
       responseData = JSON.parse(xhr.responseText);
@@ -95,6 +104,39 @@ var TogglButton = {
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
     xhr.send();
   },
+	
+	//Create a New Project
+	createNewProject: function (projectName,timeEntry) {
+
+  	var xhr = new XMLHttpRequest();
+		var project_data = {
+		      project: {
+		        name: projectName,
+		        wid: TogglButton.$user.default_wid
+		      }
+    };
+
+		//POST https://www.toggl.com/api/v8/projects
+    xhr.open("POST", TogglButton.$newApiUrl + "/projects", true);
+    xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
+
+		// handle response
+    xhr.addEventListener('load', function (e) {
+      var responseData, projectId;
+      responseData = JSON.parse(xhr.responseText);
+      projectId = responseData && responseData.data && responseData.data.id;
+
+			if(projectId == null || projectId == undefined){
+				projectId = 0;
+			}
+
+			TogglButton.$user.projectMap[projectName] = projectId;
+
+			TogglButton.createTimeEntry(timeEntry);
+
+    });
+    xhr.send(JSON.stringify(project_data));
+	},
 
   setPageAction: function (tabId) {
     var imagePath = 'images/inactive-19.png';

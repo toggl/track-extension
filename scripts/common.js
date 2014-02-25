@@ -49,17 +49,17 @@ var togglbutton = {
       if (response.success) {
         if (opts.observe) {
           var observer = new MutationObserver(function (mutations) {
-            togglbutton.addaasd(selector, renderer);
+            togglbutton.renderTo(selector, renderer);
           });
           observer.observe(document, {childList: true, subtree: true});
         } else {
-          togglbutton.addaasd(selector, renderer);
+          togglbutton.renderTo(selector, renderer);
         }
       }
     });
   },
 
-  addaasd: function (selector, renderer) {
+  renderTo: function (selector, renderer) {
     var i, len, elems = document.querySelectorAll(selector);
     for (i = 0, len = elems.length; i < len; i += 1) {
       elems[i].classList.add('toggl');
@@ -72,14 +72,22 @@ var togglbutton = {
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
     link.classList.add(params.className);
+
+    if (params.buttonType === 'minimal') {
+      link.classList.add('min');
+      link.removeChild(link.firstChild);
+    }
+
     link.addEventListener('click', function (e) {
       var opts, linkText, color = '';
       e.preventDefault();
 
       if (this.isStarted) {
+        link.classList.remove('active');
         linkText = 'Start timer';
         opts = {type: 'stop'};
       } else {
+        link.classList.add('active');
         color = '#1ab351';
         linkText = 'Stop timer';
         opts = {
@@ -91,9 +99,11 @@ var togglbutton = {
         };
       }
       chrome.extension.sendMessage(opts);
-      link.innerHTML = linkText;
-      link.style.color = color;
       this.isStarted = !this.isStarted;
+      link.style.color = color;
+      if (params.buttonType !== 'minimal') {
+        link.innerHTML = linkText;
+      }
       return false;
     });
 

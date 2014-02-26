@@ -31,6 +31,10 @@ chrome.extension.sendMessage({type: 'activate'}, function (response) {
     if (response.success && response.user && response.user.projects) {
 
         var togglSelect = createProjectSelect(response.user,'toggl-project-select');
+        togglSelect.style['border-color'] = '#ddd';
+        togglSelect.style.padding = '0 6px 2px';
+        togglSelect.style.color = '#777';
+        togglSelect.style['font-weight'] = 'bold';
 
         document.addEventListener('DOMNodeInserted', function() {
             var titleSection = $('section.name h2');

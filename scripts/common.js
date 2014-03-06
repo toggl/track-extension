@@ -28,7 +28,7 @@ function createLink(className, tagName, linkHref) {
   link     = createTag(tagName, className);
 
   if (tagName === 'a') {
-    link.href = '#';
+    link.href = linkHref;
   }
 
   link.appendChild(document.createTextNode('Start timer'));

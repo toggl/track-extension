@@ -40,6 +40,11 @@ chrome.extension.sendMessage({type: 'activate'}, function (response) {
             var titleSection = $('section.name h2');
             if (titleSection) {
                 titleSection.appendChild(togglSelect);
+            } else {
+                titleSection = $('.projects a.projects');
+                if (titleSection) {
+                    titleSection.appendChild(togglSelect);
+                }
             }
         });
 

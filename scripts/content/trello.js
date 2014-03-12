@@ -4,9 +4,10 @@
 'use strict';
 
 togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('div', 'badge'),
+  var link, container = createTag('div', 'card-detail-item clear'),
     titleElem = $('.window-title-text', elem),
-    projectElem = $('.board-header > a');
+    projectElem = $('.board-header > a'),
+    descriptionElem = $('.card-detail-item-block');
 
   link = togglbutton.createTimerLink({
     className: 'trello',
@@ -15,7 +16,7 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
   });
 
   container.appendChild(link);
-  $('.badges', elem.parentNode).appendChild(container);
+  descriptionElem.parentNode.insertBefore(container, descriptionElem);
 });
 
 /* Checklist buttons */

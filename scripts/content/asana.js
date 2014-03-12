@@ -6,7 +6,7 @@
 togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (elem) {
 
   var link,
-    container = $(".property.description", elem),
+    container = $('.sticky-view-placeholder', elem),
     description = $('#details_property_sheet_title', elem),
     project = $('#details_pane_project_tokenizer .token_name', elem);
 

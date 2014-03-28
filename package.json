@@ -7,6 +7,7 @@
   "devDependencies": {
     "grunt": "~0.4.4",
     "grunt-crx": "~0.3.3",
-    "grunt-jslint": "~1.1.8"
+    "grunt-jslint": "~1.1.8",
+    "grunt-contrib-compress": "~0.7.0"
   }
 }

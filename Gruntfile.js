@@ -3,23 +3,44 @@ module.exports = function( grunt ) {
 
   grunt.loadNpmTasks('grunt-jslint');
   grunt.loadNpmTasks('grunt-crx');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+
+  var config = {
+    app: 'src',
+    dist: 'dist',
+    package: grunt.file.readJSON('package.json')
+  };
 
   grunt.initConfig({
+    config: config,
     jslint: {
       app: {
         src: [
-          'src/scripts/**/*.js'
+          '<%= config.app %>/scripts/**/*.js'
         ]
       }
     },
     crx: {
       toggl: {
-        "src": "src/",
-        "dest": "dist/",
+        "src": "<%= config.app %>",
+        "dest": "<%= config.dist %>",
         "privateKey": "toggl-button.pem"
+      }
+    },
+    compress: {
+      dist: {
+        options: {
+          archive: '<%= config.dist %>/<%= config.package.name %>-<%= config.package.version %>.zip'
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/',
+          src: ['**'],
+          dest: ''
+        }]
       }
     }
   });
 
-  grunt.registerTask('default', ['jslint', 'crx']);
+  grunt.registerTask('default', ['jslint', 'crx', 'compress']);
 };

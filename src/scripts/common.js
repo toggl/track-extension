@@ -52,9 +52,8 @@ var togglbutton = {
             togglbutton.renderTo(selector, renderer);
           });
           observer.observe(document, {childList: true, subtree: true});
-        } else {
-          togglbutton.renderTo(selector, renderer);
         }
+        togglbutton.renderTo(selector, renderer);
       }
     });
   },

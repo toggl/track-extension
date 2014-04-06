@@ -1,2 +1,4 @@
-toggl-button.zip
-.idea
+dist
+node_modules
+tmp
+*.pem

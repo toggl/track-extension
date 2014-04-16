@@ -29,7 +29,7 @@
     "*://*.atlassian.net/*",
     "*://*.producteev.com/*",
     "*://*.bitbucket.org/*",
-    "*://*.sifterapp.com*"
+    "*://*.sifterapp.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -119,7 +119,7 @@
       "js": ["scripts/content/jira.js"]
     },
     {
-      "matches": ["*://*.sifterapp.com*"],
+      "matches": ["*://*.sifterapp.com/*"],
       "js": ["scripts/content/sifterapp.js"]
     }
   ]

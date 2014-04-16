@@ -1,6 +1,6 @@
 {
   "name": "Toggl Button",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -28,7 +28,8 @@
     "*://*.basecamp.com/*",
     "*://*.atlassian.net/*",
     "*://*.producteev.com/*",
-    "*://*.bitbucket.org/*"
+    "*://*.bitbucket.org/*",
+    "*://*.redmine.org/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -51,7 +52,8 @@
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/*",
-        "*://*.producteev.com/*"
+        "*://*.producteev.com/*",
+        "*://*.redmine.org/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -115,6 +117,10 @@
     {
       "matches": ["*://*.atlassian.net/*"],
       "js": ["scripts/content/jira.js"]
+    },
+    {
+      "matches": ["*://*.redmine.org/*"],
+      "js": ["scripts/content/redmine.js"]
     }
   ]
 }

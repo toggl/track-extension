@@ -127,3 +127,11 @@
   line-height: 21px;
   padding-left: 21px;
 }
+
+/********* REDMINE *********/
+.toggl-button.redmine {
+  float: right;
+  font-size: .8em;
+  font-weight: normal;
+  margin-top: 4px;
+}

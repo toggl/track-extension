@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('h2', {}, function (elem) {
+togglbutton.render('body.controller-issues.action-show h2', {}, function (elem) {
   var link, description,
     numElem = $('h2'),
     titleElem = $('.subject h3'),

@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.subheader-content', {}, function (elem) {
+togglbutton.render('.subheader-status .subheader-content', {}, function (elem) {
   var link, description,
     numElem = $('.subheader-content h2 i'),
     titleElem = $('.subheader-content h2'),

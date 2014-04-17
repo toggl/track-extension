@@ -19,5 +19,5 @@ togglbutton.render('.subheader-status .subheader-content', {}, function (elem) {
     projectName: projectElem && projectElem.textContent
   });
 
-  $('.subheader-content').appendChild(link);
+  $('.subheader-content h2').appendChild(link);
 });

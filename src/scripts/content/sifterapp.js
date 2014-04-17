@@ -3,11 +3,16 @@
 'use strict';
 
 togglbutton.render('.subheader-status .subheader-content', {}, function (elem) {
-  var link, description,
+  var link, description, project, company,
     titleElem = $('.subheader-content h2'),
-    projectElem = $('#header h1').clone().children().remove().end().text(); //Exp: http://stackoverflow.com/a/8851526
+    projectElem = $('#header h1'),
+    companyElem = $('#header h1 .company');
 
   description = titleElem.innerText;
+  project = projectElem.textContent;
+  company = companyElem.textContent;
+  
+  project = project.substring(0, project.length - company.length - 1);
 
   link = togglbutton.createTimerLink({
     className: 'sifterapp',

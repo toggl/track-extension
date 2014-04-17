@@ -4,14 +4,10 @@
 
 togglbutton.render('.subheader-status .subheader-content', {}, function (elem) {
   var link, description,
-    numElem = $('.subheader-content h2 i'),
     titleElem = $('.subheader-content h2'),
     projectElem = $('#header h1');
 
   description = titleElem.innerText;
-  if (numElem !== null) {
-    description = numElem.innerText + " " + description;
-  }
 
   link = togglbutton.createTimerLink({
     className: 'sifterapp',

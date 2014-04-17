@@ -17,7 +17,7 @@ togglbutton.render('.subheader-status .subheader-content', {}, function (elem) {
   link = togglbutton.createTimerLink({
     className: 'sifterapp',
     description: description,
-    projectName: projectElem && projectElem.textContent
+    projectName: project
   });
 
   $('.subheader-content h2').appendChild(link);

@@ -5,7 +5,7 @@
 togglbutton.render('.subheader-status .subheader-content', {}, function (elem) {
   var link, description,
     titleElem = $('.subheader-content h2'),
-    projectElem = $('#header h1');
+    projectElem = $('#header h1').clone().children().remove().end().text(); //Exp: http://stackoverflow.com/a/8851526
 
   description = titleElem.innerText;
 

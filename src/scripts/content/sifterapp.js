@@ -11,7 +11,6 @@ togglbutton.render('.subheader-status .subheader-content', {}, function (elem) {
   description = titleElem.innerText;
   project = projectElem.textContent;
   company = companyElem.textContent;
-  
   project = project.substring(0, project.length - company.length - 1);
 
   link = togglbutton.createTimerLink({

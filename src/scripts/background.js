@@ -4,24 +4,28 @@
 
 var TogglButton = {
   $user: null,
+  $curEntryId: null,
   $apiUrl: "https://www.toggl.com/api/v7",
   $newApiUrl: "https://new.toggl.com/api/v8",
-  $sites: new RegExp([
-    'asana\\.com',
-    'podio\\.com',
-    'trello\\.com',
-    'github\\.com',
-    'bitbucket\\.org',
-    'gitlab\\.com',
-    'redbooth\\.com',
-    'teamweek\\.com',
-    'basecamp\\.com',
-    'unfuddle\\.com',
-    'worksection\\.com',
-    'pivotaltracker\\.com',
-    'producteev\\.com',
-    'sifterapp\\.com'].join('|')),
-  $curEntryId: null,
+  $sites: new RegExp(
+    [
+      'asana\\.com',
+      'podio\\.com',
+      'trello\\.com',
+      'github\\.com',
+      'bitbucket\\.org',
+      'gitlab\\.com',
+      'redbooth\\.com',
+      'teamweek\\.com',
+      'basecamp\\.com',
+      'unfuddle\\.com',
+      'worksection\\.com',
+      'pivotaltracker\\.com',
+      'producteev\\.com',
+      'sifterapp\\.com',
+      'google\\.com',
+    ].join('|')
+  ),
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {

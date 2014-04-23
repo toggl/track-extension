@@ -30,6 +30,7 @@
     "*://*.producteev.com/*",
     "*://*.bitbucket.org/*",
     "*://*.sifterapp.com/*"
+    "*://docs.google.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -54,6 +55,7 @@
         "*://*.atlassian.net/*",
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*"
+        "*://docs.google.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -121,6 +123,10 @@
     {
       "matches": ["*://*.sifterapp.com/*"],
       "js": ["scripts/content/sifterapp.js"]
+    },
+    {
+      "matches": ["*://docs.google.com/*"],
+      "js": ["scripts/content/google-docs.js"]
     }
   ]
 }

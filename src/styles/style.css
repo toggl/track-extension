@@ -150,3 +150,11 @@
   overflow: hidden;
   padding-left: 21px;
 }
+
+/********* REDMINE *********/
+.toggl-button.redmine {
+  float: right;
+  font-size: .8em;
+  font-weight: normal;
+  margin-top: 4px;
+}

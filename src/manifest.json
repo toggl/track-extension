@@ -30,7 +30,8 @@
     "*://*.producteev.com/*",
     "*://*.bitbucket.org/*",
     "*://*.sifterapp.com/*",
-    "*://docs.google.com/*"
+    "*://docs.google.com/*",
+    "*://*.redmine.org/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -55,7 +56,8 @@
         "*://*.atlassian.net/*",
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*",
-        "*://docs.google.com/*"
+        "*://docs.google.com/*",
+        "*://*.redmine.org/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -127,6 +129,10 @@
     {
       "matches": ["*://docs.google.com/*"],
       "js": ["scripts/content/google-docs.js"]
+    },
+    {
+      "matches": ["*://*.redmine.org/*"],
+      "js": ["scripts/content/redmine.js"]
     }
   ]
 }

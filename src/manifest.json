@@ -120,7 +120,7 @@
     },
     {
       "matches": ["*://docs.google.com/*"],
-      "js": ["scripts/content/google-drive.js"]
+      "js": ["scripts/content/google-docs.js"]
     }
   ]
 }

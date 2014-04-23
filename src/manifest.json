@@ -1,6 +1,6 @@
 {
   "name": "Toggl Button",
-  "version": "0.2.14",
+  "version": "0.2.13",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {

@@ -29,7 +29,7 @@
     "*://*.atlassian.net/*",
     "*://*.producteev.com/*",
     "*://*.bitbucket.org/*",
-    "*://*.sifterapp.com/*"
+    "*://*.sifterapp.com/*",
     "*://docs.google.com/*"
   ],
   "icons": {
@@ -54,7 +54,7 @@
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/*",
         "*://*.producteev.com/*",
-        "*://*.sifterapp.com/*"
+        "*://*.sifterapp.com/*",
         "*://docs.google.com/*"
       ],
       "css": ["styles/style.css"],

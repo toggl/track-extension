@@ -128,10 +128,12 @@
   padding-left: 21px;
 }
 
-/********* REDMINE *********/
-.toggl-button.redmine {
+/********* SIFTER *********/
+.toggl-button.sifterapp {
+  color: white;
   float: right;
-  font-size: .8em;
-  font-weight: normal;
-  margin-top: 4px;
+}
+
+.toggl-button.sifterapp.active {
+  color: rgb(52, 255, 125) !important;
 }

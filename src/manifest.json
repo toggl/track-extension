@@ -29,7 +29,7 @@
     "*://*.atlassian.net/*",
     "*://*.producteev.com/*",
     "*://*.bitbucket.org/*",
-    "*://*.redmine.org/*"
+    "*://*.sifterapp.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -53,7 +53,7 @@
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/*",
         "*://*.producteev.com/*",
-        "*://*.redmine.org/*"
+        "*://*.sifterapp.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -119,8 +119,8 @@
       "js": ["scripts/content/jira.js"]
     },
     {
-      "matches": ["*://*.redmine.org/*"],
-      "js": ["scripts/content/redmine.js"]
+      "matches": ["*://*.sifterapp.com/*"],
+      "js": ["scripts/content/sifterapp.js"]
     }
   ]
 }

@@ -13,5 +13,5 @@ togglbutton.render('#docs-toolbar-wrapper', {}, function (elem) {
     description: description
   });
 
-  $('#docs-toolbar-wrapped').appendChild(link);
+  $('#docs-toolbar-wrapper').appendChild(link);
 });

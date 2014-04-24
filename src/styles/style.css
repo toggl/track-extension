@@ -52,7 +52,7 @@
 
 .toggl-button-wrapper .color-green,
 .toggl-button-wrapper-task .color-green {
-    color: #43d541;
+  color: #43d541;
 }
 
 /********* GITLAB *********/
@@ -145,15 +145,8 @@
 
 /********* GOOGLE DOCS *********/
 .toggl-button.google-docs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: 7px;
-  margin-left: 3px;
-  width: 32px;
-  height: 20px;
-  overflow: hidden;
-  padding-left: 21px;
+  background-size: 17px;
+  padding-left: 19px;
 }
 
 /********* REDMINE *********/

@@ -23,7 +23,8 @@ var TogglButton = {
       'pivotaltracker\\.com',
       'producteev\\.com',
       'sifterapp\\.com',
-      'google\\.com',
+      'docs\\.google\\.com',
+      'drive\\.google\\.com',
       'redmine\\.org',
     ].join('|')
   ),

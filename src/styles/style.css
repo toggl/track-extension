@@ -62,6 +62,11 @@
   padding-left: 21px;
 }
 
+/********* JIRA *********/
+.toggl-button.jira {
+  margin-top:.2em;
+}
+
 /********* UNFUDDLE *********/
 .toggl-button.unfuddle {
   margin-left: 4px;

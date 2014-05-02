@@ -2,6 +2,8 @@
 /*global document: false, MutationObserver: false, chrome: false*/
 "use strict";
 
+var isStarted = false;
+
 function $(s, elem) {
   elem = elem || document;
   return elem.querySelector(s);
@@ -30,7 +32,13 @@ function createLink(className, tagName, linkHref) {
     link.href = linkHref;
   }
 
-  link.appendChild(document.createTextNode('Start timer'));
+  if(!isStarted){
+    link.appendChild(document.createTextNode('Start timer'));
+  }else{
+    link.appendChild(document.createTextNode('Stop timer'));
+    link.style.color = '#1ab351';
+    link.classList.add('active');
+  }
   return link;
 }
 
@@ -42,7 +50,6 @@ function invokeIfFunction(trial) {
 }
 
 var togglbutton = {
-  isStarted: false,
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
@@ -69,7 +76,10 @@ var togglbutton = {
 
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
-    link.classList.add(params.className);
+    if(!isStarted){
+        console.log('yolo')
+       link.classList.add(params.className);
+    }
 
     if (params.buttonType === 'minimal') {
       link.classList.add('min');
@@ -80,7 +90,7 @@ var togglbutton = {
       var opts, linkText, color = '';
       e.preventDefault();
 
-      if (this.isStarted) {
+      if (isStarted) {
         link.classList.remove('active');
         linkText = 'Start timer';
         opts = {type: 'stop'};
@@ -97,7 +107,7 @@ var togglbutton = {
         };
       }
       chrome.extension.sendMessage(opts);
-      this.isStarted = !this.isStarted;
+      isStarted = !isStarted;
       link.style.color = color;
       if (params.buttonType !== 'minimal') {
         link.innerHTML = linkText;
@@ -105,8 +115,6 @@ var togglbutton = {
       return false;
     });
 
-    // new button created - reset state
-    this.isStarted = false;
     return link;
   }
 };

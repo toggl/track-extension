@@ -19,5 +19,5 @@ togglbutton.render('#js-discussion-header', {}, function (elem) {
     projectName: projectElem && projectElem.textContent
   });
 
-  $('.gh-header-meta').appendChild(link);
+  $('.flex-table-item-primary').appendChild(link);
 });

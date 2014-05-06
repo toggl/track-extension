@@ -77,7 +77,6 @@ var togglbutton = {
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
     if(!isStarted){
-        console.log('yolo')
        link.classList.add(params.className);
     }
 

@@ -4,7 +4,7 @@
 
 togglbutton.render('#js-discussion-header', {}, function (elem) {
   var link, description,
-    numElem = $('.issue-number', elem),
+    numElem = $('.gh-header-number', elem),
     titleElem = $('.js-issue-title', elem),
     projectElem = $('.js-current-repository');
 

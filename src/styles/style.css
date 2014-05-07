@@ -107,8 +107,8 @@
 .toggl-button.teamweek-new {
   color: rgba(47,47,47,0.8);
   position: absolute;
-  right: 95px;
-  bottom: 14px;
+  left: 130px;
+  bottom: 3px;
 }
 
 /********* PRODUCTEEV *********/

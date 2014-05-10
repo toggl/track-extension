@@ -31,7 +31,8 @@
     "*://*.bitbucket.org/*",
     "*://*.sifterapp.com/*",
     "*://docs.google.com/*",
-    "*://*.redmine.org/*"
+    "*://*.redmine.org/*",
+    "*://*.myjetbrains.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -57,7 +58,8 @@
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*",
         "*://docs.google.com/*",
-        "*://*.redmine.org/*"
+        "*://*.redmine.org/*",
+        "*://*.myjetbrains.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -133,6 +135,10 @@
     {
       "matches": ["*://*.redmine.org/*"],
       "js": ["scripts/content/redmine.js"]
+    },
+    {
+      "matches": ["*://*.myjetbrains.com/*"],
+      "js": ["scripts/content/youtrack.js"]
     }
   ]
 }

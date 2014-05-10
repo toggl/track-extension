@@ -30,6 +30,11 @@
   margin-left: 5px;
 }
 
+/********* YOUTRACK *********/
+.toggl-button.youtrack {
+  float: right;
+}
+
 /********* ASANA *********/
 .toggl-button.asana {
   margin-left: 52px;

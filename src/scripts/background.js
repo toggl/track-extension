@@ -26,6 +26,7 @@ var TogglButton = {
       'docs\\.google\\.com',
       'drive\\.google\\.com',
       'redmine\\.org',
+      'myjetbrains\\.com'
     ].join('|')
   ),
 

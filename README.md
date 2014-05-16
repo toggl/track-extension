@@ -20,6 +20,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Sifter][16]
   - [Google Docs][17]
   - [Redmine][18]
+  - [CapsuleCRM][19]
 
 ## Installing from the Web Store
 
@@ -61,4 +62,5 @@ Want to contribute? Great! Just fork the project, make your changes and open a [
 [16]: https://www.sifterapp.com/
 [17]: https://docs.google.com/
 [18]: http://www.redmine.org/
+[19]: http://www.capsulecrm.com/
 [99]: https://github.com/toggl/toggl-button/pulls

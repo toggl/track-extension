@@ -32,7 +32,8 @@
     "*://*.sifterapp.com/*",
     "*://docs.google.com/*",
     "*://*.redmine.org/*",
-    "*://*.myjetbrains.com/*"
+    "*://*.myjetbrains.com/*",
+    "*://*.capsulecrm.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -59,7 +60,8 @@
         "*://*.sifterapp.com/*",
         "*://docs.google.com/*",
         "*://*.redmine.org/*",
-        "*://*.myjetbrains.com/*"
+        "*://*.myjetbrains.com/*",
+        "*://*.capsulecrm.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -139,6 +141,10 @@
     {
       "matches": ["*://*.myjetbrains.com/*"],
       "js": ["scripts/content/youtrack.js"]
+    },
+    {
+      "matches": ["*://*.capsulecrm.com/*"],
+      "js": ["scripts/content/capsule.js"]
     }
   ]
 }

@@ -161,3 +161,10 @@
   font-weight: normal;
   margin-top: 4px;
 }
+
+/********* CAPSULECRM *********/
+.toggl-button.capsule {
+  line-height: 15px;
+  background-position: 7% 40%;
+  padding-left: 30px !important;
+}

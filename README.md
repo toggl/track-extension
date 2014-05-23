@@ -20,7 +20,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Sifter][16]
   - [Google Docs][17]
   - [Redmine][18]
-  - [YouTrack][19]
+  - [YouTrack (InCloud)][19]
   - [CapsuleCRM][20]
 
 ## Installing from the Web Store

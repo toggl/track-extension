@@ -1,4 +1,4 @@
-/*jslint indent: 2 */
+/*jslint indent: 2, unparam: true*/
 /*global document: false, MutationObserver: false, chrome: false*/
 "use strict";
 
@@ -133,7 +133,7 @@ function createOption(id, cid, clientName, projectName) {
 }
 
 function createProjectSelect(userData, className) {
-  var clients, projectLabel, option, select = createTag('select', className);
+  var clients, projectLabel, select = createTag('select', className);
 
   //add an empty (default) option
   select.appendChild(createOption("default", null, "Select a toggl project"));

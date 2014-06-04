@@ -1,4 +1,4 @@
-/*jslint indent: 2 */
+/*jslint indent: 2, unparam: true*/
 /*global $: false, document: false, togglbutton: false*/
 
 'use strict';

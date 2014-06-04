@@ -6,10 +6,6 @@
 togglbutton.render('body', {}, function (elem) {
   var link, liTag;
 
-  if (container === null) {
-    return;
-  }
-
   link = togglbutton.createTimerLink({
     className: 'capsule',
     description: $('.currentPage', elem).textContent,

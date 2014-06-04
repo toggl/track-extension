@@ -1,4 +1,4 @@
-/*jslint indent: 2 */
+/*jslint indent: 2, unparam: true*/
 /*global window: false, XMLHttpRequest: false, chrome: false, btoa: false */
 "use strict";
 

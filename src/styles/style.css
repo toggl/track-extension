@@ -20,8 +20,8 @@
 
 /********* BITBUCKET *********/
 .toggl-button.bitbucket {
-	border-color: #ccc;
-	margin-left:15px;
+  border-color: #ccc;
+  margin-left:15px;
 }
 
 /********* GITHUB *********/
@@ -111,9 +111,7 @@
 /********* TEAMWEEK *********/
 .toggl-button.teamweek-new {
   color: rgba(47,47,47,0.8);
-  position: absolute;
-  left: 130px;
-  bottom: 3px;
+  margin: 12px;
 }
 
 /********* PRODUCTEEV *********/

@@ -3,26 +3,27 @@
 
 'use strict';
 
-togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (element) {
   var link,
-    titleElem = $('input.title', elem),
-    projectNameElem = $('select[name=project_id]', elem),
-    container = $('footer.actions .cancel', elem);
+    titleElement = $('input.title', element),
+    projectNameElement = $('select[name=project_id]', element),
+    container = $('footer.actions > .quick-actions', element);
 
-  if (titleElem === null || container === null) {
+  if (titleElement === null || container === null) {
     return;
   }
 
   link = togglbutton.createTimerLink({
     className: 'teamweek-new',
+    buttonType: 'minimal',
     description: function () {
-      return titleElem.value;
+      return titleElement.value;
     },
     projectName: function () {
-      var projectSelectedElem = $('option:checked', projectNameElem);
+      var projectSelectedElem = $('option:checked', projectNameElement);
       return projectSelectedElem.value ? projectSelectedElem.text : null;
     }
   });
 
-  container.parentNode.appendChild(link);
+  container.appendChild(link);
 });

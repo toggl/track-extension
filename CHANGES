@@ -1,0 +1,5 @@
+[0.3.3]
+- Added support for CapsuleCRM
+- Added support for YouTrack InCloud
+- Added support for Xero accountancy software
+- Fixed toggl-button's location for Teamweek's new design

@@ -1,18 +1,18 @@
 /*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
+/*global $: false, createTag: false, togglbutton: false*/
 
 'use strict';
+
 togglbutton.render('#frmMain', {}, function (elem) {
   var link, liTag;
 
   link = togglbutton.createTimerLink({
     className: 'xero',
-    description: $('#frmMain h1').innerText,
-    projectName: 'Finance'
+    projectName: 'Finance',
+    description: $('#frmMain h1').innerText
   });
 
-  liTag = document.createElement("li");
-  liTag.className = 'xn-h-header-info-item xero';
+  liTag = createTag("li", "xn-h-menu");
   liTag.appendChild(link);
-  $('ul.xn-h-header-info').insertBefore(liTag, $('ul.xn-h-header-info li'));
+  $('.xn-h-header-tabs ul').appendChild(liTag);
 });

@@ -110,39 +110,3 @@ var togglbutton = {
     return link;
   }
 };
-
-
-function createOption(id, cid, clientName, projectName) {
-  var text = '', option = document.createElement("option");
-  option.setAttribute("value", id);
-  option.setAttribute("data-client-id", cid);
-
-  if (clientName) {
-    text = clientName + ' - ';
-  }
-  option.text = text + projectName;
-
-  if (projectName) {
-    option.setAttribute("data-project-name", projectName);
-  }
-  if (clientName) {
-    option.setAttribute("data-client-name", clientName);
-  }
-
-  return option;
-}
-
-function createProjectSelect(userData, className) {
-  var clients, projectLabel, select = createTag('select', className);
-
-  //add an empty (default) option
-  select.appendChild(createOption("default", null, "Select a toggl project"));
-
-  userData.projects.forEach(function (project) {
-    clients = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); });
-    projectLabel = (clients.length > 0 ? clients[0].name + " - " : "") + project.name;
-    select.appendChild(createOption(project.id, project.cid, projectLabel));
-  });
-
-  return select;
-}

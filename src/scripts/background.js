@@ -37,7 +37,7 @@ var TogglButton = {
         TogglButton.setPageAction(tabId);
       } else if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
-      } else if (/toggl\.com\/app/.test(tab.url)) {
+      } else if (/toggl\.com\/app.*/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
       }
     }

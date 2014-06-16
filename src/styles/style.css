@@ -46,18 +46,9 @@
 }
 
 /********* PODIO *********/
-.toggl-button-wrapper {
-  display: inline-block !important;
-  width: 100px !important;
-}
-
-.toggl-button-wrapper-task {
-  display: block;
-}
-
-.toggl-button-wrapper .color-green,
-.toggl-button-wrapper-task .color-green {
-  color: #43d541;
+.toggl-button.podio {
+  width: 65px;
+  margin-left: 4px;
 }
 
 /********* GITLAB *********/

@@ -1,3 +1,6 @@
+[0.3.4]
+- fetchUser API urls corrected
+- Podio content script refactoring
 [0.3.3]
 - Added support for CapsuleCRM
 - Added support for YouTrack InCloud

@@ -5,8 +5,8 @@
 var TogglButton = {
   $user: null,
   $curEntryId: null,
-  $apiUrl: "https://www.toggl.com/api/v7",
-  $newApiUrl: "https://new.toggl.com/api/v8",
+  $apiUrl: "https://old.toggl.com/api/v7",
+  $newApiUrl: "https://www.toggl.com/api/v8",
   $sites: new RegExp(
     [
       'asana\\.com',
@@ -132,7 +132,7 @@ var TogglButton = {
 
 chrome.pageAction.onClicked.addListener(function (tab) {
   if (TogglButton.$user === null) {
-    chrome.tabs.create({url: 'https://new.toggl.com/#login'});
+    chrome.tabs.create({url: 'https://www.toggl.com/#login'});
   }
 });
 

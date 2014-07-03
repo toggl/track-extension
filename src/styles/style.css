@@ -164,3 +164,9 @@
   background-position: 0px !important;
   padding-left: 22px;
 }
+
+/********* ZENDESK *********/
+.toggl-button.zendesk {
+    line-height: 18px;
+}
+

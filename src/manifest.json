@@ -34,7 +34,8 @@
     "*://*.redmine.org/*",
     "*://*.myjetbrains.com/*",
     "*://*.capsulecrm.com/*",
-    "*://go.xero.com/*"
+    "*://go.xero.com/*",
+    "*://*.zendesk.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -63,7 +64,8 @@
         "*://*.redmine.org/*",
         "*://*.myjetbrains.com/*",
         "*://*.capsulecrm.com/*",
-        "*://go.xero.com/*"
+        "*://go.xero.com/*",
+        "*://*.zendesk.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -151,6 +153,10 @@
     {
       "matches": ["https://go.xero.com/*"],
       "js": ["scripts/content/xero.js"]
+    },
+    {
+      "matches": ["https://*.zendesk.com/*"],
+      "js": ["scripts/content/zendesk.js"]
     }
   ]
 }

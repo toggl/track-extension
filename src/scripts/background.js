@@ -37,7 +37,7 @@ var TogglButton = {
         TogglButton.setPageAction(tabId);
       } else if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
-      } else if (/toggl\.com\/app.*/.test(tab.url)) {
+      } else if (/toggl\.com\/app/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
       }
     }
@@ -65,7 +65,6 @@ var TogglButton = {
 
   createTimeEntry: function (timeEntry) {
     var start = new Date(),
-      xhr = new XMLHttpRequest(),
       entry = {
         time_entry: {
           start: start.toISOString(),
@@ -80,16 +79,27 @@ var TogglButton = {
     if (timeEntry.projectName !== undefined) {
       entry.time_entry.pid = TogglButton.$user.projectMap[timeEntry.projectName];
     }
-    xhr.open("POST", TogglButton.$newApiUrl + "/time_entries", true);
-    xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
-    // handle response
-    xhr.addEventListener('load', function (e) {
-      var responseData, entryId;
-      responseData = JSON.parse(xhr.responseText);
-      entryId = responseData && responseData.data && responseData.data.id;
-      TogglButton.$curEntryId = entryId;
+
+    TogglButton.ajax('/time_entries', {
+      method: 'POST',
+      payload: entry,
+      onLoad: function (xhr) {
+        var responseData, entryId;
+        responseData = JSON.parse(xhr.responseText);
+        entryId = responseData && responseData.data && responseData.data.id;
+        TogglButton.$curEntryId = entryId;
+      }
     });
-    xhr.send(JSON.stringify(entry));
+  },
+
+  ajax: function (url, opts) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(opts.method, TogglButton.$newApiUrl + url, true);
+    xhr.addEventListener('load', function () { opts.onLoad(xhr); });
+    if (TogglButton.$user !== null) {
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
+    }
+    xhr.send(JSON.stringify(opts.payload));
   },
 
   stopTimeEntry: function (entryId) {

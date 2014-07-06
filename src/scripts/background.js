@@ -95,8 +95,10 @@ var TogglButton = {
   ajax: function (url, opts) {
     var xhr = new XMLHttpRequest();
     xhr.open(opts.method, TogglButton.$newApiUrl + url, true);
-    xhr.addEventListener('load', function () { opts.onLoad(xhr); });
-    if (TogglButton.$user !== null) {
+    if (opts.onLoad) {
+      xhr.addEventListener('load', function () { opts.onLoad(xhr); });
+    }
+    if (TogglButton.$user) {
       xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
     }
     xhr.send(JSON.stringify(opts.payload));
@@ -104,15 +106,8 @@ var TogglButton = {
 
   stopTimeEntry: function (entryId) {
     entryId = entryId || TogglButton.$curEntryId;
-    if (!entryId) {
-      return;
-    }
-    var xhr = new XMLHttpRequest();
-
-    // PUT https://www.toggl.com/api/v8/time_entries/{time_entry_id}/stop
-    xhr.open("PUT", TogglButton.$newApiUrl + "/time_entries/" + entryId + "/stop", true);
-    xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
-    xhr.send();
+    if (!entryId) { return; }
+    TogglButton.ajax("/time_entries/" + entryId + "/stop", {method: 'PUT'});
   },
 
   setPageAction: function (tabId) {

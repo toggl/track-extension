@@ -44,23 +44,23 @@ var TogglButton = {
   },
 
   fetchUser: function (apiUrl) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", apiUrl + "/me?with_related_data=true", true);
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        var projectMap = {}, resp = JSON.parse(xhr.responseText);
-        if (resp.data.projects) {
-          resp.data.projects.forEach(function (project) {
-            projectMap[project.name] = project.id;
-          });
+    TogglButton.ajax('/me?with_related_data=true', {
+      baseUrl: apiUrl,
+      onLoad: function (xhr) {
+        if (xhr.status === 200) {
+          var projectMap = {}, resp = JSON.parse(xhr.responseText);
+          if (resp.data.projects) {
+            resp.data.projects.forEach(function (project) {
+              projectMap[project.name] = project.id;
+            });
+          }
+          TogglButton.$user = resp.data;
+          TogglButton.$user.projectMap = projectMap;
+        } else if (apiUrl === TogglButton.$apiUrl) {
+          TogglButton.fetchUser(TogglButton.$newApiUrl);
         }
-        TogglButton.$user = resp.data;
-        TogglButton.$user.projectMap = projectMap;
-      } else if (apiUrl === TogglButton.$apiUrl) {
-        TogglButton.fetchUser(TogglButton.$newApiUrl);
       }
-    };
-    xhr.send();
+    });
   },
 
   createTimeEntry: function (timeEntry) {
@@ -93,8 +93,10 @@ var TogglButton = {
   },
 
   ajax: function (url, opts) {
-    var xhr = new XMLHttpRequest();
-    xhr.open(opts.method, TogglButton.$newApiUrl + url, true);
+    var xhr = new XMLHttpRequest(),
+      method = opts.method || 'GET',
+      baseUrl = opts.baseUrl || TogglButton.$newApiUrl;
+    xhr.open(method, baseUrl + url, true);
     if (opts.onLoad) {
       xhr.addEventListener('load', function () { opts.onLoad(xhr); });
     }

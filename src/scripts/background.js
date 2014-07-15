@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true*/
-/*global window: false, XMLHttpRequest: false, chrome: false, btoa: false */
+/*global window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = {
@@ -37,18 +37,20 @@ var TogglButton = {
         TogglButton.setPageAction(tabId);
       } else if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
-      } else if (/toggl\.com\/app/.test(tab.url)) {
+      } else if (/toggl\.com\/app\/index/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
       }
     }
   },
 
-  fetchUser: function (apiUrl) {
+  fetchUser: function (apiUrl, token) {
     TogglButton.ajax('/me?with_related_data=true', {
+      token: token || ' ',
       baseUrl: apiUrl,
       onLoad: function (xhr) {
+        var resp, apiToken, projectMap = {};
         if (xhr.status === 200) {
-          var projectMap = {}, resp = JSON.parse(xhr.responseText);
+          resp = JSON.parse(xhr.responseText);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
               projectMap[project.name] = project.id;
@@ -56,8 +58,15 @@ var TogglButton = {
           }
           TogglButton.$user = resp.data;
           TogglButton.$user.projectMap = projectMap;
+          localStorage.removeItem('userToken');
+          localStorage.setItem('userToken', resp.data.api_token);
         } else if (apiUrl === TogglButton.$apiUrl) {
           TogglButton.fetchUser(TogglButton.$newApiUrl);
+        } else if (apiUrl === TogglButton.$newApiUrl && !token) {
+          apiToken = localStorage.getItem('userToken');
+          if (apiToken) {
+            TogglButton.fetchUser(TogglButton.$newApiUrl, apiToken);
+          }
         }
       }
     });
@@ -95,13 +104,15 @@ var TogglButton = {
   ajax: function (url, opts) {
     var xhr = new XMLHttpRequest(),
       method = opts.method || 'GET',
-      baseUrl = opts.baseUrl || TogglButton.$newApiUrl;
+      baseUrl = opts.baseUrl || TogglButton.$newApiUrl,
+      token = opts.token || (TogglButton.$user && TogglButton.$user.api_token);
+
     xhr.open(method, baseUrl + url, true);
     if (opts.onLoad) {
       xhr.addEventListener('load', function () { opts.onLoad(xhr); });
     }
-    if (TogglButton.$user) {
-      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(TogglButton.$user.api_token + ':api_token'));
+    if (token && token !== ' ') {
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(token + ':api_token'));
     }
     xhr.send(JSON.stringify(opts.payload));
   },

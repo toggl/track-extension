@@ -23,6 +23,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [YouTrack (InCloud)][19]
   - [CapsuleCRM][20]
   - [Xero][21]
+  - [Zendesk][22]
 
 ## Installing from the Web Store
 
@@ -37,7 +38,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 
 ## Using the Button
 1.  Log in to your [Toggl][1] account and keep yourself logged in (no need to keep the tab open).
-2.  Go to your [TeamWeek][2], [Pivotal Tracker][3], [Github][4], [Asana][5], [Unfuddle][6], [Gitlab][7], [Trello][8], [Worksection][9], [Redbooth][10], [Podio][11], [Basecamp][12], [JIRA][13], [Producteev][14], [Bitbucket][15], [Stifer][16], [Google Docs][17], [Redmine][18], [YouTrack][19], [CapsuleCRM][20], [Xero][21] account and start your Toggl timer there.
+2.  Go to your [TeamWeek][2], [Pivotal Tracker][3], [Github][4], [Asana][5], [Unfuddle][6], [Gitlab][7], [Trello][8], [Worksection][9], [Redbooth][10], [Podio][11], [Basecamp][12], [JIRA][13], [Producteev][14], [Bitbucket][15], [Stifer][16], [Google Docs][17], [Redmine][18], [YouTrack][19], [CapsuleCRM][20], [Xero][21], [Zendesk][22] account and start your Toggl timer there.
 3.  To stop the current running timer:
   - press the button again
   - start another time entry inside your account.
@@ -67,4 +68,5 @@ Want to contribute? Great! Just fork the project, make your changes and open a [
 [19]: http://myjetbrains.com/
 [20]: http://www.capsulecrm.com/
 [21]: https://www.xero.com/
+[21]: https://www.zendesk.com/
 [99]: https://github.com/toggl/toggl-button/pulls

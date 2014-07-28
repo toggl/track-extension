@@ -35,7 +35,8 @@
     "*://*.myjetbrains.com/*",
     "*://*.capsulecrm.com/*",
     "*://*.zendesk.com/*",
-    "*://go.xero.com/*"
+    "*://go.xero.com/*",
+    "*://web.any.do/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -65,7 +66,8 @@
         "*://*.myjetbrains.com/*",
         "*://*.capsulecrm.com/*",
         "*://*.zendesk.com/*",
-        "*://go.xero.com/*"
+        "*://go.xero.com/*",
+        "*://web.any.do/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -157,6 +159,10 @@
     {
       "matches": ["https://go.xero.com/*"],
       "js": ["scripts/content/xero.js"]
+    },
+    {
+      "matches": ["https://web.any.do/*"],
+      "js": ["scripts/content/anydo.js"]
     }
   ]
 }

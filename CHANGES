@@ -1,3 +1,7 @@
+[0.3.6]
+- API requests refactoring
+- Save logged in user to extension localStorage
+- Resolve the 999.00 hours problem with incorrect date and/or time
 [0.3.5]
 - Fix toggl.com regexp to support push state
 [0.3.4]

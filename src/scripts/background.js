@@ -4,7 +4,7 @@
 
 var TogglButton = {
   $user: null,
-  $curEntryId: null,
+  $curEntry: null,
   $apiUrl: "https://old.toggl.com/api/v7",
   $newApiUrl: "https://www.toggl.com/api/v8",
   $sites: new RegExp(
@@ -93,10 +93,10 @@ var TogglButton = {
       method: 'POST',
       payload: entry,
       onLoad: function (xhr) {
-        var responseData, entryId;
+        var responseData;
         responseData = JSON.parse(xhr.responseText);
-        entryId = responseData && responseData.data && responseData.data.id;
-        TogglButton.$curEntryId = entryId;
+        entry = responseData && responseData.data;
+        TogglButton.$curEntry = entry;
       }
     });
   },
@@ -117,10 +117,20 @@ var TogglButton = {
     xhr.send(JSON.stringify(opts.payload));
   },
 
-  stopTimeEntry: function (entryId) {
-    entryId = entryId || TogglButton.$curEntryId;
-    if (!entryId) { return; }
-    TogglButton.ajax("/time_entries/" + entryId + "/stop", {method: 'PUT'});
+  stopTimeEntry: function () {
+    if (!TogglButton.$curEntry) { return; }
+    var stopTime = new Date(),
+      startTime = new Date(-TogglButton.$curEntry.duration * 1000);
+
+    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+      method: 'PUT',
+      payload: {
+        time_entry: {
+          stop: stopTime.toISOString(),
+          duration: Math.floor(((stopTime - startTime) / 1000))
+        }
+      }
+    });
   },
 
   setPageAction: function (tabId) {

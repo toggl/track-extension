@@ -1,3 +1,7 @@
+[0.3.7]
+- Added support for Any.Do
+- Added support for ZenDesk
+- Time entry is marked as billable if the project is billable
 [0.3.6]
 - API requests refactoring
 - Save logged in user to extension localStorage

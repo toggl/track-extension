@@ -87,9 +87,11 @@ var TogglButton = {
           created_with: timeEntry.createdWith || 'TogglButton'
         }
       };
+
     if (timeEntry.projectName !== undefined) {
       project = TogglButton.$user.projectMap[timeEntry.projectName];
       entry.time_entry.pid = project && project.id;
+      entry.time_entry.billable = project && project.billable;
     }
 
     TogglButton.ajax('/time_entries', {

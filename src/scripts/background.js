@@ -55,7 +55,7 @@ var TogglButton = {
           resp = JSON.parse(xhr.responseText);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
-              projectMap[project.name] = project.id;
+              projectMap[project.name] = project;
             });
           }
           TogglButton.$user = resp.data;
@@ -75,7 +75,7 @@ var TogglButton = {
   },
 
   createTimeEntry: function (timeEntry) {
-    var start = new Date(),
+    var project, start = new Date(),
       entry = {
         time_entry: {
           start: start.toISOString(),
@@ -88,7 +88,8 @@ var TogglButton = {
         }
       };
     if (timeEntry.projectName !== undefined) {
-      entry.time_entry.pid = TogglButton.$user.projectMap[timeEntry.projectName];
+      project = TogglButton.$user.projectMap[timeEntry.projectName];
+      entry.time_entry.pid = project && project.id;
     }
 
     TogglButton.ajax('/time_entries', {

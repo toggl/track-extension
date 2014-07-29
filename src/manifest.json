@@ -36,7 +36,8 @@
     "*://*.capsulecrm.com/*",
     "*://*.zendesk.com/*",
     "*://go.xero.com/*",
-    "*://web.any.do/*"
+    "*://web.any.do/*",
+    "*://*.todoist.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -67,7 +68,8 @@
         "*://*.capsulecrm.com/*",
         "*://*.zendesk.com/*",
         "*://go.xero.com/*",
-        "*://web.any.do/*"
+        "*://web.any.do/*",
+        "*://*.todoist.com/app*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -163,6 +165,10 @@
     {
       "matches": ["https://web.any.do/*"],
       "js": ["scripts/content/anydo.js"]
+    },
+    {
+      "matches": ["https://*.todoist.com/app*"],
+      "js": ["scripts/content/todoist.js"]
     }
   ]
 }

@@ -180,6 +180,13 @@
   visibility: hidden;
 }
 
+/********* wunderlist *********/
+.toggl-button.wunderlist {
+  text-decoration: none;
+  cursor: pointer;
+  color: #737373;
+}
+
 .toggl-button.todoist.active {
   visibility: visible;
 }

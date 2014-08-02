@@ -37,7 +37,8 @@
     "*://*.zendesk.com/*",
     "*://go.xero.com/*",
     "*://web.any.do/*",
-    "*://*.todoist.com/*"
+    "*://*.todoist.com/*",
+    "*://*.wunderlist.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -69,7 +70,8 @@
         "*://*.zendesk.com/*",
         "*://go.xero.com/*",
         "*://web.any.do/*",
-        "*://*.todoist.com/app*"
+        "*://*.todoist.com/app*",
+        "*://*.wunderlist.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -169,6 +171,10 @@
     {
       "matches": ["https://*.todoist.com/app*"],
       "js": ["scripts/content/todoist.js"]
+    },
+    {
+      "matches": ["https://*.wunderlist.com/*"],
+      "js": ["scripts/content/wunderlist.js"]
     }
   ]
 }

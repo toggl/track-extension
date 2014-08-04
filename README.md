@@ -14,7 +14,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Redbooth (old UI)][10]
   - [Podio][11]
   - [Basecamp][12]
-  - [JIRA][13]
+  - [JIRA (InCloud)][13]
   - [Producteev][14]
   - [Bitbucket][15]
   - [Sifter][16]

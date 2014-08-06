@@ -4,7 +4,7 @@
 'use strict';
 
 togglbutton.render('.taskItem-titleWrapper:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('a', 'myClass'),
+  var link, container = createTag('a', 'taskItem-toggl'),
     listElem = $('.lists-scroll'),
     titleElem =$('.taskItem-titleWrapper-title',elem),
     projectElem = $('.active',listElem),
@@ -20,12 +20,14 @@ togglbutton.render('.taskItem-titleWrapper:not(.toggl)', {observe: true}, functi
   container.appendChild(link);
   elem.insertBefore(container, titleElem);
 
+
 });
 
 /* Checklist buttons */
-togglbutton.render('.subtask-title:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('div', 'myClass'),
+togglbutton.render('.subtask:not(.toggl)', {observe: true}, function (elem) {
+  var link, container = createTag('span', 'detailItem-toggl small'),
     listElem = $('.lists-scroll'),
+    chkBxElem = $('.checkBox', elem),
     titleElem = $('.title-container'),
     projectElem = $('.active',listElem),
     projectTitleElem = $('.title',projectElem),
@@ -40,7 +42,7 @@ togglbutton.render('.subtask-title:not(.toggl)', {observe: true}, function (elem
   });
 
   container.appendChild(link);
-  taskElem.parentNode.insertBefore(link,taskElem);
+  chkBxElem.parentNode.insertBefore(container,chkBxElem);
 });
 
 

@@ -171,6 +171,31 @@
   margin-left: 10px;
 }
 
+
+/********* wunderlist *********/
+.toggl-button.wunderlist {
+  text-decoration: none;
+  cursor: pointer;
+  color: #737373;
+  margin: 0px;
+  display: inline;
+}
+
+.taskItem-toggl {
+  z-index: 1;
+  display: inline;
+  margin-bottom: -20px;
+  padding-top: -5px;
+  padding-right: 10px;
+  line-height: 100%;
+}
+
+.detailItem-toggl {
+  position: relative;
+  left: 10px;
+  top: 32px;
+}
+
 /****** todoist *********/
 .toggl-button.todoist {
   font-size: 12px;
@@ -180,16 +205,10 @@
   visibility: hidden;
 }
 
-/********* wunderlist *********/
-.toggl-button.wunderlist {
-  text-decoration: none;
-  cursor: pointer;
-  color: #737373;
-}
-
 .toggl-button.todoist.active {
   visibility: visible;
 }
+
 
 .task_content_item:hover .toggl-button {
   visibility: visible;

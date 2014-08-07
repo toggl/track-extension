@@ -1,3 +1,6 @@
+[0.3.9]
+- Github - fix content script for new issues layout
+- Todoist - add button after the notes and strip tags
 [0.3.8]
 - Added support for Todoist
 - Fixed button in new Github issues page

@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#js-discussion-header:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#partial-discussion-header:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
     numElem = $('.gh-header-number', elem),
     titleElem = $('.js-issue-title', elem),

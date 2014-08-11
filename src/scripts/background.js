@@ -159,6 +159,10 @@ var TogglButton = {
       TogglButton.createTimeEntry(request);
     } else if (request.type === 'stop') {
       TogglButton.stopTimeEntry();
+    } else if (request.type === 'userToken') {
+      if (!TogglButton.$user) {
+        TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
+      }
     }
   }
 

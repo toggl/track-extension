@@ -37,7 +37,11 @@
     "*://*.zendesk.com/*",
     "*://go.xero.com/*",
     "*://web.any.do/*",
-    "*://*.todoist.com/*"
+    "*://*.todoist.com/*",
+    "*://trac.edgewall.org/*",
+    "*://trac-hacks.org/*",
+    "*://*.trac.wordpress.org/*",
+    "*://bugs.jquery.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -69,7 +73,11 @@
         "*://*.zendesk.com/*",
         "*://go.xero.com/*",
         "*://web.any.do/*",
-        "*://*.todoist.com/app*"
+        "*://*.todoist.com/app*",
+        "*://trac.edgewall.org/*",
+        "*://trac-hacks.org/*",
+        "*://*.trac.wordpress.org/*",
+        "*://bugs.jquery.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -98,7 +106,7 @@
       "matches": ["*://*.bitbucket.org/*"],
       "js": ["scripts/content/bitbucket.js"]
     },
-	  {
+    {
       "matches": ["*://*.github.com/*"],
       "js": ["scripts/content/github.js"]
     },
@@ -173,6 +181,15 @@
     {
       "matches": ["https://*.todoist.com/app*"],
       "js": ["scripts/content/todoist.js"]
+    },
+    {
+      "matches": [
+        "*://trac.edgewall.org/*",
+        "*://trac-hacks.org/*",
+        "*://*.trac.wordpress.org/*",
+        "*://bugs.jquery.com/*"
+      ],
+      "js": ["scripts/content/trac.js"]
     }
   ]
 }

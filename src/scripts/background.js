@@ -30,7 +30,11 @@ var TogglButton = {
       'zendesk\\.com',
       'capsulecrm\\.com',
       'web\\.any\\.do',
-      'todoist\\.com'
+      'todoist\\.com',
+      'trac\\.edgewall\\.org',
+      'trac-hacks\\.org',
+      'trac\\.wordpress\\.org',
+      'bugs\\.jquery\\.com'
     ].join('|')
   ),
 

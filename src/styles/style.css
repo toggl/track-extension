@@ -160,9 +160,9 @@
 
 /****** Zendesk *********/
 .toggl-button.zendesk {
-	float: right;
-	padding-right: 3em;
-	margin-top: -1.5em;
+  float: right;
+  padding-right: 3em;
+  margin-top: -1.5em;
 } 
 
 /****** Anydo *********/
@@ -195,3 +195,118 @@
   padding-left: 22px;
 }
 
+/****** Trac v1.x *********/
+#content .toggl-button.trac {
+  display: inline;
+  background-color: #eee;
+  background-position: 0.1em 0.1em;
+  color: #222;
+  border: 1px outset #eee;
+  border-radius: .3em;
+  box-shadow: .1em .1em .4em 0 #888;
+  text-shadow: .1em .1em #ddd;
+  padding: .1em .3em 0 1.7em;
+  margin: 0 0 0 0.2em;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+#content .toggl-button.trac:hover {
+  background-color: #f6f6f6;
+  box-shadow: .1em .1em .6em 0 #999;
+  text-shadow: .1em .1em #fcfcfc;
+}
+
+#content .toggl-button.trac:active {
+  position: relative;
+  top: .1em;
+  left: .1em;
+}
+
+#content .toggl-button.trac.active {
+  color: rgb(34, 34, 34) !important;
+  background-color: rgb(26, 179, 81);
+  border-color: rgb(26, 179, 81);
+  text-shadow: rgb(180, 180, 180) .1em .1em;
+}
+
+#content .toggl-button.trac.active:hover {
+  background-color: rgb(137, 224, 168);
+  border-color: rgb(137, 224, 168);
+}
+
+/****** Trac v0.x *********/
+#content > #trac-ticket-title > .toggl-button.trac {
+  border: 1px outset #ccc;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+  cursor: default;
+}
+
+#content > #trac-ticket-title > .toggl-button.trac:hover {
+  background-color: #ccb;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+#content > #trac-ticket-title > .toggl-button.trac:active {
+  top: 0;
+  left: 0;
+}
+
+#content > #trac-ticket-title > .toggl-button.trac.active {
+  background-color: rgb(137, 224, 168);
+  border-color: rgb(137, 224, 168);
+  text-shadow: none;
+}
+
+#content > #trac-ticket-title > .toggl-button.trac.active:hover {
+  background-color: rgb(26, 179, 81);
+  border-color: rgb(26, 179, 81);
+}
+
+/****** WordPress Trac *********/
+
+#wordpress-org #content .toggl-button.trac {
+  border: 1px solid #eee;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 23px;
+  height: 24px;
+  margin: 0;
+  padding: 0 10px 1px 28px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  background-color: #f3f3f3;
+  border-color: #bbb;
+  color: #333;
+  border-radius: 3px;
+  text-shadow: none;
+  box-shadow: none;
+  background-position: 7px 1px;
+}
+
+#wordpress-org #content .toggl-button.trac:hover {
+  border-color: #999;
+  color: #222;
+}
+
+#wordpress-org #content .toggl-button.trac:active {
+  top: 0;
+  left: 0;
+}
+
+#wordpress-org #content .toggl-button.trac.active {
+  color: rgb(34, 34, 34) !important;
+  background-color: rgb(137, 224, 168);
+  border-color: rgb(26, 179, 81);
+}
+
+#wordpress-org #content .toggl-button.trac.active:hover {
+  border-color: rgb(22, 148, 67);
+}

@@ -140,9 +140,9 @@ var TogglButton = {
   },
 
   setBrowserAction: function () {
-    var imagePath = 'images/inactive-19.png';
+    var imagePath = {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'};
     if (TogglButton.$user !== null) {
-      imagePath = 'images/active-19.png';
+      imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
     }
     chrome.browserAction.setIcon({
       path: imagePath

@@ -8,7 +8,7 @@
       "scripts/background.js"
     ]
   },
-  "page_action": {
+  "browser_action": {
     "default_icon": "images/inactive-19.png",
     "default_title": "Toggl Time Tracker"
   },

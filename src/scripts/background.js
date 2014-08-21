@@ -37,7 +37,7 @@ var TogglButton = {
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
       if (TogglButton.$sites.test(tab.url)) {
-        TogglButton.setPageAction(tabId);
+        TogglButton.setBrowserAction();
       } else if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app\/index/.test(tab.url)) {
@@ -139,21 +139,19 @@ var TogglButton = {
     });
   },
 
-  setPageAction: function (tabId) {
+  setBrowserAction: function () {
     var imagePath = 'images/inactive-19.png';
     if (TogglButton.$user !== null) {
       imagePath = 'images/active-19.png';
     }
-    chrome.pageAction.setIcon({
-      tabId: tabId,
+    chrome.browserAction.setIcon({
       path: imagePath
     });
-    chrome.pageAction.show(tabId);
   },
 
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
-      TogglButton.setPageAction(sender.tab.id);
+      TogglButton.setBrowserAction();
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request);
@@ -168,7 +166,7 @@ var TogglButton = {
 
 };
 
-chrome.pageAction.onClicked.addListener(function (tab) {
+chrome.browserAction.onClicked.addListener(function (tab) {
   if (TogglButton.$user === null) {
     chrome.tabs.create({url: 'https://www.toggl.com/#login'});
   }

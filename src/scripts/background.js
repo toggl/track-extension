@@ -103,6 +103,7 @@ var TogglButton = {
         responseData = JSON.parse(xhr.responseText);
         entry = responseData && responseData.data;
         TogglButton.$curEntry = entry;
+        TogglButton.setBrowserAction(entry);
       }
     });
   },
@@ -135,26 +136,37 @@ var TogglButton = {
           stop: stopTime.toISOString(),
           duration: Math.floor(((stopTime - startTime) / 1000))
         }
+      },
+      onLoad: function (xhr) {
+        if (xhr.status === 200) {
+          TogglButton.$curEntry = null;
+          TogglButton.setBrowserAction(null);
+        }
       }
     });
   },
 
-  setBrowserAction: function () {
+  setBrowserActionBadge: function () {
     var badge = "";
     if (TogglButton.$user === null) {
       badge = "x";
-      TogglButton.setBrowserActionIcon(null);
+      TogglButton.setBrowserAction(null);
     }
     chrome.browserAction.setBadgeText(
       {text: badge}
     );
   },
 
-  setBrowserActionIcon: function (running) {
+  setBrowserAction: function (runningEntry) {
     var imagePath = {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'};
-    if (running !== null) {
+    var title = chrome.runtime.getManifest().browser_action.default_title;
+    if (runningEntry !== null) {
       imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
+      title = runningEntry.description + " - Toggl";
     }
+    chrome.browserAction.setTitle({
+      title: title
+      });
     chrome.browserAction.setIcon({
       path: imagePath
     });
@@ -162,7 +174,7 @@ var TogglButton = {
 
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
-      TogglButton.setBrowserAction();
+      TogglButton.setBrowserActionBadge();
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request);

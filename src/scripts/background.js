@@ -36,9 +36,9 @@ var TogglButton = {
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
-      if (TogglButton.$sites.test(tab.url)) {
+      /*if (TogglButton.$sites.test(tab.url)) {
         TogglButton.setBrowserAction();
-      } else if (/toggl\.com\/track/.test(tab.url)) {
+      } else */if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app\/index/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
@@ -140,8 +140,19 @@ var TogglButton = {
   },
 
   setBrowserAction: function () {
+    var badge = "";
+    if (TogglButton.$user === null) {
+      badge = "x";
+      TogglButton.setBrowserActionIcon(null);
+    }
+    chrome.browserAction.setBadgeText(
+      {text: badge}
+    );
+  },
+
+  setBrowserActionIcon: function (running) {
     var imagePath = {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'};
-    if (TogglButton.$user !== null) {
+    if (running !== null) {
       imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
     }
     chrome.browserAction.setIcon({

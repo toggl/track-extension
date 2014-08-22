@@ -36,9 +36,7 @@ var TogglButton = {
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
-      /*if (TogglButton.$sites.test(tab.url)) {
-        TogglButton.setBrowserAction();
-      } else */if (/toggl\.com\/track/.test(tab.url)) {
+      if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app\/index/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
@@ -171,15 +169,15 @@ var TogglButton = {
   },
 
   setBrowserAction: function (runningEntry) {
-    var imagePath = {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'};
-    var title = chrome.runtime.getManifest().browser_action.default_title;
+    var imagePath = {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'},
+      title = chrome.runtime.getManifest().browser_action.default_title;
     if (runningEntry !== null) {
       imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
       title = runningEntry.description + " - Toggl";
     }
     chrome.browserAction.setTitle({
       title: title
-      });
+    });
     chrome.browserAction.setIcon({
       path: imagePath
     });
@@ -203,12 +201,6 @@ var TogglButton = {
   }
 
 };
-
-chrome.browserAction.onClicked.addListener(function (tab) {
-  if (TogglButton.$user === null) {
-    chrome.tabs.create({url: 'https://www.toggl.com/#login'});
-  }
-});
 
 TogglButton.fetchUser(TogglButton.$apiUrl);
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);

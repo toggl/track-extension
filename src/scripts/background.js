@@ -146,6 +146,19 @@ var TogglButton = {
     });
   },
 
+  updateTimeEntry: function (timeEntry) {
+    if (!TogglButton.$curEntry) { return; }
+    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+      method: 'PUT',
+      payload: {
+        time_entry: {
+          description: timeEntry.description,
+          pid: timeEntry.pid
+        }
+      }
+    });
+  },
+
   setBrowserActionBadge: function () {
     var badge = "";
     if (TogglButton.$user === null) {
@@ -178,6 +191,8 @@ var TogglButton = {
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request);
+    } else if (request.type === 'update') {
+      TogglButton.updateTimeEntry(request);
     } else if (request.type === 'stop') {
       TogglButton.stopTimeEntry();
     } else if (request.type === 'userToken') {

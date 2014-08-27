@@ -30,6 +30,7 @@
     "*://*.worksection.com/*",
     "*://*.basecamp.com/*",
     "*://*.atlassian.net/*",
+	"*://*.jira.com/*",
     "*://*.producteev.com/*",
     "*://*.bitbucket.org/*",
     "*://*.sifterapp.com/*",
@@ -63,6 +64,7 @@
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/*",
+		"*://*.jira.com/*",	
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*",
         "*://docs.google.com/*",
@@ -139,6 +141,10 @@
     },
     {
       "matches": ["*://*.atlassian.net/*"],
+      "js": ["scripts/content/jira.js"]
+    },
+    {
+      "matches": ["*://*.jira.com/*"],
       "js": ["scripts/content/jira.js"]
     },
     {

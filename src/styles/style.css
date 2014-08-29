@@ -14,19 +14,21 @@
 }
 
 .toggl-button-edit-form {
+  position: absolute;
   width: 240px;
-  height: 180px;
+  height: 240px;
   padding: 10px;
   -webkit-box-shadow: 0 1px 3px rgba(128,128,128,.5);
   -moz-box-shadow: 0 1px 3px rgba(128,128,128,.5);
   box-shadow: 0 1px 3px rgba(128,128,128,.5);
   -webkit-border-radius: 3px;
   border-radius: 3px;
+  background-color: #ffffff;
 }
 
 .toggl-button-row {
   margin: 0;
-  padding: 0;
+  padding: 10px 0;
 }
 .toggl-button-row label {
   display: block;
@@ -44,9 +46,10 @@ p.toggl-button-row.first {
   padding: 5px;
   width: 220px;
 }
-.toggl-button_project {
-  height: 25px;
-  width: 230px;
+#toggl-button-project {
+  height: 34px;
+  width: 220px;
+  font-size: 13px;
 }
 .toggl-button-submit-row input {
   font-size: 0.7em;

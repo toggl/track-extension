@@ -5,6 +5,7 @@
 var TogglButton = {
   $user: null,
   $curEntry: null,
+  $showPostPopup: false,
   $apiUrl: "https://old.toggl.com/api/v7",
   $newApiUrl: "https://www.toggl.com/api/v8",
   $sites: new RegExp(
@@ -33,6 +34,22 @@ var TogglButton = {
       'todoist\\.com'
     ].join('|')
   ),
+
+  $editForm: '<div class="toggl-button-edit-form">' +
+      '<a class="toggl-button github active" href="#">Stop timer</a>' +
+      '<p class="toggl-button-row">' +
+        '<label for="toggl-button-description">Description:</label>' +
+        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="">' +
+      '</p>' +
+      '<p class="toggl-button-row">' +
+        '<label for="toggl-button-project">Project:</label>' +
+        '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
+      '</p>' +
+      '<p class="toggl-button-submit-row">' +
+        '<input type="button" value="Cancel" class="toggl-button-hide">' +
+        '<input type="button" value="Update" class="toggl-button-update">' +
+      '</p>' +
+    '</div>',
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
@@ -102,8 +119,8 @@ var TogglButton = {
         entry = responseData && responseData.data;
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
-        if (timeEntry.respond !== null) {
-          sendResponse({success: (xhr.status === 200), type: "New Entry"});
+        if (!!timeEntry.respond) {
+          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup});
         }
       }
     });
@@ -146,7 +163,7 @@ var TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$curEntry = null;
           TogglButton.setBrowserAction(null);
-          if (timeEntry.respond !== null) {
+          if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
           }
         }
@@ -171,7 +188,7 @@ var TogglButton = {
         entry = responseData && responseData.data;
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
-        if (timeEntry.respond !== null) {
+        if (!!timeEntry.respond) {
           sendResponse({success: (xhr.status === 200), type: "Update"});
         }
       }
@@ -227,10 +244,26 @@ var TogglButton = {
     });
   },
 
+  getEditForm: function () {
+    return TogglButton.$editForm.replace("{projects}", TogglButton.fillProjects());
+  },
+
+  fillProjects: function () {
+    var html = "<option value='0'>- No Project -</option>",
+      projects = TogglButton.$user.projectMap,
+      key = null;
+    for (key in projects) {
+      if (projects.hasOwnProperty(key)) {
+        html += "<option value='" + projects[key].id + "'>" + key + "</option>";
+      }
+    }
+    return html;
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.setBrowserActionBadge();
-      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, html: TogglButton.getEditForm()});
     } else if (request.type === 'login') {
       TogglButton.loginUser(request.username, request.password, sendResponse);
     } else if (request.type === 'logout') {
@@ -241,6 +274,9 @@ var TogglButton = {
       TogglButton.updateTimeEntry(request, sendResponse);
     } else if (request.type === 'stop') {
       TogglButton.stopTimeEntry(request, sendResponse);
+    } else if (request.type === 'toggle-popup') {
+      localStorage.setItem("showPostPopup", request.state);
+      TogglButton.$showPostPopup = request.state;
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
@@ -252,5 +288,6 @@ var TogglButton = {
 };
 
 TogglButton.fetchUser(TogglButton.$apiUrl);
+TogglButton.$showPostPopup = !!localStorage.getItem("showPostPopup");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

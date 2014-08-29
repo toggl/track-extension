@@ -43,9 +43,12 @@ function invokeIfFunction(trial) {
 
 var togglbutton = {
   isStarted: false,
+  editHtml: null,
+  element: null,
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
+        togglbutton.editHtml = response.html;
         if (opts.observe) {
           var observer = new MutationObserver(function (mutations) {
             togglbutton.renderTo(selector, renderer);
@@ -65,6 +68,52 @@ var togglbutton = {
     for (i = 0, len = elems.length; i < len; i += 1) {
       renderer(elems[i]);
     }
+  },
+
+  addEditForm: function (response) {
+    if (response === null || !response.showPostPopup) {
+      return;
+    }
+    var pid = (!!response.entry.pid) ? response.entry.pid : 0,
+      bodyRect,
+      elemRect,
+      offsetY,
+      offsetX,
+      div = document.createElement('div'),
+      editForm;
+    if (document.querySelector(".toggl-button-edit-form") !== null) {
+      document.querySelector("#toggl-button-description").value = response.entry.description;
+      document.querySelector("#toggl-button-project").value = pid;
+      document.querySelector(".toggl-button-edit-form").style.display = "block";
+      return;
+    }
+
+    bodyRect = document.body.getBoundingClientRect();
+    elemRect = togglbutton.element.getBoundingClientRect();
+    offsetY = elemRect.top - bodyRect.top;
+    offsetX = elemRect.left - bodyRect.left;
+    div.innerHTML = togglbutton.editHtml;
+    editForm = div.firstChild;
+
+    editForm.style.left = (offsetX - 10) + "px";
+    editForm.style.top = (offsetY - 10) + "px";
+
+    document.body.appendChild(editForm);
+    editForm.querySelector("#toggl-button-description").value = response.entry.description;
+    editForm.querySelector("#toggl-button-project").value = pid;
+    editForm.querySelector(".toggl-button-hide").addEventListener('click', function (e) {
+      document.querySelector(".toggl-button-edit-form").style.display = "none";
+    });
+
+    editForm.querySelector(".toggl-button-update").addEventListener('click', function (e) {
+      var request = {
+        type: "update",
+        description: document.querySelector("#toggl-button-description").value,
+        pid: document.querySelector("#toggl-button-project").value
+      };
+      chrome.extension.sendMessage(request);
+      document.querySelector(".toggl-button-edit-form").style.display = "none";
+    });
   },
 
   createTimerLink: function (params) {
@@ -90,18 +139,21 @@ var togglbutton = {
         linkText = 'Stop timer';
         opts = {
           type: 'timeEntry',
+          respond: true,
           projectId: invokeIfFunction(params.projectId),
           description: invokeIfFunction(params.description),
           projectName: invokeIfFunction(params.projectName),
           createdWith: 'TogglButton - ' + params.className
         };
       }
-      chrome.extension.sendMessage(opts);
+      togglbutton.element = e.target;
+      chrome.extension.sendMessage(opts, togglbutton.addEditForm);
       this.isStarted = !this.isStarted;
       link.style.color = color;
       if (params.buttonType !== 'minimal') {
         link.innerHTML = linkText;
       }
+
       return false;
     });
 

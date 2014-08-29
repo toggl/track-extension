@@ -73,7 +73,7 @@ var TogglButton = {
     });
   },
 
-  createTimeEntry: function (timeEntry) {
+  createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       entry = {
         time_entry: {
@@ -102,6 +102,9 @@ var TogglButton = {
         entry = responseData && responseData.data;
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
+        if (timeEntry.respond !== null) {
+          sendResponse({success: (xhr.status === 200), type: "New Entry"});
+        }
       }
     });
   },
@@ -119,10 +122,13 @@ var TogglButton = {
     if (token && token !== ' ') {
       xhr.setRequestHeader('Authorization', 'Basic ' + btoa(token + ':api_token'));
     }
+    if (credentials) {
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + credentials.password));
+    }
     xhr.send(JSON.stringify(opts.payload));
   },
 
-  stopTimeEntry: function () {
+  stopTimeEntry: function (timeEntry, sendResponse) {
     if (!TogglButton.$curEntry) { return; }
     var stopTime = new Date(),
       startTime = new Date(-TogglButton.$curEntry.duration * 1000);
@@ -139,12 +145,16 @@ var TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$curEntry = null;
           TogglButton.setBrowserAction(null);
+          if (timeEntry.respond !== null) {
+            sendResponse({success: true, type: "Stop"});
+          }
         }
       }
     });
   },
 
-  updateTimeEntry: function (timeEntry) {
+  updateTimeEntry: function (timeEntry, sendResponse) {
+    var entry;
     if (!TogglButton.$curEntry) { return; }
     TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
       method: 'PUT',
@@ -152,6 +162,16 @@ var TogglButton = {
         time_entry: {
           description: timeEntry.description,
           pid: timeEntry.pid
+        }
+      },
+      onLoad: function (xhr) {
+        var responseData;
+        responseData = JSON.parse(xhr.responseText);
+        entry = responseData && responseData.data;
+        TogglButton.$curEntry = entry;
+        TogglButton.setBrowserAction(entry);
+        if (timeEntry.respond !== null) {
+          sendResponse({success: (xhr.status === 200), type: "Update"});
         }
       }
     });
@@ -183,21 +203,49 @@ var TogglButton = {
     });
   },
 
+  loginUser: function (username, password, sendResponse) {
+    TogglButton.ajax("/sessions/", {
+      method: 'POST',
+      onLoad: function (xhr) {
+        sendResponse({success: (xhr.status === 200)});
+      },
+      credentials: {
+        username: username,
+        password: password
+      }
+    });
+  },
+
+  logoutUser: function (sendResponse) {
+    TogglButton.ajax("/sessions?created_with=TogglButton", {
+      method: 'DELETE',
+      onLoad: function (xhr) {
+        TogglButton.$user = null;
+        sendResponse({success: (xhr.status === 200), xhr: xhr});
+      }
+    });
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.setBrowserActionBadge();
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
+    } else if (request.type === 'login') {
+      TogglButton.loginUser(request.username, request.password, sendResponse);
+    } else if (request.type === 'logout') {
+      TogglButton.logoutUser(sendResponse);
     } else if (request.type === 'timeEntry') {
-      TogglButton.createTimeEntry(request);
+      TogglButton.createTimeEntry(request, sendResponse);
     } else if (request.type === 'update') {
-      TogglButton.updateTimeEntry(request);
+      TogglButton.updateTimeEntry(request, sendResponse);
     } else if (request.type === 'stop') {
-      TogglButton.stopTimeEntry();
+      TogglButton.stopTimeEntry(request, sendResponse);
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
       }
     }
+    return true;
   }
 
 };

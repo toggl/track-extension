@@ -13,6 +13,7 @@
       "19": "images/inactive-19.png",
       "38": "images/inactive-38.png"
     },
+    "default_popup": "html/popup.html",
     "default_title": "Toggl Time Tracker"
   },
   "permissions": [

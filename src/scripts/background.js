@@ -113,7 +113,8 @@ var TogglButton = {
     var xhr = new XMLHttpRequest(),
       method = opts.method || 'GET',
       baseUrl = opts.baseUrl || TogglButton.$newApiUrl,
-      token = opts.token || (TogglButton.$user && TogglButton.$user.api_token);
+      token = opts.token || (TogglButton.$user && TogglButton.$user.api_token),
+      credentials = opts.credentials || null;
 
     xhr.open(method, baseUrl + url, true);
     if (opts.onLoad) {

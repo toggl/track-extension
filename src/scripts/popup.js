@@ -23,7 +23,11 @@ var PopUp = {
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
       if (!!response.success) {
-        window.location.reload();
+        if (!!response.type && response.type === "Stop") {
+          window.close();
+        } else {
+          window.location.reload();
+        }
       }
     });
   },

@@ -172,6 +172,7 @@ var TogglButton = {
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
           }
+          TogglButton.refreshPage();
         }
       }
     });
@@ -233,9 +234,7 @@ var TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
         TogglButton.fetchUser(TogglButton.$newApiUrl);
-        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-          chrome.tabs.reload(tabs[0].id);
-        });
+        TogglButton.refreshPage();
       },
       credentials: {
         username: request.username,
@@ -250,7 +249,7 @@ var TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$user = null;
         sendResponse({success: (xhr.status === 200), xhr: xhr});
-        TogglButton.setBrowserActionBadge();
+        TogglButton.refreshPage();
       }
     });
   },
@@ -272,6 +271,12 @@ var TogglButton = {
       }
     }
     return html;
+  },
+
+  refreshPage: function () {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+      chrome.tabs.reload(tabs[0].id);
+    });
   },
 
   newMessage: function (request, sender, sendResponse) {

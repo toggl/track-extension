@@ -140,3 +140,8 @@ p.form-row.first {
 button:focus {
   outline: none;
 }
+hr {
+  border: none;
+  margin: 0 5px;
+  border-top: 1px solid #ddd;
+}

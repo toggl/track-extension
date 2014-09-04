@@ -138,5 +138,5 @@ p.form-row.first {
   width: 200px;
 }
 button:focus {
-  outline: 3px auto #ddd;
+  outline: none;
 }

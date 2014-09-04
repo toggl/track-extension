@@ -8,6 +8,7 @@ var TogglButton = {
   $showPostPopup: false,
   $apiUrl: "https://old.toggl.com/api/v7",
   $newApiUrl: "https://www.toggl.com/api/v8",
+  $sendResponse: null,
   $sites: new RegExp(
     [
       'asana\\.com',
@@ -78,6 +79,11 @@ var TogglButton = {
           TogglButton.$user.projectMap = projectMap;
           localStorage.removeItem('userToken');
           localStorage.setItem('userToken', resp.data.api_token);
+          if (TogglButton.$sendResponse !== null) {
+            TogglButton.$sendResponse({success: (xhr.status === 200)});
+            TogglButton.$sendResponse = null;
+            TogglButton.setBrowserActionBadge();
+          }
         } else if (apiUrl === TogglButton.$apiUrl) {
           TogglButton.fetchUser(TogglButton.$newApiUrl);
         } else if (apiUrl === TogglButton.$newApiUrl && !token) {
@@ -226,7 +232,10 @@ var TogglButton = {
       method: 'POST',
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
-        TogglButton.getUser(request.tab);
+        TogglButton.fetchUser(TogglButton.$newApiUrl);
+        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+          chrome.tabs.reload(tabs[0].id);
+        });
       },
       credentials: {
         username: request.username,
@@ -241,11 +250,15 @@ var TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$user = null;
         sendResponse({success: (xhr.status === 200), xhr: xhr});
+        TogglButton.setBrowserActionBadge();
       }
     });
   },
 
   getEditForm: function () {
+    if (TogglButton.$user === null) {
+      return "";
+    }
     return TogglButton.$editForm.replace("{projects}", TogglButton.fillProjects());
   },
 
@@ -266,7 +279,7 @@ var TogglButton = {
       TogglButton.setBrowserActionBadge();
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, html: TogglButton.getEditForm()});
     } else if (request.type === 'login') {
-      TogglButton.loginUser(request.username, request.password, sendResponse);
+      TogglButton.loginUser(request, sendResponse);
     } else if (request.type === 'logout') {
       TogglButton.logoutUser(sendResponse);
     } else if (request.type === 'timeEntry') {

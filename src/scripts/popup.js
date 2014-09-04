@@ -22,7 +22,7 @@ var PopUp = {
 
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
-      if (response.success) {
+      if (!!response.success) {
         window.location.reload();
       }
     });

@@ -171,8 +171,10 @@ var TogglButton = {
           TogglButton.setBrowserAction(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
+            });
           }
-          TogglButton.refreshPage();
         }
       }
     });

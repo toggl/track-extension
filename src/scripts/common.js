@@ -75,6 +75,7 @@ var togglbutton = {
       return;
     }
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
+      handler,
       bodyRect,
       elemRect,
       offsetY,
@@ -99,12 +100,13 @@ var togglbutton = {
     editForm.style.top = (offsetY - 10) + "px";
     document.body.appendChild(editForm);
 
-    var handler = function(e) {
+    handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
         document.querySelector(".toggl-button-edit-form").style.display = "none";
         this.removeEventListener("click", handler);
       }
-    }
+    };
+
     editForm.querySelector("#toggl-button-description").value = response.entry.description;
     editForm.querySelector("#toggl-button-project").value = pid;
     editForm.querySelector(".toggl-button-hide").addEventListener('click', function (e) {
@@ -170,5 +172,24 @@ var togglbutton = {
     // new button created - reset state
     this.isStarted = false;
     return link;
+  },
+
+  newMessage: function (request, sender, sendResponse) {
+    if (request.type === 'stop-entry') {
+      var linkText, color = '',
+        link = document.querySelector(".toggl-button");
+      if (/active/.test(link.className)) {
+        link.classList.remove('active');
+        linkText = 'Start timer';
+      } else {
+        link.classList.add('active');
+        color = '#1ab351';
+        linkText = 'Stop timer';
+      }
+      link.style.color = color;
+      link.innerHTML = linkText;
+    }
   }
 };
+
+chrome.extension.onMessage.addListener(togglbutton.newMessage);

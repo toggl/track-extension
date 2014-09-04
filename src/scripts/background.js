@@ -141,7 +141,7 @@ var TogglButton = {
       xhr.setRequestHeader('Authorization', 'Basic ' + btoa(token + ':api_token'));
     }
     if (credentials) {
-      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + credentials.password));
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + ':' + credentials.password));
     }
     xhr.send(JSON.stringify(opts.payload));
   },
@@ -221,15 +221,16 @@ var TogglButton = {
     });
   },
 
-  loginUser: function (username, password, sendResponse) {
-    TogglButton.ajax("/sessions/", {
+  loginUser: function (request, sendResponse) {
+    TogglButton.ajax("/sessions", {
       method: 'POST',
       onLoad: function (xhr) {
-        sendResponse({success: (xhr.status === 200)});
+        TogglButton.$sendResponse = sendResponse;
+        TogglButton.getUser(request.tab);
       },
       credentials: {
-        username: username,
-        password: password
+        username: request.username,
+        password: request.password
       }
     });
   },

@@ -41,7 +41,7 @@ var TogglButton = {
   ),
 
   $editForm: '<div class="toggl-button-edit-form">' +
-      '<a class="toggl-button github active" href="#">Stop timer</a>' +
+      '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +
         '<label for="toggl-button-description">Description:</label>' +
         '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="">' +

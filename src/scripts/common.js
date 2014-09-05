@@ -45,6 +45,7 @@ var togglbutton = {
   isStarted: false,
   editHtml: null,
   element: null,
+  serviceName: '',
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
@@ -93,7 +94,7 @@ var togglbutton = {
     elemRect = togglbutton.element.getBoundingClientRect();
     offsetY = elemRect.top - bodyRect.top;
     offsetX = elemRect.left - bodyRect.left;
-    div.innerHTML = togglbutton.editHtml;
+    div.innerHTML = togglbutton.editHtml.replace("{service}", togglbutton.serviceName);;
     editForm = div.firstChild;
 
     editForm.style.left = (offsetX - 10) + "px";
@@ -131,6 +132,7 @@ var togglbutton = {
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
     link.classList.add(params.className);
+    togglbutton.serviceName = params.className;
 
     if (params.buttonType === 'minimal') {
       link.classList.add('min');

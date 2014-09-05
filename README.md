@@ -14,7 +14,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Redbooth (old UI)][10]
   - [Podio][11]
   - [Basecamp][12]
-  - [JIRA][13]
+  - [JIRA (InCloud)][13]
   - [Producteev][14]
   - [Bitbucket][15]
   - [Sifter][16]
@@ -70,7 +70,7 @@ Want to contribute? Great! Just fork the project, make your changes and open a [
 [16]: https://www.sifterapp.com/
 [17]: https://docs.google.com/
 [18]: http://www.redmine.org/
-[19]: http://myjetbrains.com/
+[19]: http://www.jetbrains.com/youtrack/
 [20]: http://www.capsulecrm.com/
 [21]: https://www.xero.com/
 [22]: https://www.zendesk.com/

@@ -5,7 +5,7 @@ lint:
 
 dist: clean
 	@if [ ! -d "out" ]; then mkdir -p out; fi
-	@cp -R src/manifest.json src/images src/scripts src/styles out/
+	@cp -R src/manifest.json src/images src/scripts src/styles src/html out/
 	@zip -q -r toggl-button out && rm -rf out
 
 clean:

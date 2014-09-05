@@ -5,8 +5,10 @@
 var TogglButton = {
   $user: null,
   $curEntry: null,
+  $showPostPopup: false,
   $apiUrl: "https://old.toggl.com/api/v7",
   $newApiUrl: "https://www.toggl.com/api/v8",
+  $sendResponse: null,
   $sites: new RegExp(
     [
       'asana\\.com',
@@ -31,15 +33,33 @@ var TogglButton = {
       'capsulecrm\\.com',
       'web\\.any\\.do',
       'todoist\\.com',
+      'trac\\.edgewall\\.org',
+      'trac-hacks\\.org',
+      'trac\\.wordpress\\.org',
+      'bugs\\.jquery\\.com',
       'wunderlist\\.com'
     ].join('|')
   ),
 
+  $editForm: '<div id="toggl-button-edit-form">' +
+      '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
+      '<p class="toggl-button-row">' +
+        '<label for="toggl-button-description">Description:</label>' +
+        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="">' +
+      '</p>' +
+      '<p class="toggl-button-row">' +
+        '<label for="toggl-button-project">Project:</label>' +
+        '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
+      '</p>' +
+      '<p id="toggl-button-submit-row">' +
+        '<input type="button" value="Cancel" id="toggl-button-hide">' +
+        '<input type="button" value="Update" id="toggl-button-update">' +
+      '</p>' +
+    '</div>',
+
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
-      if (TogglButton.$sites.test(tab.url)) {
-        TogglButton.setPageAction(tabId);
-      } else if (/toggl\.com\/track/.test(tab.url)) {
+      if (/toggl\.com\/track/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app\/index/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
@@ -64,6 +84,11 @@ var TogglButton = {
           TogglButton.$user.projectMap = projectMap;
           localStorage.removeItem('userToken');
           localStorage.setItem('userToken', resp.data.api_token);
+          if (TogglButton.$sendResponse !== null) {
+            TogglButton.$sendResponse({success: (xhr.status === 200)});
+            TogglButton.$sendResponse = null;
+            TogglButton.setBrowserActionBadge();
+          }
         } else if (apiUrl === TogglButton.$apiUrl) {
           TogglButton.fetchUser(TogglButton.$newApiUrl);
         } else if (apiUrl === TogglButton.$newApiUrl && !token) {
@@ -76,7 +101,7 @@ var TogglButton = {
     });
   },
 
-  createTimeEntry: function (timeEntry) {
+  createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       entry = {
         time_entry: {
@@ -104,6 +129,10 @@ var TogglButton = {
         responseData = JSON.parse(xhr.responseText);
         entry = responseData && responseData.data;
         TogglButton.$curEntry = entry;
+        TogglButton.setBrowserAction(entry);
+        if (!!timeEntry.respond) {
+          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup});
+        }
       }
     });
   },
@@ -112,7 +141,8 @@ var TogglButton = {
     var xhr = new XMLHttpRequest(),
       method = opts.method || 'GET',
       baseUrl = opts.baseUrl || TogglButton.$newApiUrl,
-      token = opts.token || (TogglButton.$user && TogglButton.$user.api_token);
+      token = opts.token || (TogglButton.$user && TogglButton.$user.api_token),
+      credentials = opts.credentials || null;
 
     xhr.open(method, baseUrl + url, true);
     if (opts.onLoad) {
@@ -121,10 +151,13 @@ var TogglButton = {
     if (token && token !== ' ') {
       xhr.setRequestHeader('Authorization', 'Basic ' + btoa(token + ':api_token'));
     }
+    if (credentials) {
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + ':' + credentials.password));
+    }
     xhr.send(JSON.stringify(opts.payload));
   },
 
-  stopTimeEntry: function () {
+  stopTimeEntry: function (timeEntry, sendResponse) {
     if (!TogglButton.$curEntry) { return; }
     var stopTime = new Date(),
       startTime = new Date(-TogglButton.$curEntry.duration * 1000);
@@ -136,41 +169,151 @@ var TogglButton = {
           stop: stopTime.toISOString(),
           duration: Math.floor(((stopTime - startTime) / 1000))
         }
+      },
+      onLoad: function (xhr) {
+        if (xhr.status === 200) {
+          TogglButton.$curEntry = null;
+          TogglButton.setBrowserAction(null);
+          if (!!timeEntry.respond) {
+            sendResponse({success: true, type: "Stop"});
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
+            });
+          }
+        }
       }
     });
   },
 
-  setPageAction: function (tabId) {
-    var imagePath = 'images/inactive-19.png';
-    if (TogglButton.$user !== null) {
-      imagePath = 'images/active-19.png';
+  updateTimeEntry: function (timeEntry, sendResponse) {
+    var entry;
+    if (!TogglButton.$curEntry) { return; }
+    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+      method: 'PUT',
+      payload: {
+        time_entry: {
+          description: timeEntry.description,
+          pid: timeEntry.pid
+        }
+      },
+      onLoad: function (xhr) {
+        var responseData;
+        responseData = JSON.parse(xhr.responseText);
+        entry = responseData && responseData.data;
+        TogglButton.$curEntry = entry;
+        TogglButton.setBrowserAction(entry);
+        if (!!timeEntry.respond) {
+          sendResponse({success: (xhr.status === 200), type: "Update"});
+        }
+      }
+    });
+  },
+
+  setBrowserActionBadge: function () {
+    var badge = "";
+    if (TogglButton.$user === null) {
+      badge = "x";
+      TogglButton.setBrowserAction(null);
     }
-    chrome.pageAction.setIcon({
-      tabId: tabId,
+    chrome.browserAction.setBadgeText(
+      {text: badge}
+    );
+  },
+
+  setBrowserAction: function (runningEntry) {
+    var imagePath = {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'},
+      title = chrome.runtime.getManifest().browser_action.default_title;
+    if (runningEntry !== null) {
+      imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
+      title = runningEntry.description + " - Toggl";
+    }
+    chrome.browserAction.setTitle({
+      title: title
+    });
+    chrome.browserAction.setIcon({
       path: imagePath
     });
-    chrome.pageAction.show(tabId);
+  },
+
+  loginUser: function (request, sendResponse) {
+    TogglButton.ajax("/sessions", {
+      method: 'POST',
+      onLoad: function (xhr) {
+        TogglButton.$sendResponse = sendResponse;
+        TogglButton.fetchUser(TogglButton.$newApiUrl);
+        TogglButton.refreshPage();
+      },
+      credentials: {
+        username: request.username,
+        password: request.password
+      }
+    });
+  },
+
+  logoutUser: function (sendResponse) {
+    TogglButton.ajax("/sessions?created_with=TogglButton", {
+      method: 'DELETE',
+      onLoad: function (xhr) {
+        TogglButton.$user = null;
+        sendResponse({success: (xhr.status === 200), xhr: xhr});
+        TogglButton.refreshPage();
+      }
+    });
+  },
+
+  getEditForm: function () {
+    if (TogglButton.$user === null) {
+      return "";
+    }
+    return TogglButton.$editForm.replace("{projects}", TogglButton.fillProjects());
+  },
+
+  fillProjects: function () {
+    var html = "<option value='0'>- No Project -</option>",
+      projects = TogglButton.$user.projectMap,
+      key = null;
+    for (key in projects) {
+      if (projects.hasOwnProperty(key)) {
+        html += "<option value='" + projects[key].id + "'>" + key + "</option>";
+      }
+    }
+    return html;
+  },
+
+  refreshPage: function () {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+      chrome.tabs.reload(tabs[0].id);
+    });
   },
 
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
-      TogglButton.setPageAction(sender.tab.id);
-      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
+      TogglButton.setBrowserActionBadge();
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, html: TogglButton.getEditForm()});
+    } else if (request.type === 'login') {
+      TogglButton.loginUser(request, sendResponse);
+    } else if (request.type === 'logout') {
+      TogglButton.logoutUser(sendResponse);
     } else if (request.type === 'timeEntry') {
-      TogglButton.createTimeEntry(request);
+      TogglButton.createTimeEntry(request, sendResponse);
+    } else if (request.type === 'update') {
+      TogglButton.updateTimeEntry(request, sendResponse);
     } else if (request.type === 'stop') {
-      TogglButton.stopTimeEntry();
+      TogglButton.stopTimeEntry(request, sendResponse);
+    } else if (request.type === 'toggle-popup') {
+      localStorage.setItem("showPostPopup", request.state);
+      TogglButton.$showPostPopup = request.state;
+    } else if (request.type === 'userToken') {
+      if (!TogglButton.$user) {
+        TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
+      }
     }
+    return true;
   }
 
 };
 
-chrome.pageAction.onClicked.addListener(function (tab) {
-  if (TogglButton.$user === null) {
-    chrome.tabs.create({url: 'https://www.toggl.com/#login'});
-  }
-});
-
 TogglButton.fetchUser(TogglButton.$apiUrl);
+TogglButton.$showPostPopup = !!localStorage.getItem("showPostPopup");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

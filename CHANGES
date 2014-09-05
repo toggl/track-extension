@@ -1,3 +1,15 @@
+[0.4.1]
+- Fixed packaging issue
+[0.4.0]
+- Convert from Page extension to Browser extension
+- Added post Start popup
+- Added Browser extension popup
+- Added Login and logout functionality
+- Added high resolution icons
+- Added offline/online and running/not running indicators to extension icon
+[0.3.9]
+- Github - fix content script for new issues layout
+- Todoist - add button after the notes and strip tags
 [0.3.8]
 - Added support for Todoist
 - Fixed button in new Github issues page

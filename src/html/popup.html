@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Toggl Button</title>
+    <link rel="stylesheet" href="../styles/popup.css"/>
+  </head>
+  <body>
+    <div class="header"></div>
+
+    <ul class="menu view">   
+      <li>
+        <button class="stop-button">Stop timer</button>
+      </li>
+      <li>
+        <button class="popup-button" data-form-enabled="false">Disable post-start popup</button>
+      </li>
+      <hr>
+      <li>
+        <button class="logout-button">Logout</button>
+      </li>
+    </ul>
+
+    <div id="login-form" class="view">
+      <form accept-charset="UTF-8" action="javascript:void(0);" id="signin" method="post">
+        <p class="form-row">
+          <label for="login_email">E-mail:</label>
+          <input name="user_login" type="text" id="login_email" class="text-input" value="">
+        </p>
+        <p class="form-row">
+          <label for="login_password">Password:</label>
+          <input name="user_password" type="password" id="login_password" class="text-input" value="">
+        </p>
+        <p class="form-submit-row cf">
+          <input type="submit" value="Log in" class="btn-small right login-btn">
+        </p>
+      </form>
+    </div>
+
+    <!--div id="entry-form" class="view">
+      <p class="form-row">
+        <label for="entry_description">Description:</label>
+        <input name="entry_description" type="text" id="entry_description" class="text-input" value="">
+      </p>
+      <p class="form-row">
+        <label for="entry_project">Project:</label>
+        <select class="text-input" id="entry_project" name="entry_project"></select>
+      </p>
+      <p class="form-submit-row cf running">
+        <input type="button" value="Cancel" class="btn-small left btn hide-btn">
+        <input type="button" value="Update" class="btn-small right update-btn">
+      </p>
+      <p class="form-submit-row cf stopped">
+        <input type="button" value="Start" class="btn-small right start-btn">
+      </p>
+    </div-->
+
+    <div id="error">Error</div>
+    <script src="../scripts/popup.js"></script>
+  </body>
+</html>

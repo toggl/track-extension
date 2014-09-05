@@ -5,7 +5,7 @@
 
 togglbutton.render('.task-details:not(.toggl)', {observe: true}, function (elem) {
   var link, wrap = createTag('div'),
-    container = $('#leftSide', elem),
+    container = $('.top-level-details', elem),
     titleElem = $('#quickTitle', elem),
     projectElem = $('.folderSelector', elem);
 

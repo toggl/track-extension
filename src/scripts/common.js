@@ -83,10 +83,10 @@ var togglbutton = {
       offsetX,
       div = document.createElement('div'),
       editForm;
-    if (document.querySelector(".toggl-button-edit-form") !== null) {
+    if (document.querySelector("#toggl-button-edit-form") !== null) {
       document.querySelector("#toggl-button-description").value = response.entry.description;
       document.querySelector("#toggl-button-project").value = pid;
-      document.querySelector(".toggl-button-edit-form").style.display = "block";
+      document.querySelector("#toggl-button-edit-form").style.display = "block";
       return;
     }
 
@@ -103,26 +103,26 @@ var togglbutton = {
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        document.querySelector(".toggl-button-edit-form").style.display = "none";
+        document.querySelector("#toggl-button-edit-form").style.display = "none";
         this.removeEventListener("click", handler);
       }
     };
 
     editForm.querySelector("#toggl-button-description").value = response.entry.description;
     editForm.querySelector("#toggl-button-project").value = pid;
-    editForm.querySelector(".toggl-button-hide").addEventListener('click', function (e) {
-      document.querySelector(".toggl-button-edit-form").style.display = "none";
+    editForm.querySelector("#toggl-button-hide").addEventListener('click', function (e) {
+      document.querySelector("#toggl-button-edit-form").style.display = "none";
       this.removeEventListener("click", handler);
     });
 
-    editForm.querySelector(".toggl-button-update").addEventListener('click', function (e) {
+    editForm.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       var request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
         pid: document.querySelector("#toggl-button-project").value
       };
       chrome.extension.sendMessage(request);
-      document.querySelector(".toggl-button-edit-form").style.display = "none";
+      document.querySelector("#toggl-button-edit-form").style.display = "none";
       this.removeEventListener("click", handler);
     });
 

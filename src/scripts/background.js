@@ -40,7 +40,7 @@ var TogglButton = {
     ].join('|')
   ),
 
-  $editForm: '<div class="toggl-button-edit-form">' +
+  $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +
         '<label for="toggl-button-description">Description:</label>' +
@@ -50,9 +50,9 @@ var TogglButton = {
         '<label for="toggl-button-project">Project:</label>' +
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
       '</p>' +
-      '<p class="toggl-button-submit-row">' +
-        '<input type="button" value="Cancel" class="toggl-button-hide">' +
-        '<input type="button" value="Update" class="toggl-button-update">' +
+      '<p id="toggl-button-submit-row">' +
+        '<input type="button" value="Cancel" id="toggl-button-hide">' +
+        '<input type="button" value="Update" id="toggl-button-update">' +
       '</p>' +
     '</div>',
 

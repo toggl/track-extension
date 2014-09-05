@@ -63,6 +63,9 @@ p.toggl-button-row.first {
   margin: 0;
   padding: 0 10px !important;
 }
+#toggl-button-project {
+  width: 100% !important;
+}
 
 #toggl-button-hide, #toggl-button-update {
   height: 34px;

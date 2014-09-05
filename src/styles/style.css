@@ -25,6 +25,7 @@
   -webkit-border-radius: 3px;
   border-radius: 3px;
   background-color: #ffffff;
+  z-index: 999;
 }
 
 #toggl-button-edit-form .toggl-button{

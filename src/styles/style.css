@@ -236,6 +236,11 @@ p.toggl-button-row.first {
   padding-left: 19px;
 }
 
+.toggl-button.google-docs.min {
+  margin-bottom: -10px;
+  margin-left: 5px;
+}
+
 /********* REDMINE *********/
 .toggl-button.redmine {
   float: right;

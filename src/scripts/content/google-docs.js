@@ -11,6 +11,18 @@ togglbutton.render('#docs-toolbar-wrapper', {}, function (elem) {
     className: 'google-docs',
     description: description
   });
-
-  $('#docs-menubar').appendChild(link);
+  if ($('#docs-menubars').style.display !== "none") {
+    link = togglbutton.createTimerLink({
+      className: 'google-docs',
+      description: description
+    });
+    $('#docs-menubar').appendChild(link);
+  } else {
+    link = togglbutton.createTimerLink({
+      className: 'google-docs',
+      buttonType: 'minimal',
+      description: description
+    });
+    $('#docs-toolbar').appendChild(link);
+  }
 });

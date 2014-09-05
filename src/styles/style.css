@@ -25,11 +25,11 @@
   -webkit-border-radius: 3px;
   border-radius: 3px;
   background-color: #ffffff;
-  z-index: 999;
+  z-index: 999999;
 }
 
 #toggl-button-edit-form .toggl-button{
-  margin-left: 0 !important;
+  margin: 0 !important;
   border: none !important;
 }
 #toggl-button-edit-form .toggl-button:hover{

@@ -3,11 +3,11 @@
 
 'use strict';
 
-togglbutton.render('.tb_task.expanded:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.js-right-pane .tb-element-big:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    container = $('.name_holder', elem),
-    projectElem = $('.project a', elem),
-    titleElem = $('.name', container);
+    container = $('.tb-element-title', elem),
+    projectElem = $('.tb-element-subtitle a', elem),
+    titleElem = $('.js-element-title-inner a', container);
 
   link = togglbutton.createTimerLink({
     className: 'redbooth',

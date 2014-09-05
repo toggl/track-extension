@@ -188,6 +188,10 @@
   padding-top: -5px;
   padding-right: 10px;
   line-height: 100%;
+  position: absolute;
+  top: 8px;
+  bottom: 0;
+  left: 0;
 }
 
 .detailItem-toggl {
@@ -195,6 +199,12 @@
   left: 10px;
   top: 32px;
 }
+
+.toggl > .taskItem-titleWrapper-title, .toggl > .taskItem-titleMeta-info {
+  margin-left: 25px;
+}
+
+
 
 /****** todoist *********/
 .toggl-button.todoist {

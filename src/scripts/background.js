@@ -83,6 +83,7 @@ var TogglButton = {
           if (resp.data.time_entries) {
             resp.data.time_entries.some(function (entry) {
               if (entry.duration < 0) {
+                TogglButton.$curEntry = entry;
                 TogglButton.setBrowserAction(entry);
                 return true;
               }

@@ -80,6 +80,15 @@ var TogglButton = {
               projectMap[project.name] = project;
             });
           }
+          if (resp.data.time_entries) {
+            resp.data.time_entries.some(function (entry) {
+              if (entry.duration < 0) {
+                TogglButton.setBrowserAction(entry);
+                return true;
+              }
+              return false;
+            });
+          }
           TogglButton.$user = resp.data;
           TogglButton.$user.projectMap = projectMap;
           localStorage.removeItem('userToken');

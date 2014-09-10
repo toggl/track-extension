@@ -130,6 +130,22 @@ var togglbutton = {
   },
 
   createTimerLink: function (params) {
+    function activate() {
+      link.classList.add('active');
+      link.style.color = '#1ab351';
+      if (params.buttonType !== 'minimal') {
+        link.innerHTML = 'Stop Timer';
+      }
+    }
+
+    function deactivate() {
+      link.classList.remove('active');
+      link.style.color = '';
+      if (params.buttonType !== 'minimal') {
+        link.innerHTML = 'Start timer';
+      }
+    }
+
     var link = createLink('toggl-button');
     link.classList.add(params.className);
     togglbutton.serviceName = params.className;
@@ -140,17 +156,14 @@ var togglbutton = {
     }
 
     link.addEventListener('click', function (e) {
-      var opts, linkText, color = '';
+      var opts;
       e.preventDefault();
 
-      if (this.isStarted) {
-        link.classList.remove('active');
-        linkText = 'Start timer';
+      if (link.classList.contains('active')) {
+        deactivate();
         opts = {type: 'stop'};
       } else {
-        link.classList.add('active');
-        color = '#1ab351';
-        linkText = 'Stop timer';
+        activate();
         opts = {
           type: 'timeEntry',
           respond: true,
@@ -162,17 +175,22 @@ var togglbutton = {
       }
       togglbutton.element = e.target;
       chrome.extension.sendMessage(opts, togglbutton.addEditForm);
-      this.isStarted = !this.isStarted;
-      link.style.color = color;
-      if (params.buttonType !== 'minimal') {
-        link.innerHTML = linkText;
-      }
 
       return false;
     });
 
-    // new button created - reset state
-    this.isStarted = false;
+    // new button created - set state
+    chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
+      var description, currentEntry;
+      if (response.success) {
+        currentEntry = response.currentEntry;
+        description = invokeIfFunction(params.description);
+        if (description === currentEntry.description) {
+          activate(link);
+        }
+      }
+    });
+
     return link;
   },
 

@@ -6,9 +6,9 @@
 togglbutton.render('.taskItem-titleWrapper:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('a', 'taskItem-toggl'),
     listElem = $('.lists-scroll'),
-    titleElem =$('.taskItem-titleWrapper-title',elem),
-    projectElem = $('.active',listElem),
-    projectTitleElem = $('.title',projectElem);
+    titleElem = $('.taskItem-titleWrapper-title', elem),
+    projectElem = $('.active', listElem),
+    projectTitleElem = $('.title', projectElem);
 
   link = togglbutton.createTimerLink({
     className: 'wunderlist',
@@ -29,20 +29,17 @@ togglbutton.render('.subtask:not(.toggl)', {observe: true}, function (elem) {
     listElem = $('.lists-scroll'),
     chkBxElem = $('.checkBox', elem),
     titleElem = $('.title-container'),
-    projectElem = $('.active',listElem),
-    projectTitleElem = $('.title',projectElem),
-    taskElem = $('.display-view',elem);
-    
+    projectElem = $('.active', listElem),
+    projectTitleElem = $('.title', projectElem),
+    taskElem = $('.display-view', elem);
 
   link = togglbutton.createTimerLink({
     className: 'wunderlist',
     buttonType: 'minimal',
     description: titleElem.innerText + ' - ' + taskElem.innerText,
-    projectName: projectTitleElem.innerText 
+    projectName: projectTitleElem.innerText
   });
 
   container.appendChild(link);
-  chkBxElem.parentNode.insertBefore(container,chkBxElem);
+  chkBxElem.parentNode.insertBefore(container, chkBxElem);
 });
-
-

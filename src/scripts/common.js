@@ -77,28 +77,26 @@ var togglbutton = {
     }
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
       handler,
-      bodyRect,
       elemRect,
-      offsetY,
-      offsetX,
       div = document.createElement('div'),
       editForm;
-    if (document.querySelector("#toggl-button-edit-form") !== null) {
+
+    elemRect = togglbutton.element.getBoundingClientRect();
+    editForm = document.querySelector("#toggl-button-edit-form");
+    if (editForm !== null) {
       document.querySelector("#toggl-button-description").value = response.entry.description;
       document.querySelector("#toggl-button-project").value = pid;
-      document.querySelector("#toggl-button-edit-form").style.display = "block";
+      editForm.style.left = (elemRect.left - 10) + "px";
+      editForm.style.top = (elemRect.top - 10) + "px";
+      editForm.style.display = "block";
       return;
     }
 
-    bodyRect = document.body.getBoundingClientRect();
-    elemRect = togglbutton.element.getBoundingClientRect();
-    offsetY = elemRect.top - bodyRect.top;
-    offsetX = elemRect.left - bodyRect.left;
-    div.innerHTML = togglbutton.editHtml.replace("{service}", togglbutton.serviceName);;
+    div.innerHTML = togglbutton.editHtml.replace("{service}", togglbutton.serviceName);
     editForm = div.firstChild;
 
-    editForm.style.left = (offsetX - 10) + "px";
-    editForm.style.top = (offsetY - 10) + "px";
+    editForm.style.left = (elemRect.left - 10) + "px";
+    editForm.style.top = (elemRect.top - 10) + "px";
     document.body.appendChild(editForm);
 
     handler = function (e) {
@@ -130,6 +128,7 @@ var togglbutton = {
   },
 
   createTimerLink: function (params) {
+    var link = createLink('toggl-button');
     function activate() {
       link.classList.add('active');
       link.style.color = '#1ab351';
@@ -146,7 +145,6 @@ var togglbutton = {
       }
     }
 
-    var link = createLink('toggl-button');
     link.classList.add(params.className);
     togglbutton.serviceName = params.className;
 

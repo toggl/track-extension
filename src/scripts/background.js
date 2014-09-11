@@ -318,7 +318,7 @@ var TogglButton = {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
       }
     } else if (request.type === 'currentEntry') {
-      sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry})
+      sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
     }
     return true;
   }

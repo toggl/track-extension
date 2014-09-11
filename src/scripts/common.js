@@ -134,7 +134,7 @@ var togglbutton = {
       link.classList.add('active');
       link.style.color = '#1ab351';
       if (params.buttonType !== 'minimal') {
-        link.innerHTML = 'Stop Timer';
+        link.innerHTML = 'Stop timer';
       }
     }
 

@@ -73,6 +73,7 @@ p.toggl-button-row.first {
   font-size: 13px;
   margin: 0;
   padding: 0 10px !important;
+  width: 240px !important;
 }
 #toggl-button-project {
   width: 100% !important;

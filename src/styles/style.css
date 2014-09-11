@@ -42,6 +42,7 @@ only screen and (min-resolution: 192dpi) {
 #toggl-button-edit-form .toggl-button{
   margin: 0 !important;
   border: none !important;
+  visibility: visible !important;
 }
 #toggl-button-edit-form .toggl-button:hover{
   background-color: transparent;
@@ -70,10 +71,10 @@ p.toggl-button-row.first {
 }
 #toggl-button-description, #toggl-button-project {
   height: 35px !important;
-  font-size: 13px;
-  margin: 0;
+  font-size: 13px !important;
+  margin: 0 !important;
   padding: 0 10px !important;
-  width: 240px !important;
+  width: 220px !important;
 }
 #toggl-button-project {
   width: 100% !important;

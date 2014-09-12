@@ -101,27 +101,42 @@ var togglbutton = {
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        $("#toggl-button-edit-form").style.display = "none";
+        editForm.style.display = "none";
         this.removeEventListener("click", handler);
       }
     };
 
-    editForm.querySelector("#toggl-button-description").value = response.entry.description;
-    editForm.querySelector("#toggl-button-project").value = pid;
-    editForm.querySelector("#toggl-button-hide").addEventListener('click', function (e) {
-      $("#toggl-button-edit-form").style.display = "none";
+    $("#toggl-button-description", editForm).value = response.entry.description;
+    $("#toggl-button-project", editForm).value = pid;
+    $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
+      editForm.style.display = "none";
       this.removeEventListener("click", handler);
     });
 
-    editForm.querySelector("#toggl-button-update").addEventListener('click', function (e) {
+    $("#toggl-button-update", editForm).addEventListener('click', function (e) {
       var request = {
         type: "update",
         description: $("#toggl-button-description").value,
         pid: $("#toggl-button-project").value
       };
       chrome.extension.sendMessage(request);
-      $("#toggl-button-edit-form").style.display = "none";
+      editForm.style.display = "none";
       this.removeEventListener("click", handler);
+    });
+
+    $(".toggl-button", editForm).addEventListener('click', function (e) {
+      var link;
+      e.preventDefault();
+      link = togglbutton.element;
+      link.classList.remove('active');
+      link.style.color = '';
+      if (!link.classList.contains("min")) {
+        link.innerHTML = 'Start timer';
+      }
+      chrome.extension.sendMessage({type: 'stop'}, togglbutton.addEditForm);
+      editForm.style.display = "none";
+      this.removeEventListener("click", handler);
+      return false;
     });
 
     document.addEventListener("click", handler);

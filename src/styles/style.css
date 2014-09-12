@@ -46,7 +46,6 @@ only screen and (min-resolution: 192dpi) {
 }
 #toggl-button-edit-form .toggl-button:hover{
   background-color: transparent;
-  cursor: default;
 }
 
 .toggl-button-row {

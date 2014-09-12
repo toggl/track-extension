@@ -14,7 +14,6 @@ var PopUp = {
       if (TogglButton.$curEntry === null) {
         PopUp.$stopButton.setAttribute("disabled", true);
       }
-      PopUp.toggleEditFormState(TogglButton.$showPostPopup);
     } else {
       document.querySelector("#login-form").style.display = 'block';
     }
@@ -30,21 +29,10 @@ var PopUp = {
         }
       }
     });
-  },
-
-  toggleEditFormState: function (state) {
-    var request = {
-      type: "toggle-popup",
-      state: state
-    };
-    PopUp.sendMessage(request);
-    PopUp.$popUpButton.setAttribute("data-form-enabled", state);
-    PopUp.$popUpButton.innerHTML = (state ? "Disable" : "Enable") + PopUp.$postStartText;
   }
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  PopUp.$popUpButton = document.querySelector(".popup-button");
   PopUp.$stopButton = document.querySelector(".stop-button");
   PopUp.showPage();
 
@@ -56,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.sendMessage(request);
   });
 
-  PopUp.$popUpButton.addEventListener('click', function () {
-    PopUp.toggleEditFormState(localStorage.getItem("showPostPopup") !== "true");
+  document.querySelector(".settings-button").addEventListener('click', function () {
+    chrome.tabs.create({url: "html/settings.html"});
   });
 
   document.querySelector(".logout-button").addEventListener('click', function () {

@@ -38,7 +38,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 1.  Clone the repository: `git clone git://github.com/toggl/toggl-button`
 2.  Navigate to `chrome://extensions/` and enable "Developer Mode".
 3.  Choose "Load unpacked extension..."
-4.  Open the directory you just cloned and follow the prompts to install.
+4.  Open the src directory in the toggl-button directory you just cloned and follow the prompts to install.
 
 ## Using the Button
 1.  Log in to your [Toggl][1] account and keep yourself logged in (no need to keep the tab open).

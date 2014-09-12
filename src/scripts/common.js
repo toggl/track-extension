@@ -82,10 +82,10 @@ var togglbutton = {
       editForm;
 
     elemRect = togglbutton.element.getBoundingClientRect();
-    editForm = document.querySelector("#toggl-button-edit-form");
+    editForm = $("#toggl-button-edit-form");
     if (editForm !== null) {
-      document.querySelector("#toggl-button-description").value = response.entry.description;
-      document.querySelector("#toggl-button-project").value = pid;
+      $("#toggl-button-description").value = response.entry.description;
+      $("#toggl-button-project").value = pid;
       editForm.style.left = (elemRect.left - 10) + "px";
       editForm.style.top = (elemRect.top - 10) + "px";
       editForm.style.display = "block";
@@ -101,7 +101,7 @@ var togglbutton = {
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        document.querySelector("#toggl-button-edit-form").style.display = "none";
+        $("#toggl-button-edit-form").style.display = "none";
         this.removeEventListener("click", handler);
       }
     };
@@ -109,18 +109,18 @@ var togglbutton = {
     editForm.querySelector("#toggl-button-description").value = response.entry.description;
     editForm.querySelector("#toggl-button-project").value = pid;
     editForm.querySelector("#toggl-button-hide").addEventListener('click', function (e) {
-      document.querySelector("#toggl-button-edit-form").style.display = "none";
+      $("#toggl-button-edit-form").style.display = "none";
       this.removeEventListener("click", handler);
     });
 
     editForm.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       var request = {
         type: "update",
-        description: document.querySelector("#toggl-button-description").value,
-        pid: document.querySelector("#toggl-button-project").value
+        description: $("#toggl-button-description").value,
+        pid: $("#toggl-button-project").value
       };
       chrome.extension.sendMessage(request);
-      document.querySelector("#toggl-button-edit-form").style.display = "none";
+      $("#toggl-button-edit-form").style.display = "none";
       this.removeEventListener("click", handler);
     });
 
@@ -195,7 +195,7 @@ var togglbutton = {
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'stop-entry') {
       var linkText, color = '',
-        link = document.querySelector(".toggl-button");
+        link = $(".toggl-button");
       if (/active/.test(link.className)) {
         link.classList.remove('active');
         linkText = 'Start timer';

@@ -5,7 +5,7 @@
 var TogglButton = {
   $user: null,
   $curEntry: null,
-  $showPostPopup: false,
+  $showPostPopup: true,
   $apiUrl: "https://old.toggl.com/api/v7",
   $newApiUrl: "https://www.toggl.com/api/v8",
   $sendResponse: null,
@@ -322,10 +322,9 @@ var TogglButton = {
     }
     return true;
   }
-
 };
 
 TogglButton.fetchUser(TogglButton.$apiUrl);
-TogglButton.$showPostPopup = !!localStorage.getItem("showPostPopup");
+TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

@@ -6,23 +6,32 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 
 var Settings = {
   $postPopup: null,
+  $socket: null,
   showPage: function () {
-    Settings.toggleEditFormState(TogglButton.$showPostPopup);
+    Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
+    Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
   },
-  toggleEditFormState: function (state) {
+  toggleState: function (elem, state) {
+    elem.checked = state;
+  },
+  toggleSetting: function (elem, state, type) {
     var request = {
-      type: "toggle-popup",
+      type: type,
       state: state
     };
-    Settings.$postPopup.checked = state;
+    Settings.toggleState(elem, state);
     chrome.extension.sendMessage(request);
   }
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
+  Settings.$socket = document.querySelector("#websocket");
   Settings.showPage();
   Settings.$postPopup.addEventListener('click', function () {
-    Settings.toggleEditFormState(localStorage.getItem("showPostPopup") !== "true");
+    Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
+  });
+  Settings.$socket.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("socketEnabled") !== "true"), "toggle-socket");
   });
 });

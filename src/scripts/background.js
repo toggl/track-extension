@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true*/
-/*global window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = {
@@ -9,6 +9,9 @@ var TogglButton = {
   $apiUrl: "https://old.toggl.com/api/v7",
   $newApiUrl: "https://www.toggl.com/api/v8",
   $sendResponse: null,
+  $socket: null,
+  $retrySocket: false,
+  $socketEnabled: false,
   $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +
@@ -67,6 +70,9 @@ var TogglButton = {
             TogglButton.$sendResponse = null;
             TogglButton.setBrowserActionBadge();
           }
+          if (TogglButton.$socketEnabled) {
+            TogglButton.setupSocket();
+          }
         } else if (apiUrl === TogglButton.$apiUrl) {
           TogglButton.fetchUser(TogglButton.$newApiUrl);
         } else if (apiUrl === TogglButton.$newApiUrl && !token) {
@@ -77,6 +83,77 @@ var TogglButton = {
         }
       }
     });
+  },
+
+  setupSocket: function () {
+    var authenticationMessage, pingResponse;
+    try {
+      TogglButton.$socket = new WebSocket('wss://stream.toggl.com/ws');
+    } catch (error) {
+      return;
+    }
+
+    authenticationMessage = {
+      type: 'authenticate',
+      api_token: TogglButton.$user.api_token
+    };
+    pingResponse = JSON.stringify({
+      type: "pong"
+    });
+
+    TogglButton.$socket.onopen = function () {
+      var data;
+      data = JSON.stringify(authenticationMessage);
+      try {
+        return TogglButton.$socket.send(data);
+      } catch (error) {
+        console.log("Exception while sending:", error);
+      }
+    };
+
+    TogglButton.$socket.onerror = function (e) {
+      return console.log('onerror: ', e);
+    };
+
+    TogglButton.$socket.onclose = function () {
+      var retrySeconds = Math.floor(Math.random() * 30);
+      if (TogglButton.$retrySocket) {
+        setTimeout(TogglButton.setupSocket, retrySeconds * 1000);
+        TogglButton.$retrySocket = false;
+      }
+    };
+
+    TogglButton.$socket.onmessage = function (msg) {
+      var data;
+      data = JSON.parse(msg.data);
+      if (data.session_id !== null) {
+        console.log("session authenticated, session ID:", data.session_id);
+      } else if (data.model !== null) {
+        if (data.model === "time_entry") {
+          TogglButton.updateCurrentEntry(data);
+        }
+      } else if (TogglButton.$socket !== null) {
+        try {
+          TogglButton.$socket.send(pingResponse);
+        } catch (error) {
+          console.log("Exception while sending:", error);
+        }
+      }
+    };
+
+  },
+
+  updateCurrentEntry: function (data) {
+    var entry = data.data;
+    if (data.action === "INSERT") {
+      TogglButton.$curEntry = entry;
+    } else if (data.action === "UPDATE") {
+      if (entry.duration < 0) {
+        TogglButton.$curEntry = entry;
+      } else {
+        TogglButton.$curEntry = null;
+      }
+    }
   },
 
   createTimeEntry: function (timeEntry, sendResponse) {
@@ -264,6 +341,21 @@ var TogglButton = {
     });
   },
 
+  setSocket: function (state) {
+    localStorage.setItem("socketEnabled", state);
+    TogglButton.$socketEnabled = state;
+    if (state) {
+      if (TogglButton.$socket !== null) {
+        TogglButton.$socket.close();
+        TogglButton.$socket = null;
+      }
+      TogglButton.setupSocket();
+    } else {
+      TogglButton.$socket.close();
+      TogglButton.$socket = null;
+    }
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.setBrowserActionBadge();
@@ -281,6 +373,8 @@ var TogglButton = {
     } else if (request.type === 'toggle-popup') {
       localStorage.setItem("showPostPopup", request.state);
       TogglButton.$showPostPopup = request.state;
+    } else if (request.type === 'toggle-socket') {
+      TogglButton.setSocket(request.state);
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
@@ -294,5 +388,6 @@ var TogglButton = {
 
 TogglButton.fetchUser(TogglButton.$apiUrl);
 TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
+TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

@@ -9,38 +9,6 @@ var TogglButton = {
   $apiUrl: "https://old.toggl.com/api/v7",
   $newApiUrl: "https://www.toggl.com/api/v8",
   $sendResponse: null,
-  $sites: new RegExp(
-    [
-      'asana\\.com',
-      'podio\\.com',
-      'trello\\.com',
-      'github\\.com',
-      'bitbucket\\.org',
-      'gitlab\\.com',
-      'redbooth\\.com',
-      'teamweek\\.com',
-      'basecamp\\.com',
-      'unfuddle\\.com',
-      'worksection\\.com',
-      'pivotaltracker\\.com',
-      'producteev\\.com',
-      'sifterapp\\.com',
-      'docs\\.google\\.com',
-      'drive\\.google\\.com',
-      'redmine\\.org',
-      'myjetbrains\\.com',
-      'zendesk\\.com',
-      'capsulecrm\\.com',
-      'web\\.any\\.do',
-      'todoist\\.com',
-      'trac\\.edgewall\\.org',
-      'trac-hacks\\.org',
-      'trac\\.wordpress\\.org',
-      'bugs\\.jquery\\.com',
-      'wunderlist\\.com'
-    ].join('|')
-  ),
-
   $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +

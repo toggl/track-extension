@@ -126,9 +126,7 @@ var TogglButton = {
     TogglButton.$socket.onmessage = function (msg) {
       var data;
       data = JSON.parse(msg.data);
-      if (data.session_id !== null) {
-        console.log("session authenticated, session ID:", data.session_id);
-      } else if (data.model !== null) {
+      if (data.model !== null) {
         if (data.model === "time_entry") {
           TogglButton.updateCurrentEntry(data);
         }
@@ -147,12 +145,13 @@ var TogglButton = {
     var entry = data.data;
     if (data.action === "INSERT") {
       TogglButton.$curEntry = entry;
+      TogglButton.setBrowserAction(entry);
     } else if (data.action === "UPDATE") {
-      if (entry.duration < 0) {
-        TogglButton.$curEntry = entry;
-      } else {
-        TogglButton.$curEntry = null;
+      if (entry.duration >= 0) {
+        entry = null;
       }
+      TogglButton.$curEntry = entry;
+      TogglButton.setBrowserAction(entry);
     }
   },
 

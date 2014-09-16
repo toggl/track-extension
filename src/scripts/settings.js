@@ -7,19 +7,32 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 var Settings = {
   $postPopup: null,
   $socket: null,
+  $customWebsites: null,
   showPage: function () {
-    Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
-    Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
+    Settings.toggleCheckBoxState(Settings.$postPopup, TogglButton.$showPostPopup);
+    Settings.toggleCheckBoxSetting(Settings.$socket, TogglButton.$socket);
+    Settings.setTextAreaValue(Settings.$customWebsites, TogglButton.$customWebsites);
   },
-  toggleState: function (elem, state) {
+  toggleCheckBoxState: function (elem, state) {
     elem.checked = state;
   },
-  toggleSetting: function (elem, state, type) {
+  toggleCheckBoxSetting: function (elem, state, type) {
     var request = {
       type: type,
       state: state
     };
-    Settings.toggleState(elem, state);
+    Settings.toggleCheckBoxState(elem, state);
+    chrome.extension.sendMessage(request);
+  },
+  setTextAreaValue: function (elem, value) {
+    elem.value = value;
+  },
+  setTextAreaSetting: function (elem, value, type) {
+    var request = {
+      type: type,
+      value: value
+    };
+    Settings.setTextAreaValue(elem, value);
     chrome.extension.sendMessage(request);
   }
 };
@@ -27,11 +40,18 @@ var Settings = {
 document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
+  Settings.$customWebsites = document.querySelector("#custom_websites");
   Settings.showPage();
   Settings.$postPopup.addEventListener('click', function () {
-    Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
+    Settings.toggleCheckBoxSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
   });
   Settings.$socket.addEventListener('click', function (e) {
-    Settings.toggleSetting(e.target, (localStorage.getItem("socketEnabled") !== "true"), "toggle-socket");
+    Settings.toggleCheckBoxSetting(e.target, (localStorage.getItem("socketEnabled") !== "true"), "toggle-socket");
   });
+  var customWebsitesEventListeners = ['keydown', 'mouseout'];
+  for (var i = 0; i < customWebsitesEventListeners.length; i++) {
+    Settings.$customWebsites.addEventListener(customWebsitesEventListeners[i], function (e) {
+      Settings.setTextAreaSetting(e.target, Settings.$customWebsites.value, "setCustomWebsitesValue");
+    });
+  }
 });

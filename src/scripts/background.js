@@ -27,6 +27,37 @@ var TogglButton = {
         '<input type="button" value="Update" id="toggl-button-update">' +
       '</p>' +
     '</div>',
+  $defaultWebsites: new RegExp(
+    [
+      'asana\\.com',
+      'podio\\.com',
+      'trello\\.com',
+      'github\\.com',
+      'bitbucket\\.org',
+      'gitlab\\.com',
+      'redbooth\\.com',
+      'teamweek\\.com',
+      'basecamp\\.com',
+      'unfuddle\\.com',
+      'worksection\\.com',
+      'pivotaltracker\\.com',
+      'producteev\\.com',
+      'sifterapp\\.com',
+      'docs\\.google\\.com',
+      'drive\\.google\\.com',
+      'redmine\\.org',
+      'myjetbrains\\.com',
+      'zendesk\\.com',
+      'capsulecrm\\.com',
+      'web\\.any\\.do',
+      'todoist\\.com',
+      'trac\\.edgewall\\.org',
+      'trac-hacks\\.org',
+      'trac\\.wordpress\\.org',
+      'bugs\\.jquery\\.com'
+    ].join('|')
+  ),
+  $customWebsites: '',
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
@@ -34,6 +65,90 @@ var TogglButton = {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app\/index/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
+      } else if (TogglButton.$defaultWebsites.test(tab.url)) {
+        TogglButton.setPageAction(tabId);
+      } else if (TogglButton.$customWebsites !== '') {
+        var customWebsitesArray = TogglButton.$customWebsites.split('\n');
+        for (var i = 0; i < customWebsitesArray.length; i++) {
+          var websiteAndApp = customWebsitesArray[i].split(' ');
+          var curWebsite = websiteAndApp[0];
+          var curApp = websiteAndApp[1];
+          if (tab.url.indexOf(curWebsite) > -1) {
+            switch (curApp) {
+              case "Asana":
+                chrome.tabs.executeScript({file: 'scripts/content/asana.js'});
+                break;
+              case "Podio":
+                chrome.tabs.executeScript({file: 'scripts/content/podio.js'});
+                break;
+              case "Trello":
+                chrome.tabs.executeScript({file: 'scripts/content/trello.js'});
+                break;
+              case "GitHub":
+                chrome.tabs.executeScript({file: 'scripts/content/github.js'});
+                break;
+              case "BitBucket":
+                chrome.tabs.executeScript({file: 'scripts/content/bitbucket.js'});
+                break;
+              case "GitLab":
+                chrome.tabs.executeScript({file: 'scripts/content/gitlab.js'});
+                break;
+              case "Redbooth":
+                chrome.tabs.executeScript({file: 'scripts/content/redbooth.js'});
+                break;
+              case "Teamweek":
+                chrome.tabs.executeScript({file: 'scripts/content/teamweek.js'});
+                break;
+              case "Basecamp":
+                chrome.tabs.executeScript({file: 'scripts/content/basecamp.js'});
+                break;
+              case "Unfuddle":
+                chrome.tabs.executeScript({file: 'scripts/content/unfuddle.js'});
+                break;
+              case "WorkSection":
+                chrome.tabs.executeScript({file: 'scripts/content/worksection.js'});
+                break;
+              case "PivotalTracker":
+                chrome.tabs.executeScript({file: 'scripts/content/pivotal.js'});
+                break;
+              case "Producteev":
+                chrome.tabs.executeScript({file: 'scripts/content/producteev.js'});
+                break;
+              case "Sifter":
+                chrome.tabs.executeScript({file: 'scripts/content/sifterapp.js'});
+                break;
+              case "GoogleDocs":
+                chrome.tabs.executeScript({file: 'scripts/content/google-docs.js'});
+                break;
+              case "Producteev":
+                chrome.tabs.executeScript({file: 'scripts/content/producteev.js'});
+                break;
+              case "Redmine":
+                chrome.tabs.executeScript({file: 'scripts/content/redmine.js'});
+                break;
+              case "YoutTrack":
+                chrome.tabs.executeScript({file: 'scripts/content/youtrack.js'});
+                break;
+              case "ZenDesk":
+                chrome.tabs.executeScript({file: 'scripts/content/zendesk.js'});
+                break;
+              case "CapsuleCRM":
+                chrome.tabs.executeScript({file: 'scripts/content/capsule.js'});
+                break;
+              case "AnyDo":
+                chrome.tabs.executeScript({file: 'scripts/content/anydo.js'});
+                break;
+              case "Todoist":
+                chrome.tabs.executeScript({file: 'scripts/content/todoist.js'});
+                break;
+              case "Trac":
+                chrome.tabs.executeScript({file: 'scripts/content/trac.js'});
+                break;
+              default:
+                console.log('Invalid app name: ' + curApp);
+            }
+          }
+        }
       }
     }
   },
@@ -374,6 +489,9 @@ var TogglButton = {
       TogglButton.$showPostPopup = request.state;
     } else if (request.type === 'toggle-socket') {
       TogglButton.setSocket(request.state);
+    } else if (request.type === 'setCustomWebsitesValue') {
+      localStorage.setItem("customWebsites", request.value);
+      TogglButton.$customWebsites = request.value;
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
@@ -388,5 +506,6 @@ var TogglButton = {
 TogglButton.fetchUser(TogglButton.$apiUrl);
 TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
 TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
+TogglButton.$customWebsites = (localStorage.getItem("customWebsites") === null) ? "" : localStorage.getItem("customWebsites");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

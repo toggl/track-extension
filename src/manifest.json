@@ -9,6 +9,7 @@
       "scripts/background.js"
     ]
   },
+  "options_page": "html/settings.html",
   "browser_action": {
     "default_icon": {
       "19": "images/inactive-19.png",
@@ -19,36 +20,8 @@
   },
   "permissions": [
     "tabs",
-    "*://*.toggl.com/*",
-    "*://*.teamweek.com/*",
-    "*://*.pivotaltracker.com/*",
-    "*://*.github.com/*",
-    "*://*.gitlab.com/*",
-    "*://app.asana.com/*",
-    "*://*.unfuddle.com/*",
-    "*://*.podio.com/*",
-    "*://*.redbooth.com/*",
-    "*://*.trello.com/*",
-    "*://*.worksection.com/*",
-    "*://*.basecamp.com/*",
-    "*://*.atlassian.net/*",
-    "*://*.jira.com/*",
-    "*://*.producteev.com/*",
-    "*://*.bitbucket.org/*",
-    "*://*.sifterapp.com/*",
-    "*://docs.google.com/*",
-    "*://*.redmine.org/*",
-    "*://*.myjetbrains.com/*",
-    "*://*.capsulecrm.com/*",
-    "*://*.zendesk.com/*",
-    "*://go.xero.com/*",
-    "*://web.any.do/*",
-    "*://*.todoist.com/*",
-    "*://trac.edgewall.org/*",
-    "*://trac-hacks.org/*",
-    "*://*.trac.wordpress.org/*",
-    "*://bugs.jquery.com/*",
-    "*://*.wunderlist.com/*"
+    "http://*/*",
+    "https://*/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -58,35 +31,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.teamweek.com/*",
-        "*://*.pivotaltracker.com/*",
-        "*://*.github.com/*",
-        "*://*.gitlab.com/*",
-        "*://*.bitbucket.org/*",
-        "*://app.asana.com/*",
-        "*://*.unfuddle.com/*",
-        "*://*.podio.com/*",
-        "*://*.redbooth.com/*",
-        "*://*.trello.com/*",
-        "*://*.worksection.com/*",
-        "*://*.basecamp.com/*",
-        "*://*.atlassian.net/*",
-        "*://*.jira.com/*",
-        "*://*.producteev.com/*",
-        "*://*.sifterapp.com/*",
-        "*://docs.google.com/*",
-        "*://*.redmine.org/*",
-        "*://*.myjetbrains.com/*",
-        "*://*.capsulecrm.com/*",
-        "*://*.zendesk.com/*",
-        "*://go.xero.com/*",
-        "*://web.any.do/*",
-        "*://*.todoist.com/app*",
-        "*://trac.edgewall.org/*",
-        "*://trac-hacks.org/*",
-        "*://*.trac.wordpress.org/*",
-        "*://bugs.jquery.com/*",
-        "*://*.wunderlist.com/*"
+        "http://*/*",
+        "https://*/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]

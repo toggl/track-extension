@@ -120,13 +120,10 @@ var TogglButton = {
               case "GoogleDocs":
                 chrome.tabs.executeScript({file: 'scripts/content/google-docs.js'});
                 break;
-              case "Producteev":
-                chrome.tabs.executeScript({file: 'scripts/content/producteev.js'});
-                break;
               case "Redmine":
                 chrome.tabs.executeScript({file: 'scripts/content/redmine.js'});
                 break;
-              case "YoutTrack":
+              case "YouTrack":
                 chrome.tabs.executeScript({file: 'scripts/content/youtrack.js'});
                 break;
               case "ZenDesk":

@@ -185,7 +185,7 @@ var TogglButton = {
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
         if (!!timeEntry.respond) {
-          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup});
+          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm()});
         }
       }
     });
@@ -362,7 +362,7 @@ var TogglButton = {
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.setBrowserActionBadge();
-      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, html: TogglButton.getEditForm()});
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
     } else if (request.type === 'login') {
       TogglButton.loginUser(request, sendResponse);
     } else if (request.type === 'logout') {

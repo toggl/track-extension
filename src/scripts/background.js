@@ -57,6 +57,85 @@ var TogglButton = {
       'bugs\\.jquery\\.com'
     ].join('|')
   ),
+  $defaultWebsitesJSON: [{
+      'url': 'web.any.do',
+      'app': 'AnyDo'
+    }, {
+      'url': 'asana.com',
+      'app': 'Asana'
+    }, {
+      'url': 'basecamp.com',
+      'app': 'Basecamp'
+    }, {
+      'url': 'bitbucket.org',
+      'app': 'BitBucket'
+    }, {
+      'url': 'capsulecrm.com',
+      'app': 'CapsuleCRM'
+    }, {
+      'url': 'github.com',
+      'app': 'GitHub'
+    }, {
+      'url': 'gitlab.com',
+      'app': 'GitLab'
+    }, {
+      'url': 'docs.google.com',
+      'app': 'GoogleDocs'
+    }, {
+      'url': 'drive.google.com',
+      'app': 'GoogleDocs'
+    }, {
+      'url': 'pivotaltracker.com',
+      'app': 'PivotalTracker'
+    }, {
+      'url': 'podio.com',
+      'app': 'Podio'
+    }, {
+      'url': 'producteev.com',
+      'app': 'Producteev'
+    }, {
+      'url': 'redbooth.com',
+      'app': 'Redbooth'
+    }, {
+      'url': 'redmine.org',
+      'app': 'Redmine'
+    }, {
+      'url': 'sifterapp.com',
+      'app': 'Sifter'
+    }, {
+      'url': 'teamweek.com',
+      'app': 'Teamweek'
+    }, {
+      'url': 'todoist.com',
+      'app': 'Todoist'
+    }, {
+      'url': 'bugs.jquery.com',
+      'app': 'Trac'
+    }, {
+      'url': 'trac-hacks.org',
+      'app': 'Trac'
+    }, {
+      'url': 'trac.edgewall.org',
+      'app': 'Trac'
+    }, {
+      'url': 'trac.wordpress.org',
+      'app': 'Trac'
+    }, {
+      'url': 'trello.com',
+      'app': 'Trello'
+    }, {
+      'url': 'unfuddle.com',
+      'app': 'Unfuddle'
+    }, {
+      'url': 'worksection.com',
+      'app': 'WorkSection'
+    }, {
+      'url': 'myjetbrains.com',
+      'app': 'YouTrack'
+    }, {
+      'url': 'zendesk.com',
+      'app': 'ZenDesk'
+    }],
   $customWebsites: '',
 
   checkUrl: function (tabId, changeInfo, tab) {

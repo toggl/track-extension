@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
   Settings.showPage();
-  Settings.$postPopup.addEventListener('click', function () {
+  Settings.$postPopup.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
   });
   Settings.$socket.addEventListener('click', function (e) {

@@ -279,7 +279,11 @@ var TogglButton = {
       title = chrome.runtime.getManifest().browser_action.default_title;
     if (runningEntry !== null) {
       imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
-      title = runningEntry.description + " - Toggl";
+      if (!!runningEntry.description && runningEntry.description.length > 0) {
+        title = runningEntry.description + " - Toggl";
+      } else {
+        title = "(no description) - Toggl";
+      }
     }
     chrome.browserAction.setTitle({
       title: title

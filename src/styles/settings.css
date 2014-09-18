@@ -40,7 +40,7 @@ only screen and (min-resolution: 2dppx) {
 }
 
 .list li {
-  padding: 10px 0;
+  height: 40px;
 }
 
 .list li label {

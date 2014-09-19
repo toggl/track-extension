@@ -1,3 +1,11 @@
+[0.4.2]
+- Added support for Wunderlist
+- Added support for Trac
+- Added websocket support
+- Improved icons
+- Added Settings view
+- Position and z-index fix for post start popup
+
 [0.4.1]
 - Fixed packaging issue
 [0.4.0]

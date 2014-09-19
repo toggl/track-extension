@@ -6,13 +6,13 @@
 togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('div', 'card-detail-item clear'),
     titleElem = $('.window-title-text', elem),
-    projectElem = $('.board-header > a'),
-    descriptionElem = $('.card-detail-item-block');
+    projectElem = $('.board-header > a > span'),
+    descriptionElem = $('.card-detail-item-block > .current > p');
 
   link = togglbutton.createTimerLink({
     className: 'trello',
-    description: titleElem.innerText,
-    projectName: projectElem.innerText
+    description: titleElem.html(),
+    projectName: projectElem.html()
   });
 
   container.appendChild(link);

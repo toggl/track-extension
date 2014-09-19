@@ -18,6 +18,8 @@
     "default_title": "Toggl Time Tracker"
   },
   "permissions": [
+    "notifications",
+    "idle",
     "tabs",
     "*://*.toggl.com/*",
     "*://*.teamweek.com/*",

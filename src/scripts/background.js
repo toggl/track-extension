@@ -12,6 +12,10 @@ var TogglButton = {
   $socket: null,
   $retrySocket: false,
   $socketEnabled: false,
+  $timer: null,
+  $idleCheckEnabled: false,
+  $idleInterval: 15000,
+  $idleFromTo: "09:00-17:00",
   $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +
@@ -187,6 +191,9 @@ var TogglButton = {
         if (!!timeEntry.respond) {
           sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm()});
         }
+        if (TogglButton.$timer !== null) {
+          clearTimeout(TogglButton.$timer);
+        }
       }
     });
   },
@@ -234,6 +241,7 @@ var TogglButton = {
               chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
             });
           }
+          TogglButton.triggerNotification();
         }
       }
     });
@@ -359,6 +367,67 @@ var TogglButton = {
     }
   },
 
+  setNanny: function (state) {
+    localStorage.setItem("idleCheckEnabled", state);
+    TogglButton.$idleCheckEnabled = state;
+  },
+
+  setNannyFromTo: function (state) {
+    console.log(state);
+    localStorage.setItem("idleFromTo", state);
+    TogglButton.$idleFromTo = state;
+  },
+
+  setNannyInterval: function (state) {
+    localStorage.setItem("idleInterval", Math.max(state, 1000));
+    TogglButton.$idleInterval = state;
+  },
+
+  checkActivity: function () {
+    clearTimeout(TogglButton.$timer);
+    TogglButton.$timer = null;
+    if (TogglButton.$idleCheckEnabled && TogglButton.$curEntry === null && TogglButton.workingTime()) {
+      chrome.notifications.create(
+        'remind-to-track-time',
+        {
+          type: 'basic',
+          iconUrl: 'images/icon-128.png',
+          title: "Toggl Button",
+          message: "Don't forget to track your time!"
+        },
+        function () {
+          return;
+        }
+      );
+    }
+  },
+
+  workingTime: function () {
+    var now = new Date(),
+      fromTo = TogglButton.$idleFromTo.split("-"),
+      start,
+      end,
+      startHelper,
+      endHelper;
+
+    if (now.getDay() === 6 || now.getDay() === 0) {
+      return false;
+    }
+    startHelper = fromTo[0].split(":");
+    endHelper = fromTo[1].split(":");
+    start = new Date();
+    start.setHours(startHelper[0]);
+    start.setMinutes(startHelper[1]);
+    end = new Date();
+    end.setHours(endHelper[0]);
+    end.setMinutes(endHelper[1]);
+    return (now > start && now <= end);
+  },
+
+  triggerNotification: function () {
+    TogglButton.$timer = setTimeout(TogglButton.checkActivity, TogglButton.$interval);
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.setBrowserActionBadge();
@@ -378,6 +447,12 @@ var TogglButton = {
       TogglButton.$showPostPopup = request.state;
     } else if (request.type === 'toggle-socket') {
       TogglButton.setSocket(request.state);
+    } else if (request.type === 'toggle-nanny') {
+      TogglButton.setNanny(request.state);
+    } else if (request.type === 'toggle-nanny-from-to') {
+      TogglButton.setNannyFromTo(request.state);
+    } else if (request.type === 'toggle-nanny-interval') {
+      TogglButton.setNannyInterval(request.state);
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
@@ -392,5 +467,10 @@ var TogglButton = {
 TogglButton.fetchUser(TogglButton.$apiUrl);
 TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
 TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
+TogglButton.$idleCheckEnabled = !!localStorage.getItem("idleCheckEnabled");
+TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 15000;
+TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
+TogglButton.$timer = setTimeout(TogglButton.checkActivity, TogglButton.$idleInterval);
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
+chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);

@@ -12,6 +12,7 @@ var TogglButton = {
   $socket: null,
   $retrySocket: false,
   $socketEnabled: false,
+  $websites: null,
   $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +
@@ -27,37 +28,7 @@ var TogglButton = {
         '<input type="button" value="Update" id="toggl-button-update">' +
       '</p>' +
     '</div>',
-  $defaultWebsites: new RegExp(
-    [
-      'asana\\.com',
-      'podio\\.com',
-      'trello\\.com',
-      'github\\.com',
-      'bitbucket\\.org',
-      'gitlab\\.com',
-      'redbooth\\.com',
-      'teamweek\\.com',
-      'basecamp\\.com',
-      'unfuddle\\.com',
-      'worksection\\.com',
-      'pivotaltracker\\.com',
-      'producteev\\.com',
-      'sifterapp\\.com',
-      'docs\\.google\\.com',
-      'drive\\.google\\.com',
-      'redmine\\.org',
-      'myjetbrains\\.com',
-      'zendesk\\.com',
-      'capsulecrm\\.com',
-      'web\\.any\\.do',
-      'todoist\\.com',
-      'trac\\.edgewall\\.org',
-      'trac-hacks\\.org',
-      'trac\\.wordpress\\.org',
-      'bugs\\.jquery\\.com'
-    ].join('|')
-  ),
-  $defaultWebsitesJSON: [{
+  $defaultWebsites: [{
       'url': 'web.any.do',
       'app': 'AnyDo'
     }, {
@@ -68,10 +39,10 @@ var TogglButton = {
       'app': 'Basecamp'
     }, {
       'url': 'bitbucket.org',
-      'app': 'BitBucket'
+      'app': 'Bitbucket'
     }, {
       'url': 'capsulecrm.com',
-      'app': 'CapsuleCRM'
+      'app': 'Capsule'
     }, {
       'url': 'github.com',
       'app': 'GitHub'
@@ -80,10 +51,10 @@ var TogglButton = {
       'app': 'GitLab'
     }, {
       'url': 'docs.google.com',
-      'app': 'GoogleDocs'
+      'app': 'GoogleDrive'
     }, {
       'url': 'drive.google.com',
-      'app': 'GoogleDocs'
+      'app': 'GoogleDrive'
     }, {
       'url': 'pivotaltracker.com',
       'app': 'PivotalTracker'
@@ -128,15 +99,14 @@ var TogglButton = {
       'app': 'Unfuddle'
     }, {
       'url': 'worksection.com',
-      'app': 'WorkSection'
+      'app': 'Worksection'
     }, {
       'url': 'myjetbrains.com',
       'app': 'YouTrack'
     }, {
       'url': 'zendesk.com',
-      'app': 'ZenDesk'
+      'app': 'Zendesk'
     }],
-  $customWebsites: '',
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
@@ -144,15 +114,12 @@ var TogglButton = {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app\/index/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
-      } else if (TogglButton.$defaultWebsites.test(tab.url)) {
-        TogglButton.setPageAction(tabId);
-      } else if (TogglButton.$customWebsites !== '') {
-        var customWebsitesArray = TogglButton.$customWebsites.split('\n');
-        for (var i = 0; i < customWebsitesArray.length; i++) {
-          var websiteAndApp = customWebsitesArray[i].split(' ');
-          var curWebsite = websiteAndApp[0];
-          var curApp = websiteAndApp[1];
-          if (tab.url.indexOf(curWebsite) > -1) {
+      } else {
+        var websites = JSON.parse(localStorage.getItem('websites'));
+        for (var i = 0; i < websites.length; i++) {
+          var curURL = websites[i]['url'];
+          var curApp = websites[i]['app'];
+          if (curURL && tab.url.indexOf(curURL) > -1) {
             switch (curApp) {
               case "Asana":
                 chrome.tabs.executeScript({file: 'scripts/content/asana.js'});
@@ -166,7 +133,7 @@ var TogglButton = {
               case "GitHub":
                 chrome.tabs.executeScript({file: 'scripts/content/github.js'});
                 break;
-              case "BitBucket":
+              case "Bitbucket":
                 chrome.tabs.executeScript({file: 'scripts/content/bitbucket.js'});
                 break;
               case "GitLab":
@@ -184,7 +151,7 @@ var TogglButton = {
               case "Unfuddle":
                 chrome.tabs.executeScript({file: 'scripts/content/unfuddle.js'});
                 break;
-              case "WorkSection":
+              case "Worksection":
                 chrome.tabs.executeScript({file: 'scripts/content/worksection.js'});
                 break;
               case "PivotalTracker":
@@ -196,7 +163,7 @@ var TogglButton = {
               case "Sifter":
                 chrome.tabs.executeScript({file: 'scripts/content/sifterapp.js'});
                 break;
-              case "GoogleDocs":
+              case "GoogleDrive":
                 chrome.tabs.executeScript({file: 'scripts/content/google-docs.js'});
                 break;
               case "Redmine":
@@ -205,10 +172,10 @@ var TogglButton = {
               case "YouTrack":
                 chrome.tabs.executeScript({file: 'scripts/content/youtrack.js'});
                 break;
-              case "ZenDesk":
+              case "Zendesk":
                 chrome.tabs.executeScript({file: 'scripts/content/zendesk.js'});
                 break;
-              case "CapsuleCRM":
+              case "Capsule":
                 chrome.tabs.executeScript({file: 'scripts/content/capsule.js'});
                 break;
               case "AnyDo":
@@ -545,6 +512,11 @@ var TogglButton = {
       TogglButton.$socket = null;
     }
   },
+  
+  setWebsites: function (websites) {
+    localStorage.setItem('websites', JSON.stringify(websites));
+    TogglButton.$websites = websites;
+  },
 
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
@@ -565,9 +537,17 @@ var TogglButton = {
       TogglButton.$showPostPopup = request.state;
     } else if (request.type === 'toggle-socket') {
       TogglButton.setSocket(request.state);
-    } else if (request.type === 'setCustomWebsitesValue') {
-      localStorage.setItem("customWebsites", request.value);
-      TogglButton.$customWebsites = request.value;
+    } else if (request.type === 'setWebsite') {
+      var websites = TogglButton.$websites.slice();
+      websites[request.index] = request.value;
+      TogglButton.setWebsites(websites);
+    } else if (request.type === 'removeWebsite') {
+      var websites = TogglButton.$websites.slice();
+      websites.splice(request.index, 1);
+      TogglButton.setWebsites(websites);
+    } else if (request.type === 'restoreDefaultWebsites') {
+      TogglButton.setWebsites(TogglButton.$defaultWebsites.slice());
+      sendResponse();
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
@@ -582,6 +562,5 @@ var TogglButton = {
 TogglButton.fetchUser(TogglButton.$apiUrl);
 TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
 TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
-TogglButton.$customWebsites = (localStorage.getItem("customWebsites") === null) ? "" : localStorage.getItem("customWebsites");
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

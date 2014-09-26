@@ -370,7 +370,7 @@ var TogglButton = {
   setNanny: function (state) {
     localStorage.setItem("idleCheckEnabled", state);
     TogglButton.$idleCheckEnabled = state;
-    if (state === "true") {
+    if (state) {
       TogglButton.triggerNotification();
     }
   },

@@ -233,7 +233,7 @@ var TogglButton = {
       },
       onLoad: function (xhr) {
         if (xhr.status === 200) {
-          TogglButton.$curEntry = null;
+          TogglButton.$timer = TogglButton.$curEntry = null;
           TogglButton.setBrowserAction(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
@@ -431,7 +431,13 @@ var TogglButton = {
   },
 
   triggerNotification: function () {
-    if (TogglButton.$timer === null) {
+    if (TogglButton.$timer === null && TogglButton.$curEntry === null) {
+      chrome.notifications.clear(
+        'remind-to-track-time',
+        function () {
+          return;
+        }
+      );
       TogglButton.$timer = setTimeout(TogglButton.checkState, TogglButton.$idleInterval);
     }
   },
@@ -483,3 +489,4 @@ TogglButton.triggerNotification();
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);
+chrome.notifications.onClicked.addListener(TogglButton.triggerNotification);

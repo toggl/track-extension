@@ -3,3 +3,4 @@ node_modules
 tmp
 *.pem
 toggl-button.zip
+src/manifest.json

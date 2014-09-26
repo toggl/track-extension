@@ -7,10 +7,14 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 var Settings = {
   $postPopup: null,
   $socket: null,
+  $nanny: null,
   $addWebsiteLink: null,
   $restoreDefaultWebsitesButton: null,
   showPage: function () {
+    Settings.setFromTo();
+    document.querySelector("#nag-nanny-interval").value = TogglButton.$idleInterval / 60000;
     Settings.toggleCheckBoxState(Settings.$postPopup, TogglButton.$showPostPopup);
+    Settings.toggleCheckBoxState(Settings.$nanny, TogglButton.$idleCheckEnabled);
     Settings.toggleCheckBoxSetting(Settings.$socket, TogglButton.$socket);
     if (TogglButton.$websites) {
         Settings.loadWebsites();
@@ -29,6 +33,11 @@ var Settings = {
       }
     }
   },
+  setFromTo: function () {
+    var fromTo = TogglButton.$idleFromTo.split("-");
+    document.querySelector("#nag-nanny-from").value = fromTo[0];
+    document.querySelector("#nag-nanny-to").value = fromTo[1];
+  },
   toggleCheckBoxState: function (elem, state) {
     elem.checked = state;
   },
@@ -37,8 +46,13 @@ var Settings = {
       type: type,
       state: state
     };
-    Settings.toggleCheckBoxState(elem, state);
+    if (elem !== null) {
+      Settings.toggleCheckBoxState(elem, state);
+    }
     chrome.extension.sendMessage(request);
+  },
+  saveSetting: function (value, type) {
+    Settings.toggleSetting(null, value, type);
   },
   setWebsiteInStorage: function (index, value) {
     var request = {
@@ -145,6 +159,7 @@ var Settings = {
 document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
+  Settings.$nanny = document.querySelector("#nag-nanny");
   Settings.$addWebsiteLink = document.querySelector("#add_new_website_link");
   Settings.$restoreDefaultWebsitesButton = document.querySelector("#restore_default_websites_button");
   Settings.showPage();
@@ -159,5 +174,32 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
   Settings.$restoreDefaultWebsitesButton.addEventListener('click', function () {
     Settings.restoreDefaultWebsitesInStorage();
+  });
+  Settings.$nanny.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("idleCheckEnabled") !== "true"), "toggle-nanny");
+  });
+  document.querySelector("#nag-nanny-from").addEventListener('blur', function (e) {
+    if (e.target.value.length === 0) {
+      Settings.setFromTo();
+      return;
+    }
+    Settings.$fromTo = e.target.value + "-" + document.querySelector('"nag-nanny-to').value;
+    Settings.saveSetting();
+  });
+  document.querySelector("#nag-nanny-to").addEventListener('blur', function (e) {
+    if (e.target.value.length === 0) {
+      Settings.setFromTo();
+      return;
+    }
+    var fromTo = document.querySelector('#nag-nanny-from').value + "-" + e.target.value;
+    Settings.saveSetting(fromTo, "toggle-nanny-from-to");
+  });
+  document.querySelector("#nag-nanny-interval").addEventListener('blur', function (e) {
+    if (e.target.value < 1) {
+      e.target.value = 1;
+      return;
+    }
+    Settings.saveSetting((document.querySelector('#nag-nanny-interval').value * 60000), "toggle-nanny-interval");
+
   });
 });

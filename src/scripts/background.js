@@ -12,6 +12,10 @@ var TogglButton = {
   $socket: null,
   $retrySocket: false,
   $socketEnabled: false,
+  $timer: null,
+  $idleCheckEnabled: false,
+  $idleInterval: 15000,
+  $idleFromTo: "09:00-17:00",
   $websites: null,
   $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -304,7 +308,7 @@ var TogglButton = {
     if (data.action === "INSERT") {
       TogglButton.$curEntry = entry;
       TogglButton.setBrowserAction(entry);
-    } else if (data.action === "UPDATE") {
+    } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
       if (entry.duration >= 0) {
         entry = null;
       }
@@ -343,7 +347,10 @@ var TogglButton = {
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
         if (!!timeEntry.respond) {
-          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup});
+          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm()});
+        }
+        if (TogglButton.$timer !== null) {
+          clearTimeout(TogglButton.$timer);
         }
       }
     });
@@ -392,6 +399,7 @@ var TogglButton = {
               chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
             });
           }
+          TogglButton.triggerNotification();
         }
       }
     });
@@ -437,7 +445,11 @@ var TogglButton = {
       title = chrome.runtime.getManifest().browser_action.default_title;
     if (runningEntry !== null) {
       imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
-      title = runningEntry.description + " - Toggl";
+      if (!!runningEntry.description && runningEntry.description.length > 0) {
+        title = runningEntry.description + " - Toggl";
+      } else {
+        title = "(no description) - Toggl";
+      }
     }
     chrome.browserAction.setTitle({
       title: title
@@ -518,10 +530,80 @@ var TogglButton = {
     TogglButton.$websites = websites;
   },
 
+  setNanny: function (state) {
+    localStorage.setItem("idleCheckEnabled", state);
+    TogglButton.$idleCheckEnabled = state;
+    if (state === "true") {
+      TogglButton.triggerNotification();
+    }
+  },
+
+  setNannyFromTo: function (state) {
+    localStorage.setItem("idleFromTo", state);
+    TogglButton.$idleFromTo = state;
+  },
+
+  setNannyInterval: function (state) {
+    localStorage.setItem("idleInterval", Math.max(state, 1000));
+    TogglButton.$idleInterval = state;
+  },
+
+  checkState: function () {
+    chrome.idle.queryState(15, TogglButton.checkActivity);
+  },
+
+  checkActivity: function (currentState) {
+    clearTimeout(TogglButton.$timer);
+    TogglButton.$timer = null;
+    if (currentState === "active" && TogglButton.$idleCheckEnabled && TogglButton.$curEntry === null && TogglButton.workingTime()) {
+      chrome.notifications.create(
+        'remind-to-track-time',
+        {
+          type: 'basic',
+          iconUrl: 'images/icon-128.png',
+          title: "Toggl Button",
+          message: "Don't forget to track your time!"
+        },
+        function () {
+          return;
+        }
+      );
+    }
+  },
+
+  workingTime: function () {
+    var now = new Date(),
+      fromTo = TogglButton.$idleFromTo.split("-"),
+      start,
+      end,
+      startHelper,
+      endHelper;
+
+    if (now.getDay() === 6 || now.getDay() === 0) {
+      return false;
+    }
+    startHelper = fromTo[0].split(":");
+    endHelper = fromTo[1].split(":");
+    start = new Date();
+    start.setHours(startHelper[0]);
+    start.setMinutes(startHelper[1]);
+    end = new Date();
+    end.setHours(endHelper[0]);
+    end.setMinutes(endHelper[1]);
+    return (now > start && now <= end);
+  },
+
+  triggerNotification: function () {
+    if (TogglButton.$timer === null) {
+      TogglButton.$timer = setTimeout(TogglButton.checkState, TogglButton.$idleInterval);
+    }
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.setBrowserActionBadge();
-      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, html: TogglButton.getEditForm()});
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
+      TogglButton.triggerNotification();
     } else if (request.type === 'login') {
       TogglButton.loginUser(request, sendResponse);
     } else if (request.type === 'logout') {
@@ -537,6 +619,12 @@ var TogglButton = {
       TogglButton.$showPostPopup = request.state;
     } else if (request.type === 'toggle-socket') {
       TogglButton.setSocket(request.state);
+    } else if (request.type === 'toggle-nanny') {
+      TogglButton.setNanny(request.state);
+    } else if (request.type === 'toggle-nanny-from-to') {
+      TogglButton.setNannyFromTo(request.state);
+    } else if (request.type === 'toggle-nanny-interval') {
+      TogglButton.setNannyInterval(request.state);
     } else if (request.type === 'setWebsite') {
       var websites = TogglButton.$websites.slice();
       websites[request.index] = request.value;
@@ -562,5 +650,10 @@ var TogglButton = {
 TogglButton.fetchUser(TogglButton.$apiUrl);
 TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
 TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
+TogglButton.$idleCheckEnabled = !!localStorage.getItem("idleCheckEnabled");
+TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 15000;
+TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
+TogglButton.triggerNotification();
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
+chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);

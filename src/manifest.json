@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -19,6 +19,8 @@
     "default_title": "Toggl Time Tracker"
   },
   "permissions": [
+    "notifications",
+    "idle",
     "tabs",
     "http://*/*",
     "https://*/*"

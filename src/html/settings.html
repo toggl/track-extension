@@ -17,6 +17,25 @@
         <input type="checkbox" id="websocket">
         <label for="websocket">Use websocket</label>
       </li>
+      <li class="nag-nanny">
+        <input type="checkbox" id="nag-nanny">
+        <label for="nag-nanny">Nag Nanny</label>
+        <div id="nag-nanny-details">
+          <span>Track activity on workdays</span>
+          <p>
+            <label for="nag-nanny-from">From:</label>
+            <input type="time" id="nag-nanny-from">
+          </p>
+          <p>
+            <label for="nag-nanny-to">To:</label>
+            <input type="time" id="nag-nanny-to">
+          </p>
+          <p>
+            <label for="nag-nanny-interval">Minutes since stopping last Time Entry</label>
+            <input type="number" id="nag-nanny-interval" min="1">
+          </p>
+        </div>
+      </li>
       <li>
         <p>Websites:</p>
         <ul id="website_list" class="list">

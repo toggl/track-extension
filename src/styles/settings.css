@@ -40,7 +40,7 @@ only screen and (min-resolution: 2dppx) {
 }
 
 .list li {
-  padding: 10px 0;
+  height: 40px;
 }
 
 .list li label {
@@ -69,6 +69,31 @@ only screen and (min-resolution: 2dppx) {
   position: relative;
   top: -7px;
   left: -3px;
+}
+
+#nag-nanny-details {
+  display: none;
+  margin-left: 20px;
+}
+
+#nag-nanny-details p {
+  float: left;
+  padding-right: 30px;
+}
+
+#nag-nanny-details p:last-child {
+  float: none;
+  clear: both;
+}
+
+#nag-nanny-details span {
+display: block;
+font-size: 14px;
+padding-top: 10px;
+}
+
+.list li #nag-nanny:checked ~ div {
+  display: block;
 }
 
 .website {

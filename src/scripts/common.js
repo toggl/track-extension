@@ -43,13 +43,11 @@ function invokeIfFunction(trial) {
 
 var togglbutton = {
   isStarted: false,
-  editHtml: null,
   element: null,
   serviceName: '',
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
-        togglbutton.editHtml = response.html;
         if (opts.observe) {
           var observer = new MutationObserver(function (mutations) {
             togglbutton.renderTo(selector, renderer);
@@ -92,7 +90,7 @@ var togglbutton = {
       return;
     }
 
-    div.innerHTML = togglbutton.editHtml.replace("{service}", togglbutton.serviceName);
+    div.innerHTML = response.html.replace("{service}", togglbutton.serviceName);
     editForm = div.firstChild;
 
     editForm.style.left = (elemRect.left - 10) + "px";

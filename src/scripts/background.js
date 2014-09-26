@@ -661,12 +661,12 @@ var TogglButton = {
 };
 
 TogglButton.fetchUser(TogglButton.$apiUrl);
-TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
-TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
-TogglButton.$idleCheckEnabled = !!localStorage.getItem("idleCheckEnabled");
+TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup") === "true";
+TogglButton.$socketEnabled = localStorage.getItem("socketEnabled") === "true";
+TogglButton.$idleCheckEnabled = localStorage.getItem("idleCheckEnabled") === "true";
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 15000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
-TogglButton.$customWebsitesEnabled = !!localStorage.getItem("customWebsitesEnabled");
+TogglButton.$customWebsitesEnabled = localStorage.getItem("customWebsitesEnabled") === "true";
 TogglButton.triggerNotification();
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

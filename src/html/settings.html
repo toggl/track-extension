@@ -10,8 +10,8 @@
     </div>
     <ul class="list">   
       <li>
-        <input type="checkbox" id="show_post_start_popup">
-        <label for="show_post_start_popup">Show post-start popup</label>
+        <input type="checkbox" id="show-post-start-popup">
+        <label for="show-post-start-popup">Show post-start popup</label>
       </li>
       <li>
         <input type="checkbox" id="websocket">
@@ -20,7 +20,7 @@
       <li class="nag-nanny">
         <input type="checkbox" id="nag-nanny">
         <label for="nag-nanny">Nag Nanny</label>
-        <div id="nag-nanny-details">
+        <div id="nag-nanny-details" class="details">
           <span>Track activity on workdays</span>
           <p>
             <label for="nag-nanny-from">From:</label>
@@ -37,13 +37,14 @@
         </div>
       </li>
       <li>
-        <p>Websites:</p>
-        <ul id="website_list" class="list">
-        </ul>
-        <p>
-          <span id="add_new_website_link">+ Add new website</span>
-        </p>
-        <input type="button" value="Restore default websites" id="restore_default_websites_button" />
+        <input type="checkbox" id="custom-websites">
+        <label for="custom-websites">Custom websites</label>
+        <div id="custom-websites-details" class="details">
+          <ul id="custom-website-list" class="list details-list">
+          </ul>
+          <p id="add-new-custom-website-link">+ Add new custom website</p>
+          <input type="button" value="Restore custom websites to default" id="restore-custom-websites-to-default-button" />
+        </div>
       </li>
     </ul>
     <script src="../scripts/settings.js"></script>

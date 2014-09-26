@@ -98,7 +98,7 @@ var togglbutton = {
     document.body.appendChild(editForm);
 
     handler = function (e) {
-      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
+      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
         editForm.style.display = "none";
         this.removeEventListener("click", handler);
       }

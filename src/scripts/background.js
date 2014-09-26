@@ -16,6 +16,8 @@ var TogglButton = {
   $idleCheckEnabled: false,
   $idleInterval: 15000,
   $idleFromTo: "09:00-17:00",
+  $customWebsitesEnabled: false,
+  $customWebsites: null,
   $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +
@@ -31,6 +33,88 @@ var TogglButton = {
         '<input type="button" value="Update" id="toggl-button-update">' +
       '</p>' +
     '</div>',
+  $defaultWebsites: [{
+      'url': 'web.any.do',
+      'app': 'AnyDo'
+    }, {
+      'url': 'asana.com',
+      'app': 'Asana'
+    }, {
+      'url': 'basecamp.com',
+      'app': 'Basecamp'
+    }, {
+      'url': 'bitbucket.org',
+      'app': 'Bitbucket'
+    }, {
+      'url': 'capsulecrm.com',
+      'app': 'Capsule'
+    }, {
+      'url': 'github.com',
+      'app': 'GitHub'
+    }, {
+      'url': 'gitlab.com',
+      'app': 'GitLab'
+    }, {
+      'url': 'docs.google.com',
+      'app': 'GoogleDrive'
+    }, {
+      'url': 'drive.google.com',
+      'app': 'GoogleDrive'
+    }, {
+      'url': 'pivotaltracker.com',
+      'app': 'PivotalTracker'
+    }, {
+      'url': 'podio.com',
+      'app': 'Podio'
+    }, {
+      'url': 'producteev.com',
+      'app': 'Producteev'
+    }, {
+      'url': 'redbooth.com',
+      'app': 'Redbooth'
+    }, {
+      'url': 'redmine.org',
+      'app': 'Redmine'
+    }, {
+      'url': 'sifterapp.com',
+      'app': 'Sifter'
+    }, {
+      'url': 'teamweek.com',
+      'app': 'Teamweek'
+    }, {
+      'url': 'todoist.com',
+      'app': 'Todoist'
+    }, {
+      'url': 'bugs.jquery.com',
+      'app': 'Trac'
+    }, {
+      'url': 'trac-hacks.org',
+      'app': 'Trac'
+    }, {
+      'url': 'trac.edgewall.org',
+      'app': 'Trac'
+    }, {
+      'url': 'trac.wordpress.org',
+      'app': 'Trac'
+    }, {
+      'url': 'trello.com',
+      'app': 'Trello'
+    }, {
+      'url': 'unfuddle.com',
+      'app': 'Unfuddle'
+    }, {
+      'url': 'worksection.com',
+      'app': 'Worksection'
+    }, {
+      'url': 'wunderlist.com',
+      'app': 'Wunderlist'
+    }, {
+      'url': 'myjetbrains.com',
+      'app': 'YouTrack'
+    }, {
+      'url': 'zendesk.com',
+      'app': 'Zendesk'
+    }],
 
   checkUrl: function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
@@ -38,6 +122,90 @@ var TogglButton = {
         TogglButton.fetchUser(TogglButton.$apiUrl);
       } else if (/toggl\.com\/app\/index/.test(tab.url)) {
         TogglButton.fetchUser(TogglButton.$newApiUrl);
+      } else {
+        var websites = TogglButton.$defaultWebsites;
+        if (TogglButton.$customWebsitesEnabled) {
+          websites = TogglButton.$customWebsites;
+        }
+        for (var i = 0; i < websites.length; i++) {
+          var curURL = websites[i]['url'];
+          var curApp = websites[i]['app'];
+          if (curURL && tab.url.indexOf(curURL) > -1) {
+            switch (curApp) {
+              case "AnyDo":
+                chrome.tabs.executeScript({file: 'scripts/content/anydo.js'});
+                break;
+              case "Asana":
+                chrome.tabs.executeScript({file: 'scripts/content/asana.js'});
+                break;
+              case "Basecamp":
+                chrome.tabs.executeScript({file: 'scripts/content/basecamp.js'});
+                break;
+              case "Bitbucket":
+                chrome.tabs.executeScript({file: 'scripts/content/bitbucket.js'});
+                break;
+              case "Capsule":
+                chrome.tabs.executeScript({file: 'scripts/content/capsule.js'});
+                break;
+              case "GitHub":
+                chrome.tabs.executeScript({file: 'scripts/content/github.js'});
+                break;
+              case "GitLab":
+                chrome.tabs.executeScript({file: 'scripts/content/gitlab.js'});
+                break;
+              case "GoogleDrive":
+                chrome.tabs.executeScript({file: 'scripts/content/google-docs.js'});
+                break;
+              case "PivotalTracker":
+                chrome.tabs.executeScript({file: 'scripts/content/pivotal.js'});
+                break;
+              case "Podio":
+                chrome.tabs.executeScript({file: 'scripts/content/podio.js'});
+                break;
+              case "Producteev":
+                chrome.tabs.executeScript({file: 'scripts/content/producteev.js'});
+                break;
+              case "Redbooth":
+                chrome.tabs.executeScript({file: 'scripts/content/redbooth.js'});
+                break;
+              case "Redmine":
+                chrome.tabs.executeScript({file: 'scripts/content/redmine.js'});
+                break;
+              case "Sifter":
+                chrome.tabs.executeScript({file: 'scripts/content/sifterapp.js'});
+                break;
+              case "Teamweek":
+                chrome.tabs.executeScript({file: 'scripts/content/teamweek.js'});
+                break;
+              case "Todoist":
+                chrome.tabs.executeScript({file: 'scripts/content/todoist.js'});
+                break;
+              case "Trac":
+                chrome.tabs.executeScript({file: 'scripts/content/trac.js'});
+                break;
+              case "Trello":
+                chrome.tabs.executeScript({file: 'scripts/content/trello.js'});
+                break;
+              case "Unfuddle":
+                chrome.tabs.executeScript({file: 'scripts/content/unfuddle.js'});
+                break;
+              case "Worksection":
+                chrome.tabs.executeScript({file: 'scripts/content/worksection.js'});
+                break;
+              case "Wunderlist":
+                chrome.tabs.executeScript({file: 'scripts/content/wunderlist.js'});
+                break;
+              case "YouTrack":
+                chrome.tabs.executeScript({file: 'scripts/content/youtrack.js'});
+                break;
+              case "Zendesk":
+                chrome.tabs.executeScript({file: 'scripts/content/zendesk.js'});
+                break;
+              default:
+                console.log('Invalid app name: ' + curApp);
+            }
+          }
+        }
       }
     }
   },
@@ -366,6 +534,11 @@ var TogglButton = {
       TogglButton.$socket = null;
     }
   },
+  
+  setCustomWebsites: function (customWebsites) {
+    localStorage.setItem('customWebsites', JSON.stringify(customWebsites));
+    TogglButton.$customWebsites = customWebsites;
+  },
 
   setNanny: function (state) {
     localStorage.setItem("idleCheckEnabled", state);
@@ -462,6 +635,20 @@ var TogglButton = {
       TogglButton.setNannyFromTo(request.state);
     } else if (request.type === 'toggle-nanny-interval') {
       TogglButton.setNannyInterval(request.state);
+    } else if (request.type === 'toggle-custom-websites') {
+      localStorage.setItem("customWebsitesEnabled", request.state);
+      TogglButton.$customWebsitesEnabled = request.state;
+    } else if (request.type === 'set-custom-website') {
+      var customWebsites = TogglButton.$customWebsites.slice();
+      customWebsites[request.index] = request.value;
+      TogglButton.setCustomWebsites(customWebsites);
+    } else if (request.type === 'remove-custom-website') {
+      var customWebsites = TogglButton.$customWebsites.slice();
+      customWebsites.splice(request.index, 1);
+      TogglButton.setCustomWebsites(customWebsites);
+    } else if (request.type === 'restore-custom-websites-to-default') {
+      TogglButton.setCustomWebsites(TogglButton.$defaultWebsites.slice());
+      sendResponse();
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
@@ -479,6 +666,7 @@ TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
 TogglButton.$idleCheckEnabled = !!localStorage.getItem("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 15000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
+TogglButton.$customWebsitesEnabled = !!localStorage.getItem("customWebsitesEnabled");
 TogglButton.triggerNotification();
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

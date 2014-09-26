@@ -26,6 +26,10 @@ var TogglButton = {
         '<label for="toggl-button-project">Project:</label>' +
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
       '</p>' +
+	  '<p class="toggl-button-row">' +
+        '<label for="toggl-button-tag">Tag:</label>' +
+        '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag">{tags}</select>' +
+      '</p>' +
       '<p id="toggl-button-submit-row">' +
         '<input type="button" value="Cancel" id="toggl-button-hide">' +
         '<input type="button" value="Update" id="toggl-button-update">' +
@@ -47,12 +51,17 @@ var TogglButton = {
       token: token || ' ',
       baseUrl: apiUrl,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {};
+        var resp, apiToken, projectMap = {}, tagMap = {};
         if (xhr.status === 200) {
           resp = JSON.parse(xhr.responseText);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
               projectMap[project.name] = project;
+            });
+          }
+		  if (resp.data.tags) {
+            resp.data.tags.forEach(function (tag) {
+              tagMap[tag.name] = tag;
             });
           }
           if (resp.data.time_entries) {
@@ -67,6 +76,7 @@ var TogglButton = {
           }
           TogglButton.$user = resp.data;
           TogglButton.$user.projectMap = projectMap;
+		  TogglButton.$user.tagMap = tagMap;
           localStorage.removeItem('userToken');
           localStorage.setItem('userToken', resp.data.api_token);
           if (TogglButton.$sendResponse !== null) {
@@ -167,6 +177,7 @@ var TogglButton = {
           description: timeEntry.description,
           wid: TogglButton.$user.default_wid,
           pid: timeEntry.projectId || null,
+		  tags: timeEntry.tags || null,
           billable: timeEntry.billable || false,
           duration: -(start.getTime() / 1000),
           created_with: timeEntry.createdWith || 'TogglButton'
@@ -255,7 +266,8 @@ var TogglButton = {
       payload: {
         time_entry: {
           description: timeEntry.description,
-          pid: timeEntry.pid
+          pid: timeEntry.pid,
+		  tags: timeEntry.tags
         }
       },
       onLoad: function (xhr) {
@@ -331,7 +343,10 @@ var TogglButton = {
     if (TogglButton.$user === null) {
       return "";
     }
-    return TogglButton.$editForm.replace("{projects}", TogglButton.fillProjects());
+    return TogglButton.$editForm
+				.replace("{projects}", TogglButton.fillProjects())
+				.replace("{tags}", TogglButton.fillTags())
+				;
   },
 
   fillProjects: function () {
@@ -341,6 +356,19 @@ var TogglButton = {
     for (key in projects) {
       if (projects.hasOwnProperty(key)) {
         html += "<option value='" + projects[key].id + "'>" + key + "</option>";
+      }
+    }
+    return html;
+  },
+  
+  fillTags: function() {
+	var html = "<option value=''>- No Tag -</option>",
+	  tags = TogglButton.$user.tagMap,
+	  key = null;
+	
+	for (key in tags) {
+      if (tags.hasOwnProperty(key)) {
+        html += "<option value='" + tags[key].name + "'>" + key + "</option>";
       }
     }
     return html;

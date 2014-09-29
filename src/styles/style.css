@@ -28,7 +28,6 @@ only screen and (min-resolution: 192dpi) {
 #toggl-button-edit-form {
   position: absolute;
   width: 240px !important;
-  height: 240px;
   padding: 10px !important;
   -webkit-box-shadow: 0 1px 3px rgba(128,128,128,.5);
   -moz-box-shadow: 0 1px 3px rgba(128,128,128,.5);
@@ -68,14 +67,14 @@ p.toggl-button-row.first {
   padding: 5px;
   width: 220px;
 }
-#toggl-button-description, #toggl-button-project {
+#toggl-button-description, #toggl-button-project, #toggl-button-tag {
   height: 35px !important;
   font-size: 13px !important;
   margin: 0 !important;
   padding: 0 10px !important;
   width: 220px !important;
 }
-#toggl-button-project {
+#toggl-button-project, #toggl-button-tag {
   width: 100% !important;
 }
 
@@ -109,13 +108,6 @@ p.toggl-button-row.first {
 }
 #toggl-button-update {
   float: right;
-}
-#toggl-button-submit-row {
-  position:absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  margin: 0 !important;
 }
 
 /********* PIVOTAL *********/

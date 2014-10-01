@@ -57,6 +57,8 @@ If you use a setup, where one of the supported services is on a custom domain yo
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
 
+Don't know how to start? Just check out the user requested services that have not yet been implemented, pick one and start hacking. [User requested services][97]
+
 [1]: https://www.toggl.com/
 [2]: https://teamweek.com/
 [3]: https://www.pivotaltracker.com/
@@ -83,5 +85,6 @@ Want to contribute? Great! Just fork the project, make your changes and open a [
 [24]: https://todoist.com/
 [25]: http://trac.edgewall.org/
 [26]: https://www.wunderlist.com
+[97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
 [99]: https://github.com/toggl/toggl-button/pulls

@@ -51,6 +51,9 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
   - start another time entry inside your account.
   - go to Toggl to stop or edit your time entry.
 
+## Custom domains
+If you have a setup where one of the supported services is on a custom domain you can customize the extension and add your custom domain. Here is a step by step guide on how to do that [Adding custom domains][98]
+
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
 
@@ -80,4 +83,5 @@ Want to contribute? Great! Just fork the project, make your changes and open a [
 [24]: https://todoist.com/
 [25]: http://trac.edgewall.org/
 [26]: https://www.wunderlist.com
+[98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
 [99]: https://github.com/toggl/toggl-button/pulls

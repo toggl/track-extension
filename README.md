@@ -52,7 +52,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
   - go to Toggl to stop or edit your time entry.
 
 ## Custom domains
-If you have a setup where one of the supported services is on a custom domain you can customize the extension and add your custom domain. Here is a step by step guide on how to do that [Adding custom domains][98]
+If you use a setup, where one of the supported services is on a custom domain you can customize the extension to fit your needs. Here is a step by step guide on how to [add custom domain][98] to the extension.
 
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]

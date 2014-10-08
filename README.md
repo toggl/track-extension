@@ -27,7 +27,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Any.do][23]
   - [Todoist][24]
   - [Trac][25]
-  - [Wundrelist][26]
+  - [Wunderlist][26]
 
 ## Installing from the Web Store
 

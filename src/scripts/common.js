@@ -84,7 +84,7 @@ var togglbutton = {
     if (editForm !== null) {
       $("#toggl-button-description").value = response.entry.description;
       $("#toggl-button-project").value = pid;
-	  $("#toggl-button-tag").value = tid;
+      $("#toggl-button-tag").value = 0;
       editForm.style.left = (elemRect.left - 10) + "px";
       editForm.style.top = (elemRect.top - 10) + "px";
       editForm.style.display = "block";
@@ -117,7 +117,7 @@ var togglbutton = {
         type: "update",
         description: $("#toggl-button-description").value,
         pid: $("#toggl-button-project").value,
-		tags: [ $("#toggl-button-tag").value ]
+        tags: [ $("#toggl-button-tag").value ]
       };
       chrome.extension.sendMessage(request);
       editForm.style.display = "none";
@@ -182,7 +182,7 @@ var togglbutton = {
           respond: true,
           projectId: invokeIfFunction(params.projectId),
           description: invokeIfFunction(params.description),
-		  tags: invokeIfFunction(params.tags),
+          tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
           createdWith: 'TogglButton - ' + params.className
         };

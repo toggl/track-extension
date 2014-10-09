@@ -27,8 +27,8 @@ var TogglButton = {
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
       '</p>' +
       '<p class="toggl-button-row">' +
-        '<label for="toggl-button-tag">Tag:</label>' +
-        '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag">{tags}</select>' +
+        '<label for="toggl-button-tag">Tags:</label>' +
+        '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
       '</p>' +
       '<p id="toggl-button-submit-row">' +
         '<input type="button" value="Cancel" id="toggl-button-hide">' +
@@ -361,7 +361,7 @@ var TogglButton = {
   },
 
   fillTags: function () {
-    var html = "<option value='0'>- No Tag -</option>",
+    var html = "",
       tags = TogglButton.$user.tagMap,
       key = null;
 

@@ -69,6 +69,20 @@ var togglbutton = {
     }
   },
 
+  getSelectedTags: function () {
+    var tags = [],
+      tag,
+      i,
+      s = document.getElementById("toggl-button-tag");
+    for (i = 0; i < s.options.length; i += 1) {
+      if (s.options[i].selected === true) {
+        tag = s.options[i].value;
+        tags.push(tag);
+      }
+    }
+    return tags;
+  },
+
   addEditForm: function (response) {
     if (response === null || !response.showPostPopup) {
       return;
@@ -84,7 +98,7 @@ var togglbutton = {
     if (editForm !== null) {
       $("#toggl-button-description").value = response.entry.description;
       $("#toggl-button-project").value = pid;
-      $("#toggl-button-tag").value = 0;
+      $("#toggl-button-tag").value = "";
       editForm.style.left = (elemRect.left - 10) + "px";
       editForm.style.top = (elemRect.top - 10) + "px";
       editForm.style.display = "block";
@@ -117,7 +131,7 @@ var togglbutton = {
         type: "update",
         description: $("#toggl-button-description").value,
         pid: $("#toggl-button-project").value,
-        tags: [ $("#toggl-button-tag").value ]
+        tags: togglbutton.getSelectedTags()
       };
       chrome.extension.sendMessage(request);
       editForm.style.display = "none";

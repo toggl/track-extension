@@ -67,13 +67,20 @@ p.toggl-button-row.first {
   padding: 5px;
   width: 220px;
 }
-#toggl-button-description, #toggl-button-project, #toggl-button-tag {
+#toggl-button-description, #toggl-button-project {
   height: 35px !important;
+}
+#toggl-button-description, #toggl-button-project, #toggl-button-tag {
   font-size: 13px !important;
   margin: 0 !important;
   padding: 0 10px !important;
   width: 220px !important;
 }
+
+#toggl-button-tag {
+  height: 65px !important;
+}
+
 #toggl-button-project, #toggl-button-tag {
   width: 100% !important;
 }

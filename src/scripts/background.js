@@ -405,11 +405,17 @@ var TogglButton = {
   setNannyFromTo: function (state) {
     localStorage.setItem("idleFromTo", state);
     TogglButton.$idleFromTo = state;
+    if (TogglButton.$idleCheckEnabled) {
+      TogglButton.triggerNotification();
+    }
   },
 
   setNannyInterval: function (state) {
     localStorage.setItem("idleInterval", Math.max(state, 1000));
     TogglButton.$idleInterval = state;
+    if (TogglButton.$idleCheckEnabled) {
+      TogglButton.triggerNotification();
+    }
   },
 
   checkState: function () {

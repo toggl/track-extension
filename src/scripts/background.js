@@ -465,14 +465,18 @@ var TogglButton = {
 
   triggerNotification: function () {
     if (TogglButton.$timer === null && TogglButton.$curEntry === null) {
-      chrome.notifications.clear(
-        'remind-to-track-time',
-        function () {
-          return;
-        }
-      );
+      TogglButton.hideNotification();
       TogglButton.$timer = setTimeout(TogglButton.checkState, TogglButton.$idleInterval);
     }
+  },
+
+  hideNotification: function () {
+    chrome.notifications.clear(
+      'remind-to-track-time',
+      function () {
+        return;
+      }
+    );
   },
 
   newMessage: function (request, sender, sendResponse) {
@@ -486,6 +490,7 @@ var TogglButton = {
       TogglButton.logoutUser(sendResponse);
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request, sendResponse);
+      TogglButton.hideNotification();
     } else if (request.type === 'update') {
       TogglButton.updateTimeEntry(request, sendResponse);
     } else if (request.type === 'stop') {

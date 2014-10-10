@@ -14,7 +14,7 @@ var TogglButton = {
   $socketEnabled: false,
   $timer: null,
   $idleCheckEnabled: false,
-  $idleInterval: 15000,
+  $idleInterval: 360000,
   $idleFromTo: "09:00-17:00",
   $editForm: '<div id="toggl-button-edit-form">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -516,7 +516,7 @@ TogglButton.fetchUser(TogglButton.$apiUrl);
 TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
 TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
 TogglButton.$idleCheckEnabled = !!localStorage.getItem("idleCheckEnabled");
-TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 15000;
+TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
 TogglButton.triggerNotification();
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);

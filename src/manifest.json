@@ -88,7 +88,8 @@
         "*://trac-hacks.org/*",
         "*://*.trac.wordpress.org/*",
         "*://bugs.jquery.com/*",
-        "*://*.wunderlist.com/*"
+        "*://*.wunderlist.com/*",
+        "*://*.toodledo.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -209,6 +210,10 @@
     {
       "matches": ["https://*.wunderlist.com/*"],
       "js": ["scripts/content/wunderlist.js"]
+    },
+    {
+      "matches": ["*://*.toodledo.com/*"],
+      "js": ["scripts/content/toodledo.js"]
     }
   ]
 }

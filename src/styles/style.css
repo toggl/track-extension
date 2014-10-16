@@ -75,14 +75,11 @@ p.toggl-button-row.first {
   margin: 0 !important;
   padding: 0 10px !important;
   width: 220px !important;
+  box-sizing: content-box !important;
 }
 
 #toggl-button-tag {
   height: 65px !important;
-}
-
-#toggl-button-project, #toggl-button-tag {
-  width: 100% !important;
 }
 
 #toggl-button-hide, #toggl-button-update {

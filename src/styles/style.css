@@ -462,3 +462,7 @@ p.toggl-button-row.first {
   position: absolute;
   margin-left: 5px;
 }
+
+#toggl-button-edit-form .toggl-button.toodledo {
+  position: static;
+}

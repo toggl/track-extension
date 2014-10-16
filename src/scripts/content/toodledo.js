@@ -14,6 +14,7 @@ togglbutton.render('.row:not(.toggl)', {observe: true}, function (elem) {
 
   link = togglbutton.createTimerLink({
     className: 'toodledo',
+    buttonType: 'minimal',
     description: taskElem.firstChild.textContent + folderName,
     projectName: goalElem && goalElem.textContent
   });

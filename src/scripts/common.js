@@ -89,6 +89,10 @@ var togglbutton = {
     }
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
       handler,
+      left,
+      top,
+      editFormHeight = 350,
+      editFormWidth = 240,
       submitForm,
       elemRect,
       div = document.createElement('div'),
@@ -108,9 +112,16 @@ var togglbutton = {
 
     div.innerHTML = response.html.replace("{service}", togglbutton.serviceName);
     editForm = div.firstChild;
-
-    editForm.style.left = (elemRect.left - 10) + "px";
-    editForm.style.top = (elemRect.top - 10) + "px";
+    left = (elemRect.left - 10);
+    top = (elemRect.top - 10);
+    if (left + editFormWidth > window.innerWidth) {
+      left = window.innerWidth - 10 - editFormWidth;
+    }
+    if (top + editFormHeight > window.innerHeight) {
+      top = window.innerHeight - 10 - editFormHeight;
+    }
+    editForm.style.left = left + "px";
+    editForm.style.top = top + "px";
     document.body.appendChild(editForm);
 
     handler = function (e) {

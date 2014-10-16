@@ -89,6 +89,7 @@ var togglbutton = {
     }
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
       handler,
+      submitForm,
       elemRect,
       div = document.createElement('div'),
       editForm;
@@ -119,14 +120,7 @@ var togglbutton = {
       }
     };
 
-    $("#toggl-button-description", editForm).value = response.entry.description;
-    $("#toggl-button-project", editForm).value = pid;
-    $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
-      editForm.style.display = "none";
-      this.removeEventListener("click", handler);
-    });
-
-    $("#toggl-button-update", editForm).addEventListener('click', function (e) {
+    submitForm = function () {
       var request = {
         type: "update",
         description: $("#toggl-button-description").value,
@@ -136,6 +130,21 @@ var togglbutton = {
       chrome.extension.sendMessage(request);
       editForm.style.display = "none";
       this.removeEventListener("click", handler);
+    };
+
+    $("#toggl-button-description", editForm).value = response.entry.description;
+    $("#toggl-button-project", editForm).value = pid;
+    $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
+      editForm.style.display = "none";
+      this.removeEventListener("click", handler);
+    });
+
+    $("#toggl-button-update", editForm).addEventListener('click', function (e) {
+      submitForm();
+    });
+
+    $("form", editForm).addEventListener('submit', function (e) {
+      submitForm();
     });
 
     $(".toggl-button", editForm).addEventListener('click', function (e) {

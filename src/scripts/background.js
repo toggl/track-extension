@@ -17,6 +17,7 @@ var TogglButton = {
   $idleInterval: 360000,
   $idleFromTo: "09:00-17:00",
   $editForm: '<div id="toggl-button-edit-form">' +
+      '<form>' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<p class="toggl-button-row">' +
         '<label for="toggl-button-description">Description:</label>' +
@@ -34,6 +35,7 @@ var TogglButton = {
         '<input type="button" value="Cancel" id="toggl-button-hide">' +
         '<input type="button" value="Update" id="toggl-button-update">' +
       '</p>' +
+      '</from>' +
     '</div>',
 
   checkUrl: function (tabId, changeInfo, tab) {

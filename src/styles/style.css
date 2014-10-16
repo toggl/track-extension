@@ -74,8 +74,7 @@ p.toggl-button-row.first {
   font-size: 13px !important;
   margin: 0 !important;
   padding: 0 10px !important;
-  width: 220px !important;
-  box-sizing: content-box !important;
+  width: 100% !important;
 }
 
 #toggl-button-tag {

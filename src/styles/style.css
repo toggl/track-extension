@@ -205,6 +205,12 @@ p.toggl-button-row.first {
   color: rgba(47,47,47,0.8);
   margin: 12px;
   margin-top: 18px;
+  position: absolute;
+  z-index: 9999999;
+}
+
+#toggl-button-edit-form .toggl-button.teamweek-new {
+  position: static;
 }
 
 /********* PRODUCTEEV *********/

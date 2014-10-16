@@ -455,3 +455,10 @@ p.toggl-button-row.first {
 #wordpress-org #content .toggl-button.trac.active:hover {
   border-color: rgb(22, 148, 67);
 }
+
+/****** Toodledo *********/
+.toggl-button.toodledo {
+  margin-top: -3px;
+  position: absolute;
+  margin-left: 5px;
+}

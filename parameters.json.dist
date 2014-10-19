@@ -1,0 +1,31 @@
+{
+  "sites": {
+    "anydo": ["https://web.any.do/*"],
+    "asana": ["*://app.asana.com/*"],
+    "basecamp": ["*://*.basecamp.com/*"],
+    "bitbucket": ["*://*.bitbucket.org/*"],
+    "capsule": ["*://*.capsulecrm.com/*"],
+    "github": ["*://*.github.com/*"],
+    "gitlab": ["*://*.gitlab.com/*"],
+    "google-docs": ["*://docs.google.com/*"],
+    "jira": ["*://*.atlassian.net/*", "*://*.jira.com/*"],
+    "pivotal": ["*://*.pivotaltracker.com/*"],
+    "podio": ["*://*.podio.com/*"],
+    "producteev": ["*://*.producteev.com/*"],
+    "redbooth": ["*://*.redbooth.com/*"],
+    "redmine": ["*://*.redmine.org/*"],
+    "sifterapp": ["*://*.sifterapp.com/*"],
+    "teamweek": ["*://*.teamweek.com/*"],
+    "teamweek_new": ["*://new.teamweek.com/*"],
+    "todoist": ["https://*.todoist.com/app*"],
+    "toggl": ["*://www.toggl.com/app/timer", "*://www.toggl.com/"],
+    "trac": ["*://trac.edgewall.org/*", "*://trac-hacks.org/*", "*://*.trac.wordpress.org/*", "*://bugs.jquery.com/*"],
+    "trello": ["*://*.trello.com/*"],
+    "unfuddle": ["*://*.unfuddle.com/*"],
+    "worksection": ["*://*.worksection.com/*"],
+    "wunderlist": ["https://*.wunderlist.com/*"],
+    "xero": ["https://go.xero.com/*"],
+    "youtrack": ["*://*.myjetbrains.com/*"],
+    "zendesk": ["*://*.zendesk.com/*"]
+  }
+}

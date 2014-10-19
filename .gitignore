@@ -1,4 +1,5 @@
 src/manifest.json
+parameters.json
 dist
 node_modules
 tmp

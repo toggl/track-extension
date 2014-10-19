@@ -91,5 +91,8 @@ module.exports = function( grunt ) {
     grunt.file.write('src/manifest.json', JSON.stringify(manifest, null, 2));
   });
 
-  grunt.registerTask('default', ['jslint', 'crx', 'compress']);
+  grunt.registerTask('build', ['manifest', 'crx', 'compress']);
+  grunt.registerTask('build-crx', ['manifest', 'crx']);
+  grunt.registerTask('build-zip', ['manifest', 'crx']);
+  grunt.registerTask('default', ['jslint', 'build']);
 };

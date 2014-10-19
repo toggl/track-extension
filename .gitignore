@@ -1,3 +1,4 @@
+src/manifest.json
 dist
 node_modules
 tmp

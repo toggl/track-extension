@@ -53,5 +53,43 @@ module.exports = function( grunt ) {
     }
   });
 
+  grunt.registerTask('manifest', 'Generate manifest file based on parameters.', function() {
+    var _ = require('lodash'), parameters = config.parameters, permissions = [];
+    var distManifest = grunt.file.readJSON('src/manifest.json.dist');
+    var manifest = {
+      'version': parameters['version'] || config.package['version'],
+      'permissions': [],
+      'content_scripts': [
+        {
+          "matches": [],
+          "css": ["styles/style.css"],
+          "js": ["scripts/common.js"]
+        }
+      ]
+    }
+
+    if (parameters.hasOwnProperty('update_url')) {
+      manifest['update_url'] = parameters['update_url'];
+    }
+
+    _.forOwn(parameters.sites, function (matches, site) {
+      manifest["content_scripts"].push({
+        "js": "scripts/content/" + site + ".js",
+        "matches": matches
+      });
+
+      _.forIn(matches, function (pattern) {
+        manifest['content_scripts'][0]['matches'].push(pattern);
+        manifest['permissions'].push(pattern);
+      });
+    });
+
+    manifest = _.merge(distManifest, manifest, function(a, b) {
+      return _.isArray(a) ? a.concat(b) : undefined;
+    });
+
+    grunt.file.write('src/manifest.json', JSON.stringify(manifest, null, 2));
+  });
+
   grunt.registerTask('default', ['jslint', 'crx', 'compress']);
 };

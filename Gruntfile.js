@@ -35,18 +35,20 @@ module.exports = function( grunt ) {
       toggl: {
         "src": "<%= config.app %>",
         "dest": "<%= config.dist %>",
-        "privateKey": "toggl-button.pem"
+        "privateKey": "toggl-button.pem",
+        "exclude": [ "manifest.json.dist" ],
+        "codebase": config.parameters['base_url'] || false
       }
     },
     compress: {
       dist: {
         options: {
-          archive: '<%= config.dist %>/<%= config.package.name %>-<%= config.package.version %>.zip'
+          archive: '<%= config.dist %>/<%= config.package.name %>-<%= config.parameters.version || config.package.version %>.zip'
         },
         files: [{
           expand: true,
           cwd: '<%= config.app %>/',
-          src: ['**'],
+          src: ['**', '!manifest.json.dist'],
           dest: ''
         }]
       }

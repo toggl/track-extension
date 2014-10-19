@@ -5,10 +5,21 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks('grunt-crx');
   grunt.loadNpmTasks('grunt-contrib-compress');
 
+  var loadParameters = function () {
+    if (grunt.file.exists('parameters.json')) {
+      return grunt.file.readJSON('parameters.json');
+    }
+
+    if (grunt.file.exists('parameters.json.dist')) {
+      return grunt.file.readJSON('parameters.json.dist');
+    }
+  }
+
   var config = {
     app: 'src',
     dist: 'dist',
-    package: grunt.file.readJSON('package.json')
+    package: grunt.file.readJSON('package.json'),
+    parameters: loadParameters()
   };
 
   grunt.initConfig({

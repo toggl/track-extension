@@ -98,6 +98,6 @@ module.exports = function( grunt ) {
 
   grunt.registerTask('build', ['manifest', 'crx', 'compress']);
   grunt.registerTask('build-crx', ['manifest', 'crx']);
-  grunt.registerTask('build-zip', ['manifest', 'crx']);
+  grunt.registerTask('build-zip', ['manifest', 'compress']);
   grunt.registerTask('default', ['jslint', 'build']);
 };

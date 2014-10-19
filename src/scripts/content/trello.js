@@ -30,7 +30,7 @@ togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, funct
     className: 'trello',
     buttonType: 'minimal',
     projectName: projectElem.innerText,
-    description: titleElem.innerText + ' - ' + taskElem.innerText,
+    description: titleElem.innerText + ' - ' + taskElem.innerText
   });
 
   link.classList.add('checklist-item-button');

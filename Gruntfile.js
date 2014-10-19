@@ -28,7 +28,10 @@ module.exports = function( grunt ) {
       app: {
         src: [
           '<%= config.app %>/scripts/**/*.js'
-        ]
+        ],
+        directives: {
+          node: true
+        }
       }
     },
     crx: {

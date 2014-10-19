@@ -12,7 +12,7 @@ togglbutton.render('.ticket-fields-panel:not(.toggl)', {observe: true}, function
 
   link = togglbutton.createTimerLink({
     className: 'unfuddle',
-    description: description,
+    description: description
   });
 
   $(".primary-properties", elem).appendChild(link);

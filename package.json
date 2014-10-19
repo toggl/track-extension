@@ -9,7 +9,6 @@
     "grunt-contrib-compress": "~0.7",
     "grunt-crx": "~0.3",
     "grunt-jslint": "~1.1",
-    "jslint": "~0.5",
     "lodash": "~2.4"
   }
 }

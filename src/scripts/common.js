@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true*/
-/*global document: false, MutationObserver: false, chrome: false*/
+/*global document: false, MutationObserver: false, chrome: false, window: false*/
 "use strict";
 
 function $(s, elem) {

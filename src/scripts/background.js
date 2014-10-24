@@ -56,6 +56,7 @@ var TogglButton = {
         var resp, apiToken, projectMap = {}, tagMap = {};
         if (xhr.status === 200) {
           resp = JSON.parse(xhr.responseText);
+          TogglButton.$curEntry = null;
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
               projectMap[project.name] = project;
@@ -335,6 +336,7 @@ var TogglButton = {
       method: 'DELETE',
       onLoad: function (xhr) {
         TogglButton.$user = null;
+        TogglButton.$curEntry = null;
         sendResponse({success: (xhr.status === 200), xhr: xhr});
         TogglButton.refreshPage();
       }

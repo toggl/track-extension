@@ -16,6 +16,7 @@ var TogglButton = {
   $idleCheckEnabled: false,
   $idleInterval: 360000,
   $idleFromTo: "09:00-17:00",
+  $lastSyncDate: null,
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form>' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -490,8 +491,18 @@ var TogglButton = {
     );
   },
 
+  checkSync: function () {
+    var d = new Date(),
+      currentDate = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
+    if (TogglButton.$lastSyncDate === null || TogglButton.$lastSyncDate !== currentDate) {
+      TogglButton.syncUser();
+      TogglButton.$lastSyncDate = currentDate;
+    }
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
+      TogglButton.checkSync();
       TogglButton.setBrowserActionBadge();
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
       TogglButton.triggerNotification();

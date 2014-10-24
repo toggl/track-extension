@@ -55,6 +55,9 @@ var TogglButton = {
       onLoad: function (xhr) {
         var resp, apiToken, projectMap = {}, tagMap = {};
         if (xhr.status === 200) {
+          chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
+          });
           resp = JSON.parse(xhr.responseText);
           TogglButton.$curEntry = null;
           if (resp.data.projects) {
@@ -316,6 +319,10 @@ var TogglButton = {
     });
   },
 
+  syncUser: function () {
+    TogglButton.fetchUser(TogglButton.$newApiUrl);
+  },
+
   loginUser: function (request, sendResponse) {
     TogglButton.ajax("/sessions", {
       method: 'POST',
@@ -492,6 +499,8 @@ var TogglButton = {
       TogglButton.loginUser(request, sendResponse);
     } else if (request.type === 'logout') {
       TogglButton.logoutUser(sendResponse);
+    } else if (request.type === 'sync') {
+      TogglButton.syncUser();
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request, sendResponse);
       TogglButton.hideNotification();

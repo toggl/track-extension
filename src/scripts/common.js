@@ -256,6 +256,10 @@ var togglbutton = {
       }
       link.style.color = color;
       link.innerHTML = linkText;
+    } else if (request.type === 'sync') {
+      if ($("#toggl-button-edit-form") !== null) {
+        $("#toggl-button-edit-form").remove();
+      }
     }
   }
 };

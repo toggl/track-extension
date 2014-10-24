@@ -56,6 +56,15 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.sendMessage(request);
   });
 
+  document.querySelector(".sync-button").addEventListener('click', function () {
+    var request = {
+      type: "sync",
+      respond: false
+    };
+    PopUp.sendMessage(request);
+    window.close();
+  });
+
   document.querySelector(".login-btn").addEventListener('click', function () {
     var request = {
       type: "login",

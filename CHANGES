@@ -1,3 +1,6 @@
+[0.4.5]
+- Added dayly automatic sync
+- Added sync menu item
 [0.4.4]
 - Added support for Toodledo
 - Fixed toggl-button's location for Teamweek's new design

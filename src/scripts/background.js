@@ -491,7 +491,7 @@ var TogglButton = {
     );
   },
 
-  checkSync: function () {
+  checkDailyUpdate: function () {
     var d = new Date(),
       currentDate = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
     if (TogglButton.$lastSyncDate === null || TogglButton.$lastSyncDate !== currentDate) {
@@ -502,7 +502,7 @@ var TogglButton = {
 
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
-      TogglButton.checkSync();
+      TogglButton.checkDailyUpdate();
       TogglButton.setBrowserActionBadge();
       sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
       TogglButton.triggerNotification();

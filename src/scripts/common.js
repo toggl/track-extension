@@ -45,6 +45,7 @@ var togglbutton = {
   isStarted: false,
   element: null,
   serviceName: '',
+  tagsVisible: false,
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
@@ -88,21 +89,26 @@ var togglbutton = {
       return;
     }
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
+      projectSelect,
       handler,
       left,
       top,
       editFormHeight = 350,
       editFormWidth = 240,
       submitForm,
+      updateTags,
       elemRect,
       div = document.createElement('div'),
       editForm;
 
     elemRect = togglbutton.element.getBoundingClientRect();
     editForm = $("#toggl-button-edit-form");
+
     if (editForm !== null) {
       $("#toggl-button-description").value = response.entry.description;
       $("#toggl-button-project").value = pid;
+      projectSelect = document.getElementById("toggl-button-project");
+      $("#toggl-button-project-placeholder > div").innerHTML = (pid === 0) ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
       $("#toggl-button-tag").value = "";
       editForm.style.left = (elemRect.left - 10) + "px";
       editForm.style.top = (elemRect.top - 10) + "px";
@@ -143,8 +149,20 @@ var togglbutton = {
       this.removeEventListener("click", handler);
     };
 
+    updateTags = function () {
+      var tags = togglbutton.getSelectedTags();
+      if (tags.length) {
+        tags = tags.join(',');
+      } else {
+        tags = "Add tag";
+      }
+      $("#toggl-button-tag-placeholder > div", editForm).innerHTML = tags;
+    };
+
     $("#toggl-button-description", editForm).value = response.entry.description;
     $("#toggl-button-project", editForm).value = pid;
+    projectSelect = $("#toggl-button-project", editForm);
+    $("#toggl-button-project-placeholder > div", editForm).innerHTML = (pid === 0) ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
       editForm.style.display = "none";
       this.removeEventListener("click", handler);
@@ -171,6 +189,33 @@ var togglbutton = {
       editForm.style.display = "none";
       this.removeEventListener("click", handler);
       return false;
+    });
+    $("#toggl-button-project-placeholder", editForm).addEventListener('click', function (e) {
+      var dropdown = document.getElementById('toggl-button-project'),
+        event = document.createEvent('MouseEvents');
+      event.initMouseEvent('mousedown', true, true, window);
+      dropdown.dispatchEvent(event);
+      this.removeEventListener("click", handler);
+    });
+
+    $("#toggl-button-tag-placeholder", editForm).addEventListener('click', function (e) {
+      var dropdown = document.getElementById('toggl-button-tag');
+      if (togglbutton.tagsVisible) {
+        dropdown.style.display = "none";
+        updateTags();
+      } else {
+        dropdown.style.display = "block";
+      }
+      togglbutton.tagsVisible = !togglbutton.tagsVisible;
+
+      this.removeEventListener("click", handler);
+    });
+
+    $("#toggl-button-project", editForm).addEventListener('change', function (e) {
+      projectSelect = $("#toggl-button-project");
+      $("#toggl-button-project-placeholder > div", editForm).innerHTML = (projectSelect.value === "0") ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
+
+      this.removeEventListener("change", handler);
     });
 
     document.addEventListener("click", handler);

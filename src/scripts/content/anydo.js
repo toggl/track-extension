@@ -3,15 +3,15 @@
 
 'use strict';
 
-togglbutton.render('.task-details:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.dialog:not(.toggl)', {observe: true}, function (elem) {
   var link, wrap = createTag('div'),
-    container = $('.top-level-details', elem),
-    titleElem = $('#quickTitle', elem),
+    container = $('#top-level-details', elem),
+    titleElem = $('#title', elem),
     projectElem = $('.folderSelector', elem);
 
   link = togglbutton.createTimerLink({
     className: 'anydo',
-    description: titleElem.textContent,
+    description: titleElem.value,
     projectName: projectElem.textContent
   });
 

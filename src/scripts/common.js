@@ -137,7 +137,7 @@ var togglbutton = {
       }
     };
 
-    submitForm = function () {
+    submitForm = function (that) {
       var request = {
         type: "update",
         description: $("#toggl-button-description").value,
@@ -146,7 +146,7 @@ var togglbutton = {
       };
       chrome.extension.sendMessage(request);
       editForm.style.display = "none";
-      this.removeEventListener("click", handler);
+      that.removeEventListener("click", handler);
     };
 
     updateTags = function () {
@@ -169,11 +169,11 @@ var togglbutton = {
     });
 
     $("#toggl-button-update", editForm).addEventListener('click', function (e) {
-      submitForm();
+      submitForm(this);
     });
 
     $("form", editForm).addEventListener('submit', function (e) {
-      submitForm();
+      submitForm(this);
     });
 
     $(".toggl-button", editForm).addEventListener('click', function (e) {

@@ -79,7 +79,7 @@ module.exports = function( grunt ) {
 
     _.forOwn(parameters.sites, function (matches, site) {
       manifest["content_scripts"].push({
-        "js": "scripts/content/" + site + ".js",
+        "js": ["scripts/content/" + site + ".js"],
         "matches": matches
       });
 

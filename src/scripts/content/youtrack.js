@@ -1,7 +1,8 @@
 /*jslint indent: 2 */
 /*global $: false, document: false, togglbutton: false*/
 
-togglbutton.render('.issueContainer .fsi-toolbar-content:not(.toggl)', {observe: true}, function (elem) {
+/* the first selector is required for youtrack-5 and the second for youtrack-6 */
+togglbutton.render('.fsi-toolbar-content:not(.toggl), .toolbar_fsi:not(.toggl)', {observe: true}, function (elem) {
   'use strict';
 
   var link, description,
@@ -18,5 +19,5 @@ togglbutton.render('.issueContainer .fsi-toolbar-content:not(.toggl)', {observe:
     projectName: projectElem ? projectElem.textContent : ''
   });
 
-  elem.insertBefore(link, elem.firstChild);
+  elem.insertBefore(link, titleElem);
 });

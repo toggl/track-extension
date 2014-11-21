@@ -109,6 +109,7 @@ p.toggl-button-row.first {
   margin: 0 !important;
   padding: 0 10px !important;
   width: 100% !important;
+  box-sizing :border-box !important;
 }
 
 #toggl-button-tag {

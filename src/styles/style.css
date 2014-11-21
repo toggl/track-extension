@@ -1,3 +1,29 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+#toggl-button-edit-form div, #toggl-button-edit-form span, #toggl-button-edit-form applet, #toggl-button-edit-form object, #toggl-button-edit-form iframe,
+h1, #toggl-button-edit-form h2, #toggl-button-edit-form h3, #toggl-button-edit-form h4, #toggl-button-edit-form h5, #toggl-button-edit-form h6, #toggl-button-edit-form p, #toggl-button-edit-form blockquote, #toggl-button-edit-form pre,
+a, #toggl-button-edit-form abbr, #toggl-button-edit-form acronym, #toggl-button-edit-form address, #toggl-button-edit-form big, #toggl-button-edit-form cite, #toggl-button-edit-form code,
+del, #toggl-button-edit-form dfn, #toggl-button-edit-form em, #toggl-button-edit-form img, #toggl-button-edit-form ins, #toggl-button-edit-form kbd, #toggl-button-edit-form q, #toggl-button-edit-form s, #toggl-button-edit-form samp,
+small, #toggl-button-edit-form strike, #toggl-button-edit-form strong, #toggl-button-edit-form sub, #toggl-button-edit-form sup, #toggl-button-edit-form tt, #toggl-button-edit-form var,
+b, #toggl-button-edit-form u, #toggl-button-edit-form i, #toggl-button-edit-form center,
+dl, #toggl-button-edit-form dt, #toggl-button-edit-form dd, #toggl-button-edit-form ol, #toggl-button-edit-form ul, #toggl-button-edit-form li,
+fieldset, #toggl-button-edit-form form, #toggl-button-edit-form label, #toggl-button-edit-form legend,
+table, #toggl-button-edit-form caption, #toggl-button-edit-form tbody, #toggl-button-edit-form tfoot, #toggl-button-edit-form thead, #toggl-button-edit-form tr, #toggl-button-edit-form th, #toggl-button-edit-form td,
+article, #toggl-button-edit-form aside, #toggl-button-edit-form canvas, #toggl-button-edit-form details, #toggl-button-edit-form embed, #toggl-button-edit-form 
+figure, #toggl-button-edit-form figcaption, #toggl-button-edit-form footer, #toggl-button-edit-form header, #toggl-button-edit-form hgroup, #toggl-button-edit-form 
+menu, #toggl-button-edit-form nav, #toggl-button-edit-form output, #toggl-button-edit-form ruby, #toggl-button-edit-form section, #toggl-button-edit-form summary,
+time, #toggl-button-edit-form mark, #toggl-button-edit-form audio, #toggl-button-edit-form video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
 .toggl-button {
   display: inline-block !important;
   line-height: 20px;
@@ -27,7 +53,8 @@ only screen and (min-resolution: 192dpi) {
 
 #toggl-button-edit-form {
   position: absolute;
-  width: 240px !important;
+  width: 260px !important;
+  max-width: 240px;
   padding: 10px !important;
   -webkit-box-shadow: 0 1px 3px rgba(128,128,128,.5);
   -moz-box-shadow: 0 1px 3px rgba(128,128,128,.5);
@@ -36,6 +63,7 @@ only screen and (min-resolution: 192dpi) {
   border-radius: 3px;
   background-color: #f5f5f5;
   z-index: 999999;
+  box-sizing: border-box;
 }
 
 #toggl-button-edit-form .toggl-button{
@@ -47,37 +75,37 @@ only screen and (min-resolution: 192dpi) {
   background-color: transparent;
 }
 
-.toggl-button-row {
+#toggl-button-edit-form .toggl-button-row {
   margin: 0;
   padding: 0;
   padding-top: 10px;
 }
-.toggl-button-row label {
+#toggl-button-edit-form .toggl-button-row label {
   display: block;
   font-size: 13px;
   height: 20px;
 }
-p.toggl-button-row.first {
+div.toggl-button-row.first {
   margin-top: 0;
   margin-bottom: 0;
 }
-.toggl-button-input {
+#toggl-button-edit-form .toggl-button-input {
   background: #f5f5f5;
   border: 1px solid #e1e1e1;
   font-size: 0.7em;  
-  padding: 0 8px;
+  padding: 0 10px;
   width: 220px;
 }
-.toggl-button-text {
+#toggl-button-edit-form .toggl-button-text {
   float:left;
-  width: 190px;
+  width: 186px;
   height: 40px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-#toggl-button-project-placeholder, #toggl-button-tag-placeholder, 
-#toggl-button-description, #toggl-button-project {
+#toggl-button-edit-form #toggl-button-project-placeholder, #toggl-button-edit-form #toggl-button-tag-placeholder, 
+#toggl-button-edit-form #toggl-button-description, #toggl-button-edit-form #toggl-button-project {
   height: 40px !important;
   line-height: 40px;
   vertical-align: middle;
@@ -112,7 +140,7 @@ p.toggl-button-row.first {
   box-sizing :border-box !important;
 }
 
-#toggl-button-tag {
+#toggl-button-edit-form #toggl-button-tag {
   display: none;
   visibility: visible;
   background: #ffffff;
@@ -123,7 +151,7 @@ p.toggl-button-row.first {
   z-index: 1;
 }
 
-#toggl-button-update {
+#toggl-button-edit-form #toggl-button-update {
   font-weight: 200;
   font-size: 16px;
   width: 110px;
@@ -131,6 +159,7 @@ p.toggl-button-row.first {
   line-height: 34px;
   vertical-align: middle;
   margin-left: 55px;
+  margin-top: 15px;
   text-transform: uppercase;
   color: white;
   display: inline-block;

@@ -32,9 +32,7 @@ var TogglButton = {
         '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
       '</div>' +
-      '<p id="toggl-button-submit-row">' +
-        '<div id="toggl-button-update">DONE</div>' +
-      '</p>' +
+      '<div id="toggl-button-update">DONE</div>' +
       '</from>' +
     '</div>',
 

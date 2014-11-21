@@ -497,6 +497,11 @@ var TogglButton = {
     }
   },
 
+  loadSetting: function (setting) {
+    var value = localStorage.getItem(setting);
+    return !(value !== null && (value === "false" || !value));
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.checkDailyUpdate();
@@ -539,9 +544,9 @@ var TogglButton = {
 };
 
 TogglButton.fetchUser(TogglButton.$apiUrl);
-TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
-TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
-TogglButton.$idleCheckEnabled = !!localStorage.getItem("idleCheckEnabled");
+TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");
+TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
+TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
 TogglButton.triggerNotification();

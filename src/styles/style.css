@@ -119,6 +119,7 @@ p.toggl-button-row.first {
   position: absolute;
   margin-top: 40px!important;
   height: 100px!important;
+  z-index: 1;
 }
 
 #toggl-button-update {

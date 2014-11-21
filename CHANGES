@@ -1,3 +1,9 @@
+[0.4.6]
+- New design for post start popup
+- Fixed Toggl Button in Any.do
+- Added Youtrack 6 support
+- Fixed settings save issue
+- Added duration mode support
 [0.4.5]
 - Added dayly automatic sync
 - Added sync menu item

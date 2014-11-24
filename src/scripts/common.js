@@ -154,7 +154,7 @@ var togglbutton = {
       if (tags.length) {
         tags = tags.join(',');
       } else {
-        tags = "Add tag";
+        tags = "Add tags";
       }
       $("#toggl-button-tag-placeholder > div", editForm).innerHTML = tags;
     };

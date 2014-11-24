@@ -20,17 +20,17 @@ var TogglButton = {
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form>' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
-      '<a id="toggl-button-hide">x</a>' +
+      '<a id="toggl-button-hide"></a>' +
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="">' +
       '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
-        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
+        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add project</div><span class="toggl-icon-down"></span></div>' +
       '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
-        '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
+        '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span class="toggl-icon-down"></span></div>' +
       '</div>' +
       '<div id="toggl-button-update">DONE</div>' +
       '</from>' +

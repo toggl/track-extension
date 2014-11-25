@@ -10,6 +10,11 @@
   box-sizing: border-box;
 }
 
+#toggl-button-edit-form select option {
+  color: black!important;
+  background-color: white!important;
+}
+
 .toggl-button {
   display: inline-block !important;
   line-height: 20px;

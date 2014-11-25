@@ -199,14 +199,11 @@ var togglbutton = {
     });
 
     $("#toggl-button-tag-placeholder", editForm).addEventListener('click', function (e) {
-      var dropdown = document.getElementById('toggl-button-tag'),
-        icon = $(".toggl-icon-down", this);
+      var dropdown = document.getElementById('toggl-button-tag');
       if (togglbutton.tagsVisible) {
-        icon.classList.remove('open');
         dropdown.style.display = "none";
         updateTags();
       } else {
-        icon.classList.add('open');
         dropdown.style.display = "block";
       }
       togglbutton.tagsVisible = !togglbutton.tagsVisible;

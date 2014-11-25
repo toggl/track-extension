@@ -10,53 +10,6 @@
   box-sizing: border-box;
 }
 
-@font-face {
-  font-family: 'togglbutton';
-  src: url('data:application/font-woff;base64,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') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
- 
-#toggl-button-edit-form #toggl-button-update:before,
-#toggl-button-edit-form #toggl-button-hide:before,
-#toggl-button-edit-form .toggl-icon-down,
-#toggl-button-edit-form .toggl-icon-up {
-  font-family: "togglbutton";
-  font-style: normal;
-  font-weight: normal;
-  speak: none;
- 
-  display: inline-block;
-  text-decoration: inherit;
-  width: 1em;
-  margin-right: .2em;
-  text-align: center;
-  /* opacity: .8; */
- 
-  /* For safety - reset parent styles, that can break glyph codes*/
-  font-variant: normal;
-  text-transform: none;
-     
-  /* fix buttons height, for twitter bootstrap */
-  line-height: 1em;
- 
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  margin-left: .2em;
- 
-  /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
- 
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
-}
-
-/*
-.icon-down-dir:before { content: '\e801'; }
-.icon-up-dir:before { content: '\e802'; } 
-.icon-cancel:before { content: '\e803'; } 
-*/
-
 .toggl-button {
   display: inline-block !important;
   line-height: 20px;
@@ -133,23 +86,11 @@ only screen and (min-resolution: 192dpi) {
 
 #toggl-button-edit-form .toggl-button-text {
   float:left;
-  width: 200px;
+  width: 186px;
   height: 40px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
-#toggl-button-edit-form .toggl-icon-down {
-  margin-top: -28px!important;  
-}
-
-#toggl-button-edit-form .toggl-icon-down:before {
-  content: '\e801';
-}
-
-#toggl-button-edit-form .toggl-icon-down.open:before {
-  content: '\e802'!important; 
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder,
@@ -227,12 +168,13 @@ only screen and (min-resolution: 192dpi) {
 #toggl-button-edit-form #toggl-button-update:before {
   border-color: rgba(0,0,0,0.5);
   direction: ltr;
-  content: '\e803';
+  content: '\2713';
   margin-left: 0;
   font-size: 20px;
   position: relative;
   color: #fff;
   top: 0;
+  font-weight: 200;
   left: -8px;
 }
 
@@ -240,14 +182,9 @@ only screen and (min-resolution: 192dpi) {
   float: right;
   background: transparent;
   border: none;
-  color: rgb(157, 159, 160);
-  font-size: 12px;
-}
-
-#toggl-button-edit-form #toggl-button-hide:before {
-  content: '\e800';
-  right: 7px;
-  position: absolute;
+  color: #6a7479;
+  font-family: fantasy;
+  font-size: 18px;
 }
 
 /********* PIVOTAL *********/

@@ -1,3 +1,6 @@
+[0.4.9]
+- Fixed invisible project names in dropdown
+- Fixed some minor UI issues
 [0.4.8]
 - Fixed minor UI issues
 - Removed Font Awesome because issues with some tools

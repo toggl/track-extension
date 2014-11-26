@@ -199,8 +199,9 @@ only screen and (min-resolution: 192dpi) {
   background: transparent;
   border: none;
   color: #6a7479;
-  font-family: fantasy;
+  font-family: sans-serif, Arial;
   font-size: 18px;
+  font-weight: 200;
 }
 
 /********* PIVOTAL *********/

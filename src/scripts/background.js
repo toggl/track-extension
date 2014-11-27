@@ -165,14 +165,13 @@ var TogglButton = {
     var entry = data.data;
     if (data.action === "INSERT") {
       TogglButton.$curEntry = entry;
-      TogglButton.setBrowserAction(entry);
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
       if (entry.duration >= 0) {
         entry = null;
       }
       TogglButton.$curEntry = entry;
-      TogglButton.setBrowserAction(entry);
     }
+    TogglButton.setBrowserAction(entry);
   },
 
   createTimeEntry: function (timeEntry, sendResponse) {

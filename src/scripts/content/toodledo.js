@@ -8,7 +8,8 @@ togglbutton.render('.row:not(.toggl)', {observe: true}, function (elem) {
     taskElem = $('.col0', elem),
     goalElem = $('.col1024', elem),
     folderElem = $('.col1', elem).firstChild,
-    folderName = folderElem && folderElem.textContent;
+    folderName = folderElem && folderElem.textContent,
+    newElem = document.createElement('div');
 
   folderName = (folderName === "No Folder") ? "" : " - " + folderName;
 
@@ -19,7 +20,6 @@ togglbutton.render('.row:not(.toggl)', {observe: true}, function (elem) {
     projectName: goalElem && goalElem.textContent
   });
 
-  var newElem = document.createElement('div');
   newElem.appendChild(link);
   newElem.setAttribute('style', 'float:left;width:30px;height:20px;');
   elem.insertBefore(newElem, taskElem);

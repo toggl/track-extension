@@ -59,6 +59,7 @@ var TogglButton = {
           });
           resp = JSON.parse(xhr.responseText);
           TogglButton.$curEntry = null;
+          TogglButton.setBrowserAction(null);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
               projectMap[project.name] = project;

@@ -22,7 +22,5 @@ togglbutton.render('.row:not(.toggl)', {observe: true}, function (elem) {
   var newElem = document.createElement('div');
   newElem.appendChild(link);
   newElem.setAttribute('style', 'float:left;width:30px;height:20px;');
-
-  var landmarkElem = $('.subm', elem) || $('.subp', elem);
-  elem.insertBefore(newElem, landmarkElem.nextSibling);
+  elem.insertBefore(newElem, taskElem);
 });

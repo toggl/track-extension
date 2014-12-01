@@ -1,3 +1,7 @@
+[0.5.0]
+- Updated Toggl button position in toodledo
+- Extension icon updating fix
+- UI fixes for different tools
 [0.4.9]
 - Fixed invisible project names in dropdown
 - Fixed some minor UI issues

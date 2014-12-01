@@ -72,6 +72,7 @@ only screen and (min-resolution: 192dpi) {
   margin: 0 !important;
   border: none !important;
   visibility: visible !important;
+  float: none !important;
 }
 
 #toggl-button-edit-form .toggl-button:hover{
@@ -211,6 +212,7 @@ only screen and (min-resolution: 192dpi) {
   font-family: sans-serif, Arial;
   font-size: 18px;
   font-weight: 200;
+  min-height: 25px;
 }
 
 /********* PIVOTAL *********/

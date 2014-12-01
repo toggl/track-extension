@@ -128,6 +128,9 @@ var togglbutton = {
     }
     editForm.style.left = left + "px";
     editForm.style.top = top + "px";
+    if (togglbutton.serviceName === "basecamp") {
+      editForm.style.position = "fixed";
+    }
     document.body.appendChild(editForm);
 
     handler = function (e) {

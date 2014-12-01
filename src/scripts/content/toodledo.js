@@ -5,6 +5,8 @@
 
 togglbutton.render('.row:not(.toggl)', {observe: true}, function (elem) {
   var link,
+    newElem,
+    landmarkElem,
     taskElem = $('.task', elem),
     goalElem = $('.col1024', elem),
     folderElem = $('.col1', elem),
@@ -19,10 +21,10 @@ togglbutton.render('.row:not(.toggl)', {observe: true}, function (elem) {
     projectName: goalElem && goalElem.textContent
   });
 
-  var newElem = document.createElement('div');
+  newElem = document.createElement('div');
   newElem.appendChild(link);
   newElem.setAttribute('style', 'float:left;width:30px;height:20px;');
 
-  var landmarkElem = $('.subm', elem) || $('.subp', elem) || $('.ax', elem);
+  landmarkElem = $('.subm', elem) || $('.subp', elem) || $('.ax', elem);
   elem.insertBefore(newElem, landmarkElem.nextSibling);
 });

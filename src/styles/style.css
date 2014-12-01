@@ -10,6 +10,11 @@
   box-sizing: border-box;
 }
 
+#toggl-button-edit-form a {
+  background-color: transparent;
+  cursor: pointer;
+}
+
 #toggl-button-edit-form select option {
   color: black!important;
   background-color: white!important;

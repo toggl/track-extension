@@ -566,3 +566,14 @@ only screen and (min-resolution: 192dpi) {
 #toggl-button-edit-form .toggl-button.toodledo {
   position: static;
 }
+
+/********* TEAMWORKPM *********/
+.toggl-button.huh.active {
+  visibility:visible;
+  opacity: 1;
+}
+
+.taskUsedOps span a.toggl-button {
+  background-size:contain;
+  font-weight: normal;
+}

@@ -6,7 +6,7 @@
 console.log("Load Toggl for Teamwork");
 
 togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
-  var link, className = 'huh', container = $('.taskUsedOps', elem), spanTag;
+  var link, className = 'huh', container = $('.taskUnusedOps', elem), spanTag;
 
   if (container === null) {
     return;
@@ -42,6 +42,7 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
 
   spanTag = document.createElement("span");
   link.style.width = 'auto';
+  link.style.paddingLeft = '22px';
   spanTag.appendChild(link);  
   container.insertBefore( spanTag, container.firstChild);
 });

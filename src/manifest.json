@@ -51,7 +51,8 @@
     "*://*.trac.wordpress.org/*",
     "*://bugs.jquery.com/*",
     "*://*.wunderlist.com/*",
-	"*://*.visualstudio.com/*"
+	"*://*.visualstudio.com/*",
+	"*://*/tfs/DefaultCollection/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -91,7 +92,8 @@
         "*://bugs.jquery.com/*",
         "*://*.wunderlist.com/*",
         "*://*.toodledo.com/*",
-		"*://*.visualstudio.com/*"
+		"*://*.visualstudio.com/*",
+		"*://*/tfs/DefaultCollection/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -218,7 +220,8 @@
       "js": ["scripts/content/toodledo.js"]
     },
     {
-      "matches": ["*://*.visualstudio.com/*"],
+      "matches": ["*://*.visualstudio.com/*", 
+		"*://*/tfs/DefaultCollection/*"],
       "js": ["scripts/content/TFS.js"]
     }
   ]

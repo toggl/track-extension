@@ -29,6 +29,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Trac][25]
   - [Wunderlist][26]
   - [Toodledo][27]
+  - [Teamwork.com][28]
 
 ## Installing from the Web Store
 
@@ -46,7 +47,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 2.  Go to your [TeamWeek][2], [Pivotal Tracker][3], [Github][4], [Asana][5], [Unfuddle][6], [Gitlab][7],
 [Trello][8], [Worksection][9], [Redbooth][10], [Podio][11], [Basecamp][12], [JIRA][13], [Producteev][14],
 [Bitbucket][15], [Stifer][16], [Google Docs][17], [Redmine][18], [YouTrack][19], [CapsuleCRM][20],
-[Xero][21], [Zendesk][22], [Any.do][23], [Todoist][24], [Trac][25], [Wunderlist][26], [Toodledo][27] account and start your Toggl timer there.
+[Xero][21], [Zendesk][22], [Any.do][23], [Todoist][24], [Trac][25], [Wunderlist][26], [Toodledo][27], [Teamwork.com][28] account and start your Toggl timer there.
 3.  To stop the current running timer:
   - press the button again
   - start another time entry inside your account.
@@ -87,6 +88,7 @@ Don't know how to start? Just check out the [user requested services][97] that h
 [25]: http://trac.edgewall.org/
 [26]: https://www.wunderlist.com
 [27]: https://www.toodledo.com/
+[28]: https://www.teamwork.com/
 [97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
 [99]: https://github.com/toggl/toggl-button/pulls

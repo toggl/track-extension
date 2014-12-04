@@ -73,6 +73,7 @@ only screen and (min-resolution: 192dpi) {
   border: none !important;
   visibility: visible !important;
   float: none !important;
+  opacity: 1 !important;
 }
 
 #toggl-button-edit-form .toggl-button:hover{

@@ -213,6 +213,7 @@ only screen and (min-resolution: 192dpi) {
   font-size: 18px;
   font-weight: 200;
   min-height: 25px;
+  text-decoration: none;
 }
 
 /********* PIVOTAL *********/

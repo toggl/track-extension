@@ -17,13 +17,14 @@ var TogglButton = {
   $idleInterval: 360000,
   $idleFromTo: "09:00-17:00",
   $lastSyncDate: null,
+  $version: ("TogglButton/" + chrome.runtime.getManifest().version),
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form>' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
-      '<input type="button" value="x" id="toggl-button-hide">' +
-      '<p class="toggl-button-row">' +
+      '<a id="toggl-button-hide">x</a>' +
+      '<div class="toggl-button-row">' +
         '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="">' +
-      '</p>' +
+      '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
@@ -32,9 +33,7 @@ var TogglButton = {
         '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
       '</div>' +
-      '<p id="toggl-button-submit-row">' +
-        '<div id="toggl-button-update">DONE</div>' +
-      '</p>' +
+      '<div id="toggl-button-update">DONE</div>' +
       '</from>' +
     '</div>',
 
@@ -60,6 +59,7 @@ var TogglButton = {
           });
           resp = JSON.parse(xhr.responseText);
           TogglButton.$curEntry = null;
+          TogglButton.setBrowserAction(null);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
               projectMap[project.name] = project;
@@ -165,14 +165,13 @@ var TogglButton = {
     var entry = data.data;
     if (data.action === "INSERT") {
       TogglButton.$curEntry = entry;
-      TogglButton.setBrowserAction(entry);
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
       if (entry.duration >= 0) {
         entry = null;
       }
       TogglButton.$curEntry = entry;
-      TogglButton.setBrowserAction(entry);
     }
+    TogglButton.setBrowserAction(entry);
   },
 
   createTimeEntry: function (timeEntry, sendResponse) {
@@ -186,7 +185,8 @@ var TogglButton = {
           tags: timeEntry.tags || null,
           billable: timeEntry.billable || false,
           duration: -(start.getTime() / 1000),
-          created_with: timeEntry.createdWith || 'TogglButton'
+          created_with: timeEntry.createdWith || TogglButton.$version,
+          duronly: !TogglButton.$user.store_start_and_stop_time
         }
       };
 
@@ -339,7 +339,7 @@ var TogglButton = {
   },
 
   logoutUser: function (sendResponse) {
-    TogglButton.ajax("/sessions?created_with=TogglButton", {
+    TogglButton.ajax("/sessions?created_with=" + TogglButton.$version, {
       method: 'DELETE',
       onLoad: function (xhr) {
         TogglButton.$user = null;
@@ -499,6 +499,11 @@ var TogglButton = {
     }
   },
 
+  loadSetting: function (setting) {
+    var value = localStorage.getItem(setting);
+    return !(value !== null && (value === "false" || !value));
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.checkDailyUpdate();
@@ -541,9 +546,9 @@ var TogglButton = {
 };
 
 TogglButton.fetchUser(TogglButton.$apiUrl);
-TogglButton.$showPostPopup = (localStorage.getItem("showPostPopup") === null) ? true : localStorage.getItem("showPostPopup");
-TogglButton.$socketEnabled = !!localStorage.getItem("socketEnabled");
-TogglButton.$idleCheckEnabled = !!localStorage.getItem("idleCheckEnabled");
+TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");
+TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
+TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
 TogglButton.triggerNotification();

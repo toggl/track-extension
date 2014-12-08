@@ -77,7 +77,7 @@ var togglbutton = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].value;
+        tag = s.options[i].innerHTML;
         tags.push(tag);
       }
     }
@@ -97,6 +97,7 @@ var togglbutton = {
       editFormWidth = 240,
       submitForm,
       updateTags,
+      closeTagsList,
       elemRect,
       div = document.createElement('div'),
       editForm;
@@ -128,10 +129,14 @@ var togglbutton = {
     }
     editForm.style.left = left + "px";
     editForm.style.top = top + "px";
+    if (togglbutton.serviceName === "basecamp") {
+      editForm.style.position = "fixed";
+    }
     document.body.appendChild(editForm);
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
+        closeTagsList(true);
         editForm.style.display = "none";
         this.removeEventListener("click", handler);
       }
@@ -145,6 +150,7 @@ var togglbutton = {
         tags: togglbutton.getSelectedTags()
       };
       chrome.extension.sendMessage(request);
+      closeTagsList(true);
       editForm.style.display = "none";
       that.removeEventListener("click", handler);
     };
@@ -154,9 +160,25 @@ var togglbutton = {
       if (tags.length) {
         tags = tags.join(',');
       } else {
-        tags = "Add tag";
+        tags = "Add tags";
       }
       $("#toggl-button-tag-placeholder > div", editForm).innerHTML = tags;
+    };
+
+    closeTagsList = function (close) {
+      var dropdown = document.getElementById('toggl-button-tag');
+      if (close) {
+        dropdown.style.display = "none";
+        togglbutton.tagsVisible = false;
+        return;
+      }
+      if (togglbutton.tagsVisible) {
+        dropdown.style.display = "none";
+        updateTags();
+      } else {
+        dropdown.style.display = "block";
+      }
+      togglbutton.tagsVisible = !togglbutton.tagsVisible;
     };
 
     $("#toggl-button-description", editForm).value = response.entry.description;
@@ -164,6 +186,7 @@ var togglbutton = {
     projectSelect = $("#toggl-button-project", editForm);
     $("#toggl-button-project-placeholder > div", editForm).innerHTML = (pid === 0) ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
+      closeTagsList(true);
       editForm.style.display = "none";
       this.removeEventListener("click", handler);
     });
@@ -186,6 +209,7 @@ var togglbutton = {
         link.innerHTML = 'Start timer';
       }
       chrome.extension.sendMessage({type: 'stop'}, togglbutton.addEditForm);
+      closeTagsList(true);
       editForm.style.display = "none";
       this.removeEventListener("click", handler);
       return false;
@@ -199,15 +223,7 @@ var togglbutton = {
     });
 
     $("#toggl-button-tag-placeholder", editForm).addEventListener('click', function (e) {
-      var dropdown = document.getElementById('toggl-button-tag');
-      if (togglbutton.tagsVisible) {
-        dropdown.style.display = "none";
-        updateTags();
-      } else {
-        dropdown.style.display = "block";
-      }
-      togglbutton.tagsVisible = !togglbutton.tagsVisible;
-
+      closeTagsList(false);
       this.removeEventListener("click", handler);
     });
 

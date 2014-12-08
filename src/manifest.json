@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.4.5",
+  "version": "0.5.1",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -51,7 +51,9 @@
     "*://trac-hacks.org/*",
     "*://*.trac.wordpress.org/*",
     "*://bugs.jquery.com/*",
-    "*://*.wunderlist.com/*"
+    "*://*.wunderlist.com/*",
+    "*://*.teamwork.com/*",
+    "*://*.teamworkpm.net/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -91,7 +93,9 @@
         "*://*.trac.wordpress.org/*",
         "*://bugs.jquery.com/*",
         "*://*.wunderlist.com/*",
-        "*://*.toodledo.com/*"
+        "*://*.toodledo.com/*",
+        "*://*.teamwork.com/*",
+        "*://*.teamworkpm.net/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -204,6 +208,13 @@
       "matches": ["https://*.todoist.com/app*"],
       "js": ["scripts/content/todoist.js"]
     },
+    {
+      "matches": [
+        "*://*.teamwork.com/*",
+        "*://*.teamworkpm.net/*"
+      ],
+      "js": ["scripts/content/teamworkpm.js"]
+    },    
     {
       "matches": [
         "*://trac.edgewall.org/*",

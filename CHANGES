@@ -1,3 +1,24 @@
+[0.5.1]
+- Added support for Teamwork
+- Style fixes
+[0.5.0]
+- Updated Toggl button position in toodledo
+- Extension icon updating fix
+- UI fixes for different tools
+[0.4.9]
+- Fixed invisible project names in dropdown
+- Fixed some minor UI issues
+[0.4.8]
+- Fixed minor UI issues
+- Removed Font Awesome because issues with some tools
+[0.4.7]
+- Added Font Awesome icons
+[0.4.6]
+- New design for post start popup
+- Fixed Toggl Button in Any.do
+- Added Youtrack 6 support
+- Fixed settings save issue
+- Added duration mode support
 [0.4.5]
 - Added dayly automatic sync
 - Added sync menu item

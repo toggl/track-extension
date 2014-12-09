@@ -3,28 +3,17 @@
 
 'use strict';
 
+var checkTimer;
+
 togglbutton.render('.toolbar:not(.toggl)', {
 	observe: true
 }, function(elem) {
 
-	window.setTimeout("createTFSButton()", 1000);
+	checkTimer = window.setTimeout("createTFSButton()", 1000);
 
 });
 
-function createTFSButton() {
-	var link,
-		projectElem = $('.project-name'),
-		togglElem = document.querySelectorAll('.toolbar'),
-		descriptionElem = document.querySelectorAll('.info-text-wrapper')
-
-
-	link = togglbutton.createTimerLink({
-		className: 'tfsTogglButton',
-		description: descriptionElem[descriptionElem.length - 1].childNodes[0].innerText + " " + descriptionElem[descriptionElem.length - 1].childNodes[1].innerText,
-		projectName: projectElem.innerText
-	});
-
-	togglElem[togglElem.length - 1].firstChild.appendChild(link);
+function createTFSEvilHackElement() {
 	var bla = createTag('div', 'empty')
 	var a = createTag('a', 'emptylink')
 	var findWhere = document.querySelectorAll('.workitem-info-bar')
@@ -37,11 +26,41 @@ function createTFSButton() {
 		findNewLink[findNewLink.length - 1].innerHTML = "&nbsp;";
 		findNew[findNew.length - 1].setAttribute("style", "float:left");
 	}
+}
+
+function createTFSButton() {
+	var x, link,
+		projectElem = $('.project-name'),
+		togglElem = document.querySelectorAll('.toolbar'),
+		descriptionElem = document.querySelectorAll('.workitem-info-bar'),
+		descriptionTitle = ""
+
 	var findLastInput = document.querySelectorAll('.wit-font-size-large > div > div > input')
-	findLastInput[findLastInput.length - 1].addEventListener('blur', reCreateButton, false);
+	if (findLastInput.length !== 0) {
+		findLastInput[findLastInput.length - 1].addEventListener('blur', reCreateButton, false);
+		var titleName = findLastInput[findLastInput.length - 1].value;
+
+		for (x = 0; x < descriptionElem.length; x++) {
+			if (descriptionElem[x].getAttribute("title") === titleName) {
+				var descElem = descriptionElem[x].childNodes[0];
+				descriptionTitle = descElem.childNodes[0].innerText + " " + descElem.childNodes[1].innerText
+			}
+		}
+
+		link = togglbutton.createTimerLink({
+			className: 'tfsTogglButton',
+			description: descriptionTitle,
+			projectName: projectElem.innerText
+		});
+
+		togglElem[togglElem.length - 1].firstChild.appendChild(link);
+
+		createTFSEvilHackElement();
+	}
 
 	if (togglElem[togglElem.length - 1].innerHTML.indexOf('class="toggl-button tfsTogglButton"') == -1) {
-		window.setTimeout("reCreateButton()", 1000);
+		window.clearTimeout(checkTimer);
+		checkTimer = window.setTimeout("reCreateButton()", 1000);
 	}
 }
 
@@ -53,5 +72,6 @@ function reCreateButton() {
 	}
 	var findLastInput = document.querySelectorAll('.wit-font-size-large > div > div > input')
 	findLastInput[findLastInput.length - 1].removeEventListener("blur", reCreateButton, false);
-	window.setTimeout("createTFSButton()", 100);
+	window.clearTimeout(checkTimer);
+	checkTimer = window.setTimeout("createTFSButton()", 100);
 }

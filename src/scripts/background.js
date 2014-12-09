@@ -6,8 +6,7 @@ var TogglButton = {
   $user: null,
   $curEntry: null,
   $showPostPopup: true,
-  $apiUrl: "https://old.toggl.com/api/v7",
-  $newApiUrl: "https://www.toggl.com/api/v8",
+  $ApiV8Url: "https://www.toggl.com/api/v8",
   $sendResponse: null,
   $socket: null,
   $retrySocket: false,
@@ -38,19 +37,15 @@ var TogglButton = {
     '</div>',
 
   checkUrl: function (tabId, changeInfo, tab) {
-    if (changeInfo.status === 'complete') {
-      if (/toggl\.com\/track/.test(tab.url)) {
-        TogglButton.fetchUser(TogglButton.$apiUrl);
-      } else if (/toggl\.com\/app\/index/.test(tab.url)) {
-        TogglButton.fetchUser(TogglButton.$newApiUrl);
-      }
+    if (changeInfo.status === 'complete' && /toggl\.com\/app\/index/.test(tab.url)) {
+      TogglButton.fetchUser();
     }
   },
 
-  fetchUser: function (apiUrl, token) {
+  fetchUser: function (token) {
     TogglButton.ajax('/me?with_related_data=true', {
       token: token || ' ',
-      baseUrl: apiUrl,
+      baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
         var resp, apiToken, projectMap = {}, tagMap = {};
         if (xhr.status === 200) {
@@ -93,12 +88,10 @@ var TogglButton = {
           if (TogglButton.$socketEnabled) {
             TogglButton.setupSocket();
           }
-        } else if (apiUrl === TogglButton.$apiUrl) {
-          TogglButton.fetchUser(TogglButton.$newApiUrl);
-        } else if (apiUrl === TogglButton.$newApiUrl && !token) {
+        } else if (!token) {
           apiToken = localStorage.getItem('userToken');
           if (apiToken) {
-            TogglButton.fetchUser(TogglButton.$newApiUrl, apiToken);
+            TogglButton.fetchUser(apiToken);
           }
         }
       }
@@ -218,7 +211,7 @@ var TogglButton = {
   ajax: function (url, opts) {
     var xhr = new XMLHttpRequest(),
       method = opts.method || 'GET',
-      baseUrl = opts.baseUrl || TogglButton.$newApiUrl,
+      baseUrl = opts.baseUrl || TogglButton.$ApiV8Url,
       token = opts.token || (TogglButton.$user && TogglButton.$user.api_token),
       credentials = opts.credentials || null;
 
@@ -319,16 +312,12 @@ var TogglButton = {
     });
   },
 
-  syncUser: function () {
-    TogglButton.fetchUser(TogglButton.$newApiUrl);
-  },
-
   loginUser: function (request, sendResponse) {
     TogglButton.ajax("/sessions", {
       method: 'POST',
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
-        TogglButton.fetchUser(TogglButton.$newApiUrl);
+        TogglButton.fetchUser();
         TogglButton.refreshPage();
       },
       credentials: {
@@ -494,7 +483,7 @@ var TogglButton = {
     var d = new Date(),
       currentDate = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
     if (TogglButton.$lastSyncDate === null || TogglButton.$lastSyncDate !== currentDate) {
-      TogglButton.syncUser();
+      TogglButton.fetchUser();
       TogglButton.$lastSyncDate = currentDate;
     }
   },
@@ -515,7 +504,7 @@ var TogglButton = {
     } else if (request.type === 'logout') {
       TogglButton.logoutUser(sendResponse);
     } else if (request.type === 'sync') {
-      TogglButton.syncUser();
+      TogglButton.fetchUser();
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request, sendResponse);
       TogglButton.hideNotification();
@@ -536,7 +525,7 @@ var TogglButton = {
       TogglButton.setNannyInterval(request.state);
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
-        TogglButton.fetchUser(TogglButton.$newApiUrl, request.apiToken);
+        TogglButton.fetchUser(request.apiToken);
       }
     } else if (request.type === 'currentEntry') {
       sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
@@ -545,7 +534,7 @@ var TogglButton = {
   }
 };
 
-TogglButton.fetchUser(TogglButton.$apiUrl);
+TogglButton.fetchUser();
 TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");
 TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
 TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");

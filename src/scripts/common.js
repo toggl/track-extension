@@ -303,20 +303,26 @@ var togglbutton = {
     return link;
   },
 
+  updateTimerLink: function (entry) {
+    var linkText, color = '',
+      link = $(".toggl-button");
+    if (/active/.test(link.className) ||
+        entry === null ||
+        (entry !== null && entry.duration >= 0)) {
+      link.classList.remove('active');
+      linkText = 'Start timer';
+    } else {
+      link.classList.add('active');
+      color = '#1ab351';
+      linkText = 'Stop timer';
+    }
+    link.style.color = color;
+    link.innerHTML = linkText;
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'stop-entry') {
-      var linkText, color = '',
-        link = $(".toggl-button");
-      if (/active/.test(link.className)) {
-        link.classList.remove('active');
-        linkText = 'Start timer';
-      } else {
-        link.classList.add('active');
-        color = '#1ab351';
-        linkText = 'Stop timer';
-      }
-      link.style.color = color;
-      link.innerHTML = linkText;
+      togglbutton.updateTimerLink();
     } else if (request.type === 'sync') {
       if ($("#toggl-button-edit-form") !== null) {
         $("#toggl-button-edit-form").remove();
@@ -326,3 +332,9 @@ var togglbutton = {
 };
 
 chrome.extension.onMessage.addListener(togglbutton.newMessage);
+document.addEventListener('webkitvisibilitychange', function (e) {
+  // update button state
+  chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
+    togglbutton.updateTimerLink(response.currentEntry);
+  });
+});

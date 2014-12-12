@@ -52,7 +52,8 @@
     "*://bugs.jquery.com/*",
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
-    "*://*.teamworkpm.net/*"
+    "*://*.teamworkpm.net/*",
+    "*://*/otrs/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -93,7 +94,8 @@
         "*://*.wunderlist.com/*",
         "*://*.toodledo.com/*",
         "*://*.teamwork.com/*",
-        "*://*.teamworkpm.net/*"
+        "*://*.teamworkpm.net/*",
+		"*://*/otrs/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -209,6 +211,10 @@
       ],
       "js": ["scripts/content/teamworkpm.js"]
     },    
+    {
+      "matches": ["*://*/otrs/*"],
+      "js": ["scripts/content/otrs.js"]
+    },
     {
       "matches": [
         "*://trac.edgewall.org/*",

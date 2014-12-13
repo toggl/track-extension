@@ -110,6 +110,7 @@ var togglbutton = {
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
       $("#toggl-button-project-placeholder > div").innerHTML = (pid === 0) ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
+      $("#toggl-button-tag-placeholder > div", editForm).innerHTML = "Add tags";
       $("#toggl-button-tag").value = "";
       editForm.style.left = (elemRect.left - 10) + "px";
       editForm.style.top = (elemRect.top - 10) + "px";

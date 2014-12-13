@@ -15,3 +15,11 @@ if (offlineUser) {
     });
   }
 }
+
+document.addEventListener('webkitvisibilitychange', function (e) {
+  if (!document.webkitHidden) {
+    chrome.extension.sendMessage({type: "sync"}, function (response) {});
+  }
+});
+
+chrome.extension.sendMessage({type: "sync"}, function (response) {});

@@ -36,12 +36,6 @@ var TogglButton = {
       '</from>' +
     '</div>',
 
-  checkUrl: function (tabId, changeInfo, tab) {
-    if (changeInfo.status === 'complete' && /toggl\.com\/app\/index/.test(tab.url)) {
-      TogglButton.fetchUser();
-    }
-  },
-
   fetchUser: function (token) {
     TogglButton.ajax('/me?with_related_data=true', {
       token: token || ' ',
@@ -541,7 +535,6 @@ TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
 TogglButton.triggerNotification();
-chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);
 chrome.notifications.onClicked.addListener(TogglButton.triggerNotification);

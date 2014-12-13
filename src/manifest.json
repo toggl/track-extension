@@ -20,7 +20,6 @@
   "permissions": [
     "notifications",
     "idle",
-    "tabs",
     "*://*.toggl.com/*",
     "*://*.teamweek.com/*",
     "*://*.pivotaltracker.com/*",

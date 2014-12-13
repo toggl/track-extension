@@ -335,7 +335,9 @@ var togglbutton = {
 chrome.extension.onMessage.addListener(togglbutton.newMessage);
 document.addEventListener('webkitvisibilitychange', function (e) {
   // update button state
-  chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
-    togglbutton.updateTimerLink(response.currentEntry);
-  });
+  if (!document.webkitHidden) {
+    chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
+      togglbutton.updateTimerLink(response.currentEntry);
+    });
+  }
 });

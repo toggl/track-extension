@@ -9,7 +9,7 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
 
   link = togglbutton.createTimerLink({
     className: 'todoist',
-    description: container.firstChild.textContent,
+    description: container.textContent.replace("Stop timer", ""),
     projectName: projectElem && projectElem.textContent
   });
 

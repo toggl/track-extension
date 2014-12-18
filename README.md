@@ -29,7 +29,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Trac][25]
   - [Wunderlist][26]
   - [Toodledo][27]
-  - [TFS (visualStudioOnline and localinstalations)][28]
+  - [TFS (visualStudioOnline and local instalations)][28]
 
 ## Installing from the Web Store
 
@@ -41,6 +41,10 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 2.  Navigate to `chrome://extensions/` and enable "Developer Mode".
 3.  Choose "Load unpacked extension..."
 4.  Open the src directory in the toggl-button directory you just cloned and follow the prompts to install.
+  
+## Current issue (TFS)
+
+Currently you can track time only on backlog and canban view, in custom queries, toggl button have some issues and dont work properly.
 
 ## Using the Button
 1.  Log in to your [Toggl][1] account and keep yourself logged in (no need to keep the tab open).

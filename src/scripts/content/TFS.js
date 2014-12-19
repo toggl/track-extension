@@ -3,40 +3,61 @@
 
 'use strict';
 
-var checkTimer;
+var checkTimer,
+	timeWait = 10;
 window.MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+var observer = new MutationObserver(function(mutation) {
+		var obj = arguments[0][0].target;
+		window.clearTimeout(checkTimer);
+		checkTimer = window.setTimeout(function() {
+			createTFSButton(obj);
+		}, timeWait);
+	}),
+	config = {
+		attributes: true
+	};
 
 togglbutton.render('.workitem-info-bar:not(.toggl)', {
 	observe: true
 }, function(elem) {
 
-	checkTimer = window.setTimeout("createTFSButton()", 1000);
-	// Find the element that you want to "watch"
-	var target = document.querySelector('.workitem-info-bar'),
-		// create an observer instance
-		observer = new MutationObserver(function(mutation) {
-			var obj = arguments[0][0].target;
-			window.clearTimeout(checkTimer);
-			checkTimer = window.setTimeout(function() {
-				createTFSButton(obj);
-			}, 1000);
-		}),
-		// configuration of the observer:
-		config = {
-			attributes: true // this is to watch for attribute changes.
-		};
-	// pass in the element you wanna watch as well as the options
-	observer.observe(target, config);
-	// later, you can stop observing
+	var target = document.querySelectorAll('.workitem-info-bar'),
+		y;
+
+	checkTimer = window.setTimeout(function() {
+		createTFSButton(target[0]);
+	}, timeWait);
+
+	for (y = 0; y < target.length; y++) {
+		createObserver(target[y]);
+	}
+
 	// observer.disconnect();
 });
 
-function createTFSEvilHackElement() {
+function createObserver(element) {
 
+	observer.observe(element, config);
 }
 
+function createTFSEvilHackElement(hackElement, titleHolder) {
+	var div = createTag('div', 'empty');
+	var a = createTag('a', 'emptylink');
+	var where = hackElement;
+	var title = titleHolder;
+	if (where.innerHTML.indexOf('class="emptylink"') == -1) {
+		where.insertBefore(div, title);
+		var findNew = where.querySelector('.empty');
+		findNew.appendChild(a);
+		var findNewLink = where.querySelector('.emptylink');
+		findNewLink.setAttribute("href", "javascript:void()");
+		findNewLink.innerHTML = "&nbsp;";
+		findNew.setAttribute("style", "float:left");
+	}
+}
 
-function createTFSButton() {
+function createTFSButton(homeElement) {
 	var x, y, link,
 		projectElem = $('.project-name'),
 		togglElem = document.querySelectorAll('.toolbar'),
@@ -44,68 +65,38 @@ function createTFSButton() {
 		descriptionTitle = "",
 		home, titleHolder
 
-	home = arguments[0];
-	titleHolder = home.childNodes[0];
+	home = homeElement;
+	if (home.innerHTML != "") {
+		titleHolder = home.querySelector('.info-text-wrapper');
 
-	descriptionTitle = titleHolder.childNodes[0].innerText + " " + titleHolder.childNodes[1].innerText
+		descriptionTitle = titleHolder.childNodes[0].innerText + " " + titleHolder.childNodes[1].innerText;
 
 
-	//var allForms = document.querySelectorAll('.work-item-form');
-	//for (y = 0; y < allForms.length; y++) {
-	//}
-	link = togglbutton.createTimerLink({
-		className: 'tfsTogglButton',
-		description: descriptionTitle,
-		projectName: projectElem.innerText
-	});
+		link = togglbutton.createTimerLink({
+			className: 'tfsTogglButton',
+			description: descriptionTitle,
+			projectName: projectElem.innerText
+		});
 
-	var toolbars = home.parentNode.querySelectorAll('.toolbar');
-	for (y = 0; y < toolbars.length; y++) {
-		toolbars[y].firstChild.appendChild(link);
-	}
-
-	/*var bla = createTag('div', 'empty')
-	var a = createTag('a', 'emptylink')
-	var evilHackElement = form.querySelectorAll('.info-text-wrapper')
-	var findWhere = form.querySelectorAll('.workitem-info-bar')
-	if (findWhere != undefined) {
-		if (findWhere[findWhere.length - 1].innerHTML.indexOf('class="empty"') == -1) {
-			findWhere[findWhere.length - 1].insertBefore(bla, evilHackElement[evilHackElement.length - 1]);
-			var findNew = form.querySelectorAll('.empty')
-			findNew[findNew.length - 1].appendChild(a);
-			var findNewLink = form.querySelectorAll('.emptylink')
-			findNewLink[findNewLink.length - 1].setAttribute("href", "javascript:void()");
-			findNewLink[findNewLink.length - 1].innerHTML = "&nbsp;";
-			findNew[findNew.length - 1].setAttribute("style", "float:left");
+		var toolbars = home.parentNode.querySelectorAll('.toolbar');
+		if (toolbars.length == 0) {
+			toolbars = home.parentNode.parentNode.querySelectorAll('.toolbar');
 		}
-	}*/
+		for (y = 0; y < toolbars.length; y++) {
+			removeButton(toolbars[y]);
+			toolbars[y].firstChild.appendChild(link);
+
+		}
+		createTFSEvilHackElement(home, titleHolder);
+	}
 
 }
 
-//createTFSEvilHackElement();
-
-/*if (togglElem[togglElem.length - 1].innerHTML.indexOf('class="toggl-button tfsTogglButton"') == -1) {
-	window.clearTimeout(checkTimer);
-	checkTimer = window.setTimeout("reCreateButton()", 1000);
-}*/
-
-
-function reCreateButton() {
-	var togglElem = document.querySelectorAll('.toolbar')
-	var y;
-	for (y = 0; y < togglElem.length; y++) {
-		if (togglElem[y].innerHTML.indexOf('class="toggl-button tfsTogglButton') > -1) {
-			var lastNode = togglElem[y].childNodes[0].lastChild;
-			if (lastNode.innerHTML.indexOf('timer') > -1) {
-				togglElem[y].childNodes[0].removeChild(lastNode)
-			}
+function removeButton(toolbarElement) {
+	if (toolbarElement.innerHTML.indexOf('class="toggl-button tfsTogglButton') > -1) {
+		var lastNode = toolbarElement.childNodes[0].lastChild;
+		if (lastNode.innerHTML.indexOf('timer') > -1) {
+			toolbarElement.childNodes[0].removeChild(lastNode)
 		}
 	}
-	var findLastInput = document.querySelectorAll('.wit-font-size-large > div > div > input')
-	for (y = 0; y < findLastInput.length; y++) {
-
-		findLastInput[y].removeEventListener("blur", reCreateButton, false);
-	}
-	window.clearTimeout(checkTimer);
-	checkTimer = window.setTimeout("createTFSButton()", 10);
 }

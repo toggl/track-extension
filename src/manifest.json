@@ -222,7 +222,7 @@
     {
       "matches": ["*://*.visualstudio.com/*", 
 		"*://*/tfs/DefaultCollection/*"],
-      "js": ["scripts/content/TFS.js"]
+      "js": ["scripts/content/tfs.js"]
     }
   ]
 }

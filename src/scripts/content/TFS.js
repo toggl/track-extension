@@ -63,7 +63,7 @@ function createTFSButton(homeElement) {
 		togglElem = document.querySelectorAll('.toolbar'),
 		descriptionElem = document.querySelectorAll('.workitem-info-bar'),
 		descriptionTitle = "",
-		home, titleHolder
+		home, titleHolder;
 
 	home = homeElement;
 	if (home.innerHTML != "") {
@@ -96,7 +96,7 @@ function removeButton(toolbarElement) {
 	if (toolbarElement.innerHTML.indexOf('class="toggl-button tfsTogglButton') > -1) {
 		var lastNode = toolbarElement.childNodes[0].lastChild;
 		if (lastNode.innerHTML.indexOf('timer') > -1) {
-			toolbarElement.childNodes[0].removeChild(lastNode)
+			toolbarElement.childNodes[0].removeChild(lastNode);
 		}
 	}
 }

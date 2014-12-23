@@ -42,7 +42,7 @@ var TogglButton = {
       token: token || ' ',
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = [], clientMap = {}, tagMap = {};
+        var resp, apiToken, projectMap = {}, clientMap = {}, tagMap = {};
         if (xhr.status === 200) {
           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
@@ -56,7 +56,6 @@ var TogglButton = {
                 projectMap[project.id] = project;
               }
             });
-            projectMap.sort(TogglButton.Compare);
           }
           if (resp.data.clients) {
             resp.data.clients.forEach(function (client) {
@@ -100,14 +99,6 @@ var TogglButton = {
         }
       }
     });
-  },
-
-  Compare: function (a,b) {
-    if (a.name < b.name)
-       return -1;
-    if (a.name > b.name)
-      return 1;
-    return 0;
   },
 
   setupSocket: function () {

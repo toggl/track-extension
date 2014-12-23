@@ -52,7 +52,9 @@ var TogglButton = {
           TogglButton.setBrowserAction(null);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
-              projectMap[project.name] = project;
+              if (project.active) {
+                projectMap[project.id] = project;
+              }
             });
           }
           if (resp.data.clients) {

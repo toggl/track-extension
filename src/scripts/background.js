@@ -53,7 +53,7 @@ var TogglButton = {
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
               if (project.active) {
-                projectMap[project.id] = project;
+                projectMap[project.name + project.id] = project;
               }
             });
           }

@@ -41,7 +41,7 @@ var TogglButton = {
       token: token || ' ',
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {}, tagMap = {};
+        var resp, apiToken, projectMap = {}, clientMap = {}, tagMap = {};
         if (xhr.status === 200) {
           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
@@ -52,6 +52,11 @@ var TogglButton = {
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
               projectMap[project.name] = project;
+            });
+          }
+          if (resp.data.clients) {
+            resp.data.clients.forEach(function (client) {
+              clientMap[client.id] = client;
             });
           }
           if (resp.data.tags) {
@@ -71,6 +76,7 @@ var TogglButton = {
           }
           TogglButton.$user = resp.data;
           TogglButton.$user.projectMap = projectMap;
+          TogglButton.$user.clientMap = clientMap;
           TogglButton.$user.tagMap = tagMap;
           localStorage.removeItem('userToken');
           localStorage.setItem('userToken', resp.data.api_token);
@@ -346,6 +352,7 @@ var TogglButton = {
     var html = "<option value='0'>- No Project -</option>",
       projects = TogglButton.$user.projectMap,
       wsHtml = [],
+      client,
       key = null;
 
     if (TogglButton.$user.workspaces.length > 1) {
@@ -355,14 +362,16 @@ var TogglButton = {
 
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
-          wsHtml[projects[key].wid] += "<option value='" + projects[key].id + "'>" + key + "</option>";
+          client = (!!projects[key].cid) ? " - " + TogglButton.$user.clientMap[projects[key].cid].name : "";
+          wsHtml[projects[key].wid] += "<option value='" + projects[key].id + "'>" + key + client + "</option>";
         }
       }
       html += wsHtml.join("</optgroup>") + "</optgroup>";
     } else {
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
-          html += "<option value='" + projects[key].id + "'>" + key + "</option>";
+          client = (!!projects[key].cid) ? " - " + TogglButton.$user.clientMap[projects[key].cid].name : "";
+          html += "<option value='" + projects[key].id + "'>" + key + client + "</option>";
         }
       }
     }

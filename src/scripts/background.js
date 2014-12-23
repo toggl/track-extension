@@ -170,6 +170,16 @@ var TogglButton = {
     TogglButton.setBrowserAction(entry);
   },
 
+  findProjectByName: function (name) {
+    var key;
+    for (key in TogglButton.$user.projectMap) {
+      if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].name === name) {
+        return TogglButton.$user.projectMap[key];
+      }
+    }
+    return undefined;
+  },
+
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       entry = {
@@ -186,8 +196,8 @@ var TogglButton = {
         }
       };
 
-    if (timeEntry.projectName !== undefined) {
-      project = TogglButton.$user.projectMap[timeEntry.projectName];
+    if (timeEntry.projectName !== null) {
+      project = TogglButton.findProjectByName(timeEntry.projectName);
       entry.time_entry.pid = project && project.id;
       entry.time_entry.billable = project && project.billable;
     }

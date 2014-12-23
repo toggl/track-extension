@@ -304,12 +304,12 @@ var togglbutton = {
     return link;
   },
 
+  // If "entry" is passed, make button active; otherwise inactive.
   updateTimerLink: function (entry) {
     var linkText, color = '',
       link = $(".toggl-button");
-    if (/active/.test(link.className) ||
-        entry === null ||
-        (entry !== null && entry.duration >= 0)) {
+
+    if (entry === null) {
       link.classList.remove('active');
       linkText = 'Start timer';
     } else {

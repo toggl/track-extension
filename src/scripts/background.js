@@ -345,12 +345,28 @@ var TogglButton = {
   fillProjects: function () {
     var html = "<option value='0'>- No Project -</option>",
       projects = TogglButton.$user.projectMap,
+      wsHtml = [],
       key = null;
-    for (key in projects) {
-      if (projects.hasOwnProperty(key)) {
-        html += "<option value='" + projects[key].id + "'>" + key + "</option>";
+
+    if (TogglButton.$user.workspaces.length > 1) {
+      TogglButton.$user.workspaces.forEach(function (element, index) {
+        wsHtml[element.id] = '<optgroup label="' + element.name + '">';
+      });
+
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          wsHtml[projects[key].wid] += "<option value='" + projects[key].id + "'>" + key + "</option>";
+        }
+      }
+      html += wsHtml.join("</optgroup>") + "</optgroup>";
+    } else {
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          html += "<option value='" + projects[key].id + "'>" + key + "</option>";
+        }
       }
     }
+
     return html;
   },
 

@@ -45,6 +45,9 @@ var togglbutton = {
   isStarted: false,
   element: null,
   serviceName: '',
+  mousedownTrigger: null,
+  projectBlurTrigger: null,
+  taskBlurTrigger: null,
   tagsVisible: false,
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
@@ -86,8 +89,8 @@ var togglbutton = {
 
   delegateTaskClick: function (e) {
     // Ignore this click if it caused the last task blur.
-    if (togglbutton.taskBlurTrigger == e.target) {
-      togglbutton.taskBlurTrigger = togglbutton.mousedownTrigger = null;
+    if (togglbutton.taskBlurTrigger === e.target) {
+      togglbutton.taskBlurTrigger = null;
       return;
     }
 
@@ -104,15 +107,12 @@ var togglbutton = {
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
       projectSelect,
       handler,
-      mousedownTrigger = null,
-      projectBlurTrigger = null,
       left,
       top,
       editFormHeight = 350,
       editFormWidth = 240,
       submitForm,
       taskSelect,
-      taskBlurTrigger = null,
       resetTasks,
       updateTags,
       closeTagsList,
@@ -248,7 +248,7 @@ var togglbutton = {
 
     $("#toggl-button-project-placeholder", editForm).addEventListener('click', function (e) {
       // Ignore this click if it caused the last project blur.
-      if (togglbutton.projectBlurTrigger == e.target) {
+      if (togglbutton.projectBlurTrigger === e.target) {
         togglbutton.projectBlurTrigger = null;
         return;
       }

@@ -431,8 +431,7 @@ var TogglButton = {
         return [{id: 0, name: '- No Task -'}]
           .concat(tasks)
             .map(function (task) { return '<option value="' + task.id + '">' + task.name + '</option>'; })
-            .join("")
-        ;
+            .join("");
       }
     }
 

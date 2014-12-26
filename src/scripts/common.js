@@ -91,6 +91,8 @@ var togglbutton = {
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
       projectSelect,
       handler,
+      mousedownTrigger = null,
+      projectBlurTrigger = null,
       left,
       top,
       editFormHeight = 350,
@@ -153,7 +155,6 @@ var togglbutton = {
       chrome.extension.sendMessage(request);
       closeTagsList(true);
       editForm.style.display = "none";
-      that.removeEventListener("click", handler);
     };
 
     updateTags = function () {
@@ -189,7 +190,6 @@ var togglbutton = {
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
       closeTagsList(true);
       editForm.style.display = "none";
-      this.removeEventListener("click", handler);
     });
 
     $("#toggl-button-update", editForm).addEventListener('click', function (e) {
@@ -212,27 +212,55 @@ var togglbutton = {
       chrome.extension.sendMessage({type: 'stop'}, togglbutton.addEditForm);
       closeTagsList(true);
       editForm.style.display = "none";
-      this.removeEventListener("click", handler);
       return false;
     });
+    document.addEventListener('mousedown', function (e) {
+      togglbutton.mousedownTrigger = e.target;
+    });
+    document.addEventListener('mouseup', function (e) {
+      togglbutton.mousedownTrigger = null;
+    });
+
     $("#toggl-button-project-placeholder", editForm).addEventListener('click', function (e) {
+      // Ignore this click if it caused the last project blur.
+      if (togglbutton.projectBlurTrigger == e.target) {
+        togglbutton.projectBlurTrigger = null;
+        return;
+      }
+
       var dropdown = document.getElementById('toggl-button-project'),
         event = document.createEvent('MouseEvents');
       event.initMouseEvent('mousedown', true, true, window);
       dropdown.dispatchEvent(event);
-      this.removeEventListener("click", handler);
     });
 
     $("#toggl-button-tag-placeholder", editForm).addEventListener('click', function (e) {
       closeTagsList(false);
-      this.removeEventListener("click", handler);
     });
 
-    $("#toggl-button-project", editForm).addEventListener('change', function (e) {
-      projectSelect = $("#toggl-button-project");
-      $("#toggl-button-project-placeholder > div", editForm).innerHTML = (projectSelect.value === "0") ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
+    projectSelect.addEventListener('change', function (e) {
+      var projectId = this.value;
+      $("#toggl-button-project-placeholder > div", editForm).innerHTML = (projectId === "0") ? "Add project" : this.options[this.selectedIndex].text;
 
-      this.removeEventListener("change", handler);
+      // Force blur.
+      togglbutton.projectBlurTrigger = null;
+      projectSelect.blur();
+
+      // If tasks are available, populate the task dropdown.
+      chrome.extension.sendMessage({type: 'getTasksHtml', projectId: projectId}, function (response) {
+        if (response && response.success && response.html) {
+          $('#toggl-button-task').innerHTML = response.html;
+          $("#toggl-button-task-placeholder", editForm).addEventListener('click', togglbutton.delegateTaskClick);
+        }
+      });
+    });
+    projectSelect.addEventListener('click', function () {
+      // Catch click in case user selects an already-selected item - force blur.
+      togglbutton.projectBlurTrigger = null;
+      projectSelect.blur();
+    });
+    projectSelect.addEventListener('blur', function () {
+      togglbutton.projectBlurTrigger = togglbutton.mousedownTrigger;
     });
 
     document.addEventListener("click", handler);

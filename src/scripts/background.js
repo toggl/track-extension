@@ -29,6 +29,10 @@ var TogglButton = {
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
       '</div>' +
+      '<div class="toggl-button-row" style="display: {tasks-display}">' +
+        '<select class="toggl-button-input" id="toggl-button-task" name="toggl-button-task"></select>' +
+        '<div id="toggl-button-task-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add task</div><span>▼</span></div>' +
+      '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
@@ -42,7 +46,7 @@ var TogglButton = {
       token: token || ' ',
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {}, clientMap = {}, tagMap = {};
+        var resp, apiToken, projectMap = {}, clientMap = {}, tagMap = {}, projectTaskList = null;
         if (xhr.status === 200) {
           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
@@ -67,6 +71,14 @@ var TogglButton = {
               tagMap[tag.name] = tag;
             });
           }
+          if (resp.data.tasks) {
+            projectTaskList = {};
+            resp.data.tasks.forEach(function (task) {
+              var pid = task.pid;
+              if (!projectTaskList[pid]) { projectTaskList[pid] = []; }
+              projectTaskList[pid].push(task);
+            });
+          }
           if (resp.data.time_entries) {
             resp.data.time_entries.some(function (entry) {
               if (entry.duration < 0) {
@@ -81,6 +93,7 @@ var TogglButton = {
           TogglButton.$user.projectMap = projectMap;
           TogglButton.$user.clientMap = clientMap;
           TogglButton.$user.tagMap = tagMap;
+          TogglButton.$user.projectTaskList = projectTaskList;
           localStorage.removeItem('userToken');
           localStorage.setItem('userToken', resp.data.api_token);
           if (TogglButton.$sendResponse !== null) {
@@ -279,7 +292,8 @@ var TogglButton = {
         time_entry: {
           description: timeEntry.description,
           pid: timeEntry.pid,
-          tags: timeEntry.tags
+          tags: timeEntry.tags,
+          tid: timeEntry.tid
         }
       },
       onLoad: function (xhr) {
@@ -358,6 +372,7 @@ var TogglButton = {
     }
     return TogglButton.$editForm
         .replace("{projects}", TogglButton.fillProjects())
+        .replace("{tasks-display}", TogglButton.$user.projectTaskList ? 'block' : 'none')
         .replace("{tags}", TogglButton.fillTags());
   },
 
@@ -406,6 +421,22 @@ var TogglButton = {
       }
     }
     return html;
+  },
+
+  fillTasks: function (projectId) {
+    if (TogglButton.$user && TogglButton.$user.projectTaskList) {
+      var tasks = TogglButton.$user.projectTaskList[projectId];
+
+      if (tasks) {
+        return [{id: 0, name: '- No Task -'}]
+          .concat(tasks)
+            .map(function (task) { return '<option value="' + task.id + '">' + task.name + '</option>'; })
+            .join("")
+        ;
+      }
+    }
+
+    return "";
   },
 
   refreshPage: function () {
@@ -564,6 +595,13 @@ var TogglButton = {
       }
     } else if (request.type === 'currentEntry') {
       sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
+    } else if (request.type === 'getTasksHtml') {
+      var success = TogglButton.$user && TogglButton.$user.projectTaskList;
+
+      sendResponse({
+        success: success,
+        html: success ? TogglButton.fillTasks(request.projectId) : ''
+      });
     }
     return true;
   }

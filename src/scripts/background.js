@@ -29,7 +29,7 @@ var TogglButton = {
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
       '</div>' +
-      '<div class="toggl-button-row" style="display: {tasks-display}">' +
+      '<div class="toggl-button-row" id="toggl-button-tasks-row">' +
         '<select class="toggl-button-input" id="toggl-button-task" name="toggl-button-task"></select>' +
         '<div id="toggl-button-task-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add task</div><span>▼</span></div>' +
       '</div>' +
@@ -225,7 +225,7 @@ var TogglButton = {
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
         if (!!timeEntry.respond) {
-          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm()});
+          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
         }
         if (TogglButton.$timer !== null) {
           clearTimeout(TogglButton.$timer);
@@ -372,7 +372,6 @@ var TogglButton = {
     }
     return TogglButton.$editForm
         .replace("{projects}", TogglButton.fillProjects())
-        .replace("{tasks-display}", TogglButton.$user.projectTaskList ? 'block' : 'none')
         .replace("{tags}", TogglButton.fillTags());
   },
 

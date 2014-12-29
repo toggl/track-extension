@@ -76,6 +76,10 @@ only screen and (min-resolution: 192dpi) {
   opacity: 1 !important;
 }
 
+#toggl-button-edit-form #toggl-button-tasks-row {
+  display: none;
+}
+
 #toggl-button-edit-form .toggl-button:hover{
   background-color: transparent;
 }

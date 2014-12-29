@@ -5,13 +5,13 @@
 
 togglbutton.render('.Headline:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('div', 'Headline-clear'),
-    titleElem = $('.Headline h1', elem),    
+    titleElem = $('.Headline h1', elem),
     descriptionElem = $('.Flag');
 
   link = togglbutton.createTimerLink({
     className: 'otrs',
     description: titleElem.innerText,
-	tags: 'otrs'
+    tags: 'otrs'
   });
 
   container.appendChild(link);

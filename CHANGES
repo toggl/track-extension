@@ -1,3 +1,10 @@
+[0.5.3]
+- Fixed Todoist description parsing issue
+[0.5.2]
+- Removed references to deprecated api
+- Clear selected tags when reopening edit form
+- Update "Start timer" link when running entry has changed
+- Reworked user sync so that tabs permission can be removed
 [0.5.1]
 - Added support for Teamwork
 - Style fixes

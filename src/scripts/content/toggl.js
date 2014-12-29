@@ -1,5 +1,5 @@
 /*jslint indent: 2 */
-/*global $: false, localStorage: false, chrome:false*/
+/*global document: false, $: false, localStorage: false, chrome:false*/
 
 'use strict';
 
@@ -15,3 +15,11 @@ if (offlineUser) {
     });
   }
 }
+
+document.addEventListener('webkitvisibilitychange', function () {
+  if (!document.webkitHidden) {
+    chrome.extension.sendMessage({type: "sync"}, function () {return; });
+  }
+});
+
+chrome.extension.sendMessage({type: "sync"}, function () {return; });

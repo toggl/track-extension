@@ -16,7 +16,8 @@ var TogglButton = {
   $idleInterval: 360000,
   $idleFromTo: "09:00-17:00",
   $lastSyncDate: null,
-  $version: ("TogglButton/" + chrome.runtime.getManifest().version),
+  $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
+  $version: (chrome.runtime.getManifest().version),
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form>' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -28,6 +29,10 @@ var TogglButton = {
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
       '</div>' +
+      '<div class="toggl-button-row" id="toggl-button-tasks-row">' +
+        '<select class="toggl-button-input" id="toggl-button-task" name="toggl-button-task"></select>' +
+        '<div id="toggl-button-task-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add task</div><span>▼</span></div>' +
+      '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
@@ -36,18 +41,12 @@ var TogglButton = {
       '</from>' +
     '</div>',
 
-  checkUrl: function (tabId, changeInfo, tab) {
-    if (changeInfo.status === 'complete' && /toggl\.com\/app\/index/.test(tab.url)) {
-      TogglButton.fetchUser();
-    }
-  },
-
   fetchUser: function (token) {
     TogglButton.ajax('/me?with_related_data=true', {
       token: token || ' ',
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {}, tagMap = {};
+        var resp, apiToken, projectMap = {}, clientMap = {}, tagMap = {}, projectTaskList = null;
         if (xhr.status === 200) {
           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
@@ -57,12 +56,27 @@ var TogglButton = {
           TogglButton.setBrowserAction(null);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
-              projectMap[project.name] = project;
+              if (project.active) {
+                projectMap[project.name + project.id] = project;
+              }
+            });
+          }
+          if (resp.data.clients) {
+            resp.data.clients.forEach(function (client) {
+              clientMap[client.id] = client;
             });
           }
           if (resp.data.tags) {
             resp.data.tags.forEach(function (tag) {
               tagMap[tag.name] = tag;
+            });
+          }
+          if (resp.data.tasks) {
+            projectTaskList = {};
+            resp.data.tasks.forEach(function (task) {
+              var pid = task.pid;
+              if (!projectTaskList[pid]) { projectTaskList[pid] = []; }
+              projectTaskList[pid].push(task);
             });
           }
           if (resp.data.time_entries) {
@@ -77,7 +91,9 @@ var TogglButton = {
           }
           TogglButton.$user = resp.data;
           TogglButton.$user.projectMap = projectMap;
+          TogglButton.$user.clientMap = clientMap;
           TogglButton.$user.tagMap = tagMap;
+          TogglButton.$user.projectTaskList = projectTaskList;
           localStorage.removeItem('userToken');
           localStorage.setItem('userToken', resp.data.api_token);
           if (TogglButton.$sendResponse !== null) {
@@ -167,6 +183,16 @@ var TogglButton = {
     TogglButton.setBrowserAction(entry);
   },
 
+  findProjectByName: function (name) {
+    var key;
+    for (key in TogglButton.$user.projectMap) {
+      if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].name === name) {
+        return TogglButton.$user.projectMap[key];
+      }
+    }
+    return undefined;
+  },
+
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       entry = {
@@ -178,13 +204,13 @@ var TogglButton = {
           tags: timeEntry.tags || null,
           billable: timeEntry.billable || false,
           duration: -(start.getTime() / 1000),
-          created_with: timeEntry.createdWith || TogglButton.$version,
+          created_with: timeEntry.createdWith + "/" + TogglButton.$version || TogglButton.$fullVersion,
           duronly: !TogglButton.$user.store_start_and_stop_time
         }
       };
 
-    if (timeEntry.projectName !== undefined) {
-      project = TogglButton.$user.projectMap[timeEntry.projectName];
+    if (timeEntry.projectName !== null) {
+      project = TogglButton.findProjectByName(timeEntry.projectName);
       entry.time_entry.pid = project && project.id;
       entry.time_entry.billable = project && project.billable;
     }
@@ -199,7 +225,7 @@ var TogglButton = {
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
         if (!!timeEntry.respond) {
-          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm()});
+          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
         }
         if (TogglButton.$timer !== null) {
           clearTimeout(TogglButton.$timer);
@@ -266,7 +292,8 @@ var TogglButton = {
         time_entry: {
           description: timeEntry.description,
           pid: timeEntry.pid,
-          tags: timeEntry.tags
+          tags: timeEntry.tags,
+          tid: timeEntry.tid
         }
       },
       onLoad: function (xhr) {
@@ -328,7 +355,7 @@ var TogglButton = {
   },
 
   logoutUser: function (sendResponse) {
-    TogglButton.ajax("/sessions?created_with=" + TogglButton.$version, {
+    TogglButton.ajax("/sessions?created_with=" + TogglButton.$fullVersion, {
       method: 'DELETE',
       onLoad: function (xhr) {
         TogglButton.$user = null;
@@ -351,12 +378,34 @@ var TogglButton = {
   fillProjects: function () {
     var html = "<option value='0'>- No Project -</option>",
       projects = TogglButton.$user.projectMap,
+      wsHtml = [],
+      client,
+      project,
       key = null;
-    for (key in projects) {
-      if (projects.hasOwnProperty(key)) {
-        html += "<option value='" + projects[key].id + "'>" + key + "</option>";
+
+    if (TogglButton.$user.workspaces.length > 1) {
+      TogglButton.$user.workspaces.forEach(function (element, index) {
+        wsHtml[element.id] = '<optgroup label="' + element.name + '">';
+      });
+
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          project = projects[key];
+          client = (!!project.cid) ? " - " + TogglButton.$user.clientMap[project.cid].name : "";
+          wsHtml[project.wid] += "<option value='" + project.id + "'>" + project.name + client + "</option>";
+        }
+      }
+      html += wsHtml.join("</optgroup>") + "</optgroup>";
+    } else {
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          project = projects[key];
+          client = (!!project.cid) ? " - " + TogglButton.$user.clientMap[project.cid].name : "";
+          html += "<option value='" + project.id + "'>" + project.name + client + "</option>";
+        }
       }
     }
+
     return html;
   },
 
@@ -371,6 +420,21 @@ var TogglButton = {
       }
     }
     return html;
+  },
+
+  fillTasks: function (projectId) {
+    if (TogglButton.$user && TogglButton.$user.projectTaskList) {
+      var tasks = TogglButton.$user.projectTaskList[projectId];
+
+      if (tasks) {
+        return [{id: 0, name: '- No Task -'}]
+          .concat(tasks)
+            .map(function (task) { return '<option value="' + task.id + '">' + task.name + '</option>'; })
+            .join("");
+      }
+    }
+
+    return "";
   },
 
   refreshPage: function () {
@@ -529,6 +593,13 @@ var TogglButton = {
       }
     } else if (request.type === 'currentEntry') {
       sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
+    } else if (request.type === 'getTasksHtml') {
+      var success = TogglButton.$user && TogglButton.$user.projectTaskList;
+
+      sendResponse({
+        success: success,
+        html: success ? TogglButton.fillTasks(request.projectId) : ''
+      });
     }
     return true;
   }
@@ -541,7 +612,6 @@ TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
 TogglButton.triggerNotification();
-chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);
 chrome.notifications.onClicked.addListener(TogglButton.triggerNotification);

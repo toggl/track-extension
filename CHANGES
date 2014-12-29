@@ -1,3 +1,9 @@
+[0.5.4]
+- Grouping projects by workspaces
+- Show client names in project dropdown
+- Show only active projects in dropdown
+- Added tasks dropdown for Pro users
+- Added support for OTRS
 [0.5.3]
 - Fixed Todoist description parsing issue
 [0.5.2]

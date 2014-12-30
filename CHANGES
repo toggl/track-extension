@@ -1,3 +1,6 @@
+[0.5.5]
+- Fixed too bold permissions
+- Removed OTRS because of too strong permissions
 [0.5.4]
 - Grouping projects by workspaces
 - Show client names in project dropdown

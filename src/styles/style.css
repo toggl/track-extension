@@ -303,19 +303,6 @@ only screen and (min-resolution: 192dpi) {
   max-width: 94%;
 }
 
-/********* OTRS *********/
-.toggl-button.otrs {
-  text-decoration: none;
-  cursor: pointer;
-  color: #69BFCC;
-}
-
-.Headline-clear {
-  float: right;
-  height: 24px;
-  margin: 5px 286px 10px 7px;
-}
-
 /********* BASECAMP *********/
 .toggl-button.basecamp {
   font-size: 12px;

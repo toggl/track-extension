@@ -50,6 +50,8 @@ var togglbutton = {
   taskBlurTrigger: null,
   tagsVisible: false,
   hasTasks: false,
+  minimal: false,
+  currentDescription: "",
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
@@ -326,6 +328,8 @@ var togglbutton = {
 
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
+    togglbutton.minimal = (params.buttonType === 'minimal');
+    togglbutton.currentDescription = invokeIfFunction(params.description);
     function activate() {
       link.classList.add('active');
       link.style.color = '#1ab351';
@@ -392,16 +396,21 @@ var togglbutton = {
 
   // If "entry" is passed, make button active; otherwise inactive.
   updateTimerLink: function (entry) {
-    var linkText, color = '',
+    var linkText = '',
+      color = '',
       link = $(".toggl-button");
 
-    if (entry === null) {
+    if (entry === null || togglbutton.currentDescription !== entry.description) {
       link.classList.remove('active');
-      linkText = 'Start timer';
+      if (!togglbutton.minimal) {
+        linkText = 'Start timer';
+      }
     } else {
       link.classList.add('active');
       color = '#1ab351';
-      linkText = 'Stop timer';
+      if (!togglbutton.minimal) {
+        linkText = 'Stop timer';
+      }
     }
     link.style.color = color;
     link.innerHTML = linkText;

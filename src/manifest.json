@@ -92,7 +92,8 @@
         "*://*.wunderlist.com/*",
         "*://*.toodledo.com/*",
         "*://*.teamwork.com/*",
-        "*://*.teamworkpm.net/*"
+        "*://*.teamworkpm.net/*",
+        "*://mail.google.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -224,6 +225,10 @@
     {
       "matches": ["*://*.toodledo.com/*"],
       "js": ["scripts/content/toodledo.js"]
+    },
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["scripts/content/google-mail.js"]
     }
   ]
 }

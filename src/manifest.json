@@ -51,7 +51,8 @@
     "*://bugs.jquery.com/*",
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
-    "*://*.teamworkpm.net/*"
+    "*://*.teamworkpm.net/*",
+    "*://*.taiga.io/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -93,7 +94,8 @@
         "*://*.toodledo.com/*",
         "*://*.teamwork.com/*",
         "*://*.teamworkpm.net/*",
-        "*://mail.google.com/*"
+        "*://mail.google.com/*",
+        "*://*.taiga.io/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -229,6 +231,10 @@
     {
       "matches": ["*://mail.google.com/*"],
       "js": ["scripts/content/google-mail.js"]
+    },
+    {
+      "matches": ["*://*.taiga.io/*"],
+      "js": ["scripts/content/taiga.js"]
     }
   ]
 }

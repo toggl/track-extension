@@ -617,3 +617,15 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.google-mail:hover {
   text-decoration: underline;
 }
+
+/********* TAIGA *********/
+.toggl-button.taiga {
+  margin: 13px 0 0 4px;
+  text-decoration: none;
+}
+
+.backlog-table-body .user-story-name a.toggl-button.taiga-backlog {
+  margin-right: 20px;
+  text-decoration: none;
+  flex-grow: 0;
+}

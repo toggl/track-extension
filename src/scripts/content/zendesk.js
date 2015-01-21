@@ -4,14 +4,17 @@
 'use strict';
 
 togglbutton.render('.pane_header:not(.toggl)', {observe: true}, function (elem) {
-  var link, titleFunc,
+  var link, titleFunc, description,
     projectName = $('title').textContent,
     divTag = document.createElement("div");
 
   titleFunc = function () {
-    var titleElem = $('.ticket-title'),
-      description = titleElem.innerText,
+    var titleElem = $('.selected .tab_text'),
       ticketNum = location.href.match(/tickets\/(\d+)/);
+
+    if (titleElem !== null) {
+      description = titleElem.innerText;
+    }
 
     if (ticketNum) {
       description = '#' + ticketNum[1] + " " + description;
@@ -26,5 +29,5 @@ togglbutton.render('.pane_header:not(.toggl)', {observe: true}, function (elem) 
   });
 
   divTag.appendChild(link);
-  elem.insertBefore(divTag, elem.previousChild);
+  elem.insertBefore(divTag, elem.querySelector(".btn-group"));
 });

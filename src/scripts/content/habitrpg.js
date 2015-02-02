@@ -10,9 +10,11 @@
         text = $('.task-text>markdown', elem).innerText.trim(),
         container = $('.task-meta-controls', elem);
 
-      link = togglbutton.createTimerLink({ className: 'habitrpg',
-                                           description: text,
-                                           buttonType: 'minimal' });
+      link = togglbutton.createTimerLink({
+        className: 'habitrpg',
+        description: text,
+        buttonType: 'minimal'
+      });
 
       container.appendChild(link);
     });

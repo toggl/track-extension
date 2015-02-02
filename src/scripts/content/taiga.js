@@ -12,8 +12,8 @@ togglbutton.render('body:not(.loader-active) .us-detail:not(.toggl)', {observe: 
 
   link = togglbutton.createTimerLink({
     className: 'taiga',
-    description: titleElem.innerText,
-    projectName: projectElem.innerText
+    description: titleElem.textContent,
+    projectName: projectElem.textContent
   });
 
   container.appendChild(link);
@@ -30,8 +30,8 @@ togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (el
   link = togglbutton.createTimerLink({
     className: 'taiga-backlog',
     buttonType: 'minimal',
-    projectName: projectElem.innerText,
-    description: taskElem.innerText
+    projectName: projectElem.textContent,
+    description: taskElem.textContent
   });
 
   elem.insertBefore(link, $('a', elem));

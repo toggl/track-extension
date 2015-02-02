@@ -23,7 +23,7 @@ togglbutton.render('body:not(.loader-active) .us-detail:not(.toggl)', {observe: 
 /* Backlog list buttons */
 togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    projectElem = $('.project-name'),
+    projectElem = $('.backlog .project-name'),
     //titleElem = $('.window-title-text'),
     taskElem = $('a > span:nth-child(2)', elem);
 

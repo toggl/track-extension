@@ -238,6 +238,7 @@
       "matches": ["*://*.habitrpg.com/*"],
       "js": ["scripts/content/habitrpg.js"]
     },
+    {
       "matches": ["*://*.taiga.io/*"],
       "js": ["scripts/content/taiga.js"]
     }

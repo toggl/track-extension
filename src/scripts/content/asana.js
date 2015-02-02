@@ -5,14 +5,18 @@
 
 togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (elem) {
 
-  var link,
+  var link, descFunc,
     container = $('.sticky-view-placeholder', elem),
     description = $('#details_property_sheet_title', elem),
     project = $('#details_pane_project_tokenizer .token_name', elem);
 
+  descFunc = function () {
+    return description.value;
+  };
+
   link = togglbutton.createTimerLink({
     className: 'asana',
-    description: description.value,
+    description: descFunc,
     projectName: project && project.textContent
   });
 

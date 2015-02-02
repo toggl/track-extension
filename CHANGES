@@ -1,3 +1,7 @@
+[0.5.8]
+- Fixed updating Toggl Button link
+- Fixed Toggl Button in Zendesk
+- Fixed Asana new task description issue
 [0.5.7]
 - Added support for Google mail
 [0.5.6]

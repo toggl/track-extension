@@ -50,7 +50,6 @@ var togglbutton = {
   taskBlurTrigger: null,
   tagsVisible: false,
   hasTasks: false,
-  minimal: false,
   currentDescription: "",
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
@@ -328,7 +327,6 @@ var togglbutton = {
 
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
-    togglbutton.minimal = (params.buttonType === 'minimal');
     togglbutton.currentDescription = invokeIfFunction(params.description);
     function activate() {
       link.classList.add('active');
@@ -398,17 +396,21 @@ var togglbutton = {
   updateTimerLink: function (entry) {
     var linkText = '',
       color = '',
-      link = $(".toggl-button");
+      link = $(".toggl-button"),
+      minimal = link.classList.contains("min");
+    if (link === null) {
+      return;
+    }
 
     if (entry === null || togglbutton.currentDescription !== entry.description) {
       link.classList.remove('active');
-      if (!togglbutton.minimal) {
+      if (!minimal) {
         linkText = 'Start timer';
       }
     } else {
       link.classList.add('active');
       color = '#1ab351';
-      if (!togglbutton.minimal) {
+      if (!minimal) {
         linkText = 'Stop timer';
       }
     }
@@ -428,11 +430,9 @@ var togglbutton = {
 };
 
 chrome.extension.onMessage.addListener(togglbutton.newMessage);
-document.addEventListener('webkitvisibilitychange', function (e) {
+window.addEventListener('focus', function (e) {
   // update button state
-  if (!document.webkitHidden) {
-    chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
-      togglbutton.updateTimerLink(response.currentEntry);
-    });
-  }
+  chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
+    togglbutton.updateTimerLink(response.currentEntry);
+  });
 });

@@ -617,3 +617,15 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.google-mail:hover {
   text-decoration: underline;
 }
+
+/********* AXOSOFT *********/
+.toggl-button.axosoft {
+  margin-left: 10px;
+  float: right;
+}
+.toggl-button.axosoft.edit {
+  margin-top: 9px;
+}
+.toggl-button.axosoft.view {
+  margin-top: 4px;
+}

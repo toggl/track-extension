@@ -10,9 +10,12 @@ togglbutton.render('#issue_view:not(.toggl)', {}, function (elem) {
     description = $('#issue_overview div#summary div.display', elem).textContent;
 
   // find the project dropdown
+  // if the dropdown exists, its multiproject
+  // otherwise take it from text value
   projectSelect = $('#project_chooser > form > select[name=current_project]', elem);
-  // project is current value
-  project = projectSelect.options[projectSelect.selectedIndex].text;
+  project = projectSelect ?
+    projectSelect.options[projectSelect.selectedIndex].text :
+    $('#project_chooser').textContent.replace(/^\s+Project:\s/, '');
 
   link = togglbutton.createTimerLink({
     className: 'eventum',

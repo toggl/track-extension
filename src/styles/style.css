@@ -222,10 +222,11 @@ only screen and (min-resolution: 192dpi) {
   border: none;
   color: #6a7479;
   font-family: sans-serif, Arial;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 200;
   min-height: 25px;
   text-decoration: none;
+  margin-top: -8px;
 }
 
 /********* PIVOTAL *********/

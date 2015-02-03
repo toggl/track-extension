@@ -1,5 +1,6 @@
 [0.5.8]
 - Added support for Axosoft
+- Updated edit form hide button to use &times;
 [0.5.7]
 - Added support for Google mail
 [0.5.6]

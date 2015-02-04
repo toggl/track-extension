@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -53,7 +53,8 @@
     "*://*.teamwork.com/*",
     "*://*.teamworkpm.net/*",
     "*://*.habitrpg.com/*",
-    "*://*.taiga.io/*"
+    "*://*.taiga.io/*",
+    "*://*.axosoft.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -97,7 +98,8 @@
         "*://*.teamworkpm.net/*",
         "*://mail.google.com/*",
         "*://*.habitrpg.com/*",
-        "*://*.taiga.io/*"
+        "*://*.taiga.io/*",
+        "*://*.axosoft.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -212,7 +214,7 @@
         "*://*.teamworkpm.net/*"
       ],
       "js": ["scripts/content/teamworkpm.js"]
-    },    
+    },
     {
       "matches": [
         "*://trac.edgewall.org/*",
@@ -241,6 +243,10 @@
     {
       "matches": ["*://*.taiga.io/*"],
       "js": ["scripts/content/taiga.js"]
+    },
+    {
+      "matches": ["*://*.axosoft.com/*"],
+      "js": ["scripts/content/axosoft.js"]
     }
   ]
 }

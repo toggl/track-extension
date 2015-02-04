@@ -397,10 +397,11 @@ var togglbutton = {
     var linkText = '',
       color = '',
       link = $(".toggl-button"),
-      minimal = link.classList.contains("min");
+      minimal;
     if (link === null) {
       return;
     }
+    minimal = link.classList.contains("min");
 
     if (entry === null || togglbutton.currentDescription !== entry.description) {
       link.classList.remove('active');

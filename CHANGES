@@ -1,5 +1,6 @@
 [0.5.10]
 - Added support for Axosoft
+- Updated edit form hide button to use &times;
 [0.5.9]
 - Added support for Taiga.io
 - Added support for HabitRPG

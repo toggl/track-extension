@@ -34,6 +34,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Taiga][30]
   - [HabitRPG][31]
   - [Axosoft][32]
+  
 ## Installing from the Web Store
 
 https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn

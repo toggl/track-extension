@@ -3,16 +3,16 @@
 
 'use strict';
 
-togglbutton.render('.item-field-name input:not(.toggl)', {observe: true}, function (elem) {
-  var link, titleText, projectText,
+togglbutton.render('.item-field-name input:not(.toggl)', {observe: true}, function () {
+  var link, titleText,
     wrapperElem = $('.axo-addEditItem-content'),
     titleElem = $('#name', wrapperElem),
     ratingElem = $('.axo-rating', wrapperElem);
 
-  if(titleElem !== null) {
+  if (titleElem !== null) {
     titleText = titleElem.value;
   }
-  
+
   link = togglbutton.createTimerLink({
     className: 'axosoft',
     description: titleText || ''
@@ -22,19 +22,21 @@ togglbutton.render('.item-field-name input:not(.toggl)', {observe: true}, functi
 });
 
 
-togglbutton.render('.axo-view-item-content .item-field-name:not(.toggl)', {observe: true}, function (elem) {
-  var link, titleText, projectText,
+togglbutton.render('.axo-view-item-content .item-field-name:not(.toggl)', {observe: true}, function () {
+  var link, titleText,
     wrapperElem = $('.axo-view-item-content'),
+    projectText = $(".item-field-table .item-field-row .item-field-inner-right .field", wrapperElem),
     titleElem = $('.item-field-name', wrapperElem),
     ratingElem = $('.axo-rating', wrapperElem);
 
-  if(titleElem !== null) {
+  if (titleElem !== null) {
     titleText = titleElem.innerText;
   }
-  
+
   link = togglbutton.createTimerLink({
     className: 'axosoft',
-    description: titleText || ''
+    description: titleText || '',
+    projectName: projectText && projectText.textContent
   });
   link.classList.add('view');
   ratingElem.parentNode.insertBefore(link, ratingElem);

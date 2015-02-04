@@ -1,3 +1,5 @@
+[0.5.11]
+- Added atlassian.com to support all JIRA versions
 [0.5.10]
 - Added support for Axosoft
 - Updated edit form hide button to use &times;

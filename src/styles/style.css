@@ -629,3 +629,15 @@ only screen and (min-resolution: 192dpi) {
   text-decoration: none;
   flex-grow: 0;
 }
+
+/********* AXOSOFT *********/
+.toggl-button.axosoft {
+  margin-left: 10px;
+  float: right;
+}
+.toggl-button.axosoft.edit {
+  margin-top: 9px;
+}
+.toggl-button.axosoft.view {
+  margin-top: 4px;
+}

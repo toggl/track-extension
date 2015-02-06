@@ -642,3 +642,12 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.axosoft.view {
   margin-top: 4px;
 }
+
+/********* COUNTERSOFT GEMINI *********/
+.toggl-button.gemini {
+  margin-top: 5px;
+  position: absolute;
+  right: 260px;
+  font-size: 12px;
+  white-space: nowrap;
+}

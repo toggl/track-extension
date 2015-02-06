@@ -54,7 +54,8 @@
     "*://*.teamworkpm.net/*",
     "*://*.habitrpg.com/*",
     "*://*.taiga.io/*",
-    "*://*.axosoft.com/*"
+    "*://*.axosoft.com/*",
+    "*://*.drupal.org/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -100,7 +101,8 @@
         "*://mail.google.com/*",
         "*://*.habitrpg.com/*",
         "*://*.taiga.io/*",
-        "*://*.axosoft.com/*"
+        "*://*.axosoft.com/*",
+        "*://*.drupal.org/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -248,6 +250,10 @@
     {
       "matches": ["*://*.axosoft.com/*"],
       "js": ["scripts/content/axosoft.js"]
+    },
+    {
+      "matches": ["*://*.drupal.org/*"],
+      "js": ["scripts/content/drupalorg.js"]
     }
   ]
 }

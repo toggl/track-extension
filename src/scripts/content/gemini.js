@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#filter-navigator-container:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#filter-navigator-container:not(.toggl)', {observe: true}, function () {
   var link, description,
     numElem = $('.item-title'),
     titleElem = $('.item-title'),

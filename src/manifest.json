@@ -55,6 +55,7 @@
     "*://*.habitrpg.com/*",
     "*://*.taiga.io/*",
     "*://*.axosoft.com/*",
+    "*://*.ongemini.com/*",
     "*://*.drupal.org/*"
   ],
   "icons": {
@@ -102,6 +103,7 @@
         "*://*.habitrpg.com/*",
         "*://*.taiga.io/*",
         "*://*.axosoft.com/*",
+        "*://*.ongemini.com/*",
         "*://*.drupal.org/*"
       ],
       "css": ["styles/style.css"],
@@ -250,6 +252,10 @@
     {
       "matches": ["*://*.axosoft.com/*"],
       "js": ["scripts/content/axosoft.js"]
+    },
+    {
+      "matches": ["*://*.ongemini.com/*"],
+      "js": ["scripts/content/gemini.js"]
     },
     {
       "matches": ["*://*.drupal.org/*"],

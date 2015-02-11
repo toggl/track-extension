@@ -226,7 +226,7 @@ only screen and (min-resolution: 192dpi) {
   font-weight: 200;
   min-height: 25px;
   text-decoration: none;
-  margin-top: -8px;
+  margin-top: 0px;
 }
 
 /********* PIVOTAL *********/

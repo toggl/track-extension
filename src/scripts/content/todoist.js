@@ -9,14 +9,23 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
 
   descFunc = function () {
     var clone = container.cloneNode(true),
-      i = 0;
+      i = 0,
+      child = null;
 
     while (clone.children.length > i) {
-      if (clone.children[i].tagName === "B"
-          || clone.children[i].tagName === "I") {
+      child = clone.children[i];
+      if (child.tagName === "B"
+          || child.tagName === "I") {
         i++;
+      } else if (child.tagName === "A") {
+        if (child.classList.contains("ex_link")
+            || child.getAttribute("href").indexOf("mailto:") === 0) {
+          i++;
+        } else {
+          child.remove();
+        }
       } else {
-        clone.children[i].remove();
+        child.remove();
       }
     }
 

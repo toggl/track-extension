@@ -1,3 +1,8 @@
+[0.6.0]
+- Added support for Countersoft Gemini
+- Added support for esa.io
+- Added support for drupal.org
+- Fixed Todoist description parsing for links
 [0.5.11]
 - Added atlassian.com to support all JIRA versions
 [0.5.10]

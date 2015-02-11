@@ -6,7 +6,7 @@
 togglbutton.render('.content .page-title:not(.toggl)', {observe: true}, function (elem) {
   var link,  description,
     numElem = $('.page-title'),
-    titleElem = $(".issue-box .title"),
+    titleElem = $(".issue-box .title, .issue-title"),
     projectElem = $('.title').firstChild;
 
   description = titleElem.textContent;

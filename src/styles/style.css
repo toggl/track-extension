@@ -222,10 +222,11 @@ only screen and (min-resolution: 192dpi) {
   border: none;
   color: #6a7479;
   font-family: sans-serif, Arial;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 200;
   min-height: 25px;
   text-decoration: none;
+  margin-top: 0px;
 }
 
 /********* PIVOTAL *********/
@@ -616,4 +617,37 @@ only screen and (min-resolution: 192dpi) {
 }
 .toggl-button.google-mail:hover {
   text-decoration: underline;
+}
+
+/********* TAIGA *********/
+.toggl-button.taiga {
+  margin: 13px 0 0 4px;
+  text-decoration: none;
+}
+
+.backlog-table-body .user-story-name a.toggl-button.taiga-backlog {
+  margin-right: 20px;
+  text-decoration: none;
+  flex-grow: 0;
+}
+
+/********* AXOSOFT *********/
+.toggl-button.axosoft {
+  margin-left: 10px;
+  float: right;
+}
+.toggl-button.axosoft.edit {
+  margin-top: 9px;
+}
+.toggl-button.axosoft.view {
+  margin-top: 4px;
+}
+
+/********* COUNTERSOFT GEMINI *********/
+.toggl-button.gemini {
+  margin-top: 5px;
+  position: absolute;
+  right: 260px;
+  font-size: 12px;
+  white-space: nowrap;
 }

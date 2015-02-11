@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.5.8",
+  "version": "0.5.11",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -52,6 +52,11 @@
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
     "*://*.teamworkpm.net/*",
+    "*://*.habitrpg.com/*",
+    "*://*.taiga.io/*",
+    "*://*.axosoft.com/*",
+    "*://*.ongemini.com/*",
+    "*://*.drupal.org/*",
     "*://*.esa.io/*"
   ],
   "icons": {
@@ -75,6 +80,7 @@
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/*",
+        "*://*.atlassian.com/*",
         "*://*.jira.com/*",
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*",
@@ -95,6 +101,11 @@
         "*://*.teamwork.com/*",
         "*://*.teamworkpm.net/*",
         "*://mail.google.com/*",
+        "*://*.habitrpg.com/*",
+        "*://*.taiga.io/*",
+        "*://*.axosoft.com/*",
+        "*://*.ongemini.com/*",
+        "*://*.drupal.org/*",
         "*://*.esa.io/*"
       ],
       "css": ["styles/style.css"],
@@ -161,11 +172,11 @@
       "js": ["scripts/content/basecamp.js"]
     },
     {
-      "matches": ["*://*.atlassian.net/*"],
-      "js": ["scripts/content/jira.js"]
-    },
-    {
-      "matches": ["*://*.jira.com/*"],
+      "matches": [
+        "*://*.atlassian.net/*",
+        "*://*.atlassian.com/*",
+        "*://*.jira.com/*"
+      ],
       "js": ["scripts/content/jira.js"]
     },
     {
@@ -231,6 +242,26 @@
     {
       "matches": ["*://mail.google.com/*"],
       "js": ["scripts/content/google-mail.js"]
+    },
+    {
+      "matches": ["*://*.habitrpg.com/*"],
+      "js": ["scripts/content/habitrpg.js"]
+    },
+    {
+      "matches": ["*://*.taiga.io/*"],
+      "js": ["scripts/content/taiga.js"]
+    },
+    {
+      "matches": ["*://*.axosoft.com/*"],
+      "js": ["scripts/content/axosoft.js"]
+    },
+    {
+      "matches": ["*://*.ongemini.com/*"],
+      "js": ["scripts/content/gemini.js"]
+    },
+    {
+      "matches": ["*://*.drupal.org/*"],
+      "js": ["scripts/content/drupalorg.js"]
     },
     {
       "matches": ["*://*.esa.io/*"],

@@ -21,7 +21,7 @@ var TogglButton = {
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form>' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
-      '<a id="toggl-button-hide">x</a>' +
+      '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="">' +
       '</div>' +

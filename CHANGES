@@ -1,3 +1,14 @@
+[0.5.11]
+- Added atlassian.com to support all JIRA versions
+[0.5.10]
+- Added support for Axosoft
+- Updated edit form hide button to use &times;
+- Fixed Todoist description parsing
+[0.5.9]
+- Added support for Taiga.io
+- Added support for HabitRPG
+- Fixes for GitLab
+- Todoist description parse fix
 [0.5.8]
 - Fixed updating Toggl Button link
 - Fixed Toggl Button in Zendesk

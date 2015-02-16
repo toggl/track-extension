@@ -21,6 +21,7 @@
     "notifications",
     "idle",
     "*://*.toggl.com/*",
+    "*://toggl.com/*",
     "*://*.teamweek.com/*",
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
@@ -112,7 +113,12 @@
       "js": ["scripts/common.js"]
     },
     {
-      "matches": ["*://www.toggl.com/app/timer", "*://www.toggl.com/"],
+      "matches": [
+        "*://www.toggl.com/app/timer",
+        "*://www.toggl.com/",
+        "*://toggl.com/app/timer",
+        "*://toggl.com/"
+      ],
       "js": ["scripts/content/toggl.js"]
     },
     {

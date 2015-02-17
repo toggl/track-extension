@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.5.11",
+  "version": "0.6.0",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -21,6 +21,7 @@
     "notifications",
     "idle",
     "*://*.toggl.com/*",
+    "*://toggl.com/*",
     "*://*.teamweek.com/*",
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
@@ -55,6 +56,9 @@
     "*://*.habitrpg.com/*",
     "*://*.taiga.io/*",
     "*://*.axosoft.com/*",
+    "*://*.ongemini.com/*",
+    "*://*.drupal.org/*",
+    "*://*.esa.io/*",
     "*://secure.helpscout.net/*"
   ],
   "icons": {
@@ -102,13 +106,21 @@
         "*://*.habitrpg.com/*",
         "*://*.taiga.io/*",
         "*://*.axosoft.com/*",
-         "*://secure.helpscout.net/*"
+        "*://*.ongemini.com/*",
+        "*://*.drupal.org/*",
+        "*://*.esa.io/*",
+        "*://secure.helpscout.net/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
     },
     {
-      "matches": ["*://www.toggl.com/app/timer", "*://www.toggl.com/"],
+      "matches": [
+        "*://www.toggl.com/app/timer",
+        "*://www.toggl.com/",
+        "*://toggl.com/app/timer",
+        "*://toggl.com/"
+      ],
       "js": ["scripts/content/toggl.js"]
     },
     {
@@ -250,6 +262,18 @@
     {
       "matches": ["*://*.axosoft.com/*"],
       "js": ["scripts/content/axosoft.js"]
+    },
+    {
+      "matches": ["*://*.ongemini.com/*"],
+      "js": ["scripts/content/gemini.js"]
+    },
+    {
+      "matches": ["*://*.drupal.org/*"],
+      "js": ["scripts/content/drupalorg.js"]
+    },
+    {
+      "matches": ["*://*.esa.io/*"],
+      "js": ["scripts/content/esa.js"]
     },
     {
       "matches": ["*://secure.helpscout.net/*"],

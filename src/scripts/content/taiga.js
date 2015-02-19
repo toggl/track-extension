@@ -5,34 +5,69 @@
 
 /* User story details button */
 togglbutton.render('body:not(.loader-active) .us-detail:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('div', ''),
+  var link,
+    refElem = $('.us-number', elem),
     titleElem = $('.view-subject', elem),
     projectElem = $('.project-name', elem),
-    buttonInsertionPoint = $('.us-story-main-data', elem);
+    container = $('.us-title-text');
 
   link = togglbutton.createTimerLink({
     className: 'taiga',
-    description: titleElem.textContent,
+    buttonType: 'minimal',
+    description: refElem.textContent + ' ' + titleElem.textContent,
     projectName: projectElem.textContent
   });
 
-  container.appendChild(link);
-  buttonInsertionPoint.appendChild(link);
+  container.insertBefore(link, $('.us-number', elem));
 });
 
 /* Backlog list buttons */
 togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (elem) {
   var link,
     projectElem = $('.backlog .project-name'),
-    //titleElem = $('.window-title-text'),
+    refElem = $('a > span:nth-child(2)', elem),
     taskElem = $('a > span:nth-child(2)', elem);
 
   link = togglbutton.createTimerLink({
     className: 'taiga-backlog',
     buttonType: 'minimal',
     projectName: projectElem.textContent,
-    description: taskElem.textContent
+    description: refElem.textContent + ' ' + taskElem.textContent
   });
 
   elem.insertBefore(link, $('a', elem));
+});
+
+/* Kanban button */
+togglbutton.render('body:not(.loader-active) .kanban-task-inner:not(.toggl)', {observe: true}, function (elem) {
+  var link,
+    refElem = $('.task-num', elem),
+    titleElem = $('.task-name', elem),
+    projectElem = $('.kanban .project-name');
+
+  link = togglbutton.createTimerLink({
+    className: 'taiga',
+    buttonType: 'minimal',
+    description: refElem.textContent + ' ' + titleElem.textContent,
+    projectName: projectElem.textContent
+  });
+
+  elem.appendChild(link);
+});
+
+/* Sprint Taskboard tasks button */
+togglbutton.render('body:not(.loader-active) .taskboard-task-inner:not(.toggl)', {observe: true}, function (elem) {
+  var link,
+    refElem = $('.task-num', elem),
+    titleElem = $('.task-name', elem),
+    projectElem = $('.taskboard .project-name-short');
+
+  link = togglbutton.createTimerLink({
+    className: 'taiga',
+    buttonType: 'minimal',
+    description: refElem.textContent + ' ' + titleElem.textContent,
+    projectName: projectElem.textContent
+  });
+
+  elem.appendChild(link);
 });

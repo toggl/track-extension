@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.5.10",
+  "version": "0.6.1",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -21,6 +21,7 @@
     "notifications",
     "idle",
     "*://*.toggl.com/*",
+    "*://toggl.com/*",
     "*://*.teamweek.com/*",
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
@@ -54,7 +55,11 @@
     "*://*.teamworkpm.net/*",
     "*://*.habitrpg.com/*",
     "*://*.taiga.io/*",
-    "*://*.axosoft.com/*"
+    "*://*.axosoft.com/*",
+    "*://*.ongemini.com/*",
+    "*://*.drupal.org/*",
+    "*://*.esa.io/*",
+    "*://secure.helpscout.net/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -77,6 +82,7 @@
         "*://*.worksection.com/*",
         "*://*.basecamp.com/*",
         "*://*.atlassian.net/*",
+        "*://*.atlassian.com/*",
         "*://*.jira.com/*",
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*",
@@ -99,13 +105,22 @@
         "*://mail.google.com/*",
         "*://*.habitrpg.com/*",
         "*://*.taiga.io/*",
-        "*://*.axosoft.com/*"
+        "*://*.axosoft.com/*",
+        "*://*.ongemini.com/*",
+        "*://*.drupal.org/*",
+        "*://*.esa.io/*",
+        "*://secure.helpscout.net/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
     },
     {
-      "matches": ["*://www.toggl.com/app/timer", "*://www.toggl.com/"],
+      "matches": [
+        "*://www.toggl.com/app/timer",
+        "*://www.toggl.com/",
+        "*://toggl.com/app/timer",
+        "*://toggl.com/"
+      ],
       "js": ["scripts/content/toggl.js"]
     },
     {
@@ -165,11 +180,11 @@
       "js": ["scripts/content/basecamp.js"]
     },
     {
-      "matches": ["*://*.atlassian.net/*"],
-      "js": ["scripts/content/jira.js"]
-    },
-    {
-      "matches": ["*://*.jira.com/*"],
+      "matches": [
+        "*://*.atlassian.net/*",
+        "*://*.atlassian.com/*",
+        "*://*.jira.com/*"
+      ],
       "js": ["scripts/content/jira.js"]
     },
     {
@@ -247,6 +262,22 @@
     {
       "matches": ["*://*.axosoft.com/*"],
       "js": ["scripts/content/axosoft.js"]
+    },
+    {
+      "matches": ["*://*.ongemini.com/*"],
+      "js": ["scripts/content/gemini.js"]
+    },
+    {
+      "matches": ["*://*.drupal.org/*"],
+      "js": ["scripts/content/drupalorg.js"]
+    },
+    {
+      "matches": ["*://*.esa.io/*"],
+      "js": ["scripts/content/esa.js"]
+    },
+    {
+      "matches": ["*://secure.helpscout.net/*"],
+      "js": ["scripts/content/helpscout.js"]
     }
   ]
 }

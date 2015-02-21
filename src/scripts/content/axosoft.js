@@ -25,7 +25,6 @@ togglbutton.render('.item-field-name input:not(.toggl)', {observe: true}, functi
 togglbutton.render('.axo-view-item-content .item-field-name:not(.toggl)', {observe: true}, function () {
   var link, titleText,
     wrapperElem = $('.axo-view-item-content'),
-    projectText = $(".item-field-table .item-field-row .item-field-inner-right .field", wrapperElem),
     titleElem = $('.item-field-name', wrapperElem),
     beforeElem = $('.axo-rating', wrapperElem) || titleElem;
 
@@ -35,8 +34,7 @@ togglbutton.render('.axo-view-item-content .item-field-name:not(.toggl)', {obser
 
   link = togglbutton.createTimerLink({
     className: 'axosoft',
-    description: titleText || '',
-    projectName: projectText && projectText.textContent
+    description: titleText || ''
   });
   link.classList.add('view');
   beforeElem.parentNode.insertBefore(link, beforeElem);

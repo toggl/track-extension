@@ -651,3 +651,23 @@ only screen and (min-resolution: 192dpi) {
   font-size: 12px;
   white-space: nowrap;
 }
+
+/********* GETFLOW *********/
+.toggl-button.getflow {
+  font-size: 0px;
+  margin: 0px 0px 0px 5px;
+  padding-left: 25px;
+  line-height: 21px;
+  background-size: 19px;
+  height: auto;
+  color: #575858;
+  font-weight: 500;
+  vertical-align: middle;
+  opacity: 0.3;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.toggl-button.getflow:hover,
+.toggl-button.getflow.active{
+  opacity: 1;
+}

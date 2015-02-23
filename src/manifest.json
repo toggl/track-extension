@@ -59,7 +59,8 @@
     "*://*.ongemini.com/*",
     "*://*.drupal.org/*",
     "*://*.esa.io/*",
-    "*://secure.helpscout.net/*"
+    "*://secure.helpscout.net/*",
+    "*://*.getflow.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -109,7 +110,8 @@
         "*://*.ongemini.com/*",
         "*://*.drupal.org/*",
         "*://*.esa.io/*",
-        "*://secure.helpscout.net/*"
+        "*://secure.helpscout.net/*",
+        "*://*.getflow.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -278,6 +280,10 @@
     {
       "matches": ["*://secure.helpscout.net/*"],
       "js": ["scripts/content/helpscout.js"]
-    }
+    },
+    {
+	  "matches": ["*://*.getflow.com/*"],
+	  "js": ["scripts/content/getflow.js"]
+	}
   ]
 }

@@ -38,6 +38,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Drupal][34]
   - [Esa][35]
   - [Help Scout][36]
+  - [Sprintly][37]
   
 ## Installing from the Web Store
 
@@ -106,6 +107,7 @@ Don't know how to start? Just check out the [user requested services][97] that h
 [34]: https://www.drupal.org
 [35]: https://esa.io
 [36]: http://www.helpscout.net/
+[37]: https://sprint.ly
 [97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
 [99]: https://github.com/toggl/toggl-button/pulls

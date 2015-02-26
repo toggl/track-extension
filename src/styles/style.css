@@ -723,4 +723,8 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.getflow:hover,
 .toggl-button.getflow.active{
   opacity: 1;
+
+/********* SPRINTLY *********/
+.toggl-button.sprintly {
+  margin-left: 5px;
 }

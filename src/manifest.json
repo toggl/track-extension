@@ -60,7 +60,8 @@
     "*://*.drupal.org/*",
     "*://*.esa.io/*",
     "*://secure.helpscout.net/*",
-    "*://*.getflow.com/*"
+    "*://*.getflow.com/*",
+    "*://sprint.ly/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -111,7 +112,8 @@
         "*://*.drupal.org/*",
         "*://*.esa.io/*",
         "*://secure.helpscout.net/*",
-        "*://*.getflow.com/*"
+        "*://*.getflow.com/*",
+        "*://sprint.ly/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -282,8 +284,12 @@
       "js": ["scripts/content/helpscout.js"]
     },
     {
-	  "matches": ["*://*.getflow.com/*"],
-	  "js": ["scripts/content/getflow.js"]
-	}
+  	  "matches": ["*://*.getflow.com/*"],
+  	  "js": ["scripts/content/getflow.js"]
+  	},
+    {
+      "matches": ["*://sprint.ly/*"],
+      "js": ["scripts/content/sprintly.js"]
+    }
   ]
 }

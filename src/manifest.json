@@ -40,6 +40,7 @@
     "*://*.sifterapp.com/*",
     "*://docs.google.com/*",
     "*://*.redmine.org/*",
+    "*://redmine.luxms.com/*",
     "*://*.myjetbrains.com/*",
     "*://*.capsulecrm.com/*",
     "*://*.zendesk.com/*",
@@ -88,6 +89,7 @@
         "*://*.sifterapp.com/*",
         "*://docs.google.com/*",
         "*://*.redmine.org/*",
+        "*://redmine.luxms.com/*",
         "*://*.myjetbrains.com/*",
         "*://*.capsulecrm.com/*",
         "*://*.zendesk.com/*",
@@ -197,6 +199,10 @@
     },
     {
       "matches": ["*://*.redmine.org/*"],
+      "js": ["scripts/content/redmine.js"]
+    },
+    {
+      "matches": ["*://redmine.luxms.com/*"],
       "js": ["scripts/content/redmine.js"]
     },
     {

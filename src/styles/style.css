@@ -651,3 +651,8 @@ only screen and (min-resolution: 192dpi) {
   font-size: 12px;
   white-space: nowrap;
 }
+
+/********* SPRINTLY *********/
+.toggl-button.sprintly {
+  margin-left: 5px;
+}

@@ -14,7 +14,7 @@ togglbutton.render('.task-list-section-collection-list li:not(.toggl)', {observe
   link = togglbutton.createTimerLink({
     className: 'getflow',
     description: $('.content-list-item-name-wrapper', elem).textContent,
-    projectName: $('.context-header-title .copy').innerText.slice(0, - 1)
+    projectName: $('.content-header-main-title .copy').textContent.slice(0, - 1)
   });
 
   container.appendChild(link);

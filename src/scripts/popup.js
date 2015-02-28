@@ -13,6 +13,10 @@ var PopUp = {
       document.querySelector(".menu").style.display = 'block';
       if (TogglButton.$curEntry === null) {
         PopUp.$stopButton.setAttribute("disabled", true);
+        PopUp.$startButton.removeAttribute("disabled");
+      } else {
+        PopUp.$stopButton.removeAttribute("disabled");
+        PopUp.$startButton.setAttribute("disabled", true);
       }
     } else {
       document.querySelector("#login-form").style.display = 'block';
@@ -22,7 +26,7 @@ var PopUp = {
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
       if (!!response.success) {
-        if (!!response.type && response.type === "Stop") {
+        if (!!response.type && (response.type === "Stop" || response.type === "New Entry")) {
           window.close();
         } else {
           window.location.reload();
@@ -34,11 +38,20 @@ var PopUp = {
 
 document.addEventListener('DOMContentLoaded', function () {
   PopUp.$stopButton = document.querySelector(".stop-button");
+  PopUp.$startButton = document.querySelector(".start-button");
   PopUp.showPage();
 
   PopUp.$stopButton.addEventListener('click', function () {
     var request = {
       type: "stop",
+      respond: true
+    };
+    PopUp.sendMessage(request);
+  });
+
+  PopUp.$startButton.addEventListener('click', function () {
+    var request = {
+      type: "timeEntry",
       respond: true
     };
     PopUp.sendMessage(request);

@@ -45,6 +45,11 @@ document.addEventListener('DOMContentLoaded', function () {
       type: this.getAttribute('data-event'),
       respond: true
     };
+
+    if (request.type === 'timeEntry') {
+      request.description = 'Chrome';
+    }
+
     PopUp.sendMessage(request);
   });
 

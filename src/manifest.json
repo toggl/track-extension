@@ -60,7 +60,7 @@
     "*://*.drupal.org/*",
     "*://*.esa.io/*",
     "*://secure.helpscout.net/*",
-      "*://*/wp-admin/*"
+	"*://*/*wp-admin*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -111,7 +111,7 @@
         "*://*.drupal.org/*",
         "*://*.esa.io/*",
         "*://secure.helpscout.net/*",
-          "*://*/wp-admin/*"
+		"*://*/*wp-admin*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -281,9 +281,9 @@
       "matches": ["*://secure.helpscout.net/*"],
       "js": ["scripts/content/helpscout.js"]
     },
-      {
-          "matches": ["*://*/wp-admin/*"],
-          "js": ["scripts/content/wordpress.js"]
-      }
+	{
+      "matches": ["*://*/*wp-admin*"],
+      "js": ["scripts/content/wordpress.js"]
+    }
   ]
 }

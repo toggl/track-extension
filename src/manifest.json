@@ -59,7 +59,8 @@
     "*://*.ongemini.com/*",
     "*://*.drupal.org/*",
     "*://*.esa.io/*",
-    "*://secure.helpscout.net/*"
+    "*://secure.helpscout.net/*",
+      "*://*/wp-admin/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -109,7 +110,8 @@
         "*://*.ongemini.com/*",
         "*://*.drupal.org/*",
         "*://*.esa.io/*",
-        "*://secure.helpscout.net/*"
+        "*://secure.helpscout.net/*",
+          "*://*/wp-admin/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -278,6 +280,10 @@
     {
       "matches": ["*://secure.helpscout.net/*"],
       "js": ["scripts/content/helpscout.js"]
-    }
+    },
+      {
+          "matches": ["*://*/wp-admin/*"],
+          "js": ["scripts/content/wordpress.js"]
+      }
   ]
 }

@@ -1,9 +1,8 @@
-/*jslint indent: 2 */ 
-/*global $: false, document: false, togglbutton: false*/ 
-'use strict'; 
+/*jslint indent: 2 */
+/*global $: false, document: false, togglbutton: false*/
+'use strict';
 togglbutton.render('.task-list-section-collection-list li:not(.toggl)', {observe: true}, function (elem) {
-  var link, 
-  	spanTag,
+  var link,
     container = $('.task-list-item-details', elem);
 
   if (container === null) {
@@ -14,7 +13,7 @@ togglbutton.render('.task-list-section-collection-list li:not(.toggl)', {observe
   link = togglbutton.createTimerLink({
     className: 'getflow',
     description: $('.content-list-item-name-wrapper', elem).textContent,
-    projectName: $('.content-header-main-title .copy').textContent.slice(0, - 1)
+    projectName: $('.content-header-main-title .copy').textContent.slice(0, -1)
   });
 
   container.appendChild(link);

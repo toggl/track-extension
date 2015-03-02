@@ -69,7 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
     window.close();
   });
 
-  document.querySelector(".login-btn").addEventListener('click', function () {
+  document.querySelector("#signin").addEventListener('submit', function (event) {
+    event.preventDefault();
     PopUp.$error.style.display = 'none';
     var request = {
       type: "login",

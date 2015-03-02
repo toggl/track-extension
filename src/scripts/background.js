@@ -344,8 +344,12 @@ var TogglButton = {
       method: 'POST',
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
-        TogglButton.fetchUser();
-        TogglButton.refreshPage();
+        if (xhr.status === 200) {
+          TogglButton.fetchUser();
+          TogglButton.refreshPage();
+        } else {
+          sendResponse({success: false, xhr: xhr});
+        }
       },
       credentials: {
         username: request.username,

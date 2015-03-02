@@ -154,3 +154,10 @@ hr {
   margin: 0 5px;
   border-top: 1px solid #ddd;
 }
+.error {
+  display: none;
+  background: red;
+  padding: 10px 5px;
+  color: white;
+}
+}

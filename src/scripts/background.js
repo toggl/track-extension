@@ -364,6 +364,7 @@ var TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$user = null;
         TogglButton.$curEntry = null;
+        localStorage.setItem('userToken', null);
         sendResponse({success: (xhr.status === 200), xhr: xhr});
         TogglButton.refreshPage();
       }

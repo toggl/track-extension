@@ -494,7 +494,10 @@ var TogglButton = {
   checkActivity: function (currentState) {
     clearTimeout(TogglButton.$timer);
     TogglButton.$timer = null;
-    if (currentState === "active" && TogglButton.$idleCheckEnabled && TogglButton.$curEntry === null && TogglButton.workingTime()) {
+    if (TogglButton.$user && currentState === "active" &&
+        TogglButton.$idleCheckEnabled &&
+        TogglButton.$curEntry === null &&
+        TogglButton.workingTime()) {
       chrome.notifications.create(
         'remind-to-track-time',
         {

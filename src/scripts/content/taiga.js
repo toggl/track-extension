@@ -25,7 +25,7 @@ togglbutton.render('body:not(.loader-active) .us-detail:not(.toggl)', {observe: 
 togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (elem) {
   var link,
     projectElem = $('.backlog .project-name'),
-    refElem = $('a > span:nth-child(2)', elem),
+    refElem = $('a > span:nth-child(1)', elem),
     taskElem = $('a > span:nth-child(2)', elem);
 
   link = togglbutton.createTimerLink({

@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#docs-toolbar-wrapper', {}, function (elem) {
+togglbutton.render('#docs-toolbar-wrapper:not(.toggl)', {}, function (elem) {
   var link, description, titleElem = $('.docs-title-inner');
 
   description = titleElem.innerText;

@@ -3,12 +3,11 @@
 
 'use strict';
 
-togglbutton.render('.convo-toolbar:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.convo-toolbar:not(.toggl)', {observe: true}, function () {
 
-  var link, descFunc,
-    container = $('.convo-toolbar', elem),
+  var link,
     description = '#' + $('#tkHeader strong').innerHTML + ' ' + $('#subjectLine').innerHTML;
-    
+
   link = togglbutton.createTimerLink({
     className: 'helpscout',
     description: description

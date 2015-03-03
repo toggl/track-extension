@@ -40,6 +40,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Help Scout][36]
   - [GetFlow][37]
   - [Sprintly][38]
+  - [Google Calendar][39]
   
 ## Installing from the Web Store
 
@@ -110,6 +111,7 @@ Don't know how to start? Just check out the [user requested services][97] that h
 [36]: http://www.helpscout.net/
 [37]: http://getflow.com/
 [38]: https://sprint.ly
+[39]: https://www.google.com/calendar
 [97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
 [99]: https://github.com/toggl/toggl-button/pulls

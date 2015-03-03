@@ -61,7 +61,8 @@
     "*://*.esa.io/*",
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
-    "*://sprint.ly/*"
+    "*://sprint.ly/*",
+    "*://www.google.com/calendar/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -113,7 +114,8 @@
         "*://*.esa.io/*",
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
-        "*://sprint.ly/*"
+        "*://sprint.ly/*",
+        "*://www.google.com/calendar/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -290,6 +292,10 @@
     {
       "matches": ["*://sprint.ly/*"],
       "js": ["scripts/content/sprintly.js"]
+    },
+    {
+      "matches": ["*://www.google.com/calendar/*"],
+      "js": ["scripts/content/google-calendar.js"]
     }
   ]
 }

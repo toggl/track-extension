@@ -5,14 +5,11 @@
 togglbutton.render('.eb-root:not(.toggl), .ep:not(.toggl)', {observe: true}, function (elem) {
   var link, description, togglButtonElement;
 
-  if($('.eb-title', elem) != null)
-  {
+  if ($('.eb-title', elem) !== null) {
     togglButtonElement = $('.eb-date', elem);
     description = $('.eb-title', elem).textContent;
-  }
-  else
-  {
-    togglButtonElement = $('.ep-dpc .ep-drs', elem)
+  } else {
+    togglButtonElement = $('.ep-dpc .ep-drs', elem);
     description = $('.ep .ep-title', elem).textContent;
   }
 

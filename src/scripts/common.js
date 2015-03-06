@@ -41,6 +41,14 @@ function invokeIfFunction(trial) {
   return trial;
 }
 
+function getFullPageHeight() {
+  var body = document.body,
+    html = document.documentElement;
+
+  return Math.max(body.scrollHeight, body.offsetHeight,
+                         html.clientHeight, html.scrollHeight, html.offsetHeight);
+}
+
 var togglbutton = {
   isStarted: false,
   element: null,
@@ -51,6 +59,7 @@ var togglbutton = {
   tagsVisible: false,
   hasTasks: false,
   currentDescription: "",
+  fullPageHeight: getFullPageHeight(),
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
@@ -73,6 +82,19 @@ var togglbutton = {
     for (i = 0, len = elems.length; i < len; i += 1) {
       renderer(elems[i]);
     }
+  },
+
+  topPosition: function (rect, editFormWidth, editFormHeight) {
+    var left = (rect.left - 10),
+      top = (rect.top + document.body.scrollTop - 10);
+
+    if (left + editFormWidth > window.innerWidth) {
+      left = window.innerWidth - 10 - editFormWidth;
+    }
+    if (top + editFormHeight > togglbutton.fullPageHeight) {
+      top = window.innerHeight + document.body.scrollTop - 10 - editFormHeight;
+    }
+    return {left: left, top: top};
   },
 
   getSelectedTags: function () {
@@ -114,11 +136,11 @@ var togglbutton = {
     if (response === null || !response.showPostPopup) {
       return;
     }
+
     var pid = (!!response.entry.pid) ? response.entry.pid : 0,
       projectSelect,
       handler,
-      left,
-      top,
+      position,
       editFormHeight = 350,
       editFormWidth = 240,
       submitForm,
@@ -131,6 +153,7 @@ var togglbutton = {
 
     elemRect = togglbutton.element.getBoundingClientRect();
     editForm = $("#toggl-button-edit-form");
+    position = togglbutton.topPosition(elemRect, editFormWidth, editFormHeight);
 
     if (editForm !== null) {
       togglbutton.fetchTasks(pid, editForm);
@@ -141,24 +164,16 @@ var togglbutton = {
       togglbutton.resetTasks();
       $("#toggl-button-tag-placeholder > div", editForm).innerHTML = "Add tags";
       $("#toggl-button-tag").value = "";
-      editForm.style.left = (elemRect.left - 10) + "px";
-      editForm.style.top = (elemRect.top - 10) + "px";
+      editForm.style.left = position.left + "px";
+      editForm.style.top = position.top + "px";
       editForm.style.display = "block";
       return;
     }
 
     div.innerHTML = response.html.replace("{service}", togglbutton.serviceName);
     editForm = div.firstChild;
-    left = (elemRect.left - 10);
-    top = (elemRect.top - 10);
-    if (left + editFormWidth > window.innerWidth) {
-      left = window.innerWidth - 10 - editFormWidth;
-    }
-    if (top + editFormHeight > window.innerHeight) {
-      top = window.innerHeight - 10 - editFormHeight;
-    }
-    editForm.style.left = left + "px";
-    editForm.style.top = top + "px";
+    editForm.style.left = position.left + "px";
+    editForm.style.top = position.top + "px";
     if (togglbutton.serviceName === "basecamp") {
       editForm.style.position = "fixed";
     }

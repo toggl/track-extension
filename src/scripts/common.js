@@ -403,7 +403,7 @@ var togglbutton = {
     }
     minimal = link.classList.contains("min");
 
-    if (entry === null || togglbutton.currentDescription !== entry.description) {
+    if (!entry || togglbutton.currentDescription !== entry.description) {
       link.classList.remove('active');
       if (!minimal) {
         linkText = 'Start timer';

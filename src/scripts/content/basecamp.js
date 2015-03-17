@@ -42,7 +42,7 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
     projectName: (!!$(".project")) ? ($(".project > title") || $(".project > header > h1 > a")).innerHTML : ""
   });
 
-  link.setAttribute('data-behavior', behavior);
+  link.setAttribute('data-behavior', '');
   link.addEventListener('click', function (e) {
     if (link.getAttribute('data-behavior') === '') {
       link.setAttribute('data-behavior', behavior);

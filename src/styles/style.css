@@ -338,8 +338,9 @@ only screen and (min-resolution: 192dpi) {
   color: #000000!important;
 }
 
-.active_selection .toggl-button.basecamphq {
-  visibility: visible;
+.active_selection .toggl-button.basecamphq,
+.toggl-button.basecamphq[data-behavior="selectable_target"] {
+  visibility: visible!important;
 }
 
 /********* TEAMWEEK *********/

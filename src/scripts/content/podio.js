@@ -3,6 +3,26 @@
 
 'use strict';
 
+togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) {
+  var link, wrapper,
+    description = $('.item-title', elem),
+    container = $('.breadcrumb', elem);
+
+  if (description === null || container === null) {
+    return;
+  }
+
+  link = togglbutton.createTimerLink({
+    className: 'podio',
+    description: description.innerText
+  });
+
+  wrapper = createTag('div', 'item-via');
+  wrapper.appendChild(link);
+  container.parentNode.insertBefore(wrapper, container.nextSibling);
+});
+
+
 togglbutton.render('.task-detail:not(.toggl)', {observe: true}, function (elem) {
   var link, wrapper,
     description = $('.task-link', elem.parentNode),

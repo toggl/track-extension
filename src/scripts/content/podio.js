@@ -4,7 +4,9 @@
 'use strict';
 
 togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) {
-  var link, wrapper,
+    var delay=1000;//1 seconds
+    setTimeout(function(){
+    var link, wrapper,
     description = $('.item-title', elem),
     container = $('.breadcrumb', elem);
 
@@ -20,6 +22,7 @@ togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) 
   wrapper = createTag('div', 'item-via');
   wrapper.appendChild(link);
   container.parentNode.insertBefore(wrapper, container.nextSibling);
+},delay); 
 });
 
 

@@ -4,25 +4,25 @@
 'use strict';
 
 togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) {
-    var delay=1000;//1 seconds
-    setTimeout(function(){
+  var delay = 1000; //1 second
+  setTimeout(function () {
     var link, wrapper,
-    description = $('.item-title', elem),
-    container = $('.breadcrumb', elem);
+      description = $('.item-title', elem),
+      container = $('.breadcrumb', elem);
 
-  if (description === null || container === null) {
-    return;
-  }
+    if (description === null || container === null) {
+      return;
+    }
 
-  link = togglbutton.createTimerLink({
-    className: 'podio',
-    description: description.innerText
-  });
+    link = togglbutton.createTimerLink({
+      className: 'podio',
+      description: description.innerText
+    });
 
-  wrapper = createTag('div', 'item-via');
-  wrapper.appendChild(link);
-  container.parentNode.insertBefore(wrapper, container.nextSibling);
-},delay); 
+    wrapper = createTag('div', 'item-via');
+    wrapper.appendChild(link);
+    container.parentNode.insertBefore(wrapper, container.nextSibling);
+  }, delay);
 });
 
 

@@ -38,7 +38,7 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
 
   link = togglbutton.createTimerLink({
     className: 'basecamphq',
-    description: $('.content', elem).textContent.trim(),
+    description: elem.querySelector('span.content > span').textContent.trim(),
     projectName: (!!$(".project")) ? ($(".project > title") || $(".project > header > h1 > a")).innerHTML : ""
   });
 

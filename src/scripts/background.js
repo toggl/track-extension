@@ -569,7 +569,7 @@ var TogglButton = {
     if (request.type === 'activate') {
       TogglButton.checkDailyUpdate();
       TogglButton.setBrowserActionBadge();
-      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion});
       TogglButton.triggerNotification();
     } else if (request.type === 'login') {
       TogglButton.loginUser(request, sendResponse);

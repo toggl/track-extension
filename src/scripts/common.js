@@ -60,9 +60,11 @@ var togglbutton = {
   hasTasks: false,
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
+  fullVersion: "TogglButton",
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
+        togglbutton.fullVersion = response.version;
         if (opts.observe) {
           var observer = new MutationObserver(function (mutations) {
             togglbutton.renderTo(selector, renderer);
@@ -383,7 +385,7 @@ var togglbutton = {
           description: invokeIfFunction(params.description),
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
-          createdWith: 'TogglButton - ' + params.className
+          createdWith: togglbutton.fullVersion
         };
       }
       togglbutton.element = e.target;

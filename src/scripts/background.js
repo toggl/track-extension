@@ -284,18 +284,25 @@ var TogglButton = {
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {
-    var entry;
+    var entry, project;
     if (!TogglButton.$curEntry) { return; }
+    entry = {
+      time_entry: {
+        description: timeEntry.description,
+        pid: timeEntry.pid,
+        tags: timeEntry.tags,
+        tid: timeEntry.tid
+      }
+    };
+
+    if (timeEntry.pid !== null && timeEntry.projectName !== null) {
+      project = TogglButton.$user.projectMap[timeEntry.projectName + timeEntry.pid];
+      entry.time_entry.billable = project && project.billable;
+    }
+
     TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
       method: 'PUT',
-      payload: {
-        time_entry: {
-          description: timeEntry.description,
-          pid: timeEntry.pid,
-          tags: timeEntry.tags,
-          tid: timeEntry.tid
-        }
-      },
+      payload: entry,
       onLoad: function (xhr) {
         var responseData;
         responseData = JSON.parse(xhr.responseText);

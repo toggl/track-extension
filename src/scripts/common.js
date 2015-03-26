@@ -192,10 +192,12 @@ var togglbutton = {
 
     submitForm = function (that) {
       var taskButton = $("#toggl-button-task"),
+        projectSelect = $("#toggl-button-project"),
         request = {
           type: "update",
           description: $("#toggl-button-description").value,
-          pid: $("#toggl-button-project").value,
+          pid: projectSelect.value,
+          projectName: projectSelect.options[projectSelect.selectedIndex].text,
           tags: togglbutton.getSelectedTags(),
           tid: (taskButton && taskButton.value) ? taskButton.value : null
         };

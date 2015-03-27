@@ -1,7 +1,7 @@
 [0.6.3]
 - Fixed setting entry billable if project is billable
 [0.6.2]
-- Added support for GetFlow
+- Added support for Flow
 - Added support for Google Calendar
 - Added support for Sprint.ly
 - Added support for Basecamp Classis (basecamphq.com)

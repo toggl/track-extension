@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Toggl Button by toggl</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Toggl Button</h1>
+        <p>Toggl Button Chrome extension</p>
+
+        <p class="view"><a href="https://github.com/toggl/toggl-button">View the Project on GitHub <small>toggl/toggl-button</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/toggl/toggl-button/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/toggl/toggl-button/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/toggl/toggl-button">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="changelog-of-toggl-button" class="anchor" href="#changelog-of-toggl-button" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changelog of Toggl Button</h2>
+
+<h3>
+<a id="063" class="anchor" href="#063" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.6.3</h3>
+
+<ul>
+<li>Fixed setting entry billable if project is billable</li>
+</ul>
+
+<h3>
+<a id="062" class="anchor" href="#062" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.6.2</h3>
+
+<ul>
+<li>Added support for Flow</li>
+<li>Added support for Google Calendar</li>
+<li>Added support for Sprint.ly</li>
+<li>Added support for Basecamp Classis (basecamphq.com)</li>
+<li>Improvements for Taiga.io implementation</li>
+<li>Improvements for Axosoft implementation</li>
+<li>Don't display reminders when user is not logged in</li>
+<li>Improved edit popup position calculations</li>
+<li>Other smaller improvements and fixes</li>
+</ul>
+
+<h3>
+<a id="061" class="anchor" href="#061" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.6.1</h3>
+
+<ul>
+<li>Fixed issues with non-www toggl.com login</li>
+<li>Added support for Help Scout</li>
+</ul>
+
+<h3>
+<a id="060" class="anchor" href="#060" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.6.0</h3>
+
+<ul>
+<li>Added support for Countersoft Gemini</li>
+<li>Added support for esa.io</li>
+<li>Added support for drupal.org</li>
+<li>Fixed Todoist description parsing for links</li>
+</ul>
+
+<h3>
+<a id="0511" class="anchor" href="#0511" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.11</h3>
+
+<ul>
+<li>Added atlassian.com to support all JIRA versions</li>
+</ul>
+
+<h3>
+<a id="0510" class="anchor" href="#0510" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.10</h3>
+
+<ul>
+<li>Added support for Axosoft</li>
+<li>Updated edit form hide button to use ×</li>
+<li>Fixed Todoist description parsing</li>
+</ul>
+
+<h3>
+<a id="059" class="anchor" href="#059" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.9</h3>
+
+<ul>
+<li>Added support for Taiga.io</li>
+<li>Added support for HabitRPG</li>
+<li>Fixes for GitLab</li>
+<li>Todoist description parse fix</li>
+</ul>
+
+<h3>
+<a id="058" class="anchor" href="#058" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.8</h3>
+
+<ul>
+<li>Fixed updating Toggl Button link</li>
+<li>Fixed Toggl Button in Zendesk</li>
+<li>Fixed Asana new task description issue</li>
+</ul>
+
+<h3>
+<a id="057" class="anchor" href="#057" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.7</h3>
+
+<ul>
+<li>Added support for Google mail</li>
+</ul>
+
+<h3>
+<a id="056" class="anchor" href="#056" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.6</h3>
+
+<ul>
+<li>Fixed minimal mode Toggl Button link refreshing</li>
+</ul>
+
+<h3>
+<a id="055" class="anchor" href="#055" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.5</h3>
+
+<ul>
+<li>Fixed too bold permissions</li>
+<li>Removed OTRS because of too strong permissions</li>
+</ul>
+
+<h3>
+<a id="054" class="anchor" href="#054" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.4</h3>
+
+<ul>
+<li>Grouping projects by workspaces</li>
+<li>Show client names in project dropdown</li>
+<li>Show only active projects in dropdown</li>
+<li>Added tasks dropdown for Pro users</li>
+<li>Added support for OTRS</li>
+</ul>
+
+<h3>
+<a id="053" class="anchor" href="#053" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.3</h3>
+
+<ul>
+<li>Fixed Todoist description parsing issue</li>
+</ul>
+
+<h3>
+<a id="052" class="anchor" href="#052" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.2</h3>
+
+<ul>
+<li>Removed references to deprecated api</li>
+<li>Clear selected tags when reopening edit form</li>
+<li>Update "Start timer" link when running entry has changed</li>
+<li>Reworked user sync so that tabs permission can be removed</li>
+</ul>
+
+<h3>
+<a id="051" class="anchor" href="#051" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.1</h3>
+
+<ul>
+<li>Added support for Teamwork</li>
+<li>Style fixes</li>
+</ul>
+
+<h3>
+<a id="050" class="anchor" href="#050" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.5.0</h3>
+
+<ul>
+<li>Updated Toggl button position in toodledo</li>
+<li>Extension icon updating fix</li>
+<li>UI fixes for different tools</li>
+</ul>
+
+<h3>
+<a id="049" class="anchor" href="#049" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.9</h3>
+
+<ul>
+<li>Fixed invisible project names in dropdown</li>
+<li>Fixed some minor UI issues</li>
+</ul>
+
+<h3>
+<a id="048" class="anchor" href="#048" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.8</h3>
+
+<ul>
+<li>Fixed minor UI issues</li>
+<li>Removed Font Awesome because issues with some tools</li>
+</ul>
+
+<h3>
+<a id="047" class="anchor" href="#047" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.7</h3>
+
+<ul>
+<li>Added Font Awesome icons</li>
+</ul>
+
+<h3>
+<a id="046" class="anchor" href="#046" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.6</h3>
+
+<ul>
+<li>New design for post start popup</li>
+<li>Fixed Toggl Button in Any.do</li>
+<li>Added Youtrack 6 support</li>
+<li>Fixed settings save issue</li>
+<li>Added duration mode support</li>
+</ul>
+
+<h3>
+<a id="045" class="anchor" href="#045" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.5</h3>
+
+<ul>
+<li>Added dayly automatic sync</li>
+<li>Added sync menu item</li>
+</ul>
+
+<h3>
+<a id="044" class="anchor" href="#044" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.4</h3>
+
+<ul>
+<li>Added support for Toodledo</li>
+<li>Fixed toggl-button's location for Teamweek's new design</li>
+<li>Post start popup is always fully visible</li>
+<li>Post start popup form style fixes</li>
+</ul>
+
+<h3>
+<a id="043" class="anchor" href="#043" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.3</h3>
+
+<ul>
+<li>Added "Remind me to track" setting</li>
+<li>Added tags selection to post start popup</li>
+</ul>
+
+<h3>
+<a id="042" class="anchor" href="#042" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.2</h3>
+
+<ul>
+<li>Added support for Wunderlist</li>
+<li>Added support for Trac</li>
+<li>Added websocket support</li>
+<li>Improved icons</li>
+<li>Added Settings view</li>
+<li>Position and z-index fix for post start popup</li>
+</ul>
+
+<h3>
+<a id="041" class="anchor" href="#041" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.1</h3>
+
+<ul>
+<li>Fixed packaging issue</li>
+</ul>
+
+<h3>
+<a id="040" class="anchor" href="#040" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.4.0</h3>
+
+<ul>
+<li>Convert from Page extension to Browser extension</li>
+<li>Added post Start popup</li>
+<li>Added Browser extension popup</li>
+<li>Added Login and logout functionality</li>
+<li>Added high resolution icons</li>
+<li>Added offline/online and running/not running indicators to extension icon</li>
+</ul>
+
+<h3>
+<a id="039" class="anchor" href="#039" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.3.9</h3>
+
+<ul>
+<li>Github - fix content script for new issues layout</li>
+<li>Todoist - add button after the notes and strip tags</li>
+</ul>
+
+<h3>
+<a id="038" class="anchor" href="#038" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.3.8</h3>
+
+<ul>
+<li>Added support for Todoist</li>
+<li>Fixed button in new Github issues page</li>
+</ul>
+
+<h3>
+<a id="037" class="anchor" href="#037" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.3.7</h3>
+
+<ul>
+<li>Added support for Any.Do</li>
+<li>Added support for ZenDesk</li>
+<li>Time entry is marked as billable if the project is billable</li>
+</ul>
+
+<h3>
+<a id="036" class="anchor" href="#036" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.3.6</h3>
+
+<ul>
+<li>API requests refactoring</li>
+<li>Save logged in user to extension localStorage</li>
+<li>Resolve the 999.00 hours problem with incorrect date and/or time</li>
+</ul>
+
+<h3>
+<a id="035" class="anchor" href="#035" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.3.5</h3>
+
+<ul>
+<li>Fix toggl.com regexp to support push state</li>
+</ul>
+
+<h3>
+<a id="034" class="anchor" href="#034" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.3.4</h3>
+
+<ul>
+<li>fetchUser API urls corrected</li>
+<li>Podio content script refactoring</li>
+</ul>
+
+<h3>
+<a id="033" class="anchor" href="#033" aria-hidden="true"><span class="octicon octicon-link"></span></a>0.3.3</h3>
+
+<ul>
+<li>Added support for CapsuleCRM</li>
+<li>Added support for YouTrack InCloud</li>
+<li>Added support for Xero accountancy software</li>
+<li>Fixed toggl-button's location for Teamweek's new design</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/toggl">toggl</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>

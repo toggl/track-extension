@@ -390,34 +390,50 @@ var TogglButton = {
   fillProjects: function () {
     var html = "<option value='0'>- No Project -</option>",
       projects = TogglButton.$user.projectMap,
-      wsHtml = [],
+      clHtml = {},
       client,
       project,
-      key = null;
-
-    if (TogglButton.$user.workspaces.length > 1) {
-      TogglButton.$user.workspaces.forEach(function (element, index) {
-        wsHtml[element.id] = '<optgroup label="' + element.name + '">';
+      key = null,
+      key2 = null;
+	
+    if (TogglButton.$user.clients.length > 0) {
+      clHtml["noclient"] = "<optgroup label='(No Client)'>";
+      TogglButton.$user.clients.forEach(function (element, index) {
+        clHtml[element.name] = "<optgroup label='" + element.name + "'>";
       });
 
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           project = projects[key];
-          client = (!!project.cid) ? " - " + TogglButton.$user.clientMap[project.cid].name : "";
-          wsHtml[project.wid] += "<option value='" + project.id + "'>" + project.name + client + "</option>";
+          if (!!project.cid) {
+            client = TogglButton.$user.clientMap[project.cid].name;
+            clHtml[client] += "<option value='" + project.id + "'>" + project.name + "</option>";
+          } else {
+            clHtml["noclient"] += "<option value='" + project.id + "'>" + project.name + "</option>";
+          }
         }
       }
-      html += wsHtml.join("</optgroup>") + "</optgroup>";
+	  
+      TogglButton.$user.clients.forEach(function (element, index) {
+        clHtml[element.name] += "</optgroup>";
+      });
+      clHtml["noclient"] += "</optgroup>";
+	  
+      Object.keys(clHtml).sort();
+	  
+      for (key2 in clHtml) {
+        if (clHtml[key2].indexOf("</option>") > -1) {
+          html += clHtml[key2];
+        }
+      }
     } else {
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           project = projects[key];
-          client = (!!project.cid) ? " - " + TogglButton.$user.clientMap[project.cid].name : "";
-          html += "<option value='" + project.id + "'>" + project.name + client + "</option>";
+          html += "<option value='" + project.id + "'>" + project.name + "</option>";
         }
       }
     }
-
     return html;
   },
 

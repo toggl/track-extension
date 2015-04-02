@@ -391,38 +391,49 @@ var TogglButton = {
     var html = "<option value='0'>- No Project -</option>",
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
-      wsHtml = [],
-      clientHtml = [],
+      wsHtml = {},
+      clientHtml = {},
       client,
       project,
       key = null,
-      ckey = null;
+      ckey = null,
+      clientName = 0;
 
     if (TogglButton.$user.workspaces.length > 1) {
+      // Add Workspace names
       TogglButton.$user.workspaces.forEach(function (element, index) {
-        wsHtml[element.id] = [];
-        wsHtml[element.id][0] += '<option disabled="disabled">  --  WORKSPACE:  ' + element.name + '  --  </option>';
+        wsHtml[element.id] = {};
+        wsHtml[element.id][0] = '<option disabled="disabled">  ---  ' + element.name.toUpperCase() + '  ---  </option>';
       });
 
+      // Add client optgroups
       for (ckey in clients) {
         if (clients.hasOwnProperty(ckey)) {
           client = clients[ckey];
-          wsHtml[client.wid][client.id] = '<optgroup label="' + client.name + '">';
+          wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
         }
       }
 
+      // Add projects
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           project = projects[key];
-          wsHtml[project.wid][(!!project.cid) ? project.cid : 0] += "<option value='" + project.id + "'>" + project.name + "</option>";
+          clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
+          wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
         }
       }
 
+      Object.keys(wsHtml).sort();
+
       for (key in wsHtml) {
         if (wsHtml.hasOwnProperty(key)) {
+          Object.keys(wsHtml[key]).sort();
           for (ckey in wsHtml[key]) {
-            if (wsHtml[key].hasOwnProperty(ckey) && wsHtml[key][ckey].indexOf("option") !== -1 && !!wsHtml[key][ckey]) {
-              html += wsHtml[key][ckey] + "</optgroup>";
+            if (wsHtml[key].hasOwnProperty(ckey) &&
+              wsHtml[key][ckey].indexOf("</option>") !== -1 &&
+              !!wsHtml[key][ckey] &&
+              (wsHtml[key][ckey].match(/\/option/g) || []).length > 1) {
+                html += wsHtml[key][ckey] + "</optgroup>";
             }
           }
         }
@@ -431,16 +442,20 @@ var TogglButton = {
       for (ckey in clients) {
         if (clients.hasOwnProperty(ckey)) {
           client = clients[ckey];
-          clientHtml[client.id] = '<optgroup label="' + client.name + '">';
+          clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
         }
       }
 
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           project = projects[key];
-          clientHtml[project.cid] += "<option value='" + project.id + "'>" + project.name + "</option>";
+          client = clients[project.cid].name;
+          clientName = (!!project.cid) ? clients[project.cid].name + project.cid : 0;
+          clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
         }
       }
+      Object.keys(clientHtml).sort();
+
       html += clientHtml.join("</optgroup>") + "</optgroup>";
     }
 

@@ -425,20 +425,22 @@ var TogglButton = {
 
       Object.keys(wsHtml).sort();
 
+      // create htnl
       for (key in wsHtml) {
         if (wsHtml.hasOwnProperty(key)) {
           Object.keys(wsHtml[key]).sort();
           for (ckey in wsHtml[key]) {
             if (wsHtml[key].hasOwnProperty(ckey) &&
-              wsHtml[key][ckey].indexOf("</option>") !== -1 &&
-              !!wsHtml[key][ckey] &&
-              (wsHtml[key][ckey].match(/\/option/g) || []).length > 1) {
-                html += wsHtml[key][ckey] + "</optgroup>";
+                wsHtml[key][ckey].indexOf("</option>") !== -1 &&
+                !!wsHtml[key][ckey] &&
+                (wsHtml[key][ckey].match(/\/option/g) || []).length > 1) {
+              html += wsHtml[key][ckey] + "</optgroup>";
             }
           }
         }
       }
     } else {
+      // Add clients
       for (ckey in clients) {
         if (clients.hasOwnProperty(ckey)) {
           client = clients[ckey];
@@ -446,17 +448,25 @@ var TogglButton = {
         }
       }
 
+      // Add projects
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           project = projects[key];
-          client = clients[project.cid].name;
-          clientName = (!!project.cid) ? clients[project.cid].name + project.cid : 0;
+          clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
           clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
         }
       }
       Object.keys(clientHtml).sort();
 
-      html += clientHtml.join("</optgroup>") + "</optgroup>";
+      // Create html
+      for (key in clientHtml) {
+        if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
+          html += clientHtml[key];
+          if (key !== "0") {
+            html += "</optgroup>";
+          }
+        }
+      }
     }
 
     return html;

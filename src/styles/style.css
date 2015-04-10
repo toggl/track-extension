@@ -438,19 +438,21 @@ only screen and (min-resolution: 192dpi) {
   color: #737373;
   margin: 0px;
   display: inline;
+  opacity: 0.2;
 }
 
 .taskItem-toggl {
   z-index: 1;
   display: inline;
-  margin-bottom: -20px;
+  margin-bottom: 0px;
   padding-top: -5px;
   padding-right: 10px;
   line-height: 100%;
-  position: absolute;
-  top: 8px;
+  position: relative;
+  top: -2px;
   bottom: 0;
   left: 0;
+  float: right;
 }
 
 .detailItem-toggl {

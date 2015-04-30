@@ -80,4 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     PopUp.sendMessage(request);
   });
+
+  document.querySelector(".header").addEventListener('click', function () {
+      chrome.tabs.create({url: "https://toggl.com/app"});
+  });
 });

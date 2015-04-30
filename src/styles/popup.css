@@ -107,6 +107,7 @@ p.form-row.first {
   width: 95px;
   margin: 10px auto;
   height: 30px;
+  cursor: pointer;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
 only screen and (min-resolution: 192dpi),

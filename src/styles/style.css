@@ -254,6 +254,10 @@ only screen and (min-resolution: 192dpi) {
   margin-left: 5px;
 }
 
+/********* TESTRAIL *********/
+.toggl-button.testrail {
+}
+
 /********* YOUTRACK *********/
 .toggl-button.youtrack {
   float: right;

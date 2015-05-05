@@ -26,6 +26,7 @@
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
     "*://*.gitlab.com/*",
+    "*://*.testrail.com/*",
     "*://app.asana.com/*",
     "*://*.unfuddle.com/*",
     "*://*.podio.com/*",
@@ -77,6 +78,7 @@
         "*://*.pivotaltracker.com/*",
         "*://*.github.com/*",
         "*://*.gitlab.com/*",
+        "*://*.testrail.com/*",
         "*://*.bitbucket.org/*",
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
@@ -158,6 +160,10 @@
     {
       "matches": ["*://*.gitlab.com/*"],
       "js": ["scripts/content/gitlab.js"]
+    },
+    {
+      "matches": ["*://*.testrail.com/*"],
+      "js": ["scripts/content/testrail.js"]
     },
     {
       "matches": ["*://app.asana.com/*"],

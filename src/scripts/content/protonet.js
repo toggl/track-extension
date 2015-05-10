@@ -6,7 +6,7 @@ togglbutton.render('.todo-details:not(.toggl)', {observe: true}, function (elem)
   var link,
     title = $('.name', elem).textContent,
     href = $('.name', elem).getAttribute('href'),
-    project = $('ul.breadcrumb li:first-child a', elem).textContent,
+    project = $('ul.breadcrumb li:nth-child(3) a', elem).textContent,
     id = href.split("/").pop(-1),
     description = '#' + id + ': ' + title;
 

@@ -63,7 +63,8 @@
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
-    "*://www.google.com/calendar/*"
+    "*://www.google.com/calendar/*",
+    "*://*.protonet.info/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -117,7 +118,8 @@
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
-        "*://www.google.com/calendar/*"
+        "*://www.google.com/calendar/*",
+        "*://*.protonet.info/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -298,6 +300,11 @@
     {
       "matches": ["*://www.google.com/calendar/*"],
       "js": ["scripts/content/google-calendar.js"]
+    }
+    ,
+    {
+      "matches": ["*://*.protonet.info/*"],
+      "js": ["scripts/content/protonet.js"]
     }
   ]
 }

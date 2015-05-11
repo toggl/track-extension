@@ -16,6 +16,7 @@ togglbutton.render('.todo-details:not(.toggl)', {observe: true}, function (elem)
     projectName: project
   });
   
+<<<<<<< HEAD
   $('.actions', elem).appendChild(link);
 });
 
@@ -48,3 +49,7 @@ togglbutton.render('.detail-content-wrapper li.meep.Meep:not(.toggl)', {observe:
   link.classList.add('tiny');
   destroyLink.parentNode.insertBefore(link, destroyLink);
 });
+=======
+  $('.actions').appendChild(link);
+});
+>>>>>>> bfcfd40731feba65825f0930f73e2f0a7b1fe12e

@@ -12,8 +12,9 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
   link = togglbutton.createTimerLink({
     className: 'trello',
     description: titleElem.innerText,
-    projectName: projectElem.innerText
-  });
+    projectName: projectElem.innerText,
+    tags: getTrelloLabels()
+});
 
   container.appendChild(link);
   descriptionElem.parentNode.insertBefore(container, descriptionElem);
@@ -31,8 +32,22 @@ togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, funct
     buttonType: 'minimal',
     projectName: projectElem.innerText,
     description: titleElem.innerText + ' - ' + taskElem.innerText,
+    tags: getTrelloLabels()
   });
 
   link.classList.add('checklist-item-button');
   elem.parentNode.appendChild(link);
 });
+
+function getTrelloLabels() {
+    var labels = [];
+    var label = null;
+    var labelElements = document.querySelectorAll('.js-card-detail-labels-list span.card-label');
+    for (var i = 0; i < labelElements.length; i++) {
+        label = labelElements[i].innerText;
+        if (label.trim().length > 0)
+            labels.push(label);
+    }
+
+    return labels;
+}

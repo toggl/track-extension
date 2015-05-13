@@ -51,6 +51,7 @@ function getFullPageHeight() {
 
 var togglbutton = {
   isStarted: false,
+  autoTagsEnabled: true,
   element: null,
   serviceName: '',
   mousedownTrigger: null,
@@ -110,6 +111,15 @@ var togglbutton = {
         tags.push(tag);
       }
     }
+
+    //use auto-tags
+    if (togglbutton.autoTagsEnabled) {
+        if (togglbutton.autoTags && togglbutton.autoTags.length > 0) {
+            var combined = tags.concat(togglbutton.autoTags);
+            tags = combined.filter(function (item, pos) { return combined.indexOf(item) == pos });
+        }
+    }
+
     return tags;
   },
 
@@ -164,11 +174,16 @@ var togglbutton = {
       projectSelect = document.getElementById("toggl-button-project");
       $("#toggl-button-project-placeholder > div").innerHTML = (pid === 0) ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
       togglbutton.resetTasks();
-      $("#toggl-button-tag-placeholder > div", editForm).innerHTML = "Add tags";
       $("#toggl-button-tag").value = "";
       editForm.style.left = position.left + "px";
       editForm.style.top = position.top + "px";
       editForm.style.display = "block";
+
+      //add auto-tags
+      var selectedTags = togglbutton.getSelectedTags();
+      $("#toggl-button-tag-placeholder > div", editForm).innerHTML = (selectedTags.length > 0 ? selectedTags.join(',') : "Add tags");
+
+
       return;
     }
 
@@ -280,6 +295,10 @@ var togglbutton = {
       dropdown.dispatchEvent(event);
     });
 
+    //add autotags
+    var selectedTags = togglbutton.getSelectedTags();
+    $("#toggl-button-tag-placeholder > div", editForm).innerHTML = (selectedTags.length > 0 ? selectedTags.join(',') : "Add tags");
+
     $("#toggl-button-tag-placeholder", editForm).addEventListener('click', function (e) {
       closeTagsList(false);
     });
@@ -388,6 +407,7 @@ var togglbutton = {
         };
       }
       togglbutton.element = e.target;
+      togglbutton.autoTags = invokeIfFunction(params.tags);
       chrome.extension.sendMessage(opts, togglbutton.addEditForm);
 
       return false;
@@ -451,5 +471,10 @@ window.addEventListener('focus', function (e) {
   // update button state
   chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
     togglbutton.updateTimerLink(response.currentEntry);
+  });
+
+  // get autotags setting
+  chrome.extension.sendMessage({ type: 'getAutotagSetting' }, function (response) {
+      togglbutton.autoTagsEnabled = response.autoTagsSetting;
   });
 });

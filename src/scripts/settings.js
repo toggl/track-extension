@@ -8,10 +8,12 @@ var Settings = {
   $postPopup: null,
   $socket: null,
   $nanny: null,
+  $autoTags: null,
   showPage: function () {
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = TogglButton.$idleInterval / 60000;
     Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
+    Settings.toggleState(Settings.$autoTags, TogglButton.$autoTagsEnabled);
     Settings.toggleState(Settings.$nanny, TogglButton.$idleCheckEnabled);
     Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
 
@@ -43,9 +45,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
   Settings.$nanny = document.querySelector("#nag-nanny");
+  Settings.$autoTags = document.querySelector("#auto-tags");
   Settings.showPage();
   Settings.$postPopup.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
+  });
+  Settings.$autoTags.addEventListener('click', function (e) {
+      Settings.toggleSetting(e.target, (localStorage.getItem("autoTagsEnabled") !== "true"), "toggle-autotags");
   });
   Settings.$socket.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("socketEnabled") !== "true"), "toggle-socket");

@@ -433,7 +433,7 @@ var TogglButton = {
             if (wsHtml[key].hasOwnProperty(ckey) &&
                 wsHtml[key][ckey].indexOf("</option>") !== -1 &&
                 !!wsHtml[key][ckey] &&
-                (wsHtml[key][ckey].match(/\/option/g) || []).length > 1) {
+                (wsHtml[key][ckey].match(/\/option/g) || []).length > 0) {
               html += wsHtml[key][ckey] + "</optgroup>";
             }
           }
@@ -645,6 +645,11 @@ var TogglButton = {
     } else if (request.type === 'toggle-popup') {
       localStorage.setItem("showPostPopup", request.state);
       TogglButton.$showPostPopup = request.state;
+    } else if (request.type === 'toggle-autotags') {
+        localStorage.setItem("autoTagsEnabled", request.state);
+        TogglButton.$autoTagsEnabled = request.state;
+    } else if (request.type === 'getAutotagSetting') {
+        sendResponse({ success: true, autoTagsSetting: TogglButton.$autoTagsEnabled });
     } else if (request.type === 'toggle-socket') {
       TogglButton.setSocket(request.state);
     } else if (request.type === 'toggle-nanny') {
@@ -673,6 +678,7 @@ var TogglButton = {
 
 TogglButton.fetchUser();
 TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");
+TogglButton.$autoTagsEnabled = TogglButton.loadSetting("autoTagsEnabled");
 TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
 TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;

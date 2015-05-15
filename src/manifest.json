@@ -136,7 +136,7 @@
       "js": ["scripts/content/teamweek.js"]
     },
     {
-      "matches": ["*://new.teamweek.com/*"],
+      "matches": ["*://app.teamweek.com/*"],
       "js": ["scripts/content/teamweek_new.js"]
     },
     {

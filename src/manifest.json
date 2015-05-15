@@ -27,6 +27,7 @@
     "*://*.github.com/*",
     "*://*.gitlab.com/*",
     "*://*.testrail.com/*",
+    "*://*.testrail.net/*",
     "*://app.asana.com/*",
     "*://*.unfuddle.com/*",
     "*://*.podio.com/*",
@@ -79,6 +80,7 @@
         "*://*.github.com/*",
         "*://*.gitlab.com/*",
         "*://*.testrail.com/*",
+        "*://*.testrail.net/*",
         "*://*.bitbucket.org/*",
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
@@ -162,7 +164,7 @@
       "js": ["scripts/content/gitlab.js"]
     },
     {
-      "matches": ["*://*.testrail.com/*"],
+      "matches": ["*://*.testrail.com/*", "*://*.testrail.net/*"],
       "js": ["scripts/content/testrail.js"]
     },
     {

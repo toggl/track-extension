@@ -7,13 +7,17 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
-  $stopButton: null,
+  $togglButton: null,
   $error: null,
   showPage: function () {
     if (TogglButton.$user !== null) {
       document.querySelector(".menu").style.display = 'block';
       if (TogglButton.$curEntry === null) {
-        PopUp.$stopButton.setAttribute("disabled", true);
+        PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
+        PopUp.$togglButton.textContent = 'Start timer';
+      } else {
+        PopUp.$togglButton.setAttribute('data-event', 'stop');
+        PopUp.$togglButton.textContent = 'Stop timer';
       }
     } else {
       document.querySelector("#login-form").style.display = 'block';
@@ -23,7 +27,7 @@ var PopUp = {
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
       if (!!response.success) {
-        if (!!response.type && response.type === "Stop") {
+        if (!!response.type && (response.type === "Stop" || response.type === "New Entry")) {
           window.close();
         } else {
           window.location.reload();
@@ -36,15 +40,20 @@ var PopUp = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  PopUp.$stopButton = document.querySelector(".stop-button");
+  PopUp.$togglButton = document.querySelector(".stop-button");
   PopUp.$error = document.querySelector(".error");
   PopUp.showPage();
 
-  PopUp.$stopButton.addEventListener('click', function () {
+  PopUp.$togglButton.addEventListener('click', function () {
     var request = {
-      type: "stop",
+      type: this.getAttribute('data-event'),
       respond: true
     };
+
+    if (request.type === 'timeEntry') {
+      request.description = 'Chrome';
+    }
+
     PopUp.sendMessage(request);
   });
 

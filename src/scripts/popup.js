@@ -12,6 +12,7 @@ var PopUp = {
   $timer: null,
   showPage: function () {
     if (TogglButton.$user !== null) {
+      document.querySelector(".user-email").textContent = TogglButton.$user.email;
       document.querySelector(".menu").style.display = 'block';
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');

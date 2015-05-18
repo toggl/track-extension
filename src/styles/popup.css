@@ -161,4 +161,8 @@ hr {
   padding: 10px 5px;
   color: white;
 }
+.user-email {
+  font-style: italic;
+  text-align: center;
+  color: #999;
 }

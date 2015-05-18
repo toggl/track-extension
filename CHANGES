@@ -1,3 +1,6 @@
+[0.6.6]
+- Added sorting for tags
+- Added hover titles to project, tag and task selections
 [0.6.5]
 - Added support for TestRail
 - Projects grouped by Workspaces and Clients
@@ -6,7 +9,6 @@
 - Added user email to Extension icon menu
 - Wunderlist UI improvements
 - Teamweek domain name fix
-- Added sorting for tags
 [0.6.4]
 - Fixed edit popup position in Basecamp Next
 [0.6.3]

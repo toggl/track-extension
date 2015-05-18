@@ -9,6 +9,7 @@ var PopUp = {
   $popUpButton: null,
   $togglButton: null,
   $error: null,
+  $timer: null,
   showPage: function () {
     if (TogglButton.$user !== null) {
       document.querySelector(".menu").style.display = 'block';
@@ -17,7 +18,7 @@ var PopUp = {
         PopUp.$togglButton.textContent = 'Start timer';
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
-        PopUp.$togglButton.textContent = 'Stop timer';
+        PopUp.showCurrentDuration(true);
       }
     } else {
       document.querySelector("#login-form").style.display = 'block';
@@ -36,6 +37,31 @@ var PopUp = {
         PopUp.$error.style.display = 'block';
       }
     });
+  },
+
+  showCurrentDuration: function (startTimer) {
+    var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start));
+
+    PopUp.$togglButton.textContent = 'Stop timer   [' + duration + ']';
+    if (startTimer) {
+      PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+    }
+  },
+
+  formatMe: function (n) {
+    return (n < 10) ? '0' + n : n;
+  },
+
+  msToTime: function (duration) {
+    var seconds = parseInt((duration / 1000) % 60, 10),
+      minutes = parseInt((duration / (1000 * 60)) % 60, 10),
+      hours = parseInt((duration / (1000 * 60 * 60)) % 24, 10);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds;
   }
 };
 
@@ -52,6 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (request.type === 'timeEntry') {
       request.description = 'Chrome';
+    } else {
+      clearInterval(PopUp.$timer);
+      PopUp.$timer = null;
     }
 
     PopUp.sendMessage(request);

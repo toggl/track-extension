@@ -5,10 +5,10 @@
 
 togglbutton.render('.content-header:not(.toggl)', {observe: true}, function () {
 
-  var link;
-  var id = $('div.content-header-id').innerText;
-  var title = $('div.content-header-title').innerText.trim();
-  var description = '#' + id + ' ' + title;
+  var link,
+    id = $('div.content-header-id').innerText,
+    title = $('div.content-header-title').innerText.trim(),
+    description = '#' + id + ' ' + title;
 
   link = togglbutton.createTimerLink({
     className: 'testrail',

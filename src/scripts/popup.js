@@ -82,6 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.querySelector(".header").addEventListener('click', function () {
-      chrome.tabs.create({url: "https://toggl.com/app"});
+    chrome.tabs.create({url: "https://toggl.com/app"});
   });
 });

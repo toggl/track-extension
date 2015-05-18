@@ -487,12 +487,20 @@ var TogglButton = {
   fillTags: function () {
     var html = "",
       tags = TogglButton.$user.tagMap,
-      key = null;
+      i,
+      key = null,
+      keys = [];
 
     for (key in tags) {
       if (tags.hasOwnProperty(key)) {
-        html += "<option value='" + tags[key].name + "'>" + key + "</option>";
+        keys.push(key);
       }
+    }
+    keys.sort();
+
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      html += "<option value='" + tags[key].name + "'>" + key + "</option>";
     }
     return html;
   },

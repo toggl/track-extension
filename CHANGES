@@ -1,3 +1,11 @@
+[0.6.5]
+- Added support for TestRail
+- Projects grouped by Workspaces and Clients
+- Added "Start timer" link to Extension icon menu
+- Added running timer to Extension icon menu
+- Added user email to Extension icon menu
+- Wunderlist UI improvements
+- Teamweek domain name fix
 [0.6.4]
 - Fixed edit popup position in Basecamp Next
 [0.6.3]

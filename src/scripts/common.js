@@ -133,6 +133,15 @@ var togglbutton = {
     $("#toggl-button-task").innerHTML = "";
   },
 
+  generateProjectLabel: function (selected) {
+    var parent = selected.parentNode,
+      result = "";
+    if (parent.tagName === "OPTGROUP") {
+      result = parent.label + " - ";
+    }
+    return result + selected.text;
+  },
+
   addEditForm: function (response) {
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {
@@ -162,7 +171,7 @@ var togglbutton = {
       $("#toggl-button-description").value = response.entry.description;
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
-      $("#toggl-button-project-placeholder > div").innerHTML = (pid === 0) ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
+      $("#toggl-button-project-placeholder > div").innerHTML = (pid === 0) ? "Add project" : togglbutton.generateProjectLabel(projectSelect.options[projectSelect.selectedIndex]);
       togglbutton.resetTasks();
       $("#toggl-button-tag-placeholder > div", editForm).innerHTML = "Add tags";
       $("#toggl-button-tag").value = "";
@@ -232,7 +241,7 @@ var togglbutton = {
     $("#toggl-button-description", editForm).value = response.entry.description;
     $("#toggl-button-project", editForm).value = pid;
     projectSelect = $("#toggl-button-project", editForm);
-    $("#toggl-button-project-placeholder > div", editForm).innerHTML = (pid === 0) ? "Add project" : projectSelect.options[projectSelect.selectedIndex].text;
+    $("#toggl-button-project-placeholder > div", editForm).innerHTML = (pid === 0) ? "Add project" : togglbutton.generateProjectLabel(projectSelect.options[projectSelect.selectedIndex]);
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
       closeTagsList(true);
       editForm.style.display = "none";
@@ -286,7 +295,7 @@ var togglbutton = {
 
     projectSelect.addEventListener('change', function (e) {
       var projectId = this.value;
-      $("#toggl-button-project-placeholder > div", editForm).innerHTML = (projectId === "0") ? "Add project" : this.options[this.selectedIndex].text;
+      $("#toggl-button-project-placeholder > div", editForm).innerHTML = (projectId === "0") ? "Add project" : togglbutton.generateProjectLabel(this.options[this.selectedIndex]);
       // Force blur.
       togglbutton.projectBlurTrigger = null;
       projectSelect.blur();

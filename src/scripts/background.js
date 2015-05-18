@@ -1,4 +1,4 @@
-/*jslint indent: 2, unparam: true*/
+/*jslint indent: 2, unparam: true, plusplus: true */
 /*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
@@ -46,7 +46,7 @@ var TogglButton = {
       token: token || ' ',
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {}, clientMap = {}, tagMap = {}, projectTaskList = null;
+        var resp, apiToken, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null;
         if (xhr.status === 200) {
           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
@@ -64,6 +64,7 @@ var TogglButton = {
           if (resp.data.clients) {
             resp.data.clients.forEach(function (client) {
               clientMap[client.id] = client;
+              clientNameMap[client.name.toLowerCase()] = client;
             });
           }
           if (resp.data.tags) {
@@ -92,6 +93,7 @@ var TogglButton = {
           TogglButton.$user = resp.data;
           TogglButton.$user.projectMap = projectMap;
           TogglButton.$user.clientMap = clientMap;
+          TogglButton.$user.clientNameMap = clientNameMap;
           TogglButton.$user.tagMap = tagMap;
           TogglButton.$user.projectTaskList = projectTaskList;
           localStorage.removeItem('userToken');
@@ -391,15 +393,27 @@ var TogglButton = {
     var html = "<option value='0'>- No Project -</option>",
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
+      clientNames = TogglButton.$user.clientNameMap,
       wsHtml = {},
       clientHtml = {},
       client,
       project,
       key = null,
       ckey = null,
-      clientName = 0;
+      keys = [],
+      clientName = 0,
+      i;
+
+    // Sort clients
+    for (key in clientNames) {
+      if (clientNames.hasOwnProperty(key)) {
+        keys.push(key.toLowerCase());
+      }
+    }
+    keys.sort();
 
     if (TogglButton.$user.workspaces.length > 1) {
+
       // Add Workspace names
       TogglButton.$user.workspaces.forEach(function (element, index) {
         wsHtml[element.id] = {};
@@ -407,11 +421,9 @@ var TogglButton = {
       });
 
       // Add client optgroups
-      for (ckey in clients) {
-        if (clients.hasOwnProperty(ckey)) {
-          client = clients[ckey];
-          wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
-        }
+      for (i = 0; i < keys.length; i++) {
+        client = clientNames[keys[i]];
+        wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
       }
 
       // Add projects
@@ -422,8 +434,6 @@ var TogglButton = {
           wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
         }
       }
-
-      Object.keys(wsHtml).sort();
 
       // create htnl
       for (key in wsHtml) {
@@ -439,16 +449,18 @@ var TogglButton = {
           }
         }
       }
+
     } else {
+
       // Add clients
-      for (ckey in clients) {
-        if (clients.hasOwnProperty(ckey)) {
-          client = clients[ckey];
-          clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
-        }
+
+      for (i = 0; i < keys.length; i++) {
+        client = clientNames[keys[i]];
+        clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
       }
 
       // Add projects
+
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           project = projects[key];
@@ -456,9 +468,9 @@ var TogglButton = {
           clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
         }
       }
-      Object.keys(clientHtml).sort();
 
       // Create html
+
       for (key in clientHtml) {
         if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
           html += clientHtml[key];

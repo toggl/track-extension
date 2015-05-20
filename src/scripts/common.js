@@ -133,9 +133,14 @@ var togglbutton = {
     $("#toggl-button-task").innerHTML = "";
   },
 
-  generateProjectLabel: function (selected) {
-    var parent = selected.parentNode,
+  generateProjectLabel: function (select, pid) {
+    var selected = select.options[select.selectedIndex],
+      parent,
       result = "";
+    if (parseInt(pid, 10) === 0 || !selected) {
+      return "Add project";
+    }
+    parent = selected.parentNode;
     if (parent.tagName === "OPTGROUP") {
       result = parent.label + " - ";
     }
@@ -173,7 +178,7 @@ var togglbutton = {
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
       placeholder = $("#toggl-button-project-placeholder > div");
-      placeholder.innerHTML = placeholder.title = (pid === 0) ? "Add project" : togglbutton.generateProjectLabel(projectSelect.options[projectSelect.selectedIndex]);
+      placeholder.innerHTML = placeholder.title = togglbutton.generateProjectLabel(projectSelect, pid);
       togglbutton.resetTasks();
       $("#toggl-button-tag-placeholder > div", editForm).innerHTML = "Add tags";
       $("#toggl-button-tag").value = "";
@@ -244,7 +249,7 @@ var togglbutton = {
     $("#toggl-button-project", editForm).value = pid;
     projectSelect = $("#toggl-button-project", editForm);
     placeholder = $("#toggl-button-project-placeholder > div", editForm);
-    placeholder.innerHTML = placeholder.title = (pid === 0) ? "Add project" : togglbutton.generateProjectLabel(projectSelect.options[projectSelect.selectedIndex]);
+    placeholder.innerHTML = placeholder.title = togglbutton.generateProjectLabel(projectSelect, pid);
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
       closeTagsList(true);
       editForm.style.display = "none";
@@ -297,37 +302,42 @@ var togglbutton = {
     });
 
     projectSelect.addEventListener('change', function (e) {
-      var projectId = this.value;
       placeholder = $("#toggl-button-project-placeholder > div", editForm);
-      placeholder.innerHTML = placeholder.title = (projectId === "0") ? "Add project" : togglbutton.generateProjectLabel(this.options[this.selectedIndex]);
+      placeholder.innerHTML = placeholder.title = togglbutton.generateProjectLabel(this, this.value);
+
       // Force blur.
       togglbutton.projectBlurTrigger = null;
       projectSelect.blur();
 
-      togglbutton.fetchTasks(projectId, editForm);
+      togglbutton.fetchTasks(this.value, editForm);
     });
+
     projectSelect.addEventListener('click', function () {
       // Catch click in case user selects an already-selected item - force blur.
       togglbutton.projectBlurTrigger = null;
       projectSelect.blur();
     });
+
     projectSelect.addEventListener('blur', function () {
       togglbutton.projectBlurTrigger = togglbutton.mousedownTrigger;
     });
 
     taskSelect = $("#toggl-button-task", editForm);
     taskSelect.addEventListener('change', function (e) {
-      $("#toggl-button-task-placeholder > div", editForm).innerHTML = $("#toggl-button-task-placeholder > div", editForm).title = (taskSelect.value === "0") ? "Add task" : taskSelect.options[taskSelect.selectedIndex].text;
+      var taskPlaceholder = $("#toggl-button-task-placeholder > div", editForm);
+      taskPlaceholder.innerHTML = taskPlaceholder.title = (taskSelect.value === "0") ? "Add task" : taskSelect.options[taskSelect.selectedIndex].text;
 
       // Force blur.
       togglbutton.taskBlurTrigger = null;
       taskSelect.blur();
     });
+
     taskSelect.addEventListener('click', function () {
       // Catch click in case user selects an already-selected item - force blur.
       togglbutton.taskBlurTrigger = null;
       projectSelect.blur();
     });
+
     taskSelect.addEventListener('blur', function (e) {
       togglbutton.taskBlurTrigger = togglbutton.mousedownTrigger;
     });

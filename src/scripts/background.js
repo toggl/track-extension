@@ -435,7 +435,7 @@ var TogglButton = {
         }
       }
 
-      // create htnl
+      // create html
       for (key in wsHtml) {
         if (wsHtml.hasOwnProperty(key)) {
           Object.keys(wsHtml[key]).sort();

@@ -219,14 +219,21 @@ var togglbutton = {
       editForm.style.display = "none";
     };
 
-    updateTags = function () {
-      var tags = togglbutton.getSelectedTags();
+    updateTags = function (open) {
+      var tags = togglbutton.getSelectedTags(),
+        tagsPlaceholder = $("#toggl-button-tag-placeholder > div", editForm);
+
+      if (open) {
+        tagsPlaceholder.innerHTML = tagsPlaceholder.title = "Save tags";
+        return;
+      }
+
       if (tags.length) {
         tags = tags.join(',');
       } else {
         tags = "Add tags";
       }
-      $("#toggl-button-tag-placeholder > div", editForm).innerHTML = $("#toggl-button-tag-placeholder > div", editForm).title = tags;
+      tagsPlaceholder.innerHTML = tagsPlaceholder.title = tags;
     };
 
     closeTagsList = function (close) {
@@ -241,6 +248,7 @@ var togglbutton = {
         updateTags();
       } else {
         dropdown.style.display = "block";
+        updateTags(true);
       }
       togglbutton.tagsVisible = !togglbutton.tagsVisible;
     };

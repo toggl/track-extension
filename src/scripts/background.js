@@ -402,7 +402,12 @@ var TogglButton = {
       ckey = null,
       keys = [],
       clientName = 0,
-      i;
+      i,
+      validate = function (item) {
+        return item.indexOf("</option>") !== -1 &&
+          !!item &&
+          ((item.match(/\/option/g) || []).length > 1 || item.length > 1);
+      };
 
     // Sort clients
     for (key in clientNames) {
@@ -440,10 +445,7 @@ var TogglButton = {
         if (wsHtml.hasOwnProperty(key)) {
           Object.keys(wsHtml[key]).sort();
           for (ckey in wsHtml[key]) {
-            if (wsHtml[key].hasOwnProperty(ckey) &&
-                wsHtml[key][ckey].indexOf("</option>") !== -1 &&
-                !!wsHtml[key][ckey] &&
-                (wsHtml[key][ckey].match(/\/option/g) || []).length > 1) {
+            if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
               html += wsHtml[key][ckey] + "</optgroup>";
             }
           }

@@ -346,6 +346,7 @@ var TogglButton = {
     chrome.browserAction.setIcon({
       path: imagePath
     });
+    TogglButton.updatePopup();
   },
 
   loginUser: function (request, sendResponse) {
@@ -643,6 +644,13 @@ var TogglButton = {
   loadSetting: function (setting) {
     var value = localStorage.getItem(setting);
     return !(value !== null && (value === "false" || !value));
+  },
+
+  updatePopup: function () {
+    var popup = chrome.extension.getViews({"type": "popup"});
+    if (popup.length) {
+      popup[0].PopUp.showPage();
+    }
   },
 
   newMessage: function (request, sender, sendResponse) {

@@ -41,6 +41,14 @@ var PopUp = {
   },
 
   showCurrentDuration: function (startTimer) {
+    if (TogglButton.$curEntry === null) {
+      PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
+      PopUp.$togglButton.textContent = 'Start timer';
+      clearInterval(PopUp.$timer);
+      PopUp.$timer = null;
+      return;
+    }
+
     var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start));
 
     PopUp.$togglButton.textContent = 'Stop timer   [' + duration + ']';

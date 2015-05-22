@@ -1,3 +1,8 @@
+[0.6.7]
+- Fixed multi workspace issue in project dropdown
+- Added 'Save Tags' placeholder
+- Improved popup menu syncing
+- Improved Login form styles
 [0.6.6]
 - Added sorting for tags
 - Added hover titles to project, tag and task selections

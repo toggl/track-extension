@@ -65,6 +65,7 @@
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
+    "*://*.coredata.is/*",
     "*://www.google.com/calendar/*"
   ],
   "icons": {
@@ -121,6 +122,7 @@
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
+        "*://*.coredata.is/*",
         "*://www.google.com/calendar/*"
       ],
       "css": ["styles/style.css"],
@@ -190,6 +192,10 @@
     {
       "matches": ["*://*.worksection.com/*"],
       "js": ["scripts/content/worksection.js"]
+    },
+    {
+      "matches": ["*://*.coredata.is/*"],
+      "js": ["scripts/content/coredata.js"]
     },
     {
       "matches": ["*://*.basecamp.com/*", "*://*.basecamphq.com/*"],

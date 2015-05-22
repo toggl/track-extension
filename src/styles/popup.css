@@ -18,12 +18,13 @@ body {
 }
 #login-form {
   margin-bottom: 30px;
+  padding-top: 10px;
 }
 #login-form .form-submit-row label.left {
   padding: 10px 0;
 }
 .form-row {
-  margin: 0;
+  margin: 0 0 10px;
   padding: 0;
 }
 .form-row label {
@@ -38,7 +39,6 @@ p.form-row.first {
 .text-input {
   background: #f5f5f5;
   border: 1px solid #e1e1e1;
-  font-size: 0.7em;  
   padding: 5px;
   width: 220px;
 }

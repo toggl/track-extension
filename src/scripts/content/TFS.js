@@ -58,10 +58,7 @@ function createTFSEvilHackElement(hackElement, titleHolder) {
 }
 
 function createTFSButton(homeElement) {
-	var x, y, link,
-		projectElem = $('.project-name'),
-		togglElem = document.querySelectorAll('.toolbar'),
-		descriptionElem = document.querySelectorAll('.workitem-info-bar'),
+	var y, link,
 		descriptionTitle = "",
 		home, titleHolder;
 
@@ -69,13 +66,12 @@ function createTFSButton(homeElement) {
 	if (home.innerHTML != "") {
 		titleHolder = home.querySelector('.info-text-wrapper');
 
-		descriptionTitle = titleHolder.childNodes[0].innerText + " " + titleHolder.childNodes[1].innerText;
-
-
+		var numberPattern = /\d+/g;
+		descriptionTitle = titleHolder.childNodes[1].innerText + " (TFS Workitem ID: " + titleHolder.childNodes[0].innerText.match(numberPattern) + ")";
+		
 		link = togglbutton.createTimerLink({
 			className: 'tfsTogglButton',
-			description: descriptionTitle,
-			projectName: projectElem.innerText
+			description: descriptionTitle
 		});
 
 		var toolbars = home.parentNode.querySelectorAll('.toolbar');
@@ -85,8 +81,8 @@ function createTFSButton(homeElement) {
 		for (y = 0; y < toolbars.length; y++) {
 			removeButton(toolbars[y]);
 			toolbars[y].firstChild.appendChild(link);
-
 		}
+		
 		createTFSEvilHackElement(home, titleHolder);
 	}
 

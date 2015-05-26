@@ -10,18 +10,5 @@
     "grunt-jslint": "~1.1.8",
     "grunt-contrib-compress": "~0.7.0",
     "jslint": "~0.5.2"
-  },
-  "main": "Gruntfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ReddwarfCro/toggl-button.git"
-  },
-  "author": "",
-  "bugs": {
-    "url": "https://github.com/ReddwarfCro/toggl-button/issues"
-  },
-  "homepage": "https://github.com/ReddwarfCro/toggl-button"
+  }
 }

@@ -42,7 +42,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Sprintly][38]
   - [Google Calendar][39]
   - [TestRail][40]
-  - [VisualStudioOnline (TFS)][28]
+  - [VisualStudioOnline (TFS)][41]
 
 ## Installing from the Web Store
 

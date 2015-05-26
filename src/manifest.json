@@ -228,15 +228,15 @@
       "js": ["scripts/content/zendesk.js"]
     },
     {
-      "matches": ["https://go.xero.com/*"],
+      "matches": ["*://go.xero.com/*"],
       "js": ["scripts/content/xero.js"]
     },
     {
-      "matches": ["https://web.any.do/*"],
+      "matches": ["*://web.any.do/*"],
       "js": ["scripts/content/anydo.js"]
     },
     {
-      "matches": ["https://*.todoist.com/app*"],
+      "matches": ["*://*.todoist.com/app*"],
       "js": ["scripts/content/todoist.js"]
     },
     {
@@ -256,7 +256,7 @@
       "js": ["scripts/content/trac.js"]
     },
     {
-      "matches": ["https://*.wunderlist.com/*"],
+      "matches": ["*://*.wunderlist.com/*"],
       "js": ["scripts/content/wunderlist.js"]
     },
     {

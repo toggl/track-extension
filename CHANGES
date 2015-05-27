@@ -1,3 +1,6 @@
+[0.6.8]
+- Fixed Google Calendar description issue
+- Fixed http and https url support
 [0.6.7]
 - Fixed multi workspace issue in project dropdown
 - Added 'Save Tags' placeholder

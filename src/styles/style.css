@@ -458,7 +458,7 @@ only screen and (min-resolution: 192dpi) {
 }
 
 .toggl > .taskItem-titleWrapper-title, .toggl > .taskItem-titleMeta-info {
-  margin-left: 25px;
+  margin-left: 0;
 }
 
 .toggl span.checkBox.small {

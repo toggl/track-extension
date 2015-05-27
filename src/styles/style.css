@@ -448,17 +448,25 @@ only screen and (min-resolution: 192dpi) {
   top: -2px;
   bottom: 0;
   left: 0;
-  float: right;
+  float: left;
 }
 
 .detailItem-toggl {
-  position: relative;
+  position: absolute;
   left: 10px;
-  top: 32px;
+  top: 21px;
 }
 
 .toggl > .taskItem-titleWrapper-title, .toggl > .taskItem-titleMeta-info {
   margin-left: 25px;
+}
+
+.toggl span.checkBox.small {
+  left: 4px;
+}
+
+.subtasks li.toggl:before, .subtasks .addtask:before, .subtasks li.toggl:after, .subtasks .addtask:after {
+  margin-left: 5px;
 }
 
 /********* TODOIST *********/

@@ -10,7 +10,7 @@ togglbutton.render('.eb-root:not(.toggl), .ep:not(.toggl)', {observe: true}, fun
     description = $('.eb-title', elem).textContent;
   } else {
     togglButtonElement = $('.ep-dpc .ep-drs', elem);
-    description = $('.ep .ep-title', elem).textContent;
+    description = $('.ep .ep-title input', elem).value;
   }
 
   link = togglbutton.createTimerLink({

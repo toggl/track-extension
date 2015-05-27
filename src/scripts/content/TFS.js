@@ -5,7 +5,6 @@
 
 var checkTimer,
   timeWait = 10;
-window.MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
 function removeButton(toolbarElement) {
   if (toolbarElement.innerHTML.indexOf('class="toggl-button tfsTogglButton') > -1) {

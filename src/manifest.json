@@ -67,7 +67,8 @@
     "*://sprint.ly/*",
     "*://www.google.com/calendar/*",
     "*://*.dobambam.com/*",
-    "*://app.breeze.pm/*"
+    "*://app.breeze.pm/*",
+    "*://www.gqueues.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -125,7 +126,8 @@
         "*://sprint.ly/*",
         "*://www.google.com/calendar/*",
         "*://*.dobambam.com/*",
-        "*://app.breeze.pm/*"
+        "*://app.breeze.pm/*",
+        "*://www.gqueues.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -314,6 +316,10 @@
     {
       "matches": ["*://app.breeze.pm/*"],
       "js": ["scripts/content/breeze.js"]
+    },
+    {
+      "matches": ["*://www.gqueues.com/*"],
+      "js": ["scripts/content/gqueues.js"]
     }
   ]
 }

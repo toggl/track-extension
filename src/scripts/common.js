@@ -49,6 +49,16 @@ function getFullPageHeight() {
                          html.clientHeight, html.scrollHeight, html.offsetHeight);
 }
 
+/**
+ * Checks whether the given time entry could have been started by the given
+ * toggl button.
+ *
+ * @return {Boolean} check result
+ */
+function entryStartedByButton(entry, button) {
+  return entry && entry.description.indexOf(button.currentDescription) > -1;
+}
+
 var togglbutton = {
   isStarted: false,
   element: null,
@@ -426,11 +436,9 @@ var togglbutton = {
 
     // new button created - set state
     chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
-      var description, currentEntry;
       if (response.success) {
-        currentEntry = response.currentEntry;
-        description = invokeIfFunction(params.description);
-        if (description === currentEntry.description) {
+        var currentEntry = response.currentEntry;
+        if (entryStartedByButton(currentEntry, togglbutton)) {
           activate(link);
         }
       }
@@ -450,7 +458,7 @@ var togglbutton = {
     }
     minimal = link.classList.contains("min");
 
-    if (!entry || togglbutton.currentDescription !== entry.description) {
+    if (entryStartedByButton(entry, togglbutton)) {
       link.classList.remove('active');
       if (!minimal) {
         linkText = 'Start timer';

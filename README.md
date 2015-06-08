@@ -59,7 +59,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 List of all the changes and added features can be found at http://toggl.github.io/toggl-button
 
 ## Using the Button
-1.  Log in to your [Toggl][1] account and keep yourself logged in (no need to keep the tab open).
+1.  Log in to your [Toggl][toggl] account and keep yourself logged in (no need to keep the tab open).
 2.  Go to your [TeamWeek][2], [Pivotal Tracker][3], [Github][4], [Asana][5], [Unfuddle][6], [Gitlab][7],
 [Trello][8], [Worksection][9], [Redbooth][10], [Podio][11], [Basecamp][12], [JIRA][13], [Producteev][14],
 [Bitbucket][15], [Stifer][16], [Google Docs][17], [Redmine][18], [YouTrack][19], [CapsuleCRM][20],
@@ -71,14 +71,17 @@ List of all the changes and added features can be found at http://toggl.github.i
   - go to Toggl to stop or edit your time entry.
 
 ## Custom domains
-If you use a setup, where one of the supported services is on a custom domain you can customize the extension to fit your needs. Here is a step by step guide on how to [add custom domain][98] to the extension.
+If you use a setup, where one of the supported services is on a custom domain you can customize the extension to fit your needs. Here is a step by step guide on how to [add custom domain][custom-domains] to the extension.
 
 ## Contributing
-Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
+Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][pull-request]
 
-Don't know how to start? Just check out the [user requested services][97] that have not yet been implemented, pick one and start hacking.
+Don't know how to start? Just check out the [user requested services][user-requests] that have not yet been implemented, pick one and start hacking.
 
-[1]: https://www.toggl.com/
+[toggl]: https://www.toggl.com/
+[user-requests]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
+[custom-domains]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
+[pull-request]: https://github.com/toggl/toggl-button/pulls
 [2]: https://teamweek.com/
 [3]: https://www.pivotaltracker.com/
 [4]: https://github.com/
@@ -118,6 +121,3 @@ Don't know how to start? Just check out the [user requested services][97] that h
 [38]: https://sprint.ly
 [39]: https://www.google.com/calendar
 [40]: https://testrail.com
-[97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
-[98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
-[99]: https://github.com/toggl/toggl-button/pulls

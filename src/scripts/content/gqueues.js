@@ -6,8 +6,9 @@ function insertAfter(newNode, referenceNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
-togglbutton.render('.gq-item-row:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('a', 'taskItem-toggl'),
+togglbutton.render('#gqItemList .gq-item-row:not(.toggl)', {observe: true}, function (elem) {
+  var link, 
+    container = createTag('a', 'taskItem-toggl'),
     titleElem = $('.gq-i-description', elem),
     projectContainer = $('.gq-queue-container.selected .gq-queue-name');
 

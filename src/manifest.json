@@ -1,9 +1,9 @@
 {
-  "name": "Toggl Button",
-  "short_name": "Toggl Button",
-  "version": "0.6.8",
+  "name": "Toggl Button for GQueues",
+  "short_name": "Toggl Button for GQueues",
+  "version": "0.6.12",
   "manifest_version": 2,
-  "description": "Add Official Toggl Online Timer to Popular Web Tools",
+  "description": "Add Official Toggl Online Timer to Popular Web Tools, Including GQueues",
   "background": {
     "scripts": [
       "scripts/background.js"

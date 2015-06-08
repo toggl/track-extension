@@ -269,6 +269,7 @@ var togglbutton = {
 
     $("form", editForm).addEventListener('submit', function (e) {
       submitForm(this);
+      e.preventDefault();
     });
 
     $(".toggl-button", editForm).addEventListener('click', function (e) {

@@ -136,10 +136,6 @@
       "js": ["scripts/content/toggl.js"]
     },
     {
-      "matches": ["*://*.teamweek.com/*"],
-      "js": ["scripts/content/teamweek.js"]
-    },
-    {
       "matches": ["*://app.teamweek.com/*"],
       "js": ["scripts/content/teamweek_new.js"]
     },

@@ -65,7 +65,8 @@
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
-    "*://www.google.com/calendar/*"
+    "*://www.google.com/calendar/*",
+    "*://*.dobambam.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -121,7 +122,8 @@
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
-        "*://www.google.com/calendar/*"
+        "*://www.google.com/calendar/*",
+        "*://*.dobambam.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -292,9 +294,9 @@
       "js": ["scripts/content/helpscout.js"]
     },
     {
-  	  "matches": ["*://*.getflow.com/*"],
-  	  "js": ["scripts/content/getflow.js"]
-  	},
+        "matches": ["*://*.getflow.com/*"],
+        "js": ["scripts/content/getflow.js"]
+      },
     {
       "matches": ["*://sprint.ly/*"],
       "js": ["scripts/content/sprintly.js"]
@@ -302,6 +304,10 @@
     {
       "matches": ["*://www.google.com/calendar/*"],
       "js": ["scripts/content/google-calendar.js"]
+    },
+    {
+      "matches": ["*://*.dobambam.com/*"],
+      "js": ["scripts/content/dobambam.js"]
     }
   ]
 }

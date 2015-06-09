@@ -5,9 +5,9 @@
 
 togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (element) {
   var link,
-    titleElement = $('input.title', element),
-    projectNameElement = $('select[name=project_id]', element),
-    container = $('footer.actions > .quick-actions', element);
+    titleElement = $('[data-hook=input-name]', element),
+    projectNameElement = $('[data-hook=select-project]', element),
+    container = $('[data-hook=row-actions]', element);
 
   if (titleElement === null || container === null) {
     return;

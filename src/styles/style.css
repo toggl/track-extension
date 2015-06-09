@@ -764,3 +764,15 @@ only screen and (min-resolution: 192dpi) {
   margin-left: 10px;
 }
 
+/********* DOBAMBAM *********/
+.toggl-button.dobambam {
+  float: right;
+  margin-right: 35px;
+  margin-top: -25px;
+}
+
+.actionBar .toggl-button.dobambam {
+  margin-left: 7px;
+  float: left;
+  margin-top: 8px;
+}

@@ -23,7 +23,7 @@ togglbutton.render('.row:not(.toggl)', {observe: true}, function (elem) {
 
   newElem = document.createElement('div');
   newElem.appendChild(link);
-  newElem.setAttribute('style', 'float:left;width:30px;height:20px;');
+  newElem.setAttribute('style', 'float:left;width:30px;height:20px;position:relative;');
 
   landmarkElem = $('.subm', elem) || $('.subp', elem) || $('.ax', elem);
   elem.insertBefore(newElem, landmarkElem.nextSibling);

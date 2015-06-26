@@ -172,7 +172,9 @@ var togglbutton = {
       closeTagsList,
       elemRect,
       div = document.createElement('div'),
-      editForm;
+      editForm,
+      togglButtonDescription;
+
 
     elemRect = togglbutton.element.getBoundingClientRect();
     editForm = $("#toggl-button-edit-form");
@@ -180,7 +182,7 @@ var togglbutton = {
 
     if (editForm !== null) {
       togglbutton.fetchTasks(pid, editForm);
-      var togglButtonDescription = $("#toggl-button-description");
+      togglButtonDescription = $("#toggl-button-description");
       togglButtonDescription.value = response.entry.description;
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
@@ -261,7 +263,7 @@ var togglbutton = {
       togglbutton.tagsVisible = !togglbutton.tagsVisible;
     };
 
-    var togglButtonDescription = $("#toggl-button-description", editForm);
+    togglButtonDescription = $("#toggl-button-description", editForm);
     togglButtonDescription.value = response.entry.description;
     setCursorAtBeginning(togglButtonDescription);
     $("#toggl-button-project", editForm).value = pid;

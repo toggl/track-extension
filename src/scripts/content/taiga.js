@@ -24,8 +24,6 @@ togglbutton.render('.us-detail:not(.toggl)', {observe: true}, function (elem) {
 /* Backlog list buttons */
 togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (elem) {
 
-  console.log('foo');
-
   var link,
     projectElem = $('.backlog .project-name'),
     refElem = $('a > span:nth-child(1)', elem),

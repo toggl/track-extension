@@ -1,9 +1,9 @@
 {
-  "name": "Toggl Button",
-  "short_name": "Toggl Button",
-  "version": "0.6.8",
+  "name": "Toggl Button for GQueues",
+  "short_name": "Toggl Button for GQueues",
+  "version": "0.6.12",
   "manifest_version": 2,
-  "description": "Add Official Toggl Online Timer to Popular Web Tools",
+  "description": "Add Official Toggl Online Timer to Popular Web Tools, Including GQueues",
   "background": {
     "scripts": [
       "scripts/background.js"
@@ -65,7 +65,8 @@
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
-    "*://www.google.com/calendar/*"
+    "*://www.google.com/calendar/*",
+    "*://www.gqueues.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -121,7 +122,8 @@
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
-        "*://www.google.com/calendar/*"
+        "*://www.google.com/calendar/*",
+        "*://www.gqueues.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -302,6 +304,10 @@
     {
       "matches": ["*://www.google.com/calendar/*"],
       "js": ["scripts/content/google-calendar.js"]
+    },
+    {
+      "matches": ["*://www.gqueues.com/*"],
+      "js": ["scripts/content/gqueues.js"]
     }
   ]
 }

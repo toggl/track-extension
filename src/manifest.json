@@ -65,6 +65,7 @@
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
+    "*://*.wrike.com/*",
     "*://www.google.com/calendar/*"
   ],
   "icons": {
@@ -121,6 +122,7 @@
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
+        "*://*.wrike.com/*",
         "*://www.google.com/calendar/*"
       ],
       "css": ["styles/style.css"],
@@ -298,6 +300,10 @@
     {
       "matches": ["*://sprint.ly/*"],
       "js": ["scripts/content/sprintly.js"]
+    },
+    {
+      "matches": ["*://*.wrike.com/*"],
+      "js": ["scripts/content/wrike.js"]
     },
     {
       "matches": ["*://www.google.com/calendar/*"],

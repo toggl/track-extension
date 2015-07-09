@@ -65,7 +65,8 @@
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
-    "*://www.google.com/calendar/*"
+    "*://www.google.com/calendar/*",
+    "*://bugzilla.mozilla.org/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -121,7 +122,8 @@
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
-        "*://www.google.com/calendar/*"
+        "*://www.google.com/calendar/*",
+        "*://bugzilla.mozilla.org/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -302,6 +304,10 @@
     {
       "matches": ["*://www.google.com/calendar/*"],
       "js": ["scripts/content/google-calendar.js"]
+    },
+    {
+      "matches": ["*://bugzilla.mozilla.org/*"],
+      "js": ["scripts/content/bugzilla.js"]
     }
   ]
 }

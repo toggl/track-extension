@@ -5,15 +5,17 @@
 togglbutton.render('.card_box:not(.toggl), .card-content:not(.toggl)', {observe: true}, function (elem) {
   var link, description, project;
 
-  description = $('.card_name', elem);
-  if(!description) {
-    description = $('.card-name', elem);
-  }
   project = $('.project_name_card');
 
   link = togglbutton.createTimerLink({
     className: 'breeze',
-    description: description && description.textContent.trim(),
+    description: function () {
+      description = $('.card_name', elem);
+      if(!description) {
+        description = $('.card-name', elem);
+      }
+      return description && description.textContent.trim();
+    },
     projectName: project && project.textContent.trim()
   });
 

@@ -175,7 +175,6 @@ var togglbutton = {
       editForm,
       togglButtonDescription;
 
-
     elemRect = togglbutton.element.getBoundingClientRect();
     editForm = $("#toggl-button-edit-form");
     position = togglbutton.topPosition(elemRect, editFormWidth, editFormHeight);

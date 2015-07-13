@@ -761,3 +761,9 @@ only screen and (min-resolution: 192dpi) {
   margin-left: 10px;
 }
 
+/********* WRIKE *********/
+.toggl-button.wrike {
+  text-decoration: none;
+  color: rgb(80, 79, 79);
+}
+

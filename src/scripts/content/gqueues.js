@@ -1,13 +1,13 @@
 /*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
+/*global $: false, document: false, togglbutton: false, createTag: false*/
 'use strict';
 
 function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 togglbutton.render('#gqItemList .gq-item-row:not(.toggl)', {observe: true}, function (elem) {
-  var link, 
+  var link,
     container = createTag('a', 'taskItem-toggl'),
     titleElem = $('.gq-i-description', elem),
     projectContainer = $('.gq-queue-container.selected .gq-queue-name');
@@ -19,7 +19,7 @@ togglbutton.render('#gqItemList .gq-item-row:not(.toggl)', {observe: true}, func
       description: titleElem.innerText,
       projectName: projectContainer.innerText
     });
-    
+
     container.appendChild(link);
     container.style.paddingTop = "5px"; // move button 5px down
     insertAfter(container, titleElem);

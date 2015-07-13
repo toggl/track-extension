@@ -43,6 +43,7 @@ var PopUp = {
   showCurrentDuration: function (startTimer) {
     if (TogglButton.$curEntry === null) {
       PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
+      PopUp.$togglButton.setAttribute('title', '');
       PopUp.$togglButton.textContent = 'Start timer';
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
@@ -54,6 +55,7 @@ var PopUp = {
     PopUp.$togglButton.textContent = 'Stop timer   [' + duration + ']';
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      PopUp.$togglButton.setAttribute('title', TogglButton.$curEntry.description);
     }
   },
 

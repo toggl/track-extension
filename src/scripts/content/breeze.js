@@ -11,7 +11,7 @@ togglbutton.render('.card_box:not(.toggl), .card-content:not(.toggl)', {observe:
     className: 'breeze',
     description: function () {
       description = $('.card_name', elem);
-      if(!description) {
+      if (!description) {
         description = $('.card-name', elem);
       }
       return description && description.textContent.trim();

@@ -6,7 +6,7 @@ togglbutton.render('.taskScroll:not(.toggl)', {observe: true}, function (elem) {
   var link, description, project;
 
   description = $('.jQ_taskTitleEl a', elem);
-  if(!description) {
+  if (!description) {
     description = $('.jQ_taskTitleEl', elem);
   }
   project = $('.txt-gry .jhtmlTicketsTicketViewItem .jQ_trigger', elem);
@@ -17,7 +17,7 @@ togglbutton.render('.taskScroll:not(.toggl)', {observe: true}, function (elem) {
     projectName: project && project.textContent.trim()
   });
 
-  if($('section.jQ_taskHeader')) {
+  if ($('section.jQ_taskHeader')) {
     $('section.jQ_taskHeader').appendChild(link);
   }
 

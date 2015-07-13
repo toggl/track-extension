@@ -66,7 +66,11 @@
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
     "*://*.wrike.com/*",
-    "*://www.google.com/calendar/*"
+    "*://www.google.com/calendar/*",
+    "*://bugzilla.mozilla.org/*",
+    "*://*.dobambam.com/*",
+    "*://app.breeze.pm/*",
+    "*://www.gqueues.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -123,7 +127,11 @@
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
         "*://*.wrike.com/*",
-        "*://www.google.com/calendar/*"
+        "*://www.google.com/calendar/*",
+        "*://bugzilla.mozilla.org/*",
+        "*://*.dobambam.com/*",
+        "*://app.breeze.pm/*",
+        "*://www.gqueues.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -294,9 +302,9 @@
       "js": ["scripts/content/helpscout.js"]
     },
     {
-  	  "matches": ["*://*.getflow.com/*"],
-  	  "js": ["scripts/content/getflow.js"]
-  	},
+      "matches": ["*://*.getflow.com/*"],
+      "js": ["scripts/content/getflow.js"]
+    },
     {
       "matches": ["*://sprint.ly/*"],
       "js": ["scripts/content/sprintly.js"]
@@ -308,6 +316,22 @@
     {
       "matches": ["*://www.google.com/calendar/*"],
       "js": ["scripts/content/google-calendar.js"]
+    },
+    {
+      "matches": ["*://bugzilla.mozilla.org/*"],
+      "js": ["scripts/content/bugzilla.js"]
+    },
+    {
+      "matches": ["*://*.dobambam.com/*"],
+      "js": ["scripts/content/dobambam.js"]
+    },
+    {
+      "matches": ["*://app.breeze.pm/*"],
+      "js": ["scripts/content/breeze.js"]
+    },
+    {
+      "matches": ["*://www.gqueues.com/*"],
+      "js": ["scripts/content/gqueues.js"]
     }
   ]
 }

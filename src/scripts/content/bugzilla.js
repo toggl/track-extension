@@ -12,7 +12,7 @@ togglbutton.render('input[name=id]', {}, function (elem) {
     projectName: 'Bugs'
   });
 
-  if($('#summary_alias_container') != undefined) {
+  if ($('#summary_alias_container') !== undefined) {
     $('#summary_alias_container').appendChild(link);
   }
 });

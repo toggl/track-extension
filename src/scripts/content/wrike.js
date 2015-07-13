@@ -2,9 +2,9 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.wspace-task-view:not(.toggl)', {observe: true}, function (elem) {
-  var link, description,
-    titleElem = function(){
+togglbutton.render('.wspace-task-view:not(.toggl)', {observe: true}, function () {
+  var link,
+    titleElem = function () {
       return $('title').innerText.replace(' - Wrike', '');
     };
 

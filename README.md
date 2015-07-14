@@ -42,12 +42,11 @@ Add Toggl one-click time tracking to popular web tools.
   - [Sprintly][38]
   - [Google Calendar][39]
   - [TestRail][40]
-<<<<<<< HEAD
   - [Bugzilla][41]
-=======
-  - [Bambam][41]
   - [Breeze][42]
->>>>>>> master
+  - [BamBam][43]
+  - [GQueue][44]
+  - [Wrike][45]
 
 ## Installing from the Web Store
 
@@ -70,11 +69,8 @@ List of all the changes and added features can be found at http://toggl.github.i
 [Trello][8], [Worksection][9], [Redbooth][10], [Podio][11], [Basecamp][12], [JIRA][13], [Producteev][14],
 [Bitbucket][15], [Stifer][16], [Google Docs][17], [Redmine][18], [YouTrack][19], [CapsuleCRM][20],
 [Xero][21], [Zendesk][22], [Any.do][23], [Todoist][24], [Trac][25], [Wunderlist][26], [Toodledo][27],
-<<<<<<< HEAD
-[Teamwork.com][28], [Google Mail][29], [Taiga][30], [HabitRPG][31], [Axosoft][32], [Countersoft Gemini][33], [Drupal][34], [Esa][35], [Help Scout][36], [Flow][37], [Sprintly][38], [Google Calendar][39], [TestRail][40], [Bugzilla][41] account and start your Toggl timer there.
-=======
-[Teamwork.com][28], [Google Mail][29], [Taiga][30], [HabitRPG][31], [Axosoft][32], [Countersoft Gemini][33], [Drupal][34], [Esa][35], [Help Scout][36], [Flow][37], [Sprintly][38], [Google Calendar][39], [TestRail][40], [Bambam][41], [Breeze][42] account and start your Toggl timer there.
->>>>>>> master
+[Teamwork.com][28], [Google Mail][29], [Taiga][30], [HabitRPG][31], [Axosoft][32], [Countersoft Gemini][33], [Drupal][34], [Esa][35], [Help Scout][36], [Flow][37], [Sprintly][38], [Google Calendar][39], [TestRail][40], [Bugzilla][41], [Breeze][42], [BamBam][43], [GQueue][44], [Wrike][45] account and start your Toggl timer there.
+
 3.  To stop the current running timer:
   - press the button again
   - start another time entry inside your account.
@@ -128,12 +124,12 @@ Don't know how to start? Just check out the [user requested services][97] that h
 [38]: https://sprint.ly
 [39]: https://www.google.com/calendar
 [40]: https://testrail.com
-<<<<<<< HEAD
 [41]: https://bugzilla.mozilla.org/
-=======
-[41]: https://www.dobambam.com/
 [42]: http://www.breeze.pm/
->>>>>>> master
+[43]: https://www.dobambam.com/
+[44]: https://www.gqueues.com/
+[45]: https://www.wrike.com/
+
 [97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
 [99]: https://github.com/toggl/toggl-button/pulls

@@ -8,6 +8,7 @@
 - Fixed issues with Teamweek ui
 - Show running entry description in running popup item tooltip
 - Fixed project name issue in github
+- Added Worksection .net and .eu domains
 [0.6.8]
 - Fixed Google Calendar description issue
 - Fixed http and https url support

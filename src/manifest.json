@@ -34,6 +34,8 @@
     "*://*.redbooth.com/*",
     "*://*.trello.com/*",
     "*://*.worksection.com/*",
+    "*://*.worksection.eu/*",
+    "*://*.worksection.net/*",
     "*://*.basecamp.com/*",
     "*://*.basecamphq.com/*",
     "*://*.atlassian.net/*",
@@ -93,6 +95,8 @@
         "*://*.redbooth.com/*",
         "*://*.trello.com/*",
         "*://*.worksection.com/*",
+        "*://*.worksection.eu/*",
+        "*://*.worksection.net/*",
         "*://*.basecamp.com/*",
         "*://*.basecamphq.com/*",
         "*://*.atlassian.net/*",
@@ -194,7 +198,11 @@
       "js": ["scripts/content/trello.js"]
     },
     {
-      "matches": ["*://*.worksection.com/*"],
+      "matches": [
+        "*://*.worksection.com/*",
+        "*://*.worksection.eu/*",
+        "*://*.worksection.net/*"
+      ],
       "js": ["scripts/content/worksection.js"]
     },
     {

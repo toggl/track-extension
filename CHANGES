@@ -1,3 +1,14 @@
+[0.6.9]
+- Added support for TestRail
+- Added support for Breeze
+- Added support for BamBam
+- Added support for Wrike
+- Added support for Bugzilla
+- Added support for GQueue
+- Fixed issues with Taiga.io ui
+- Fixed issues with Teamweek ui
+- Show running entry description in running popup item tooltip
+- Fixed project name issue in github
 [0.6.8]
 - Fixed Google Calendar description issue
 - Fixed http and https url support

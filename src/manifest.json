@@ -58,6 +58,7 @@
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
     "*://*.teamworkpm.net/*",
+    "*://*.habitica.com/*",
     "*://*.habitrpg.com/*",
     "*://*.taiga.io/*",
     "*://*.axosoft.com/*",
@@ -121,6 +122,7 @@
         "*://*.teamwork.com/*",
         "*://*.teamworkpm.net/*",
         "*://mail.google.com/*",
+        "*://*.habitica.com/*",
         "*://*.habitrpg.com/*",
         "*://*.taiga.io/*",
         "*://*.axosoft.com/*",
@@ -280,6 +282,10 @@
     {
       "matches": ["*://mail.google.com/*"],
       "js": ["scripts/content/google-mail.js"]
+    },
+    {
+      "matches": ["*://*.habitica.com/*"],
+      "js": ["scripts/content/habitrpg.js"]
     },
     {
       "matches": ["*://*.habitrpg.com/*"],

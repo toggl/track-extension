@@ -4,7 +4,7 @@
 
 togglbutton.render('#tickets-show:not(.toggl)', {observe: true}, function (elem) {
 
-  var link,
+  var link, linkParent,
     description = $('span.ticket-number', elem).textContent + ' ' + $('.ticket-summary > h1').textContent,
     project = $('h1.header-w > span').textContent;
 
@@ -14,6 +14,6 @@ togglbutton.render('#tickets-show:not(.toggl)', {observe: true}, function (elem)
     projectName: project,
   });
 
-  var linkParent = $('.sidebar > .m-10', elem);
+  linkParent = $('.sidebar > .m-10', elem);
   linkParent.insertBefore(link, $('.ticket-info', linkParent));
 });

@@ -809,3 +809,8 @@ only screen and (min-resolution: 192dpi) {
   text-decoration: none;
   color: rgb(80, 79, 79);
 }
+
+.toggl-button.assembla {
+  float: left;
+  margin: 3px 0 0 10px;
+}

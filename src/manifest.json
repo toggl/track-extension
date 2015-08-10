@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.6.8",
+  "version": "0.6.10",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -34,6 +34,8 @@
     "*://*.redbooth.com/*",
     "*://*.trello.com/*",
     "*://*.worksection.com/*",
+    "*://*.worksection.eu/*",
+    "*://*.worksection.net/*",
     "*://*.basecamp.com/*",
     "*://*.basecamphq.com/*",
     "*://*.atlassian.net/*",
@@ -56,7 +58,7 @@
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
     "*://*.teamworkpm.net/*",
-    "*://*.habitrpg.com/*",
+    "*://*.habitica.com/*",
     "*://*.taiga.io/*",
     "*://*.axosoft.com/*",
     "*://*.ongemini.com/*",
@@ -65,7 +67,12 @@
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
-    "*://www.google.com/calendar/*"
+    "*://*.wrike.com/*",
+    "*://www.google.com/calendar/*",
+    "*://bugzilla.mozilla.org/*",
+    "*://*.dobambam.com/*",
+    "*://app.breeze.pm/*",
+    "*://www.gqueues.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -89,6 +96,8 @@
         "*://*.redbooth.com/*",
         "*://*.trello.com/*",
         "*://*.worksection.com/*",
+        "*://*.worksection.eu/*",
+        "*://*.worksection.net/*",
         "*://*.basecamp.com/*",
         "*://*.basecamphq.com/*",
         "*://*.atlassian.net/*",
@@ -113,7 +122,7 @@
         "*://*.teamwork.com/*",
         "*://*.teamworkpm.net/*",
         "*://mail.google.com/*",
-        "*://*.habitrpg.com/*",
+        "*://*.habitica.com/*",
         "*://*.taiga.io/*",
         "*://*.axosoft.com/*",
         "*://*.ongemini.com/*",
@@ -122,7 +131,12 @@
         "*://secure.helpscout.net/*",
         "*://*.getflow.com/*",
         "*://sprint.ly/*",
-        "*://www.google.com/calendar/*"
+        "*://*.wrike.com/*",
+        "*://www.google.com/calendar/*",
+        "*://bugzilla.mozilla.org/*",
+        "*://*.dobambam.com/*",
+        "*://app.breeze.pm/*",
+        "*://www.gqueues.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -185,7 +199,11 @@
       "js": ["scripts/content/trello.js"]
     },
     {
-      "matches": ["*://*.worksection.com/*"],
+      "matches": [
+        "*://*.worksection.com/*",
+        "*://*.worksection.eu/*",
+        "*://*.worksection.net/*"
+      ],
       "js": ["scripts/content/worksection.js"]
     },
     {
@@ -265,7 +283,7 @@
       "js": ["scripts/content/google-mail.js"]
     },
     {
-      "matches": ["*://*.habitrpg.com/*"],
+      "matches": ["*://*.habitica.com/*"],
       "js": ["scripts/content/habitrpg.js"]
     },
     {
@@ -293,16 +311,36 @@
       "js": ["scripts/content/helpscout.js"]
     },
     {
-  	  "matches": ["*://*.getflow.com/*"],
-  	  "js": ["scripts/content/getflow.js"]
-  	},
+      "matches": ["*://*.getflow.com/*"],
+      "js": ["scripts/content/getflow.js"]
+    },
     {
       "matches": ["*://sprint.ly/*"],
       "js": ["scripts/content/sprintly.js"]
     },
     {
+      "matches": ["*://*.wrike.com/*"],
+      "js": ["scripts/content/wrike.js"]
+    },
+    {
       "matches": ["*://www.google.com/calendar/*"],
       "js": ["scripts/content/google-calendar.js"]
+    },
+    {
+      "matches": ["*://bugzilla.mozilla.org/*"],
+      "js": ["scripts/content/bugzilla.js"]
+    },
+    {
+      "matches": ["*://*.dobambam.com/*"],
+      "js": ["scripts/content/dobambam.js"]
+    },
+    {
+      "matches": ["*://app.breeze.pm/*"],
+      "js": ["scripts/content/breeze.js"]
+    },
+    {
+      "matches": ["*://www.gqueues.com/*"],
+      "js": ["scripts/content/gqueues.js"]
     }
   ]
 }

@@ -2,9 +2,10 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#tickets-show:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#tickets-show:not(.toggl)', {}, function (elem) {
 
-  var link, linkParent,
+  var link,
+    container = createTag('li', 'toggle-container'),
     description = $('span.ticket-number', elem).textContent + ' ' + $('.ticket-summary > h1').textContent,
     project = $('h1.header-w > span').textContent;
 
@@ -14,6 +15,6 @@ togglbutton.render('#tickets-show:not(.toggl)', {observe: true}, function (elem)
     projectName: project,
   });
 
-  linkParent = $('.sidebar > .m-10', elem);
-  linkParent.insertBefore(link, $('.ticket-info', linkParent));
+  container.appendChild(link);
+  $('ul.menu-submenu').appendChild(container);
 });

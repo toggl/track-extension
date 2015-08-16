@@ -64,6 +64,7 @@
     "*://*.ongemini.com/*",
     "*://*.drupal.org/*",
     "*://*.esa.io/*",
+    "*://waffle.io/*",
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
@@ -136,8 +137,9 @@
         "*://bugzilla.mozilla.org/*",
         "*://*.dobambam.com/*",
         "*://app.breeze.pm/*",
-        "*://www.gqueues.com/*"
-      ],
+        "*://www.gqueues.com/*",
+        "*://waffle.io/*"
+        ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
     },
@@ -341,6 +343,10 @@
     {
       "matches": ["*://www.gqueues.com/*"],
       "js": ["scripts/content/gqueues.js"]
+    },
+    {
+      "matches": ["*://waffle.io/*"] ,
+      "js": ["scripts/content/waffle.io.js"]
     }
   ]
 }

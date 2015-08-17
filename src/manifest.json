@@ -73,7 +73,8 @@
     "*://bugzilla.mozilla.org/*",
     "*://*.dobambam.com/*",
     "*://app.breeze.pm/*",
-    "*://www.gqueues.com/*"
+    "*://www.gqueues.com/*",
+    "*://www.assembla.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -138,8 +139,9 @@
         "*://*.dobambam.com/*",
         "*://app.breeze.pm/*",
         "*://www.gqueues.com/*",
-        "*://waffle.io/*"
-        ],
+        "*://waffle.io/*",
+        "*://www.assembla.com/*"
+      ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
     },
@@ -347,6 +349,10 @@
     {
       "matches": ["*://waffle.io/*"] ,
       "js": ["scripts/content/waffle.io.js"]
+    },
+    {
+      "matches": ["*://www.assembla.com/*"],
+      "js": ["scripts/content/assembla.js"]
     }
   ]
 }

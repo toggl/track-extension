@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -58,12 +58,13 @@
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
     "*://*.teamworkpm.net/*",
-    "*://*.habitrpg.com/*",
+    "*://*.habitica.com/*",
     "*://*.taiga.io/*",
     "*://*.axosoft.com/*",
     "*://*.ongemini.com/*",
     "*://*.drupal.org/*",
     "*://*.esa.io/*",
+    "*://waffle.io/*",
     "*://secure.helpscout.net/*",
     "*://*.getflow.com/*",
     "*://sprint.ly/*",
@@ -73,13 +74,15 @@
     "*://*.dobambam.com/*",
     "*://app.breeze.pm/*",
     "*://www.gqueues.com/*",
-    "*://app.codeable.io/*"
+    "*://app.codeable.io/*",
+    "*://www.assembla.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
+  "options_page": "html/settings.html",
   "content_scripts": [
     {
       "matches": [
@@ -122,7 +125,7 @@
         "*://*.teamwork.com/*",
         "*://*.teamworkpm.net/*",
         "*://mail.google.com/*",
-        "*://*.habitrpg.com/*",
+        "*://*.habitica.com/*",
         "*://*.taiga.io/*",
         "*://*.axosoft.com/*",
         "*://*.ongemini.com/*",
@@ -137,7 +140,9 @@
         "*://*.dobambam.com/*",
         "*://app.breeze.pm/*",
         "*://www.gqueues.com/*",
-        "*://app.codeable.io/*"
+        "*://app.codeable.io/*",
+        "*://waffle.io/*",
+        "*://www.assembla.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -284,7 +289,7 @@
       "js": ["scripts/content/google-mail.js"]
     },
     {
-      "matches": ["*://*.habitrpg.com/*"],
+      "matches": ["*://*.habitica.com/*"],
       "js": ["scripts/content/habitrpg.js"]
     },
     {
@@ -346,6 +351,14 @@
     {
       "matches": ["*://app.codeable.io/*"],
       "js": ["scripts/content/codeable.js"]
+    },
+    {
+      "matches": ["*://waffle.io/*"] ,
+      "js": ["scripts/content/waffle.io.js"]
+    },
+    {
+      "matches": ["*://www.assembla.com/*"],
+      "js": ["scripts/content/assembla.js"]
     }
   ]
 }

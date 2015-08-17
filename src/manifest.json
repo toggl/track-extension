@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -58,7 +58,7 @@
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
     "*://*.teamworkpm.net/*",
-    "*://*.habitrpg.com/*",
+    "*://*.habitica.com/*",
     "*://*.taiga.io/*",
     "*://*.axosoft.com/*",
     "*://*.ongemini.com/*",
@@ -80,6 +80,7 @@
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
+  "options_page": "html/settings.html",
   "content_scripts": [
     {
       "matches": [
@@ -122,7 +123,7 @@
         "*://*.teamwork.com/*",
         "*://*.teamworkpm.net/*",
         "*://mail.google.com/*",
-        "*://*.habitrpg.com/*",
+        "*://*.habitica.com/*",
         "*://*.taiga.io/*",
         "*://*.axosoft.com/*",
         "*://*.ongemini.com/*",
@@ -284,7 +285,7 @@
       "js": ["scripts/content/google-mail.js"]
     },
     {
-      "matches": ["*://*.habitrpg.com/*"],
+      "matches": ["*://*.habitica.com/*"],
       "js": ["scripts/content/habitrpg.js"]
     },
     {

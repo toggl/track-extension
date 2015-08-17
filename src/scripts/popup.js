@@ -45,6 +45,8 @@ var PopUp = {
         if (!!response.type && response.type === "New Entry" && TogglButton.$showPostPopup) {
           PopUp.updateEditForm();
           PopUp.switchView(PopUp.$editView);
+        } else if (response.type === "Update") {
+          TogglButton = chrome.extension.getBackgroundPage().TogglButton;
         } else {
           window.location.reload();
         }
@@ -191,9 +193,10 @@ var PopUp = {
         pid: selectedProject.value,
         projectName: selectedProject.options[selectedProject.selectedIndex].text,
         tags: PopUp.getSelectedTags(),
-        tid: (taskButton && taskButton.value) ? taskButton.value : null
+        tid: (taskButton && taskButton.value) ? taskButton.value : null,
+        respond: true
       };
-    chrome.extension.sendMessage(request);
+    PopUp.sendMessage(request);
     PopUp.closeTagsList(true);
     PopUp.switchView(PopUp.$menuView);
   },

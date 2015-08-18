@@ -10,6 +10,11 @@
   box-sizing: border-box;
 }
 
+#toggl-button-edit-form input {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
 #toggl-button-edit-form form {
   text-align: left!important;
 }
@@ -136,6 +141,10 @@ only screen and (min-resolution: 192dpi) {
   border-radius: 0;
   background-color: #ffffff;
   font-size: 14px;
+}
+
+#toggl-button-edit-form #toggl-button-description img {
+  display: none!important;
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder,

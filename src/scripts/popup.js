@@ -72,7 +72,7 @@ var PopUp = {
     PopUp.$editButton.textContent = '[' + duration + ']';
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
-      PopUp.$editButton.setAttribute('title', TogglButton.$curEntry.description);
+      PopUp.$editButton.setAttribute('title', TogglButton.$curEntry.description || "(no description)");
     }
   },
 

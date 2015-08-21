@@ -1,3 +1,10 @@
+[0.7.0]
+- Added Edit form to extension popup
+- Added support for Waffle.io
+- Added support for Assembla
+- Fixed Basecamp "Start timer" link issues
+- Fixed Any.Do description issue
+- Fixed Google Drive "Start timer" link
 [0.6.11]
 - HabitRPG to Habitica
 - Enabled extension options page

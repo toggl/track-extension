@@ -28,6 +28,11 @@ h2 {
   color:#393939;
 }
 
+h3 {
+  border-bottom: 1px solid #e0e0e0;
+  line-height: 35px;
+}
+
 h3, h4, h5, h6 {
   color:#494949;
 }
@@ -48,6 +53,14 @@ a small {
 .wrapper {
   width:860px;
   margin:0 auto;
+}
+
+.date {
+  float: right;
+  font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #777;
+  font-weight: 300;
+  line-height: 35px;
 }
 
 blockquote {

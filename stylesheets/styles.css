@@ -196,6 +196,10 @@ footer {
   bottom:50px;
 }
 
+section ul {
+  margin-bottom: 40px;
+}
+
 @media print, screen and (max-width: 960px) {
   
   div.wrapper {

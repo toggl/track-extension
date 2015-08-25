@@ -339,6 +339,9 @@ var TogglButton = {
       } else {
         title = "(no description) - Toggl";
       }
+      chrome.browserAction.setBadgeText(
+        {text: ""}
+      );
     }
     chrome.browserAction.setTitle({
       title: title

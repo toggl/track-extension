@@ -70,6 +70,7 @@
     "*://sprint.ly/*",
     "*://*.wrike.com/*",
     "*://www.google.com/calendar/*",
+    "*://calendar.google.com/calendar*",
     "*://bugzilla.mozilla.org/*",
     "*://*.dobambam.com/*",
     "*://app.breeze.pm/*",
@@ -136,6 +137,7 @@
         "*://sprint.ly/*",
         "*://*.wrike.com/*",
         "*://www.google.com/calendar/*",
+        "*://calendar.google.com/calendar*",
         "*://bugzilla.mozilla.org/*",
         "*://*.dobambam.com/*",
         "*://app.breeze.pm/*",
@@ -329,7 +331,10 @@
       "js": ["scripts/content/wrike.js"]
     },
     {
-      "matches": ["*://www.google.com/calendar/*"],
+      "matches": [
+        "*://www.google.com/calendar/*",
+        "*://calendar.google.com/calendar*"
+      ],
       "js": ["scripts/content/google-calendar.js"]
     },
     {

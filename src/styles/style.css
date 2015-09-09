@@ -610,7 +610,7 @@ only screen and (min-resolution: 192dpi) {
 /********* TOODLEDO *********/
 .toggl-button.toodledo {
   margin-top: -3px;
-  position: absolute;
+  position: relative;
   margin-left: 5px;
 }
 

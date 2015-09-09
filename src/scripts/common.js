@@ -134,11 +134,9 @@ var togglbutton = {
 
 
   resetTasks: function () {
-    if ($("#toggl-button-task-placeholder")) {
-      $("#toggl-button-task-placeholder").removeEventListener('click', togglbutton.delegateTaskClick);
-      $("#toggl-button-task-placeholder > div").innerHTML = "Add task";
-      $("#toggl-button-task").innerHTML = "";
-    }
+    document.querySelector("#toggl-button-task-placeholder").removeEventListener('click', togglbutton.delegateTaskClick);
+    document.querySelector("#toggl-button-task-placeholder > div").innerHTML = "Add task";
+    document.querySelector("#toggl-button-task").innerHTML = "";
   },
 
   generateProjectLabel: function (select, pid) {

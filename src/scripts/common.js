@@ -258,6 +258,7 @@ var togglbutton = {
       } else {
         dropdown.style.display = "block";
         updateTags(true);
+        dropdown.focus();
       }
       togglbutton.tagsVisible = !togglbutton.tagsVisible;
     };

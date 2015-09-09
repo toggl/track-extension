@@ -464,11 +464,11 @@ only screen and (min-resolution: 192dpi) {
   top: -7px;
 }
 
-.done .detailItem-toggl {
+.toggl.done .detailItem-toggl {
   display: none;
 }
 
-.done .section-icon {
+.toggl.done .section-icon {
   padding-left: 22px;
 }
 

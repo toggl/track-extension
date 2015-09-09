@@ -134,9 +134,11 @@ var togglbutton = {
 
 
   resetTasks: function () {
-    $("#toggl-button-task-placeholder").removeEventListener('click', togglbutton.delegateTaskClick);
-    $("#toggl-button-task-placeholder > div").innerHTML = "Add task";
-    $("#toggl-button-task").innerHTML = "";
+    if ($("#toggl-button-task-placeholder")) {
+      $("#toggl-button-task-placeholder").removeEventListener('click', togglbutton.delegateTaskClick);
+      $("#toggl-button-task-placeholder > div").innerHTML = "Add task";
+      $("#toggl-button-task").innerHTML = "";
+    }
   },
 
   generateProjectLabel: function (select, pid) {

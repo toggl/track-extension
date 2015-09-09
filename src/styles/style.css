@@ -448,20 +448,28 @@ only screen and (min-resolution: 192dpi) {
   z-index: 1;
   display: inline;
   margin-bottom: 0px;
-  padding-top: -5px;
   padding-right: 10px;
   line-height: 100%;
   position: relative;
-  top: -2px;
+  top: 0;
   bottom: 0;
   left: 0;
   float: right;
+  margin-top: 3px;
 }
 
 .detailItem-toggl {
   position: relative;
-  left: 10px;
-  top: 32px;
+  left: 5px;
+  top: -7px;
+}
+
+.done .detailItem-toggl {
+  display: none;
+}
+
+.done .section-icon {
+  padding-left: 22px;
 }
 
 .toggl > .taskItem-titleWrapper-title, .toggl > .taskItem-titleMeta-info {

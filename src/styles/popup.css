@@ -148,6 +148,7 @@ only screen and (min-resolution: 2dppx) {
   background-color: rgba(0, 0, 0, 0);
   text-align: left;
   width: 200px;
+  font-size: 11px;
 }
 button:focus {
   outline: none;

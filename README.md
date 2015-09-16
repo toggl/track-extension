@@ -74,10 +74,17 @@ List of all the changes and added features can be found at http://toggl.github.i
 [Bitbucket][15], [Stifer][16], [Google Docs][17], [Redmine][18], [YouTrack][19], [CapsuleCRM][20],
 [Xero][21], [Zendesk][22], [Any.do][23], [Todoist][24], [Trac][25], [Wunderlist][26], [Toodledo][27], [Teamwork.com][28], [Google Mail][29], [Taiga][30], [HabitRPG][31], [Axosoft][32], [Countersoft Gemini][33], [Drupal][34], [Esa][35], [Help Scout][36], [Flow][37], [Sprintly][38], [Google Calendar][39], [TestRail][40], [Bugzilla][41], [Breeze][42], [BamBam][43], [GQueue][44], [Wrike][45], [Assembla][46], [Waffle][47], [Codeable][48], [Eventum][49] account and start your Toggl timer there.
 
-3.  To stop the current running timer:
-  - press the button again
-  - start another time entry inside your account.
-  - go to Toggl to stop or edit your time entry.
+Or start entry from the extension icon menu
+
+3. To edit the running time entry
+  - Edit entry details from the post start popup that is shown right after you click the "Start timer" button
+  - Edit entry details from the extesnion icon menu by clicking the running duration
+
+4. To stop the current running timer:
+  - Press the button again
+  - Stop the entry from the extension icon menu
+  - Start another time entry inside your account.
+  - Go to Toggl to stop or edit your time entry.
 
 ## Custom domains
 If you use a setup, where one of the supported services is on a custom domain you can customize the extension to fit your needs. Here is a step by step guide on how to [add custom domain][98] to the extension.

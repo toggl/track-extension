@@ -1,3 +1,82 @@
+[0.7.1]
+- Focus tags dropdown when it's opened
+- Fixed Wunderlist styles
+- Remove active state from link when clicking on another start link
+- Fixed Toodledo start timer link positioning
+- Fixed tasks selector
+- Fixed hour calculation for durations longer than 24 hours
+- Added new google calendar url
+- X on the icon should never be shown when tracking
+[0.7.0]
+- Added Edit form to extension popup
+- Added support for Waffle.io
+- Added support for Assembla
+- Fixed Basecamp "Start timer" link issues
+- Fixed Any.Do description issue
+- Fixed Google Drive "Start timer" link
+[0.6.11]
+- HabitRPG to Habitica
+- Enabled extension options page
+[0.6.10]
+- Fixed Teamweek issues
+[0.6.9]
+- Added support for Breeze
+- Added support for BamBam
+- Added support for Wrike
+- Added support for Bugzilla
+- Added support for GQueue
+- Fixed issues with Taiga.io ui
+- Fixed issues with Teamweek ui
+- Show running entry description in running popup item tooltip
+- Fixed project name issue in github
+- Added Worksection .net and .eu domains
+[0.6.8]
+- Fixed Google Calendar description issue
+- Fixed http and https url support
+[0.6.7]
+- Fixed multi workspace issue in project dropdown
+- Added 'Save Tags' placeholder
+- Improved popup menu syncing
+- Improved Login form styles
+[0.6.6]
+- Added sorting for tags
+- Added hover titles to project, tag and task selections
+[0.6.5]
+- Added support for TestRail
+- Projects grouped by Workspaces and Clients
+- Added "Start timer" link to Extension icon menu
+- Added running timer to Extension icon menu
+- Added user email to Extension icon menu
+- Wunderlist UI improvements
+- Teamweek domain name fix
+[0.6.4]
+- Fixed edit popup position in Basecamp Next
+[0.6.3]
+- Fixed setting entry billable if project is billable
+[0.6.2]
+- Added support for Flow
+- Added support for Google Calendar
+- Added support for Sprint.ly
+- Added support for Basecamp Classis (basecamphq.com)
+- Improvements for Taiga.io implementation
+- Improvements for Axosoft implementation
+- Don't display reminders when user is not logged in
+- Improved edit popup position calculations
+- Other smaller improvements and fixes
+[0.6.1]
+- Fixed issues with non-www toggl.com login
+- Added support for Help Scout
+[0.6.0]
+- Added support for Countersoft Gemini
+- Added support for esa.io
+- Added support for drupal.org
+- Fixed Todoist description parsing for links
+[0.5.11]
+- Added atlassian.com to support all JIRA versions
+[0.5.10]
+- Added support for Axosoft
+- Updated edit form hide button to use &times;
+- Fixed Todoist description parsing
 [0.5.9]
 - Added support for Taiga.io
 - Added support for HabitRPG

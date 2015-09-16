@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.5.9",
+  "version": "0.7.1",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
@@ -21,18 +21,23 @@
     "notifications",
     "idle",
     "*://*.toggl.com/*",
+    "*://toggl.com/*",
     "*://*.teamweek.com/*",
-    "*://eventum.example.org/view.php*",
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
     "*://*.gitlab.com/*",
+    "*://*.testrail.com/*",
+    "*://*.testrail.net/*",
     "*://app.asana.com/*",
     "*://*.unfuddle.com/*",
     "*://*.podio.com/*",
     "*://*.redbooth.com/*",
     "*://*.trello.com/*",
     "*://*.worksection.com/*",
+    "*://*.worksection.eu/*",
+    "*://*.worksection.net/*",
     "*://*.basecamp.com/*",
+    "*://*.basecamphq.com/*",
     "*://*.atlassian.net/*",
     "*://*.jira.com/*",
     "*://*.producteev.com/*",
@@ -53,22 +58,41 @@
     "*://*.wunderlist.com/*",
     "*://*.teamwork.com/*",
     "*://*.teamworkpm.net/*",
-    "*://*.habitrpg.com/*",
-    "*://*.taiga.io/*"
+    "*://*.habitica.com/*",
+    "*://*.taiga.io/*",
+    "*://*.axosoft.com/*",
+    "*://*.ongemini.com/*",
+    "*://*.drupal.org/*",
+    "*://*.esa.io/*",
+    "*://waffle.io/*",
+    "*://secure.helpscout.net/*",
+    "*://*.getflow.com/*",
+    "*://sprint.ly/*",
+    "*://*.wrike.com/*",
+    "*://www.google.com/calendar/*",
+    "*://calendar.google.com/calendar*",
+    "*://bugzilla.mozilla.org/*",
+    "*://*.dobambam.com/*",
+    "*://app.breeze.pm/*",
+    "*://www.gqueues.com/*",
+    "*://app.codeable.io/*",
+    "*://www.assembla.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
+  "options_page": "html/settings.html",
   "content_scripts": [
     {
       "matches": [
         "*://*.teamweek.com/*",
         "*://*.pivotaltracker.com/*",
-        "*://eventum.example.org/view.php*",
         "*://*.github.com/*",
         "*://*.gitlab.com/*",
+        "*://*.testrail.com/*",
+        "*://*.testrail.net/*",
         "*://*.bitbucket.org/*",
         "*://app.asana.com/*",
         "*://*.unfuddle.com/*",
@@ -76,8 +100,12 @@
         "*://*.redbooth.com/*",
         "*://*.trello.com/*",
         "*://*.worksection.com/*",
+        "*://*.worksection.eu/*",
+        "*://*.worksection.net/*",
         "*://*.basecamp.com/*",
+        "*://*.basecamphq.com/*",
         "*://*.atlassian.net/*",
+        "*://*.atlassian.com/*",
         "*://*.jira.com/*",
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*",
@@ -98,22 +126,40 @@
         "*://*.teamwork.com/*",
         "*://*.teamworkpm.net/*",
         "*://mail.google.com/*",
-        "*://*.habitrpg.com/*",
-        "*://*.taiga.io/*"
+        "*://*.habitica.com/*",
+        "*://*.taiga.io/*",
+        "*://*.axosoft.com/*",
+        "*://*.ongemini.com/*",
+        "*://*.drupal.org/*",
+        "*://*.esa.io/*",
+        "*://secure.helpscout.net/*",
+        "*://*.getflow.com/*",
+        "*://sprint.ly/*",
+        "*://*.wrike.com/*",
+        "*://www.google.com/calendar/*",
+        "*://calendar.google.com/calendar*",
+        "*://bugzilla.mozilla.org/*",
+        "*://*.dobambam.com/*",
+        "*://app.breeze.pm/*",
+        "*://www.gqueues.com/*",
+        "*://app.codeable.io/*",
+        "*://waffle.io/*",
+        "*://www.assembla.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
     },
     {
-      "matches": ["*://www.toggl.com/app/timer", "*://www.toggl.com/"],
+      "matches": [
+        "*://www.toggl.com/app/timer",
+        "*://www.toggl.com/",
+        "*://toggl.com/app/timer",
+        "*://toggl.com/"
+      ],
       "js": ["scripts/content/toggl.js"]
     },
     {
-      "matches": ["*://*.teamweek.com/*"],
-      "js": ["scripts/content/teamweek.js"]
-    },
-    {
-      "matches": ["*://new.teamweek.com/*"],
+      "matches": ["*://app.teamweek.com/*"],
       "js": ["scripts/content/teamweek_new.js"]
     },
     {
@@ -137,6 +183,10 @@
       "js": ["scripts/content/gitlab.js"]
     },
     {
+      "matches": ["*://*.testrail.com/*", "*://*.testrail.net/*"],
+      "js": ["scripts/content/testrail.js"]
+    },
+    {
       "matches": ["*://app.asana.com/*"],
       "js": ["scripts/content/asana.js"]
     },
@@ -157,19 +207,23 @@
       "js": ["scripts/content/trello.js"]
     },
     {
-      "matches": ["*://*.worksection.com/*"],
+      "matches": [
+        "*://*.worksection.com/*",
+        "*://*.worksection.eu/*",
+        "*://*.worksection.net/*"
+      ],
       "js": ["scripts/content/worksection.js"]
     },
     {
-      "matches": ["*://*.basecamp.com/*"],
+      "matches": ["*://*.basecamp.com/*", "*://*.basecamphq.com/*"],
       "js": ["scripts/content/basecamp.js"]
     },
     {
-      "matches": ["*://*.atlassian.net/*"],
-      "js": ["scripts/content/jira.js"]
-    },
-    {
-      "matches": ["*://*.jira.com/*"],
+      "matches": [
+        "*://*.atlassian.net/*",
+        "*://*.atlassian.com/*",
+        "*://*.jira.com/*"
+      ],
       "js": ["scripts/content/jira.js"]
     },
     {
@@ -197,15 +251,15 @@
       "js": ["scripts/content/zendesk.js"]
     },
     {
-      "matches": ["https://go.xero.com/*"],
+      "matches": ["*://go.xero.com/*"],
       "js": ["scripts/content/xero.js"]
     },
     {
-      "matches": ["https://web.any.do/*"],
+      "matches": ["*://web.any.do/*"],
       "js": ["scripts/content/anydo.js"]
     },
     {
-      "matches": ["https://*.todoist.com/app*"],
+      "matches": ["*://*.todoist.com/app*"],
       "js": ["scripts/content/todoist.js"]
     },
     {
@@ -214,7 +268,7 @@
         "*://*.teamworkpm.net/*"
       ],
       "js": ["scripts/content/teamworkpm.js"]
-    },    
+    },
     {
       "matches": [
         "*://trac.edgewall.org/*",
@@ -225,14 +279,7 @@
       "js": ["scripts/content/trac.js"]
     },
     {
-      "matches": [
-        "*://eventum.example.org/view.php*"
-      ],
-      "js": ["scripts/content/eventum.js"]
-    },
-
-    {
-      "matches": ["https://*.wunderlist.com/*"],
+      "matches": ["*://*.wunderlist.com/*"],
       "js": ["scripts/content/wunderlist.js"]
     },
     {
@@ -244,12 +291,79 @@
       "js": ["scripts/content/google-mail.js"]
     },
     {
-      "matches": ["*://*.habitrpg.com/*"],
+      "matches": ["*://*.habitica.com/*"],
       "js": ["scripts/content/habitrpg.js"]
     },
     {
       "matches": ["*://*.taiga.io/*"],
       "js": ["scripts/content/taiga.js"]
+    },
+    {
+      "matches": ["*://*.axosoft.com/*"],
+      "js": ["scripts/content/axosoft.js"]
+    },
+    {
+      "matches": ["*://*.ongemini.com/*"],
+      "js": ["scripts/content/gemini.js"]
+    },
+    {
+      "matches": ["*://*.drupal.org/*"],
+      "js": ["scripts/content/drupalorg.js"]
+    },
+    {
+      "matches": ["*://*.esa.io/*"],
+      "js": ["scripts/content/esa.js"]
+    },
+    {
+      "matches": ["*://secure.helpscout.net/*"],
+      "js": ["scripts/content/helpscout.js"]
+    },
+    {
+      "matches": ["*://*.getflow.com/*"],
+      "js": ["scripts/content/getflow.js"]
+    },
+    {
+      "matches": ["*://sprint.ly/*"],
+      "js": ["scripts/content/sprintly.js"]
+    },
+    {
+      "matches": ["*://*.wrike.com/*"],
+      "js": ["scripts/content/wrike.js"]
+    },
+    {
+      "matches": [
+        "*://www.google.com/calendar/*",
+        "*://calendar.google.com/calendar*"
+      ],
+      "js": ["scripts/content/google-calendar.js"]
+    },
+    {
+      "matches": ["*://bugzilla.mozilla.org/*"],
+      "js": ["scripts/content/bugzilla.js"]
+    },
+    {
+      "matches": ["*://*.dobambam.com/*"],
+      "js": ["scripts/content/dobambam.js"]
+    },
+    {
+      "matches": ["*://app.breeze.pm/*"],
+      "js": ["scripts/content/breeze.js"]
+    },
+    {
+      "matches": ["*://www.gqueues.com/*"],
+      "js": ["scripts/content/gqueues.js"]
+    },
+    {
+      "matches": ["*://app.codeable.io/*"],
+      "js": ["scripts/content/codeable.js"]
+    },
+    {
+      "matches": ["*://waffle.io/*"] ,
+      "js": ["scripts/content/waffle.io.js"]
+    },
+    {
+      "matches": ["*://www.assembla.com/*"],
+      "js": ["scripts/content/assembla.js"]
     }
   ]
 }

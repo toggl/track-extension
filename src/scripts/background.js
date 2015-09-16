@@ -1,4 +1,4 @@
-/*jslint indent: 2, unparam: true*/
+/*jslint indent: 2, unparam: true, plusplus: true */
 /*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
@@ -21,9 +21,9 @@ var TogglButton = {
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form>' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
-      '<a id="toggl-button-hide">x</a>' +
+      '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="">' +
+        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)">' +
       '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
@@ -46,7 +46,7 @@ var TogglButton = {
       token: token || ' ',
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {}, clientMap = {}, tagMap = {}, projectTaskList = null;
+        var resp, apiToken, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null;
         if (xhr.status === 200) {
           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
@@ -64,6 +64,7 @@ var TogglButton = {
           if (resp.data.clients) {
             resp.data.clients.forEach(function (client) {
               clientMap[client.id] = client;
+              clientNameMap[client.name.toLowerCase()] = client;
             });
           }
           if (resp.data.tags) {
@@ -92,6 +93,7 @@ var TogglButton = {
           TogglButton.$user = resp.data;
           TogglButton.$user.projectMap = projectMap;
           TogglButton.$user.clientMap = clientMap;
+          TogglButton.$user.clientNameMap = clientNameMap;
           TogglButton.$user.tagMap = tagMap;
           TogglButton.$user.projectTaskList = projectTaskList;
           localStorage.removeItem('userToken');
@@ -204,7 +206,7 @@ var TogglButton = {
           tags: timeEntry.tags || null,
           billable: timeEntry.billable || false,
           duration: -(start.getTime() / 1000),
-          created_with: timeEntry.createdWith + "/" + TogglButton.$version || TogglButton.$fullVersion,
+          created_with: timeEntry.createdWith || TogglButton.$fullVersion,
           duronly: !TogglButton.$user.store_start_and_stop_time
         }
       };
@@ -284,18 +286,25 @@ var TogglButton = {
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {
-    var entry;
+    var entry, project;
     if (!TogglButton.$curEntry) { return; }
+    entry = {
+      time_entry: {
+        description: timeEntry.description,
+        pid: timeEntry.pid,
+        tags: timeEntry.tags,
+        tid: timeEntry.tid
+      }
+    };
+
+    if (timeEntry.pid !== null && timeEntry.projectName !== null) {
+      project = TogglButton.$user.projectMap[timeEntry.projectName + timeEntry.pid];
+      entry.time_entry.billable = project && project.billable;
+    }
+
     TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
       method: 'PUT',
-      payload: {
-        time_entry: {
-          description: timeEntry.description,
-          pid: timeEntry.pid,
-          tags: timeEntry.tags,
-          tid: timeEntry.tid
-        }
-      },
+      payload: entry,
       onLoad: function (xhr) {
         var responseData;
         responseData = JSON.parse(xhr.responseText);
@@ -330,6 +339,9 @@ var TogglButton = {
       } else {
         title = "(no description) - Toggl";
       }
+      chrome.browserAction.setBadgeText(
+        {text: ""}
+      );
     }
     chrome.browserAction.setTitle({
       title: title
@@ -337,6 +349,7 @@ var TogglButton = {
     chrome.browserAction.setIcon({
       path: imagePath
     });
+    TogglButton.updatePopup();
   },
 
   loginUser: function (request, sendResponse) {
@@ -344,8 +357,12 @@ var TogglButton = {
       method: 'POST',
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
-        TogglButton.fetchUser();
-        TogglButton.refreshPage();
+        if (xhr.status === 200) {
+          TogglButton.fetchUser();
+          TogglButton.refreshPage();
+        } else {
+          sendResponse({success: false, xhr: xhr});
+        }
       },
       credentials: {
         username: request.username,
@@ -360,6 +377,7 @@ var TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$user = null;
         TogglButton.$curEntry = null;
+        localStorage.setItem('userToken', null);
         sendResponse({success: (xhr.status === 200), xhr: xhr});
         TogglButton.refreshPage();
       }
@@ -378,30 +396,93 @@ var TogglButton = {
   fillProjects: function () {
     var html = "<option value='0'>- No Project -</option>",
       projects = TogglButton.$user.projectMap,
-      wsHtml = [],
+      clients =  TogglButton.$user.clientMap,
+      clientNames = TogglButton.$user.clientNameMap,
+      wsHtml = {},
+      clientHtml = {},
       client,
       project,
-      key = null;
+      key = null,
+      ckey = null,
+      keys = [],
+      clientName = 0,
+      i,
+      validate = function (item) {
+        return item.indexOf("</option>") !== -1 &&
+          !!item &&
+          ((item.match(/\/option/g) || []).length > 1 || item.length > 1);
+      };
+
+    // Sort clients
+    for (key in clientNames) {
+      if (clientNames.hasOwnProperty(key)) {
+        keys.push(key.toLowerCase());
+      }
+    }
+    keys.sort();
 
     if (TogglButton.$user.workspaces.length > 1) {
+
+      // Add Workspace names
       TogglButton.$user.workspaces.forEach(function (element, index) {
-        wsHtml[element.id] = '<optgroup label="' + element.name + '">';
+        wsHtml[element.id] = {};
+        wsHtml[element.id][0] = '<option disabled="disabled">  ---  ' + element.name.toUpperCase() + '  ---  </option>';
       });
+
+      // Add client optgroups
+      for (i = 0; i < keys.length; i++) {
+        client = clientNames[keys[i]];
+        wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
+      }
+
+      // Add projects
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          project = projects[key];
+          clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
+          wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
+        }
+      }
+
+      // create html
+      for (key in wsHtml) {
+        if (wsHtml.hasOwnProperty(key)) {
+          Object.keys(wsHtml[key]).sort();
+          for (ckey in wsHtml[key]) {
+            if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
+              html += wsHtml[key][ckey] + "</optgroup>";
+            }
+          }
+        }
+      }
+
+    } else {
+
+      // Add clients
+
+      for (i = 0; i < keys.length; i++) {
+        client = clientNames[keys[i]];
+        clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
+      }
+
+      // Add projects
 
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           project = projects[key];
-          client = (!!project.cid) ? " - " + TogglButton.$user.clientMap[project.cid].name : "";
-          wsHtml[project.wid] += "<option value='" + project.id + "'>" + project.name + client + "</option>";
+          clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
+          clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
         }
       }
-      html += wsHtml.join("</optgroup>") + "</optgroup>";
-    } else {
-      for (key in projects) {
-        if (projects.hasOwnProperty(key)) {
-          project = projects[key];
-          client = (!!project.cid) ? " - " + TogglButton.$user.clientMap[project.cid].name : "";
-          html += "<option value='" + project.id + "'>" + project.name + client + "</option>";
+
+      // Create html
+
+      for (key in clientHtml) {
+        if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
+          html += clientHtml[key];
+          if (key !== "0") {
+            html += "</optgroup>";
+          }
         }
       }
     }
@@ -412,12 +493,20 @@ var TogglButton = {
   fillTags: function () {
     var html = "",
       tags = TogglButton.$user.tagMap,
-      key = null;
+      i,
+      key = null,
+      keys = [];
 
     for (key in tags) {
       if (tags.hasOwnProperty(key)) {
-        html += "<option value='" + tags[key].name + "'>" + key + "</option>";
+        keys.push(key);
       }
+    }
+    keys.sort();
+
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      html += "<option value='" + tags[key].name + "'>" + key + "</option>";
     }
     return html;
   },
@@ -489,7 +578,10 @@ var TogglButton = {
   checkActivity: function (currentState) {
     clearTimeout(TogglButton.$timer);
     TogglButton.$timer = null;
-    if (currentState === "active" && TogglButton.$idleCheckEnabled && TogglButton.$curEntry === null && TogglButton.workingTime()) {
+    if (TogglButton.$user && currentState === "active" &&
+        TogglButton.$idleCheckEnabled &&
+        TogglButton.$curEntry === null &&
+        TogglButton.workingTime()) {
       chrome.notifications.create(
         'remind-to-track-time',
         {
@@ -557,11 +649,18 @@ var TogglButton = {
     return !(value !== null && (value === "false" || !value));
   },
 
+  updatePopup: function () {
+    var popup = chrome.extension.getViews({"type": "popup"});
+    if (popup.length) {
+      popup[0].PopUp.showPage();
+    }
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.checkDailyUpdate();
       TogglButton.setBrowserActionBadge();
-      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user});
+      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion});
       TogglButton.triggerNotification();
     } else if (request.type === 'login') {
       TogglButton.loginUser(request, sendResponse);

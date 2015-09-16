@@ -57,7 +57,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 
 ## Installing from Source
 
-_`Chrome will soon disable all non Chrome Web Store extensions so this is not viable solution for the future. More info: https://support.google.com/chrome/answer/2811969`_
+_Chrome will soon disable all non Chrome Web Store extensions so this is not viable solution for the future. More info: https://support.google.com/chrome/answer/2811969_
 
 1.  Clone the repository: `git clone git://github.com/toggl/toggl-button`
 2.  Navigate to `chrome://extensions/` and enable "Developer Mode".

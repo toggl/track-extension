@@ -200,7 +200,7 @@ var TogglButton = {
       entry = {
         time_entry: {
           start: start.toISOString(),
-          description: timeEntry.description,
+          description: timeEntry.description || "",
           wid: TogglButton.$user.default_wid,
           pid: timeEntry.projectId || null,
           tags: timeEntry.tags || null,
@@ -578,22 +578,38 @@ var TogglButton = {
   checkActivity: function (currentState) {
     clearTimeout(TogglButton.$timer);
     TogglButton.$timer = null;
+
     if (TogglButton.$user && currentState === "active" &&
         TogglButton.$idleCheckEnabled &&
         TogglButton.$curEntry === null &&
         TogglButton.workingTime()) {
+
       chrome.notifications.create(
         'remind-to-track-time',
         {
           type: 'basic',
           iconUrl: 'images/icon-128.png',
           title: "Toggl Button",
-          message: "Don't forget to track your time!"
+          message: "Don't forget to track your time!",
+          buttons: [
+            { title: "Start timer"},
+            { title: "Open Toggl.com"}
+          ]
         },
         function () {
           return;
         }
       );
+    }
+  },
+
+  notificationBtnClick: function (notificationID, buttonID) {
+    if (buttonID === 0) {
+      // start timer
+      TogglButton.createTimeEntry({}, null);
+    } else {
+      // open toggl.com
+      chrome.tabs.create({url: 'https://toggl.com'});
     }
   },
 
@@ -714,3 +730,4 @@ TogglButton.triggerNotification();
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);
 chrome.notifications.onClicked.addListener(TogglButton.triggerNotification);
+chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);

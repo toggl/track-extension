@@ -129,10 +129,12 @@ only screen and (min-resolution: 2dppx) {
   padding: 6px 0;
   min-width: 100%;
   font-weight: 400;
+  display: block;
 }
 .menu li {
   white-space: nowrap;
   list-style: none;
+  height: 29px;
 }
 .menu li:hover {
   background-color: #e6e6e6;
@@ -146,6 +148,7 @@ only screen and (min-resolution: 2dppx) {
   background-color: rgba(0, 0, 0, 0);
   text-align: left;
   width: 200px;
+  font-size: 11px;
 }
 button:focus {
   outline: none;
@@ -165,4 +168,225 @@ hr {
   font-style: italic;
   text-align: center;
   color: #999;
+}
+
+.edit-button, .stop-button {
+  float: left;
+  height: 29px;
+  line-height: 29px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.edit-button {
+  display: none;
+}
+
+.stop-button {
+  width: 170px;
+  padding-left: 30px;
+  text-align: left;
+  font-size: 11px;
+}
+
+.tracking .stop-button {
+  width: 60px!important;
+  padding-left: 3px!important;
+  text-align: center;
+  background-color: #ec0000;
+  color: white;
+  text-align: center;
+  display: block;
+}
+
+.tracking .edit-button{
+  width: 104px;
+  padding-left: 30px;
+  display: block;
+}
+
+.tracking .edit-button:hover {
+  opacity: 0.7;
+}
+
+/* Entry form styles */
+
+#entry-form {
+  display: none;
+  padding: 0;
+  width: 240px;
+  height: 220px;
+}
+
+#toggl-button-edit-form {
+  position: absolute;
+  width: 260px !important;
+  max-width: 240px;
+  padding: 10px !important;
+  box-sizing: border-box;
+}
+
+#toggl-button-edit-form .toggl-button{
+  margin: 0 !important;
+  border: none !important;
+  visibility: visible !important;
+  float: none !important;
+  opacity: 1 !important;
+}
+
+#toggl-button-edit-form #toggl-button-tasks-row {
+  display: none;
+}
+
+#toggl-button-edit-form .toggl-button:hover{
+  background-color: transparent;
+}
+
+#toggl-button-edit-form .toggl-button-row {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  outline: 1px solid #E0E0E0;
+}
+
+#toggl-button-edit-form .toggl-button-row label {
+  display: block;
+  font-size: 13px;
+  height: 20px;
+}
+
+#toggl-button-edit-form .toggl-button-input {
+  background: #f5f5f5;
+  border: 1px solid #e1e1e1;
+  font-size: 0.7em;
+  padding: 0 10px;
+}
+
+#toggl-button-edit-form .toggl-button-text {
+  float:left;
+  width: 186px;
+  height: 40px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#toggl-button-edit-form #toggl-button-project-placeholder,
+#toggl-button-edit-form #toggl-button-tag-placeholder,
+#toggl-button-edit-form #toggl-button-task-placeholder,
+#toggl-button-edit-form #toggl-button-description,
+#toggl-button-edit-form #toggl-button-project,
+#toggl-button-edit-form #toggl-button-task {
+  height: 40px !important;
+  line-height: 40px;
+  vertical-align: middle;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 0;
+  background-color: #ffffff;
+  font-size: 14px;
+}
+
+#toggl-button-edit-form #toggl-button-project-placeholder,
+#toggl-button-edit-form #toggl-button-tag-placeholder,
+#toggl-button-edit-form #toggl-button-task-placeholder {
+  color: #8a8989;
+  cursor: pointer;
+}
+
+#toggl-button-edit-form #toggl-button-project-placeholder,
+#toggl-button-edit-form #toggl-button-task-placeholder {
+  position: relative;
+  z-index: 2;
+}
+
+#toggl-button-edit-form #toggl-button-project-placeholder span,
+#toggl-button-edit-form #toggl-button-tag-placeholder span,
+#toggl-button-edit-form #toggl-button-task-placeholder span {
+  float: right;
+  color: #abaaaa;
+  cursor: pointer;
+}
+
+#toggl-button-edit-form #toggl-button-project,
+#toggl-button-edit-form #toggl-button-tag,
+#toggl-button-edit-form #toggl-button-task {
+  visibility: hidden;
+  position: absolute;
+}
+
+#toggl-button-edit-form #toggl-button-project,
+#toggl-button-edit-form #toggl-button-task {
+  visibility: visible!important;
+  z-index: 1;
+  max-width: 220px;
+}
+
+#toggl-button-description, #toggl-button-project, #toggl-button-tag, #toggl-button-task {
+  font-size: 13px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  width: 100% !important;
+  box-sizing :border-box !important;
+}
+
+#toggl-button-edit-form #toggl-button-tag {
+  display: none;
+  visibility: visible;
+  background: #ffffff;
+  max-width: 220px;
+  position: absolute;
+  margin-top: 40px!important;
+  height: 100px!important;
+  z-index: 1;
+}
+
+#toggl-button-edit-form #toggl-button-update {
+  font-weight: 200;
+  font-size: 16px;
+  width: 110px;
+  height: 34px;
+  line-height: 34px;
+  vertical-align: middle;
+  margin-left: 55px;
+  margin-top: 15px;
+  text-transform: uppercase;
+  color: white;
+  display: inline-block;
+  background-color: #80d364;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+}
+
+#toggl-button-edit-form #toggl-button-update:before {
+  border-color: rgba(0,0,0,0.5);
+  direction: ltr;
+  content: '\2713';
+  margin-left: 0;
+  font-size: 20px;
+  position: relative;
+  color: #fff;
+  top: 0;
+  font-weight: 200;
+  left: -8px;
+}
+
+#toggl-button-edit-form #toggl-button-hide{
+  float: right;
+  background: transparent;
+  border: none;
+  color: #6a7479;
+  font-family: sans-serif, Arial;
+  font-size: 20px;
+  font-weight: 200;
+  min-height: 25px;
+  text-decoration: none;
+  margin-top: 0px;
+}
+
+.toggl-button, #toggl-button-hide {
+  display: none;
 }

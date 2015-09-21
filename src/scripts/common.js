@@ -49,6 +49,12 @@ function getFullPageHeight() {
                          html.clientHeight, html.scrollHeight, html.offsetHeight);
 }
 
+function setCursorAtBeginning(elem) {
+  elem.focus();
+  elem.setSelectionRange(0, 0);
+  elem.scrollLeft = 0;
+}
+
 var togglbutton = {
   isStarted: false,
   element: null,
@@ -128,9 +134,9 @@ var togglbutton = {
 
 
   resetTasks: function () {
-    $("#toggl-button-task-placeholder").removeEventListener('click', togglbutton.delegateTaskClick);
-    $("#toggl-button-task-placeholder > div").innerHTML = "Add task";
-    $("#toggl-button-task").innerHTML = "";
+    document.querySelector("#toggl-button-task-placeholder").removeEventListener('click', togglbutton.delegateTaskClick);
+    document.querySelector("#toggl-button-task-placeholder > div").innerHTML = "Add task";
+    document.querySelector("#toggl-button-task").innerHTML = "";
   },
 
   generateProjectLabel: function (select, pid) {
@@ -166,7 +172,8 @@ var togglbutton = {
       closeTagsList,
       elemRect,
       div = document.createElement('div'),
-      editForm;
+      editForm,
+      togglButtonDescription;
 
     elemRect = togglbutton.element.getBoundingClientRect();
     editForm = $("#toggl-button-edit-form");
@@ -174,7 +181,8 @@ var togglbutton = {
 
     if (editForm !== null) {
       togglbutton.fetchTasks(pid, editForm);
-      $("#toggl-button-description").value = response.entry.description;
+      togglButtonDescription = $("#toggl-button-description");
+      togglButtonDescription.value = response.entry.description;
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
       placeholder = $("#toggl-button-project-placeholder > div");
@@ -185,6 +193,7 @@ var togglbutton = {
       editForm.style.left = position.left + "px";
       editForm.style.top = position.top + "px";
       editForm.style.display = "block";
+      setCursorAtBeginning(togglButtonDescription);
       return;
     }
 
@@ -249,11 +258,14 @@ var togglbutton = {
       } else {
         dropdown.style.display = "block";
         updateTags(true);
+        dropdown.focus();
       }
       togglbutton.tagsVisible = !togglbutton.tagsVisible;
     };
 
-    $("#toggl-button-description", editForm).value = response.entry.description;
+    togglButtonDescription = $("#toggl-button-description", editForm);
+    togglButtonDescription.value = response.entry.description;
+    setCursorAtBeginning(togglButtonDescription);
     $("#toggl-button-project", editForm).value = pid;
     projectSelect = $("#toggl-button-project", editForm);
     placeholder = $("#toggl-button-project-placeholder > div", editForm);
@@ -269,6 +281,7 @@ var togglbutton = {
 
     $("form", editForm).addEventListener('submit', function (e) {
       submitForm(this);
+      e.preventDefault();
     });
 
     $(".toggl-button", editForm).addEventListener('click', function (e) {
@@ -376,6 +389,9 @@ var togglbutton = {
     var link = createLink('toggl-button');
     togglbutton.currentDescription = invokeIfFunction(params.description);
     function activate() {
+      if (document.querySelector(".toggl-button.active")) {
+        document.querySelector(".toggl-button.active").classList.remove('active');
+      }
       link.classList.add('active');
       link.style.color = '#1ab351';
       if (params.buttonType !== 'minimal') {

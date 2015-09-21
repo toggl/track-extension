@@ -4,18 +4,23 @@
 'use strict';
 
 /* User story details button */
-togglbutton.render('body:not(.loader-active) .us-detail:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.us-detail:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    refElem = $('.us-number', elem),
-    titleElem = $('.view-subject', elem),
-    projectElem = $('.project-name', elem),
+    refElem,
+    titleElem,
     container = $('.us-title-text');
 
   link = togglbutton.createTimerLink({
     className: 'taiga',
     buttonType: 'minimal',
-    description: refElem.textContent + ' ' + titleElem.textContent,
-    projectName: projectElem.textContent
+    description: function () {
+      refElem = $('.us-number', elem);
+      titleElem = $('.view-subject', elem);
+      return refElem.textContent + ' ' + titleElem.textContent;
+    },
+    projectName: function () {
+      return $('.project-name', elem).textContent;
+    }
   });
 
   container.insertBefore(link, $('.us-number', elem));
@@ -23,6 +28,7 @@ togglbutton.render('body:not(.loader-active) .us-detail:not(.toggl)', {observe: 
 
 /* Backlog list buttons */
 togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (elem) {
+
   var link,
     projectElem = $('.backlog .project-name'),
     refElem = $('a > span:nth-child(1)', elem),
@@ -39,7 +45,7 @@ togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (el
 });
 
 /* Kanban button */
-togglbutton.render('body:not(.loader-active) .kanban-task-inner:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.kanban-task-inner:not(.toggl)', {observe: true}, function (elem) {
   var link,
     refElem = $('.task-num', elem),
     titleElem = $('.task-name', elem),
@@ -56,7 +62,7 @@ togglbutton.render('body:not(.loader-active) .kanban-task-inner:not(.toggl)', {o
 });
 
 /* Sprint Taskboard tasks button */
-togglbutton.render('body:not(.loader-active) .taskboard-task-inner:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.taskboard-task-inner:not(.toggl)', {observe: true}, function (elem) {
   var link,
     refElem = $('.task-num', elem),
     titleElem = $('.task-name', elem),

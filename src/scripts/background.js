@@ -669,7 +669,7 @@ var TogglButton = {
 
   updatePopup: function () {
     var popup = chrome.extension.getViews({"type": "popup"});
-    if (popup.length) {
+    if (!!popup && popup.length && !!popup[0].PopUp) {
       popup[0].PopUp.showPage();
     }
   },

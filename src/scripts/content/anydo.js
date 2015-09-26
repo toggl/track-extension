@@ -22,3 +22,26 @@ togglbutton.render('.dialog:not(.toggl)', {observe: true}, function (elem) {
   wrap.appendChild(link);
   container.appendChild(wrap);
 });
+
+
+/* Subtasks */
+
+togglbutton.render('.subtasks-list li .container:not(.toggl)', {observe: true}, function (elem) {
+  var link, wrap = createTag('div'),
+    projectElem = $('.folderSelector'),
+    titleFunc;
+
+  titleFunc = function () {
+    return $('.title', elem).textContent;
+  };
+
+  link = togglbutton.createTimerLink({
+    className: 'anydo',
+    description: titleFunc,
+    projectName: projectElem.textContent
+  });
+
+  wrap.appendChild(link);
+  elem.insertBefore(wrap, $('.controls', elem));
+});
+

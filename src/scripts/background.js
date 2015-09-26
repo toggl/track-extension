@@ -49,7 +49,9 @@ var TogglButton = {
         var resp, apiToken, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null;
         if (xhr.status === 200) {
           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
+            if (!!tabs[0]) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
+            }
           });
           resp = JSON.parse(xhr.responseText);
           TogglButton.$curEntry = null;

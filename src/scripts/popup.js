@@ -102,16 +102,17 @@ var PopUp = {
   /* Edit form functions */
   updateEditForm: function () {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
+      tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
       togglButtonDescription = document.querySelector("#toggl-button-description"),
       projectSelect,
       placeholder;
 
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
-    document.querySelector("#toggl-button-project").value = pid;
     projectSelect = document.getElementById("toggl-button-project");
+    projectSelect.value = pid;
     placeholder = document.querySelector("#toggl-button-project-placeholder > div");
-    placeholder.innerHTML = placeholder.title = PopUp.generateProjectLabel(projectSelect, pid);
-    PopUp.resetTasks();
+    placeholder.innerHTML = placeholder.title = PopUp.generateLabel(projectSelect, pid, "project");
+    PopUp.fetchTasks(pid, tid);
     if (!!TogglButton.$curEntry.tags && TogglButton.$curEntry.tags.length) {
       PopUp.setSelecedTags();
     } else {
@@ -170,15 +171,15 @@ var PopUp = {
     return tags;
   },
 
-  generateProjectLabel: function (select, pid) {
+  generateLabel: function (select, id, type) {
     var selected = select.options[select.selectedIndex],
       parent,
       result = "";
-    if (parseInt(pid, 10) === 0 || !selected) {
-      return "Add project";
+    if (parseInt(id, 10) === 0 || !selected) {
+      return "Add " + type;
     }
     parent = selected.parentNode;
-    if (parent.tagName === "OPTGROUP") {
+    if (type === "project" && parent.tagName === "OPTGROUP") {
       result = parent.label + " - ";
     }
     return result + selected.text;
@@ -236,8 +237,11 @@ var PopUp = {
     PopUp.$tagsVisible = !PopUp.$tagsVisible;
   },
 
-  fetchTasks: function (projectId) {
-    var tasksRow = document.getElementById("toggl-button-tasks-row");
+  fetchTasks: function (projectId, tid) {
+    var tasksRow = document.getElementById("toggl-button-tasks-row"),
+      taskSelect,
+      taskPlaceholder;
+
     PopUp.resetTasks();
     if (!TogglButton.$user.projectTaskList || projectId === 0) {
       tasksRow.style.display = "none";
@@ -248,6 +252,12 @@ var PopUp = {
       if (response && response.success && response.html) {
         document.querySelector('#toggl-button-task').innerHTML = response.html;
         document.querySelector("#toggl-button-task-placeholder").addEventListener('click', PopUp.delegateTaskClick);
+        if (!!tid) {
+          taskPlaceholder = document.querySelector("#toggl-button-task-placeholder > div");
+          taskSelect = document.getElementById("toggl-button-task");
+          taskSelect.value = tid;
+          taskPlaceholder.innerHTML = taskPlaceholder.title = PopUp.generateLabel(taskSelect, tid, "task");
+        }
         tasksRow.style.display = "block";
       } else {
         tasksRow.style.display = "none";
@@ -303,7 +313,7 @@ var PopUp = {
 
     projectSelect.addEventListener('change', function (e) {
       var placeholder = document.querySelector("#toggl-button-project-placeholder > div");
-      placeholder.innerHTML = placeholder.title = PopUp.generateProjectLabel(this, this.value);
+      placeholder.innerHTML = placeholder.title = PopUp.generateLabel(this, this.value, "project");
 
       // Force blur.
       PopUp.projectBlurTrigger = null;

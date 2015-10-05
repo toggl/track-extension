@@ -1,3 +1,12 @@
+[0.7.2]
+- Fixed popup font consistency
+- Fixed subtask project selection for Asana
+- Fixed Youtrack project name fetch
+- Added action buttons to tracking reminder
+- Added Start timer buttons to Any.do subtasks
+- Don't show deleted project in dropdown
+- Added usage statistics gathering
+- Added extension version and change log link to Settings view
 [0.7.1]
 - Focus tags dropdown when it's opened
 - Fixed Wunderlist styles

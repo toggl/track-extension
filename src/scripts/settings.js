@@ -14,7 +14,7 @@ var Settings = {
     Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
     Settings.toggleState(Settings.$nanny, TogglButton.$idleCheckEnabled);
     Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
-
+    TogglButton.analytics("settings", null);
   },
   setFromTo: function () {
     var fromTo = TogglButton.$idleFromTo.split("-");

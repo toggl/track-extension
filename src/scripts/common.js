@@ -221,7 +221,8 @@ var togglbutton = {
           pid: selectedProject.value,
           projectName: selectedProject.options[selectedProject.selectedIndex].text,
           tags: togglbutton.getSelectedTags(),
-          tid: (taskButton && taskButton.value) ? taskButton.value : null
+          tid: (taskButton && taskButton.value) ? taskButton.value : null,
+          service: togglbutton.serviceName
         };
       chrome.extension.sendMessage(request);
       closeTagsList(true);
@@ -421,7 +422,10 @@ var togglbutton = {
 
       if (link.classList.contains('active')) {
         deactivate();
-        opts = {type: 'stop'};
+        opts = {
+          type: 'stop',
+          service: togglbutton.serviceName
+        };
       } else {
         activate();
         opts = {
@@ -431,7 +435,8 @@ var togglbutton = {
           description: invokeIfFunction(params.description),
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
-          createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName
+          createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName,
+          service: togglbutton.serviceName
         };
       }
       togglbutton.element = e.target;

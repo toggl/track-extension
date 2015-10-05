@@ -194,7 +194,8 @@ var PopUp = {
         projectName: selectedProject.options[selectedProject.selectedIndex].text,
         tags: PopUp.getSelectedTags(),
         tid: (taskButton && taskButton.value) ? taskButton.value : null,
-        respond: true
+        respond: true,
+        service: "dropdown"
       };
     PopUp.sendMessage(request);
     PopUp.closeTagsList(true);
@@ -361,7 +362,8 @@ document.addEventListener('DOMContentLoaded', function () {
   PopUp.$togglButton.addEventListener('click', function () {
     var request = {
       type: this.getAttribute('data-event'),
-      respond: true
+      respond: true,
+      service: "dropdown"
     };
     clearInterval(PopUp.$timer);
     PopUp.$timer = null;

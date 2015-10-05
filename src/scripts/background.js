@@ -1,6 +1,19 @@
-/*jslint indent: 2, unparam: true, plusplus: true */
-/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false */
+/*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
+/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false */
 "use strict";
+
+var _gaq = window._gaq || [];
+_gaq.push(['_setAccount', 'UA-3215787-22']);
+_gaq.push(['_trackPageview']);
+
+(function () {
+  var ga = document.createElement('script'),
+    s = document.getElementsByTagName('script')[0];
+  ga.type = 'text/javascript';
+  ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(ga, s);
+}());
 
 var TogglButton = {
   $user: null,
@@ -234,8 +247,19 @@ var TogglButton = {
         if (TogglButton.$timer !== null) {
           clearTimeout(TogglButton.$timer);
         }
+        TogglButton.analytics(timeEntry.type, timeEntry.service);
       }
     });
+  },
+
+  analytics: function (event, service) {
+    if (event === "settings") {
+      _gaq.push(['_trackEvent', 'popup', "popup-" + TogglButton.$showPostPopup]);
+      _gaq.push(['_trackEvent', 'idle', "idle-" + TogglButton.$idleCheckEnabled]);
+      _gaq.push(['_trackEvent', 'websocket', "websocket-" + TogglButton.$socketEnabled]);
+    } else {
+      _gaq.push(['_trackEvent', event, event + "-" + service]);
+    }
   },
 
   ajax: function (url, opts) {
@@ -282,6 +306,7 @@ var TogglButton = {
             });
           }
           TogglButton.triggerNotification();
+          TogglButton.analytics(timeEntry.type, timeEntry.service);
         }
       }
     });
@@ -316,6 +341,7 @@ var TogglButton = {
         if (!!timeEntry.respond) {
           sendResponse({success: (xhr.status === 200), type: "Update"});
         }
+        TogglButton.analytics(timeEntry.type, timeEntry.service);
       }
     });
   },
@@ -608,7 +634,7 @@ var TogglButton = {
   notificationBtnClick: function (notificationID, buttonID) {
     if (buttonID === 0) {
       // start timer
-      TogglButton.createTimeEntry({}, null);
+      TogglButton.createTimeEntry({"type": "timeEntry", "service": "dropdown"}, null);
     } else {
       // open toggl.com
       chrome.tabs.create({url: 'https://toggl.com'});

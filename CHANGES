@@ -4,7 +4,7 @@
 - Fixed Youtrack project name fetch
 - Added action buttons to tracking reminder
 - Added Start timer buttons to Any.do subtasks
-- Don't show deleted project in dropdown
+- Don't show deleted projects in dropdown
 - Added usage statistics gathering
 - Added extension version and change log link to Settings view
 - Fixed task dropdown display in popup

@@ -700,6 +700,10 @@ var TogglButton = {
     }
   },
 
+  contextMenuClick: function (info, tab) {
+    TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": info.selectionText || ""}, null);
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'activate') {
       TogglButton.checkDailyUpdate();
@@ -747,6 +751,9 @@ var TogglButton = {
     return true;
   }
 };
+
+chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
+chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
 
 TogglButton.fetchUser();
 TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");

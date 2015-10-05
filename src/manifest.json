@@ -19,6 +19,7 @@
     "default_title": "Toggl Time Tracker"
   },
   "permissions": [
+    "contextMenus",
     "notifications",
     "idle",
     "*://*.toggl.com/*",

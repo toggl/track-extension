@@ -58,7 +58,7 @@ var TogglButton = {
           TogglButton.setBrowserAction(null);
           if (resp.data.projects) {
             resp.data.projects.forEach(function (project) {
-              if (project.active) {
+              if (project.active && !project.server_deleted_at) {
                 projectMap[project.name + project.id] = project;
               }
             });

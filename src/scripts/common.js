@@ -431,7 +431,7 @@ var togglbutton = {
           description: invokeIfFunction(params.description),
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
-          createdWith: togglbutton.fullVersion
+          createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName
         };
       }
       togglbutton.element = e.target;

@@ -78,7 +78,8 @@
     "*://app.breeze.pm/*",
     "*://www.gqueues.com/*",
     "*://app.codeable.io/*",
-    "*://www.assembla.com/*"
+    "*://www.assembla.com/*",
+	"*://*.visualstudio.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -146,7 +147,9 @@
         "*://www.gqueues.com/*",
         "*://app.codeable.io/*",
         "*://waffle.io/*",
-        "*://www.assembla.com/*"
+        "*://www.assembla.com/*",
+
+        "*://*.visualstudio.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -321,9 +324,9 @@
       "js": ["scripts/content/helpscout.js"]
     },
     {
-      "matches": ["*://*.getflow.com/*"],
-      "js": ["scripts/content/getflow.js"]
-    },
+  	  "matches": ["*://*.getflow.com/*"],
+  	  "js": ["scripts/content/getflow.js"]
+  	},
     {
       "matches": ["*://sprint.ly/*"],
       "js": ["scripts/content/sprintly.js"]
@@ -366,6 +369,10 @@
     {
       "matches": ["*://www.assembla.com/*"],
       "js": ["scripts/content/assembla.js"]
+    },
+    {
+      "matches": ["*://*.visualstudio.com/*"],
+      "js": ["scripts/content/tfs.js"]
     }
   ]
 }

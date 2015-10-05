@@ -9,6 +9,7 @@ var Settings = {
   $socket: null,
   $nanny: null,
   showPage: function () {
+    document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = TogglButton.$idleInterval / 60000;
     Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);

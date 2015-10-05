@@ -95,3 +95,20 @@ padding-top: 10px;
 .list li #nag-nanny:checked ~ div {
   display: block;
 }
+
+.top {
+  width: 1000px;
+  margin: 10px auto;
+  padding: 0;
+  color: #8A8888!important;
+}
+#version {
+  font-size: 12px;
+  color: #8A8888;
+  padding-left: 10px;
+}
+
+#version a {
+  color: #8A8888!important;
+  text-decoration: none;
+}

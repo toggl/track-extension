@@ -15,7 +15,7 @@ togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (
   };
 
   projectFunc = function () {
-    return (project && project.textContent) || $('.ancestor-projects', elem).textContent;
+    return (project && project.textContent) || ($('.ancestor-projects', elem) && $('.ancestor-projects', elem).textContent) || "";
   };
 
   link = togglbutton.createTimerLink({

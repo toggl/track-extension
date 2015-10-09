@@ -2,8 +2,9 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.wspace-task-view:not(.toggl)', {observe: true}, function () {
+togglbutton.render('.wspace-task-view:not(.toggl)', {observe: true}, function (elem) {
   var link,
+    container = $('.wrike-panel-header-toolbar', elem),
     titleElem = function () {
       return $('title').innerText.replace(' - Wrike', '');
     };
@@ -13,5 +14,5 @@ togglbutton.render('.wspace-task-view:not(.toggl)', {observe: true}, function ()
     description: titleElem
   });
 
-  $('.wspace-task-settings-bar').appendChild(link);
+  container.insertBefore(link, container.firstChild);
 });

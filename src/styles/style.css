@@ -5,7 +5,7 @@
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
+  font-family: Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
   vertical-align: baseline;
   box-sizing: border-box;
 }

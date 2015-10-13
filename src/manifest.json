@@ -88,7 +88,8 @@
     "*://app.breeze.pm/*",
     "*://www.gqueues.com/*",
     "*://app.codeable.io/*",
-    "*://www.assembla.com/*"
+    "*://www.assembla.com/*",
+    "*://*.salesforce.com/*"
   ],
   "content_scripts": [
     {
@@ -150,7 +151,8 @@
         "*://www.gqueues.com/*",
         "*://app.codeable.io/*",
         "*://waffle.io/*",
-        "*://www.assembla.com/*"
+        "*://www.assembla.com/*",
+        "*://*.salesforce.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -370,6 +372,10 @@
     {
       "matches": ["*://www.assembla.com/*"],
       "js": ["scripts/content/assembla.js"]
+    },
+    {
+      "matches": ["*://*.salesforce.com/*"],
+      "js": ["scripts/content/salesforce.js"]
     }
   ]
 }

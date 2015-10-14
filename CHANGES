@@ -1,3 +1,11 @@
+[0.7.3]
+- Added Toggl Button to context menu
+- 16px Icon improvements
+- Fixed Wrike integration
+- Improved font consistency in edit view
+- Fixed Asana start button
+- Converted to Settings view to Options V2
+- Added support for Salesforce
 [0.7.2]
 - Fixed popup font consistency
 - Fixed subtask project selection for Asana

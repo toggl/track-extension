@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.querySelector(".settings-button").addEventListener('click', function () {
-    chrome.tabs.create({url: "html/settings.html"});
+    chrome.runtime.openOptionsPage();
   });
 
   document.querySelector(".logout-button").addEventListener('click', function () {

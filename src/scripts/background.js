@@ -250,6 +250,8 @@ var TogglButton = {
         TogglButton.analytics(timeEntry.type, timeEntry.service);
       }
     });
+
+    chrome.alarms.create('PomodoroTimer', {when: Date.now() + 5000});
   },
 
   analytics: function (event, service) {
@@ -305,11 +307,31 @@ var TogglButton = {
               chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
             });
           }
+
+          chrome.alarms.clear('PomodoroTimer');
+
           TogglButton.triggerNotification();
           TogglButton.analytics(timeEntry.type, timeEntry.service);
         }
       }
     });
+  },
+
+  pomodoroAlarmStop: function (alarm) {
+    if(alarm.name === 'PomodoroTimer') {
+      // chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+      //   console.log(tabs);
+      //   if (!!tabs[0]) {
+      //     chrome.tabs.sendMessage(tabs[0].id, {type: "pomodoro-stop"});
+      //   }
+      // });
+
+      TogglButton.stopTimeEntry({type: 'pomodoro-stop'}, function(responce) {});
+      
+      alert("Time is up");
+    }
+
+    //return true;
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {
@@ -762,6 +784,7 @@ TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
 TogglButton.triggerNotification();
+chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);
 chrome.notifications.onClicked.addListener(TogglButton.triggerNotification);

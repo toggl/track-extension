@@ -153,6 +153,13 @@ var togglbutton = {
     return result + selected.text;
   },
 
+  pomodoroAlarmStop: function (alarm) {
+    console.log("on alarm event");
+    if(alarm.name === 'PomodoroTimer') {
+      chrome.extension.sendMessage({type: 'stop'}, togglbutton.addEditForm);
+    }
+  },
+
   addEditForm: function (response) {
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {
@@ -494,7 +501,7 @@ var togglbutton = {
       if ($("#toggl-button-edit-form") !== null) {
         $("#toggl-button-edit-form").remove();
       }
-    }
+    } 
   }
 };
 

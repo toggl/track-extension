@@ -17,6 +17,7 @@ body {
   display: none;
 }
 #login-form {
+  margin-bottom: 30px;
   padding-top: 10px;
 }
 #login-form .form-submit-row label.left {
@@ -27,7 +28,12 @@ body {
   line-height: 33px;
   vertical-align: middle;
   text-decoration: none;
-  color: #f30c16;
+  color: #aaa;
+  float: left;
+  display: block;
+}
+.forgot-link:hover {
+  color: #767676;
 }
 .form-row {
   margin: 0 0 10px;

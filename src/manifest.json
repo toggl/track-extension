@@ -29,6 +29,7 @@
     "chrome_style": true
   },
   "permissions": [
+    "alarms",
     "contextMenus",
     "notifications",
     "idle",

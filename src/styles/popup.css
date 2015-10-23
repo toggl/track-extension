@@ -17,11 +17,17 @@ body {
   display: none;
 }
 #login-form {
-  margin-bottom: 30px;
   padding-top: 10px;
 }
 #login-form .form-submit-row label.left {
   padding: 10px 0;
+}
+.forgot-link {
+  height: 33px;
+  line-height: 33px;
+  vertical-align: middle;
+  text-decoration: none;
+  color: #f30c16;
 }
 .form-row {
   margin: 0 0 10px;
@@ -160,7 +166,7 @@ hr {
 }
 .error {
   display: none;
-  background: red;
+  background: #f30c16;
   padding: 10px 5px;
   color: white;
 }

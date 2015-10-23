@@ -319,19 +319,15 @@ var TogglButton = {
 
   pomodoroAlarmStop: function (alarm) {
     if(alarm.name === 'PomodoroTimer') {
-      // chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      //   console.log(tabs);
-      //   if (!!tabs[0]) {
-      //     chrome.tabs.sendMessage(tabs[0].id, {type: "pomodoro-stop"});
-      //   }
-      // });
-
-      TogglButton.stopTimeEntry({type: 'pomodoro-stop'}, function(responce) {});
+      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
       
-      alert("Time is up");
+      var stopSound = new Audio();
+      stopSound.src = 'sounds/time_is_up_1.mp3';
+      stopSound.play();
+      //alert("Time is up");
     }
 
-    //return true;
+    return true;
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {

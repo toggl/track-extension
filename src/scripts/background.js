@@ -328,13 +328,16 @@ var TogglButton = {
     if(alarm.name === 'PomodoroTimer') {
       TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
       
+      var notificationId = 'pomodoro-time-is-up';
+      TogglButton.hideNotification(notificationId);
       chrome.notifications.create(
-        'pomodoro-time-is-up',
+        notificationId,
         {
           type: 'basic',
           iconUrl: 'images/icon-128.png',
           title: "Time is up!",
           message: "Take a break",
+          priority: 2,
           buttons: [
             { title: "Restart timer"},
             { title: "Open Tracker"}

@@ -264,6 +264,8 @@ var TogglButton = {
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + TogglButton.$showPostPopup]);
       _gaq.push(['_trackEvent', 'idle', "settings/idle-" + TogglButton.$idleCheckEnabled]);
       _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + TogglButton.$socketEnabled]);
+      _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + TogglButton.$pomodoroModeEnabled]);
+      _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + TogglButton.$pomodoroSoundEnabled]);
     } else {
       _gaq.push(['_trackEvent', event, event + "-" + service]);
     }

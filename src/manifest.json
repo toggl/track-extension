@@ -89,7 +89,8 @@
     "*://www.gqueues.com/*",
     "*://app.codeable.io/*",
     "*://www.assembla.com/*",
-    "*://*.salesforce.com/*"
+    "*://*.salesforce.com/*",
+    "*://*.draftin.com/*"
   ],
   "content_scripts": [
     {
@@ -152,7 +153,8 @@
         "*://app.codeable.io/*",
         "*://waffle.io/*",
         "*://www.assembla.com/*",
-        "*://*.salesforce.com/*"
+        "*://*.salesforce.com/*",
+        "*://*.draftin.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -376,6 +378,10 @@
     {
       "matches": ["*://*.salesforce.com/*"],
       "js": ["scripts/content/salesforce.js"]
+    },
+    {
+      "matches": ["*://*.draftin.com/*"],
+      "js": ["scripts/content/draftin.js"]
     }
   ]
 }

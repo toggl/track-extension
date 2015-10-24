@@ -21,7 +21,7 @@ body {
 }
 
 .list li {
-  height: 40px;
+  min-height: 40px;
 }
 
 .list li #nag-nanny:checked ~ div {

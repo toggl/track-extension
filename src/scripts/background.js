@@ -838,7 +838,7 @@ TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
 TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
-TogglButton.$pomodoroModeEnabled = TogglButton.loadSetting("pomodoroModeEnabled");
+TogglButton.$pomodoroModeEnabled = !!localStorage.getItem("pomodoroModeEnabled") ? localStorage.getItem("pomodoroModeEnabled") : false;
 TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled");
 TogglButton.$pomodoroInterval = !!localStorage.getItem("pomodoroInterval") ? localStorage.getItem("pomodoroInterval") : 25;
 TogglButton.triggerNotification();

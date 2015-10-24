@@ -28,6 +28,10 @@ body {
   display: block;
 }
 
+.list li #pomodoro-mode:checked ~ div {
+  display: block;
+}
+
 .list li label {
   font-size: 14px;
 }
@@ -38,22 +42,22 @@ body {
   margin: 0px 0.4em 0.3em 0px;
 }
 
-#nag-nanny-details {
+#subsettings-details  {
   display: none;
   margin-left: 10px;
 }
 
-#nag-nanny-details p {
+#subsettings-details p {
   float: left;
   padding-right: 30px;
 }
 
-#nag-nanny-details p:last-child {
+#subsettings-details p:last-child {
   float: none;
   clear: both;
 }
 
-#nag-nanny-details span {
+#subsettings-details span {
   display: block;
   font-size: 14px;
   padding-top: 10px;

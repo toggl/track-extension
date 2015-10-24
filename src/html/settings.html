@@ -18,7 +18,7 @@
         <li class="nag-nanny">
           <input type="checkbox" id="nag-nanny">
           <label for="nag-nanny">Remind me to track</label>
-          <div id="nag-nanny-details">
+          <div id="subsettings-details">
             <span>Track activity on workdays</span>
             <p>
               <label for="nag-nanny-from">From:</label>
@@ -31,6 +31,20 @@
             <p>
               <label for="nag-nanny-interval">Minutes since stopping last Time Entry</label>
               <input type="number" id="nag-nanny-interval" min="1">
+            </p>
+          </div>
+        </li>
+        <li class="pomodoro-mode">
+          <input type="checkbox" id="pomodoro-mode">
+          <label for="pomodoro-mode">Enable Pomodoro mode</label>
+          <div id="subsettings-details">
+            <p>
+              <input type="checkbox" id="enable-sound-signal">
+              <label for="enable-sound-signal">Enable sound notification at the end of an interval</label>
+            </p>
+            <p>
+              <label for="pomodoro-interval">Length of Pomodoro time interval in minutes</label>
+              <input type="number" id="pomodoro-interval" min="1">
             </p>
           </div>
         </li>

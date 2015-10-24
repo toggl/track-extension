@@ -28,6 +28,9 @@ var TogglButton = {
   $idleCheckEnabled: false,
   $idleInterval: 360000,
   $idleFromTo: "09:00-17:00",
+  $pomodoroModeEnabled: false,
+  $pomodoroSoundEnabled: true,
+  $pomodoroInterval: 25,
   $lastSyncDate: null,
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
@@ -251,7 +254,9 @@ var TogglButton = {
       }
     });
 
-    chrome.alarms.create('PomodoroTimer', {when: Date.now() + 5000});
+    if (TogglButton.$pomodoroModeEnabled) {
+      chrome.alarms.create('PomodoroTimer', {delayInMinutes: TogglButton.$pomodoroInterval});
+    }
   },
 
   analytics: function (event, service) {
@@ -338,10 +343,11 @@ var TogglButton = {
         }
       );
 
-      var stopSound = new Audio();
-      stopSound.src = 'sounds/time_is_up_1.mp3';
-      stopSound.play();
-      //alert("Time is up");
+      if (TogglButton.$pomodoroSoundEnabled) {
+        var stopSound = new Audio();
+        stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
+        stopSound.play();
+      }
     }
 
     return true;
@@ -634,6 +640,11 @@ var TogglButton = {
     }
   },
 
+  setPomodoroInterval: function (state) {
+    localStorage.setItem("pomodoroInterval", state);
+    TogglButton.$pomodoroInterval = state;
+  },
+
   checkState: function () {
     chrome.idle.queryState(15, TogglButton.checkActivity);
   },
@@ -787,6 +798,14 @@ var TogglButton = {
       TogglButton.setNannyFromTo(request.state);
     } else if (request.type === 'toggle-nanny-interval') {
       TogglButton.setNannyInterval(request.state);
+    } else if (request.type === 'toggle-pomodoro') {
+      localStorage.setItem("pomodoroModeEnabled", request.state);
+      TogglButton.$pomodoroModeEnabled = request.state;
+    } else if (request.type === 'toggle-pomodoro-sound') {
+      localStorage.setItem("pomodoroSoundEnabled", request.state);
+      TogglButton.$pomodoroSoundEnabled = request.state;
+    } else if (request.type === 'toggle-pomodoro-interval') {
+      TogglButton.setPomodoroInterval(request.state);
     } else if (request.type === 'userToken') {
       if (!TogglButton.$user) {
         TogglButton.fetchUser(request.apiToken);
@@ -814,6 +833,9 @@ TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
 TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
 TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
 TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
+TogglButton.$pomodoroModeEnabled = TogglButton.loadSetting("pomodoroModeEnabled");
+TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled");
+TogglButton.$pomodoroInterval = !!localStorage.getItem("pomodoroInterval") ? localStorage.getItem("pomodoroInterval") : 25;
 TogglButton.triggerNotification();
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);

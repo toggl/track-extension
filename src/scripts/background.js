@@ -321,6 +321,23 @@ var TogglButton = {
     if(alarm.name === 'PomodoroTimer') {
       TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
       
+      chrome.notifications.create(
+        'pomodoro-time-is-up',
+        {
+          type: 'basic',
+          iconUrl: 'images/icon-128.png',
+          title: "Time is up!",
+          message: "Take a break",
+          buttons: [
+            { title: "Restart timer"},
+            { title: "Open Tracker"}
+          ]
+        },
+        function () {
+          return;
+        }
+      );
+
       var stopSound = new Audio();
       stopSound.src = 'sounds/time_is_up_1.mp3';
       stopSound.play();
@@ -649,14 +666,24 @@ var TogglButton = {
     }
   },
 
-  notificationBtnClick: function (notificationID, buttonID) {
+  notificationBtnClick: function (notificationId, buttonID) {
     if (buttonID === 0) {
       // start timer
       TogglButton.createTimeEntry({"type": "timeEntry", "service": "dropdown"}, null);
     } else {
-      // open toggl.com
-      chrome.tabs.create({url: 'https://toggl.com'});
+      var pageToOpen = '';
+
+      if (notificationId === 'remind-to-track-time') {
+        // open toggl.com
+        pageToOpen = {url: 'https://toggl.com'};
+      } else {
+        //open tracker
+        pageToOpen = {url: 'https://toggl.com/app/'};
+      }
+
+      chrome.tabs.create(pageToOpen);
     }
+    TogglButton.processNotificationEvent(notificationId);
   },
 
   workingTime: function () {
@@ -683,14 +710,22 @@ var TogglButton = {
 
   triggerNotification: function () {
     if (TogglButton.$timer === null && TogglButton.$curEntry === null) {
-      TogglButton.hideNotification();
+      TogglButton.hideNotification('remind-to-track-time');
       TogglButton.$timer = setTimeout(TogglButton.checkState, TogglButton.$idleInterval);
     }
   },
 
-  hideNotification: function () {
+  processNotificationEvent: function(notificationId) {
+    if (notificationId === 'remind-to-track-time') {
+      TogglButton.triggerNotification();
+    } else {
+      TogglButton.hideNotification(notificationId);
+    }
+  },
+
+  hideNotification: function (notificationId) {
     chrome.notifications.clear(
-      'remind-to-track-time',
+      notificationId,
       function () {
         return;
       }
@@ -736,7 +771,7 @@ var TogglButton = {
       TogglButton.fetchUser();
     } else if (request.type === 'timeEntry') {
       TogglButton.createTimeEntry(request, sendResponse);
-      TogglButton.hideNotification();
+      TogglButton.hideNotification('remind-to-track-time');
     } else if (request.type === 'update') {
       TogglButton.updateTimeEntry(request, sendResponse);
     } else if (request.type === 'stop') {
@@ -782,6 +817,6 @@ TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.ge
 TogglButton.triggerNotification();
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
-chrome.notifications.onClosed.addListener(TogglButton.triggerNotification);
-chrome.notifications.onClicked.addListener(TogglButton.triggerNotification);
+chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
+chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);

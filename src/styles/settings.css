@@ -42,22 +42,22 @@ body {
   margin: 0px 0.4em 0.3em 0px;
 }
 
-#subsettings-details  {
+.subsettings-details  {
   display: none;
   margin-left: 10px;
 }
 
-#subsettings-details p {
+.subsettings-details p {
   float: left;
   padding-right: 30px;
 }
 
-#subsettings-details p:last-child {
+.subsettings-details p:last-child {
   float: none;
   clear: both;
 }
 
-#subsettings-details span {
+.subsettings-details span {
   display: block;
   font-size: 14px;
   padding-top: 10px;

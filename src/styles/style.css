@@ -850,3 +850,8 @@ only screen and (min-resolution: 192dpi) {
   text-decoration: none;
   font-weight: normal;
 }
+
+/********* DRAFTIN *********/
+.toggl-button.draftin {
+  margin-right: 15px;
+}

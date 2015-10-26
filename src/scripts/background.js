@@ -683,9 +683,15 @@ var TogglButton = {
   },
 
   notificationBtnClick: function (notificationId, buttonID) {
+    var type = "dropdown-pomodoro"
+
+    if (notificationId === 'remind-to-track-time') {
+      type = "dropdown-reminder";
+    }
+
     if (buttonID === 0) {
       // start timer
-      TogglButton.createTimeEntry({"type": "timeEntry", "service": "dropdown"}, null);
+      TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
     } else {
       var pageToOpen = '';
 

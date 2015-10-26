@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false */
+/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false */
 "use strict";
 
 var _gaq = window._gaq || [];
@@ -325,10 +325,11 @@ var TogglButton = {
   },
 
   pomodoroAlarmStop: function (alarm) {
-    if(alarm.name === 'PomodoroTimer') {
+    if (alarm.name === 'PomodoroTimer') {
       TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
-      
-      var notificationId = 'pomodoro-time-is-up';
+
+      var notificationId = 'pomodoro-time-is-up',
+        stopSound;
       TogglButton.hideNotification(notificationId);
       chrome.notifications.create(
         notificationId,
@@ -349,7 +350,7 @@ var TogglButton = {
       );
 
       if (TogglButton.$pomodoroSoundEnabled) {
-        var stopSound = new Audio();
+        stopSound = new Audio();
         stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
         stopSound.play();
       }
@@ -683,7 +684,7 @@ var TogglButton = {
   },
 
   notificationBtnClick: function (notificationId, buttonID) {
-    var type = "dropdown-pomodoro"
+    var type = "dropdown-pomodoro";
 
     if (notificationId === 'remind-to-track-time') {
       type = "dropdown-reminder";
@@ -728,7 +729,7 @@ var TogglButton = {
     }
   },
 
-  processNotificationEvent: function(notificationId) {
+  processNotificationEvent: function (notificationId) {
     if (notificationId === 'remind-to-track-time') {
       TogglButton.triggerNotification();
     } else {

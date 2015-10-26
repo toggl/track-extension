@@ -17,11 +17,11 @@ var Settings = {
     Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
     Settings.toggleState(Settings.$nanny, TogglButton.$idleCheckEnabled);
     Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
-    
+
     Settings.toggleState(Settings.$pomodoroMode, TogglButton.$pomodoroModeEnabled);
     Settings.toggleState(Settings.$pomodoroSound, TogglButton.$pomodoroSoundEnabled);
     document.querySelector("#pomodoro-interval").value = TogglButton.$pomodoroInterval;
-    
+
     TogglButton.analytics("settings", null);
   },
   setFromTo: function () {
@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
       e.target.value = 1;
       return;
     }
-    var tval = document.querySelector('#nag-nanny-interval').value;
     Settings.saveSetting((document.querySelector('#nag-nanny-interval').value * 60000), "toggle-nanny-interval");
 
   });

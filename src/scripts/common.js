@@ -494,7 +494,7 @@ var togglbutton = {
       if ($("#toggl-button-edit-form") !== null) {
         $("#toggl-button-edit-form").remove();
       }
-    } 
+    }
   }
 };
 

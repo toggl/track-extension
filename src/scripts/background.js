@@ -693,17 +693,8 @@ var TogglButton = {
       // start timer
       TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
     } else {
-      var pageToOpen = '';
-
-      if (notificationId === 'remind-to-track-time') {
-        // open toggl.com
-        pageToOpen = {url: 'https://toggl.com'};
-      } else {
-        //open tracker
-        pageToOpen = {url: 'https://toggl.com/app/'};
-      }
-
-      chrome.tabs.create(pageToOpen);
+      //open tracker
+      chrome.tabs.create({url: 'https://toggl.com/app/'});
     }
     TogglButton.processNotificationEvent(notificationId);
   },

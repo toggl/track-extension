@@ -815,6 +815,14 @@ var TogglButton = {
       }
     } else if (request.type === 'currentEntry') {
       sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
+    } else if (request.type === 'getEditFormData') {
+      var success = TogglButton.$user && TogglButton.$user.projectMap && TogglButton.$user.tagMap;
+
+      sendResponse({
+        success: success,
+        projects: success ? TogglButton.$user.projectMap : '',
+        tags: success ? TogglButton.$user.tagMap : ''
+      });
     } else if (request.type === 'getTasksHtml') {
       var success = TogglButton.$user && TogglButton.$user.projectTaskList;
 

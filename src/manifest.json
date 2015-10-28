@@ -91,7 +91,8 @@
     "*://app.codeable.io/*",
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
-    "*://*.draftin.com/*"
+    "*://*.draftin.com/*",
+    "*://*.fogbugz.com/*"
   ],
   "content_scripts": [
     {
@@ -155,7 +156,8 @@
         "*://waffle.io/*",
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
-        "*://*.draftin.com/*"
+        "*://*.draftin.com/*",
+        "*://*.fogbugz.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -383,6 +385,10 @@
     {
       "matches": ["*://*.draftin.com/*"],
       "js": ["scripts/content/draftin.js"]
+    },
+    {
+      "matches": ["*://*.fogbugz.com/*"],
+      "js": ["scripts/content/fogbugz.js"]
     }
   ]
 }

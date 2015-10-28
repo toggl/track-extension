@@ -647,8 +647,8 @@ var TogglButton = {
   },
 
   setPomodoroInterval: function (state) {
-    localStorage.setItem("pomodoroInterval", state);
-    TogglButton.$pomodoroInterval = state;
+    localStorage.setItem("pomodoroInterval", parseInt(state, 10));
+    TogglButton.$pomodoroInterval = parseInt(state, 10);
   },
 
   checkState: function () {

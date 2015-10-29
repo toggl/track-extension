@@ -289,9 +289,9 @@ var TogglButton = {
     xhr.send(JSON.stringify(opts.payload));
   },
 
-  stopTimeEntry: function (timeEntry, sendResponse) {
+  stopTimeEntry: function (timeEntry, sendResponse, cb) {
     if (!TogglButton.$curEntry) { return; }
-    var stopTime = new Date(),
+    var stopTime = timeEntry.stopDate || new Date(),
       startTime = new Date(-TogglButton.$curEntry.duration * 1000);
 
     TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
@@ -317,6 +317,9 @@ var TogglButton = {
 
           TogglButton.triggerNotification();
           TogglButton.analytics(timeEntry.type, timeEntry.service);
+          if (cb) {
+            cb();
+          }
         }
       }
     });

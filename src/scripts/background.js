@@ -24,10 +24,10 @@ var TogglButton = {
   $socket: null,
   $retrySocket: false,
   $socketEnabled: false,
-  $timer: null,
-  $idleCheckEnabled: false,
-  $idleInterval: 360000,
-  $idleFromTo: "09:00-17:00",
+  $nannyTimer: null,
+  $nannyCheckEnabled: false,
+  $nannyInterval: 360000,
+  $nannyFromTo: "09:00-17:00",
   $pomodoroModeEnabled: false,
   $pomodoroSoundEnabled: true,
   $pomodoroInterval: 25,
@@ -244,11 +244,9 @@ var TogglButton = {
         entry = responseData && responseData.data;
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
+        clearTimeout(TogglButton.$nannyTimer);
         if (!!timeEntry.respond) {
           sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
-        }
-        if (TogglButton.$timer !== null) {
-          clearTimeout(TogglButton.$timer);
         }
         TogglButton.analytics(timeEntry.type, timeEntry.service);
       }
@@ -262,7 +260,7 @@ var TogglButton = {
   analytics: function (event, service) {
     if (event === "settings") {
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + TogglButton.$showPostPopup]);
-      _gaq.push(['_trackEvent', 'idle', "settings/idle-" + TogglButton.$idleCheckEnabled]);
+      _gaq.push(['_trackEvent', 'idle', "settings/idle-" + TogglButton.$nannyCheckEnabled]);
       _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + TogglButton.$socketEnabled]);
       _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + TogglButton.$pomodoroModeEnabled]);
       _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + TogglButton.$pomodoroSoundEnabled]);
@@ -306,7 +304,7 @@ var TogglButton = {
       },
       onLoad: function (xhr) {
         if (xhr.status === 200) {
-          TogglButton.$timer = TogglButton.$curEntry = null;
+          TogglButton.$nannyTimer = TogglButton.$curEntry = null;
           TogglButton.setBrowserAction(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
@@ -623,25 +621,25 @@ var TogglButton = {
   },
 
   setNanny: function (state) {
-    localStorage.setItem("idleCheckEnabled", state);
-    TogglButton.$idleCheckEnabled = state;
+    localStorage.setItem("nannyCheckEnabled", state);
+    TogglButton.$nannyCheckEnabled = state;
     if (state) {
       TogglButton.triggerNotification();
     }
   },
 
   setNannyFromTo: function (state) {
-    localStorage.setItem("idleFromTo", state);
-    TogglButton.$idleFromTo = state;
-    if (TogglButton.$idleCheckEnabled) {
+    localStorage.setItem("nannyFromTo", state);
+    TogglButton.$nannyFromTo = state;
+    if (TogglButton.$nannyCheckEnabled) {
       TogglButton.triggerNotification();
     }
   },
 
   setNannyInterval: function (state) {
-    localStorage.setItem("idleInterval", Math.max(state, 1000));
-    TogglButton.$idleInterval = state;
-    if (TogglButton.$idleCheckEnabled) {
+    localStorage.setItem("nannyInterval", Math.max(state, 1000));
+    TogglButton.$nannyInterval = state;
+    if (TogglButton.$nannyCheckEnabled) {
       TogglButton.triggerNotification();
     }
   },
@@ -656,11 +654,11 @@ var TogglButton = {
   },
 
   checkActivity: function (currentState) {
-    clearTimeout(TogglButton.$timer);
-    TogglButton.$timer = null;
+    clearTimeout(TogglButton.$nannyTimer);
+    TogglButton.$nannyTimer = null;
 
     if (TogglButton.$user && currentState === "active" &&
-        TogglButton.$idleCheckEnabled &&
+        TogglButton.$nannyCheckEnabled &&
         TogglButton.$curEntry === null &&
         TogglButton.workingTime()) {
 
@@ -702,7 +700,7 @@ var TogglButton = {
 
   workingTime: function () {
     var now = new Date(),
-      fromTo = TogglButton.$idleFromTo.split("-"),
+      fromTo = TogglButton.$nannyFromTo.split("-"),
       start,
       end,
       startHelper,
@@ -723,9 +721,9 @@ var TogglButton = {
   },
 
   triggerNotification: function () {
-    if (TogglButton.$timer === null && TogglButton.$curEntry === null) {
+    if (TogglButton.$nannyTimer === null && TogglButton.$curEntry === null) {
       TogglButton.hideNotification('remind-to-track-time');
-      TogglButton.$timer = setTimeout(TogglButton.checkState, TogglButton.$idleInterval);
+      TogglButton.$nannyTimer = setTimeout(TogglButton.checkState, TogglButton.$nannyInterval);
     }
   },
 
@@ -833,9 +831,9 @@ chrome.contextMenus.create({"title": "Start timer with description '%s'", "conte
 TogglButton.fetchUser();
 TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");
 TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
-TogglButton.$idleCheckEnabled = TogglButton.loadSetting("idleCheckEnabled");
-TogglButton.$idleInterval = !!localStorage.getItem("idleInterval") ? localStorage.getItem("idleInterval") : 360000;
-TogglButton.$idleFromTo = !!localStorage.getItem("idleFromTo") ? localStorage.getItem("idleFromTo") : "09:00-17:00";
+TogglButton.$nannyCheckEnabled = TogglButton.loadSetting("nannyCheckEnabled");
+TogglButton.$nannyInterval = !!localStorage.getItem("nannyInterval") ? localStorage.getItem("nannyInterval") : 360000;
+TogglButton.$nannyFromTo = !!localStorage.getItem("nannyFromTo") ? localStorage.getItem("nannyFromTo") : "09:00-17:00";
 TogglButton.$pomodoroModeEnabled = !!localStorage.getItem("pomodoroModeEnabled") ? localStorage.getItem("pomodoroModeEnabled") : false;
 TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled");
 TogglButton.$pomodoroInterval = !!localStorage.getItem("pomodoroInterval") ? localStorage.getItem("pomodoroInterval") : 25;

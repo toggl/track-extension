@@ -13,9 +13,9 @@ var Settings = {
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
-    document.querySelector("#nag-nanny-interval").value = TogglButton.$idleInterval / 60000;
+    document.querySelector("#nag-nanny-interval").value = TogglButton.$nannyInterval / 60000;
     Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
-    Settings.toggleState(Settings.$nanny, TogglButton.$idleCheckEnabled);
+    Settings.toggleState(Settings.$nanny, TogglButton.$nannyCheckEnabled);
     Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
 
     Settings.toggleState(Settings.$pomodoroMode, TogglButton.$pomodoroModeEnabled);
@@ -25,7 +25,7 @@ var Settings = {
     TogglButton.analytics("settings", null);
   },
   setFromTo: function () {
-    var fromTo = TogglButton.$idleFromTo.split("-");
+    var fromTo = TogglButton.$nannyFromTo.split("-");
     document.querySelector("#nag-nanny-from").value = fromTo[0];
     document.querySelector("#nag-nanny-to").value = fromTo[1];
   },
@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("socketEnabled") !== "true"), "toggle-socket");
   });
   Settings.$nanny.addEventListener('click', function (e) {
-    Settings.toggleSetting(e.target, (localStorage.getItem("idleCheckEnabled") !== "true"), "toggle-nanny");
+    Settings.toggleSetting(e.target, (localStorage.getItem("nannyCheckEnabled") !== "true"), "toggle-nanny");
+  });
   });
 
   Settings.$pomodoroMode.addEventListener('click', function (e) {

@@ -1,6 +1,13 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false */
+/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
+
+Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
+Bugsnag.appVersion = chrome.runtime.getManifest().version;
+
+Bugsnag.beforeNotify = function (error, metaData) {
+  error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
+}
 
 var _gaq = window._gaq || [];
 _gaq.push(['_setAccount', 'UA-3215787-22']);
@@ -63,82 +70,100 @@ var TogglButton = {
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
         var resp, apiToken, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null;
-        if (xhr.status === 200) {
-          chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            if (!!tabs[0]) {
-              chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
+        try {
+          if (xhr.status === 200) {
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+              try{
+                if (!!tabs[0]) {
+                  chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
+                }
+              } catch (e) {
+                Bugsnag.notifyException(e);
+              }
+            });
+            resp = JSON.parse(xhr.responseText);
+            TogglButton.$curEntry = null;
+            TogglButton.setBrowserAction(null);
+            if (resp.data.projects) {
+              resp.data.projects.forEach(function (project) {
+                if (project.active && !project.server_deleted_at) {
+                  projectMap[project.name + project.id] = project;
+                }
+              });
             }
-          });
-          resp = JSON.parse(xhr.responseText);
-          TogglButton.$curEntry = null;
-          TogglButton.setBrowserAction(null);
-          if (resp.data.projects) {
-            resp.data.projects.forEach(function (project) {
-              if (project.active && !project.server_deleted_at) {
-                projectMap[project.name + project.id] = project;
-              }
-            });
+            if (resp.data.clients) {
+              resp.data.clients.forEach(function (client) {
+                clientMap[client.id] = client;
+                clientNameMap[client.name.toLowerCase()] = client;
+              });
+            }
+            if (resp.data.tags) {
+              resp.data.tags.forEach(function (tag) {
+                tagMap[tag.name] = tag;
+              });
+            }
+            if (resp.data.tasks) {
+              projectTaskList = {};
+              resp.data.tasks.forEach(function (task) {
+                var pid = task.pid;
+                if (!projectTaskList[pid]) { projectTaskList[pid] = []; }
+                projectTaskList[pid].push(task);
+              });
+            }
+            if (resp.data.time_entries) {
+              resp.data.time_entries.some(function (entry) {
+                if (entry.duration < 0) {
+                  TogglButton.$curEntry = entry;
+                  TogglButton.setBrowserAction(entry);
+                  return true;
+                }
+                return false;
+              });
+            }
+            TogglButton.$user = resp.data;
+            TogglButton.$user.projectMap = projectMap;
+            TogglButton.$user.clientMap = clientMap;
+            TogglButton.$user.clientNameMap = clientNameMap;
+            TogglButton.$user.tagMap = tagMap;
+            TogglButton.$user.projectTaskList = projectTaskList;
+            localStorage.removeItem('userToken');
+            localStorage.setItem('userToken', resp.data.api_token);
+            if (TogglButton.$sendResponse !== null) {
+              TogglButton.$sendResponse({success: (xhr.status === 200)});
+              TogglButton.$sendResponse = null;
+              TogglButton.setBrowserActionBadge();
+            }
+            if (TogglButton.$socketEnabled) {
+              TogglButton.setupSocket();
+            }
+            TogglButton.updateBugsnag();
+          } else if (!token) {
+            apiToken = localStorage.getItem('userToken');
+            if (apiToken) {
+              TogglButton.fetchUser(apiToken);
+            }
           }
-          if (resp.data.clients) {
-            resp.data.clients.forEach(function (client) {
-              clientMap[client.id] = client;
-              clientNameMap[client.name.toLowerCase()] = client;
-            });
-          }
-          if (resp.data.tags) {
-            resp.data.tags.forEach(function (tag) {
-              tagMap[tag.name] = tag;
-            });
-          }
-          if (resp.data.tasks) {
-            projectTaskList = {};
-            resp.data.tasks.forEach(function (task) {
-              var pid = task.pid;
-              if (!projectTaskList[pid]) { projectTaskList[pid] = []; }
-              projectTaskList[pid].push(task);
-            });
-          }
-          if (resp.data.time_entries) {
-            resp.data.time_entries.some(function (entry) {
-              if (entry.duration < 0) {
-                TogglButton.$curEntry = entry;
-                TogglButton.setBrowserAction(entry);
-                return true;
-              }
-              return false;
-            });
-          }
-          TogglButton.$user = resp.data;
-          TogglButton.$user.projectMap = projectMap;
-          TogglButton.$user.clientMap = clientMap;
-          TogglButton.$user.clientNameMap = clientNameMap;
-          TogglButton.$user.tagMap = tagMap;
-          TogglButton.$user.projectTaskList = projectTaskList;
-          localStorage.removeItem('userToken');
-          localStorage.setItem('userToken', resp.data.api_token);
-          if (TogglButton.$sendResponse !== null) {
-            TogglButton.$sendResponse({success: (xhr.status === 200)});
-            TogglButton.$sendResponse = null;
-            TogglButton.setBrowserActionBadge();
-          }
-          if (TogglButton.$socketEnabled) {
-            TogglButton.setupSocket();
-          }
-        } else if (!token) {
-          apiToken = localStorage.getItem('userToken');
-          if (apiToken) {
-            TogglButton.fetchUser(apiToken);
-          }
+        } catch (e) {
+          Bugsnag.notifyException(e);
         }
       }
     });
+  },
+
+  updateBugsnag: function () {
+    // Set user data
+    Bugsnag.user = {
+      id: TogglButton.$user.id,
+      name: TogglButton.$user.fullname,
+      email: TogglButton.$user.email
+    };
   },
 
   setupSocket: function () {
     var authenticationMessage, pingResponse;
     try {
       TogglButton.$socket = new WebSocket('wss://stream.toggl.com/ws');
-    } catch (error) {
+    } catch (e) {
       return;
     }
 
@@ -488,78 +513,82 @@ var TogglButton = {
           ((item.match(/\/option/g) || []).length > 1 || item.length > 1);
       };
 
-    // Sort clients
-    for (key in clientNames) {
-      if (clientNames.hasOwnProperty(key)) {
-        keys.push(key.toLowerCase());
-      }
-    }
-    keys.sort();
-
-    if (TogglButton.$user.workspaces.length > 1) {
-
-      // Add Workspace names
-      TogglButton.$user.workspaces.forEach(function (element, index) {
-        wsHtml[element.id] = {};
-        wsHtml[element.id][0] = '<option disabled="disabled">  ---  ' + element.name.toUpperCase() + '  ---  </option>';
-      });
-
-      // Add client optgroups
-      for (i = 0; i < keys.length; i++) {
-        client = clientNames[keys[i]];
-        wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
-      }
-
-      // Add projects
-      for (key in projects) {
-        if (projects.hasOwnProperty(key)) {
-          project = projects[key];
-          clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
-          wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
+    try {
+      // Sort clients
+      for (key in clientNames) {
+        if (clientNames.hasOwnProperty(key)) {
+          keys.push(key.toLowerCase());
         }
       }
+      keys.sort();
 
-      // create html
-      for (key in wsHtml) {
-        if (wsHtml.hasOwnProperty(key)) {
-          Object.keys(wsHtml[key]).sort();
-          for (ckey in wsHtml[key]) {
-            if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
-              html += wsHtml[key][ckey] + "</optgroup>";
+      if (TogglButton.$user.workspaces.length > 1) {
+
+        // Add Workspace names
+        TogglButton.$user.workspaces.forEach(function (element, index) {
+          wsHtml[element.id] = {};
+          wsHtml[element.id][0] = '<option disabled="disabled">  ---  ' + element.name.toUpperCase() + '  ---  </option>';
+        });
+
+        // Add client optgroups
+        for (i = 0; i < keys.length; i++) {
+          client = clientNames[keys[i]];
+          wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
+        }
+
+        // Add projects
+        for (key in projects) {
+          if (projects.hasOwnProperty(key)) {
+            project = projects[key];
+            clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
+            wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
+          }
+        }
+
+        // create html
+        for (key in wsHtml) {
+          if (wsHtml.hasOwnProperty(key)) {
+            Object.keys(wsHtml[key]).sort();
+            for (ckey in wsHtml[key]) {
+              if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
+                html += wsHtml[key][ckey] + "</optgroup>";
+              }
+            }
+          }
+        }
+
+      } else {
+
+        // Add clients
+
+        for (i = 0; i < keys.length; i++) {
+          client = clientNames[keys[i]];
+          clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
+        }
+
+        // Add projects
+
+        for (key in projects) {
+          if (projects.hasOwnProperty(key)) {
+            project = projects[key];
+            clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
+            clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
+          }
+        }
+
+        // Create html
+
+        for (key in clientHtml) {
+          if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
+            html += clientHtml[key];
+            if (key !== "0") {
+              html += "</optgroup>";
             }
           }
         }
       }
-
-    } else {
-
-      // Add clients
-
-      for (i = 0; i < keys.length; i++) {
-        client = clientNames[keys[i]];
-        clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
-      }
-
-      // Add projects
-
-      for (key in projects) {
-        if (projects.hasOwnProperty(key)) {
-          project = projects[key];
-          clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
-          clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
-        }
-      }
-
-      // Create html
-
-      for (key in clientHtml) {
-        if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
-          html += clientHtml[key];
-          if (key !== "0") {
-            html += "</optgroup>";
-          }
-        }
-      }
+    } catch (e) {
+      Bugsnag.notifyException(e);
     }
 
     return html;
@@ -772,57 +801,63 @@ var TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
-    if (request.type === 'activate') {
-      TogglButton.checkDailyUpdate();
-      TogglButton.setBrowserActionBadge();
-      sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion});
-      TogglButton.triggerNotification();
-    } else if (request.type === 'login') {
-      TogglButton.loginUser(request, sendResponse);
-    } else if (request.type === 'logout') {
-      TogglButton.logoutUser(sendResponse);
-    } else if (request.type === 'sync') {
-      TogglButton.fetchUser();
-    } else if (request.type === 'timeEntry') {
-      TogglButton.createTimeEntry(request, sendResponse);
-      TogglButton.hideNotification('remind-to-track-time');
-    } else if (request.type === 'update') {
-      TogglButton.updateTimeEntry(request, sendResponse);
-    } else if (request.type === 'stop') {
-      TogglButton.stopTimeEntry(request, sendResponse);
-    } else if (request.type === 'toggle-popup') {
-      localStorage.setItem("showPostPopup", request.state);
-      TogglButton.$showPostPopup = request.state;
-    } else if (request.type === 'toggle-socket') {
-      TogglButton.setSocket(request.state);
-    } else if (request.type === 'toggle-nanny') {
-      TogglButton.setNanny(request.state);
-    } else if (request.type === 'toggle-nanny-from-to') {
-      TogglButton.setNannyFromTo(request.state);
-    } else if (request.type === 'toggle-nanny-interval') {
-      TogglButton.setNannyInterval(request.state);
-    } else if (request.type === 'toggle-pomodoro') {
-      localStorage.setItem("pomodoroModeEnabled", request.state);
-      TogglButton.$pomodoroModeEnabled = request.state;
-    } else if (request.type === 'toggle-pomodoro-sound') {
-      localStorage.setItem("pomodoroSoundEnabled", request.state);
-      TogglButton.$pomodoroSoundEnabled = request.state;
-    } else if (request.type === 'toggle-pomodoro-interval') {
-      TogglButton.setPomodoroInterval(request.state);
-    } else if (request.type === 'userToken') {
-      if (!TogglButton.$user) {
-        TogglButton.fetchUser(request.apiToken);
-      }
-    } else if (request.type === 'currentEntry') {
-      sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
-    } else if (request.type === 'getTasksHtml') {
-      var success = TogglButton.$user && TogglButton.$user.projectTaskList;
+    try {
+      if (request.type === 'activate') {
+        TogglButton.checkDailyUpdate();
+        TogglButton.setBrowserActionBadge();
+        sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion});
+        TogglButton.triggerNotification();
+      } else if (request.type === 'login') {
+        TogglButton.loginUser(request, sendResponse);
+      } else if (request.type === 'logout') {
+        TogglButton.logoutUser(sendResponse);
+      } else if (request.type === 'sync') {
+        TogglButton.fetchUser();
+      } else if (request.type === 'timeEntry') {
+        TogglButton.createTimeEntry(request, sendResponse);
+        TogglButton.hideNotification('remind-to-track-time');
+      } else if (request.type === 'update') {
+        TogglButton.updateTimeEntry(request, sendResponse);
+      } else if (request.type === 'stop') {
+        TogglButton.stopTimeEntry(request, sendResponse);
+      } else if (request.type === 'toggle-popup') {
+        localStorage.setItem("showPostPopup", request.state);
+        TogglButton.$showPostPopup = request.state;
+      } else if (request.type === 'toggle-socket') {
+        TogglButton.setSocket(request.state);
+      } else if (request.type === 'toggle-nanny') {
+        TogglButton.setNanny(request.state);
+      } else if (request.type === 'toggle-nanny-from-to') {
+        TogglButton.setNannyFromTo(request.state);
+      } else if (request.type === 'toggle-nanny-interval') {
+        TogglButton.setNannyInterval(request.state);
+      } else if (request.type === 'toggle-pomodoro') {
+        localStorage.setItem("pomodoroModeEnabled", request.state);
+        TogglButton.$pomodoroModeEnabled = request.state;
+      } else if (request.type === 'toggle-pomodoro-sound') {
+        localStorage.setItem("pomodoroSoundEnabled", request.state);
+        TogglButton.$pomodoroSoundEnabled = request.state;
+      } else if (request.type === 'toggle-pomodoro-interval') {
+        TogglButton.setPomodoroInterval(request.state);
+      } else if (request.type === 'userToken') {
+        if (!TogglButton.$user) {
+          TogglButton.fetchUser(request.apiToken);
+        }
+      } else if (request.type === 'currentEntry') {
+        sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
+      } else if (request.type === 'getTasksHtml') {
+        var success = TogglButton.$user && TogglButton.$user.projectTaskList;
 
-      sendResponse({
-        success: success,
-        html: success ? TogglButton.fillTasks(request.projectId) : ''
-      });
+        sendResponse({
+          success: success,
+          html: success ? TogglButton.fillTasks(request.projectId) : ''
+        });
+      }
+
+    } catch (e) {
+      Bugsnag.notifyException(e);
     }
+
     return true;
   }
 };

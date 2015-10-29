@@ -280,7 +280,7 @@ var TogglButton = {
     });
 
     if (TogglButton.$pomodoroModeEnabled) {
-      chrome.alarms.create('PomodoroTimer', {delayInMinutes: TogglButton.$pomodoroInterval});
+      chrome.alarms.create('PomodoroTimer', {delayInMinutes: parseInt(TogglButton.$pomodoroInterval, 10)});
     }
   },
 
@@ -676,8 +676,8 @@ var TogglButton = {
   },
 
   setPomodoroInterval: function (state) {
-    localStorage.setItem("pomodoroInterval", parseInt(state, 10));
-    TogglButton.$pomodoroInterval = parseInt(state, 10);
+    localStorage.setItem("pomodoroInterval", state);
+    TogglButton.$pomodoroInterval = state;
   },
 
   checkState: function () {

@@ -6,6 +6,7 @@
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
     "scripts": [
+      "scripts/bugsnag-2.min.js",
       "scripts/background.js"
     ]
   },

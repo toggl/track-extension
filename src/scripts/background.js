@@ -32,6 +32,13 @@ var TogglButton = {
   $pomodoroSoundEnabled: true,
   $pomodoroInterval: 25,
   $lastSyncDate: null,
+  $discardNotificationEnabled: true,
+  $lastWork: {
+    id: null,
+    date: Date.now()
+  },
+  $checkingUserState: false,
+  $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
   $editForm: '<div id="toggl-button-edit-form">' +
@@ -103,6 +110,7 @@ var TogglButton = {
               if (entry.duration < 0) {
                 TogglButton.$curEntry = entry;
                 TogglButton.setBrowserAction(entry);
+                TogglButton.startCheckingUserState();
                 return true;
               }
               return false;
@@ -200,6 +208,7 @@ var TogglButton = {
       }
       TogglButton.$curEntry = entry;
     }
+    TogglButton.startCheckingUserState();
     TogglButton.setBrowserAction(entry);
   },
 
@@ -245,6 +254,7 @@ var TogglButton = {
         TogglButton.$curEntry = entry;
         TogglButton.setBrowserAction(entry);
         clearTimeout(TogglButton.$nannyTimer);
+        TogglButton.startCheckingUserState();
         if (!!timeEntry.respond) {
           sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
         }
@@ -305,6 +315,7 @@ var TogglButton = {
       onLoad: function (xhr) {
         if (xhr.status === 200) {
           TogglButton.$nannyTimer = TogglButton.$curEntry = null;
+          TogglButton.stopCheckingUserState();
           TogglButton.setBrowserAction(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
@@ -647,9 +658,93 @@ var TogglButton = {
     }
   },
 
+  setDiscardNotification: function (state) {
+    localStorage.setItem("discardNotificationEnabled", state);
+    TogglButton.$discardNotificationEnabled = state;
+    if (state) {
+      TogglButton.startCheckingUserState();
+    }
+  },
+
   setPomodoroInterval: function (state) {
     localStorage.setItem("pomodoroInterval", state);
     TogglButton.$pomodoroInterval = state;
+  },
+
+  /**
+   * Start checking whether the user is 'active', 'idle' or 'locked' for the
+   * discard time notification.
+   */
+  startCheckingUserState: function () {
+    if (!TogglButton.$checkingState &&
+        TogglButton.$discardNotificationEnabled &&
+        TogglButton.$curEntry) {
+      TogglButton.$checkingUserState = setTimeout(function () {
+        chrome.idle.queryState(15, TogglButton.onUserState);
+      }, 2 * 1000);
+    }
+  },
+
+  stopCheckingUserState: function () {
+    clearTimeout(TogglButton.$checkingUserState);
+    TogglButton.$checkingUserState = false;
+  },
+
+  timeStringFromSeconds: function (s) {
+    var seconds = 0,
+      minutes = 0,
+      hours = 0;
+    minutes = Math.floor(s / 60);
+    seconds = s % 60;
+    hours = Math.floor(minutes / 60);
+    minutes %= 60;
+    if (hours > 0) {
+      return hours + "h " + minutes + "m";
+    }
+    if (minutes > 0) {
+      return minutes + "m " + seconds + "s";
+    }
+    return seconds + "s";
+  },
+
+  showDiscardTimeNotification: function (seconds) {
+    var timeString = TogglButton.timeStringFromSeconds(seconds),
+      entryDescription = TogglButton.$curEntry.description,
+      notificationOptions = {
+        type: 'basic',
+        iconUrl: 'images/icon-128.png',
+        title: "Toggl Button",
+        message: "You've been idle for " + timeString +
+          " while tracking \"" + entryDescription + "\".",
+        buttons: [
+          { title: "Discard idle time" },
+          { title: "Discard idle time and stop tracking" }
+        ]
+      };
+    TogglButton.$idleNotificationDiscardSince = TogglButton.$lastWork.date;
+    TogglButton.hideNotification('discard-time');
+    chrome.notifications.create('discard-time', notificationOptions);
+  },
+
+  onUserState: function (state) {
+    TogglButton.$userState = state;
+    var now = new Date(),
+      inactiveSeconds = Math.floor((now - TogglButton.$lastWork.date) / 1000);
+    if (TogglButton.$user && state === 'active' && TogglButton.$curEntry) {
+      // trigger discard time notification once the user has been idle for
+      // at least 5min
+      if (TogglButton.$lastWork.id === TogglButton.$curEntry.id &&
+          inactiveSeconds >= 5 * 60) {
+        TogglButton.showDiscardTimeNotification(inactiveSeconds);
+      }
+      TogglButton.$lastWork = {
+        id: TogglButton.$curEntry.id,
+        date: now
+      };
+    }
+    clearTimeout(TogglButton.$checkingUserState);
+    TogglButton.$checkingUserState = null;
+    TogglButton.startCheckingUserState();
   },
 
   checkState: function () {
@@ -685,18 +780,30 @@ var TogglButton = {
   },
 
   notificationBtnClick: function (notificationId, buttonID) {
-    var type = "dropdown-pomodoro";
-
+    var type = "dropdown-pomodoro",
+      timeEntry = TogglButton.$curEntry;
     if (notificationId === 'remind-to-track-time') {
       type = "dropdown-reminder";
-    }
-
-    if (buttonID === 0) {
-      // start timer
-      TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
-    } else {
-      //open tracker
-      chrome.tabs.create({url: 'https://toggl.com/app/'});
+      if (buttonID === 0) {
+        // start timer
+        TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
+      } else {
+        //open tracker
+        chrome.tabs.create({url: 'https://toggl.com/app/'});
+      }
+    } else if (notificationId === 'discard-time') {
+      if (buttonID === 0 || buttonID === 1) {
+        // discard idle time
+        TogglButton.stopTimeEntry({
+          stopDate: TogglButton.$idleNotificationDiscardSince,
+          type: 'discard-time-notification'
+        }, null, function () {
+          // discard idle time and continue
+          if (buttonID === 0) {
+            TogglButton.createTimeEntry(timeEntry);
+          }
+        });
+      }
     }
     TogglButton.processNotificationEvent(notificationId);
   },
@@ -802,6 +909,8 @@ var TogglButton = {
       TogglButton.setNannyFromTo(request.state);
     } else if (request.type === 'toggle-nanny-interval') {
       TogglButton.setNannyInterval(request.state);
+    } else if (request.type === 'toggle-discard') {
+      TogglButton.setDiscardNotification(request.state);
     } else if (request.type === 'toggle-pomodoro') {
       localStorage.setItem("pomodoroModeEnabled", request.state);
       TogglButton.$pomodoroModeEnabled = request.state;
@@ -837,10 +946,12 @@ TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
 TogglButton.$nannyCheckEnabled = TogglButton.loadSetting("nannyCheckEnabled");
 TogglButton.$nannyInterval = !!localStorage.getItem("nannyInterval") ? localStorage.getItem("nannyInterval") : 360000;
 TogglButton.$nannyFromTo = !!localStorage.getItem("nannyFromTo") ? localStorage.getItem("nannyFromTo") : "09:00-17:00";
+TogglButton.$discardNotificationEnabled = !!localStorage.getItem("discardNotificationEnabled") ? localStorage.getItem("discardNotificationEnabled") : true;
 TogglButton.$pomodoroModeEnabled = !!localStorage.getItem("pomodoroModeEnabled") ? localStorage.getItem("pomodoroModeEnabled") : false;
 TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled");
 TogglButton.$pomodoroInterval = !!localStorage.getItem("pomodoroInterval") ? localStorage.getItem("pomodoroInterval") : 25;
 TogglButton.triggerNotification();
+TogglButton.startCheckingUserState();
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);

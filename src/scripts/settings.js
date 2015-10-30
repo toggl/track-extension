@@ -17,7 +17,7 @@ var Settings = {
     Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
     Settings.toggleState(Settings.$nanny, TogglButton.$nannyCheckEnabled);
     Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
-
+    Settings.toggleState(Settings.$discardNotification, TogglButton.$discardNotificationEnabled);
     Settings.toggleState(Settings.$pomodoroMode, TogglButton.$pomodoroModeEnabled);
     Settings.toggleState(Settings.$pomodoroSound, TogglButton.$pomodoroSoundEnabled);
     document.querySelector("#pomodoro-interval").value = TogglButton.$pomodoroInterval;
@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
   Settings.$nanny = document.querySelector("#nag-nanny");
+  Settings.$discardNotification = document.querySelector("#discard-notification");
   Settings.$pomodoroMode = document.querySelector("#pomodoro-mode");
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
   Settings.showPage();
@@ -64,8 +65,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$nanny.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("nannyCheckEnabled") !== "true"), "toggle-nanny");
   });
+  Settings.$discardNotification.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("discardNotificationEnabled") !== "true"), "toggle-discard");
   });
-
   Settings.$pomodoroMode.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroModeEnabled") !== "true"), "toggle-pomodoro");
   });

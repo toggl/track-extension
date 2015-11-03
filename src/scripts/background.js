@@ -7,7 +7,7 @@ Bugsnag.appVersion = chrome.runtime.getManifest().version;
 
 Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
-}
+};
 
 var _gaq = window._gaq || [];
 _gaq.push(['_setAccount', 'UA-3215787-22']);
@@ -73,7 +73,7 @@ var TogglButton = {
         try {
           if (xhr.status === 200) {
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              try{
+              try {
                 if (!!tabs[0]) {
                   chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
                 }

@@ -2,7 +2,7 @@
 - Use new way to open Options
 - Added forgot password link to login view
 - Added Pomodoro Setting
-- Added support for Draft.in
+- Added support for Draftin
 - Added support for FogBugz
 - Added Bugsnag bug tracker
 [0.7.3]

@@ -744,10 +744,10 @@ var TogglButton = {
         iconUrl: 'images/icon-128.png',
         title: "Toggl Button",
         message: "You've been idle for " + timeString +
-          " while tracking \"" + entryDescription + "\".",
+          " while tracking \"" + entryDescription + "\"",
         buttons: [
           { title: "Discard idle time" },
-          { title: "Discard idle time and stop tracking" }
+          { title: "Discard idle and continue" }
         ]
       };
     TogglButton.$idleNotificationDiscardSince = TogglButton.$lastWork.date;
@@ -828,7 +828,7 @@ var TogglButton = {
           type: 'discard-time-notification'
         }, null, function () {
           // discard idle time and continue
-          if (buttonID === 0) {
+          if (buttonID === 1) {
             TogglButton.createTimeEntry(timeEntry);
           }
         });

@@ -1,11 +1,12 @@
 {
   "name": "Toggl Button",
   "short_name": "Toggl Button",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
   "background": {
     "scripts": [
+      "scripts/vendor/bugsnag-2.min.js",
       "scripts/background.js"
     ]
   },
@@ -91,7 +92,8 @@
     "*://app.codeable.io/*",
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
-    "*://*.draftin.com/*"
+    "*://*.draftin.com/*",
+    "*://*.fogbugz.com/*"
   ],
   "content_scripts": [
     {
@@ -155,7 +157,8 @@
         "*://waffle.io/*",
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
-        "*://*.draftin.com/*"
+        "*://*.draftin.com/*",
+        "*://*.fogbugz.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -383,6 +386,10 @@
     {
       "matches": ["*://*.draftin.com/*"],
       "js": ["scripts/content/draftin.js"]
+    },
+    {
+      "matches": ["*://*.fogbugz.com/*"],
+      "js": ["scripts/content/fogbugz.js"]
     }
   ]
 }

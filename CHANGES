@@ -1,3 +1,10 @@
+[0.7.4]
+- Use new way to open Options
+- Added forgot password link to login view
+- Added Pomodoro Setting
+- Added support for Draftin
+- Added support for FogBugz
+- Added Bugsnag bug tracker
 [0.7.3]
 - Added Toggl Button to context menu
 - 16px Icon improvements

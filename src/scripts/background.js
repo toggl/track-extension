@@ -253,17 +253,17 @@ var TogglButton = {
         time_entry: {
           start: start.toISOString(),
           description: timeEntry.description || "",
-          wid: TogglButton.$user.default_wid,
-          pid: timeEntry.projectId || null,
+          wid: timeEntry.wid || TogglButton.$user.default_wid,
+          pid: timeEntry.pid || timeEntry.projectId || null,
           tags: timeEntry.tags || null,
           billable: timeEntry.billable || false,
           duration: -(start.getTime() / 1000),
           created_with: timeEntry.createdWith || TogglButton.$fullVersion,
-          duronly: !TogglButton.$user.store_start_and_stop_time
+          duronly: timeEntry.duronly || !TogglButton.$user.store_start_and_stop_time
         }
       };
 
-    if (timeEntry.projectName !== null) {
+    if (timeEntry.projectName !== null && !entry.time_entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);
       entry.time_entry.pid = project && project.id;
       entry.time_entry.billable = project && project.billable;

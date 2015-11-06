@@ -970,12 +970,29 @@ var TogglButton = {
     }
 
     return true;
+  },
+
+  migrate: function () {
+    var key,
+      fields = [
+        {old: "idleCheckEnabled", update: "nannyCheckEnabled"},
+        {old: "idleInterval", update: "nannyInterval"},
+        {old: "idleFromTo", update: "nannyFromTo"}
+      ];
+
+    for (key in fields) {
+      if (fields.hasOwnProperty(key) && !!localStorage.getItem(fields[key].old)) {
+        localStorage.setItem(fields[key].update, localStorage.getItem(fields[key].old));
+        localStorage.removeItem(fields[key].old);
+      }
+    }
   }
 };
 
 chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
 chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
 
+TogglButton.migrate();
 TogglButton.fetchUser();
 TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");
 TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");

@@ -295,7 +295,8 @@ var TogglButton = {
   analytics: function (event, service) {
     if (event === "settings") {
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + TogglButton.$showPostPopup]);
-      _gaq.push(['_trackEvent', 'idle', "settings/idle-" + TogglButton.$nannyCheckEnabled]);
+      _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + TogglButton.$nannyCheckEnabled]);
+      _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + TogglButton.$idleDetectionEnabled]);
       _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + TogglButton.$socketEnabled]);
       _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + TogglButton.$pomodoroModeEnabled]);
       _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + TogglButton.$pomodoroSoundEnabled]);

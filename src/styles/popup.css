@@ -192,6 +192,9 @@ hr {
 
 .edit-button {
   display: none;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stop-button {
@@ -199,6 +202,15 @@ hr {
   padding-left: 30px;
   text-align: left;
   font-size: 11px;
+}
+
+.stop-button:hover:after{
+  content: 'Stop';
+  position: absolute;
+  right: 3px;
+  top: 6px;
+  background-color: #ec0000;
+  width: 63px;
 }
 
 .tracking .stop-button {

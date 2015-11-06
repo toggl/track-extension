@@ -67,12 +67,14 @@ var PopUp = {
       return;
     }
 
-    var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start));
+    var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start)),
+      description = TogglButton.$curEntry.description || "(no description)";
 
-    PopUp.$editButton.textContent = '[' + duration + ']';
+    PopUp.$togglButton.textContent = duration;
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
-      PopUp.$editButton.setAttribute('title', TogglButton.$curEntry.description || "(no description)");
+      PopUp.$editButton.textContent = description;
+      PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }
   },
 

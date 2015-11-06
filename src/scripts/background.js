@@ -39,7 +39,7 @@ var TogglButton = {
   $pomodoroSoundEnabled: true,
   $pomodoroInterval: 25,
   $lastSyncDate: null,
-  $discardNotificationEnabled: true,
+  $idleDetectionEnabled: true,
   $lastWork: {
     id: null,
     date: Date.now()
@@ -688,8 +688,8 @@ var TogglButton = {
   },
 
   setDiscardNotification: function (state) {
-    localStorage.setItem("discardNotificationEnabled", state);
-    TogglButton.$discardNotificationEnabled = state;
+    localStorage.setItem("idleDetectionEnabled", state);
+    TogglButton.$idleDetectionEnabled = state;
     if (state) {
       TogglButton.startCheckingUserState();
     }
@@ -706,7 +706,7 @@ var TogglButton = {
    */
   startCheckingUserState: function () {
     if (!TogglButton.$checkingState &&
-        TogglButton.$discardNotificationEnabled &&
+        TogglButton.$idleDetection &&
         TogglButton.$curEntry) {
       TogglButton.$checkingUserState = setTimeout(function () {
         chrome.idle.queryState(15, TogglButton.onUserState);
@@ -939,6 +939,8 @@ var TogglButton = {
         TogglButton.setNannyFromTo(request.state);
       } else if (request.type === 'toggle-nanny-interval') {
         TogglButton.setNannyInterval(request.state);
+      } else if (request.type === 'toggle-idle') {
+        TogglButton.setDiscardNotification(request.state);
       } else if (request.type === 'toggle-pomodoro') {
         localStorage.setItem("pomodoroModeEnabled", request.state);
         TogglButton.$pomodoroModeEnabled = request.state;
@@ -979,7 +981,7 @@ TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
 TogglButton.$nannyCheckEnabled = TogglButton.loadSetting("nannyCheckEnabled");
 TogglButton.$nannyInterval = !!localStorage.getItem("nannyInterval") ? localStorage.getItem("nannyInterval") : 360000;
 TogglButton.$nannyFromTo = !!localStorage.getItem("nannyFromTo") ? localStorage.getItem("nannyFromTo") : "09:00-17:00";
-TogglButton.$discardNotificationEnabled = !!localStorage.getItem("discardNotificationEnabled") ? localStorage.getItem("discardNotificationEnabled") : true;
+TogglButton.$idleDetectionEnabled = !!localStorage.getItem("idleDetectionEnabled") ? localStorage.getItem("idleDetectionEnabled") : true;
 TogglButton.$pomodoroModeEnabled = !!localStorage.getItem("pomodoroModeEnabled") ? localStorage.getItem("pomodoroModeEnabled") : false;
 TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled");
 TogglButton.$pomodoroInterval = !!localStorage.getItem("pomodoroInterval") ? localStorage.getItem("pomodoroInterval") : 25;

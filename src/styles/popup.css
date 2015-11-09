@@ -204,7 +204,7 @@ hr {
   font-size: 11px;
 }
 
-.stop-button:hover:after{
+.tracking .stop-button:hover:after{
   content: 'Stop';
   position: absolute;
   right: 3px;

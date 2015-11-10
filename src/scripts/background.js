@@ -739,7 +739,7 @@ var TogglButton = {
 
   showIdleDetectionNotification: function (seconds) {
     var timeString = TogglButton.timeStringFromSeconds(seconds),
-      entryDescription = TogglButton.$curEntry.description,
+      entryDescription = TogglButton.$curEntry.description || "(no description)",
       notificationOptions = {
         type: 'basic',
         iconUrl: 'images/icon-128.png',

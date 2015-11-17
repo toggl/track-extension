@@ -1,3 +1,8 @@
+[0.7.5]
+- Added idle detection notification
+- Show description in dropdown timer
+- Show project name in timer and in timer tooltip
+- Show project color bullet in timer
 [0.7.4]
 - Use new way to open Options
 - Added forgot password link to login view

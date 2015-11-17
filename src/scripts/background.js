@@ -247,6 +247,16 @@ var TogglButton = {
     return undefined;
   },
 
+  findProjectByPid: function (pid) {
+    var key;
+    for (key in TogglButton.$user.projectMap) {
+      if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].id === pid) {
+        return TogglButton.$user.projectMap[key];
+      }
+    }
+    return undefined;
+  },
+
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       entry = {

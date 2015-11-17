@@ -9,6 +9,7 @@ var PopUp = {
   $popUpButton: null,
   $togglButton: null,
   $editButton: document.querySelector(".edit-button"),
+  $projectBullet: document.querySelector(".project-bullet"),
   $error: null,
   $timer: null,
   $tagsVisible: false,
@@ -28,6 +29,7 @@ var PopUp = {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
         PopUp.$togglButton.textContent = 'Start timer';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
+        PopUp.$projectBullet.className = "project-bullet";
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
         PopUp.$togglButton.textContent = 'Stop';
@@ -64,15 +66,25 @@ var PopUp = {
       PopUp.$togglButton.parentNode.classList.remove('tracking');
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
+      PopUp.$projectBullet.className = "project-bullet";
       return;
     }
 
     var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start)),
-      description = TogglButton.$curEntry.description || "(no description)";
+      description = TogglButton.$curEntry.description || "(no description)",
+      project;
 
     PopUp.$togglButton.textContent = duration;
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      if (!!TogglButton.$curEntry.pid) {
+        project = TogglButton.findProjectByPid(TogglButton.$curEntry.pid);
+        if (project !== null) {
+          PopUp.$projectBullet.classList.add("color-" + project.color);
+          PopUp.$projectBullet.classList.add("project-color");
+          description += " - " + project.name;
+        }
+      }
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }

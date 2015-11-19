@@ -150,6 +150,8 @@ var TogglButton = {
             if (apiToken) {
               TogglButton.fetchUser(apiToken);
             }
+          } else {
+            TogglButton.setBrowserActionBadge();
           }
         } catch (e) {
           Bugsnag.notifyException(e);
@@ -502,6 +504,9 @@ var TogglButton = {
         TogglButton.$curEntry = null;
         localStorage.setItem('userToken', null);
         sendResponse({success: (xhr.status === 200), xhr: xhr});
+        if (xhr.status === 200) {
+          TogglButton.setBrowserActionBadge();
+        }
         TogglButton.refreshPage();
       }
     });

@@ -905,7 +905,7 @@ var TogglButton = {
 
   loadSetting: function (setting) {
     var value = localStorage.getItem(setting);
-    return !(value !== null && (value === "false" || !value));
+    return !(value !== null && (value === JSON.parse("false") || !value));
   },
 
   updatePopup: function () {

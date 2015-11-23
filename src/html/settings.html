@@ -10,14 +10,17 @@
         <li>
           <input type="checkbox" id="show_post_start_popup">
           <label for="show_post_start_popup">Show post-start popup</label>
+          <div class="description">Opens up edit form right after clicking "Start timer" link</div>
         </li>
         <li>
           <input type="checkbox" id="websocket">
           <label for="websocket">Live updates (websocket)</label>
+          <div class="description">Keeps Toggl Button up to date. All updates should arrive in seconds.</div>
         </li>
         <li class="nag-nanny">
           <input type="checkbox" id="nag-nanny">
           <label for="nag-nanny">Remind me to track</label>
+          <p class="description">Shows reminder notification if user has forgot to start timer while working</p>
           <div class="subsettings-details">
             <span>Track activity on workdays</span>
             <p>
@@ -37,10 +40,12 @@
         <li class="discard-notification">
           <input type="checkbox" id="idle-detection">
           <label for="discard-notification">Idle detection</label>
+          <div class="description">Shows notification when timer was tracking but user has been idle and allows to discard idle time</div>
         </li>
         <li class="pomodoro-mode">
           <input type="checkbox" id="pomodoro-mode">
           <label for="pomodoro-mode">Enable Pomodoro mode</label>
+          <p class="description">Allows user to define Pomodoro Timer interval. Pomodoro timer start running every time time entry is started. At the end of the interval the timer is stopped and user is shown notification to take a break</p>
           <div class="subsettings-details">
             <p>
               <input type="checkbox" id="enable-sound-signal">

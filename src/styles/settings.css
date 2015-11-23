@@ -81,3 +81,23 @@ body {
   color: #8A8888!important;
   text-decoration: none;
 }
+
+.description {
+  border-left: 2px solid #dfdfdf;
+  color: rgb(119, 119, 119);
+  float: right;
+  display: block;
+  visibility: hidden;
+  padding: 5px;
+  width: 50%;
+  margin: 0!important;
+}
+
+.list li:hover .description {
+  visibility: visible;
+}
+
+input[type="number"] {
+  width: 70px;
+  text-align: center;
+}

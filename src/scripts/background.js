@@ -908,11 +908,6 @@ var TogglButton = {
     }
   },
 
-  loadSetting: function (setting) {
-    var value = localStorage.getItem(setting);
-    return !(value !== null && (value === JSON.parse("false") || !value));
-  },
-
   updatePopup: function () {
     var popup = chrome.extension.getViews({"type": "popup"});
     if (!!popup && popup.length && !!popup[0].PopUp) {
@@ -922,6 +917,45 @@ var TogglButton = {
 
   contextMenuClick: function (info, tab) {
     TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": info.selectionText || ""}, null);
+  },
+
+  getSetting: function (setting) {
+    var value = localStorage.getItem(setting);
+    if (!!value) {
+      if (value === "false" || value === "true") {
+        value = JSON.parse(value);
+      }
+    }
+    return value;
+  },
+
+  setSetting: function (setting, value) {
+    localStorage.setItem(setting, value);
+  },
+
+  loadSetting: function (setting, defaultValue) {
+    var value = localStorage.getItem(setting);
+    if (!!value) {
+      if (typeof defaultValue === "boolean") {
+        value = JSON.parse(value);
+      }
+    } else {
+      value = defaultValue;
+    }
+    localStorage.setItem(setting, value);
+    return value;
+  },
+
+  loadAllSettings: function () {
+    TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup", true);
+    TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled", true);
+    TogglButton.$nannyCheckEnabled = TogglButton.loadSetting("nannyCheckEnabled", true);
+    TogglButton.$nannyInterval = TogglButton.loadSetting("nannyInterval", 360000);
+    TogglButton.$nannyFromTo = TogglButton.loadSetting("nannyFromTo", "09:00-17:00");
+    TogglButton.$idleDetectionEnabled = TogglButton.loadSetting("idleDetectionEnabled", false);
+    TogglButton.$pomodoroModeEnabled = TogglButton.loadSetting("pomodoroModeEnabled", false);
+    TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled", true);
+    TogglButton.$pomodoroInterval = TogglButton.loadSetting("pomodoroInterval", 25);
   },
 
   newMessage: function (request, sender, sendResponse) {
@@ -1009,15 +1043,7 @@ chrome.contextMenus.create({"title": "Start timer with description '%s'", "conte
 
 TogglButton.migrate();
 TogglButton.fetchUser();
-TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup");
-TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled");
-TogglButton.$nannyCheckEnabled = TogglButton.loadSetting("nannyCheckEnabled");
-TogglButton.$nannyInterval = !!localStorage.getItem("nannyInterval") ? localStorage.getItem("nannyInterval") : 360000;
-TogglButton.$nannyFromTo = !!localStorage.getItem("nannyFromTo") ? localStorage.getItem("nannyFromTo") : "09:00-17:00";
-TogglButton.$idleDetectionEnabled = !!localStorage.getItem("idleDetectionEnabled") ? localStorage.getItem("idleDetectionEnabled") : true;
-TogglButton.$pomodoroModeEnabled = !!localStorage.getItem("pomodoroModeEnabled") ? localStorage.getItem("pomodoroModeEnabled") : false;
-TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled");
-TogglButton.$pomodoroInterval = !!localStorage.getItem("pomodoroInterval") ? localStorage.getItem("pomodoroInterval") : 25;
+TogglButton.loadAllSettings();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);

@@ -358,7 +358,9 @@ var TogglButton = {
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
+              if (!!tabs[0]) {
+                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
+              }
             });
           }
 
@@ -660,7 +662,9 @@ var TogglButton = {
 
   refreshPage: function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      chrome.tabs.reload(tabs[0].id);
+      if (!!tabs[0]) {
+        chrome.tabs.reload(tabs[0].id);
+      }
     });
   },
 

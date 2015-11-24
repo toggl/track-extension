@@ -39,5 +39,5 @@ togglbutton.render('#pull-request-header', {}, function (elem) {
     projectName: projectElem && projectElem.textContent
   });
 
-  $('.pull-request-title h1').appendChild(link);
+  $('.compare-widget-container').insertBefore(link, $('#branch-details-template'));
 });

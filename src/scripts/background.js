@@ -25,6 +25,7 @@ _gaq.push(['_trackPageview']);
 var TogglButton = {
   $user: null,
   $curEntry: null,
+  $latestStoppedEntry: null,
   $showPostPopup: true,
   $ApiV8Url: "https://www.toggl.com/api/v8",
   $sendResponse: null,
@@ -352,6 +353,7 @@ var TogglButton = {
       },
       onLoad: function (xhr) {
         if (xhr.status === 200) {
+          TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
           TogglButton.$nannyTimer = TogglButton.$curEntry = null;
           TogglButton.stopCheckingUserState();
           TogglButton.setBrowserAction(null);
@@ -392,8 +394,8 @@ var TogglButton = {
           message: "Take a break",
           priority: 2,
           buttons: [
-            { title: "Restart timer"},
-            { title: "Open Tracker"}
+            { title: "Continue Latest"},
+            { title: "Start New"}
           ]
         },
         function () {
@@ -852,6 +854,21 @@ var TogglButton = {
             TogglButton.createTimeEntry(timeEntry);
           }
         });
+      }
+    } else if (notificationId === 'pomodoro-time-is-up') {
+      if (buttonID === 0) {
+        timeEntry = TogglButton.$latestStoppedEntry;
+        if (!!timeEntry) {
+          timeEntry.type = "timeEntry";
+          timeEntry.service = type;
+        } else {
+          timeEntry = {"type": "timeEntry", "service": type};
+        }
+        // continue timer
+        TogglButton.createTimeEntry(timeEntry, null);
+      } else {
+        // start timer
+        TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
       }
     }
     TogglButton.processNotificationEvent(notificationId);

@@ -1,3 +1,8 @@
+[0.7.6]
+- Fixed Settings saving and loading
+- Fixed extension icon updates
+- When hovering setting show additional info
+- Added "Continue latest entry" button to Pomodoro timer notification
 [0.7.5]
 - Added idle detection notification
 - Show description in dropdown timer

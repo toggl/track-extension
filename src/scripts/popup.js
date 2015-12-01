@@ -45,8 +45,7 @@ var PopUp = {
     chrome.extension.sendMessage(request, function (response) {
       if (!!response.success) {
         if (!!response.type && response.type === "New Entry" && TogglButton.$showPostPopup) {
-          PopUp.updateEditForm();
-          PopUp.switchView(PopUp.$editView);
+          PopUp.updateEditForm(PopUp.$editView);
         } else if (response.type === "Update") {
           TogglButton = chrome.extension.getBackgroundPage().TogglButton;
         } else {
@@ -114,7 +113,7 @@ var PopUp = {
   },
 
   /* Edit form functions */
-  updateEditForm: function () {
+  updateEditForm: function (view) {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
       togglButtonDescription = document.querySelector("#toggl-button-description"),
@@ -133,6 +132,8 @@ var PopUp = {
       document.querySelector("#toggl-button-tag-placeholder > div").innerHTML = "Add tags";
       document.querySelector("#toggl-button-tag").value = "";
     }
+    PopUp.switchView(view);
+    togglButtonDescription.focus();
     //setCursorAtBeginning(togglButtonDescription);
   },
 
@@ -379,8 +380,7 @@ document.addEventListener('DOMContentLoaded', function () {
   PopUp.$error = document.querySelector(".error");
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
-    PopUp.updateEditForm();
-    PopUp.switchView(PopUp.$editView);
+    PopUp.updateEditForm(PopUp.$editView);
   });
 
   PopUp.$togglButton.addEventListener('click', function () {

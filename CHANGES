@@ -1,3 +1,9 @@
+[0.7.7]
+- Fixed continuing latest entry with task from Pomodoro notification
+- Added failsafe for starting websocket
+- Show project color dot in dropdown edit view
+- Added tooltips to toggl logo and email in dropdown
+- Focus description when opening edit view in dropdown
 [0.7.6]
 - Fixed Settings saving and loading
 - Fixed extension icon updates

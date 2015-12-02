@@ -141,8 +141,10 @@ var PopUp = {
       document.querySelector("#toggl-button-tag").value = "";
     }
     PopUp.switchView(view);
+    // Put focus to the beginning of desctiption field
     togglButtonDescription.focus();
-    //setCursorAtBeginning(togglButtonDescription);
+    togglButtonDescription.setSelectionRange(0, 0);
+    togglButtonDescription.scrollLeft = 0;
   },
 
   setSelecedTags: function () {

@@ -443,3 +443,13 @@ hr {
 .toggl-button, #toggl-button-hide {
   display: none;
 }
+
+#toggl-button-project-placeholder .project-color + .toggl-button-text {
+  padding-left: 12px;
+  width: 174px;
+}
+
+#toggl-button-project-placeholder .project-bullet {
+  margin-top: 16px;
+  margin-left: 0;
+}

@@ -70,23 +70,30 @@ var PopUp = {
     }
 
     var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start)),
-      description = TogglButton.$curEntry.description || "(no description)",
-      project;
+      description = TogglButton.$curEntry.description || "(no description)";
 
     PopUp.$togglButton.textContent = duration;
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
-      if (!!TogglButton.$curEntry.pid) {
-        project = TogglButton.findProjectByPid(TogglButton.$curEntry.pid);
-        if (project !== null) {
-          PopUp.$projectBullet.classList.add("color-" + project.color);
-          PopUp.$projectBullet.classList.add("project-color");
-          description += " - " + project.name;
-        }
-      }
+      description += PopUp.setProjectBullet(TogglButton.$curEntry.pid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }
+  },
+
+  setProjectBullet: function (pid, elem) {
+    var project,
+      id = parseInt(pid, 10);
+    elem.className = "project-bullet";
+    if (!!pid && id !== 0) {
+      project = TogglButton.findProjectByPid(id);
+      if (project !== null) {
+        elem.classList.add("color-" + project.color);
+        elem.classList.add("project-color");
+        return " - " + project.name;
+      }
+    }
+    return "";
   },
 
   switchView: function (view) {
@@ -123,9 +130,10 @@ var PopUp = {
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
     projectSelect = document.getElementById("toggl-button-project");
     projectSelect.value = pid;
-    placeholder = document.querySelector("#toggl-button-project-placeholder > div");
+    placeholder = document.querySelector("#toggl-button-project-placeholder > .toggl-button-text");
     placeholder.innerHTML = placeholder.title = PopUp.generateLabel(projectSelect, pid, "project");
     PopUp.fetchTasks(pid, tid);
+    PopUp.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
     if (!!TogglButton.$curEntry.tags && TogglButton.$curEntry.tags.length) {
       PopUp.setSelecedTags();
     } else {
@@ -329,7 +337,7 @@ var PopUp = {
     projectSelect.addEventListener('change', function (e) {
       var placeholder = document.querySelector("#toggl-button-project-placeholder > div");
       placeholder.innerHTML = placeholder.title = PopUp.generateLabel(this, this.value, "project");
-
+      PopUp.setProjectBullet(this.value, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
       // Force blur.
       PopUp.projectBlurTrigger = null;
       projectSelect.blur();

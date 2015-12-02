@@ -58,7 +58,7 @@ var TogglButton = {
       '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
-        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
+        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
       '</div>' +
       '<div class="toggl-button-row" id="toggl-button-tasks-row">' +
         '<select class="toggl-button-input" id="toggl-button-task" name="toggl-button-task"></select>' +

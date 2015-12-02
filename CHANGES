@@ -3,6 +3,7 @@
 - Added failsafe for starting websocket
 - Show project color dot in dropdown edit view
 - Added tooltips to toggl logo and email in dropdown
+- Clicking the email address opens profile view in web
 - Focus description when opening edit view in dropdown
 [0.7.6]
 - Fixed Settings saving and loading

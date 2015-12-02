@@ -674,15 +674,16 @@ var TogglButton = {
   setSocket: function (state) {
     localStorage.setItem("socketEnabled", state);
     TogglButton.$socketEnabled = state;
-    if (state) {
-      if (TogglButton.$socket !== null) {
-        TogglButton.$socket.close();
-        TogglButton.$socket = null;
-      }
-      TogglButton.setupSocket();
-    } else {
+    if (TogglButton.$socket !== null) {
       TogglButton.$socket.close();
       TogglButton.$socket = null;
+    }
+    if (state) {
+      if (!!TogglButton.$user) {
+        TogglButton.setupSocket();
+      } else {
+        TogglButton.fetchUser();
+      }
     }
   },
 

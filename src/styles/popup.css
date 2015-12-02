@@ -180,6 +180,7 @@ hr {
   font-style: italic;
   text-align: center;
   color: #999;
+  cursor: pointer;
 }
 
 .edit-button, .stop-button {

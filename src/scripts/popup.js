@@ -432,4 +432,8 @@ document.addEventListener('DOMContentLoaded', function () {
     chrome.tabs.create({url: "https://toggl.com/app"});
   });
 
+  document.querySelector(".user-email").addEventListener('click', function () {
+    chrome.tabs.create({url: "https://toggl.com/app/profile"});
+  });
+
 });

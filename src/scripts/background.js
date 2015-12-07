@@ -316,6 +316,9 @@ var TogglButton = {
       _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + TogglButton.$pomodoroSoundEnabled]);
     } else {
       _gaq.push(['_trackEvent', event, event + "-" + service]);
+      chrome.runtime.getPlatformInfo(function (info) {
+        _gaq.push(['_trackEvent', "os", "os-" + info.os]);
+      });
     }
   },
 

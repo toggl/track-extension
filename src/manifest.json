@@ -158,7 +158,8 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
+        "*://*.proworkflow5.net/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -390,6 +391,10 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://*.proworkflow5.net/*"],
+      "js": ["scripts/content/proworkflow.js"]
     }
   ]
 }

@@ -665,6 +665,16 @@ var TogglButton = {
     });
   },
 
+
+  updateSetting: function (key, state, callback, condition) {
+    var c = condition !== null ? condition : state;
+    Db.set(key, state);
+
+    if (c && callback !== null) {
+      callback();
+    }
+  },
+
   setSocket: function (state) {
     Db.set("socketEnabled", state);
     if (TogglButton.$socket !== null) {
@@ -678,38 +688,6 @@ var TogglButton = {
         TogglButton.fetchUser();
       }
     }
-  },
-
-  setNanny: function (state) {
-    Db.set("nannyCheckEnabled", state);
-    if (state) {
-      TogglButton.triggerNotification();
-    }
-  },
-
-  setNannyFromTo: function (state) {
-    Db.set("nannyFromTo", state);
-    if (Db.get("nannyCheckEnabled")) {
-      TogglButton.triggerNotification();
-    }
-  },
-
-  setNannyInterval: function (state) {
-    Db.set("nannyInterval", Math.max(state, 1000));
-    if (Db.get("nannyCheckEnabled")) {
-      TogglButton.triggerNotification();
-    }
-  },
-
-  setIdleDetection: function (state) {
-    Db.set("idleDetectionEnabled", state);
-    if (state) {
-      TogglButton.startCheckingUserState();
-    }
-  },
-
-  setPomodoroInterval: function (state) {
-    Db.set("pomodoroInterval", state);
   },
 
   /**
@@ -955,19 +933,19 @@ var TogglButton = {
       } else if (request.type === 'toggle-socket') {
         TogglButton.setSocket(request.state);
       } else if (request.type === 'toggle-nanny') {
-        TogglButton.setNanny(request.state);
+        TogglButton.updateSetting("nannyCheckEnabled", request.state, TogglButton.triggerNotification);
       } else if (request.type === 'toggle-nanny-from-to') {
-        TogglButton.setNannyFromTo(request.state);
+        TogglButton.updateSetting("nannyFromTo", request.state, TogglButton.triggerNotification, Db.get("nannyCheckEnabled"));
       } else if (request.type === 'toggle-nanny-interval') {
-        TogglButton.setNannyInterval(request.state);
+        TogglButton.updateSetting("nannyInterval", Math.max(request.state, 1000), TogglButton.triggerNotification, Db.get("nannyCheckEnabled"));
       } else if (request.type === 'toggle-idle') {
-        TogglButton.setIdleDetection(request.state);
+        TogglButton.updateSetting("idleDetectionEnabled", request.state, TogglButton.startCheckingUserState);
       } else if (request.type === 'toggle-pomodoro') {
         Db.set("pomodoroModeEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-sound') {
         Db.set("pomodoroSoundEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
-        TogglButton.setPomodoroInterval(request.state);
+        TogglButton.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'userToken') {
         if (!TogglButton.$user) {
           TogglButton.fetchUser(request.apiToken);

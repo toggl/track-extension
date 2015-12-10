@@ -50,8 +50,5 @@ var Db = {
         Db.load(k, Db.settings[k]);
       }
     }
-  },
-
-  migrate: function () {
   }
 };

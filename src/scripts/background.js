@@ -988,22 +988,6 @@ var TogglButton = {
     }
 
     return true;
-  },
-
-  migrate: function () {
-    var key,
-      fields = [
-        {old: "idleCheckEnabled", update: "nannyCheckEnabled"},
-        {old: "idleInterval", update: "nannyInterval"},
-        {old: "idleFromTo", update: "nannyFromTo"}
-      ];
-
-    for (key in fields) {
-      if (fields.hasOwnProperty(key) && !!localStorage.getItem(fields[key].old)) {
-        localStorage.setItem(fields[key].update, localStorage.getItem(fields[key].old));
-        localStorage.removeItem(fields[key].old);
-      }
-    }
   }
 };
 

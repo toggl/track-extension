@@ -3,6 +3,7 @@
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+var Db = chrome.extension.getBackgroundPage().Db;
 
 var Settings = {
   $postPopup: null,
@@ -13,19 +14,19 @@ var Settings = {
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
-    document.querySelector("#nag-nanny-interval").value = TogglButton.$nannyInterval / 60000;
-    Settings.toggleState(Settings.$postPopup, TogglButton.$showPostPopup);
-    Settings.toggleState(Settings.$nanny, TogglButton.$nannyCheckEnabled);
-    Settings.toggleSetting(Settings.$socket, TogglButton.$socket);
-    Settings.toggleState(Settings.$idleDetection, TogglButton.$idleDetectionEnabled);
-    Settings.toggleState(Settings.$pomodoroMode, TogglButton.$pomodoroModeEnabled);
-    Settings.toggleState(Settings.$pomodoroSound, TogglButton.$pomodoroSoundEnabled);
-    document.querySelector("#pomodoro-interval").value = TogglButton.$pomodoroInterval;
+    document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
+    Settings.toggleState(Settings.$postPopup, Db.get("showPostPopup"));
+    Settings.toggleState(Settings.$nanny, Db.get("nannyCheckEnabled"));
+    Settings.toggleSetting(Settings.$socket, Db.get("socketEnabled") && TogglButton.$socket);
+    Settings.toggleState(Settings.$idleDetection, Db.get("idleDetectionEnabled"));
+    Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
+    Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
+    document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
 
     TogglButton.analytics("settings", null);
   },
   setFromTo: function () {
-    var fromTo = TogglButton.$nannyFromTo.split("-");
+    var fromTo = Db.get("nannyFromTo").split("-");
     document.querySelector("#nag-nanny-from").value = fromTo[0];
     document.querySelector("#nag-nanny-to").value = fromTo[1];
   },

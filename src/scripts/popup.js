@@ -3,6 +3,7 @@
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+var Db = chrome.extension.getBackgroundPage().Db;
 
 var PopUp = {
   $postStartText: " post-start popup",
@@ -44,7 +45,7 @@ var PopUp = {
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
       if (!!response.success) {
-        if (!!response.type && response.type === "New Entry" && TogglButton.$showPostPopup) {
+        if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);
         } else if (response.type === "Update") {
           TogglButton = chrome.extension.getBackgroundPage().TogglButton;

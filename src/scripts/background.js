@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
@@ -26,21 +26,12 @@ var TogglButton = {
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,
-  $showPostPopup: true,
   $ApiV8Url: "https://www.toggl.com/api/v8",
   $sendResponse: null,
   $socket: null,
   $retrySocket: false,
-  $socketEnabled: false,
   $nannyTimer: null,
-  $nannyCheckEnabled: false,
-  $nannyInterval: 360000,
-  $nannyFromTo: "09:00-17:00",
-  $pomodoroModeEnabled: false,
-  $pomodoroSoundEnabled: true,
-  $pomodoroInterval: 25,
   $lastSyncDate: null,
-  $idleDetectionEnabled: true,
   $lastWork: {
     id: null,
     date: Date.now()
@@ -142,7 +133,7 @@ var TogglButton = {
               TogglButton.$sendResponse = null;
               TogglButton.setBrowserActionBadge();
             }
-            if (TogglButton.$socketEnabled) {
+            if (Db.get("socketEnabled")) {
               TogglButton.setupSocket();
             }
             TogglButton.updateBugsnag();
@@ -295,25 +286,25 @@ var TogglButton = {
         clearTimeout(TogglButton.$nannyTimer);
         TogglButton.startCheckingUserState();
         if (!!timeEntry.respond) {
-          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: TogglButton.$showPostPopup, html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
+          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: Db.get("showPostPopup"), html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
         }
         TogglButton.analytics(timeEntry.type, timeEntry.service);
       }
     });
 
-    if (TogglButton.$pomodoroModeEnabled) {
-      chrome.alarms.create('PomodoroTimer', {delayInMinutes: parseInt(TogglButton.$pomodoroInterval, 10)});
+    if (Db.get("pomodoroModeEnabled")) {
+      chrome.alarms.create('PomodoroTimer', {delayInMinutes: parseInt(Db.get("pomodoroInterval"), 10)});
     }
   },
 
   analytics: function (event, service) {
     if (event === "settings") {
-      _gaq.push(['_trackEvent', 'popup', "settings/popup-" + TogglButton.$showPostPopup]);
-      _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + TogglButton.$nannyCheckEnabled]);
-      _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + TogglButton.$idleDetectionEnabled]);
-      _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + TogglButton.$socketEnabled]);
-      _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + TogglButton.$pomodoroModeEnabled]);
-      _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + TogglButton.$pomodoroSoundEnabled]);
+      _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
+      _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
+      _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
+      _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + Db.get("socketEnabled")]);
+      _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + Db.get("pomodoroModeEnabled")]);
+      _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + Db.get("pomodoroSoundEnabled")]);
     } else {
       _gaq.push(['_trackEvent', event, event + "-" + service]);
       chrome.runtime.getPlatformInfo(function (info) {
@@ -407,7 +398,7 @@ var TogglButton = {
         }
       );
 
-      if (TogglButton.$pomodoroSoundEnabled) {
+      if (Db.get("pomodoroSoundEnabled")) {
         stopSound = new Audio();
         stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
         stopSound.play();
@@ -675,8 +666,7 @@ var TogglButton = {
   },
 
   setSocket: function (state) {
-    localStorage.setItem("socketEnabled", state);
-    TogglButton.$socketEnabled = state;
+    Db.set("socketEnabled", state);
     if (TogglButton.$socket !== null) {
       TogglButton.$socket.close();
       TogglButton.$socket = null;
@@ -691,40 +681,35 @@ var TogglButton = {
   },
 
   setNanny: function (state) {
-    localStorage.setItem("nannyCheckEnabled", state);
-    TogglButton.$nannyCheckEnabled = state;
+    Db.set("nannyCheckEnabled", state);
     if (state) {
       TogglButton.triggerNotification();
     }
   },
 
   setNannyFromTo: function (state) {
-    localStorage.setItem("nannyFromTo", state);
-    TogglButton.$nannyFromTo = state;
-    if (TogglButton.$nannyCheckEnabled) {
+    Db.set("nannyFromTo", state);
+    if (Db.get("nannyCheckEnabled")) {
       TogglButton.triggerNotification();
     }
   },
 
   setNannyInterval: function (state) {
-    localStorage.setItem("nannyInterval", Math.max(state, 1000));
-    TogglButton.$nannyInterval = state;
-    if (TogglButton.$nannyCheckEnabled) {
+    Db.set("nannyInterval", Math.max(state, 1000));
+    if (Db.get("nannyCheckEnabled")) {
       TogglButton.triggerNotification();
     }
   },
 
   setIdleDetection: function (state) {
-    localStorage.setItem("idleDetectionEnabled", state);
-    TogglButton.$idleDetectionEnabled = state;
+    Db.set("idleDetectionEnabled", state);
     if (state) {
       TogglButton.startCheckingUserState();
     }
   },
 
   setPomodoroInterval: function (state) {
-    localStorage.setItem("pomodoroInterval", state);
-    TogglButton.$pomodoroInterval = state;
+    Db.set("pomodoroInterval", state);
   },
 
   /**
@@ -733,7 +718,7 @@ var TogglButton = {
    */
   startCheckingUserState: function () {
     if (!TogglButton.$checkingState &&
-        TogglButton.$idleDetectionEnabled &&
+        Db.get("idleDetectionEnabled") &&
         TogglButton.$curEntry) {
       TogglButton.$checkingUserState = setTimeout(function () {
         chrome.idle.queryState(15, TogglButton.onUserState);
@@ -812,7 +797,7 @@ var TogglButton = {
     TogglButton.$nannyTimer = null;
 
     if (TogglButton.$user && currentState === "active" &&
-        TogglButton.$nannyCheckEnabled &&
+        Db.get("nannyCheckEnabled") &&
         TogglButton.$curEntry === null &&
         TogglButton.workingTime()) {
 
@@ -881,7 +866,7 @@ var TogglButton = {
 
   workingTime: function () {
     var now = new Date(),
-      fromTo = TogglButton.$nannyFromTo.split("-"),
+      fromTo = Db.get("nannyFromTo").split("-"),
       start,
       end,
       startHelper,
@@ -904,7 +889,7 @@ var TogglButton = {
   triggerNotification: function () {
     if (TogglButton.$nannyTimer === null && TogglButton.$curEntry === null) {
       TogglButton.hideNotification('remind-to-track-time');
-      TogglButton.$nannyTimer = setTimeout(TogglButton.checkState, TogglButton.$nannyInterval);
+      TogglButton.$nannyTimer = setTimeout(TogglButton.checkState, Db.get("nannyInterval"));
     }
   },
 
@@ -945,45 +930,6 @@ var TogglButton = {
     TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": info.selectionText || ""}, null);
   },
 
-  getSetting: function (setting) {
-    var value = localStorage.getItem(setting);
-    if (!!value) {
-      if (value === "false" || value === "true") {
-        value = JSON.parse(value);
-      }
-    }
-    return value;
-  },
-
-  setSetting: function (setting, value) {
-    localStorage.setItem(setting, value);
-  },
-
-  loadSetting: function (setting, defaultValue) {
-    var value = localStorage.getItem(setting);
-    if (!!value) {
-      if (typeof defaultValue === "boolean") {
-        value = JSON.parse(value);
-      }
-    } else {
-      value = defaultValue;
-    }
-    localStorage.setItem(setting, value);
-    return value;
-  },
-
-  loadAllSettings: function () {
-    TogglButton.$showPostPopup = TogglButton.loadSetting("showPostPopup", true);
-    TogglButton.$socketEnabled = TogglButton.loadSetting("socketEnabled", true);
-    TogglButton.$nannyCheckEnabled = TogglButton.loadSetting("nannyCheckEnabled", true);
-    TogglButton.$nannyInterval = TogglButton.loadSetting("nannyInterval", 360000);
-    TogglButton.$nannyFromTo = TogglButton.loadSetting("nannyFromTo", "09:00-17:00");
-    TogglButton.$idleDetectionEnabled = TogglButton.loadSetting("idleDetectionEnabled", false);
-    TogglButton.$pomodoroModeEnabled = TogglButton.loadSetting("pomodoroModeEnabled", false);
-    TogglButton.$pomodoroSoundEnabled = TogglButton.loadSetting("pomodoroSoundEnabled", true);
-    TogglButton.$pomodoroInterval = TogglButton.loadSetting("pomodoroInterval", 25);
-  },
-
   newMessage: function (request, sender, sendResponse) {
     try {
       if (request.type === 'activate') {
@@ -1005,8 +951,7 @@ var TogglButton = {
       } else if (request.type === 'stop') {
         TogglButton.stopTimeEntry(request, sendResponse);
       } else if (request.type === 'toggle-popup') {
-        localStorage.setItem("showPostPopup", request.state);
-        TogglButton.$showPostPopup = request.state;
+        Db.set("showPostPopup", request.state);
       } else if (request.type === 'toggle-socket') {
         TogglButton.setSocket(request.state);
       } else if (request.type === 'toggle-nanny') {
@@ -1018,11 +963,9 @@ var TogglButton = {
       } else if (request.type === 'toggle-idle') {
         TogglButton.setIdleDetection(request.state);
       } else if (request.type === 'toggle-pomodoro') {
-        localStorage.setItem("pomodoroModeEnabled", request.state);
-        TogglButton.$pomodoroModeEnabled = request.state;
+        Db.set("pomodoroModeEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-sound') {
-        localStorage.setItem("pomodoroSoundEnabled", request.state);
-        TogglButton.$pomodoroSoundEnabled = request.state;
+        Db.set("pomodoroSoundEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
         TogglButton.setPomodoroInterval(request.state);
       } else if (request.type === 'userToken') {
@@ -1067,9 +1010,8 @@ var TogglButton = {
 chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
 chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
 
-TogglButton.migrate();
+Db.loadAll();
 TogglButton.fetchUser();
-TogglButton.loadAllSettings();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);

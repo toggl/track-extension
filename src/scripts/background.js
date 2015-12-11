@@ -665,31 +665,6 @@ var TogglButton = {
     });
   },
 
-
-  updateSetting: function (key, state, callback, condition) {
-    var c = condition !== null ? condition : state;
-    Db.set(key, state);
-
-    if (c && callback !== null) {
-      callback();
-    }
-  },
-
-  setSocket: function (state) {
-    Db.set("socketEnabled", state);
-    if (TogglButton.$socket !== null) {
-      TogglButton.$socket.close();
-      TogglButton.$socket = null;
-    }
-    if (state) {
-      if (!!TogglButton.$user) {
-        TogglButton.setupSocket();
-      } else {
-        TogglButton.fetchUser();
-      }
-    }
-  },
-
   /**
    * Start checking whether the user is 'active', 'idle' or 'locked' for the
    * discard time notification.
@@ -928,24 +903,6 @@ var TogglButton = {
         TogglButton.updateTimeEntry(request, sendResponse);
       } else if (request.type === 'stop') {
         TogglButton.stopTimeEntry(request, sendResponse);
-      } else if (request.type === 'toggle-popup') {
-        Db.set("showPostPopup", request.state);
-      } else if (request.type === 'toggle-socket') {
-        TogglButton.setSocket(request.state);
-      } else if (request.type === 'toggle-nanny') {
-        TogglButton.updateSetting("nannyCheckEnabled", request.state, TogglButton.triggerNotification);
-      } else if (request.type === 'toggle-nanny-from-to') {
-        TogglButton.updateSetting("nannyFromTo", request.state, TogglButton.triggerNotification, Db.get("nannyCheckEnabled"));
-      } else if (request.type === 'toggle-nanny-interval') {
-        TogglButton.updateSetting("nannyInterval", Math.max(request.state, 1000), TogglButton.triggerNotification, Db.get("nannyCheckEnabled"));
-      } else if (request.type === 'toggle-idle') {
-        TogglButton.updateSetting("idleDetectionEnabled", request.state, TogglButton.startCheckingUserState);
-      } else if (request.type === 'toggle-pomodoro') {
-        Db.set("pomodoroModeEnabled", request.state);
-      } else if (request.type === 'toggle-pomodoro-sound') {
-        Db.set("pomodoroSoundEnabled", request.state);
-      } else if (request.type === 'toggle-pomodoro-interval') {
-        TogglButton.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'userToken') {
         if (!TogglButton.$user) {
           TogglButton.fetchUser(request.apiToken);

@@ -746,8 +746,13 @@ var TogglButton = {
   },
 
   checkActivity: function (currentState) {
+    var secondTitle = "Open toggl.com";
     clearTimeout(TogglButton.$nannyTimer);
     TogglButton.$nannyTimer = null;
+
+    if (!!TogglButton.$latestStoppedEntry) {
+      secondTitle = "Continue (" + TogglButton.$latestStoppedEntry.description + ")";
+    }
 
     if (TogglButton.$user && currentState === "active" &&
         Db.get("nannyCheckEnabled") &&
@@ -763,7 +768,7 @@ var TogglButton = {
           message: "Don't forget to track your time!",
           buttons: [
             { title: "Start timer"},
-            { title: "Open Toggl.com"}
+            { title: secondTitle}
           ]
         },
         function () {
@@ -782,8 +787,15 @@ var TogglButton = {
         // start timer
         TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
       } else {
-        //open tracker
-        chrome.tabs.create({url: 'https://toggl.com/app/'});
+        timeEntry = TogglButton.$latestStoppedEntry;
+        if (!!timeEntry) {
+          timeEntry.type = "timeEntry";
+          timeEntry.service = type;
+          // continue timer
+          TogglButton.createTimeEntry(timeEntry, null);
+        } else {
+          chrome.tabs.create({url: 'https://toggl.com/app/'});
+        }
       }
     } else if (notificationId === 'idle-detection') {
       if (buttonID === 0 || buttonID === 1) {

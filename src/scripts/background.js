@@ -131,8 +131,8 @@ var TogglButton = {
             if (TogglButton.$sendResponse !== null) {
               TogglButton.$sendResponse({success: (xhr.status === 200)});
               TogglButton.$sendResponse = null;
-              TogglButton.setBrowserActionBadge();
             }
+            TogglButton.setBrowserActionBadge();
             if (Db.get("socketEnabled")) {
               TogglButton.setupSocket();
             }

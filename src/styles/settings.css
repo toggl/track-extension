@@ -10,6 +10,7 @@ body {
   padding: 0;
   color: #505050!important;
   float: left;
+  height: 380px;
 }
 
 .list {
@@ -74,7 +75,8 @@ body {
 }
 
 .changelog {
-  margin-bottom: 5px;
+  position: absolute;
+  bottom: 36px;
 }
 
 #version a {
@@ -100,4 +102,29 @@ body {
 input[type="number"] {
   width: 70px;
   text-align: center;
+}
+
+header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+header .tab-link {
+  background: #fdfdfd;
+  cursor: pointer;
+  float: left;
+  padding: 10px 20px;
+}
+
+header .active, header li:hover {
+  border-bottom: 1px solid red;
+  background: #F1F0F0;
+}
+
+.container .tab {
+  display: none;
+}
+.container .active {
+  display: block!important;
 }

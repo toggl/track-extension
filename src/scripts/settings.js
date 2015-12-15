@@ -76,6 +76,16 @@ document.addEventListener('DOMContentLoaded', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroSoundEnabled") !== "true"), "toggle-pomodoro-sound");
   });
 
+  document.querySelector(".tab-links").addEventListener('click', function (e) {
+    var tab = e.target.getAttribute("data-tab");
+    if (!document.querySelector(".tab-" + tab).classList.contains("active")) {
+      document.querySelector(".tab.active").classList.remove("active");
+      document.querySelector("header .active").classList.remove("active");
+      document.querySelector(".tab-" + tab).classList.add("active");
+      e.target.classList.add("active");
+    }
+  });
+
   document.querySelector("#nag-nanny-from").addEventListener('blur', function (e) {
     if (e.target.value.length === 0) {
       Settings.setFromTo();

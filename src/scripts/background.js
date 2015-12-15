@@ -305,7 +305,7 @@ var TogglButton = {
       _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + Db.get("socketEnabled")]);
       _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + Db.get("pomodoroModeEnabled")]);
       _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + Db.get("pomodoroSoundEnabled")]);
-    } else {
+    } else {
       _gaq.push(['_trackEvent', event, event + "-" + service]);
       chrome.runtime.getPlatformInfo(function (info) {
         _gaq.push(['_trackEvent', "os", "os-" + info.os]);
@@ -780,7 +780,9 @@ var TogglButton = {
 
   notificationBtnClick: function (notificationId, buttonID) {
     var type = "dropdown-pomodoro",
-      timeEntry = TogglButton.$curEntry;
+      timeEntry = TogglButton.$curEntry,
+      buttonName = "start_new",
+      eventType = "reminder";
     if (notificationId === 'remind-to-track-time') {
       type = "dropdown-reminder";
       if (buttonID === 0) {
@@ -793,12 +795,15 @@ var TogglButton = {
           timeEntry.service = type;
           // continue timer
           TogglButton.createTimeEntry(timeEntry, null);
+          buttonName = "continue";
         } else {
           chrome.tabs.create({url: 'https://toggl.com/app/'});
+          buttonName = "go_to_web";
         }
       }
     } else if (notificationId === 'idle-detection') {
       if (buttonID === 0 || buttonID === 1) {
+        buttonName = "discard";
         // discard idle time
         TogglButton.stopTimeEntry({
           stopDate: TogglButton.$idleNotificationDiscardSince,
@@ -807,9 +812,11 @@ var TogglButton = {
           // discard idle time and continue
           if (buttonID === 1) {
             TogglButton.createTimeEntry(timeEntry);
+            buttonName = "discard_continue";
           }
         });
       }
+      eventType = "idle";
     } else if (notificationId === 'pomodoro-time-is-up') {
       if (buttonID === 0) {
         timeEntry = TogglButton.$latestStoppedEntry;
@@ -821,12 +828,15 @@ var TogglButton = {
         }
         // continue timer
         TogglButton.createTimeEntry(timeEntry, null);
+        buttonName = "continue";
       } else {
         // start timer
         TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
       }
+      eventType = "pomodoro";
     }
     TogglButton.processNotificationEvent(notificationId);
+    TogglButton.analytics(eventType, buttonName);
   },
 
   workingTime: function () {

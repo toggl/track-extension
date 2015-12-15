@@ -106,3 +106,4 @@ var Db = {
 };
 
 chrome.extension.onMessage.addListener(Db.newMessage);
+Db.loadAll();

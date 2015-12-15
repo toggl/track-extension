@@ -941,7 +941,6 @@ var TogglButton = {
 chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
 chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
 
-Db.loadAll();
 TogglButton.fetchUser();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();

@@ -4,6 +4,21 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+input[type="number"], input[type="time"]{
+  height: 22px;
+  line-height: 22px !important;
+  vertical-align: middle;
+  padding: 0 0 0 10px !important;
+  margin-left: 10px !important;
+  max-width: 70px;
+  border: 1px solid rgb(191, 191, 191);
+  border-radius: 2px;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
 .container {
   width: 800px;
   margin: 20px 15px auto;
@@ -35,6 +50,9 @@ body {
 
 .list li label {
   font-size: 14px;
+  height: 22px;
+  line-height: 22px;
+  vertical-align: middle;
 }
 
 .list li input[type="checkbox"]{
@@ -97,11 +115,6 @@ body {
 
 .list li:hover .description {
   visibility: visible;
-}
-
-input[type="number"] {
-  width: 70px;
-  text-align: center;
 }
 
 header ul {

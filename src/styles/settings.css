@@ -41,11 +41,11 @@ input[type="number"] {
 }
 
 .list li #nag-nanny:checked ~ div {
-  display: block;
+  height: 110px
 }
 
 .list li #pomodoro-mode:checked ~ div {
-  display: block;
+  height: 200px;
 }
 
 .list li label {
@@ -62,8 +62,10 @@ input[type="number"] {
 }
 
 .subsettings-details  {
-  display: none;
+  overflow: hidden;
+  height: 0px;
   margin-left: 10px;
+  transition:height 300ms ease-in-out;
 }
 
 .subsettings-details p {

@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       Settings.setFromTo();
       return;
     }
-    Settings.$fromTo = e.target.value + "-" + document.querySelector('"nag-nanny-to').value;
+    Settings.$fromTo = e.target.value + "-" + document.querySelector('#nag-nanny-to').value;
     Settings.saveSetting();
   });
   document.querySelector("#nag-nanny-to").addEventListener('blur', function (e) {

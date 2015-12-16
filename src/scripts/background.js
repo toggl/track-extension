@@ -750,7 +750,7 @@ var TogglButton = {
     clearTimeout(TogglButton.$nannyTimer);
     TogglButton.$nannyTimer = null;
 
-    if (!!TogglButton.$latestStoppedEntry) {
+    if (!!TogglButton.$latestStoppedEntry && !!TogglButton.$latestStoppedEntry.description) {
       secondTitle = "Continue (" + TogglButton.$latestStoppedEntry.description + ")";
     }
 

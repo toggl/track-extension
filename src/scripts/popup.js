@@ -23,6 +23,10 @@ var PopUp = {
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
   showPage: function () {
+    if (!TogglButton) {
+      TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+    }
+
     if (TogglButton.$user !== null) {
       PopUp.$editView.innerHTML = TogglButton.getEditForm();
       PopUp.addEditEvents();

@@ -278,17 +278,24 @@ var TogglButton = {
       method: 'POST',
       payload: entry,
       onLoad: function (xhr) {
-        var responseData;
-        responseData = JSON.parse(xhr.responseText);
-        entry = responseData && responseData.data;
-        TogglButton.$curEntry = entry;
-        TogglButton.setBrowserAction(entry);
-        clearTimeout(TogglButton.$nannyTimer);
-        TogglButton.startCheckingUserState();
-        if (!!timeEntry.respond) {
-          sendResponse({success: (xhr.status === 200), type: "New Entry", entry: entry, showPostPopup: Db.get("showPostPopup"), html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
+        var responseData,
+          success = (xhr.status === 200);
+        try {
+          if (success) {
+            responseData = JSON.parse(xhr.responseText);
+            entry = responseData && responseData.data;
+            TogglButton.$curEntry = entry;
+            TogglButton.setBrowserAction(entry);
+            clearTimeout(TogglButton.$nannyTimer);
+            TogglButton.startCheckingUserState();
+            TogglButton.analytics(timeEntry.type, timeEntry.service);
+          }
+          if (!!timeEntry.respond) {
+            sendResponse({success: success, type: "New Entry", entry: entry, showPostPopup: Db.get("showPostPopup"), html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
+          }
+        } catch (e) {
+          Bugsnag.notifyException(e);
         }
-        TogglButton.analytics(timeEntry.type, timeEntry.service);
       }
     });
 

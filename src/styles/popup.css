@@ -262,6 +262,20 @@ hr {
 .color-13 { background-color: #bc2d07 }
 .color-14 { background-color: #999999}
 
+.error {
+  overflow: hidden;
+  height: 0px;
+  transition:height 300ms ease-in-out;
+  display: block;
+  padding: 0 30px;
+  line-height: 30px;
+  margin-top: 5px;
+}
+
+.error.show {
+  height: 30px;
+}
+
 /* Entry form styles */
 
 #entry-form {

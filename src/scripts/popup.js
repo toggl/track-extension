@@ -9,6 +9,7 @@ var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
   $togglButton: null,
+  $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
   $error: null,
@@ -54,8 +55,15 @@ var PopUp = {
         }
       } else if (request.type === "login") {
         PopUp.$error.style.display = 'block';
+      } else if (!!response.type && response.type === "New Entry") {
+        PopUp.showError();
       }
     });
+  },
+
+  showError: function () {
+    PopUp.$errorLabel.classList.add("show");
+    setTimeout(function () { PopUp.$errorLabel.classList.remove("show"); }, 3000);
   },
 
   showCurrentDuration: function (startTimer) {

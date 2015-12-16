@@ -381,6 +381,9 @@ var TogglButton = {
   },
 
   pomodoroAlarmStop: function (alarm) {
+    if (!Db.get("pomodoroModeEnabled")) {
+      return;
+    }
     if (alarm.name === 'PomodoroTimer') {
       TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
 

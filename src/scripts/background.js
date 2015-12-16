@@ -790,7 +790,7 @@ var TogglButton = {
         TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
       } else {
         timeEntry = TogglButton.$latestStoppedEntry;
-        if (!!timeEntry && && !!timeEntry.description) {
+        if (!!timeEntry && !!timeEntry.description) {
           timeEntry.type = "timeEntry";
           timeEntry.service = type;
           // continue timer

@@ -88,7 +88,7 @@ var PopUp = {
     elem.className = "project-bullet";
     if (!!pid && id !== 0) {
       project = TogglButton.findProjectByPid(id);
-      if (project !== null) {
+      if (!!project) {
         elem.classList.add("color-" + project.color);
         elem.classList.add("project-color");
         return " - " + project.name;

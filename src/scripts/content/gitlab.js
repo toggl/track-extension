@@ -4,8 +4,7 @@
 'use strict';
 
 togglbutton.render('.issue .detail-page-description .title:not(.toggl)', {observe: true}, function (elem) {
-  var link,  description,
-    numElem = $('h2.title'),
+  var link, description,
     titleElem = $(".issue .detail-page-description .title"),
     projectElem = $('.title').firstChild;
   description = titleElem.textContent;

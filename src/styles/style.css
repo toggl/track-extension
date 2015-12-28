@@ -254,6 +254,15 @@ only screen and (min-resolution: 192dpi) {
 /********* BITBUCKET *********/
 .toggl-button.bitbucket {
   border-color: #ccc;
+}
+
+#pull-request-header .toggl-button.bitbucket{
+  float: right;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+#issue-header .toggl-button.bitbucket {
   margin-left:15px;
 }
 

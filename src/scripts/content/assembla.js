@@ -2,11 +2,12 @@
 /*global $: false, document: false, togglbutton: false, createTag: false*/
 'use strict';
 
-togglbutton.render('#tickets-show:not(.toggl)', {}, function (elem) {
+togglbutton.render('#tickets-show:not(.toggl)', {observe: true}, function (elem) {
 
   var link,
     container = createTag('li', 'toggle-container'),
-    description = $('span.ticket-number', elem).textContent + ' ' + $('.ticket-summary > h1').textContent,
+    description = $('span.ticket-number', elem).textContent + ' ' + $('.ticket-summary > h1').textContent
+      .replace("Copied!Copy to clipboard", ''),
     project = $('h1.header-w > span').textContent;
 
   link = togglbutton.createTimerLink({

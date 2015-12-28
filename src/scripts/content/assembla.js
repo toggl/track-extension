@@ -6,13 +6,22 @@ togglbutton.render('#tickets-show:not(.toggl)', {observe: true}, function (elem)
 
   var link,
     container = createTag('li', 'toggle-container'),
-    description = document.querySelector('#copyButton1').getAttribute('data-clipboard-text'),
-    project = $('h1.header-w > span').textContent;
+    descFunc,
+    projectFunc;
+
+
+  descFunc = function () {
+    return document.querySelector('#copyButton1').getAttribute('data-clipboard-text');
+  };
+
+  projectFunc = function () {
+    return $('h1.header-w > span').textContent || "";
+  };
 
   link = togglbutton.createTimerLink({
     className: 'assembla',
-    description: description,
-    projectName: project,
+    description: descFunc,
+    projectName: projectFunc,
   });
 
   container.appendChild(link);

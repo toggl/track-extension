@@ -41,11 +41,11 @@ var TogglButton = {
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
   $editForm: '<div id="toggl-button-edit-form">' +
-      '<form>' +
+      '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)">' +
+        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
       '</div>' +
       '<div class="toggl-button-row">' +
         '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +

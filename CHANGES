@@ -1,3 +1,17 @@
+[0.7.8]
+- Improved settings managment
+- Show "Continue latest" option in Tracking reminder
+- Fixed updating extension icon when logging out
+- Added tabs to settings view
+- Unified input fields design in settings
+- Added animation to subsettings open/close
+- Show error message when time entry start fails
+- Fixed Toggl Button rendering in updated gitlab design
+- Added support for BitBucket pull requests
+- Fixes for Assembla updates
+- Improved Todoist description text fetching
+- Fixed edit form clear issue in dropdown
+- Fixed browser autocomplete issue in dropdown
 [0.7.7]
 - Fixed continuing latest entry with task from Pomodoro notification
 - Added failsafe for starting websocket

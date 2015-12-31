@@ -19,6 +19,7 @@ var PopUp = {
   mousedownTrigger: null,
   projectBlurTrigger: null,
   taskBlurTrigger: null,
+  editFormAdded: false,
   $menuView: document.querySelector(".menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
@@ -28,8 +29,11 @@ var PopUp = {
     }
 
     if (TogglButton.$user !== null) {
-      PopUp.$editView.innerHTML = TogglButton.getEditForm();
-      PopUp.addEditEvents();
+      if (!PopUp.editFormAdded) {
+        PopUp.$editView.innerHTML = TogglButton.getEditForm();
+        PopUp.addEditEvents();
+        PopUp.editFormAdded = true;
+      }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');

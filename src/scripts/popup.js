@@ -63,7 +63,7 @@ var PopUp = {
         }
       } else if (request.type === "login") {
         PopUp.$error.style.display = 'block';
-      } else if (!!response.type && response.type === "New Entry") {
+      } else if (!!response.type && (response.type === "New Entry" || response.type === "Update")) {
         PopUp.showError();
       }
     });

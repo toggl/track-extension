@@ -439,15 +439,22 @@ var TogglButton = {
       method: 'PUT',
       payload: entry,
       onLoad: function (xhr) {
-        var responseData;
-        responseData = JSON.parse(xhr.responseText);
-        entry = responseData && responseData.data;
-        TogglButton.$curEntry = entry;
-        TogglButton.setBrowserAction(entry);
-        if (!!timeEntry.respond) {
-          sendResponse({success: (xhr.status === 200), type: "Update"});
+        var responseData,
+          success = (xhr.status === 200);
+        try {
+          if (success) {
+            responseData = JSON.parse(xhr.responseText);
+            entry = responseData && responseData.data;
+            TogglButton.$curEntry = entry;
+            TogglButton.setBrowserAction(entry);
+          }
+          if (!!timeEntry.respond) {
+            sendResponse({success: success, type: "Update"});
+          }
+          TogglButton.analytics(timeEntry.type, timeEntry.service);
+        } catch (e) {
+          Bugsnag.notifyException(e);
         }
-        TogglButton.analytics(timeEntry.type, timeEntry.service);
       }
     });
   },

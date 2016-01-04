@@ -8,11 +8,11 @@ var Db = chrome.extension.getBackgroundPage().Db;
 var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
-  $togglButton: null,
+  $togglButton: document.querySelector(".stop-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
-  $error: null,
+  $error: document.querySelector(".error"),
   $timer: null,
   $tagsVisible: false,
   $taskBlurTrigger: null,
@@ -403,8 +403,6 @@ document.addEventListener('DOMContentLoaded', function () {
     respond: false
   };
   PopUp.sendMessage(req);
-  PopUp.$togglButton = document.querySelector(".stop-button");
-  PopUp.$error = document.querySelector(".error");
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
     PopUp.updateEditForm(PopUp.$editView);

@@ -253,6 +253,7 @@ var TogglButton = {
 
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
+      error = "",
       entry = {
         time_entry: {
           start: start.toISOString(),
@@ -289,9 +290,21 @@ var TogglButton = {
             clearTimeout(TogglButton.$nannyTimer);
             TogglButton.startCheckingUserState();
             TogglButton.analytics(timeEntry.type, timeEntry.service);
+          } else {
+            error = xhr.responseText;
           }
           if (!!timeEntry.respond) {
-            sendResponse({success: success, type: "New Entry", entry: entry, showPostPopup: Db.get("showPostPopup"), html: TogglButton.getEditForm(), hasTasks: !!TogglButton.$user.projectTaskList});
+            sendResponse(
+              {
+                success: success,
+                type: "New Entry",
+                entry: entry,
+                showPostPopup: Db.get("showPostPopup"),
+                html: TogglButton.getEditForm(),
+                hasTasks: !!TogglButton.$user.projectTaskList,
+                error: error
+              }
+            );
           }
         } catch (e) {
           Bugsnag.notifyException(e);
@@ -419,7 +432,7 @@ var TogglButton = {
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {
-    var entry, project;
+    var entry, project, error = "";
     if (!TogglButton.$curEntry) { return; }
     entry = {
       time_entry: {
@@ -447,9 +460,11 @@ var TogglButton = {
             entry = responseData && responseData.data;
             TogglButton.$curEntry = entry;
             TogglButton.setBrowserAction(entry);
+          } else {
+            error = xhr.responseText;
           }
           if (!!timeEntry.respond) {
-            sendResponse({success: success, type: "Update"});
+            sendResponse({success: success, type: "Update", error: error});
           }
           TogglButton.analytics(timeEntry.type, timeEntry.service);
         } catch (e) {

@@ -23,6 +23,7 @@ var PopUp = {
   $menuView: document.querySelector(".menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  defaultErrorMessage: "Error connecting to server",
   showPage: function () {
     if (!TogglButton) {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
@@ -64,12 +65,13 @@ var PopUp = {
       } else if (request.type === "login") {
         PopUp.$error.style.display = 'block';
       } else if (!!response.type && (response.type === "New Entry" || response.type === "Update")) {
-        PopUp.showError();
+        PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });
   },
 
-  showError: function () {
+  showError: function (errorMessage) {
+    PopUp.$errorLabel.innerHTML = errorMessage;
     PopUp.$errorLabel.classList.add("show");
     setTimeout(function () { PopUp.$errorLabel.classList.remove("show"); }, 3000);
   },

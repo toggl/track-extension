@@ -264,16 +264,16 @@ hr {
 
 .error {
   overflow: hidden;
-  height: 0px;
-  transition:height 300ms ease-in-out;
+  max-height: 0px;
+  transition:max-height 300ms ease-in-out;
   display: block;
   padding: 0 30px;
-  line-height: 30px;
+  line-height: 20px;
   margin-top: 5px;
 }
 
 .error.show {
-  height: 30px;
+  max-height: 100px;
 }
 
 /* Entry form styles */

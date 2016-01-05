@@ -7,8 +7,28 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
   var link, descFunc, projectFunc, container = $('.text', elem);
 
   descFunc = function () {
-    var desc = container.textContent;
-    return desc.substr(0, desc.length - 10).replace("  ", " ").trim();
+    var clone = container.cloneNode(true),
+      i = 0,
+      child = null;
+
+    while (clone.children.length > i) {
+      child = clone.children[i];
+      if (child.tagName === "B"
+          || child.tagName === "I") {
+        i++;
+      } else if (child.tagName === "A") {
+        if (child.classList.contains("ex_link")
+            || child.getAttribute("href").indexOf("mailto:") === 0) {
+          i++;
+        } else {
+          child.remove();
+        }
+      } else {
+        child.remove();
+      }
+    }
+
+    return clone.textContent.trim();
   };
 
   projectFunc = function () {

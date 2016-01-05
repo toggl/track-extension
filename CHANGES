@@ -1,3 +1,7 @@
+[0.7.9]
+- Improved error messages text
+- Fixes for Todoist text fetching
+- Smaller bug fixes
 [0.7.8]
 - Improved settings managment
 - Show "Continue latest" option in Tracking reminder

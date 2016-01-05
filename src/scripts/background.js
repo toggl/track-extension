@@ -599,7 +599,7 @@ var TogglButton = {
         for (key in projects) {
           if (projects.hasOwnProperty(key)) {
             project = projects[key];
-            clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
+            clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
             wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
           }
         }

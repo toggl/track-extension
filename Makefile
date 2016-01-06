@@ -13,3 +13,6 @@ dist: clean
 
 clean:
 	@if [ -f "toggl-button.zip" ]; then rm toggl-button.zip; fi
+
+authors:
+	git log --all --format='%aN <%cE>' | sort -u > AUTHORS

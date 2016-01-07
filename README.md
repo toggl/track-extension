@@ -4,6 +4,8 @@ Here for the contest? Great! Just fork the Toggl Button project and off you go!
 
 Don't know about the campaign? Here's our awesome info page with everything you need to know: [https://toggl.com/toggl-developer-challenge](https://toggl.com/toggl-developer-challenge)
 
+Not sure where to start? Check out this list of requested integrations: [https://github.com/toggl/toggl-button/wiki/User-requested-buttons](https://github.com/toggl/toggl-button/wiki/User-requested-buttons)
+
 # Toggl Button Chrome extension
 
 Add Toggl one-click time tracking to popular web tools.

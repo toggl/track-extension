@@ -5,6 +5,9 @@
 
 togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('div', 'button-link trello-tb-wrapper'),
+    duration,
+    trackedContainer = createTag('div', 'toggl-tracked'),
+    trackedElem = $('.other-actions'),
     titleElem = $('.window-title-text', elem),
     projectElem = $('.board-header > a'),
     descriptionElem = $('.js-move-card');
@@ -17,6 +20,11 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
 
   container.appendChild(link);
   descriptionElem.parentNode.insertBefore(container, descriptionElem);
+
+  // Add Tracked time text
+  duration = togglbutton.calculateTrackedTime(titleElem.innerText);
+  trackedContainer.innerHTML = "<h3>Time tracked</h3><p title='Time tracked with Toggl: " + duration + "'>" + duration + "</p>";
+  trackedElem.parentNode.insertBefore(trackedContainer, trackedElem);
 });
 
 /* Checklist buttons */

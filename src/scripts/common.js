@@ -55,6 +55,34 @@ function setCursorAtBeginning(elem) {
   elem.scrollLeft = 0;
 }
 
+function secondsToTime(duration, format) {
+  var response,
+    seconds = parseInt(duration % 60, 10),
+    minutes = parseInt((duration / 60) % 60, 10),
+    hours = parseInt((duration / (60 * 60)), 10),
+    hoursString = "";
+
+  if (hours > 0) {
+    hours = (hours < 10) ? "0" + hours : hours;
+    hoursString += hours + "h ";
+  }
+
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  // Use the format defined in user preferences
+  if (format === "improved") {
+    response = hours + ":" + minutes + ":" + seconds;
+  } else if (format === "decimal") {
+    response = hours + "." + parseInt((minutes * 100) / 60, 10) + "h";
+  } else {
+    response = hoursString + minutes + "m " + seconds + "s";
+  }
+
+
+  return response;
+}
+
 var togglbutton = {
   isStarted: false,
   element: null,
@@ -64,13 +92,17 @@ var togglbutton = {
   taskBlurTrigger: null,
   tagsVisible: false,
   hasTasks: false,
+  entries: {},
+  duration_format: "",
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
   fullVersion: "TogglButton",
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
+        togglbutton.entries = response.user.time_entries;
         togglbutton.fullVersion = response.version;
+        togglbutton.duration_format = response.user.duration_format;
         if (opts.observe) {
           var observer = new MutationObserver(function (mutations) {
             togglbutton.renderTo(selector, renderer);
@@ -103,6 +135,17 @@ var togglbutton = {
       top = window.innerHeight + document.body.scrollTop - 10 - editFormHeight;
     }
     return {left: left, top: top};
+  },
+
+  calculateTrackedTime: function (description) {
+    var duration = 0;
+    togglbutton.entries.forEach(function (entry) {
+      if (entry.description.toLowerCase() === description.toLowerCase()) {
+        duration += entry.duration;
+      }
+    });
+
+    return secondsToTime(duration, togglbutton.duration_format);
   },
 
   getSelectedTags: function () {

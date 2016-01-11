@@ -4,10 +4,10 @@
 'use strict';
 
 togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('div', 'card-detail-item clear'),
+  var link, container = createTag('div', 'button-link trello-tb-wrapper'),
     titleElem = $('.window-title-text', elem),
     projectElem = $('.board-header > a'),
-    descriptionElem = $('.card-detail-item-block');
+    descriptionElem = $('.js-move-card');
 
   link = togglbutton.createTimerLink({
     className: 'trello',

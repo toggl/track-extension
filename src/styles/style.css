@@ -330,6 +330,14 @@ only screen and (min-resolution: 192dpi) {
   max-width: 94%;
 }
 
+.trello-tb-wrapper .toggl-button{
+  color: #444;
+}
+
+.trello-tb-wrapper:hover .toggl-button{
+  color: #fff;
+}
+
 /********* BASECAMP *********/
 .toggl-button.basecamp {
   font-size: 12px;

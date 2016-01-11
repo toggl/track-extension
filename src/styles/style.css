@@ -872,3 +872,14 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.draftin {
   margin-right: 15px;
 }
+
+
+/********* DRAFTIN *********/
+.keep-tb-wrapper{
+  padding-left: 7px;
+  display: inline;
+  height: 32px;
+  margin: 0 8px;
+  top: 12px;
+  position: absolute;
+}

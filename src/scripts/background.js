@@ -223,6 +223,7 @@ var TogglButton = {
       TogglButton.$curEntry = entry;
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
       if (entry.duration >= 0) {
+        TogglButton.$latestStoppedEntry = entry;
         entry = null;
       }
       TogglButton.$curEntry = entry;

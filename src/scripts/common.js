@@ -138,13 +138,16 @@ var togglbutton = {
     return {left: left, top: top};
   },
 
-  calculateTrackedTime: function (description) {
-    var duration = 0;
-    togglbutton.entries.forEach(function (entry) {
-      if (entry.description.toLowerCase() === description.toLowerCase()) {
-        duration += entry.duration;
-      }
-    });
+  calculateTrackedTime: function () {
+    var duration = 0,
+      description = togglbutton.mainDescription.toLowerCase();
+    if (!!togglbutton.entries) {
+      togglbutton.entries.forEach(function (entry) {
+        if (entry.description.toLowerCase() === description) {
+          duration += entry.duration;
+        }
+      });
+    }
 
     return secondsToTime(duration, togglbutton.duration_format);
   },
@@ -338,7 +341,7 @@ var togglbutton = {
       if (!link.classList.contains("min")) {
         link.innerHTML = 'Start timer';
       }
-      chrome.extension.sendMessage({type: 'stop'}, togglbutton.addEditForm);
+      chrome.extension.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
       closeTagsList(true);
       editForm.style.display = "none";
       return false;
@@ -433,6 +436,10 @@ var togglbutton = {
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
     togglbutton.currentDescription = invokeIfFunction(params.description);
+    if (!!params.calculateTotal) {
+      togglbutton.mainDescription = invokeIfFunction(params.description);
+    }
+
     function activate() {
       if (document.querySelector(".toggl-button.active")) {
         document.querySelector(".toggl-button.active").classList.remove('active');
@@ -468,6 +475,7 @@ var togglbutton = {
         deactivate();
         opts = {
           type: 'stop',
+          respond: true,
           service: togglbutton.serviceName
         };
       } else {
@@ -531,9 +539,20 @@ var togglbutton = {
     link.innerHTML = linkText;
   },
 
+  updateTrackedTimerLink: function () {
+    var totalTime = $(".toggl-tracked"),
+      duration = togglbutton.calculateTrackedTime();
+
+    if (!!totalTime) {
+      totalTime.innerHTML = "<h3>Time tracked</h3><p title='Time tracked with Toggl: " + duration + "'>" + duration + "</p>";
+    }
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'stop-entry') {
       togglbutton.updateTimerLink();
+      togglbutton.entries = request.user.time_entries;
+      togglbutton.updateTrackedTimerLink();
     } else if (request.type === 'sync') {
       if ($("#toggl-button-edit-form") !== null) {
         $("#toggl-button-edit-form").remove();

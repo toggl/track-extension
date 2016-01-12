@@ -224,12 +224,32 @@ var TogglButton = {
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
       if (entry.duration >= 0) {
         TogglButton.$latestStoppedEntry = entry;
+        TogglButton.updateEntriesDb();
         entry = null;
       }
       TogglButton.$curEntry = entry;
     }
     TogglButton.startCheckingUserState();
     TogglButton.setBrowserAction(entry);
+  },
+
+  updateEntriesDb: function () {
+    var added = false;
+    if (!TogglButton.$user.time_entries) {
+      TogglButton.$user.time_entries = {};
+    } else {
+      TogglButton.$user.time_entries.forEach(function (entry, index) {
+        if (entry.id === TogglButton.$latestStoppedEntry.id) {
+          TogglButton.$user.time_entries[index] = TogglButton.$latestStoppedEntry;
+          added = true;
+        }
+      });
+    }
+
+    // entry not present in entries array. Let's add it
+    if (!added) {
+      TogglButton.$user.time_entries.push(TogglButton.$latestStoppedEntry);
+    }
   },
 
   findProjectByName: function (name) {
@@ -370,6 +390,7 @@ var TogglButton = {
       onLoad: function (xhr) {
         if (xhr.status === 200) {
           TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
+          TogglButton.updateEntriesDb();
           TogglButton.$nannyTimer = TogglButton.$curEntry = null;
           TogglButton.stopCheckingUserState();
           TogglButton.setBrowserAction(null);
@@ -377,7 +398,7 @@ var TogglButton = {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
               if (!!tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry"});
+                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
               }
             });
           }

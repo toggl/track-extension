@@ -15,7 +15,8 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
   link = togglbutton.createTimerLink({
     className: 'trello',
     description: titleElem.innerText,
-    projectName: projectElem.innerText
+    projectName: projectElem.innerText,
+    calculateTotal: true
   });
 
   container.appendChild(link);

@@ -94,6 +94,7 @@ var togglbutton = {
   tagsVisible: false,
   hasTasks: false,
   entries: {},
+  projects: {},
   duration_format: "",
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
@@ -102,6 +103,7 @@ var togglbutton = {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
         togglbutton.entries = response.user.time_entries;
+        togglbutton.projects = response.user.projectMap;
         togglbutton.fullVersion = response.version;
         togglbutton.duration_format = response.user.duration_format;
         if (opts.observe) {
@@ -140,10 +142,12 @@ var togglbutton = {
 
   calculateTrackedTime: function () {
     var duration = 0,
-      description = togglbutton.mainDescription.toLowerCase();
+      description = togglbutton.mainDescription.toLowerCase(),
+      projectId = togglbutton.findProjectIdByName(togglbutton.currentProject);
+
     if (!!togglbutton.entries) {
       togglbutton.entries.forEach(function (entry) {
-        if (entry.description.toLowerCase() === description) {
+        if (entry.description.toLowerCase() === description && entry.pid === projectId) {
           duration += entry.duration;
         }
       });
@@ -436,6 +440,7 @@ var togglbutton = {
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
     togglbutton.currentDescription = invokeIfFunction(params.description);
+    togglbutton.currentProject = invokeIfFunction(params.projectName);
     if (!!params.calculateTotal) {
       togglbutton.mainDescription = invokeIfFunction(params.description);
     }
@@ -548,10 +553,21 @@ var togglbutton = {
     }
   },
 
+  findProjectIdByName: function (name) {
+    var key;
+    for (key in togglbutton.projects) {
+      if (togglbutton.projects.hasOwnProperty(key) && togglbutton.projects[key].name === name) {
+        return togglbutton.projects[key].id;
+      }
+    }
+    return undefined;
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'stop-entry') {
       togglbutton.updateTimerLink();
       togglbutton.entries = request.user.time_entries;
+      togglbutton.projects = request.user.projectMap;
       togglbutton.updateTrackedTimerLink();
     } else if (request.type === 'sync') {
       if ($("#toggl-button-edit-form") !== null) {

@@ -100,7 +100,8 @@
 	  "*://inbox.google.com/*",
 	  "*://wordpress.com/*",
     "*://*.kanbanery.com/*",
-    "*://*.planbox.com/*"
+    "*://*.planbox.com/*",
+    "*://books.zoho.com/*"
   ],
   "content_scripts": [
     {
@@ -171,7 +172,8 @@
 		    "*://inbox.google.com/*",
         "*://wordpress.com/*",
         "*://*.kanbanery.com/*",
-        "*://*.planbox.com/*"
+        "*://*.planbox.com/*",
+        "*://books.zoho.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -427,6 +429,10 @@
     {
       "matches": ["*://*.planbox.com/*"],
       "js": ["scripts/content/planbox.js"]
+    },
+    {
+      "matches": ["*://books.zoho.com/*"],
+      "js": ["scripts/content/zoho_books.js"]
     }
   ]
 }

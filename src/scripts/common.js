@@ -56,6 +56,7 @@ function setCursorAtBeginning(elem) {
 }
 
 function secondsToTime(duration, format) {
+  duration = Math.abs(duration);
   var response,
     seconds = parseInt(duration % 60, 10),
     minutes = parseInt((duration / 60) % 60, 10),

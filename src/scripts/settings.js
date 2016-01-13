@@ -56,31 +56,39 @@ var Settings = {
       html_list = "",
       url, name,
       i, key,
-      origins;
+      origins,
+      disabled,
+      checked;
 
     chrome.permissions.getAll(function (results) {
       origins = results.origins;
-      for (i = 0; i<origins.length; i++) {
+      console.log("origins: ALL("+Object.keys(TogglOrigins).length+ ") | Enabled ("+origins.length+")");
+      for (i = 0; i < origins.length; i++) {
         name = url = origins[i].replace("*://*.", "").replace("*://", "").replace("/*", "");
         if (url.split(".").length > 2) {
           name = url.substr(url.indexOf(".")+1)
         }
-        Settings.origins[name.substr("0","3")] = {
+        console.log("name: " + name);
+        Settings.origins[name] = {
           id: i, 
           origin: origins[i],
           url: url,
           name: name
         };
       }
-      console.log (Settings.origins);
 
-      for (key in Settings.origins) {
-        if (Settings.origins.hasOwnProperty(key)) {
-          console.log(key);
-          //console.log(JSON.stringify(Settings.origins[key]));
-          //console.log("---------");
+      for (key in TogglOrigins) {
+        if (TogglOrigins.hasOwnProperty(key)) {
+          disabled = '';
+          checked = 'checked';
+
+          if (!Settings.origins[key]) {
+            disabled = 'class="disabled"';
+            checked = '';
+          }
+
           html += "<option id='origin' data-id='" + i + "' value='" + Settings.origins[key].url + "'>" + Settings.origins[key].name + "</option>";
-          html_list += '<li id="' + Settings.origins[key].origin + '"><a href="#" data-id="' + Settings.origins[key].id + '" data-host="' + Settings.origins[key].url + '"></a><div>' + Settings.origins[key].name + '</div></li>';
+          html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" data-host="' + TogglOrigins[key] + '" ' + checked + '><div>' + key + '</div></li>';
         }
       }
 
@@ -162,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   });
 
+// Add custom permission (custom domain)
   document.querySelector('#add-permission').addEventListener('click', function(e) {
     var domain = "*://" + Settings.$newPermission.value + "/",
       permission = {origins: [domain]},
@@ -181,20 +190,27 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   document.querySelector('#permissions-list').addEventListener('click', function(e) {
-    var permission = {origins: [Settings.origins[e.target.getAttribute("data-id")]]};
-    chrome.permissions.contains(permission, function(allowed) {
+    var permission = {origins: [e.target.getAttribute("data-host")]};
+
+    if (e.target.checked) {
+      chrome.permissions.request(permission, function(result) {
+        if (result) {
+          e.target.parentNode.classList.remove("disabled");
+        }
+      });
+    } else {
+      chrome.permissions.contains(permission, function(allowed) {
       if (allowed) {
         chrome.permissions.remove(permission, function(result) {
           if (result) {
-            console.log('Revoked "'+Settings.origins[e.target.getAttribute("data-id")]+'" host permission.');
-            Settings.loadSitesIntoList();
-            Db.removeOrigin(e.target.getAttribute("data-host"));
+            e.target.parentNode.classList.add("disabled");
           }
         });
       } else {
         alert('No "' + Settings.origins[e.target.getAttribute("data-id")] + '" host permission found.');
       }
     });
+    }
   });
 
 });

@@ -34,10 +34,10 @@
     "alarms",
     "contextMenus",
     "notifications",
-    "idle"
+    "idle",
+    "tabs"
   ],
   "optional_permissions": [
-    "tabs",
     "*://*/",
     "*://in.ts/*",
     "*://*.toggl.com/*",

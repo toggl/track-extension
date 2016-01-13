@@ -155,21 +155,33 @@ header .active, header li:hover {
 }
 
 #permissions-list li {
-  height: 22px;
+  height: 23px;
   border-bottom: 1px solid #E8E8E8;
+}
+
+#permissions-list li.disabled {
+  opacity: .5;
+  background-color: #ECECEC;
+}
+
+#permissions-list li.custom {
+  outline: 2px solid blue;
 }
 
 #permissions-list li:last-child {
   border-bottom: none;
 }
-#permissions-list li a, #permissions-list li div {
-  height: 22px;
-  line-height: 22px;
+
+#permissions-list li div {
+  height: 23px;
+  line-height: 23px;
   vertical-align: middle;
   float: left;
 }
 
-#permissions-list li a{
-  width: 22px;
+#permissions-list li input {
+  float: left;
+  margin-right: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
 }
-

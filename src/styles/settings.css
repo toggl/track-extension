@@ -143,3 +143,33 @@ header .active, header li:hover {
 .container .active {
   display: block!important;
 }
+
+#permissions-list {
+  border: 1px solid #CCCACA;
+  width: 780px;
+  list-style: none;
+  max-height: 290px;
+  border-radius: 3px;
+  padding: 5px 10px;
+  overflow: auto;
+}
+
+#permissions-list li {
+  height: 22px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+#permissions-list li:last-child {
+  border-bottom: none;
+}
+#permissions-list li a, #permissions-list li div {
+  height: 22px;
+  line-height: 22px;
+  vertical-align: middle;
+  float: left;
+}
+
+#permissions-list li a{
+  width: 22px;
+}
+

@@ -8,7 +8,7 @@
     <ul class="tab-links">
       <li class="tab-link active" data-tab="1">General</li>
       <li class="tab-link" data-tab="2">Pomodoro Timer</li>
-    <!--li class="tab-link" data-tab="3">Permissions</li-->
+      <li class="tab-link" data-tab="3">Permissions</li>
     </ul>
   </header>
   <body>
@@ -70,6 +70,12 @@
             </div>
           </li>
         <ul>
+      </div>
+      <div class="tab tab-3">
+        <input type="text" id="new-permission" placeholder="custom domain url"/>
+        <select id="origins"></select>
+        <a href="#add-permission" id="add-permission">Add new Permission</a>
+        <ul id="permissions-list"></ul>
       </div>
       <p class="changelog">Change log: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a></p>
     </div>

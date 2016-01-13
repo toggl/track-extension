@@ -34,7 +34,12 @@
     "alarms",
     "contextMenus",
     "notifications",
-    "idle",
+    "idle"
+  ],
+  "optional_permissions": [
+    "tabs",
+    "*://*/",
+    "*://in.ts/*",
     "*://*.toggl.com/*",
     "*://toggl.com/*",
     "*://*.teamweek.com/*",

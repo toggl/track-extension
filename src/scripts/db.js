@@ -3,6 +3,7 @@
 "use strict";
 
 var Db = {
+  originsKey: "TogglButton-origins",
   // settings: key, default value
   settings: {
     "showPostPopup": true,
@@ -14,6 +15,40 @@ var Db = {
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
     "pomodoroInterval": 25
+  },
+
+  getOrigin: function (origin) {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj;
+    if (!!origins) {
+      obj = JSON.parse(origins);
+      return obj[origin];
+    }
+    return null;
+  },
+
+  setOrigin: function (newOrigin, baseOrigin) {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj = {};
+
+    if (!!origins) {
+      obj = JSON.parse(origins);
+    }
+    obj[newOrigin] = baseOrigin;
+    localStorage.setItem(Db.originsKey, JSON.stringify(obj));
+    console.log(obj);
+  },
+
+  removeOrigin: function (origin) {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj;
+
+    if (!!origins) {
+      obj = JSON.parse(origins);
+      delete obj[origin];
+      localStorage.setItem(Db.originsKey, JSON.stringify(obj));  
+    }
+    console.log(obj);
   },
 
   get: function (setting) {

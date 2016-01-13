@@ -3,11 +3,11 @@
 'use strict';
 
 togglbutton.render('#navbar:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    description = document.querySelector(".navbar-tree-name"),
+  var link, descFunc,
+    description = $(".navbar-tree-name",elem),
     project = '';
 
-  var descFunc = function() {
+  descFunc = function() {
     return description.textContent.trim();
   };
 

@@ -94,7 +94,9 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+    "*://stackoverflow.com/questions/*",
+    "*://*.stackexchange.com/questions/*"
   ],
   "content_scripts": [
     {
@@ -159,7 +161,9 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
+        "*://stackoverflow.com/questions/*",
+        "*://*.stackexchange.com/questions/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -391,6 +395,10 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://stackoverflow.com/questions/*", "*://*.stackexchange.com/questions/*"],
+      "js": ["scripts/content/stackexchange.js"]
     }
   ]
 }

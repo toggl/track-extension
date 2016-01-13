@@ -4,10 +4,10 @@
 
 togglbutton.render('#navbar:not(.toggl)', {observe: true}, function (elem) {
   var link, descFunc,
-    description = $(".navbar-tree-name",elem),
+    description = $(".navbar-tree-name", elem),
     project = '';
 
-  descFunc = function() {
+  descFunc = function () {
     return description.textContent.trim();
   };
 
@@ -18,7 +18,7 @@ togglbutton.render('#navbar:not(.toggl)', {observe: true}, function (elem) {
     buttonType: "minimal"
   });
 
-  link.style.margin="9px";
+  link.style.margin = "9px";
 
   $('.right-block').appendChild(link);
 });

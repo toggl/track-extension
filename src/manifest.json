@@ -95,7 +95,8 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-    "*://keep.google.com/*"
+    "*://keep.google.com/*",
+    "*://*.gingkoapp.com/*"
   ],
   "content_scripts": [
     {
@@ -161,7 +162,8 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-        "*://keep.google.com/*"
+        "*://keep.google.com/*",
+        "*://gingkoapp.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -397,6 +399,10 @@
     {
       "matches": ["*://keep.google.com/*"],
       "js": ["scripts/content/keep.js"]
+    },
+    {
+      "matches": ["*://*.gingkoapp.com/*"],
+      "js": ["scripts/content/gingkoapp.js"]
     }
   ]
 }

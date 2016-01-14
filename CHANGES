@@ -1,3 +1,7 @@
+[0.8.0]
+- Fixed Pomodoro timer sound issues
+- Updated Trello start time link to match Trello styles
+- Added "Total time tracked" to Trello cards
 [0.7.9]
 - Improved error messages text
 - Fixes for Todoist text fetching

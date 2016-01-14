@@ -147,7 +147,7 @@ var togglbutton = {
 
     if (!!togglbutton.entries) {
       togglbutton.entries.forEach(function (entry) {
-        if (entry.description.toLowerCase() === description && entry.pid === projectId) {
+        if (!!entry.description && entry.description.toLowerCase() === description && entry.pid === projectId) {
           duration += entry.duration;
         }
       });

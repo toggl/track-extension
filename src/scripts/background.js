@@ -234,16 +234,21 @@ var TogglButton = {
   },
 
   updateEntriesDb: function () {
-    var added = false;
-    if (!TogglButton.$user.time_entries) {
-      TogglButton.$user.time_entries = {};
+    var added = false,
+      index,
+      entry;
+    if (!TogglButton.$user.time_entries || !Object.keys(TogglButton.$user.time_entries).length) {
+      TogglButton.$user.time_entries = [];
     } else {
-      TogglButton.$user.time_entries.forEach(function (entry, index) {
-        if (entry.id === TogglButton.$latestStoppedEntry.id) {
-          TogglButton.$user.time_entries[index] = TogglButton.$latestStoppedEntry;
-          added = true;
+      for (index in TogglButton.$user.time_entries) {
+        if (TogglButton.$user.time_entries.hasOwnProperty(index)) {
+          entry = TogglButton.$user.time_entries[index];
+          if (entry.id === TogglButton.$latestStoppedEntry.id) {
+            TogglButton.$user.time_entries[index] = TogglButton.$latestStoppedEntry;
+            added = true;
+          }
         }
-      });
+      }
     }
 
     // entry not present in entries array. Let's add it

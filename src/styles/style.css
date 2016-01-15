@@ -877,3 +877,9 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.google-inbox {
   margin-top: 5px;
 }
+
+/********* WORDPRESS *********/
+.toggl-button.wordpress {
+  float: left;
+  margin-left: 10px;
+}

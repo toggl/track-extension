@@ -94,7 +94,9 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+	"*://inbox.google.com/*",
+	"*://wordpress.com/*"
   ],
   "content_scripts": [
     {
@@ -160,7 +162,8 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-		"*://inbox.google.com/*"
+        "*://inbox.google.com/*",
+        "*://wordpress.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -396,6 +399,10 @@
     {
       "matches": ["*://inbox.google.com/*"],
       "js": ["scripts/content/google-inbox.js"]
+    },
+    {
+      "matches": ["*://wordpress.com/*"],
+      "js": ["scripts/content/wordpress.js"]
     }
   ]
 }

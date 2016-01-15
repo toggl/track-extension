@@ -96,7 +96,9 @@
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
     "*://keep.google.com/*",
-    "*://*.gingkoapp.com/*"
+    "*://*.gingkoapp.com/*",
+	  "*://inbox.google.com/*",
+	  "*://wordpress.com/*"
   ],
   "content_scripts": [
     {
@@ -164,7 +166,8 @@
         "*://*.fogbugz.com/*",
         "*://keep.google.com/*",
         "*://gingkoapp.com/*",
-		    "*://inbox.google.com/*"
+		    "*://inbox.google.com/*",
+        "*://wordpress.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -408,6 +411,10 @@
     {
       "matches": ["*://inbox.google.com/*"],
       "js": ["scripts/content/google-inbox.js"]
+    },
+    {
+      "matches": ["*://wordpress.com/*"],
+      "js": ["scripts/content/wordpress.js"]
     }
   ]
 }

@@ -882,3 +882,12 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.google-inbox {
   margin-top: 5px;
 }
+<<<<<<< HEAD
+=======
+
+/********* WORDPRESS *********/
+.toggl-button.wordpress {
+  float: left;
+  margin-left: 10px;
+}
+>>>>>>> Added support for wordpress

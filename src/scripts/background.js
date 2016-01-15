@@ -237,6 +237,12 @@ var TogglButton = {
     var added = false,
       index,
       entry;
+
+    if (!!TogglButton.$user) {
+      TogglButton.fetchUser();
+      return;
+    }
+
     if (!TogglButton.$user.time_entries || !Object.keys(TogglButton.$user.time_entries).length) {
       TogglButton.$user.time_entries = [];
     } else {

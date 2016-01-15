@@ -873,8 +873,12 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
-
 /********* KEEP *********/
 .toggl-button.keep {
   margin-bottom: 7px;
+}
+
+/********* GOOGLE INBOX *********/
+.toggl-button.google-inbox {
+  margin-top: 5px;
 }

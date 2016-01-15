@@ -163,7 +163,8 @@
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
         "*://keep.google.com/*",
-        "*://gingkoapp.com/*"
+        "*://gingkoapp.com/*",
+		    "*://inbox.google.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -403,6 +404,10 @@
     {
       "matches": ["*://*.gingkoapp.com/*"],
       "js": ["scripts/content/gingkoapp.js"]
+    },
+    {
+      "matches": ["*://inbox.google.com/*"],
+      "js": ["scripts/content/google-inbox.js"]
     }
   ]
 }

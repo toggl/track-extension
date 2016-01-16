@@ -98,7 +98,8 @@
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
-	  "*://wordpress.com/*"
+	  "*://wordpress.com/*",
+    "*://*.kanbanery.com/*"
   ],
   "content_scripts": [
     {
@@ -167,7 +168,8 @@
         "*://keep.google.com/*",
         "*://gingkoapp.com/*",
 		    "*://inbox.google.com/*",
-        "*://wordpress.com/*"
+        "*://wordpress.com/*",
+        "*://*.kanbanery.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -415,6 +417,10 @@
     {
       "matches": ["*://wordpress.com/*"],
       "js": ["scripts/content/wordpress.js"]
+    },
+    {
+      "matches": ["*://*.kanbanery.com/*"],
+      "js": ["scripts/content/kanbanery.js"]
     }
   ]
 }

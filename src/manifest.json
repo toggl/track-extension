@@ -95,11 +95,15 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
+<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
 	  "*://wordpress.com/*",
     "*://*.kanbanery.com/*"
+=======
+    "*://*.planbox.com/*"
+>>>>>>> Add Planbox support
   ],
   "content_scripts": [
     {
@@ -169,7 +173,8 @@
         "*://gingkoapp.com/*",
 		    "*://inbox.google.com/*",
         "*://wordpress.com/*",
-        "*://*.kanbanery.com/*"
+        "*://*.kanbanery.com/*",
+        "*://*.planbox.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -421,6 +426,10 @@
     {
       "matches": ["*://*.kanbanery.com/*"],
       "js": ["scripts/content/kanbanery.js"]
+    },
+    {
+      "matches": ["*://*.planbox.com/*"],
+      "js": ["scripts/content/planbox.js"]
     }
   ]
 }

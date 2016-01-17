@@ -882,12 +882,17 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.google-inbox {
   margin-top: 5px;
 }
-<<<<<<< HEAD
-=======
 
 /********* WORDPRESS *********/
 .toggl-button.wordpress {
   float: left;
   margin-left: 10px;
 }
->>>>>>> Added support for wordpress
+
+/********* PLANBOX *********/
+.toggl-button.planbox {
+  color: black;
+  font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  margin-left: -5px;
+}

@@ -872,3 +872,11 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.draftin {
   margin-right: 15px;
 }
+
+/********* PLANBOX *********/
+.toggl-button.planbox {
+  color: black;
+  font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  margin-left: -5px;
+}

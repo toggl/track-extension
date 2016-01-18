@@ -108,7 +108,8 @@
     "*://*.cloudes.me/*",
     "*://*.eproject.me/*",
     "*://*.freshdesk.com/*",
-    "*://*.newsletter2go.com/*"
+    "*://*.newsletter2go.com/*",
+    "*://*.evernote.com/*"
   ],
   "content_scripts": [
     {
@@ -187,7 +188,8 @@
         "*://*.cloudes.me/*",
         "*://*.eproject.me/*",
         "*://*.freshdesk.com/*",
-        "*://*.newsletter2go.com/*"
+        "*://*.newsletter2go.com/*",
+        "*://*.evernote.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -482,6 +484,10 @@
     {
       "matches": ["*://*.newsletter2go.com/*"],
       "js": ["scripts/content/newsletter2go.js"]
+    },
+    {
+      "matches": ["*://*.evernote.com/*"],
+      "js": ["scripts/content/evernote.js"]
     }
   ]
 }

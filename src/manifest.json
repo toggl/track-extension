@@ -107,7 +107,8 @@
     "*://calendar.sunrise.am/*",
     "*://*.cloudes.me/*",
     "*://*.eproject.me/*",
-    "*://*.freshdesk.com/*"
+    "*://*.freshdesk.com/*",
+    "*://*.newsletter2go.com/*"
   ],
   "content_scripts": [
     {
@@ -185,7 +186,8 @@
         "*://calendar.sunrise.am/*",
         "*://*.cloudes.me/*",
         "*://*.eproject.me/*",
-        "*://*.freshdesk.com/*"
+        "*://*.freshdesk.com/*",
+        "*://*.newsletter2go.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -469,6 +471,10 @@
     {
       "matches": ["*://*.freshdesk.com/*"],
       "js": ["scripts/content/freshdesk.js"]
+    },
+    {
+      "matches": ["*://*.newsletter2go.com/*"],
+      "js": ["scripts/content/newsletter2go.js"]
     }
   ]
 }

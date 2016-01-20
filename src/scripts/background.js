@@ -155,9 +155,7 @@ var TogglButton = {
   updateBugsnag: function () {
     // Set user data
     Bugsnag.user = {
-      id: TogglButton.$user.id,
-      name: TogglButton.$user.fullname,
-      email: TogglButton.$user.email
+      id: TogglButton.$user.id
     };
   },
 

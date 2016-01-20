@@ -8,23 +8,33 @@ var Db = chrome.extension.getBackgroundPage().Db;
 var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
-  $togglButton: null,
+  $togglButton: document.querySelector(".stop-button"),
+  $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
-  $error: null,
+  $error: document.querySelector(".error"),
   $timer: null,
   $tagsVisible: false,
   $taskBlurTrigger: null,
   mousedownTrigger: null,
   projectBlurTrigger: null,
   taskBlurTrigger: null,
+  editFormAdded: false,
   $menuView: document.querySelector(".menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  defaultErrorMessage: "Error connecting to server",
   showPage: function () {
+    if (!TogglButton) {
+      TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+    }
+
     if (TogglButton.$user !== null) {
-      PopUp.$editView.innerHTML = TogglButton.getEditForm();
-      PopUp.addEditEvents();
+      if (!PopUp.editFormAdded) {
+        PopUp.$editView.innerHTML = TogglButton.getEditForm();
+        PopUp.addEditEvents();
+        PopUp.editFormAdded = true;
+      }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
@@ -54,8 +64,16 @@ var PopUp = {
         }
       } else if (request.type === "login") {
         PopUp.$error.style.display = 'block';
+      } else if (!!response.type && (response.type === "New Entry" || response.type === "Update")) {
+        PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });
+  },
+
+  showError: function (errorMessage) {
+    PopUp.$errorLabel.innerHTML = errorMessage;
+    PopUp.$errorLabel.classList.add("show");
+    setTimeout(function () { PopUp.$errorLabel.classList.remove("show"); }, 3000);
   },
 
   showCurrentDuration: function (startTimer) {
@@ -88,7 +106,7 @@ var PopUp = {
     elem.className = "project-bullet";
     if (!!pid && id !== 0) {
       project = TogglButton.findProjectByPid(id);
-      if (project !== null) {
+      if (!!project) {
         elem.classList.add("color-" + project.color);
         elem.classList.add("project-color");
         return " - " + project.name;
@@ -387,8 +405,6 @@ document.addEventListener('DOMContentLoaded', function () {
     respond: false
   };
   PopUp.sendMessage(req);
-  PopUp.$togglButton = document.querySelector(".stop-button");
-  PopUp.$error = document.querySelector(".error");
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
     PopUp.updateEditForm(PopUp.$editView);

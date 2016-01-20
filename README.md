@@ -1,3 +1,11 @@
+# Toggl Timer Developer Challenge of 2016
+
+Here for the contest? Great! Just fork the Toggl Button project and off you go!
+
+Don't know about the campaign? Here's our awesome info page with everything you need to know: [https://toggl.com/toggl-developer-challenge](https://toggl.com/toggl-developer-challenge)
+
+Not sure where to start? Check out this list of requested integrations: [https://github.com/toggl/toggl-button/wiki/User-requested-buttons](https://github.com/toggl/toggl-button/wiki/User-requested-buttons)
+
 # Toggl Button Chrome extension
 
 Add Toggl one-click time tracking to popular web tools.
@@ -94,6 +102,8 @@ If you use a setup, where one of the supported services is on a custom domain yo
 
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
+
+When adding new integrations please use `git squash` and merge all your commits into one commit. This keeps the git log more compact and clear.
 
 Don't know how to start? Just check out the [user requested services][97] that have not yet been implemented, pick one and start hacking.
 

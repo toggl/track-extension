@@ -95,6 +95,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
+<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
@@ -102,6 +103,9 @@
     "*://*.kanbanery.com/*",
     "*://*.planbox.com/*",
     "*://books.zoho.com/*"
+=======
+    "*://*.slack.com/*"
+>>>>>>> Started to work for slack
   ],
   "content_scripts": [
     {
@@ -167,6 +171,7 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
+<<<<<<< HEAD
         "*://keep.google.com/*",
         "*://gingkoapp.com/*",
 		    "*://inbox.google.com/*",
@@ -174,6 +179,9 @@
         "*://*.kanbanery.com/*",
         "*://*.planbox.com/*",
         "*://books.zoho.com/*"
+=======
+        "*://*.slack.com/*"
+>>>>>>> Started to work for slack
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -433,6 +441,10 @@
     {
       "matches": ["*://books.zoho.com/*"],
       "js": ["scripts/content/zoho_books.js"]
+    },
+    {
+      "matches": ["*://*.slack.com/*"],
+      "js": ["scripts/content/slack.js"]
     }
   ]
 }

@@ -8,7 +8,7 @@ var Db = {
     "showPostPopup": true,
     "socketEnabled": true,
     "nannyCheckEnabled": true,
-    "nannyInterval": 360000,
+    "nannyInterval": 3600000,
     "nannyFromTo": "09:00-17:00",
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,

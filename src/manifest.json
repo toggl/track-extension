@@ -95,7 +95,9 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-    "*://*.pc-help.cz/*"
+    "*://*.pc-help.cz/*",
+    "*://*.alza.cz/*",
+    "*://*.slack.com/*"
   ],
   "content_scripts": [
     {
@@ -161,7 +163,9 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-        "*://*.pc-help.cz/*"
+        "*://*.pc-help.cz/*",
+        "*://*.alza.cz/*",
+        "*://*.slack.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -397,6 +401,14 @@
     {
       "matches": ["*://*.pc-help.cz/*"],
       "js": ["scripts/content/pc-help.js"]
+    },
+    {
+      "matches": ["*://*.alza.cz/*"],
+      "js": ["scripts/content/alza.js"]
+    },
+    {
+      "matches": ["*://*.slack.com/*"],
+      "js": ["scripts/content/slack.js"]
     }
   ]
 }

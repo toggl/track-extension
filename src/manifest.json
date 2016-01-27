@@ -97,7 +97,8 @@
     "*://*.fogbugz.com/*",
     "*://*.pc-help.cz/*",
     "*://*.alza.cz/*",
-    "*://*.slack.com/*"
+    "*://*.slack.com/*",
+    "*://*.duolingo.com/*"
   ],
   "content_scripts": [
     {
@@ -165,7 +166,8 @@
         "*://*.fogbugz.com/*",
         "*://*.pc-help.cz/*",
         "*://*.alza.cz/*",
-        "*://*.slack.com/*"
+        "*://*.slack.com/*",
+        "*://*.duolingo.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -409,6 +411,10 @@
     {
       "matches": ["*://*.slack.com/*"],
       "js": ["scripts/content/slack.js"]
+    },
+    {
+      "matches": ["*://*.duolingo.com/*"],
+      "js": ["scripts/content/duolingo.js"]
     }
   ]
 }

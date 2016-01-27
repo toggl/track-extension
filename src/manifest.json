@@ -1,6 +1,6 @@
 {
-  "name": "Toggl Button",
-  "short_name": "Toggl Button",
+  "name": "Ebiquity Toggl Button",
+  "short_name": "Ebiquity Toggl Button",
   "version": "0.8.0",
   "manifest_version": 2,
   "description": "Add Official Toggl Online Timer to Popular Web Tools",
@@ -18,7 +18,7 @@
       "38": "images/inactive-38.png"
     },
     "default_popup": "html/popup.html",
-    "default_title": "Toggl Time Tracker"
+    "default_title": "Ebiquity Toggl Time Tracker"
   },
   "icons": {
     "16": "images/icon-16.png",

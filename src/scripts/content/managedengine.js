@@ -16,5 +16,5 @@ togglbutton.render('.requestEditbrsty:not(.toggl)', {observe: true}, function (e
     projectName: project
   });
 
-  $('#startListMenuItems').appendChild(link);
+  $('table.requestEditbrsty tr.listViewTableHeader > td:last-child').appendChild(link);
 });

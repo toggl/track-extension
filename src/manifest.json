@@ -1,9 +1,9 @@
 {
   "name": "Ebiquity Toggl Button",
   "short_name": "Ebiquity Toggl Button",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "manifest_version": 2,
-  "description": "Add Official Toggl Online Timer to Popular Web Tools",
+  "description": "Add Official Toggl Online Timer to Service Desk",
   "background": {
     "scripts": [
       "scripts/vendor/bugsnag-2.min.js",

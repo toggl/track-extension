@@ -95,17 +95,15 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
 	  "*://wordpress.com/*",
     "*://*.kanbanery.com/*",
     "*://*.planbox.com/*",
-    "*://books.zoho.com/*"
-=======
-    "*://*.slack.com/*"
->>>>>>> Started to work for slack
+    "*://books.zoho.com/*",
+    "*://*.slack.com/*",
+    "*://*.doit.im/*"
   ],
   "content_scripts": [
     {
@@ -171,17 +169,15 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-<<<<<<< HEAD
         "*://keep.google.com/*",
         "*://gingkoapp.com/*",
 		    "*://inbox.google.com/*",
         "*://wordpress.com/*",
         "*://*.kanbanery.com/*",
         "*://*.planbox.com/*",
-        "*://books.zoho.com/*"
-=======
-        "*://*.slack.com/*"
->>>>>>> Started to work for slack
+        "*://books.zoho.com/*",
+        "*://*.slack.com/*",
+        "*://*.doit.im/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -445,6 +441,10 @@
     {
       "matches": ["*://*.slack.com/*"],
       "js": ["scripts/content/slack.js"]
+    },
+    {
+      "matches": ["*://*.doit.im/*"],
+      "js": ["scripts/content/doit.js"]
     }
   ]
 }

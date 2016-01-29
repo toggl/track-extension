@@ -167,7 +167,8 @@
         "*://*.pc-help.cz/*",
         "*://*.alza.cz/*",
         "*://*.slack.com/*",
-        "*://*.duolingo.com/*"
+        "*://*.duolingo.com/*",
+        "*://*.w3schools.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -415,6 +416,11 @@
     {
       "matches": ["*://*.duolingo.com/*"],
       "js": ["scripts/content/duolingo.js"]
+    },
+    {
+      "matches": ["*://*.w3schools.com/*"],
+      "js": ["scripts/content/w3schools.js"]
     }
+
   ]
 }

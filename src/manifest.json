@@ -98,7 +98,10 @@
     "*://*.pc-help.cz/*",
     "*://*.alza.cz/*",
     "*://*.slack.com/*",
-    "*://*.duolingo.com/*"
+    "*://*.duolingo.com/*",
+    "*://*.w3schools.com/*",
+    "*://*.udemy.com/*"
+
   ],
   "content_scripts": [
     {
@@ -168,7 +171,8 @@
         "*://*.alza.cz/*",
         "*://*.slack.com/*",
         "*://*.duolingo.com/*",
-        "*://*.w3schools.com/*"
+        "*://*.w3schools.com/*",
+        "*://*.udemy.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -420,6 +424,10 @@
     {
       "matches": ["*://*.w3schools.com/*"],
       "js": ["scripts/content/w3schools.js"]
+    },
+    {
+      "matches": ["*://*.udemy.com/*"],
+      "js": ["scripts/content/udemy.js"]
     }
 
   ]

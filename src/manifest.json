@@ -55,6 +55,7 @@
     "*://*.basecamphq.com/*",
     "*://*.atlassian.net/*",
     "*://*.jira.com/*",
+    "*://otrs-demo.otrs.com/*",
     "*://*.producteev.com/*",
     "*://*.bitbucket.org/*",
     "*://*.sifterapp.com/*",
@@ -119,6 +120,7 @@
         "*://*.atlassian.net/*",
         "*://*.atlassian.com/*",
         "*://*.jira.com/*",
+        "*://otrs-demo.otrs.com/*",
         "*://*.producteev.com/*",
         "*://*.sifterapp.com/*",
         "*://docs.google.com/*",
@@ -391,6 +393,10 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://otrs-demo.otrs.com/*"],
+      "js": ["scripts/content/otrs.js"]
     }
   ]
 }

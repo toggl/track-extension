@@ -7,8 +7,7 @@ togglbutton.render('.name:not(.toggl)', {observe: true}, function (elem) {
     container = createTag('id', '#toggl_button_link'),
     placeholder = $('#channel_actions'),
     description = $('.name').innerText,
-    project = 'SlackTest';
-    //project = $('#team_name', elem ).innerText;
+    project = $('#team_name').innerText;
 
   link = togglbutton.createTimerLink({
     className: 'slack',
@@ -17,7 +16,5 @@ togglbutton.render('.name:not(.toggl)', {observe: true}, function (elem) {
   });
 
   container.appendChild(link);
-  //placeholder.appendChild(container);
   placeholder.parentNode.insertBefore(container, placeholder);
-  
 });

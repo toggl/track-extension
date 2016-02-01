@@ -5,7 +5,7 @@
 togglbutton.render('.name:not(.toggl)', {observe: true}, function (elem) {
   var link,
     container = createTag('id', '#toggl_button_link'),
-    placeholder = $('#stars_toggle'),
+    placeholder = $('#channel_actions'),
     description = $('.name').innerText,
     project = 'SlackTest';
     //project = $('#team_name', elem ).innerText;
@@ -17,6 +17,7 @@ togglbutton.render('.name:not(.toggl)', {observe: true}, function (elem) {
   });
 
   container.appendChild(link);
+  //placeholder.appendChild(container);
   placeholder.parentNode.insertBefore(container, placeholder);
   
 });

@@ -94,7 +94,8 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+    "*://calendar.sunrise.am/*"
   ],
   "content_scripts": [
     {
@@ -159,7 +160,8 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
+	"*://calendar.sunrise.am/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -391,6 +393,10 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://calendar.sunrise.am/*"],
+      "js": ["scripts/content/sunrise.js"]
     }
   ]
 }

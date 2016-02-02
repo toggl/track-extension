@@ -95,6 +95,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
+<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
@@ -104,6 +105,9 @@
     "*://books.zoho.com/*",
     "*://*.slack.com/*",
     "*://*.doit.im/*"
+=======
+    "*://calendar.sunrise.am/*"
+>>>>>>> Add support for Sunrise Calendar - Toggl button
   ],
   "content_scripts": [
     {
@@ -177,7 +181,8 @@
         "*://*.planbox.com/*",
         "*://books.zoho.com/*",
         "*://*.slack.com/*",
-        "*://*.doit.im/*"
+        "*://*.doit.im/*",
+        "*://calendar.sunrise.am/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -445,6 +450,10 @@
     {
       "matches": ["*://*.doit.im/*"],
       "js": ["scripts/content/doit.js"]
+    },
+    {
+      "matches": ["*://calendar.sunrise.am/*"],
+      "js": ["scripts/content/sunrise.js"]
     }
   ]
 }

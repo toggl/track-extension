@@ -68,27 +68,3 @@ togglbutton.render('li.task:not(.toggl)', {observe: true}, function (elem) {
   });
   titleElem.parentElement.appendChild(link);
 });
-
-togglbutton.render('li.subtask:not(.toggl)', {observe: true}, function (elem) {
-  var titleElem   = $('div.title > span.title-text',elem);
-  var projectElem = $('div.task-attr > div.project');
-
-  var  description = titleElem != null ? titleElem.innerHTML :''; 
-  var  project = projectElem != null ? projectElem.innerHTML : '';
-
-  if ( description != '' ) {
-    titleElem.innerHTML = description + ' ' ;
-  }
- 
-  if ( project != '' ) {
-    project = project.substring(1);  // remove '#'
-  }
-
-  var link = togglbutton.createTimerLink({
-    className: 'doit',
-    buttonType: 'minimal',
-    description: description,
-    projectName: project
-  });
-  titleElem.parentElement.appendChild(link);
-});

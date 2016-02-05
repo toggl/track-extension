@@ -62,6 +62,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Salesforce][50]
   - [Draftin][51]
   - [FogBugz][52]
+  - [Phabricator][53]
 
 ## Installing from the Web Store
 
@@ -159,6 +160,7 @@ Don't know how to start? Just check out the [user requested services][97] that h
 [50]: http://www.salesforce.com/
 [51]: https://draftin.com/
 [52]: http://www.fogcreek.com/fogbugz/
+[53]: http://phacility.com/
 
 [97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains

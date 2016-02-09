@@ -106,7 +106,8 @@
     "*://*.doit.im/*",
     "*://calendar.sunrise.am/*",
     "*://*.cloudes.me/*",
-    "*://*.eproject.me/*"
+    "*://*.eproject.me/*",
+    "*://*.freshdesk.com/*"
   ],
   "content_scripts": [
     {
@@ -183,7 +184,8 @@
         "*://*.doit.im/*",
         "*://calendar.sunrise.am/*",
         "*://*.cloudes.me/*",
-        "*://*.eproject.me/*"
+        "*://*.eproject.me/*",
+        "*://*.freshdesk.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -463,6 +465,10 @@
     {
       "matches": ["*://*.eproject.me/*"],
       "js": ["scripts/content/eproject.js"]
+    },
+    {
+      "matches": ["*://*.freshdesk.com/*"],
+      "js": ["scripts/content/freshdesk.js"]
     }
   ]
 }

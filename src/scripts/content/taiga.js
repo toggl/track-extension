@@ -21,8 +21,8 @@ togglbutton.render('.us-detail:not(.toggl)', {observe: true}, function (elem) {
     },
     projectName: function () {
       projectElem = $('.project-name', elem);
-      if (projectElem){
-          return projectElem.textContent;
+      if (projectElem) {
+        return projectElem.textContent;
       }
     }
   });

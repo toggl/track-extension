@@ -1,3 +1,8 @@
+[0.8.1]
+- Fixed card coping issue in Trello
+- Updated extension name and description
+- Default tracking reminder time is 60 minutes
+- Improved user data fetching
 [0.8.0]
 - Fixed Pomodoro timer sound issues
 - Updated Trello start time link to match Trello styles

@@ -95,8 +95,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-    "*://blackboard.*.edu/*",
-    "*://*.blackboard.com/*"
+    "*://*/webapps/blackboard/*"
   ],
   "content_scripts": [
     {
@@ -162,8 +161,7 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-        "*://blackboard.*.edu/*",
-        "*://*.blackboard.com/*"
+        "*://*/webapps/blackboard/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -397,10 +395,7 @@
       "js": ["scripts/content/fogbugz.js"]
     },
     {
-      "matches": [
-        "*://blackboard.*.edu/*",
-        "*://*.blackboard.com/*",
-      ],
+      "matches": ["*://*/webapps/blackboard/*"],
       "js": ["scripts/content/blackboard.js"]
     }
   ]

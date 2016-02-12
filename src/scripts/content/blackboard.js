@@ -13,5 +13,5 @@ togglbutton.render('[id^=contentListItem]:not(.toggl)', {observe: true}, functio
     projectName: project
   });
 
-  $('.alignPanel', elem).appendChild(link);
+  $('.details', elem).appendChild(link);
 });

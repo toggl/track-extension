@@ -105,7 +105,8 @@
     "*://*.slack.com/*",
     "*://*.doit.im/*",
     "*://calendar.sunrise.am/*",
-    "*://*.cloudes.me/*"
+    "*://*.cloudes.me/*",
+    "*://*.eproject.me/*"
   ],
   "content_scripts": [
     {
@@ -181,7 +182,8 @@
         "*://*.slack.com/*",
         "*://*.doit.im/*",
         "*://calendar.sunrise.am/*",
-        "*://*.cloudes.me/*"
+        "*://*.cloudes.me/*",
+        "*://*.eproject.me/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -457,6 +459,10 @@
     {
       "matches": ["*://*.cloudes.me/*"],
       "js": ["scripts/content/cloudes.js"]
+    },
+    {
+      "matches": ["*://*.eproject.me/*"],
+      "js": ["scripts/content/eproject.js"]
     }
   ]
 }

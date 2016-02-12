@@ -103,7 +103,9 @@
     "*://*.udemy.com/*",
     "*://*.dropbox.com/*",
     "*://*.lego.com/*",
-    "*://*.goproforums.com/*"
+    "*://*.goproforums.com/*",
+    "*://*.pcpartpicker.com/*"
+
 
 
   ],
@@ -179,7 +181,8 @@
         "*://*.udemy.com/*",
         "*://*.dropbox.com/*",
         "*://*.lego.com/*",
-        "*://*.goproforums.com/*"
+        "*://*.goproforums.com/*",
+          "*://*.pcpartpicker.com/*"
 
       ],
       "css": ["styles/style.css"],
@@ -448,7 +451,12 @@
     {
       "matches": ["*://*.goproforums.com/*"],
       "js": ["scripts/content/goproforums.js"]
+    },
+    {
+      "matches": ["*://*.pcpartpicker.com/*"],
+      "js": ["scripts/content/pcpartpicker.js"]
     }
+
 
   ]
 }

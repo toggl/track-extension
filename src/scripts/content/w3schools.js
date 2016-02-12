@@ -9,13 +9,12 @@ togglbutton.render('.color_h1:not(.toggl)', {}, function (elem) {
 
 
   link = togglbutton.createTimerLink({
-    className: 'duolingo',
+    className: 'w3schools',
     description: description,
     projectName: project
   });
 
-  //skill-tree-header
-  //var htmlElement = document.querySelector("h1");
+
   $('.color_h1').appendChild(link);
 
 });

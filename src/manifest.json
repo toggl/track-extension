@@ -100,7 +100,9 @@
     "*://*.slack.com/*",
     "*://*.duolingo.com/*",
     "*://*.w3schools.com/*",
-    "*://*.udemy.com/*"
+    "*://*.udemy.com/*",
+    "*://*.dropbox.com/*"
+
 
   ],
   "content_scripts": [
@@ -172,7 +174,9 @@
         "*://*.slack.com/*",
         "*://*.duolingo.com/*",
         "*://*.w3schools.com/*",
-        "*://*.udemy.com/*"
+        "*://*.udemy.com/*",
+        "*://*.dropbox.com/*"
+
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -428,6 +432,10 @@
     {
       "matches": ["*://*.udemy.com/*"],
       "js": ["scripts/content/udemy.js"]
+    },
+    {
+      "matches": ["*://*.dropbox.com/*"],
+      "js": ["scripts/content/dropbox.js"]
     }
 
   ]

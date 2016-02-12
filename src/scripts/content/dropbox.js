@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.general-header-right:not(.toggl)', {}, function (elem) {
+togglbutton.render('#main-nav:not(.toggl)', {}, function (elem) {
   var link,
     description = $('Description', elem),
     project = $('Projects name', elem);
@@ -15,6 +15,6 @@ togglbutton.render('.general-header-right:not(.toggl)', {}, function (elem) {
   });
 
 
-  $('.general-header-right').appendChild(link);
+  $('#main-nav').appendChild(link);
 
 });

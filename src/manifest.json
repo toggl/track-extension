@@ -105,7 +105,8 @@
     "*://*.lego.com/*",
     "*://*.goproforums.com/*",
     "*://*.pcpartpicker.com/*",
-    "*://*.nedatluj.cz/*"
+    "*://*.nedatluj.cz/*",
+    "*://developers.google.com/*"
 
 
 
@@ -184,7 +185,8 @@
         "*://*.lego.com/*",
         "*://*.goproforums.com/*",
         "*://*.pcpartpicker.com/*",
-        "*://*.nedatluj.cz/*"
+        "*://*.nedatluj.cz/*",
+        "*://developers.google.com/*"
 
       ],
       "css": ["styles/style.css"],
@@ -461,7 +463,13 @@
     {
       "matches": ["*://*.nedatluj.cz/*"],
       "js": ["scripts/content/nedatluj.js"]
+    },
+    {
+      "matches": ["*://developers.google.com/*"],
+      "js": ["scripts/content/googledevelopers.js"]
     }
+
+
 
   ]
 }

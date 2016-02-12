@@ -101,7 +101,8 @@
     "*://*.duolingo.com/*",
     "*://*.w3schools.com/*",
     "*://*.udemy.com/*",
-    "*://*.dropbox.com/*"
+    "*://*.dropbox.com/*",
+    "*://*.lego.com/*"
 
 
   ],
@@ -175,7 +176,8 @@
         "*://*.duolingo.com/*",
         "*://*.w3schools.com/*",
         "*://*.udemy.com/*",
-        "*://*.dropbox.com/*"
+        "*://*.dropbox.com/*",
+        "*://*.lego.com/*"
 
       ],
       "css": ["styles/style.css"],
@@ -436,6 +438,10 @@
     {
       "matches": ["*://*.dropbox.com/*"],
       "js": ["scripts/content/dropbox.js"]
+    },
+    {
+      "matches": ["*://*.lego.com/*"],
+      "js": ["scripts/content/lego.js"]
     }
 
   ]

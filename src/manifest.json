@@ -102,7 +102,8 @@
     "*://*.w3schools.com/*",
     "*://*.udemy.com/*",
     "*://*.dropbox.com/*",
-    "*://*.lego.com/*"
+    "*://*.lego.com/*",
+    "*://*.goproforums.com/*"
 
 
   ],
@@ -177,7 +178,8 @@
         "*://*.w3schools.com/*",
         "*://*.udemy.com/*",
         "*://*.dropbox.com/*",
-        "*://*.lego.com/*"
+        "*://*.lego.com/*",
+        "*://*.goproforums.com/*"
 
       ],
       "css": ["styles/style.css"],
@@ -442,6 +444,10 @@
     {
       "matches": ["*://*.lego.com/*"],
       "js": ["scripts/content/lego.js"]
+    },
+    {
+      "matches": ["*://*.goproforums.com/*"],
+      "js": ["scripts/content/goproforums.js"]
     }
 
   ]

@@ -2,19 +2,19 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.collapse-wrapper:not(.toggl)', {}, function (elem) {
+togglbutton.render('.socialIcons:not(.toggl)', {}, function (elem) {
   var link,
     description = $('Description', elem),
     project = $('Projects name', elem);
 
 
   link = togglbutton.createTimerLink({
-    className: 'lego',
+    className: 'goproforums',
     description: description,
     projectName: project
   });
 
 
-  $('.collapse-wrapper').appendChild(link);
+  $('.socialIcons').appendChild(link);
 
 });

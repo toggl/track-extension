@@ -95,6 +95,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
+<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
@@ -105,6 +106,10 @@
     "*://*.slack.com/*",
     "*://*.doit.im/*",
     "*://calendar.sunrise.am/*"
+=======
+    "*://*.cloudes.me/loadSim*",
+    "*://*.cloudes.me/simulation"
+>>>>>>> Added cloudes.me support
   ],
   "content_scripts": [
     {
@@ -179,7 +184,8 @@
         "*://books.zoho.com/*",
         "*://*.slack.com/*",
         "*://*.doit.im/*",
-        "*://calendar.sunrise.am/*"
+        "*://calendar.sunrise.am/*",
+        "*://*.cloudes.me/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -451,6 +457,10 @@
     {
       "matches": ["*://calendar.sunrise.am/*"],
       "js": ["scripts/content/sunrise.js"]
+    },
+    {
+      "matches": ["*://*.cloudes.me/*"],
+      "js": ["scripts/content/cloudes.js"]
     }
   ]
 }

@@ -263,6 +263,13 @@
     },
     {
       "matches": [
+        "*://*.atlassian.net/wiki/*",
+        "*://*.atlassian.com/wiki/*"
+      ],
+      "js": ["scripts/content/confluence.js"]
+    },
+    {
+      "matches": [
         "*://*.atlassian.net/*",
         "*://*.atlassian.com/*",
         "*://*.jira.com/*"

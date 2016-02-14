@@ -106,7 +106,9 @@
     "*://*.goproforums.com/*",
     "*://*.pcpartpicker.com/*",
     "*://*.nedatluj.cz/*",
-    "*://developers.google.com/*"
+    "*://developers.google.com/*",
+    "*://inbox.google.com/*",
+    "*://*.linustechtips.com/*"
 
 
 
@@ -186,7 +188,9 @@
         "*://*.goproforums.com/*",
         "*://*.pcpartpicker.com/*",
         "*://*.nedatluj.cz/*",
-        "*://developers.google.com/*"
+        "*://developers.google.com/*",
+        "*://inbox.google.com/*",
+        "*://*.linustechtips.com/*"
 
       ],
       "css": ["styles/style.css"],
@@ -467,8 +471,15 @@
     {
       "matches": ["*://developers.google.com/*"],
       "js": ["scripts/content/googledevelopers.js"]
+    },
+    {
+      "matches": ["*://inbox.google.com/*"],
+      "js": ["scripts/content/google-inbox.js"]
+    },
+    {
+      "matches": ["*://*.linustechtips.com/*"],
+      "js": ["scripts/content/linustechtips.js"]
     }
-
 
 
   ]

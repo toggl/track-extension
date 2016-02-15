@@ -95,7 +95,8 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-    "*://*.signupgenius.com/*"
+    "*://*.signupgenius.com/*",
+    "*://*.evernote.com/*"
   ],
   "content_scripts": [
     {
@@ -161,7 +162,8 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-        "*://*.signupgenius.com/*"
+        "*://*.signupgenius.com/*",
+        "*://*.evernote.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -397,6 +399,10 @@
     {
       "matches": ["*://*.signupgenius.com/*"],
       "js": ["scripts/content/signupgenius.js"]
+    },
+    {
+      "matches": ["*://*.evernote.com/*"],
+      "js": ["scripts/content/evernote.js"]
     }
   ]
 }

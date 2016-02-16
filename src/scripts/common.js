@@ -441,7 +441,7 @@ var togglbutton = {
     var link = createLink('toggl-button');
     togglbutton.currentDescription = invokeIfFunction(params.description);
     togglbutton.currentProject = invokeIfFunction(params.projectName);
-    link.title = togglbutton.currentProject+": "+togglbutton.currentDescription;
+    link.title = togglbutton.currentProject + ": " + togglbutton.currentDescription;
     if (!!params.calculateTotal) {
       togglbutton.mainDescription = invokeIfFunction(params.description);
     }

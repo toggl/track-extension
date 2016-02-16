@@ -441,7 +441,7 @@ var togglbutton = {
     var link = createLink('toggl-button');
     togglbutton.currentDescription = invokeIfFunction(params.description);
     togglbutton.currentProject = invokeIfFunction(params.projectName);
-    link.title = togglbutton.currentProject + ": " + togglbutton.currentDescription;
+    link.title = togglbutton.currentDescription + (!!togglbutton.currentProject ? " - " + togglbutton.currentProject : "");
     if (!!params.calculateTotal) {
       togglbutton.mainDescription = invokeIfFunction(params.description);
     }
@@ -471,6 +471,7 @@ var togglbutton = {
     if (params.buttonType === 'minimal') {
       link.classList.add('min');
       link.removeChild(link.firstChild);
+      link.title = "Start timer: " + link.title;
     }
 
     link.addEventListener('click', function (e) {

@@ -874,12 +874,7 @@ only screen and (min-resolution: 192dpi) {
 }
 
 
-/********* DRAFTIN *********/
-.keep-tb-wrapper{
-  padding-left: 7px;
-  display: inline;
-  height: 32px;
-  margin: 0 8px;
-  top: 12px;
-  position: absolute;
+/********* KEEP *********/
+.toggl-button.keep {
+  margin-bottom: 7px;
 }

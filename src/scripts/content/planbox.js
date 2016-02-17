@@ -3,22 +3,22 @@
 
 "use strict";
 
-togglbutton.render('div.importances:not(.toggl)', {observe: true}, function (elem) {
-    var link,
-        description = $("#story_name p").innerText,
-        projectName = $(".project .name").innerText;
+togglbutton.render('div.importances:not(.toggl)', {observe: true}, function () {
+  var link,
+    description = $("#story_name p").innerText,
+    projectName = $(".project .name").innerText,
+    div = document.createElement("div"),
+    importanceDiv = $("div.importances"),
+    collectorDiv = importanceDiv.parentNode;
 
-    link = togglbutton.createTimerLink({
-        className: "planbox",
-        description: description,
-        projectName: projectName
-    });
+  div.className = "fl";
 
-    var div = document.createElement("div");
-    div.className = "fl";
-    div.appendChild(link);
+  link = togglbutton.createTimerLink({
+    className: "planbox",
+    description: description,
+    projectName: projectName
+  });
 
-    var importanceDiv = $("div.importances");
-    var collectorDiv = importanceDiv.parentNode;
-    collectorDiv.insertBefore(div, importanceDiv.nextSibling);
+  div.appendChild(link);
+  collectorDiv.insertBefore(div, importanceDiv.nextSibling);
 });

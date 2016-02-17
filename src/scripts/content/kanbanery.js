@@ -4,18 +4,18 @@
 'use strict';
 
 togglbutton.render('section.task-actions:not(.toggl)', {observe: true}, function (elem) {
-    var link,
-        taskTitle = $("p.task-title"),
-        firstAction = $('.task-actions ul li:first-child', elem),
-        actionList = firstAction.parentNode;
+  var link,
+    linkAction = document.createElement("LI"),
+    taskTitle = $("p.task-title"),
+    firstAction = $('.task-actions ul li:first-child', elem),
+    actionList = firstAction.parentNode;
 
-    link = togglbutton.createTimerLink({
-        className: 'kanbanery',
-        description: taskTitle.innerText
-    });
+  link = togglbutton.createTimerLink({
+    className: 'kanbanery',
+    description: taskTitle.innerText
+  });
 
-    var linkAction = document.createElement("LI");
-    linkAction.appendChild(link);
+  linkAction.appendChild(link);
 
-    actionList.insertBefore(linkAction, firstAction);
+  actionList.insertBefore(linkAction, firstAction);
 });

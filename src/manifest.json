@@ -95,15 +95,12 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
 	  "*://wordpress.com/*",
-    "*://*.kanbanery.com/*"
-=======
+    "*://*.kanbanery.com/*",
     "*://*.planbox.com/*"
->>>>>>> Add Planbox support
   ],
   "content_scripts": [
     {

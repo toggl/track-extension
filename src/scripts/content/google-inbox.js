@@ -5,12 +5,12 @@
 togglbutton.render('.bJ:not(.toggl)', {observe: true}, function (elem) {
   var link,
     description = $('.eo > span', elem).textContent,
-	toolbar = $('.cp', elem);
+    toolbar = $('.cp', elem);
 
   link = togglbutton.createTimerLink({
     className: 'google-inbox',
     description: description
   });
-  
+
   toolbar.parentElement.insertBefore(link, toolbar);
 });

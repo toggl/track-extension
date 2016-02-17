@@ -163,7 +163,7 @@ var togglbutton = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].innerHTML;
+        tag = s.options[i].textContent;
         tags.push(tag);
       }
     }

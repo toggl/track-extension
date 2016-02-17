@@ -4,10 +4,10 @@
 
 var toggl_container = '#gwt-debug-NoteView-root';
 var toggl_btn_container;
-var toggl_div_container = '#gwt-debug-NoteAttributesView-root > div > div.GOSDSN-CLGB';
+var toggl_div_container = '#gwt-debug-NoteAttributesView-root > div > div:nth-child(2)';
 
 var toggl_desc = '#gwt-debug-NoteTitleView-textBox'; // name of note
-var toggl_proj = '#gwt-debug-NotebookSelectMenu-notebookName'; // name of notebook
+//var toggl_proj = '#gwt-debug-NotebookSelectMenu-notebookName'; // name of notebook, doesn't work right now
 
 var toggl_btn = '.toggl-button';
 var toggl_btn_active = toggl_btn + '.active';
@@ -30,13 +30,13 @@ function toggl() {
   togglbutton.render(toggl_container + ':not(.toggl)', {observe: true}, function (elem) {
     var link,
       description = $(toggl_desc, elem).value,
-      project = $(toggl_proj, elem).textContent,
+      //project = $(toggl_proj, elem).textContent,
       parent = $(toggl_div_container);
 
     link = togglbutton.createTimerLink({
       className: 'evernote',
       description: description,
-      projectName: project
+      //projectName: project
     });
 
     toggl_btn_container = createTag('div', 'toggl-wrapper evernote');
@@ -49,7 +49,7 @@ function toggl() {
 // OBSERVATION
 // observe changing of notes
 
-var targetString = '#gwt-debug-NoteAttributesView-root > div > div.GOSDSN-CGFB.GOSDSN-CNFB > div > div.GOSDSN-CEGB.GOSDSN-CJE';
+var targetString = '#gwt-debug-NoteAttributesView-root > div > div:nth-child(3) > div > div:nth-child(2)';
 var target;
 
 function observe() {

@@ -873,6 +873,18 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
+/********* SLACK *********/
+#active_channel_name .toggl-button.slack {
+  position: absolute;
+  right: 60px;
+  top: 9pt;
+  margin-top: 5px;
+  background-position-x: 5px;
+  background-color: #fff!important;
+  width: 25px;
+  height: 30px;
+  background-position-x: 5px!important;
+}
 /********* ZOHO BOOKS *********/
 .toggl-button.zoho_books {
   margin-top: 5px;

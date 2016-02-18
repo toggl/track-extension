@@ -2,9 +2,8 @@
 /*global $: false, document: false, togglbutton: false, createTag:false*/
 'use strict';
 
-togglbutton.render('.name:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.name:not(.toggl)', {observe: true}, function () {
   var link,
-    container = createTag('id', '#toggl_button_link'),
     placeholder = $('#channel_actions'),
     description = $('.name').innerText,
     project = $('#team_name').innerText;
@@ -12,9 +11,9 @@ togglbutton.render('.name:not(.toggl)', {observe: true}, function (elem) {
   link = togglbutton.createTimerLink({
     className: 'slack',
     description: description,
-    projectName: project
+    projectName: project,
+    buttonType: 'minimal'
   });
 
-  container.appendChild(link);
-  placeholder.parentNode.insertBefore(container, placeholder);
+  placeholder.parentNode.insertBefore(link, placeholder);
 });

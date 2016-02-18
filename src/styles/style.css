@@ -879,6 +879,10 @@ only screen and (min-resolution: 192dpi) {
   top: 10px;
 }
 
+.title > .ng-hide + .toggl-button.doit {
+  margin-left: 5px;
+}
+
 .task-op > .toggl-button.doit {
   color: #222;
   font-size: 14px;

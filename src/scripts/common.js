@@ -548,9 +548,10 @@ var togglbutton = {
 
   updateTrackedTimerLink: function () {
     var totalTime = $(".toggl-tracked"),
-      duration = togglbutton.calculateTrackedTime();
+      duration;
 
     if (!!totalTime) {
+      duration = togglbutton.calculateTrackedTime();
       totalTime.innerHTML = "<h3>Time tracked</h3><p title='Time tracked with Toggl: " + duration + "'>" + duration + "</p>";
     }
   },

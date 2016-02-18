@@ -872,3 +872,12 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.draftin {
   margin-right: 15px;
 }
+
+/********* STACKEXCHANGE *********/
+.toggl-button.stackexchange {
+  margin-left: 7px;
+  padding-left: 24px;
+  font-size: 13px;
+  background-size: 18px;
+  line-height: 19px;
+}

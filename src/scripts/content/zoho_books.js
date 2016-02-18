@@ -3,11 +3,23 @@
 
 'use strict';
 
-togglbutton.render('.btn-toolbar:not(.toggl)', {observe: true}, function () {
+togglbutton.render('.content-column .btn-toolbar:not(.toggl)', {observe: true}, function (elem) {
 
   var link,
-    description = $('.pcs-template-body .pcs-label b').innerHTML + ' ' + $('.pcs-template-body #tmp_ref_number').innerHTML,
-    project = $('.pcs-template-body .pcs-customer-name a').innerHTML;
+    description = function () {
+      var first = document.querySelector('.pcs-template-body .pcs-label b'),
+        second = document.querySelector('.pcs-template-body #tmp_ref_number');
+
+      first = (!!first ? first.textContent.trim() + " " : "");
+      second = (!!second ? second.textContent.trim() : "");
+      return first + second;
+    },
+
+    project = function () {
+      var p = document.querySelector('.pcs-template-body .pcs-customer-name a');
+      p = (!!p ? p.textContent.trim() : "");
+      return p;
+    };
 
   link = togglbutton.createTimerLink({
     className: 'zoho_books',
@@ -15,8 +27,5 @@ togglbutton.render('.btn-toolbar:not(.toggl)', {observe: true}, function () {
     projectName: project
   });
 
-  link.setAttribute('style', 'margin-top: 5px');
-  link.setAttribute('style', 'margin-left: 4px');
-
-  $('.fill.header .btn-toolbar').appendChild(link);
+  elem.appendChild(link);
 });

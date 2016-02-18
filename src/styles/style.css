@@ -873,6 +873,11 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
+/********* ZOHO BOOKS *********/
+.toggl-button.zoho_books {
+  margin-top: 5px;
+  margin-left: 4px;
+}
 /********* KEEP *********/
 .toggl-button.keep {
   margin-bottom: 7px;

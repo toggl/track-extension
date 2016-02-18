@@ -873,6 +873,29 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
+/********* DOIT *********/
+.title > .toggl-button.doit {
+  position: absolute;
+  top: 10px;
+}
+
+.task-op > .toggl-button.doit {
+  color: #222;
+  font-size: 14px;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #d6d6d6;
+  padding: 0 12px;
+  text-decoration: none;
+  box-shadow: 0 1px 0 #d6d6d6;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  padding: 0 10px 0 35px;
+  background-position: 10px 2px!important;
+}
 /********* SLACK *********/
 #active_channel_name .toggl-button.slack {
   position: absolute;

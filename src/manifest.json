@@ -95,7 +95,6 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
@@ -104,10 +103,8 @@
     "*://*.planbox.com/*",
     "*://books.zoho.com/*",
     "*://*.slack.com/*",
-    "*://*.doit.im/*"
-=======
+    "*://*.doit.im/*",
     "*://calendar.sunrise.am/*"
->>>>>>> Add support for Sunrise Calendar - Toggl button
   ],
   "content_scripts": [
     {

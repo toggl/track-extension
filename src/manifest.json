@@ -95,7 +95,6 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-<<<<<<< HEAD
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
@@ -105,11 +104,8 @@
     "*://books.zoho.com/*",
     "*://*.slack.com/*",
     "*://*.doit.im/*",
-    "*://calendar.sunrise.am/*"
-=======
-    "*://*.cloudes.me/loadSim*",
-    "*://*.cloudes.me/simulation"
->>>>>>> Added cloudes.me support
+    "*://calendar.sunrise.am/*",
+    "*://*.cloudes.me/*"
   ],
   "content_scripts": [
     {

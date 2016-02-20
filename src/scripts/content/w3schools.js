@@ -4,14 +4,12 @@
 
 togglbutton.render('.color_h1:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = $('h1').textContent;
 
 
   link = togglbutton.createTimerLink({
     className: 'w3schools',
-    description: description,
-    projectName: project
+    description: description
   });
 
 

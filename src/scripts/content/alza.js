@@ -4,14 +4,12 @@
 
 togglbutton.render('.textlinks:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = 'Shopping';
 
 
   link = togglbutton.createTimerLink({
     className: 'alza',
-    description: description,
-    projectName: project
+    description: description
   });
 
   $('.textlinks').appendChild(link);

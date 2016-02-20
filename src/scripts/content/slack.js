@@ -4,8 +4,8 @@
 
 togglbutton.render('#channel_header_actions:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = $('.name').textContent,
+    project = $('#team_name').textContent;
 
 
   link = togglbutton.createTimerLink({

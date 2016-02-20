@@ -4,8 +4,8 @@
 
 togglbutton.render('.collapse-wrapper:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = 'Looking at Lego.com',
+    project = 'Lego.com';
 
 
   link = togglbutton.createTimerLink({

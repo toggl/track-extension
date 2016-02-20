@@ -4,18 +4,15 @@
 
 togglbutton.render('.skill-tree-header:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = $('h1').textContent;
 
 
   link = togglbutton.createTimerLink({
     className: 'duolingo',
-    description: description,
-    projectName: project
+    description: description
+
   });
 
-  //skill-tree-header
-  //var htmlElement = document.querySelector("h1");
   $('.skill-tree-header').appendChild(link);
 
 });

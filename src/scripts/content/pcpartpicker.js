@@ -4,14 +4,12 @@
 
 togglbutton.render('.user-nav:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = $('h1').textContent;
 
 
   link = togglbutton.createTimerLink({
     className: 'pcpartpicker',
-    description: description,
-    projectName: project
+    description: description
   });
 
 

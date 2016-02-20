@@ -4,14 +4,12 @@
 
 togglbutton.render('.general-header-right:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = 'Learning at Udemy.com';
 
 
   link = togglbutton.createTimerLink({
     className: 'udemy',
-    description: description,
-    projectName: project
+    description: description
   });
 
 

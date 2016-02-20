@@ -4,14 +4,12 @@
 
 togglbutton.render('.socialIcons:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = $('strong').textContent;
 
 
   link = togglbutton.createTimerLink({
     className: 'goproforums',
-    description: description,
-    projectName: project
+    description: description
   });
 
 

@@ -4,14 +4,13 @@
 
 togglbutton.render('.share-buttons:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = $('.first').innerText;
 
 
   link = togglbutton.createTimerLink({
     className: 'pc-help',
     description: description,
-    projectName: project
+    projectName: 'PC-HELP.cz - České diskuzní fórum'
   });
 
   $('.share-buttons').appendChild(link);

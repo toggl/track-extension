@@ -4,14 +4,13 @@
 
 togglbutton.render('.lesson-bread.center-block:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
+    description = $('.active').innerText,
     project = $('Projects name', elem);
 
 
   link = togglbutton.createTimerLink({
     className: 'nedatluj',
-    description: description,
-    projectName: project
+    description: description
   });
 
 

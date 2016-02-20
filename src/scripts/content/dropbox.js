@@ -4,14 +4,12 @@
 
 togglbutton.render('#main-nav:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = 'Dropbox';
 
 
   link = togglbutton.createTimerLink({
-    className: 'udemy',
-    description: description,
-    projectName: project
+    className: 'dropbox',
+    description: description
   });
 
 

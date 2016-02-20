@@ -4,14 +4,12 @@
 
 togglbutton.render('.pa.Y:not(.toggl)', {}, function (elem) {
   var link,
-    description = $('Description', elem),
-    project = $('Projects name', elem);
+    description = 'Handling e-mails';
 
 
   link = togglbutton.createTimerLink({
     className: 'google-inbox',
-    description: description,
-    projectName: project
+    description: description
   });
 
   $('.pa.Y').appendChild(link);

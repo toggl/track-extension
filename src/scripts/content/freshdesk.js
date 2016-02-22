@@ -3,7 +3,7 @@
 
 'use strict';
 
-togglbutton.render('#Pagearea:not(.toggl)', {observer: true}, function (elem) {
+togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('li', 'ticket-btns'),
     duration,
     description,

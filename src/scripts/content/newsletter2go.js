@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#submenu:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#submenu:not(.toggl)', {observe: true}, function () {
   var link, description,
     titleElem = $('#mailing-name'),
     li = document.createElement('li');

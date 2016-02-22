@@ -873,6 +873,10 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
+/********* FRESHDESK *********/
+.toggl-button.freshdesk {
+  margin-top: 3px;
+}
 /********* CLOUDES.ME *********/
 .boxedDotted .toggl-button.cloudes {
   margin-left: 7px;

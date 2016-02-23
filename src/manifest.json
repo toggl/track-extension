@@ -166,10 +166,7 @@
     },
     {
       "matches": [
-        "*://www.toggl.com/app/timer",
-        "*://www.toggl.com/",
-        "*://toggl.com/app/timer",
-        "*://toggl.com/"
+        "*://*.toggl.com/*"
       ],
       "js": ["scripts/content/toggl.js"]
     },

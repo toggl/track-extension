@@ -166,7 +166,8 @@
     },
     {
       "matches": [
-        "*://*.toggl.com/*"
+        "*://*.toggl.com/*",
+        "*://toggl.com/*"
       ],
       "js": ["scripts/content/toggl.js"]
     },

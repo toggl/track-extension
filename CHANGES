@@ -1,3 +1,6 @@
+[0.8.3]
+- Fixed toggl.com url matching
+- Smaller fixes and tweaks
 [0.8.2]
 - Fixed escaping issues when saving tag
 - Added possibility to know if user has button installed while on toggl.com webpage

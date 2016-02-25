@@ -236,7 +236,7 @@ var TogglButton = {
       index,
       entry;
 
-    if (!!TogglButton.$user) {
+    if (!TogglButton.$user) {
       TogglButton.fetchUser();
       return;
     }

@@ -439,8 +439,8 @@ var TogglButton = {
         {
           type: 'basic',
           iconUrl: 'images/icon-128.png',
-          title: "Time is up!",
-          message: "Take a break",
+          title: "Toggl Button",
+          message: "Time is up! Take a break",
           priority: 2,
           buttons: [
             { title: "Continue Latest"},

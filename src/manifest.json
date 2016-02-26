@@ -95,7 +95,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-    "*://*.sourcelair.com/*"
+    "https://www.sourcelair.com/*"
   ],
   "content_scripts": [
     {
@@ -161,7 +161,7 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-        "*://*.sourcelair.com/*"
+        "https://www.sourcelair.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -393,7 +393,7 @@
       "js": ["scripts/content/fogbugz.js"]
     },
     {
-      "matches": ["*://*.sourcelair.com/*"],
+      "matches": ["https://www.sourcelair.com/*"],
       "js": ["scripts/content/sourcelair.js"]
     }
   ]

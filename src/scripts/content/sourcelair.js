@@ -7,9 +7,9 @@ var sourceLair = {
     var self = this;
     togglbutton.render('#app:not(.toggl)', {observe: true}, function (elem) {
       var link,
-      project = $('span.project-name.value', elem).textContent,
-      inlineCss = 'position: fixed; bottom: 1rem; right: 1rem; z-index: 9999;',
-      container = document.createElement('div');
+          project = $('span.project-name.value', elem).textContent,
+          inlineCss = 'position: fixed; bottom: 1rem; right: 1rem; z-index: 9999;',
+          container = document.createElement('div');
 
       container.setAttribute('id', 'toggl-sourceLair');
       container.setAttribute('style', inlineCss);

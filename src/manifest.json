@@ -94,7 +94,24 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+    "*://*.pc-help.cz/*",
+    "*://*.alza.cz/*",
+    "*://*.slack.com/*",
+    "*://*.duolingo.com/*",
+    "*://*.w3schools.com/*",
+    "*://*.udemy.com/*",
+    "*://*.dropbox.com/*",
+    "*://*.lego.com/*",
+    "*://*.goproforums.com/*",
+    "*://*.pcpartpicker.com/*",
+    "*://*.nedatluj.cz/*",
+    "*://developers.google.com/*",
+    "*://inbox.google.com/*",
+    "*://*.linustechtips.com/*"
+
+
+
   ],
   "content_scripts": [
     {
@@ -159,7 +176,22 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
+        "*://*.pc-help.cz/*",
+        "*://*.alza.cz/*",
+        "*://*.slack.com/*",
+        "*://*.duolingo.com/*",
+        "*://*.w3schools.com/*",
+        "*://*.udemy.com/*",
+        "*://*.dropbox.com/*",
+        "*://*.lego.com/*",
+        "*://*.goproforums.com/*",
+        "*://*.pcpartpicker.com/*",
+        "*://*.nedatluj.cz/*",
+        "*://developers.google.com/*",
+        "*://inbox.google.com/*",
+        "*://*.linustechtips.com/*"
+
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -389,6 +421,64 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://*.pc-help.cz/*"],
+      "js": ["scripts/content/pc-help.js"]
+    },
+    {
+      "matches": ["*://*.alza.cz/*"],
+      "js": ["scripts/content/alza.js"]
+    },
+    {
+      "matches": ["*://*.slack.com/*"],
+      "js": ["scripts/content/slack.js"]
+    },
+    {
+      "matches": ["*://*.duolingo.com/*"],
+      "js": ["scripts/content/duolingo.js"]
+    },
+    {
+      "matches": ["*://*.w3schools.com/*"],
+      "js": ["scripts/content/w3schools.js"]
+    },
+    {
+      "matches": ["*://*.udemy.com/*"],
+      "js": ["scripts/content/udemy.js"]
+    },
+    {
+      "matches": ["*://*.dropbox.com/*"],
+      "js": ["scripts/content/dropbox.js"]
+    },
+    {
+      "matches": ["*://*.lego.com/*"],
+      "js": ["scripts/content/lego.js"]
+    },
+    {
+      "matches": ["*://*.goproforums.com/*"],
+      "js": ["scripts/content/goproforums.js"]
+    },
+    {
+      "matches": ["*://*.pcpartpicker.com/*"],
+      "js": ["scripts/content/pcpartpicker.js"]
+    },
+    {
+      "matches": ["*://*.nedatluj.cz/*"],
+      "js": ["scripts/content/nedatluj.js"]
+    },
+    {
+      "matches": ["*://developers.google.com/*"],
+      "js": ["scripts/content/googledevelopers.js"]
+    },
+    {
+      "matches": ["*://inbox.google.com/*"],
+      "js": ["scripts/content/google-inbox.js"]
+    },
+    {
+      "matches": ["*://*.linustechtips.com/*"],
+      "js": ["scripts/content/linustechtips.js"]
     }
+
+
   ]
 }

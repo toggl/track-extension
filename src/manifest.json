@@ -95,6 +95,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*"
+    "*://app.liquidplanner.com/*"
   ],
   "content_scripts": [
     {
@@ -160,6 +161,7 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*"
+        "*://app.liquidplanner.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -391,6 +393,10 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://app.liquidplanner.com/*"],
+      "js": ["scripts/content/liquidplanner.js"]
     }
   ]
 }

@@ -94,7 +94,8 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+    "*://*.slack.com/*"
   ],
   "content_scripts": [
     {
@@ -159,7 +160,8 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
+        "*://*.slack.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -389,6 +391,10 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://*.slack.com/*"],
+      "js": ["scripts/content/slack.js"]
     }
   ]
 }

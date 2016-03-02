@@ -21,11 +21,16 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
     projectName = $("#projectName").innerHTML;
   }
 
-  desc = $('.taskName', elem).textContent;
+  var taskName = $('.taskName', elem);
+  desc = taskName.textContent;
+
+  //var taskId = /taskRHS(\d+)/.exec(elem.id)[1];
+
+  var taskLink = taskName.parentNode.href;
 
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
-    description: desc,
+    description: desc + " (" + taskLink + ")",
     projectName: projectName
   });
 
@@ -69,7 +74,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: 
 
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
-    description: desc,
+    description: desc + ' (' + window.location.href + ')',
     projectName: projectName
   });
 

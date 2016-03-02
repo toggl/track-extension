@@ -18,7 +18,7 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
   }
 
   if ($("#projectName")) {
-    projectName = $("#projectName").innerHTML;
+    projectName = $("#projectName").firstChild.nodeValue.trim();
   }
 
   desc = $('.taskName', elem).textContent;
@@ -64,7 +64,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: 
   desc = titleEl.getAttribute("data-taskname");
 
   if ($("#projectName")) {
-    projectName = $("#projectName").innerHTML;
+    projectName = $("#projectName").firstChild.nodeValue.trim();
   }
 
   link = togglbutton.createTimerLink({

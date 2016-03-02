@@ -94,7 +94,9 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+    "*://*.signupgenius.com/*",
+    "*://*.evernote.com/*"
   ],
   "content_scripts": [
     {
@@ -159,7 +161,9 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
+        "*://*.signupgenius.com/*",
+        "*://*.evernote.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -389,6 +393,14 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://*.signupgenius.com/*"],
+      "js": ["scripts/content/signupgenius.js"]
+    },
+    {
+      "matches": ["*://*.evernote.com/*"],
+      "js": ["scripts/content/evernote.js"]
     }
   ]
 }

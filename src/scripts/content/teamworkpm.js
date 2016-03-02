@@ -85,3 +85,39 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: 
   elem.insertBefore(liTag, elem.firstChild);
 
 });
+
+// Ticket View Page
+togglbutton.render('.sections--header ul.rightTicketOptions:not(.toggl)', {observe: true}, function (elem) {
+  var link, liTag, titleEl, desc;
+  liTag = document.createElement("li");
+  liTag.classList.add("toggl-li");
+  titleEl = $("#inboxBody .title-label");
+  var ticketLink = window.location.href;
+
+  //watch for the title to change (to a real value) before initializing the timer button
+  var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+  var observer = new MutationObserver(function(mutations, observer) {
+    // fired when a title change occurs
+    desc = titleEl.textContent.trim();
+
+    link = togglbutton.createTimerLink({
+      className: 'teamworkpm',
+      description: desc + ' (' + ticketLink + ')',
+      projectName: ''
+    });
+
+    //at the moment, teamwork desk btn styles override the background image. Just using margin-top instead
+    //link.classList.add("btn");
+    //link.classList.add("btn-default");
+    link.style.marginTop = '5px';
+    link.setAttribute("title", "Toggl Timer");
+    liTag.appendChild(link);
+    elem.insertBefore(liTag, elem.firstChild);
+
+    //we only want to fire this once, so now, let's disconnect from the observer
+    observer.disconnect();
+  });
+
+  // Watch for any changes to the title element
+  observer.observe(titleEl, { attributes: true, childList: true, characterData: true, subTree: true });
+});

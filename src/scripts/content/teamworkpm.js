@@ -3,6 +3,11 @@
 
 'use strict';
 
+var includeTeamworkLinks = false;
+chrome.runtime.sendMessage({getTogglSetting: "teamworkLinksEnabled"}, function(response) {
+  includeTeamworkLinks = response.value;
+});
+
 // Tasks listing page in project
 togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
   var link, spanTag, projectName, desc,
@@ -30,7 +35,7 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
 
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
-    description: desc + " (" + taskLink + ")",
+    description: desc + (includeTeamworkLinks ? " (" + taskLink + ")" : ""),
     projectName: projectName
   });
 
@@ -74,7 +79,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: 
 
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
-    description: desc + ' (' + window.location.href + ')',
+    description: desc + (includeTeamworkLinks ? ' (' + window.location.href + ')' : ''),
     projectName: projectName
   });
 
@@ -95,14 +100,13 @@ togglbutton.render('.sections--header ul.rightTicketOptions:not(.toggl)', {obser
   var ticketLink = window.location.href;
 
   //watch for the title to change (to a real value) before initializing the timer button
-  var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
   var observer = new MutationObserver(function(mutations, observer) {
     // fired when a title change occurs
     desc = titleEl.textContent.trim();
 
     link = togglbutton.createTimerLink({
       className: 'teamworkpm',
-      description: desc + ' (' + ticketLink + ')',
+      description: desc + (includeTeamworkLinks ? " (" + taskLink + ")" : ""),
       projectName: ''
     });
 

@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button - Timer with Pomodoro Add-On",
   "short_name": "Toggl Button",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "manifest_version": 2,
   "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {

@@ -13,7 +13,8 @@ var Db = {
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
-    "pomodoroInterval": 25
+    "pomodoroInterval": 25,
+    "teamworkLinksEnabled": false
   },
 
   get: function (setting) {
@@ -96,6 +97,8 @@ var Db = {
         Db.set("pomodoroSoundEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
         Db.updateSetting("pomodoroInterval", request.state);
+      } else if (request.type === 'toggle-teamwork-links') {
+        Db.updateSetting("teamworkLinksEnabled", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);
@@ -107,3 +110,8 @@ var Db = {
 
 chrome.extension.onMessage.addListener(Db.newMessage);
 Db.loadAll();
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.getTogglSetting)
+      sendResponse({value: Db.get(request.getTogglSetting)});
+});

@@ -872,3 +872,8 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.draftin {
   margin-right: 15px;
 }
+
+/********* OTRS *********/
+.toggl-button.otrs {
+  padding-left: 23px;
+}

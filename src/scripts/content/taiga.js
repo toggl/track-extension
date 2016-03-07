@@ -6,6 +6,7 @@
 /* User story details button */
 togglbutton.render('.us-detail:not(.toggl)', {observe: true}, function (elem) {
   var link,
+    projectElem,
     refElem,
     titleElem,
     container = $('.us-title-text');
@@ -19,7 +20,10 @@ togglbutton.render('.us-detail:not(.toggl)', {observe: true}, function (elem) {
       return refElem.textContent + ' ' + titleElem.textContent;
     },
     projectName: function () {
-      return $('.project-name', elem).textContent;
+      projectElem = $('.project-name', elem);
+      if (projectElem) {
+        return projectElem.textContent;
+      }
     }
   });
 

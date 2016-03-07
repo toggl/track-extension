@@ -94,7 +94,22 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+    "*://keep.google.com/*",
+    "*://*.gingkoapp.com/*",
+	  "*://inbox.google.com/*",
+	  "*://wordpress.com/*",
+    "*://*.kanbanery.com/*",
+    "*://*.planbox.com/*",
+    "*://books.zoho.com/*",
+    "*://*.slack.com/*",
+    "*://*.doit.im/*",
+    "*://calendar.sunrise.am/*",
+    "*://*.cloudes.me/*",
+    "*://*.eproject.me/*",
+    "*://*.freshdesk.com/*",
+    "*://*.newsletter2go.com/*",
+    "*://devdocs.io/*"
   ],
   "content_scripts": [
     {
@@ -159,7 +174,22 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
+        "*://keep.google.com/*",
+        "*://gingkoapp.com/*",
+		    "*://inbox.google.com/*",
+        "*://wordpress.com/*",
+        "*://*.kanbanery.com/*",
+        "*://*.planbox.com/*",
+        "*://books.zoho.com/*",
+        "*://*.slack.com/*",
+        "*://*.doit.im/*",
+        "*://calendar.sunrise.am/*",
+        "*://*.cloudes.me/*",
+        "*://*.eproject.me/*",
+        "*://*.freshdesk.com/*",
+        "*://*.newsletter2go.com/*",
+        "*://devdocs.io/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -230,6 +260,13 @@
     {
       "matches": ["*://*.basecamp.com/*", "*://*.basecamphq.com/*"],
       "js": ["scripts/content/basecamp.js"]
+    },
+    {
+      "matches": [
+        "*://*.atlassian.net/wiki/*",
+        "*://*.atlassian.com/wiki/*"
+      ],
+      "js": ["scripts/content/confluence.js"]
     },
     {
       "matches": [
@@ -389,6 +426,66 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://devdocs.io/*"],
+      "js": ["scripts/content/devdocs.js"]
+    },
+    {
+      "matches": ["*://keep.google.com/*"],
+      "js": ["scripts/content/keep.js"]
+    },
+    {
+      "matches": ["*://*.gingkoapp.com/*"],
+      "js": ["scripts/content/gingkoapp.js"]
+    },
+    {
+      "matches": ["*://inbox.google.com/*"],
+      "js": ["scripts/content/google-inbox.js"]
+    },
+    {
+      "matches": ["*://wordpress.com/*"],
+      "js": ["scripts/content/wordpress.js"]
+    },
+    {
+      "matches": ["*://*.kanbanery.com/*"],
+      "js": ["scripts/content/kanbanery.js"]
+    },
+    {
+      "matches": ["*://*.planbox.com/*"],
+      "js": ["scripts/content/planbox.js"]
+    },
+    {
+      "matches": ["*://books.zoho.com/*"],
+      "js": ["scripts/content/zoho_books.js"]
+    },
+    {
+      "matches": ["*://*.slack.com/*"],
+      "js": ["scripts/content/slack.js"]
+    },
+    {
+      "matches": ["*://*.doit.im/*"],
+      "js": ["scripts/content/doit.js"]
+    },
+    {
+      "matches": ["*://calendar.sunrise.am/*"],
+      "js": ["scripts/content/sunrise.js"]
+    },
+    {
+      "matches": ["*://*.cloudes.me/*"],
+      "js": ["scripts/content/cloudes.js"]
+    },
+    {
+      "matches": ["*://*.eproject.me/*"],
+      "js": ["scripts/content/eproject.js"]
+    },
+    {
+      "matches": ["*://*.freshdesk.com/*"],
+      "js": ["scripts/content/freshdesk.js"]
+    },
+    {
+      "matches": ["*://*.newsletter2go.com/*"],
+      "js": ["scripts/content/newsletter2go.js"]
     }
   ]
 }

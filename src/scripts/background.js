@@ -8,6 +8,22 @@ Bugsnag.appVersion = chrome.runtime.getManifest().version;
 Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
 };
+chrome.webRequest.onBeforeSendHeaders.addListener(
+    function(info) {
+        var headers = info.requestHeaders;
+        headers.forEach(function(header, i) {
+            if (header.name.toLowerCase() == 'user-agent') {
+                header.value = TogglButton.$fullVersion;
+            }
+        });
+        return {requestHeaders: headers};
+    },
+    {
+        urls: [ "https://www.toggl.com/*" ],
+        types: ["xmlhttprequest"]
+    },
+    ["blocking", "requestHeaders"]
+);
 
 var _gaq = window._gaq || [];
 _gaq.push(['_setAccount', 'UA-3215787-22']);

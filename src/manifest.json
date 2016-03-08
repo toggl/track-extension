@@ -494,7 +494,6 @@
     {
       "matches": ["*://*.newsletter2go.com/*"],
       "js": ["scripts/content/newsletter2go.js"]
->>>>>>> master
     }
   ]
 }

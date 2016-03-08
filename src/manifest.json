@@ -94,7 +94,7 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
     "*://app.liquidplanner.com/*"
   ],
   "content_scripts": [
@@ -160,7 +160,7 @@
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
-        "*://*.fogbugz.com/*"
+        "*://*.fogbugz.com/*",
         "*://app.liquidplanner.com/*"
       ],
       "css": ["styles/style.css"],

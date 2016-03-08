@@ -872,3 +872,8 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.draftin {
   margin-right: 15px;
 }
+
+/********* REMEMEBER THE MILK *********/
+.toggl-button.rememberthemilk {
+  margin-left: 5px;
+}

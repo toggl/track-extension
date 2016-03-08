@@ -5,6 +5,7 @@
 var Db = {
   // settings: key, default value
   settings: {
+    "showRightClickButton": true,
     "showPostPopup": true,
     "socketEnabled": true,
     "nannyCheckEnabled": true,
@@ -96,6 +97,8 @@ var Db = {
         Db.set("pomodoroSoundEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
         Db.updateSetting("pomodoroInterval", request.state);
+      }else if (request.type === 'toggle-right-click-button') {
+        Db.updateSetting("showRightClickButton", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

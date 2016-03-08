@@ -365,6 +365,7 @@ var TogglButton = {
 
   analytics: function (event, service) {
     if (event === "settings") {
+      _gaq.push(['_trackEvent', 'rightclickbutton', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
       _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
       _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
@@ -1024,12 +1025,19 @@ var TogglButton = {
     }
 
     return true;
+  },
+
+  toggleRightClickButton: function(show){
+    if(show){
+      chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
+      chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
+    }else{
+      chrome.contextMenus.removeAll();
+    }
   }
 };
 
-chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
-chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
-
+TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();

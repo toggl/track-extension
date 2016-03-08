@@ -1,6 +1,7 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
+var TogglButton;
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -8,21 +9,22 @@ Bugsnag.appVersion = chrome.runtime.getManifest().version;
 Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
 };
+
 chrome.webRequest.onBeforeSendHeaders.addListener(
-    function(info) {
-        var headers = info.requestHeaders;
-        headers.forEach(function(header, i) {
-            if (header.name.toLowerCase() == 'user-agent') {
-                header.value = TogglButton.$fullVersion;
-            }
-        });
-        return {requestHeaders: headers};
-    },
-    {
-        urls: [ "https://www.toggl.com/*" ],
-        types: ["xmlhttprequest"]
-    },
-    ["blocking", "requestHeaders"]
+  function (info) {
+    var headers = info.requestHeaders;
+    headers.forEach(function (header, i) {
+      if (header.name.toLowerCase() === 'user-agent') {
+        header.value = TogglButton.$fullVersion;
+      }
+    });
+    return {requestHeaders: headers};
+  },
+  {
+    urls: [ "https://www.toggl.com/*" ],
+    types: ["xmlhttprequest"]
+  },
+  ["blocking", "requestHeaders"]
 );
 
 var _gaq = window._gaq || [];
@@ -38,7 +40,7 @@ _gaq.push(['_trackPageview']);
   s.parentNode.insertBefore(ga, s);
 }());
 
-var TogglButton = {
+TogglButton = {
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,
@@ -1027,11 +1029,11 @@ var TogglButton = {
     return true;
   },
 
-  toggleRightClickButton: function(show){
-    if(show){
+  toggleRightClickButton: function (show) {
+    if (show) {
       chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
       chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
-    }else{
+    } else {
       chrome.contextMenus.removeAll();
     }
   }

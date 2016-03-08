@@ -112,7 +112,8 @@
     "*://*.eproject.me/*",
     "*://*.freshdesk.com/*",
     "*://*.newsletter2go.com/*",
-    "*://devdocs.io/*"
+    "*://devdocs.io/*",
+    "*://www.sourcelair.com/*"
   ],
   "content_scripts": [
     {
@@ -193,7 +194,8 @@
         "*://*.eproject.me/*",
         "*://*.freshdesk.com/*",
         "*://*.newsletter2go.com/*",
-        "*://devdocs.io/*"
+        "*://devdocs.io/*",
+        "*://www.sourcelair.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -430,6 +432,10 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["https://www.sourcelair.com/*"],
+      "js": ["scripts/content/sourcelair.js"]
     },
     {
       "matches": ["*://app.liquidplanner.com/*"],

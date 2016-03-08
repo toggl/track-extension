@@ -2,17 +2,18 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-document.getElementById('projects_split_view').addEventListener("DOMSubtreeModified", function() {
-  togglbutton.render('#section_title .panel_section_jump_links:not(.toggl)', {}, function (elem) {
-    console.log("render starts");
-    var link, description;
-    description = $('#treeitem_panel_name').innerText;
+togglbutton.render('#section_title .panel_section_jump_links:not(.toggl)', {observe: true}, function (elem) {
+  var link, description = $('#treeitem_panel_name').innerText,
+    projectFunc = function () {
+      var text = document.querySelector("#treeitem_panel_parent").innerText.split(">");
+      return text[text.length - 1].trim();
+    };
 
-    link = togglbutton.createTimerLink({
-      className: 'liquidplanner',
-      description: description
-    });
-
-    elem.insertBefore(link, elem.firstChild);
+  link = togglbutton.createTimerLink({
+    className: 'liquidplanner',
+    description: description,
+    projectName: projectFunc
   });
+
+  elem.insertBefore(link, elem.firstChild);
 });

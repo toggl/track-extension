@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button - Timer with Pomodoro Add-On",
   "short_name": "Toggl Button",
-  "version": "0.8.1",
+  "version": "0.8.3",
   "manifest_version": 2,
   "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
@@ -31,6 +31,8 @@
     "chrome_style": true
   },
   "permissions": [
+    "webRequest",
+    "webRequestBlocking",
     "alarms",
     "contextMenus",
     "notifications",
@@ -95,6 +97,23 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
+    "*://app.liquidplanner.com/*",
+    "*://keep.google.com/*",
+    "*://*.gingkoapp.com/*",
+	  "*://inbox.google.com/*",
+	  "*://wordpress.com/*",
+    "*://*.kanbanery.com/*",
+    "*://*.planbox.com/*",
+    "*://books.zoho.com/*",
+    "*://*.slack.com/*",
+    "*://*.doit.im/*",
+    "*://calendar.sunrise.am/*",
+    "*://*.cloudes.me/*",
+    "*://*.eproject.me/*",
+    "*://*.freshdesk.com/*",
+    "*://*.newsletter2go.com/*",
+    "*://devdocs.io/*",
+    "*://www.sourcelair.com/*",
     "*://*.rememberthemilk.com/*"
   ],
   "content_scripts": [
@@ -161,17 +180,32 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-	"*://*.rememberthemilk.com/*"
+        "*://app.liquidplanner.com/*",
+        "*://keep.google.com/*",
+        "*://gingkoapp.com/*",
+		    "*://inbox.google.com/*",
+        "*://wordpress.com/*",
+        "*://*.kanbanery.com/*",
+        "*://*.planbox.com/*",
+        "*://books.zoho.com/*",
+        "*://*.slack.com/*",
+        "*://*.doit.im/*",
+        "*://calendar.sunrise.am/*",
+        "*://*.cloudes.me/*",
+        "*://*.eproject.me/*",
+        "*://*.freshdesk.com/*",
+        "*://*.newsletter2go.com/*",
+        "*://devdocs.io/*",
+        "*://www.sourcelair.com/*",
+        "*://*.rememberthemilk.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
     },
     {
       "matches": [
-        "*://www.toggl.com/app/timer",
-        "*://www.toggl.com/",
-        "*://toggl.com/app/timer",
-        "*://toggl.com/"
+        "*://*.toggl.com/*",
+        "*://toggl.com/*"
       ],
       "js": ["scripts/content/toggl.js"]
     },
@@ -234,6 +268,13 @@
     {
       "matches": ["*://*.basecamp.com/*", "*://*.basecamphq.com/*"],
       "js": ["scripts/content/basecamp.js"]
+    },
+    {
+      "matches": [
+        "*://*.atlassian.net/wiki/*",
+        "*://*.atlassian.com/wiki/*"
+      ],
+      "js": ["scripts/content/confluence.js"]
     },
     {
       "matches": [
@@ -397,6 +438,74 @@
     {
       "matches": ["*://*.rememberthemilk.com/*"],
       "js": ["scripts/content/rememberthemilk.js"]
+    },
+    {
+      "matches": ["https://www.sourcelair.com/*"],
+      "js": ["scripts/content/sourcelair.js"]
+    },
+    {
+      "matches": ["*://app.liquidplanner.com/*"],
+      "js": ["scripts/content/liquidplanner.js"]
+    },
+    {
+      "matches": ["*://devdocs.io/*"],
+      "js": ["scripts/content/devdocs.js"]
+    },
+    {
+      "matches": ["*://keep.google.com/*"],
+      "js": ["scripts/content/keep.js"]
+    },
+    {
+      "matches": ["*://*.gingkoapp.com/*"],
+      "js": ["scripts/content/gingkoapp.js"]
+    },
+    {
+      "matches": ["*://inbox.google.com/*"],
+      "js": ["scripts/content/google-inbox.js"]
+    },
+    {
+      "matches": ["*://wordpress.com/*"],
+      "js": ["scripts/content/wordpress.js"]
+    },
+    {
+      "matches": ["*://*.kanbanery.com/*"],
+      "js": ["scripts/content/kanbanery.js"]
+    },
+    {
+      "matches": ["*://*.planbox.com/*"],
+      "js": ["scripts/content/planbox.js"]
+    },
+    {
+      "matches": ["*://books.zoho.com/*"],
+      "js": ["scripts/content/zoho_books.js"]
+    },
+    {
+      "matches": ["*://*.slack.com/*"],
+      "js": ["scripts/content/slack.js"]
+    },
+    {
+      "matches": ["*://*.doit.im/*"],
+      "js": ["scripts/content/doit.js"]
+    },
+    {
+      "matches": ["*://calendar.sunrise.am/*"],
+      "js": ["scripts/content/sunrise.js"]
+    },
+    {
+      "matches": ["*://*.cloudes.me/*"],
+      "js": ["scripts/content/cloudes.js"]
+    },
+    {
+      "matches": ["*://*.eproject.me/*"],
+      "js": ["scripts/content/eproject.js"]
+    },
+    {
+      "matches": ["*://*.freshdesk.com/*"],
+      "js": ["scripts/content/freshdesk.js"]
+    },
+    {
+      "matches": ["*://*.newsletter2go.com/*"],
+      "js": ["scripts/content/newsletter2go.js"]
     }
   ]
 }

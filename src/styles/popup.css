@@ -180,6 +180,7 @@ hr {
   font-style: italic;
   text-align: center;
   color: #999;
+  cursor: pointer;
 }
 
 .edit-button, .stop-button {
@@ -203,7 +204,9 @@ hr {
   text-align: left;
   font-size: 11px;
 }
-
+.resume-button-container{
+  display:none;
+}
 .tracking .stop-button:hover:after{
   content: 'Stop';
   position: absolute;
@@ -260,6 +263,20 @@ hr {
 .color-12 { background-color: #094558 }
 .color-13 { background-color: #bc2d07 }
 .color-14 { background-color: #999999}
+
+.error {
+  overflow: hidden;
+  max-height: 0px;
+  transition:max-height 300ms ease-in-out;
+  display: block;
+  padding: 0 30px;
+  line-height: 20px;
+  margin-top: 5px;
+}
+
+.error.show {
+  max-height: 100px;
+}
 
 /* Entry form styles */
 
@@ -441,4 +458,14 @@ hr {
 
 .toggl-button, #toggl-button-hide {
   display: none;
+}
+
+#toggl-button-project-placeholder .project-color + .toggl-button-text {
+  padding-left: 12px;
+  width: 174px;
+}
+
+#toggl-button-project-placeholder .project-bullet {
+  margin-top: 16px;
+  margin-left: 0;
 }

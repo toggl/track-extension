@@ -1,3 +1,48 @@
+[0.8.3]
+- Fixed toggl.com url matching
+- Smaller fixes and tweaks
+[0.8.2]
+- Fixed escaping issues when saving tag
+- Added possibility to know if user has button installed while on toggl.com webpage
+[0.8.1]
+- Fixed card coping issue in Trello
+- Updated extension name and description
+- Default tracking reminder time is 60 minutes
+- Improved user data fetching
+[0.8.0]
+- Fixed Pomodoro timer sound issues
+- Updated Trello start time link to match Trello styles
+- Added "Total time tracked" to Trello cards
+[0.7.9]
+- Improved error messages text
+- Fixes for Todoist text fetching
+- Smaller bug fixes
+[0.7.8]
+- Improved settings managment
+- Show "Continue latest" option in Tracking reminder
+- Fixed updating extension icon when logging out
+- Added tabs to settings view
+- Unified input fields design in settings
+- Added animation to subsettings open/close
+- Show error message when time entry start fails
+- Fixed Toggl Button rendering in updated gitlab design
+- Added support for BitBucket pull requests
+- Fixes for Assembla updates
+- Improved Todoist description text fetching
+- Fixed edit form clear issue in dropdown
+- Fixed browser autocomplete issue in dropdown
+[0.7.7]
+- Fixed continuing latest entry with task from Pomodoro notification
+- Added failsafe for starting websocket
+- Show project color dot in dropdown edit view
+- Added tooltips to toggl logo and email in dropdown
+- Clicking the email address opens profile view in web
+- Focus description when opening edit view in dropdown
+[0.7.6]
+- Fixed Settings saving and loading
+- Fixed extension icon updates
+- When hovering setting show additional info
+- Added "Continue latest entry" button to Pomodoro timer notification
 [0.7.5]
 - Added idle detection notification
 - Show description in dropdown timer

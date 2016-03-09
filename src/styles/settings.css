@@ -4,12 +4,28 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+input[type="number"], input[type="time"]{
+  height: 22px;
+  line-height: 22px !important;
+  vertical-align: middle;
+  padding: 0 0 0 10px !important;
+  margin-left: 10px !important;
+  max-width: 70px;
+  border: 1px solid rgb(191, 191, 191);
+  border-radius: 2px;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
 .container {
   width: 800px;
   margin: 20px 15px auto;
   padding: 0;
   color: #505050!important;
   float: left;
+  height: 380px;
 }
 
 .list {
@@ -25,15 +41,18 @@ body {
 }
 
 .list li #nag-nanny:checked ~ div {
-  display: block;
+  height: 110px
 }
 
 .list li #pomodoro-mode:checked ~ div {
-  display: block;
+  height: 200px;
 }
 
 .list li label {
   font-size: 14px;
+  height: 22px;
+  line-height: 22px;
+  vertical-align: middle;
 }
 
 .list li input[type="checkbox"]{
@@ -43,8 +62,10 @@ body {
 }
 
 .subsettings-details  {
-  display: none;
+  overflow: hidden;
+  height: 0px;
   margin-left: 10px;
+  transition:height 300ms ease-in-out;
 }
 
 .subsettings-details p {
@@ -74,10 +95,51 @@ body {
 }
 
 .changelog {
-  margin-bottom: 5px;
+  position: absolute;
+  bottom: 36px;
 }
 
 #version a {
   color: #8A8888!important;
   text-decoration: none;
+}
+
+.description {
+  border-left: 2px solid #dfdfdf;
+  color: rgb(119, 119, 119);
+  float: right;
+  display: block;
+  visibility: hidden;
+  padding: 5px;
+  width: 50%;
+  margin: 0!important;
+}
+
+.list li:hover .description {
+  visibility: visible;
+}
+
+header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+header .tab-link {
+  background: #fdfdfd;
+  cursor: pointer;
+  float: left;
+  padding: 10px 20px;
+}
+
+header .active, header li:hover {
+  border-bottom: 1px solid red;
+  background: #F1F0F0;
+}
+
+.container .tab {
+  display: none;
+}
+.container .active {
+  display: block!important;
 }

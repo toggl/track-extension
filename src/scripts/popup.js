@@ -3,33 +3,51 @@
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+var Db = chrome.extension.getBackgroundPage().Db;
 
 var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
-  $togglButton: null,
+  $togglButton: document.querySelector(".stop-button"),
+  $resumeButtonContainer: document.querySelector(".resume-button-container"),
+  $resumeButton: document.querySelector(".resume-button"),
+  $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
-  $error: null,
+  $error: document.querySelector(".error"),
   $timer: null,
   $tagsVisible: false,
   $taskBlurTrigger: null,
   mousedownTrigger: null,
   projectBlurTrigger: null,
   taskBlurTrigger: null,
+  editFormAdded: false,
   $menuView: document.querySelector(".menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  defaultErrorMessage: "Error connecting to server",
   showPage: function () {
+    if (!TogglButton) {
+      TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+    }
+
     if (TogglButton.$user !== null) {
-      PopUp.$editView.innerHTML = TogglButton.getEditForm();
-      PopUp.addEditEvents();
+      if (!PopUp.editFormAdded) {
+        PopUp.$editView.innerHTML = TogglButton.getEditForm();
+        PopUp.addEditEvents();
+        PopUp.editFormAdded = true;
+      }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
+      PopUp.$resumeButtonContainer.style.display = "none";
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
-        PopUp.$togglButton.textContent = 'Start timer';
+        PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
+        if (TogglButton.$latestStoppedEntry) {
+          PopUp.$resumeButton.setAttribute('data-event', 'resume');
+          PopUp.$resumeButtonContainer.style.display = "block";
+        }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
         PopUp.$togglButton.textContent = 'Stop';
@@ -44,9 +62,8 @@ var PopUp = {
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
       if (!!response.success) {
-        if (!!response.type && response.type === "New Entry" && TogglButton.$showPostPopup) {
-          PopUp.updateEditForm();
-          PopUp.switchView(PopUp.$editView);
+        if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
+          PopUp.updateEditForm(PopUp.$editView);
         } else if (response.type === "Update") {
           TogglButton = chrome.extension.getBackgroundPage().TogglButton;
         } else {
@@ -54,15 +71,23 @@ var PopUp = {
         }
       } else if (request.type === "login") {
         PopUp.$error.style.display = 'block';
+      } else if (!!response.type && (response.type === "New Entry" || response.type === "Update")) {
+        PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });
+  },
+
+  showError: function (errorMessage) {
+    PopUp.$errorLabel.innerHTML = errorMessage;
+    PopUp.$errorLabel.classList.add("show");
+    setTimeout(function () { PopUp.$errorLabel.classList.remove("show"); }, 3000);
   },
 
   showCurrentDuration: function (startTimer) {
     if (TogglButton.$curEntry === null) {
       PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
       PopUp.$togglButton.setAttribute('title', '');
-      PopUp.$togglButton.textContent = 'Start timer';
+      PopUp.$togglButton.textContent = 'Start new';
       PopUp.$togglButton.parentNode.classList.remove('tracking');
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
@@ -71,23 +96,30 @@ var PopUp = {
     }
 
     var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start)),
-      description = TogglButton.$curEntry.description || "(no description)",
-      project;
+      description = TogglButton.$curEntry.description || "(no description)";
 
     PopUp.$togglButton.textContent = duration;
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
-      if (!!TogglButton.$curEntry.pid) {
-        project = TogglButton.findProjectByPid(TogglButton.$curEntry.pid);
-        if (project !== null) {
-          PopUp.$projectBullet.classList.add("color-" + project.color);
-          PopUp.$projectBullet.classList.add("project-color");
-          description += " - " + project.name;
-        }
-      }
+      description += PopUp.setProjectBullet(TogglButton.$curEntry.pid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }
+  },
+
+  setProjectBullet: function (pid, elem) {
+    var project,
+      id = parseInt(pid, 10);
+    elem.className = "project-bullet";
+    if (!!pid && id !== 0) {
+      project = TogglButton.findProjectByPid(id);
+      if (!!project) {
+        elem.classList.add("color-" + project.color);
+        elem.classList.add("project-color");
+        return " - " + project.name;
+      }
+    }
+    return "";
   },
 
   switchView: function (view) {
@@ -114,7 +146,7 @@ var PopUp = {
   },
 
   /* Edit form functions */
-  updateEditForm: function () {
+  updateEditForm: function (view) {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
       togglButtonDescription = document.querySelector("#toggl-button-description"),
@@ -124,16 +156,21 @@ var PopUp = {
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
     projectSelect = document.getElementById("toggl-button-project");
     projectSelect.value = pid;
-    placeholder = document.querySelector("#toggl-button-project-placeholder > div");
+    placeholder = document.querySelector("#toggl-button-project-placeholder > .toggl-button-text");
     placeholder.innerHTML = placeholder.title = PopUp.generateLabel(projectSelect, pid, "project");
     PopUp.fetchTasks(pid, tid);
+    PopUp.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
     if (!!TogglButton.$curEntry.tags && TogglButton.$curEntry.tags.length) {
       PopUp.setSelecedTags();
     } else {
       document.querySelector("#toggl-button-tag-placeholder > div").innerHTML = "Add tags";
       document.querySelector("#toggl-button-tag").value = "";
     }
-    //setCursorAtBeginning(togglButtonDescription);
+    PopUp.switchView(view);
+    // Put focus to the beginning of desctiption field
+    togglButtonDescription.focus();
+    togglButtonDescription.setSelectionRange(0, 0);
+    togglButtonDescription.scrollLeft = 0;
   },
 
   setSelecedTags: function () {
@@ -178,7 +215,7 @@ var PopUp = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].innerHTML;
+        tag = s.options[i].textContent;
         tags.push(tag);
       }
     }
@@ -328,7 +365,7 @@ var PopUp = {
     projectSelect.addEventListener('change', function (e) {
       var placeholder = document.querySelector("#toggl-button-project-placeholder > div");
       placeholder.innerHTML = placeholder.title = PopUp.generateLabel(this, this.value, "project");
-
+      PopUp.setProjectBullet(this.value, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
       // Force blur.
       PopUp.projectBlurTrigger = null;
       projectSelect.blur();
@@ -370,20 +407,18 @@ var PopUp = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  var req = {
-    type: "sync",
-    respond: false
-  };
+  var onClickSendMessage,
+    req = {
+      type: "sync",
+      respond: false
+    };
+
   PopUp.sendMessage(req);
-  PopUp.$togglButton = document.querySelector(".stop-button");
-  PopUp.$error = document.querySelector(".error");
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
-    PopUp.updateEditForm();
-    PopUp.switchView(PopUp.$editView);
+    PopUp.updateEditForm(PopUp.$editView);
   });
-
-  PopUp.$togglButton.addEventListener('click', function () {
+  onClickSendMessage = function () {
     var request = {
       type: this.getAttribute('data-event'),
       respond: true,
@@ -393,7 +428,9 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.$timer = null;
 
     PopUp.sendMessage(request);
-  });
+  };
+  PopUp.$togglButton.addEventListener('click', onClickSendMessage);
+  PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
   document.querySelector(".settings-button").addEventListener('click', function () {
     chrome.runtime.openOptionsPage();
@@ -430,6 +467,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelector(".header").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app"});
+  });
+
+  document.querySelector(".user-email").addEventListener('click', function () {
+    chrome.tabs.create({url: "https://toggl.com/app/profile"});
   });
 
 });

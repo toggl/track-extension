@@ -962,3 +962,16 @@ only screen and (min-resolution: 192dpi) {
 .toggl-timer {
   margin-left: 5px!important;
 }
+
+/********* EVERNOTE *********/
+.toggl-wrapper.evernote {
+  display: inline-block;
+  margin-top: 5px;
+  min-width: 100px;
+}
+
+.toggl-button.evernote {
+  font-family: gotham, helvetica, arial, sans-serif !important;
+  font-size: 13px !important;
+
+}

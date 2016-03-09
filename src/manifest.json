@@ -114,7 +114,8 @@
     "*://*.newsletter2go.com/*",
     "*://devdocs.io/*",
     "*://www.sourcelair.com/*",
-    "*://*.rememberthemilk.com/*"
+    "*://*.rememberthemilk.com/*",
+    "*://*.evernote.com/*"
   ],
   "content_scripts": [
     {
@@ -197,7 +198,8 @@
         "*://*.newsletter2go.com/*",
         "*://devdocs.io/*",
         "*://www.sourcelair.com/*",
-        "*://*.rememberthemilk.com/*"
+        "*://*.rememberthemilk.com/*",
+        "*://*.evernote.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -506,6 +508,10 @@
     {
       "matches": ["*://*.newsletter2go.com/*"],
       "js": ["scripts/content/newsletter2go.js"]
+    },
+    {
+      "matches": ["*://*.evernote.com/*"],
+      "js": ["scripts/content/evernote.js"]
     }
   ]
 }

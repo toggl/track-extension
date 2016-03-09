@@ -45,6 +45,7 @@ var PopUp = {
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
         if (TogglButton.$latestStoppedEntry) {
+          localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
           PopUp.$resumeButton.setAttribute('data-event', 'resume');
           PopUp.$resumeButtonContainer.style.display = "block";
         }
@@ -55,6 +56,7 @@ var PopUp = {
         PopUp.showCurrentDuration(true);
       }
     } else {
+      localStorage.setItem('latestStoppedEntry', '');
       PopUp.switchView(PopUp.$loginView);
     }
   },
@@ -472,5 +474,4 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector(".user-email").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app/profile"});
   });
-
 });

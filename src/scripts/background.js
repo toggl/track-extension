@@ -367,6 +367,7 @@ TogglButton = {
 
   analytics: function (event, service) {
     if (event === "settings") {
+      _gaq.push(['_trackEvent', 'rightclickbutton', "settings/start-automatically" + Db.get("startAutomatically")]);
       _gaq.push(['_trackEvent', 'rightclickbutton', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
       _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
@@ -1039,6 +1040,16 @@ TogglButton = {
     } else {
       chrome.contextMenus.removeAll();
     }
+  },
+  startAutomatically: function () {
+    if (!TogglButton.$curEntry && Db.get("startAutomatically")) {
+      var lastEntryString, lastEntry;
+      lastEntryString = Db.get("latestStoppedEntry");
+      lastEntry = JSON.parse(lastEntryString);
+      TogglButton.$latestStoppedEntry = lastEntry;
+      TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, null);
+      TogglButton.hideNotification('remind-to-track-time');
+    }
   }
 };
 
@@ -1051,3 +1062,4 @@ chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
+chrome.windows.onCreated.addListener(TogglButton.startAutomatically);

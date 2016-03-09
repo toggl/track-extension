@@ -8,11 +8,11 @@ togglbutton.render('.issue .detail-page-description .title:not(.toggl)', {observ
     numElem = $(".identifier"),
     titleElem = $(".issue .detail-page-description .title"),
     projectElem = $('.title').firstChild;
-  description = titleElem.textContent;
-  description = description.trim();
-  
+
+  description = titleElem.textContent.trim();
+
   if (numElem !== null) {
-    description = "#" + numElem.innerText.split("#").pop() + " " + description;
+    description = "#" + numElem.innerText.split("#").pop().trim() + " " + description;
   }
   link = togglbutton.createTimerLink({
     className: 'gitlab',

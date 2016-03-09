@@ -93,7 +93,13 @@
     "*://www.assembla.com/*",
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
-    "*://*.fogbugz.com/*"
+    "*://*.fogbugz.com/*",
+    "*://*.proworkflow.net/*",
+    "*://*.proworkflow2.net/*",
+    "*://*.proworkflow3.net/*",
+    "*://*.proworkflow4.net/*",
+    "*://*.proworkflow5.net/*",
+    "*://*.proworkflow6.net/*"
   ],
   "content_scripts": [
     {
@@ -159,7 +165,12 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-        "*://*.proworkflow5.net/*"
+        "*://*.proworkflow.net/*",
+        "*://*.proworkflow2.net/*",
+        "*://*.proworkflow3.net/*",
+        "*://*.proworkflow4.net/*",
+        "*://*.proworkflow5.net/*",
+        "*://*.proworkflow6.net/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -393,7 +404,14 @@
       "js": ["scripts/content/fogbugz.js"]
     },
     {
-      "matches": ["*://*.proworkflow5.net/*"],
+      "matches": [
+        "*://*.proworkflow.net/*",
+        "*://*.proworkflow2.net/*",
+        "*://*.proworkflow3.net/*",
+        "*://*.proworkflow4.net/*",
+        "*://*.proworkflow5.net/*",
+        "*://*.proworkflow6.net/*"
+      ],
       "js": ["scripts/content/proworkflow.js"]
     }
   ]

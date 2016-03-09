@@ -1,6 +1,7 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
+var TogglButton;
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -8,6 +9,23 @@ Bugsnag.appVersion = chrome.runtime.getManifest().version;
 Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
 };
+
+chrome.webRequest.onBeforeSendHeaders.addListener(
+  function (info) {
+    var headers = info.requestHeaders;
+    headers.forEach(function (header, i) {
+      if (header.name.toLowerCase() === 'user-agent') {
+        header.value = TogglButton.$fullVersion;
+      }
+    });
+    return {requestHeaders: headers};
+  },
+  {
+    urls: [ "https://www.toggl.com/*" ],
+    types: ["xmlhttprequest"]
+  },
+  ["blocking", "requestHeaders"]
+);
 
 var _gaq = window._gaq || [];
 _gaq.push(['_setAccount', 'UA-3215787-22']);
@@ -22,7 +40,7 @@ _gaq.push(['_trackPageview']);
   s.parentNode.insertBefore(ga, s);
 }());
 
-var TogglButton = {
+TogglButton = {
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,
@@ -349,6 +367,7 @@ var TogglButton = {
 
   analytics: function (event, service) {
     if (event === "settings") {
+      _gaq.push(['_trackEvent', 'rightclickbutton', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
       _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
       _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
@@ -984,6 +1003,9 @@ var TogglButton = {
       } else if (request.type === 'timeEntry') {
         TogglButton.createTimeEntry(request, sendResponse);
         TogglButton.hideNotification('remind-to-track-time');
+      } else if (request.type === 'resume') {
+        TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, sendResponse);
+        TogglButton.hideNotification('remind-to-track-time');
       } else if (request.type === 'update') {
         TogglButton.updateTimeEntry(request, sendResponse);
       } else if (request.type === 'stop') {
@@ -1008,12 +1030,19 @@ var TogglButton = {
     }
 
     return true;
+  },
+
+  toggleRightClickButton: function (show) {
+    if (show) {
+      chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
+      chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
+    } else {
+      chrome.contextMenus.removeAll();
+    }
   }
 };
 
-chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
-chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
-
+TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();

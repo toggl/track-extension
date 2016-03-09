@@ -6,6 +6,7 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 var Db = chrome.extension.getBackgroundPage().Db;
 
 var Settings = {
+  $showRightClickButton: null,
   $postPopup: null,
   $socket: null,
   $nanny: null,
@@ -16,6 +17,7 @@ var Settings = {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
+    Settings.toggleState(Settings.$showRightClickButton, Db.get("showRightClickButton"));
     Settings.toggleState(Settings.$postPopup, Db.get("showPostPopup"));
     Settings.toggleState(Settings.$nanny, Db.get("nannyCheckEnabled"));
     Settings.toggleSetting(Settings.$socket, Db.get("socketEnabled") && TogglButton.$socket);
@@ -49,8 +51,8 @@ var Settings = {
     Settings.toggleSetting(null, value, type);
   }
 };
-
 document.addEventListener('DOMContentLoaded', function (e) {
+  Settings.$showRightClickButton = document.querySelector("#show_right_click_button");
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
   Settings.$nanny = document.querySelector("#nag-nanny");
@@ -59,7 +61,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
   Settings.$teamworkLinks = document.querySelector("#include-teamwork-links");
   Settings.showPage();
-
+  Settings.$showRightClickButton.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
+    TogglButton.toggleRightClickButton((localStorage.getItem("showRightClickButton") !== "true"));
+  });
   Settings.$postPopup.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
   });

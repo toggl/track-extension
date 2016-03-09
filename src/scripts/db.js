@@ -5,6 +5,7 @@
 var Db = {
   // settings: key, default value
   settings: {
+    "showRightClickButton": true,
     "showPostPopup": true,
     "socketEnabled": true,
     "nannyCheckEnabled": true,
@@ -99,6 +100,8 @@ var Db = {
         Db.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'toggle-teamwork-links') {
         Db.updateSetting("teamworkLinksEnabled", request.state);
+      } else if (request.type === 'toggle-right-click-button') {
+        Db.updateSetting("showRightClickButton", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

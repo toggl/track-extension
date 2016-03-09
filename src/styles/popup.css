@@ -204,7 +204,9 @@ hr {
   text-align: left;
   font-size: 11px;
 }
-
+.resume-button-container{
+  display:none;
+}
 .tracking .stop-button:hover:after{
   content: 'Stop';
   position: absolute;

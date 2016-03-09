@@ -44,7 +44,7 @@ var PopUp = {
         PopUp.$togglButton.textContent = 'Start timer';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
-        if(TogglButton.$latestStoppedEntry){
+        if (TogglButton.$latestStoppedEntry) {
           PopUp.$resumeButton.setAttribute('data-event', 'resume');
           PopUp.$resumeButtonContainer.style.display = "block";
         }
@@ -407,16 +407,18 @@ var PopUp = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  var req = {
-    type: "sync",
-    respond: false
-  };
+  var onClickSendMessage,
+    req = {
+      type: "sync",
+      respond: false
+    };
+
   PopUp.sendMessage(req);
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
     PopUp.updateEditForm(PopUp.$editView);
   });
-  var onClickSendMessage = function () {
+  onClickSendMessage = function () {
     var request = {
       type: this.getAttribute('data-event'),
       respond: true,

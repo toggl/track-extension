@@ -3,33 +3,51 @@
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+var Db = chrome.extension.getBackgroundPage().Db;
 
 var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
-  $togglButton: null,
+  $togglButton: document.querySelector(".stop-button"),
+  $resumeButtonContainer: document.querySelector(".resume-button-container"),
+  $resumeButton: document.querySelector(".resume-button"),
+  $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
-  $error: null,
+  $error: document.querySelector(".error"),
   $timer: null,
   $tagsVisible: false,
   $taskBlurTrigger: null,
   mousedownTrigger: null,
   projectBlurTrigger: null,
   taskBlurTrigger: null,
+  editFormAdded: false,
   $menuView: document.querySelector(".menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  defaultErrorMessage: "Error connecting to server",
   showPage: function () {
+    if (!TogglButton) {
+      TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+    }
+
     if (TogglButton.$user !== null) {
-      PopUp.$editView.innerHTML = TogglButton.getEditForm();
-      PopUp.addEditEvents();
+      if (!PopUp.editFormAdded) {
+        PopUp.$editView.innerHTML = TogglButton.getEditForm();
+        PopUp.addEditEvents();
+        PopUp.editFormAdded = true;
+      }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
+      PopUp.$resumeButtonContainer.style.display = "none";
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
-        PopUp.$togglButton.textContent = 'Start timer';
+        PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
+        if (TogglButton.$latestStoppedEntry) {
+          PopUp.$resumeButton.setAttribute('data-event', 'resume');
+          PopUp.$resumeButtonContainer.style.display = "block";
+        }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
         PopUp.$togglButton.textContent = 'Stop';
@@ -44,7 +62,7 @@ var PopUp = {
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
       if (!!response.success) {
-        if (!!response.type && response.type === "New Entry" && TogglButton.$showPostPopup) {
+        if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);
         } else if (response.type === "Update") {
           TogglButton = chrome.extension.getBackgroundPage().TogglButton;
@@ -53,15 +71,23 @@ var PopUp = {
         }
       } else if (request.type === "login") {
         PopUp.$error.style.display = 'block';
+      } else if (!!response.type && (response.type === "New Entry" || response.type === "Update")) {
+        PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });
+  },
+
+  showError: function (errorMessage) {
+    PopUp.$errorLabel.innerHTML = errorMessage;
+    PopUp.$errorLabel.classList.add("show");
+    setTimeout(function () { PopUp.$errorLabel.classList.remove("show"); }, 3000);
   },
 
   showCurrentDuration: function (startTimer) {
     if (TogglButton.$curEntry === null) {
       PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
       PopUp.$togglButton.setAttribute('title', '');
-      PopUp.$togglButton.textContent = 'Start timer';
+      PopUp.$togglButton.textContent = 'Start new';
       PopUp.$togglButton.parentNode.classList.remove('tracking');
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
@@ -87,7 +113,7 @@ var PopUp = {
     elem.className = "project-bullet";
     if (!!pid && id !== 0) {
       project = TogglButton.findProjectByPid(id);
-      if (project !== null) {
+      if (!!project) {
         elem.classList.add("color-" + project.color);
         elem.classList.add("project-color");
         return " - " + project.name;
@@ -189,7 +215,7 @@ var PopUp = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].innerHTML;
+        tag = s.options[i].textContent;
         tags.push(tag);
       }
     }
@@ -381,19 +407,18 @@ var PopUp = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  var req = {
-    type: "sync",
-    respond: false
-  };
+  var onClickSendMessage,
+    req = {
+      type: "sync",
+      respond: false
+    };
+
   PopUp.sendMessage(req);
-  PopUp.$togglButton = document.querySelector(".stop-button");
-  PopUp.$error = document.querySelector(".error");
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
     PopUp.updateEditForm(PopUp.$editView);
   });
-
-  PopUp.$togglButton.addEventListener('click', function () {
+  onClickSendMessage = function () {
     var request = {
       type: this.getAttribute('data-event'),
       respond: true,
@@ -403,7 +428,9 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.$timer = null;
 
     PopUp.sendMessage(request);
-  });
+  };
+  PopUp.$togglButton.addEventListener('click', onClickSendMessage);
+  PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
   document.querySelector(".settings-button").addEventListener('click', function () {
     chrome.runtime.openOptionsPage();

@@ -55,6 +55,35 @@ function setCursorAtBeginning(elem) {
   elem.scrollLeft = 0;
 }
 
+function secondsToTime(duration, format) {
+  duration = Math.abs(duration);
+  var response,
+    seconds = parseInt(duration % 60, 10),
+    minutes = parseInt((duration / 60) % 60, 10),
+    hours = parseInt((duration / (60 * 60)), 10),
+    hoursString = "";
+
+  if (hours > 0) {
+    hours = (hours < 10) ? "0" + hours : hours;
+    hoursString += hours + "h ";
+  }
+
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  // Use the format defined in user preferences
+  if (format === "improved") {
+    response = hours + ":" + minutes + ":" + seconds;
+  } else if (format === "decimal") {
+    response = hours + "." + parseInt((minutes * 100) / 60, 10) + "h";
+  } else {
+    response = hoursString + minutes + "m " + seconds + "s";
+  }
+
+
+  return response;
+}
+
 var togglbutton = {
   isStarted: false,
   element: null,
@@ -64,13 +93,19 @@ var togglbutton = {
   taskBlurTrigger: null,
   tagsVisible: false,
   hasTasks: false,
+  entries: {},
+  projects: {},
+  duration_format: "",
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
   fullVersion: "TogglButton",
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
+        togglbutton.entries = response.user.time_entries;
+        togglbutton.projects = response.user.projectMap;
         togglbutton.fullVersion = response.version;
+        togglbutton.duration_format = response.user.duration_format;
         if (opts.observe) {
           var observer = new MutationObserver(function (mutations) {
             togglbutton.renderTo(selector, renderer);
@@ -105,6 +140,22 @@ var togglbutton = {
     return {left: left, top: top};
   },
 
+  calculateTrackedTime: function () {
+    var duration = 0,
+      description = togglbutton.mainDescription.toLowerCase(),
+      projectId = togglbutton.findProjectIdByName(togglbutton.currentProject);
+
+    if (!!togglbutton.entries) {
+      togglbutton.entries.forEach(function (entry) {
+        if (!!entry.description && entry.description.toLowerCase() === description && entry.pid === projectId) {
+          duration += entry.duration;
+        }
+      });
+    }
+
+    return secondsToTime(duration, togglbutton.duration_format);
+  },
+
   getSelectedTags: function () {
     var tags = [],
       tag,
@@ -112,7 +163,7 @@ var togglbutton = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].innerHTML;
+        tag = s.options[i].textContent;
         tags.push(tag);
       }
     }
@@ -182,7 +233,7 @@ var togglbutton = {
     if (editForm !== null) {
       togglbutton.fetchTasks(pid, editForm);
       togglButtonDescription = $("#toggl-button-description");
-      togglButtonDescription.value = response.entry.description;
+      togglButtonDescription.value = response.entry.description || "";
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
       placeholder = $("#toggl-button-project-placeholder > div");
@@ -265,7 +316,7 @@ var togglbutton = {
     };
 
     togglButtonDescription = $("#toggl-button-description", editForm);
-    togglButtonDescription.value = response.entry.description;
+    togglButtonDescription.value = response.entry.description || "";
     setCursorAtBeginning(togglButtonDescription);
     $("#toggl-button-project", editForm).value = pid;
     projectSelect = $("#toggl-button-project", editForm);
@@ -294,7 +345,7 @@ var togglbutton = {
       if (!link.classList.contains("min")) {
         link.innerHTML = 'Start timer';
       }
-      chrome.extension.sendMessage({type: 'stop'}, togglbutton.addEditForm);
+      chrome.extension.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
       closeTagsList(true);
       editForm.style.display = "none";
       return false;
@@ -388,7 +439,13 @@ var togglbutton = {
 
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
-    togglbutton.currentDescription = invokeIfFunction(params.description);
+    togglbutton.currentDescription = params.description;
+    togglbutton.currentProject = params.projectName;
+    link.title = invokeIfFunction(togglbutton.currentDescription) + (!!invokeIfFunction(togglbutton.currentProject) ? " - " + invokeIfFunction(togglbutton.currentProject) : "");
+    if (!!params.calculateTotal) {
+      togglbutton.mainDescription = invokeIfFunction(params.description);
+    }
+
     function activate() {
       if (document.querySelector(".toggl-button.active")) {
         document.querySelector(".toggl-button.active").classList.remove('active');
@@ -414,6 +471,7 @@ var togglbutton = {
     if (params.buttonType === 'minimal') {
       link.classList.add('min');
       link.removeChild(link.firstChild);
+      link.title = "Start timer: " + link.title;
     }
 
     link.addEventListener('click', function (e) {
@@ -424,6 +482,7 @@ var togglbutton = {
         deactivate();
         opts = {
           type: 'stop',
+          respond: true,
           service: togglbutton.serviceName
         };
       } else {
@@ -471,7 +530,7 @@ var togglbutton = {
     }
     minimal = link.classList.contains("min");
 
-    if (!entry || togglbutton.currentDescription !== entry.description) {
+    if (!entry || invokeIfFunction(togglbutton.currentDescription) !== entry.description) {
       link.classList.remove('active');
       if (!minimal) {
         linkText = 'Start timer';
@@ -487,9 +546,32 @@ var togglbutton = {
     link.innerHTML = linkText;
   },
 
+  updateTrackedTimerLink: function () {
+    var totalTime = $(".toggl-tracked"),
+      duration;
+
+    if (!!totalTime) {
+      duration = togglbutton.calculateTrackedTime();
+      totalTime.innerHTML = "<h3>Time tracked</h3><p title='Time tracked with Toggl: " + duration + "'>" + duration + "</p>";
+    }
+  },
+
+  findProjectIdByName: function (name) {
+    var key;
+    for (key in togglbutton.projects) {
+      if (togglbutton.projects.hasOwnProperty(key) && togglbutton.projects[key].name === name) {
+        return togglbutton.projects[key].id;
+      }
+    }
+    return undefined;
+  },
+
   newMessage: function (request, sender, sendResponse) {
     if (request.type === 'stop-entry') {
       togglbutton.updateTimerLink();
+      togglbutton.entries = request.user.time_entries;
+      togglbutton.projects = request.user.projectMap;
+      togglbutton.updateTrackedTimerLink();
     } else if (request.type === 'sync') {
       if ($("#toggl-button-edit-form") !== null) {
         $("#toggl-button-edit-form").remove();

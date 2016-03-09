@@ -106,7 +106,7 @@ togglbutton.render('.sections--header ul.rightTicketOptions:not(.toggl)', {obser
 
     link = togglbutton.createTimerLink({
       className: 'teamworkpm',
-      description: desc + (includeTeamworkLinks ? " (" + taskLink + ")" : ""),
+      description: desc + (includeTeamworkLinks ? " (" + ticketLink + ")" : ""),
       projectName: ''
     });
 

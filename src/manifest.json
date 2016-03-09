@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button - Timer with Pomodoro Add-On",
   "short_name": "Toggl Button",
-  "version": "0.8.1",
+  "version": "0.8.3",
   "manifest_version": 2,
   "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
@@ -31,6 +31,8 @@
     "chrome_style": true
   },
   "permissions": [
+    "webRequest",
+    "webRequestBlocking",
     "alarms",
     "contextMenus",
     "notifications",
@@ -95,6 +97,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
+    "*://app.liquidplanner.com/*",
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
 	  "*://inbox.google.com/*",
@@ -109,6 +112,9 @@
     "*://*.eproject.me/*",
     "*://*.freshdesk.com/*",
     "*://*.newsletter2go.com/*",
+    "*://devdocs.io/*",
+    "*://www.sourcelair.com/*",
+    "*://*.rememberthemilk.com/*",
     "*://*.evernote.com/*"
   ],
   "content_scripts": [
@@ -175,6 +181,7 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
+        "*://app.liquidplanner.com/*",
         "*://keep.google.com/*",
         "*://gingkoapp.com/*",
 		    "*://inbox.google.com/*",
@@ -189,6 +196,9 @@
         "*://*.eproject.me/*",
         "*://*.freshdesk.com/*",
         "*://*.newsletter2go.com/*",
+        "*://devdocs.io/*",
+        "*://www.sourcelair.com/*",
+        "*://*.rememberthemilk.com/*",
         "*://*.evernote.com/*"
       ],
       "css": ["styles/style.css"],
@@ -196,10 +206,8 @@
     },
     {
       "matches": [
-        "*://www.toggl.com/app/timer",
-        "*://www.toggl.com/",
-        "*://toggl.com/app/timer",
-        "*://toggl.com/"
+        "*://*.toggl.com/*",
+        "*://toggl.com/*"
       ],
       "js": ["scripts/content/toggl.js"]
     },
@@ -428,6 +436,22 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": ["*://*.rememberthemilk.com/*"],
+      "js": ["scripts/content/rememberthemilk.js"]
+    },
+    {
+      "matches": ["https://www.sourcelair.com/*"],
+      "js": ["scripts/content/sourcelair.js"]
+    },
+    {
+      "matches": ["*://app.liquidplanner.com/*"],
+      "js": ["scripts/content/liquidplanner.js"]
+    },
+    {
+      "matches": ["*://devdocs.io/*"],
+      "js": ["scripts/content/devdocs.js"]
     },
     {
       "matches": ["*://keep.google.com/*"],

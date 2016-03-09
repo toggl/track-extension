@@ -873,6 +873,11 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
+/********* REMEMEBER THE MILK *********/
+.toggl-button.rememberthemilk {
+  margin-left: 5px;
+}
+
 /********* FRESHDESK *********/
 .toggl-button.freshdesk {
   margin-top: 3px;

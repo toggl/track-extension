@@ -1,3 +1,14 @@
+[0.8.3]
+- Fixed toggl.com url matching
+- Smaller fixes and tweaks
+[0.8.2]
+- Fixed escaping issues when saving tag
+- Added possibility to know if user has button installed while on toggl.com webpage
+[0.8.1]
+- Fixed card coping issue in Trello
+- Updated extension name and description
+- Default tracking reminder time is 60 minutes
+- Improved user data fetching
 [0.8.0]
 - Fixed Pomodoro timer sound issues
 - Updated Trello start time link to match Trello styles

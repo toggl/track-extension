@@ -9,6 +9,8 @@ var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
   $togglButton: document.querySelector(".stop-button"),
+  $resumeButtonContainer: document.querySelector(".resume-button-container"),
+  $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
@@ -36,11 +38,16 @@ var PopUp = {
         PopUp.editFormAdded = true;
       }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
+      PopUp.$resumeButtonContainer.style.display = "none";
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
-        PopUp.$togglButton.textContent = 'Start timer';
+        PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
+        if (TogglButton.$latestStoppedEntry) {
+          PopUp.$resumeButton.setAttribute('data-event', 'resume');
+          PopUp.$resumeButtonContainer.style.display = "block";
+        }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
         PopUp.$togglButton.textContent = 'Stop';
@@ -80,7 +87,7 @@ var PopUp = {
     if (TogglButton.$curEntry === null) {
       PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
       PopUp.$togglButton.setAttribute('title', '');
-      PopUp.$togglButton.textContent = 'Start timer';
+      PopUp.$togglButton.textContent = 'Start new';
       PopUp.$togglButton.parentNode.classList.remove('tracking');
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
@@ -208,7 +215,7 @@ var PopUp = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].innerHTML;
+        tag = s.options[i].textContent;
         tags.push(tag);
       }
     }
@@ -400,17 +407,18 @@ var PopUp = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  var req = {
-    type: "sync",
-    respond: false
-  };
+  var onClickSendMessage,
+    req = {
+      type: "sync",
+      respond: false
+    };
+
   PopUp.sendMessage(req);
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
     PopUp.updateEditForm(PopUp.$editView);
   });
-
-  PopUp.$togglButton.addEventListener('click', function () {
+  onClickSendMessage = function () {
     var request = {
       type: this.getAttribute('data-event'),
       respond: true,
@@ -420,7 +428,9 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.$timer = null;
 
     PopUp.sendMessage(request);
-  });
+  };
+  PopUp.$togglButton.addEventListener('click', onClickSendMessage);
+  PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
   document.querySelector(".settings-button").addEventListener('click', function () {
     chrome.runtime.openOptionsPage();

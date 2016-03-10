@@ -95,7 +95,8 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
-    "*://*.targetprocess.com/*"
+    "*://*.targetprocess.com/*",
+    "*://*.tpondemand.com/*"
   ],
   "content_scripts": [
     {
@@ -161,7 +162,8 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
-        "*://*.targetprocess.com/*"
+        "*://*.targetprocess.com/*",
+        "*://*.tpondemand.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -395,7 +397,10 @@
       "js": ["scripts/content/fogbugz.js"]
     },
     {
-      "matches": ["*://*.targetprocess.com/*"],
+      "matches": [
+        "*://*.targetprocess.com/*",
+        "*://*.tpondemand.com/*"
+      ],
       "js": ["scripts/content/targetprocess.js"]
     }
   ]

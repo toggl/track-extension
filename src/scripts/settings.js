@@ -6,7 +6,8 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 var Db = chrome.extension.getBackgroundPage().Db;
 
 var Settings = {
-  startAutomatically: null,
+  $startAutomatically: null,
+  $stopAutomatically: null,
   $showRightClickButton: null,
   $postPopup: null,
   $socket: null,
@@ -19,6 +20,7 @@ var Settings = {
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
     Settings.toggleState(Settings.$showRightClickButton, Db.get("showRightClickButton"));
     Settings.toggleState(Settings.$startAutomatically, Db.get("startAutomatically"));
+    Settings.toggleState(Settings.$stopAutomatically, Db.get("stopAutomatically"));
     Settings.toggleState(Settings.$postPopup, Db.get("showPostPopup"));
     Settings.toggleState(Settings.$nanny, Db.get("nannyCheckEnabled"));
     Settings.toggleSetting(Settings.$socket, Db.get("socketEnabled") && TogglButton.$socket);
@@ -53,6 +55,7 @@ var Settings = {
 };
 document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$startAutomatically = document.querySelector("#start_automatically");
+  Settings.$stopAutomatically = document.querySelector("#stop_automatically");
   Settings.$showRightClickButton = document.querySelector("#show_right_click_button");
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
@@ -67,6 +70,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
   Settings.$startAutomatically.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("startAutomatically") !== "true"), "toggle-start-automatically");
+  });
+  Settings.$stopAutomatically.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("stopAutomatically") !== "true"), "toggle-stop-automatically");
   });
   Settings.$postPopup.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");

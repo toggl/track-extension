@@ -1,3 +1,113 @@
+[0.8.3]
+- Fixed toggl.com url matching
+- Smaller fixes and tweaks
+[0.8.2]
+- Fixed escaping issues when saving tag
+- Added possibility to know if user has button installed while on toggl.com webpage
+[0.8.1]
+- Fixed card coping issue in Trello
+- Updated extension name and description
+- Default tracking reminder time is 60 minutes
+- Improved user data fetching
+[0.8.0]
+- Fixed Pomodoro timer sound issues
+- Updated Trello start time link to match Trello styles
+- Added "Total time tracked" to Trello cards
+[0.7.9]
+- Improved error messages text
+- Fixes for Todoist text fetching
+- Smaller bug fixes
+[0.7.8]
+- Improved settings managment
+- Show "Continue latest" option in Tracking reminder
+- Fixed updating extension icon when logging out
+- Added tabs to settings view
+- Unified input fields design in settings
+- Added animation to subsettings open/close
+- Show error message when time entry start fails
+- Fixed Toggl Button rendering in updated gitlab design
+- Added support for BitBucket pull requests
+- Fixes for Assembla updates
+- Improved Todoist description text fetching
+- Fixed edit form clear issue in dropdown
+- Fixed browser autocomplete issue in dropdown
+[0.7.7]
+- Fixed continuing latest entry with task from Pomodoro notification
+- Added failsafe for starting websocket
+- Show project color dot in dropdown edit view
+- Added tooltips to toggl logo and email in dropdown
+- Clicking the email address opens profile view in web
+- Focus description when opening edit view in dropdown
+[0.7.6]
+- Fixed Settings saving and loading
+- Fixed extension icon updates
+- When hovering setting show additional info
+- Added "Continue latest entry" button to Pomodoro timer notification
+[0.7.5]
+- Added idle detection notification
+- Show description in dropdown timer
+- Show project name in timer and in timer tooltip
+- Show project color bullet in timer
+[0.7.4]
+- Use new way to open Options
+- Added forgot password link to login view
+- Added Pomodoro Setting
+- Added support for Draftin
+- Added support for FogBugz
+- Added Bugsnag bug tracker
+[0.7.3]
+- Added Toggl Button to context menu
+- 16px Icon improvements
+- Fixed Wrike integration
+- Improved font consistency in edit view
+- Fixed Asana start button
+- Converted to Settings view to Options V2
+- Added support for Salesforce
+[0.7.2]
+- Fixed popup font consistency
+- Fixed subtask project selection for Asana
+- Fixed Youtrack project name fetch
+- Added action buttons to tracking reminder
+- Added Start timer buttons to Any.do subtasks
+- Don't show deleted projects in dropdown
+- Added usage statistics gathering
+- Added extension version and change log link to Settings view
+- Fixed task dropdown display in popup
+[0.7.1]
+- Focus tags dropdown when it's opened
+- Fixed Wunderlist styles
+- Remove active state from link when clicking on another start link
+- Fixed Toodledo start timer link positioning
+- Fixed tasks selector
+- Fixed hour calculation for durations longer than 24 hours
+- Added new google calendar url
+- X on the icon should never be shown when tracking
+[0.7.0]
+- Added Edit form to extension popup
+- Added support for Waffle.io
+- Added support for Assembla
+- Fixed Basecamp "Start timer" link issues
+- Fixed Any.Do description issue
+- Fixed Google Drive "Start timer" link
+[0.6.11]
+- HabitRPG to Habitica
+- Enabled extension options page
+[0.6.10]
+- Fixed Teamweek issues
+[0.6.9]
+- Added support for Breeze
+- Added support for BamBam
+- Added support for Wrike
+- Added support for Bugzilla
+- Added support for GQueue
+- Fixed issues with Taiga.io ui
+- Fixed issues with Teamweek ui
+- Show running entry description in running popup item tooltip
+- Fixed project name issue in github
+- Added Worksection .net and .eu domains
+[0.6.8]
+- Fixed Google Calendar description issue
+- Fixed http and https url support
 [0.6.7]
 - Fixed multi workspace issue in project dropdown
 - Added 'Save Tags' placeholder

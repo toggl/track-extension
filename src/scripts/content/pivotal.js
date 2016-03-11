@@ -6,6 +6,7 @@
 togglbutton.render('form.story:not(.toggl)', {observe: true}, function (elem) {
   var link,
     titleElem = $('textarea', elem),
+    id = $('.id.text_value', elem),
     container = $('.edit aside', elem),
     projectName = $('title').textContent;
 
@@ -15,7 +16,7 @@ togglbutton.render('form.story:not(.toggl)', {observe: true}, function (elem) {
 
   link = togglbutton.createTimerLink({
     className: 'pivotal',
-    description: titleElem.value,
+    description: id.value + ' ' + titleElem.value,
     projectName: projectName && projectName.split(' -').shift()
   });
 

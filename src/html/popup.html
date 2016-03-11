@@ -5,12 +5,17 @@
     <link rel="stylesheet" href="../styles/popup.css"/>
   </head>
   <body>
-    <div class="header"></div>
-    <div class="user-email"></div>
-
-    <ul class="menu view">   
+    <div class="header" title="Open Toggl.com"></div>
+    <div class="user-email" title="Open profile at Toggl.com"></div>
+    <div class="error"></div>
+    <ul class="menu view">
+      <li class='resume-button-container'>
+        <button class="resume-button">Continue latest</button>
+      </li>
       <li>
-        <button class="stop-button">Stop timer</button>
+        <div class="project-bullet"></div>
+        <div class="edit-button"></div>
+        <div class="stop-button">Stop</div>
       </li>
       <li>
         <button class="settings-button">Settings</button>
@@ -36,28 +41,14 @@
           <input name="user_password" type="password" id="login_password" class="text-input" value="">
         </p>
         <p class="form-submit-row cf">
+          <a href="https://toggl.com/forgot-password" class="forgot-link">Forgot password?</a>
           <input type="submit" value="Log in" class="btn-small right login-btn">
         </p>
       </form>
     </div>
 
-    <!--div id="entry-form" class="view">
-      <p class="form-row">
-        <label for="entry_description">Description:</label>
-        <input name="entry_description" type="text" id="entry_description" class="text-input" value="">
-      </p>
-      <p class="form-row">
-        <label for="entry_project">Project:</label>
-        <select class="text-input" id="entry_project" name="entry_project"></select>
-      </p>
-      <p class="form-submit-row cf running">
-        <input type="button" value="Cancel" class="btn-small left btn hide-btn">
-        <input type="button" value="Update" class="btn-small right update-btn">
-      </p>
-      <p class="form-submit-row cf stopped">
-        <input type="button" value="Start" class="btn-small right start-btn">
-      </p>
-    </div-->
+    <div id="entry-form" class="view">
+    </div>
 
     <div id="error">Error</div>
     <script src="../scripts/popup.js"></script>

@@ -3,20 +3,22 @@
 
 'use strict';
 
-togglbutton.render('.content .page-title:not(.toggl)', {observe: true}, function (elem) {
-  var link,  description,
-    numElem = $('.page-title'),
-    titleElem = $(".issue-box .title, .issue-title"),
+togglbutton.render('.issue .detail-page-description .title:not(.toggl)', {observe: true}, function (elem) {
+  var link, description,
+    numElem = $(".identifier"),
+    titleElem = $(".issue .detail-page-description .title"),
     projectElem = $('.title').firstChild;
 
-  description = titleElem.textContent;
-  description = numElem.firstChild.textContent.trim() + " " + description.trim();
+  description = titleElem.textContent.trim();
 
+  if (numElem !== null) {
+    description = "#" + numElem.innerText.split("#").pop().trim() + " " + description;
+  }
   link = togglbutton.createTimerLink({
     className: 'gitlab',
     description: description,
-    projectName: projectElem.textContent.split(' / ').pop()
+    projectName: projectElem.textContent.split(' / ').pop().split(' · ')[0]
   });
 
-  $('.content .page-title').appendChild(link);
+  $('.issue .detail-page-description h2.title').appendChild(link);
 });

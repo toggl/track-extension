@@ -4,39 +4,83 @@
     <title>Toggl Button - Settings</title>
     <link rel="stylesheet" href="../styles/settings.css"/>
   </head>
-  <body>
-    <div class="header">
-      <span class="logo">Settings</span>
-    </div>
-    <ul class="list">   
-      <li>
-        <input type="checkbox" id="show_post_start_popup">
-        <label for="show_post_start_popup">Show post-start popup</label>
-      </li>
-      <li>
-        <input type="checkbox" id="websocket">
-        <label for="websocket">Live updates (websocket)</label>
-      </li>
-      <li class="nag-nanny">
-        <input type="checkbox" id="nag-nanny">
-        <label for="nag-nanny">Remind me to track</label>
-        <div id="nag-nanny-details">
-          <span>Track activity on workdays</span>
-          <p>
-            <label for="nag-nanny-from">From:</label>
-            <input type="time" id="nag-nanny-from">
-          </p>
-          <p>
-            <label for="nag-nanny-to">To:</label>
-            <input type="time" id="nag-nanny-to">
-          </p>
-          <p>
-            <label for="nag-nanny-interval">Minutes since stopping last Time Entry</label>
-            <input type="number" id="nag-nanny-interval" min="1">
-          </p>
-        </div>
-      </li>
+  <header>
+    <ul class="tab-links">
+      <li class="tab-link active" data-tab="1">General</li>
+      <li class="tab-link" data-tab="2">Pomodoro Timer</li>
+    <!--li class="tab-link" data-tab="3">Permissions</li-->
     </ul>
+  </header>
+  <body>
+    <div class="container">
+      <div class="tab tab-1 active">
+        <ul class="list">
+          <li>
+            <input type="checkbox" id="show_right_click_button">
+            <label for="show_right_click_button">Show button in right click menu</label>
+            <div class="description">Shows a "Start timer" button in the right click menu</div>
+          </li>
+          <li>
+            <input type="checkbox" id="show_post_start_popup">
+            <label for="show_post_start_popup">Show post-start popup</label>
+            <div class="description">Opens up edit form right after clicking "Start timer" link</div>
+          </li>
+          <li>
+            <input type="checkbox" id="websocket">
+            <label for="websocket">Live updates (websocket)</label>
+            <div class="description">Keeps Toggl Button up to date. All updates should arrive in seconds.</div>
+          </li>
+          <li class="nag-nanny">
+            <input type="checkbox" id="nag-nanny">
+            <label for="nag-nanny">Remind me to track</label>
+            <p class="description">Shows reminder notification if user has forgot to start timer while working</p>
+            <div class="subsettings-details">
+              <span>Track activity on workdays</span>
+              <p>
+                <label for="nag-nanny-from">From:</label>
+                <input type="time" id="nag-nanny-from">
+              </p>
+              <p>
+                <label for="nag-nanny-to">To:</label>
+                <input type="time" id="nag-nanny-to">
+              </p>
+              <p>
+                <label for="nag-nanny-interval">Minutes since stopping last Time Entry</label>
+                <input type="number" id="nag-nanny-interval" min="1">
+              </p>
+            </div>
+          </li>
+          <li class="discard-notification">
+            <input type="checkbox" id="idle-detection">
+            <label for="discard-notification">Idle detection</label>
+            <div class="description">Shows notification when timer was tracking but user has been idle and allows to discard idle time</div>
+          </li>
+        </ul>
+      </div>
+      <div class="tab tab-2">
+        <ul class="list">
+          <li class="pomodoro-mode">
+            <input type="checkbox" id="pomodoro-mode">
+            <label for="pomodoro-mode">Enable Pomodoro mode</label>
+            <p class="description">Allows user to define Pomodoro Timer interval. Pomodoro timer starts running every time a time entry is started. At the end of the interval the timer is stopped and user is shown notification to take a break</p>
+            <div class="subsettings-details">
+              <p>
+                <input type="checkbox" id="enable-sound-signal">
+                <label for="enable-sound-signal">Enable sound notification at the end of an interval</label>
+              </p>
+              <p>
+                <label for="pomodoro-interval">Length of Pomodoro time interval in minutes</label>
+                <input type="number" id="pomodoro-interval" min="1">
+              </p>
+            </div>
+          </li>
+        <ul>
+      </div>
+      <p class="changelog">Change log: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a></p>
+    </div>
+    <div class="footer">
+      Version <span id="version"></span>
+    </div>
     <script src="../scripts/settings.js"></script>
   </body>
 </html>

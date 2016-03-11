@@ -4,8 +4,7 @@
 'use strict';
 
 togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, container = $('.text', elem),
-    projectElem = $('.project_link');
+  var link, descFunc, projectFunc, container = $('.text', elem);
 
   descFunc = function () {
     var clone = container.cloneNode(true),
@@ -32,10 +31,22 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
     return clone.textContent.trim();
   };
 
+  projectFunc = function () {
+    var projectElem, projectLabel;
+    projectElem = $('.project_link');
+    if (projectElem) {
+      return projectElem.textContent.trim();
+    }
+    projectLabel = $('.pname', elem.parentNode.parentNode);
+    if (projectLabel) {
+      return projectLabel.textContent.trim();
+    }
+  };
+
   link = togglbutton.createTimerLink({
     className: 'todoist',
     description: descFunc,
-    projectName: projectElem && projectElem.textContent
+    projectName: projectFunc
   });
 
   container.insertBefore(link, container.lastChild);

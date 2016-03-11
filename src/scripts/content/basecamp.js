@@ -6,7 +6,7 @@
 // Basecamp Next
 togglbutton.render('section.todos li.todo:not(.toggl)', {observe: true}, function (elem) {
   var link, behavior = 'hover_content',
-    container = $('.pill', elem), spanTag;
+    container = $('.wrapper', elem), spanTag;
 
   if (container === null) {
     return;
@@ -28,7 +28,7 @@ togglbutton.render('section.todos li.todo:not(.toggl)', {observe: true}, functio
   });
 
   spanTag = document.createElement("span");
-  container.parentNode.appendChild(spanTag.appendChild(link));
+  container.appendChild(spanTag.appendChild(link));
 });
 
 

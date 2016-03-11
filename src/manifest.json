@@ -122,7 +122,9 @@
     "*://*.proworkflow3.net/*",
     "*://*.proworkflow4.net/*",
     "*://*.proworkflow5.net/*",
-    "*://*.proworkflow6.net/*"
+    "*://*.proworkflow6.net/*",
+    "*://*.targetprocess.com/*",
+    "*://*.tpondemand.com/*"
   ],
   "content_scripts": [
     {
@@ -213,7 +215,9 @@
         "*://*.proworkflow3.net/*",
         "*://*.proworkflow4.net/*",
         "*://*.proworkflow5.net/*",
-        "*://*.proworkflow6.net/*"
+        "*://*.proworkflow6.net/*",
+        "*://*.targetprocess.com/*",
+        "*://*.tpondemand.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -450,6 +454,13 @@
     {
       "matches": ["*://*.fogbugz.com/*"],
       "js": ["scripts/content/fogbugz.js"]
+    },
+    {
+      "matches": [
+        "*://*.targetprocess.com/*",
+        "*://*.tpondemand.com/*"
+      ],
+      "js": ["scripts/content/targetprocess.js"]
     },
     {
       "matches": [

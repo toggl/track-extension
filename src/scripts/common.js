@@ -233,7 +233,7 @@ var togglbutton = {
     if (editForm !== null) {
       togglbutton.fetchTasks(pid, editForm);
       togglButtonDescription = $("#toggl-button-description");
-      togglButtonDescription.value = response.entry.description;
+      togglButtonDescription.value = !!response.entry.description ? response.entry.description : "";
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
       placeholder = $("#toggl-button-project-placeholder > div");
@@ -316,7 +316,7 @@ var togglbutton = {
     };
 
     togglButtonDescription = $("#toggl-button-description", editForm);
-    togglButtonDescription.value = response.entry.description;
+    togglButtonDescription.value = !!response.entry.description ? response.entry.description : "";
     setCursorAtBeginning(togglButtonDescription);
     $("#toggl-button-project", editForm).value = pid;
     projectSelect = $("#toggl-button-project", editForm);

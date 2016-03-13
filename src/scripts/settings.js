@@ -85,7 +85,8 @@ var Settings = {
             disabled = 'class="disabled"';
             checked = '';
           }
-          html += "<option id='origin' data-id='" + i + "' value='" + TogglOrigins[key].url + "'>" + TogglOrigins[key].name + "</option>";
+
+          html += "<option id='origin' data-id='" + i + "' value='" + key + "'>" + key + "</option>";
           html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" data-host="' + TogglOrigins[key] + '" ' + checked + '><div>' + key + '</div></li>';
         }
       }

@@ -72,10 +72,22 @@
         <ul>
       </div>
       <div class="tab tab-3">
+        <h2>Url Permissions</h2>
+        <div class="permissions-toolbar" data-id="regular">
+          <input type="checkbox" id="toggle-all"> Select all
+        </div>
+        <ul id="permissions-list" class="origin-list"></ul>
+
+        </br>
+
+        <h2>Custom Domain Url Permissions</h2>
         <input type="text" id="new-permission" placeholder="custom domain url"/>
         <select id="origins"></select>
         <a href="#add-permission" id="add-permission">Add new Custom Domain</a>
-        <ul id="permissions-list"></ul>
+        <div class="permissions-toolbar" data-id="custom">
+          <input type="checkbox" id="toggle-all"> Select all
+        </div>
+        <ul id="custom-permissions-list" class="origin-list"></ul>
       </div>
     </div>
     <div class="footer">

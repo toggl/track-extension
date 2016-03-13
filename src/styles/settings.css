@@ -140,14 +140,20 @@ header .active, header li:hover {
 
 .container .tab {
   display: none;
+  height: 380px;
+  overflow: auto;
 }
 .container .active {
   display: block!important;
 }
 
-#permissions-list {
+/* Permissions tab */
+
+#new-permission {
+  margin: 10px 0;
+}
+.origin-list {
   border: 1px solid #CCCACA;
-  width: 780px;
   list-style: none;
   max-height: 290px;
   border-radius: 3px;

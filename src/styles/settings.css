@@ -95,8 +95,9 @@ input[type="number"] {
 }
 
 .changelog {
-  position: absolute;
-  bottom: 36px;
+  float: right;
+  margin: 0;
+  padding: 0;
 }
 
 #version a {

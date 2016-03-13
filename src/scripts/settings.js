@@ -68,7 +68,6 @@ var Settings = {
         if (url.split(".").length > 2) {
           name = url.substr(url.indexOf(".")+1)
         }
-        console.log("name: " + name);
         Settings.origins[name] = {
           id: i, 
           origin: origins[i],
@@ -86,8 +85,7 @@ var Settings = {
             disabled = 'class="disabled"';
             checked = '';
           }
-
-          html += "<option id='origin' data-id='" + i + "' value='" + Settings.origins[key].url + "'>" + Settings.origins[key].name + "</option>";
+          html += "<option id='origin' data-id='" + i + "' value='" + TogglOrigins[key].url + "'>" + TogglOrigins[key].name + "</option>";
           html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" data-host="' + TogglOrigins[key] + '" ' + checked + '><div>' + key + '</div></li>';
         }
       }

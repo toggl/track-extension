@@ -70,7 +70,7 @@ var PopUp = {
           window.location.reload();
         }
       } else if (request.type === "login"
-        || (!!response.type && (response.type === "New Entry" || response.type === "Update"))) {
+          || (!!response.type && (response.type === "New Entry" || response.type === "Update"))) {
         PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });

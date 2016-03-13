@@ -71,9 +71,8 @@ var PopUp = {
         } else {
           window.location.reload();
         }
-      } else if (request.type === "login") {
-        PopUp.$error.style.display = 'block';
-      } else if (!!response.type && (response.type === "New Entry" || response.type === "Update")) {
+      } else if (request.type === "login"
+          || (!!response.type && (response.type === "New Entry" || response.type === "Update"))) {
         PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });
@@ -457,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelector("#signin").addEventListener('submit', function (event) {
     event.preventDefault();
-    PopUp.$error.style.display = 'none';
+    PopUp.$errorLabel.classList.remove("show");
     var request = {
       type: "login",
       respond: true,

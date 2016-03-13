@@ -357,6 +357,14 @@ TogglButton = {
         } catch (e) {
           Bugsnag.notifyException(e);
         }
+      },
+      onError: function (xhr) {
+        sendResponse(
+          {
+            success: false,
+            type: "New Entry"
+          }
+        );
       }
     });
 
@@ -392,6 +400,10 @@ TogglButton = {
       credentials = opts.credentials || null;
 
     xhr.open(method, baseUrl + url, true);
+
+    if (opts.onError) {
+      xhr.addEventListener('error', function () { opts.onError(xhr); });
+    }
     if (opts.onLoad) {
       xhr.addEventListener('load', function () { opts.onLoad(xhr); });
     }
@@ -441,6 +453,14 @@ TogglButton = {
             cb();
           }
         }
+      },
+      onError: function (xhr) {
+        sendResponse(
+          {
+            success: false,
+            type: "Stop"
+          }
+        );
       }
     });
   },
@@ -522,6 +542,14 @@ TogglButton = {
         } catch (e) {
           Bugsnag.notifyException(e);
         }
+      },
+      onError: function (xhr) {
+        sendResponse(
+          {
+            success: false,
+            type: "Update"
+          }
+        );
       }
     });
   },
@@ -572,6 +600,14 @@ TogglButton = {
           sendResponse({success: false, xhr: xhr});
         }
       },
+      onError: function (xhr) {
+        sendResponse(
+          {
+            success: false,
+            type: "login"
+          }
+        );
+      },
       credentials: {
         username: request.username,
         password: request.password
@@ -591,6 +627,14 @@ TogglButton = {
           TogglButton.setBrowserActionBadge();
         }
         TogglButton.refreshPage();
+      },
+      onError: function (xhr) {
+        sendResponse(
+          {
+            success: false,
+            type: "logout"
+          }
+        );
       }
     });
   },

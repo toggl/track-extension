@@ -124,7 +124,8 @@
     "*://*.proworkflow5.net/*",
     "*://*.proworkflow6.net/*",
     "*://*.targetprocess.com/*",
-    "*://*.tpondemand.com/*"
+    "*://*.tpondemand.com/*",
+    "*://*.visualstudio.com/*"
   ],
   "content_scripts": [
     {
@@ -217,7 +218,8 @@
         "*://*.proworkflow5.net/*",
         "*://*.proworkflow6.net/*",
         "*://*.targetprocess.com/*",
-        "*://*.tpondemand.com/*"
+        "*://*.tpondemand.com/*",
+        "*://*.visualstudio.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -414,6 +416,10 @@
         "*://calendar.google.com/calendar*"
       ],
       "js": ["scripts/content/google-calendar.js"]
+    },
+    {
+      "matches": ["*://*.visualstudio.com/*"],
+      "js": ["scripts/content/tfs.js"]
     },
     {
       "matches": ["*://bugzilla.mozilla.org/*"],

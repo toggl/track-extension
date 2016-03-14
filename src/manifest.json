@@ -419,7 +419,7 @@
     },
     {
       "matches": ["*://*.visualstudio.com/*"],
-      "js": ["scripts/content/tfs.js"]
+      "js": ["scripts/content/TFS.js"]
     },
     {
       "matches": ["*://bugzilla.mozilla.org/*"],

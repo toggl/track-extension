@@ -463,13 +463,18 @@ TogglButton = {
     });
   },
 
+  pomodoroStopTimeTracking: function() {
+    if (Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
+      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
+    }
+  },
+
   pomodoroAlarmStop: function (alarm) {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
     if (alarm.name === 'PomodoroTimer') {
-      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
-
+      TogglButton.pomodoroStopTimeTracking();
       var notificationId = 'pomodoro-time-is-up',
         stopSound;
       TogglButton.hideNotification(notificationId);

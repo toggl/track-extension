@@ -12,6 +12,7 @@ var Settings = {
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
+  $teamworkLinks: null,
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
@@ -23,6 +24,7 @@ var Settings = {
     Settings.toggleState(Settings.$idleDetection, Db.get("idleDetectionEnabled"));
     Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
     Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
+    Settings.toggleState(Settings.$teamworkLinks, Db.get("teamworkLinksEnabled"));
     document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
 
     TogglButton.analytics("settings", null);
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$idleDetection = document.querySelector("#idle-detection");
   Settings.$pomodoroMode = document.querySelector("#pomodoro-mode");
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
+  Settings.$teamworkLinks = document.querySelector("#include-teamwork-links");
   Settings.showPage();
   Settings.$showRightClickButton.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
@@ -79,6 +82,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
   Settings.$pomodoroSound.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroSoundEnabled") !== "true"), "toggle-pomodoro-sound");
+  });
+  Settings.$teamworkLinks.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("teamworkLinksEnabled") !== "true"), "toggle-teamwork-links");
   });
 
   document.querySelector(".tab-links").addEventListener('click', function (e) {

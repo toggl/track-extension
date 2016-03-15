@@ -3,6 +3,11 @@
 
 'use strict';
 
+var includeTeamworkLinks = false;
+chrome.runtime.sendMessage({getTogglSetting: "teamworkLinksEnabled"}, function(response) {
+  includeTeamworkLinks = response.value;
+});
+
 // Tasks listing page in project
 togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
   var link, spanTag, projectName, desc,
@@ -21,11 +26,16 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
     projectName = $("#projectName").innerHTML;
   }
 
-  desc = $('.taskName', elem).textContent;
+  var taskName = $('.taskName', elem);
+  desc = taskName.textContent;
+
+  //var taskId = /taskRHS(\d+)/.exec(elem.id)[1];
+
+  var taskLink = taskName.parentNode.href;
 
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
-    description: desc,
+    description: desc + (includeTeamworkLinks ? " (" + taskLink + ")" : ""),
     projectName: projectName
   });
 
@@ -69,7 +79,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: 
 
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
-    description: desc,
+    description: desc + (includeTeamworkLinks ? ' (' + window.location.href + ')' : ''),
     projectName: projectName
   });
 
@@ -79,4 +89,39 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: 
   liTag.appendChild(link);
   elem.insertBefore(liTag, elem.firstChild);
 
+});
+
+// Ticket View Page
+togglbutton.render('.sections--header ul.rightTicketOptions:not(.toggl)', {observe: true}, function (elem) {
+  var link, liTag, titleEl, desc;
+  liTag = document.createElement("li");
+  liTag.classList.add("toggl-li");
+  titleEl = $("#inboxBody .title-label");
+  var ticketLink = window.location.href;
+
+  //watch for the title to change (to a real value) before initializing the timer button
+  var observer = new MutationObserver(function(mutations, observer) {
+    // fired when a title change occurs
+    desc = titleEl.textContent.trim();
+
+    link = togglbutton.createTimerLink({
+      className: 'teamworkpm',
+      description: desc + (includeTeamworkLinks ? " (" + ticketLink + ")" : ""),
+      projectName: ''
+    });
+
+    //at the moment, teamwork desk btn styles override the background image. Just using margin-top instead
+    //link.classList.add("btn");
+    //link.classList.add("btn-default");
+    link.style.marginTop = '5px';
+    link.setAttribute("title", "Toggl Timer");
+    liTag.appendChild(link);
+    elem.insertBefore(liTag, elem.firstChild);
+
+    //we only want to fire this once, so now, let's disconnect from the observer
+    observer.disconnect();
+  });
+
+  // Watch for any changes to the title element
+  observer.observe(titleEl, { attributes: true, childList: true, characterData: true, subTree: true });
 });

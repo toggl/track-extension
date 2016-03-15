@@ -9,12 +9,12 @@ var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
   $togglButton: document.querySelector(".stop-button"),
-  $resumeButtonContainer: document.querySelector(".resume-button-container"),
   $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
   $error: document.querySelector(".error"),
+  $timerRow: document.querySelector(".timer"),
   $timer: null,
   $tagsVisible: false,
   $taskBlurTrigger: null,
@@ -38,15 +38,14 @@ var PopUp = {
         PopUp.editFormAdded = true;
       }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
-      PopUp.$resumeButtonContainer.style.display = "none";
+      PopUp.$timerRow.classList.remove("has-resume");
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
         PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
         if (TogglButton.$latestStoppedEntry) {
-          PopUp.$resumeButton.setAttribute('data-event', 'resume');
-          PopUp.$resumeButtonContainer.style.display = "block";
+          PopUp.$timerRow.classList.add("has-resume");
         }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');

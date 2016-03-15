@@ -15,7 +15,7 @@ var Db = {
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
     "pomodoroInterval": 25,
-    "pomodoroStopTimeTrackingWhenTimerEnds": false
+    "pomodoroStopTimeTrackingWhenTimerEnds": true
   },
 
   get: function (setting) {

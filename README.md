@@ -119,7 +119,7 @@ If you use a setup, where one of the supported services is on a custom domain yo
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
 
-Beware that your commits will be sqashed when merging. This keeps the git log more compact and clear.
+When adding new integrations please use `git squash` and merge all your commits into one commit. This keeps the git log more compact and clear.
 
 Don't know how to start? Just check out the [user requested services][97] that have not yet been implemented, pick one and start hacking.
 

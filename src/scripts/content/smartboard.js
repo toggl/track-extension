@@ -10,7 +10,7 @@ togglbutton.render('.task:not(.toggl)', {observe: true}, function (elem) {
   link = togglbutton.createTimerLink({
     className: 'smartboard',
     buttonType: 'minimal',
-    description: refElem.textContent.replace(/\s+/g, ' ') + ' ' + titleElem.textContent.replace(/\s+/g, ' '),
+    description: refElem.textContent.trim() + ' ' + titleElem.textContent.trim(),
     projectName: project.value
   });
 

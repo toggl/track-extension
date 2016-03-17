@@ -125,7 +125,8 @@
     "*://*.proworkflow6.net/*",
     "*://*.targetprocess.com/*",
     "*://*.tpondemand.com/*",
-    "*://*.visualstudio.com/*"
+    "*://*.visualstudio.com/*",
+    "*://*.smartboard.cl/*"
   ],
   "content_scripts": [
     {
@@ -219,7 +220,8 @@
         "*://*.proworkflow6.net/*",
         "*://*.targetprocess.com/*",
         "*://*.tpondemand.com/*",
-        "*://*.visualstudio.com/*"
+        "*://*.visualstudio.com/*",
+        "*://*.smartboard.cl/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -558,6 +560,10 @@
     {
       "matches": ["*://*.evernote.com/*"],
       "js": ["scripts/content/evernote.js"]
+    },
+    {
+      "matches": ["*://*.smartboard.cl/*"],
+      "js": ["scripts/content/smartboard.js"]
     }
   ]
 }

@@ -570,7 +570,6 @@
     {
       "matches": ["*://*.smartboard.cl/*"],
       "js": ["scripts/content/smartboard.js"]
->>>>>>> master
     }
   ]
 }

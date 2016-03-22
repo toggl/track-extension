@@ -31,7 +31,7 @@ togglbutton.render('#app-pane .task-pane-name-field-textarea:not(.toggl)', {obse
 
   // Have to remove the empty character projectName gets at the end
   link = togglbutton.createTimerLink({
-    className: 'flow',
+    className: 'getflow',
     description: descFunc,
     projectName: projectFunc
   });

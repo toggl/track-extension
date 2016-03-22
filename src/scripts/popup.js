@@ -64,6 +64,9 @@ var PopUp = {
 
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
+      if (!response) {
+        return;
+      }
       if (!!response.success) {
         if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);

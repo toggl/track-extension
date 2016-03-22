@@ -27,6 +27,7 @@ var PopUp = {
   $loginView: document.querySelector("#login-form"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {
+    var p;
     if (!TogglButton) {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
     }
@@ -45,6 +46,9 @@ var PopUp = {
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
         if (TogglButton.$latestStoppedEntry) {
+          p = TogglButton.findProjectByPid(TogglButton.$latestStoppedEntry.pid);
+          p = (!!p) ? " - " + p.name : "";
+          PopUp.$resumeButton.title = TogglButton.$latestStoppedEntry.description + p;
           PopUp.$timerRow.classList.add("has-resume");
         }
       } else {

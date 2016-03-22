@@ -24,9 +24,9 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
 
   container.appendChild(link);
   buttonsElem.appendChild(container, buttonsElem);
-
+/*
   duration = togglbutton.calculateTrackedTime(description);
   trackedContainer.innerHTML = "<h4 class='title'>Toggl</h4><p>Toggl time tracked: " + duration + "</p>";
   trackedElem.parentNode.insertBefore(trackedContainer, trackedElem.nextSibling);
-
+*/
 });

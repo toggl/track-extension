@@ -127,7 +127,8 @@
     "*://*.targetprocess.com/*",
     "*://*.tpondemand.com/*",
     "*://*.visualstudio.com/*",
-    "*://*.smartboard.cl/*"
+    "*://*.smartboard.cl/*",
+    "*://*.openproject.com/*"
   ],
   "content_scripts": [
     {
@@ -223,7 +224,8 @@
         "*://*.targetprocess.com/*",
         "*://*.tpondemand.com/*",
         "*://*.visualstudio.com/*",
-        "*://*.smartboard.cl/*"
+        "*://*.smartboard.cl/*",
+        "*://*.openproject.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -570,6 +572,10 @@
     {
       "matches": ["*://*.smartboard.cl/*"],
       "js": ["scripts/content/smartboard.js"]
+    },
+    {
+      "matches": ["*://*.openproject.com/*"],
+      "js": ["scripts/content/openproject.js"]
     }
   ]
 }

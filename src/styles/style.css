@@ -987,3 +987,8 @@ only screen and (min-resolution: 192dpi) {
   font-family: gotham, helvetica, arial, sans-serif !important;
   font-size: 13px !important;
 }
+
+/********* OPENPROJECT *********/
+.subject-header .toggl-button.openproject {
+  float: left;
+}

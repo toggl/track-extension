@@ -992,3 +992,8 @@ only screen and (min-resolution: 192dpi) {
 .subject-header .toggl-button.openproject {
   float: left;
 }
+
+/********* REMEMBERHTEMILK *********/
+.toggl-button.rememberthemilk {
+  position: absolute;
+}

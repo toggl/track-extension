@@ -888,6 +888,7 @@ only screen and (min-resolution: 192dpi) {
 /********* REMEMEBER THE MILK *********/
 .toggl-button.rememberthemilk {
   margin-left: 5px;
+  position: absolute;
 }
 
 /********* FRESHDESK *********/
@@ -991,9 +992,4 @@ only screen and (min-resolution: 192dpi) {
 /********* OPENPROJECT *********/
 .subject-header .toggl-button.openproject {
   float: left;
-}
-
-/********* REMEMBERHTEMILK *********/
-.toggl-button.rememberthemilk {
-  position: absolute;
 }

@@ -433,9 +433,8 @@ only screen and (min-resolution: 192dpi) {
 
 /********* CAPSULECRM *********/
 .toggl-button.capsule {
-  line-height: 15px;
-  background-position: 7% 40%;
-  padding-left: 30px !important;
+  position: absolute;
+  margin-left: 5px;
 }
 
 /********* ZENDESK *********/

@@ -12,7 +12,8 @@ togglbutton.render('.b-eb-Uk-Vj:not(.toggl)', {observe: true}, function (elem) {
   link = togglbutton.createTimerLink({
     className: 'rememberthemilk',
     description: description,
-    projectName: project
+    projectName: project,
+    buttonType: 'minimal'
   });
 
   elem.appendChild(link);

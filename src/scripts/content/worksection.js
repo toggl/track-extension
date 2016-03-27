@@ -3,19 +3,15 @@
 
 'use strict';
 
-togglbutton.render('.task:not(.toggl)', {}, function (elem) {
+togglbutton.render('.task:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    projectElem = $('#client_name a'),
-    taskElem = $('#tasks > .task > h1');
-
-  if (taskElem === null || taskElem.firstChild === null) {
-    return;
-  }
+    projectElem = $('#client_name b'),
+    taskElem = $('.task h1').childNodes[2].textContent.trim();
 
   link = togglbutton.createTimerLink({
     className: 'worksection',
-    description: taskElem.firstChild.textContent.trim(),
-    projectName: projectElem && projectElem.innerText.trim()
+    description: taskElem,
+    projectName: projectElem && projectElem.textContent.trim()
   });
   link.classList.add('norm');
 

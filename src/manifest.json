@@ -1,7 +1,7 @@
 {
   "name": "Toggl Button - Timer with Pomodoro Add-On",
   "short_name": "Toggl Button",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "manifest_version": 2,
   "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
@@ -97,6 +97,7 @@
     "*://*.salesforce.com/*",
     "*://*.draftin.com/*",
     "*://*.fogbugz.com/*",
+    "*://*.phacility.com/*",
     "*://app.liquidplanner.com/*",
     "*://keep.google.com/*",
     "*://*.gingkoapp.com/*",
@@ -125,7 +126,9 @@
     "*://*.proworkflow6.net/*",
     "*://*.targetprocess.com/*",
     "*://*.tpondemand.com/*",
-    "*://*.visualstudio.com/*"
+    "*://*.visualstudio.com/*",
+    "*://*.smartboard.cl/*",
+    "*://*.openproject.com/*"
   ],
   "content_scripts": [
     {
@@ -191,6 +194,7 @@
         "*://*.salesforce.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
+        "*://*.phacility.com/*",
         "*://app.liquidplanner.com/*",
         "*://keep.google.com/*",
         "*://gingkoapp.com/*",
@@ -219,7 +223,9 @@
         "*://*.proworkflow6.net/*",
         "*://*.targetprocess.com/*",
         "*://*.tpondemand.com/*",
-        "*://*.visualstudio.com/*"
+        "*://*.visualstudio.com/*",
+        "*://*.smartboard.cl/*",
+        "*://*.openproject.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -462,6 +468,10 @@
       "js": ["scripts/content/fogbugz.js"]
     },
     {
+      "matches": ["*://*.phacility.com/*", "*://sources.redfunction.ee/*"],
+      "js": ["scripts/content/phabricator.js"]
+    },
+    {
       "matches": [
         "*://*.targetprocess.com/*",
         "*://*.tpondemand.com/*"
@@ -558,6 +568,14 @@
     {
       "matches": ["*://*.evernote.com/*"],
       "js": ["scripts/content/evernote.js"]
+    },
+    {
+      "matches": ["*://*.smartboard.cl/*"],
+      "js": ["scripts/content/smartboard.js"]
+    },
+    {
+      "matches": ["*://*.openproject.com/*"],
+      "js": ["scripts/content/openproject.js"]
     }
   ]
 }

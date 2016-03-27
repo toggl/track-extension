@@ -433,9 +433,8 @@ only screen and (min-resolution: 192dpi) {
 
 /********* CAPSULECRM *********/
 .toggl-button.capsule {
-  line-height: 15px;
-  background-position: 7% 40%;
-  padding-left: 30px !important;
+  position: absolute;
+  margin-left: 5px;
 }
 
 /********* ZENDESK *********/
@@ -873,6 +872,12 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
+/********* PHABRICATOR *********/
+.toggl-button.phabricator {
+  margin-left: 5px;
+  position: absolute;
+}
+
 /********* MANTISHUB *********/
 .toggl-button.mantishub {
   margin-top: 5px;
@@ -882,6 +887,7 @@ only screen and (min-resolution: 192dpi) {
 /********* REMEMEBER THE MILK *********/
 .toggl-button.rememberthemilk {
   margin-left: 5px;
+  position: absolute;
 }
 
 /********* FRESHDESK *********/
@@ -980,4 +986,9 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.evernote {
   font-family: gotham, helvetica, arial, sans-serif !important;
   font-size: 13px !important;
+}
+
+/********* OPENPROJECT *********/
+.subject-header .toggl-button.openproject {
+  float: left;
 }

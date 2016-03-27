@@ -9,12 +9,12 @@ var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
   $togglButton: document.querySelector(".stop-button"),
-  $resumeButtonContainer: document.querySelector(".resume-button-container"),
   $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
   $error: document.querySelector(".error"),
+  $timerRow: document.querySelector(".timer"),
   $timer: null,
   $tagsVisible: false,
   $taskBlurTrigger: null,
@@ -27,6 +27,7 @@ var PopUp = {
   $loginView: document.querySelector("#login-form"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {
+    var p;
     if (!TogglButton) {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
     }
@@ -38,13 +39,17 @@ var PopUp = {
         PopUp.editFormAdded = true;
       }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
-      PopUp.$resumeButtonContainer.style.display = "none";
+      PopUp.$timerRow.classList.remove("has-resume");
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
         PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
         if (TogglButton.$latestStoppedEntry) {
+          p = TogglButton.findProjectByPid(TogglButton.$latestStoppedEntry.pid);
+          p = (!!p) ? " - " + p.name : "";
+          PopUp.$resumeButton.title = TogglButton.$latestStoppedEntry.description + p;
+          PopUp.$timerRow.classList.add("has-resume");
           localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
           PopUp.$resumeButton.setAttribute('data-event', 'resume');
           PopUp.$resumeButtonContainer.style.display = "block";
@@ -63,6 +68,9 @@ var PopUp = {
 
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
+      if (!response) {
+        return;
+      }
       if (!!response.success) {
         if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);

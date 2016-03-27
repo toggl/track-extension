@@ -1,3 +1,43 @@
+[0.9.0]
+- Added support for Phacility
+- Added support for LiquidPlanner
+- Added support for Google Keep
+- Added support for Gingko App
+- Added support for Google Inbox
+- Added support for Wordpress
+- Added support for Kanbanery
+- Added support for Planbox
+- Added support for Zoho Books
+- Added support for Slack
+- Added support for Doit.im
+- Added support for Sunrise Calendar
+- Added support for Cloudes.me
+- Added support for eProject.me
+- Added support for Freshdesk
+- Added support for Newsletter2go
+- Added support for DevDocs
+- Added support for SourceLair
+- Added support for Remember The Milk
+- Added support for Evernote
+- Added support for Mantishub
+- Added support for ProWorkflow
+- Added support for TargetProcess
+- Added support for Visual Studio Online
+- Added support for SmartBoard
+- Added support for Confluence
+- Added support for Gogs
+- Improved start link title format
+- Fixed tags saving
+- Fixed description undefined issue
+- Unified Pomodoro Timer notification text with other notfications
+- Added setting for toggl button context menu item
+- Added "Continue latest" option to dropdown
+- Improved Error handling
+- Fixed Redbooth modal "Start timer" button issue
+- Fixed "Start timer" button in GetFlow
+- Added Agile Board support to Youtrack
+- Updated Gitlab to add issue number into description
+
 [0.8.3]
 - Fixed toggl.com url matching
 - Smaller fixes and tweaks

@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false, createTag: false*/
 'use strict';
 
-togglbutton.render('#tickets-show:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#ticketDetailsContainer:not(.toggl)', {observe: true}, function (elem) {
 
   var link,
     container = createTag('li', 'toggle-container'),

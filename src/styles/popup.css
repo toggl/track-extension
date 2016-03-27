@@ -148,10 +148,16 @@ only screen and (min-resolution: 2dppx) {
   list-style: none;
   height: 29px;
 }
-.menu li:hover {
+.menu li:not(.has-resume):hover {
   background-color: #e6e6e6;
   color: #222;
 }
+
+.menu li.has-resume .stop-button:hover, .menu li.has-resume .resume-button:hover {
+  background-color: #e6e6e6;
+  color: #222;
+}
+
 .menu li>button {
   width: 100%;
   padding: 8px 36px 8px 30px;
@@ -183,7 +189,7 @@ hr {
   cursor: pointer;
 }
 
-.edit-button, .stop-button {
+.edit-button, .stop-button, .resume-button {
   float: left;
   height: 29px;
   line-height: 29px;
@@ -204,9 +210,27 @@ hr {
   text-align: left;
   font-size: 11px;
 }
-.resume-button-container{
-  display:none;
+
+.has-resume .stop-button {
+  width: 70px;
 }
+
+.resume-button {
+  width: 90px;
+  padding-left: 10px;
+  display:none;
+  float: right;
+}
+
+.has-resume .resume-button {
+  display: block;
+}
+
+.tracking .resume-button{
+  display:none!important;
+}
+
+
 .tracking .stop-button:hover:after{
   content: 'Stop';
   position: absolute;

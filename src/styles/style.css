@@ -404,12 +404,11 @@ only screen and (min-resolution: 192dpi) {
 
 /********* SIFTER *********/
 .toggl-button.sifterapp {
-  color: white;
   float: right;
 }
 
-.toggl-button.sifterapp.active {
-  color: rgb(52, 255, 125) !important;
+.issue-detail-subject .toggl-button.sifterapp {
+  margin-top: 7px;
 }
 
 /********* GOOGLE DOCS *********/

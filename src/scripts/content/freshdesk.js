@@ -5,12 +5,12 @@
 
 togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('li', 'ticket-btns'),
-    duration,
+    //duration,
     description,
     titleElem = $('h2.subject', elem),
     idElem = $('#ticket-display-id'),
-    trackedContainer = createTag('div', 'open-box toggl-time-tracked'),
-    trackedElem = $('.open-box'),
+    //trackedContainer = createTag('div', 'open-box toggl-time-tracked'),
+    //trackedElem = $('.open-box'),
     projectElem = $('.logo_text'),
     buttonsElem = $('.ticket-actions > ul');
 

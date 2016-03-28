@@ -52,7 +52,6 @@ var PopUp = {
           PopUp.$timerRow.classList.add("has-resume");
           localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
           PopUp.$resumeButton.setAttribute('data-event', 'resume');
-          PopUp.$resumeButtonContainer.style.display = "block";
         }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');

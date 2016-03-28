@@ -1119,3 +1119,7 @@ chrome.windows.onCreated.addListener(TogglButton.startAutomatically);
 chrome.windows.getAll(null, function (windows) { openWindowsCount = windows.length; });
 chrome.windows.onCreated.addListener(function (window) { openWindowsCount++; });
 chrome.windows.onRemoved.addListener(TogglButton.stopTrackingOnBrowserClosed);
+window.onbeforeunload = function () {
+  openWindowsCount = 0;
+  TogglButton.stopTimeEntry(TogglButton.stopTrackingOnBrowserClosed);
+};

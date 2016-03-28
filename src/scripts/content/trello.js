@@ -5,11 +5,11 @@
 
 togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('div', 'button-link trello-tb-wrapper'),
-    duration,
+    //duration,
     descFunc,
     titleElem = $('.window-title-text', elem),
-    trackedContainer = createTag('div', 'toggl-tracked'),
-    trackedElem = $('.other-actions'),
+    //trackedContainer = createTag('div', 'toggl-tracked'),
+    //trackedElem = $('.other-actions'),
     projectElem = $('.board-header > a'),
     descriptionElem = $('.js-move-card');
 

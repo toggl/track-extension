@@ -1121,5 +1121,5 @@ chrome.windows.onCreated.addListener(function (window) { openWindowsCount++; });
 chrome.windows.onRemoved.addListener(TogglButton.stopTrackingOnBrowserClosed);
 window.onbeforeunload = function () {
   openWindowsCount = 0;
-  TogglButton.stopTimeEntry(TogglButton.stopTrackingOnBrowserClosed);
+  TogglButton.stopTrackingOnBrowserClosed
 };

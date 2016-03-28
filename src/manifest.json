@@ -108,6 +108,7 @@
     "*://books.zoho.com/*",
     "*://*.slack.com/*",
     "*://*.doit.im/*",
+    "*://*.doitim.com/*",
     "*://calendar.sunrise.am/*",
     "*://*.cloudes.me/*",
     "*://*.eproject.me/*",
@@ -205,6 +206,7 @@
         "*://books.zoho.com/*",
         "*://*.slack.com/*",
         "*://*.doit.im/*",
+        "*://*.doitim.com/*",
         "*://calendar.sunrise.am/*",
         "*://*.cloudes.me/*",
         "*://*.eproject.me/*",
@@ -542,7 +544,10 @@
       "js": ["scripts/content/slack.js"]
     },
     {
-      "matches": ["*://*.doit.im/*"],
+      "matches": [
+        "*://*.doit.im/*",
+        "*://*.doitim.com/*"
+      ],
       "js": ["scripts/content/doit.js"]
     },
     {

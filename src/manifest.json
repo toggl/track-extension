@@ -229,7 +229,9 @@
         "*://*.visualstudio.com/*",
         "*://*.smartboard.cl/*",
         "*://*.openproject.com/*",
-        "*://zube.io/*"
+        "*://zube.io/*",
+        "*://*.minicrm.pl/*",
+        "*://*.agenocrm.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -587,6 +589,13 @@
     {
       "matches": ["*://zube.io/*"],
       "js": ["scripts/content/zube.js"]
+    },
+    {
+      "matches": [
+        "*://*.agenocrm.com/*",
+        "*://*.minicrm.pl/*"
+      ],
+      "js": ["scripts/content/minicrm.js"]
     }
   ]
 }

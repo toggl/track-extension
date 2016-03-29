@@ -129,7 +129,8 @@
     "*://*.tpondemand.com/*",
     "*://*.visualstudio.com/*",
     "*://*.smartboard.cl/*",
-    "*://*.openproject.com/*"
+    "*://*.openproject.com/*",
+    "*://zube.io/*"
   ],
   "content_scripts": [
     {
@@ -227,7 +228,8 @@
         "*://*.tpondemand.com/*",
         "*://*.visualstudio.com/*",
         "*://*.smartboard.cl/*",
-        "*://*.openproject.com/*"
+        "*://*.openproject.com/*",
+        "*://zube.io/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -581,6 +583,10 @@
     {
       "matches": ["*://*.openproject.com/*"],
       "js": ["scripts/content/openproject.js"]
+    },
+    {
+      "matches": ["*://zube.io/*"],
+      "js": ["scripts/content/zube.js"]
     }
   ]
 }

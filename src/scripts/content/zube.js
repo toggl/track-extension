@@ -37,3 +37,27 @@ togglbutton.render('#card-modal-view:not(.toggl)', {observe: true}, function (el
 
   $('.modal-header', elem).insertBefore(link, $('.close', elem));
 });
+
+//Ticket detail view
+togglbutton.render('#tickets-title-container:not(.toggl)', {observe: true}, function (elem) {
+  var link,
+    description = function () {
+      var desc = $('.content', elem);
+      if (!!desc) {
+        return desc.textContent.trim();
+      }
+
+      return "";
+    },
+    project = $('#board-header-title .title').textContent.trim().split('/');
+
+  project = project[project.length - 1];
+
+  link = togglbutton.createTimerLink({
+    className: 'zube',
+    description: description,
+    projectName: project
+  });
+
+  $('#tickets-show-main-container').insertBefore(link, $('#tickets-description-container'));
+});

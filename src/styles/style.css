@@ -1006,3 +1006,7 @@ only screen and (min-resolution: 192dpi) {
   margin-top: -2px;
   margin-left: 0;
 }
+
+#tickets-show-main-container .toggl-button.zube {
+  float:none;
+}

@@ -9,6 +9,10 @@ togglbutton.render('.editor__header:not(.toggl)', {observe: true}, function (ele
       return document.querySelector(".editor-title__input").value;
     };
 
+  if (!!$('.toggl-button')) {
+    return;
+  }
+
   link = togglbutton.createTimerLink({
     className: 'wordpress',
     description: description

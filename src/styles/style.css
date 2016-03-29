@@ -991,3 +991,16 @@ only screen and (min-resolution: 192dpi) {
 .subject-header .toggl-button.openproject {
   float: left;
 }
+
+/********* ZUBE *********/
+.toggl-button.zube {
+  float: left;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.toggl-button.zube.min {
+  margin-right: 5px;
+  margin-top: -2px;
+  margin-left: 0;
+}

@@ -481,6 +481,7 @@ var togglbutton = {
     link.addEventListener('click', function (e) {
       var opts;
       e.preventDefault();
+      e.stopPropagation();
       link = e.target;
 
       if (link.classList.contains('active')) {

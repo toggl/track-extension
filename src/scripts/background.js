@@ -173,7 +173,7 @@ TogglButton = {
   },
 
   handelQueQue: function () {
-    while(TogglButton.queque) {
+    while (TogglButton.queque) {
       TogglButton.queque.shift()();
     }
   },

@@ -58,6 +58,7 @@ TogglButton = {
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
+  queque: [],
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -155,6 +156,7 @@ TogglButton = {
               TogglButton.setupSocket();
             }
             TogglButton.updateBugsnag();
+            TogglButton.handelQueQue();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
             if (apiToken) {
@@ -168,6 +170,12 @@ TogglButton = {
         }
       }
     });
+  },
+
+  handelQueQue: function () {
+    while(TogglButton.queque) {
+      TogglButton.queque.shift()();
+    }
   },
 
   updateBugsnag: function () {
@@ -1087,7 +1095,7 @@ TogglButton = {
     }
   },
   startAutomatically: function () {
-    if (!TogglButton.$curEntry && Db.get("startAutomatically")) {
+    if (!TogglButton.$curEntry && Db.get("startAutomatically") && !!TogglButton.$user) {
       var lastEntryString, lastEntry;
       lastEntryString = Db.get("latestStoppedEntry");
       if (lastEntryString) {
@@ -1106,6 +1114,7 @@ TogglButton = {
   }
 };
 
+TogglButton.queque.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();
 TogglButton.triggerNotification();

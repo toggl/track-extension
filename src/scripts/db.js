@@ -5,6 +5,8 @@
 var Db = {
   // settings: key, default value
   settings: {
+    "startAutomatically": false,
+    "stopAutomatically": false,
     "showRightClickButton": true,
     "showPostPopup": true,
     "socketEnabled": true,
@@ -99,6 +101,10 @@ var Db = {
         Db.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'toggle-right-click-button') {
         Db.updateSetting("showRightClickButton", request.state);
+      } else if (request.type === 'toggle-start-automatically') {
+        Db.updateSetting("startAutomatically", request.state);
+      } else if (request.type === 'toggle-stop-automatically') {
+        Db.updateSetting("stopAutomatically", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

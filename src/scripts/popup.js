@@ -50,6 +50,8 @@ var PopUp = {
           p = (!!p) ? " - " + p.name : "";
           PopUp.$resumeButton.title = TogglButton.$latestStoppedEntry.description + p;
           PopUp.$timerRow.classList.add("has-resume");
+          localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
+          PopUp.$resumeButton.setAttribute('data-event', 'resume');
         }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
@@ -58,6 +60,7 @@ var PopUp = {
         PopUp.showCurrentDuration(true);
       }
     } else {
+      localStorage.setItem('latestStoppedEntry', '');
       PopUp.switchView(PopUp.$loginView);
     }
   },
@@ -477,5 +480,4 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector(".user-email").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app/profile"});
   });
-
 });

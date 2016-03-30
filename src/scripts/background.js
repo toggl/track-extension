@@ -1,7 +1,7 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton;
+var TogglButton, openWindowsCount = 0;
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -375,7 +375,9 @@ TogglButton = {
 
   analytics: function (event, service) {
     if (event === "settings") {
-      _gaq.push(['_trackEvent', 'rightclickbutton', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
+      _gaq.push(['_trackEvent', 'stop-automatically', "settings/stop-automatically-" + Db.get("stopAutomatically")]);
+      _gaq.push(['_trackEvent', 'start-automatically', "settings/start-automatically-" + Db.get("startAutomatically")]);
+      _gaq.push(['_trackEvent', 'right-click-button', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
       _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
       _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
@@ -1083,6 +1085,24 @@ TogglButton = {
     } else {
       chrome.contextMenus.removeAll();
     }
+  },
+  startAutomatically: function () {
+    if (!TogglButton.$curEntry && Db.get("startAutomatically")) {
+      var lastEntryString, lastEntry;
+      lastEntryString = Db.get("latestStoppedEntry");
+      if (lastEntryString) {
+        lastEntry = JSON.parse(lastEntryString);
+        TogglButton.$latestStoppedEntry = lastEntry;
+        TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, null);
+        TogglButton.hideNotification('remind-to-track-time');
+      }
+    }
+  },
+  stopTrackingOnBrowserClosed: function () {
+    openWindowsCount--;
+    if (Db.get("stopAutomatically") && openWindowsCount === 0 && TogglButton.$curEntry) {
+      TogglButton.stopTimeEntry(TogglButton.$curEntry);
+    }
   }
 };
 
@@ -1095,3 +1115,12 @@ chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
+chrome.windows.onCreated.addListener(TogglButton.startAutomatically);
+chrome.windows.getAll(null, function (windows) { openWindowsCount = windows.length; });
+chrome.windows.onCreated.addListener(function (window) { openWindowsCount++; });
+chrome.windows.onRemoved.addListener(TogglButton.stopTrackingOnBrowserClosed);
+window.onbeforeunload = function () {
+  if (Db.get("stopAutomatically") && TogglButton.$curEntry) {
+    TogglButton.stopTimeEntry(TogglButton.$curEntry);
+  }
+};

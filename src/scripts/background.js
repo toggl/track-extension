@@ -225,6 +225,10 @@ TogglButton = {
 
     TogglButton.$socket.onmessage = function (msg) {
       var data;
+      // test for empty json
+      if (!msg.data) {
+        return;
+      }
       data = JSON.parse(msg.data);
       if (data.model !== null) {
         if (data.model === "time_entry") {

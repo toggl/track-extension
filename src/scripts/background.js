@@ -1046,6 +1046,8 @@ TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
+    var success,
+      error;
     try {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
@@ -1075,12 +1077,18 @@ TogglButton = {
       } else if (request.type === 'currentEntry') {
         sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
       } else if (request.type === 'getTasksHtml') {
-        var success = TogglButton.$user && TogglButton.$user.projectTaskList;
+        success = TogglButton.$user && TogglButton.$user.projectTaskList;
 
         sendResponse({
           success: success,
           html: success ? TogglButton.fillTasks(request.projectId) : ''
         });
+      } else if (request.type === 'error') {
+        // Handling integration errors
+        error = new Error();
+        error.stack = request.stack;
+        error.message = request.stack.split("\n")[0];
+        Bugsnag.notifyException(error);
       }
 
     } catch (e) {

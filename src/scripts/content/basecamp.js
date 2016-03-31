@@ -54,3 +54,26 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
   spanTag = document.createElement("span");
   $(".content", elem).appendChild(spanTag.appendChild(link));
 });
+
+
+// Basecamp 3
+togglbutton.render('.todos li.todo:not(.toggl)', {observe: true}, function (elem) {
+  var link, project,
+    description = $('.checkbox__content', elem);
+
+  if (!description) {
+    return;
+  }
+
+  description = description.childNodes[1].textContent;
+  project = $('.checkbox__content', elem).parentNode.parentNode.parentNode.parentNode.parentNode;
+  project = $('.todolist__permalink', project).textContent;
+
+  link = togglbutton.createTimerLink({
+    className: 'basecamp3',
+    description: description,
+    projectName: project
+  });
+
+  $('.todo_assignee', elem).appendChild(link);
+});

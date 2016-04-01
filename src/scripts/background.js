@@ -292,13 +292,18 @@ TogglButton = {
   },
 
   findProjectByName: function (name) {
-    var key;
+    var key,
+      result;
+
     for (key in TogglButton.$user.projectMap) {
       if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].name === name) {
-        return TogglButton.$user.projectMap[key];
+        result = TogglButton.$user.projectMap[key];
+        if (result.wid === TogglButton.$user.default_wid) {
+          return result;
+        }
       }
     }
-    return undefined;
+    return result;
   },
 
   findProjectByPid: function (pid) {

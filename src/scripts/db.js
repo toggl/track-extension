@@ -16,7 +16,9 @@ var Db = {
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
-    "pomodoroInterval": 25
+    "pomodoroInterval": 25,
+    "stopAtDayEnd":false,
+    "dayEndTime": "17:00",
   },
 
   get: function (setting) {
@@ -105,6 +107,10 @@ var Db = {
         Db.updateSetting("startAutomatically", request.state);
       } else if (request.type === 'toggle-stop-automatically') {
         Db.updateSetting("stopAutomatically", request.state);
+      } else if  (request.type === 'toggle-stop-at-day-end') {
+        Db.updateSetting("stopAtDayEnd", request.state);
+      } else if  (request.type === 'toggle-day-end-time') {
+        Db.updateSetting("dayEndTime", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

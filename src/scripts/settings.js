@@ -14,6 +14,7 @@ var Settings = {
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
+  $stopAtDayEnd: null,
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
@@ -28,6 +29,9 @@ var Settings = {
     Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
     Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
     document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
+
+    Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
+    document.querySelector("#day-end-time").value = Db.get("dayEndTime");
 
     TogglButton.analytics("settings", null);
   },
@@ -63,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$idleDetection = document.querySelector("#idle-detection");
   Settings.$pomodoroMode = document.querySelector("#pomodoro-mode");
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
+  Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
   Settings.showPage();
   Settings.$showRightClickButton.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
@@ -92,7 +97,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroSound.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroSoundEnabled") !== "true"), "toggle-pomodoro-sound");
   });
-
+  Settings.$stopAtDayEnd.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
+  });
   document.querySelector(".tab-links").addEventListener('click', function (e) {
     var tab = e.target.getAttribute("data-tab");
     if (!document.querySelector(".tab-" + tab).classList.contains("active")) {
@@ -135,5 +142,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
     }
     Settings.saveSetting(+(document.querySelector('#pomodoro-interval').value), "toggle-pomodoro-interval");
 
+  });
+
+  document.querySelector("#day-end-time").addEventListener('blur', function (e) {
+    if (e.target.value < 1) {
+      e.target.value = 1;
+      return;
+    }
+    Settings.saveSetting((document.querySelector('#day-end-time').value), "toggle-day-end-time");
   });
 });

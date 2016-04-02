@@ -65,6 +65,17 @@
             <label for="discard-notification">Idle detection</label>
             <div class="description">Shows notification when timer was tracking but user has been idle and allows to discard idle time</div>
           </li>
+          <li class="stop-at-day-end">
+            <input type="checkbox" id="stop-at-day-end">
+            <label for="stop-at-day-end">Stop automatically at the end of the day</label>
+            <p class="description">The timer will be stopped automatically at this time of day</p>
+            <div class="subsettings-details">
+              <p>
+                <label for="day-end-time">End of day time:</label>
+                <input type="time" id="day-end-time">
+              </p>
+            </div>
+          </li>
         </ul>
       </div>
       <div class="tab tab-2">

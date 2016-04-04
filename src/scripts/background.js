@@ -55,6 +55,7 @@ TogglButton = {
     date: Date.now()
   },
   $checkingUserState: false,
+  checkingWorkdayEnd: false,
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
@@ -914,7 +915,13 @@ TogglButton = {
       );
     }
   },
-  startCheckingEndDay: function () {
+  startCheckingDayEnd: function (enable) {
+    clearInterval(TogglButton.checkingWorkdayEnd);
+    if (enable) {
+      TogglButton.checkingWorkdayEnd = setInterval(TogglButton.checkWorkDayEnd, 3000);
+    }
+  },
+  checkWorkDayEnd: function () {
     if (TogglButton.$user &&
         Db.get("stopAtDayEnd") &&
         TogglButton.$curEntry  &&
@@ -1175,7 +1182,7 @@ TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();
-setInterval(TogglButton.startCheckingEndDay, 30000);
+TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);

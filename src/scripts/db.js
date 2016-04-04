@@ -109,6 +109,7 @@ var Db = {
         Db.updateSetting("stopAutomatically", request.state);
       } else if (request.type === 'toggle-stop-at-day-end') {
         Db.updateSetting("stopAtDayEnd", request.state);
+        TogglButton.startCheckingDayEnd(request.state);
       } else if (request.type === 'toggle-day-end-time') {
         Db.updateSetting("dayEndTime", request.state);
       }

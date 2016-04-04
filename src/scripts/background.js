@@ -433,6 +433,57 @@ TogglButton = {
     xhr.send(JSON.stringify(opts.payload));
   },
 
+  stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {
+    var entry,
+      pomodoroDuration = parseInt(Db.get("pomodoroInterval"), 10) * 60;
+
+    if (!TogglButton.$curEntry) { return; }
+
+    entry = {
+      time_entry: {
+        duration: pomodoroDuration
+      }
+    };
+
+    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+      method: 'PUT',
+      payload: entry,
+      onLoad: function (xhr) {
+        if (xhr.status === 200) {
+          TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
+          TogglButton.updateEntriesDb();
+          TogglButton.$nannyTimer = TogglButton.$curEntry = null;
+          TogglButton.stopCheckingUserState();
+          TogglButton.setBrowserAction(null);
+          if (!!timeEntry.respond) {
+            sendResponse({success: true, type: "Stop"});
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+              if (!!tabs[0]) {
+                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
+              }
+            });
+          }
+
+          chrome.alarms.clear('PomodoroTimer');
+
+          TogglButton.triggerNotification();
+          TogglButton.analytics(timeEntry.type, timeEntry.service);
+          if (cb) {
+            cb();
+          }
+        }
+      },
+      onError: function (xhr) {
+        sendResponse(
+          {
+            success: false,
+            type: "Update"
+          }
+        );
+      }
+    });
+  },
+
   stopTimeEntry: function (timeEntry, sendResponse, cb) {
     if (!TogglButton.$curEntry) { return; }
     var stopTime = timeEntry.stopDate || new Date(),
@@ -487,7 +538,7 @@ TogglButton = {
       return;
     }
     if (alarm.name === 'PomodoroTimer') {
-      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
+      TogglButton.stopTimeEntryPomodoro({type: 'pomodoro-stop', service: 'dropdown'});
 
       var notificationId = 'pomodoro-time-is-up',
         stopSound;

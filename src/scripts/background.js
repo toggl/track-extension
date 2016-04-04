@@ -914,7 +914,7 @@ TogglButton = {
       );
     }
   },
-  startCheckingEndDay: function() {
+  startCheckingEndDay: function () {
     if (TogglButton.$user &&
         Db.get("stopAtDayEnd") &&
         TogglButton.$curEntry  &&
@@ -945,11 +945,12 @@ TogglButton = {
       );
     }
   },
-  workdayEnded: function() {
-    var startedTime = new Date(TogglButton.$curEntry.start);
-    var now = new Date();
-    var endTimeHelper = Db.get('dayEndTime').split(":");
-    var endTime = new Date();
+  workdayEnded: function () {
+    var startedTime = new Date(TogglButton.$curEntry.start),
+      now = new Date(),
+      endTime = new Date(),
+      endTimeHelper = Db.get('dayEndTime').split(":");
+
     endTime.setHours(endTimeHelper[0]);
     endTime.setMinutes(endTimeHelper[1]);
     endTime.setSeconds(0);
@@ -1011,7 +1012,7 @@ TogglButton = {
         TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
       }
       eventType = "pomodoro";
-    } else if (notificationId === 'workday-ended-notification'){
+    } else if (notificationId === 'workday-ended-notification') {
       if (buttonID === 0) {
         timeEntry = TogglButton.$latestStoppedEntry;
         if (!!timeEntry) {

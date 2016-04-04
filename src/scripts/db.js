@@ -17,7 +17,7 @@ var Db = {
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
     "pomodoroInterval": 25,
-    "stopAtDayEnd":false,
+    "stopAtDayEnd": false,
     "dayEndTime": "17:00",
   },
 
@@ -107,9 +107,9 @@ var Db = {
         Db.updateSetting("startAutomatically", request.state);
       } else if (request.type === 'toggle-stop-automatically') {
         Db.updateSetting("stopAutomatically", request.state);
-      } else if  (request.type === 'toggle-stop-at-day-end') {
+      } else if (request.type === 'toggle-stop-at-day-end') {
         Db.updateSetting("stopAtDayEnd", request.state);
-      } else if  (request.type === 'toggle-day-end-time') {
+      } else if (request.type === 'toggle-day-end-time') {
         Db.updateSetting("dayEndTime", request.state);
       }
     } catch (e) {

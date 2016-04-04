@@ -59,7 +59,7 @@ var PopUp = {
         PopUp.$togglButton.parentNode.classList.add('tracking');
         PopUp.showCurrentDuration(true);
       }
-      if (PopUp.$menuView.style.display === "none") {
+      if (PopUp.$menuView.style.display === "none" && PopUp.$editView.style.display === "none") {
         PopUp.switchView(PopUp.$menuView);
       }
     } else {

@@ -660,6 +660,7 @@ TogglButton = {
   },
 
   loginUser: function (request, sendResponse) {
+    var error;
     TogglButton.ajax("/sessions", {
       method: 'POST',
       onLoad: function (xhr) {
@@ -668,7 +669,10 @@ TogglButton = {
           TogglButton.fetchUser();
           TogglButton.refreshPage();
         } else {
-          sendResponse({success: false, xhr: xhr});
+          if (xhr.status === 403) {
+            error = "Wrong Email or Password!";
+          }
+          sendResponse({success: false, error: error});
         }
       },
       onError: function (xhr) {

@@ -59,6 +59,9 @@ var PopUp = {
         PopUp.$togglButton.parentNode.classList.add('tracking');
         PopUp.showCurrentDuration(true);
       }
+      if (PopUp.$menuView.style.display === "none" && PopUp.$editView.style.display === "none") {
+        PopUp.switchView(PopUp.$menuView);
+      }
     } else {
       localStorage.setItem('latestStoppedEntry', '');
       PopUp.switchView(PopUp.$loginView);
@@ -79,7 +82,8 @@ var PopUp = {
           window.location.reload();
         }
       } else if (request.type === "login"
-          || (!!response.type && (response.type === "New Entry" || response.type === "Update"))) {
+          || (!!response.type &&
+            (response.type === "New Entry" || response.type === "Update"))) {
         PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });

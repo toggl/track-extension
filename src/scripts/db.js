@@ -17,6 +17,8 @@ var Db = {
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
     "pomodoroInterval": 25,
+    "pomodoroStopTimeTrackingWhenTimerEnds": true,
+    "pomodoroInterval": 25,
     "stopAtDayEnd": false,
     "dayEndTime": "17:00",
   },
@@ -101,6 +103,8 @@ var Db = {
         Db.set("pomodoroSoundEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
         Db.updateSetting("pomodoroInterval", request.state);
+      } else if (request.type === 'toggle-pomodoro-stop-time') {
+        Db.set("pomodoroStopTimeTrackingWhenTimerEnds", request.state);
       } else if (request.type === 'toggle-right-click-button') {
         Db.updateSetting("showRightClickButton", request.state);
       } else if (request.type === 'toggle-start-automatically') {

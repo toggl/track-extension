@@ -14,6 +14,7 @@ var Settings = {
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
+  $pomodoroStopTimeTracking: null,
   $stopAtDayEnd: null,
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
@@ -28,6 +29,7 @@ var Settings = {
     Settings.toggleState(Settings.$idleDetection, Db.get("idleDetectionEnabled"));
     Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
     Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
+    Settings.toggleState(Settings.$pomodoroStopTimeTracking, Db.get("pomodoroStopTimeTrackingWhenTimerEnds"));
     document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
 
     Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
@@ -67,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$idleDetection = document.querySelector("#idle-detection");
   Settings.$pomodoroMode = document.querySelector("#pomodoro-mode");
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
+  Settings.$pomodoroStopTimeTracking = document.querySelector("#pomodoro-stop-time");
   Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
   Settings.showPage();
   Settings.$showRightClickButton.addEventListener('click', function (e) {
@@ -97,6 +100,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroSound.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroSoundEnabled") !== "true"), "toggle-pomodoro-sound");
   });
+  Settings.$pomodoroStopTimeTracking.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroStopTimeTrackingWhenTimerEnds") !== "true"), "toggle-pomodoro-stop-time");
+  });
+
   Settings.$stopAtDayEnd.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
   });

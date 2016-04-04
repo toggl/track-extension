@@ -538,15 +538,26 @@ TogglButton = {
     });
   },
 
+  pomodoroStopTimeTracking: function() {
+    if (Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
+      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
+    }
+  },
+
   pomodoroAlarmStop: function (alarm) {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
     if (alarm.name === 'PomodoroTimer') {
-      TogglButton.stopTimeEntryPomodoro({type: 'pomodoro-stop', service: 'dropdown'});
-
+      TogglButton.pomodoroStopTimeTracking();
       var notificationId = 'pomodoro-time-is-up',
-        stopSound;
+        stopSound, topButtonTitle = "Continue Latest",
+        bottomButtonTitle = "Start New";
+      if (!Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
+          notificationId = 'pomodoro-time-is-up-dont-stop',
+          stopSound, topButtonTitle = "Stop timer",
+          bottomButtonTitle = "Stop and Start New"
+      }
       TogglButton.hideNotification(notificationId);
       chrome.notifications.create(
         notificationId,
@@ -557,8 +568,8 @@ TogglButton = {
           message: "Time is up! Take a break",
           priority: 2,
           buttons: [
-            { title: "Continue Latest"},
-            { title: "Start New"}
+            { title: topButtonTitle},
+            { title: bottomButtonTitle}
           ]
         },
         function () {
@@ -1100,6 +1111,14 @@ TogglButton = {
         buttonName = "continue";
       }
       eventType = "workday-end";
+    } else if (notificationId === 'pomodoro-time-is-up-dont-stop') {
+      if (buttonID === 0) {
+        TogglButton.stopTimeEntry(TogglButton.$curEntry);
+      } else {
+        TogglButton.stopTimeEntry(TogglButton.$curEntry);
+        TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
+      }
+      eventType = "pomodoro";
     }
     TogglButton.processNotificationEvent(notificationId);
     TogglButton.analytics(eventType, buttonName);

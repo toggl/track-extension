@@ -134,6 +134,9 @@ TogglButton = {
                   TogglButton.$curEntry = entry;
                   TogglButton.setBrowserAction(entry);
                   TogglButton.startCheckingUserState();
+                  if (Db.get("pomodoroModeEnabled")) {
+                    chrome.alarms.create('PomodoroTimer', {delayInMinutes: parseInt(Db.get("pomodoroInterval"), 10)});
+                  }
                   return true;
                 }
                 return false;

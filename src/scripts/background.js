@@ -920,7 +920,13 @@ TogglButton = {
         TogglButton.$curEntry  &&
         TogglButton.workdayEnded()) {
 
-      var title =  "Continue (" + TogglButton.$curEntry.description + ")";
+      var title =  "Continue";
+      if (!!TogglButton.$curEntry.description) {
+        title += "(" + TogglButton.$curEntry.description + ")";
+      } else {
+        title += " latest";
+      }
+
       TogglButton.stopTimeEntry(TogglButton.$curEntry);
       chrome.notifications.create(
         'workday-ended-notification',

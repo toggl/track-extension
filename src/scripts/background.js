@@ -1024,6 +1024,7 @@ TogglButton = {
         TogglButton.createTimeEntry(timeEntry, null);
         buttonName = "continue";
       }
+      eventType = "workday-end";
     }
     TogglButton.processNotificationEvent(notificationId);
     TogglButton.analytics(eventType, buttonName);

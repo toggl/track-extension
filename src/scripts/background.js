@@ -56,6 +56,7 @@ TogglButton = {
   },
   $checkingUserState: false,
   checkingWorkdayEnd: false,
+  pomodoroAlarm: null,
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
@@ -135,9 +136,7 @@ TogglButton = {
                   TogglButton.$curEntry = entry;
                   TogglButton.setBrowserAction(entry);
                   TogglButton.startCheckingUserState();
-                  if (Db.get("pomodoroModeEnabled")) {
-                    chrome.alarms.create('PomodoroTimer', {delayInMinutes: parseInt(Db.get("pomodoroInterval"), 10)});
-                  }
+                  TogglButton.checkPomodoroAlarm(entry);
                   return true;
                 }
                 return false;
@@ -251,6 +250,7 @@ TogglButton = {
 
   updateCurrentEntry: function (data) {
     var entry = data.data;
+    TogglButton.checkPomodoroAlarm(entry);
     if (data.action === "INSERT") {
       TogglButton.$curEntry = entry;
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
@@ -358,6 +358,7 @@ TogglButton = {
             TogglButton.setBrowserAction(entry);
             clearTimeout(TogglButton.$nannyTimer);
             TogglButton.startCheckingUserState();
+            TogglButton.triggerPomodoroAlarm();
             TogglButton.analytics(timeEntry.type, timeEntry.service);
           } else {
             error = xhr.responseText;
@@ -388,9 +389,23 @@ TogglButton = {
         );
       }
     });
+  },
 
+  checkPomodoroAlarm: function (entry) {
+    var duration = (new Date() - new Date(entry.start)),
+      interval = parseInt(Db.get("pomodoroInterval"), 10) * 60000;
+    if (duration < interval) {
+      TogglButton.triggerPomodoroAlarm(interval - duration);
+    }
+  },
+
+  triggerPomodoroAlarm: function (value) {
+    if (TogglButton.pomodoroAlarm !== null) {
+      clearTimeout(TogglButton.pomodoroAlarm);
+    }
     if (Db.get("pomodoroModeEnabled")) {
-      chrome.alarms.create('PomodoroTimer', {delayInMinutes: parseInt(Db.get("pomodoroInterval"), 10)});
+      var interval = value || (parseInt(Db.get("pomodoroInterval"), 10) * 60000);
+      TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
     }
   },
 
@@ -544,44 +559,42 @@ TogglButton = {
     }
   },
 
-  pomodoroAlarmStop: function (alarm) {
+  pomodoroAlarmStop: function () {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
-    if (alarm.name === 'PomodoroTimer') {
-      TogglButton.pomodoroStopTimeTracking();
-      var notificationId = 'pomodoro-time-is-up',
-        stopSound, topButtonTitle = "Continue Latest",
-        bottomButtonTitle = "Start New";
-      if (!Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
-          notificationId = 'pomodoro-time-is-up-dont-stop',
-          stopSound, topButtonTitle = "Stop timer",
-          bottomButtonTitle = "Stop and Start New"
+    TogglButton.pomodoroStopTimeTracking();
+    var notificationId = 'pomodoro-time-is-up',
+      stopSound, topButtonTitle = "Continue Latest",
+      bottomButtonTitle = "Start New";
+    if (!Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
+        notificationId = 'pomodoro-time-is-up-dont-stop',
+        stopSound, topButtonTitle = "Stop timer",
+        bottomButtonTitle = "Stop and Start New"
+    }
+    TogglButton.hideNotification(notificationId);
+    chrome.notifications.create(
+      notificationId,
+      {
+        type: 'basic',
+        iconUrl: 'images/icon-128.png',
+        title: "Toggl Button",
+        message: "Time is up! Take a break",
+        priority: 2,
+        buttons: [
+          { title: topButtonTitle},
+          { title: bottomButtonTitle}
+        ]
+      },
+      function () {
+        return;
       }
-      TogglButton.hideNotification(notificationId);
-      chrome.notifications.create(
-        notificationId,
-        {
-          type: 'basic',
-          iconUrl: 'images/icon-128.png',
-          title: "Toggl Button",
-          message: "Time is up! Take a break",
-          priority: 2,
-          buttons: [
-            { title: topButtonTitle},
-            { title: bottomButtonTitle}
-          ]
-        },
-        function () {
-          return;
-        }
-      );
+    );
 
-      if (Db.get("pomodoroSoundEnabled")) {
-        stopSound = new Audio();
-        stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
-        stopSound.play();
-      }
+    if (Db.get("pomodoroSoundEnabled")) {
+      stopSound = new Audio();
+      stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
+      stopSound.play();
     }
 
     return true;
@@ -1276,7 +1289,6 @@ TogglButton.fetchUser();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();
 TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
-chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);

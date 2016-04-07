@@ -1115,7 +1115,6 @@ TogglButton = {
       if (buttonID === 0) {
         TogglButton.stopTimeEntry(TogglButton.$curEntry);
       } else {
-        TogglButton.stopTimeEntry(TogglButton.$curEntry);
         TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
       }
       eventType = "pomodoro";

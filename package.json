@@ -1,0 +1,14 @@
+{
+  "name": "toggl-button",
+  "version": "0.2.13",
+  "description": "Add Toggl one-click time tracking to popular web tools.",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-crx": "~0.3.3",
+    "grunt-jslint": "~1.1.8",
+    "grunt-contrib-compress": "~0.7.0",
+    "jslint": "~0.5.2"
+  }
+}

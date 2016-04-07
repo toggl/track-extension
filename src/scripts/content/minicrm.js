@@ -4,15 +4,17 @@
 
 togglbutton.render('.task-header .meta:not(.toggl)', {}, function (elem) {
 
-    var link,
-        description = $('.title h1', elem).textContent.trim(),
-        project = $('[data-contexttype="deal"]', elem).textContent.trim();
+  var link,
+    description = $('.title h1', elem).textContent.trim(),
+    project = $('[data-contexttype="deal"]', elem);
 
-    link = togglbutton.createTimerLink({
-        className: 'agenocrm',
-        description: description,
-        projectName: project
-    });
+  project = project ? project.textContent.trim() : "";
 
-    elem.appendChild(link);
+  link = togglbutton.createTimerLink({
+    className: 'agenocrm',
+    description: description,
+    projectName: project
+  });
+
+  elem.appendChild(link);
 });

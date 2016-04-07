@@ -16,7 +16,6 @@ var Db = {
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
-    "pomodoroInterval": 25,
     "pomodoroStopTimeTrackingWhenTimerEnds": true,
     "pomodoroInterval": 25,
     "stopAtDayEnd": false,

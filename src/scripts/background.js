@@ -553,7 +553,7 @@ TogglButton = {
     });
   },
 
-  pomodoroStopTimeTracking: function() {
+  pomodoroStopTimeTracking: function () {
     if (Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
       TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
     }
@@ -565,13 +565,16 @@ TogglButton = {
     }
     TogglButton.pomodoroStopTimeTracking();
     var notificationId = 'pomodoro-time-is-up',
-      stopSound, topButtonTitle = "Continue Latest",
+      stopSound,
+      topButtonTitle = "Continue Latest",
       bottomButtonTitle = "Start New";
+
     if (!Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
-        notificationId = 'pomodoro-time-is-up-dont-stop',
-        stopSound, topButtonTitle = "Stop timer",
-        bottomButtonTitle = "Stop and Start New"
+      notificationId = 'pomodoro-time-is-up-dont-stop';
+      topButtonTitle = "Stop timer";
+      bottomButtonTitle = "Stop and Start New";
     }
+
     TogglButton.hideNotification(notificationId);
     chrome.notifications.create(
       notificationId,

@@ -103,17 +103,21 @@ var togglbutton = {
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
-        togglbutton.entries = response.user.time_entries;
-        togglbutton.projects = response.user.projectMap;
-        togglbutton.fullVersion = response.version;
-        togglbutton.duration_format = response.user.duration_format;
-        if (opts.observe) {
-          var observer = new MutationObserver(function (mutations) {
-            togglbutton.renderTo(selector, renderer);
-          });
-          observer.observe(document, {childList: true, subtree: true});
+        try {
+          togglbutton.entries = response.user.time_entries;
+          togglbutton.projects = response.user.projectMap;
+          togglbutton.fullVersion = response.version;
+          togglbutton.duration_format = response.user.duration_format;
+          if (opts.observe) {
+            var observer = new MutationObserver(function (mutations) {
+              togglbutton.renderTo(selector, renderer);
+            });
+            observer.observe(document, {childList: true, subtree: true});
+          }
+          togglbutton.renderTo(selector, renderer);
+        } catch (e) {
+          chrome.extension.sendMessage({type: 'error', stack: e.stack});
         }
-        togglbutton.renderTo(selector, renderer);
       }
     });
   },

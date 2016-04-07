@@ -50,6 +50,8 @@ var PopUp = {
           p = (!!p) ? " - " + p.name : "";
           PopUp.$resumeButton.title = TogglButton.$latestStoppedEntry.description + p;
           PopUp.$timerRow.classList.add("has-resume");
+          localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
+          PopUp.$resumeButton.setAttribute('data-event', 'resume');
         }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
@@ -57,7 +59,11 @@ var PopUp = {
         PopUp.$togglButton.parentNode.classList.add('tracking');
         PopUp.showCurrentDuration(true);
       }
+      if (PopUp.$menuView.style.display === "none" && PopUp.$editView.style.display === "none") {
+        PopUp.switchView(PopUp.$menuView);
+      }
     } else {
+      localStorage.setItem('latestStoppedEntry', '');
       PopUp.switchView(PopUp.$loginView);
     }
   },
@@ -76,7 +82,8 @@ var PopUp = {
           window.location.reload();
         }
       } else if (request.type === "login"
-          || (!!response.type && (response.type === "New Entry" || response.type === "Update"))) {
+          || (!!response.type &&
+            (response.type === "New Entry" || response.type === "Update"))) {
         PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });
@@ -477,5 +484,4 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector(".user-email").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app/profile"});
   });
-
 });

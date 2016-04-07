@@ -10,7 +10,7 @@ input[type="number"], input[type="time"]{
   vertical-align: middle;
   padding: 0 0 0 10px !important;
   margin-left: 10px !important;
-  max-width: 70px;
+  max-width: 90px;
   border: 1px solid rgb(191, 191, 191);
   border-radius: 2px;
 }
@@ -25,7 +25,9 @@ input[type="number"] {
   padding: 0;
   color: #505050!important;
   float: left;
-  height: 380px;
+  min-height: 380px;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 
 .list {
@@ -48,6 +50,9 @@ input[type="number"] {
   height: 200px;
 }
 
+.list li #stop-at-day-end:checked ~ div{
+  height:70px;
+}
 .list li label {
   font-size: 14px;
   height: 22px;

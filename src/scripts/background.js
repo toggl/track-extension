@@ -1,7 +1,7 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton;
+var TogglButton, openWindowsCount = 0;
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -55,9 +55,12 @@ TogglButton = {
     date: Date.now()
   },
   $checkingUserState: false,
+  checkingWorkdayEnd: false,
+  pomodoroAlarm: null,
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
+  queque: [],
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -133,6 +136,7 @@ TogglButton = {
                   TogglButton.$curEntry = entry;
                   TogglButton.setBrowserAction(entry);
                   TogglButton.startCheckingUserState();
+                  TogglButton.checkPomodoroAlarm(entry);
                   return true;
                 }
                 return false;
@@ -155,6 +159,7 @@ TogglButton = {
               TogglButton.setupSocket();
             }
             TogglButton.updateBugsnag();
+            TogglButton.handelQueQue();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
             if (apiToken) {
@@ -168,6 +173,12 @@ TogglButton = {
         }
       }
     });
+  },
+
+  handelQueQue: function () {
+    while (!!TogglButton.queque.length) {
+      TogglButton.queque.shift()();
+    }
   },
 
   updateBugsnag: function () {
@@ -217,6 +228,10 @@ TogglButton = {
 
     TogglButton.$socket.onmessage = function (msg) {
       var data;
+      // test for empty json
+      if (!msg.data) {
+        return;
+      }
       data = JSON.parse(msg.data);
       if (data.model !== null) {
         if (data.model === "time_entry") {
@@ -235,6 +250,7 @@ TogglButton = {
 
   updateCurrentEntry: function (data) {
     var entry = data.data;
+    TogglButton.checkPomodoroAlarm(entry);
     if (data.action === "INSERT") {
       TogglButton.$curEntry = entry;
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
@@ -280,13 +296,18 @@ TogglButton = {
   },
 
   findProjectByName: function (name) {
-    var key;
+    var key,
+      result;
+
     for (key in TogglButton.$user.projectMap) {
       if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].name === name) {
-        return TogglButton.$user.projectMap[key];
+        result = TogglButton.$user.projectMap[key];
+        if (result.wid === TogglButton.$user.default_wid) {
+          return result;
+        }
       }
     }
-    return undefined;
+    return result;
   },
 
   findProjectByPid: function (pid) {
@@ -337,6 +358,7 @@ TogglButton = {
             TogglButton.setBrowserAction(entry);
             clearTimeout(TogglButton.$nannyTimer);
             TogglButton.startCheckingUserState();
+            TogglButton.triggerPomodoroAlarm();
             TogglButton.analytics(timeEntry.type, timeEntry.service);
           } else {
             error = xhr.responseText;
@@ -367,21 +389,38 @@ TogglButton = {
         );
       }
     });
+  },
 
+  checkPomodoroAlarm: function (entry) {
+    var duration = (new Date() - new Date(entry.start)),
+      interval = parseInt(Db.get("pomodoroInterval"), 10) * 60000;
+    if (duration < interval) {
+      TogglButton.triggerPomodoroAlarm(interval - duration);
+    }
+  },
+
+  triggerPomodoroAlarm: function (value) {
+    if (TogglButton.pomodoroAlarm !== null) {
+      clearTimeout(TogglButton.pomodoroAlarm);
+    }
     if (Db.get("pomodoroModeEnabled")) {
-      chrome.alarms.create('PomodoroTimer', {delayInMinutes: parseInt(Db.get("pomodoroInterval"), 10)});
+      var interval = value || (parseInt(Db.get("pomodoroInterval"), 10) * 60000);
+      TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
     }
   },
 
   analytics: function (event, service) {
     if (event === "settings") {
-      _gaq.push(['_trackEvent', 'rightclickbutton', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
+      _gaq.push(['_trackEvent', 'stop-automatically', "settings/stop-automatically-" + Db.get("stopAutomatically")]);
+      _gaq.push(['_trackEvent', 'start-automatically', "settings/start-automatically-" + Db.get("startAutomatically")]);
+      _gaq.push(['_trackEvent', 'right-click-button', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
       _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
       _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
       _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + Db.get("socketEnabled")]);
       _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + Db.get("pomodoroModeEnabled")]);
       _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + Db.get("pomodoroSoundEnabled")]);
+      _gaq.push(['_trackEvent', 'stop-at-day-end', "settings/stop-at-day-end" + Db.get("stopAtDayEnd")]);
     } else {
       _gaq.push(['_trackEvent', event, event + "-" + service]);
       chrome.runtime.getPlatformInfo(function (info) {
@@ -412,6 +451,57 @@ TogglButton = {
       xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + ':' + credentials.password));
     }
     xhr.send(JSON.stringify(opts.payload));
+  },
+
+  stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {
+    var entry,
+      pomodoroDuration = parseInt(Db.get("pomodoroInterval"), 10) * 60;
+
+    if (!TogglButton.$curEntry) { return; }
+
+    entry = {
+      time_entry: {
+        duration: pomodoroDuration
+      }
+    };
+
+    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+      method: 'PUT',
+      payload: entry,
+      onLoad: function (xhr) {
+        if (xhr.status === 200) {
+          TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
+          TogglButton.updateEntriesDb();
+          TogglButton.$nannyTimer = TogglButton.$curEntry = null;
+          TogglButton.stopCheckingUserState();
+          TogglButton.setBrowserAction(null);
+          if (!!timeEntry.respond) {
+            sendResponse({success: true, type: "Stop"});
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+              if (!!tabs[0]) {
+                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
+              }
+            });
+          }
+
+          chrome.alarms.clear('PomodoroTimer');
+
+          TogglButton.triggerNotification();
+          TogglButton.analytics(timeEntry.type, timeEntry.service);
+          if (cb) {
+            cb();
+          }
+        }
+      },
+      onError: function (xhr) {
+        sendResponse(
+          {
+            success: false,
+            type: "Update"
+          }
+        );
+      }
+    });
   },
 
   stopTimeEntry: function (timeEntry, sendResponse, cb) {
@@ -463,39 +553,51 @@ TogglButton = {
     });
   },
 
-  pomodoroAlarmStop: function (alarm) {
+  pomodoroStopTimeTracking: function () {
+    if (Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
+      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
+    }
+  },
+
+  pomodoroAlarmStop: function () {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
-    if (alarm.name === 'PomodoroTimer') {
-      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
+    TogglButton.pomodoroStopTimeTracking();
+    var notificationId = 'pomodoro-time-is-up',
+      stopSound,
+      topButtonTitle = "Continue Latest",
+      bottomButtonTitle = "Start New";
 
-      var notificationId = 'pomodoro-time-is-up',
-        stopSound;
-      TogglButton.hideNotification(notificationId);
-      chrome.notifications.create(
-        notificationId,
-        {
-          type: 'basic',
-          iconUrl: 'images/icon-128.png',
-          title: "Toggl Button",
-          message: "Time is up! Take a break",
-          priority: 2,
-          buttons: [
-            { title: "Continue Latest"},
-            { title: "Start New"}
-          ]
-        },
-        function () {
-          return;
-        }
-      );
+    if (!Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
+      notificationId = 'pomodoro-time-is-up-dont-stop';
+      topButtonTitle = "Stop timer";
+      bottomButtonTitle = "Stop and Start New";
+    }
 
-      if (Db.get("pomodoroSoundEnabled")) {
-        stopSound = new Audio();
-        stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
-        stopSound.play();
+    TogglButton.hideNotification(notificationId);
+    chrome.notifications.create(
+      notificationId,
+      {
+        type: 'basic',
+        iconUrl: 'images/icon-128.png',
+        title: "Toggl Button",
+        message: "Time is up! Take a break",
+        priority: 2,
+        buttons: [
+          { title: topButtonTitle},
+          { title: bottomButtonTitle}
+        ]
+      },
+      function () {
+        return;
       }
+    );
+
+    if (Db.get("pomodoroSoundEnabled")) {
+      stopSound = new Audio();
+      stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
+      stopSound.play();
     }
 
     return true;
@@ -587,6 +689,7 @@ TogglButton = {
   },
 
   loginUser: function (request, sendResponse) {
+    var error;
     TogglButton.ajax("/sessions", {
       method: 'POST',
       onLoad: function (xhr) {
@@ -595,7 +698,10 @@ TogglButton = {
           TogglButton.fetchUser();
           TogglButton.refreshPage();
         } else {
-          sendResponse({success: false, xhr: xhr});
+          if (xhr.status === 403) {
+            error = "Wrong Email or Password!";
+          }
+          sendResponse({success: false, error: error});
         }
       },
       onError: function (xhr) {
@@ -903,7 +1009,54 @@ TogglButton = {
       );
     }
   },
+  startCheckingDayEnd: function (enable) {
+    clearInterval(TogglButton.checkingWorkdayEnd);
+    if (enable) {
+      TogglButton.checkingWorkdayEnd = setInterval(TogglButton.checkWorkDayEnd, 3000);
+    }
+  },
+  checkWorkDayEnd: function () {
+    if (TogglButton.$user &&
+        Db.get("stopAtDayEnd") &&
+        TogglButton.$curEntry  &&
+        TogglButton.workdayEnded()) {
 
+      var title =  "Continue";
+      if (!!TogglButton.$curEntry.description) {
+        title += "(" + TogglButton.$curEntry.description + ")";
+      } else {
+        title += " latest";
+      }
+
+      TogglButton.stopTimeEntry(TogglButton.$curEntry);
+      chrome.notifications.create(
+        'workday-ended-notification',
+        {
+          type: 'basic',
+          iconUrl: 'images/icon-128.png',
+          title: "Toggl Button",
+          message: "Your workday is over, time tracking of your current task has been stopped",
+          buttons: [
+            { title: title }
+          ]
+        },
+        function () {
+          return;
+        }
+      );
+    }
+  },
+  workdayEnded: function () {
+    var startedTime = new Date(TogglButton.$curEntry.start),
+      now = new Date(),
+      endTime = new Date(),
+      endTimeHelper = Db.get('dayEndTime').split(":");
+
+    endTime.setHours(endTimeHelper[0]);
+    endTime.setMinutes(endTimeHelper[1]);
+    endTime.setSeconds(0);
+    return (now >= endTime) && (endTime > startedTime);
+  },
   notificationBtnClick: function (notificationId, buttonID) {
     var type = "dropdown-pomodoro",
       timeEntry = TogglButton.$curEntry,
@@ -957,6 +1110,27 @@ TogglButton = {
         buttonName = "continue";
       } else {
         // start timer
+        TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
+      }
+      eventType = "pomodoro";
+    } else if (notificationId === 'workday-ended-notification') {
+      if (buttonID === 0) {
+        timeEntry = TogglButton.$latestStoppedEntry;
+        if (!!timeEntry) {
+          timeEntry.type = "timeEntry";
+          timeEntry.service = type;
+        } else {
+          timeEntry = {"type": "timeEntry", "service": type};
+        }
+        // continue timer
+        TogglButton.createTimeEntry(timeEntry, null);
+        buttonName = "continue";
+      }
+      eventType = "workday-end";
+    } else if (notificationId === 'pomodoro-time-is-up-dont-stop') {
+      if (buttonID === 0) {
+        TogglButton.stopTimeEntry(TogglButton.$curEntry);
+      } else {
         TogglButton.createTimeEntry({"type": "timeEntry", "service": type}, null);
       }
       eventType = "pomodoro";
@@ -1032,6 +1206,8 @@ TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
+    var success,
+      error;
     try {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
@@ -1061,12 +1237,18 @@ TogglButton = {
       } else if (request.type === 'currentEntry') {
         sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
       } else if (request.type === 'getTasksHtml') {
-        var success = TogglButton.$user && TogglButton.$user.projectTaskList;
+        success = TogglButton.$user && TogglButton.$user.projectTaskList;
 
         sendResponse({
           success: success,
           html: success ? TogglButton.fillTasks(request.projectId) : ''
         });
+      } else if (request.type === 'error') {
+        // Handling integration errors
+        error = new Error();
+        error.stack = request.stack;
+        error.message = request.stack.split("\n")[0];
+        Bugsnag.notifyException(error);
       }
 
     } catch (e) {
@@ -1083,15 +1265,43 @@ TogglButton = {
     } else {
       chrome.contextMenus.removeAll();
     }
+  },
+  startAutomatically: function () {
+    if (!TogglButton.$curEntry && Db.get("startAutomatically") && !!TogglButton.$user) {
+      var lastEntryString, lastEntry;
+      lastEntryString = Db.get("latestStoppedEntry");
+      if (lastEntryString) {
+        lastEntry = JSON.parse(lastEntryString);
+        TogglButton.$latestStoppedEntry = lastEntry;
+        TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, null);
+        TogglButton.hideNotification('remind-to-track-time');
+      }
+    }
+  },
+  stopTrackingOnBrowserClosed: function () {
+    openWindowsCount--;
+    if (Db.get("stopAutomatically") && openWindowsCount === 0 && TogglButton.$curEntry) {
+      TogglButton.stopTimeEntry(TogglButton.$curEntry);
+    }
   }
 };
 
+TogglButton.queque.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();
 TogglButton.triggerNotification();
 TogglButton.startCheckingUserState();
-chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
+TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
+chrome.windows.onCreated.addListener(TogglButton.startAutomatically);
+chrome.windows.getAll(null, function (windows) { openWindowsCount = windows.length; });
+chrome.windows.onCreated.addListener(function (window) { openWindowsCount++; });
+chrome.windows.onRemoved.addListener(TogglButton.stopTrackingOnBrowserClosed);
+window.onbeforeunload = function () {
+  if (Db.get("stopAutomatically") && TogglButton.$curEntry) {
+    TogglButton.stopTimeEntry(TogglButton.$curEntry);
+  }
+};

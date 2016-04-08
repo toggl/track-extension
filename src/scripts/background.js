@@ -563,11 +563,13 @@ TogglButton = {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
-    TogglButton.pomodoroStopTimeTracking();
     var notificationId = 'pomodoro-time-is-up',
       stopSound,
-      topButtonTitle = "Continue Latest",
+      latestDescription = TogglButton.$curEntry.description ? " (" + TogglButton.$curEntry.description + ")" : "",
+      topButtonTitle = "Continue Latest" + latestDescription,
       bottomButtonTitle = "Start New";
+
+    TogglButton.pomodoroStopTimeTracking();
 
     if (!Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
       notificationId = 'pomodoro-time-is-up-dont-stop';

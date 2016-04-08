@@ -1023,7 +1023,7 @@ TogglButton = {
 
       var title =  "Continue";
       if (!!TogglButton.$curEntry.description) {
-        title += "(" + TogglButton.$curEntry.description + ")";
+        title += " (" + TogglButton.$curEntry.description + ")";
       } else {
         title += " latest";
       }
@@ -1035,7 +1035,7 @@ TogglButton = {
           type: 'basic',
           iconUrl: 'images/icon-128.png',
           title: "Toggl Button",
-          message: "Your workday is over, time tracking of your current task has been stopped",
+          message: "Your workday is over, running entry has been stopped",
           buttons: [
             { title: title }
           ]

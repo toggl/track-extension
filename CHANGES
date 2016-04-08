@@ -1,3 +1,30 @@
+[0.9.1]
+- Added support for Basecamp 3
+- Added support for OpenProject
+- Added support for Zube
+- Added support for AgenoCRM and MiniCRM
+- Changed toggl button to minimal in Remember the milk
+- Fixed Teamwork integration
+- Fixed Capsule CRM integration
+- Added project support to Unfuddle
+- Improved description fetch in Xero
+- Improved Wokrsection selectors
+- Updated SifterApp integration
+- Improved link updating for pages with multiple links
+- Added more error logging to detect integration errors
+- Added classic UI support to MantisHub
+- Redesigned login view
+- Fixed "Forgot password" link
+- Show latest entry name when hovering "Continue latest" button in dropdown
+- Show latest entry name with pomodoro notification "Continue latest" button
+- Added setting "start latest entry automatically on browser start" setting
+- Added setting "stop running entry automatically on browser quit"
+- Added setting "Stop time at workday end"
+- Added setting "Stop entry on pomodoro time end"
+- Added pomodoro support for entries started outside Toggl Button
+- Improved Pomodoro timer calculations
+- Fixed settings view issues and added animation
+
 [0.9.0]
 - Added support for Phacility
 - Added support for LiquidPlanner

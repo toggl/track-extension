@@ -250,7 +250,6 @@ TogglButton = {
 
   updateCurrentEntry: function (data) {
     var entry = data.data;
-    TogglButton.checkPomodoroAlarm(entry);
     if (data.action === "INSERT") {
       TogglButton.$curEntry = entry;
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
@@ -260,6 +259,9 @@ TogglButton = {
         entry = null;
       }
       TogglButton.$curEntry = entry;
+    }
+    if (!!entry) {
+      TogglButton.checkPomodoroAlarm(entry);
     }
     TogglButton.startCheckingUserState();
     TogglButton.setBrowserAction(entry);

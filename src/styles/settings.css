@@ -21,7 +21,7 @@ input[type="number"] {
 
 .container {
   width: 800px;
-  margin: 20px 15px auto;
+  margin: 20px 15px 0px;
   padding: 0;
   color: #505050!important;
   float: left;
@@ -32,7 +32,6 @@ input[type="number"] {
 
 .list {
   width: 800px;
-  margin-bottom: 80px;
   padding: 0;
   list-style: none;
   float: left;

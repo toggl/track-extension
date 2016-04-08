@@ -25,7 +25,7 @@ var Settings = {
     Settings.toggleState(Settings.$stopAutomatically, Db.get("stopAutomatically"));
     Settings.toggleState(Settings.$postPopup, Db.get("showPostPopup"));
     Settings.toggleState(Settings.$nanny, Db.get("nannyCheckEnabled"));
-    Settings.toggleSetting(Settings.$socket, Db.get("socketEnabled") && TogglButton.$socket);
+    Settings.toggleState(Settings.$socket, Db.get("socketEnabled"));
     Settings.toggleState(Settings.$idleDetection, Db.get("idleDetectionEnabled"));
     Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
     Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));

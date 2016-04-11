@@ -1016,12 +1016,14 @@ TogglButton = {
       );
     }
   },
+
   startCheckingDayEnd: function (enable) {
     clearInterval(TogglButton.checkingWorkdayEnd);
     if (enable) {
-      TogglButton.checkingWorkdayEnd = setInterval(TogglButton.checkWorkDayEnd, 3000);
+      TogglButton.checkingWorkdayEnd = setInterval(TogglButton.checkWorkDayEnd, 30000);
     }
   },
+
   checkWorkDayEnd: function () {
     if (TogglButton.$user &&
         Db.get("stopAtDayEnd") &&

@@ -874,6 +874,15 @@ only screen and (min-resolution: 192dpi) {
   font-weight: normal;
 }
 
+.toggl-button.salesforce-lightning {
+  position: absolute;
+  top: 35px;
+  left: 10px;
+}
+#toggl-button-edit-form .toggl-button.salesforce-lightning {
+  position: static;
+}
+
 /********* DRAFTIN *********/
 .toggl-button.draftin {
   margin-right: 15px;

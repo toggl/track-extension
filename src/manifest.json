@@ -194,6 +194,7 @@
         "*://waffle.io/*",
         "*://www.assembla.com/*",
         "*://*.salesforce.com/*",
+        "*://*.force.com/*",
         "*://*.draftin.com/*",
         "*://*.fogbugz.com/*",
         "*://*.phacility.com/*",
@@ -462,7 +463,10 @@
       "js": ["scripts/content/assembla.js"]
     },
     {
-      "matches": ["*://*.salesforce.com/*"],
+      "matches": [
+        "*://*.salesforce.com/*",
+        "*://*.force.com/*"
+      ],
       "js": ["scripts/content/salesforce.js"]
     },
     {

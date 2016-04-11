@@ -56,3 +56,25 @@ togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
 
   $('.pageType', container).appendChild(link);
 });
+
+// Lightning
+togglbutton.render('.sfaTaskCommon.sfaTaskRow:not(.toggl)', {observe: true}, function (elem) {
+  var link, descFunc, projectFunc;
+
+  descFunc = function () {
+    return $(".subject .uiOutputText", elem).textContent;
+  };
+
+  projectFunc = function () {
+    return $(".sfaTaskContentFields ul").lastChild.textContent;
+  };
+
+  link = togglbutton.createTimerLink({
+    className: 'salesforce-lightning',
+    description: descFunc,
+    projectName: projectFunc,
+    buttonType: "minimal"
+  });
+
+  $('.sfaTaskContent', elem).appendChild(link);
+});

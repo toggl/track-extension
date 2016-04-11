@@ -57,7 +57,7 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
 
 
 // Basecamp 3
-togglbutton.render('.todos li.todo:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}, function (elem) {
   var link, project,
     description = $('.checkbox__content', elem);
 

@@ -7,14 +7,15 @@ togglbutton.render('#gwt-debug-NoteView-root:not(.toggl)', {observe: true}, func
     descFunc,
     projectFunc,
     container,
-    parent = document.querySelector('#gwt-debug-NoteAttributesView-root > div > div:nth-child(2)', elem);
+    parent = $('#gwt-debug-NoteAttributesView-root > div > div:nth-child(2)', elem);
 
   descFunc = function () {
-    return document.querySelector('#gwt-debug-NoteAttributesView-root .GBCTSOIBJE').textContent;
+    var desc = $('#gwt-debug-NoteTitleView-textBox');
+    return desc ? desc.value : "";
   };
 
   projectFunc = function () {
-    return document.querySelector('#gwt-debug-NotebookSelectMenu-notebookName').textContent;
+    return $('#gwt-debug-NotebookSelectMenu-notebookName').textContent;
   };
 
   link = togglbutton.createTimerLink({

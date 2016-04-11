@@ -40,7 +40,8 @@ togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
   }
 
   descFunc = function () {
-    return $('.pageDescription', container).textContent.trim();
+    var desc = $('.pageDescription', container);
+    return desc ? desc.textContent.trim() : "";
   };
 
   projectFunc = function () {

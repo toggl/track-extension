@@ -6,7 +6,8 @@ togglbutton.render('#docs-bars:not(.toggl)', {}, function (elem) {
   var link, titleFunc;
 
   titleFunc = function () {
-    return document.querySelector(".docs-title-input").value;
+    var title = $(".docs-title-input");
+    return title ? title.value : "";
   };
 
   link = togglbutton.createTimerLink({

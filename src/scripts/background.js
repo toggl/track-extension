@@ -383,12 +383,14 @@ TogglButton = {
         }
       },
       onError: function (xhr) {
-        sendResponse(
-          {
-            success: false,
-            type: "New Entry"
-          }
-        );
+        if (!!sendResponse) {
+          sendResponse(
+            {
+              success: false,
+              type: "New Entry"
+            }
+          );
+        }
       }
     });
   },

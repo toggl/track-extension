@@ -48,7 +48,7 @@
 .toggl-button.min {
   height: 19px;
   padding-left: 19px;
-  width: 19px;
+  width: 0px;
   overflow: hidden;
 }
 

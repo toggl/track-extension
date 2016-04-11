@@ -3,16 +3,11 @@
 'use strict';
 
 // Detail view
-togglbutton.render('.eb-root:not(.toggl), .ep:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.ep:not(.toggl)', {observe: true}, function (elem) {
   var link, description, togglButtonElement;
 
-  if ($('.eb-title', elem) !== null) {
-    togglButtonElement = $('.eb-date', elem);
-    description = $('.eb-title', elem).textContent;
-  } else {
-    togglButtonElement = $('.ep-dpc', elem);
-    description = $('.ep .ep-title input', elem).value;
-  }
+  togglButtonElement = $('.ep-dpc', elem);
+  description = $('.ep-title input', elem).value;
 
   link = togglbutton.createTimerLink({
     className: 'google-calendar',

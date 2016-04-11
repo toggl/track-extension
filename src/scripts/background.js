@@ -567,7 +567,7 @@ TogglButton = {
     }
     var notificationId = 'pomodoro-time-is-up',
       stopSound,
-      latestDescription = TogglButton.$curEntry.description ? " (" + TogglButton.$curEntry.description + ")" : "",
+      latestDescription = (TogglButton.$curEntry && TogglButton.$curEntry.description) ? " (" + TogglButton.$curEntry.description + ")" : "",
       topButtonTitle = "Continue Latest" + latestDescription,
       bottomButtonTitle = "Start New";
 

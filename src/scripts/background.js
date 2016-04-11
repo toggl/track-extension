@@ -102,8 +102,7 @@ TogglButton = {
               }
             });
             resp = JSON.parse(xhr.responseText);
-            TogglButton.$curEntry = null;
-            TogglButton.setBrowserAction(null);
+            TogglButton.updateTriggers(null);
             if (resp.data.projects) {
               resp.data.projects.forEach(function (project) {
                 if (project.active && !project.server_deleted_at) {
@@ -133,10 +132,7 @@ TogglButton = {
             if (resp.data.time_entries) {
               resp.data.time_entries.some(function (entry) {
                 if (entry.duration < 0) {
-                  TogglButton.$curEntry = entry;
-                  TogglButton.setBrowserAction(entry);
-                  TogglButton.startCheckingUserState();
-                  TogglButton.checkPomodoroAlarm(entry);
+                  TogglButton.updateTriggers(entry);
                   return true;
                 }
                 return false;
@@ -248,23 +244,37 @@ TogglButton = {
 
   },
 
+  updateTriggers: function (entry) {
+    TogglButton.$curEntry = entry;
+    if (!!entry) {
+      TogglButton.checkPomodoroAlarm(entry);
+      clearTimeout(TogglButton.$nannyTimer);
+    } else {
+      // Clear pomodoro timer
+      clearTimeout(TogglButton.pomodoroAlarm);
+
+      TogglButton.$nannyTimer = null;
+    }
+    // Toggle workday end check
+    TogglButton.startCheckingDayEnd(!!entry);
+
+    TogglButton.toggleCheckingUserState(!!entry);
+    TogglButton.setBrowserAction(entry);
+  },
+
+
   updateCurrentEntry: function (data) {
     var entry = data.data;
     if (data.action === "INSERT") {
-      TogglButton.$curEntry = entry;
+      TogglButton.updateTriggers(entry);
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
       if (entry.duration >= 0) {
         TogglButton.$latestStoppedEntry = entry;
         TogglButton.updateEntriesDb();
         entry = null;
       }
-      TogglButton.$curEntry = entry;
+      TogglButton.updateTriggers(entry);
     }
-    if (!!entry) {
-      TogglButton.checkPomodoroAlarm(entry);
-    }
-    TogglButton.startCheckingUserState();
-    TogglButton.setBrowserAction(entry);
   },
 
   updateEntriesDb: function () {
@@ -357,11 +367,7 @@ TogglButton = {
           if (success) {
             responseData = JSON.parse(xhr.responseText);
             entry = responseData && responseData.data;
-            TogglButton.$curEntry = entry;
-            TogglButton.setBrowserAction(entry);
-            clearTimeout(TogglButton.$nannyTimer);
-            TogglButton.startCheckingUserState();
-            TogglButton.triggerPomodoroAlarm();
+            TogglButton.updateTriggers(entry);
             TogglButton.analytics(timeEntry.type, timeEntry.service);
           } else {
             error = xhr.responseText;
@@ -477,9 +483,7 @@ TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
           TogglButton.updateEntriesDb();
-          TogglButton.$nannyTimer = TogglButton.$curEntry = null;
-          TogglButton.stopCheckingUserState();
-          TogglButton.setBrowserAction(null);
+          TogglButton.updateTriggers(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -488,9 +492,6 @@ TogglButton = {
               }
             });
           }
-
-          chrome.alarms.clear('PomodoroTimer');
-
           TogglButton.triggerNotification();
           TogglButton.analytics(timeEntry.type, timeEntry.service);
           if (cb) {
@@ -526,9 +527,7 @@ TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
           TogglButton.updateEntriesDb();
-          TogglButton.$nannyTimer = TogglButton.$curEntry = null;
-          TogglButton.stopCheckingUserState();
-          TogglButton.setBrowserAction(null);
+          TogglButton.updateTriggers(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -537,9 +536,6 @@ TogglButton = {
               }
             });
           }
-
-          chrome.alarms.clear('PomodoroTimer');
-
           TogglButton.triggerNotification();
           TogglButton.analytics(timeEntry.type, timeEntry.service);
           if (cb) {
@@ -637,6 +633,7 @@ TogglButton = {
           if (success) {
             responseData = JSON.parse(xhr.responseText);
             entry = responseData && responseData.data;
+            // Not using TogglButton.updateCurrent as the time is not changed
             TogglButton.$curEntry = entry;
             TogglButton.setBrowserAction(entry);
           } else {
@@ -731,7 +728,7 @@ TogglButton = {
       method: 'DELETE',
       onLoad: function (xhr) {
         TogglButton.$user = null;
-        TogglButton.$curEntry = null;
+        TogglButton.updateTriggers(null);
         localStorage.setItem('userToken', null);
         sendResponse({success: (xhr.status === 200), xhr: xhr});
         if (xhr.status === 200) {
@@ -923,6 +920,14 @@ TogglButton = {
     TogglButton.$checkingUserState = false;
   },
 
+  toggleCheckingUserState: function (enable) {
+    if (enable) {
+      TogglButton.startCheckingUserState();
+    } else {
+      TogglButton.stopCheckingUserState();
+    }
+  },
+
   timeStringFromSeconds: function (s) {
     var seconds = 0,
       minutes = 0,
@@ -1055,6 +1060,7 @@ TogglButton = {
       );
     }
   },
+
   workdayEnded: function () {
     var startedTime = new Date(TogglButton.$curEntry.start),
       now = new Date(),
@@ -1066,6 +1072,7 @@ TogglButton = {
     endTime.setSeconds(0);
     return (now >= endTime) && (endTime > startedTime);
   },
+
   notificationBtnClick: function (notificationId, buttonID) {
     var type = "dropdown-pomodoro",
       timeEntry = TogglButton.$curEntry,
@@ -1275,6 +1282,7 @@ TogglButton = {
       chrome.contextMenus.removeAll();
     }
   },
+
   startAutomatically: function () {
     if (!TogglButton.$curEntry && Db.get("startAutomatically") && !!TogglButton.$user) {
       var lastEntryString, lastEntry;
@@ -1287,6 +1295,7 @@ TogglButton = {
       }
     }
   },
+
   stopTrackingOnBrowserClosed: function () {
     openWindowsCount--;
     if (Db.get("stopAutomatically") && openWindowsCount === 0 && TogglButton.$curEntry) {

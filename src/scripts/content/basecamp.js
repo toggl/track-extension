@@ -6,16 +6,22 @@
 // Basecamp Next
 togglbutton.render('section.todos li.todo:not(.toggl)', {observe: true}, function (elem) {
   var link, behavior = 'hover_content',
-    container = $('.wrapper', elem), spanTag;
+    container = $('.wrapper', elem), spanTag,
+    projectFunc;
 
   if (container === null) {
     return;
   }
 
+  projectFunc = function () {
+    var p = $(".project > title") || $(".project > header > h1 > a");
+    return p ? p.textContent : "";
+  };
+
   link = togglbutton.createTimerLink({
     className: 'basecamp',
     description: $('.content_for_perma', elem).textContent,
-    projectName: (!!$(".project")) ? ($(".project > title") || $(".project > header > h1 > a")).innerHTML : ""
+    projectName: projectFunc
   });
 
   link.setAttribute('data-behavior', behavior);

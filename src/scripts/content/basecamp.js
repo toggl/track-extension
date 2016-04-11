@@ -65,6 +65,7 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
 // Basecamp 3
 togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}, function (elem) {
   var link, project,
+    projectItem,
     description = $('.checkbox__content', elem);
 
   if (!description) {
@@ -73,7 +74,8 @@ togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}
 
   description = description.childNodes[1].textContent;
   project = $('.checkbox__content', elem).parentNode.parentNode.parentNode.parentNode.parentNode;
-  project = $('.todolist__permalink', project).textContent;
+  projectItem = $('.todolist__permalink', project);
+  project = projectItem ? projectItem.textContent : "";
 
   link = togglbutton.createTimerLink({
     className: 'basecamp3',

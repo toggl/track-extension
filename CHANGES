@@ -24,6 +24,7 @@
 - Added pomodoro support for entries started outside Toggl Button
 - Improved Pomodoro timer calculations
 - Fixed settings view issues and added animation
+- Fixed Trello integration
 
 [0.9.0]
 - Added support for Phacility

@@ -351,6 +351,7 @@ TogglButton = {
       payload: entry,
       onLoad: function (xhr) {
         var responseData,
+          hasTasks = !!TogglButton.$user && !!TogglButton.$user.projectTaskList,
           success = (xhr.status === 200);
         try {
           if (success) {
@@ -373,7 +374,7 @@ TogglButton = {
                 entry: entry,
                 showPostPopup: Db.get("showPostPopup"),
                 html: TogglButton.getEditForm(),
-                hasTasks: !!TogglButton.$user.projectTaskList,
+                hasTasks: hasTasks,
                 error: error
               }
             );

@@ -36,7 +36,7 @@ input[type="number"] {
   padding: 0;
   list-style: none;
   float: left;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-bottom: 20px;
 }
 

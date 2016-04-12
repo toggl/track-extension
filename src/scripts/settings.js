@@ -158,4 +158,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
     }
     Settings.saveSetting((document.querySelector('#day-end-time').value), "toggle-day-end-time");
   });
+
+  document.querySelector(".container").addEventListener("transitionend", function (e) {
+    if (e.propertyName === "height"
+        && e.target.className === "subsettings-details"
+        && e.target.clientHeight > 0) {
+      e.target.scrollIntoView();
+    }
+  }, false);
 });

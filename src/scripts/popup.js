@@ -9,10 +9,12 @@ var PopUp = {
   $postStartText: " post-start popup",
   $popUpButton: null,
   $togglButton: document.querySelector(".stop-button"),
+  $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
   $error: document.querySelector(".error"),
+  $timerRow: document.querySelector(".timer"),
   $timer: null,
   $tagsVisible: false,
   $taskBlurTrigger: null,
@@ -25,6 +27,7 @@ var PopUp = {
   $loginView: document.querySelector("#login-form"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {
+    var p;
     if (!TogglButton) {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
     }
@@ -36,24 +39,40 @@ var PopUp = {
         PopUp.editFormAdded = true;
       }
       document.querySelector(".user-email").textContent = TogglButton.$user.email;
+      PopUp.$timerRow.classList.remove("has-resume");
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
-        PopUp.$togglButton.textContent = 'Start timer';
+        PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
         PopUp.$projectBullet.className = "project-bullet";
+        if (TogglButton.$latestStoppedEntry) {
+          p = TogglButton.findProjectByPid(TogglButton.$latestStoppedEntry.pid);
+          p = (!!p) ? " - " + p.name : "";
+          PopUp.$resumeButton.title = TogglButton.$latestStoppedEntry.description + p;
+          PopUp.$timerRow.classList.add("has-resume");
+          localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
+          PopUp.$resumeButton.setAttribute('data-event', 'resume');
+        }
       } else {
         PopUp.$togglButton.setAttribute('data-event', 'stop');
         PopUp.$togglButton.textContent = 'Stop';
         PopUp.$togglButton.parentNode.classList.add('tracking');
         PopUp.showCurrentDuration(true);
       }
+      if (PopUp.$menuView.style.display === "none" && PopUp.$editView.style.display === "none") {
+        PopUp.switchView(PopUp.$menuView);
+      }
     } else {
+      localStorage.setItem('latestStoppedEntry', '');
       PopUp.switchView(PopUp.$loginView);
     }
   },
 
   sendMessage: function (request) {
     chrome.extension.sendMessage(request, function (response) {
+      if (!response) {
+        return;
+      }
       if (!!response.success) {
         if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);
@@ -62,9 +81,9 @@ var PopUp = {
         } else {
           window.location.reload();
         }
-      } else if (request.type === "login") {
-        PopUp.$error.style.display = 'block';
-      } else if (!!response.type && (response.type === "New Entry" || response.type === "Update")) {
+      } else if (request.type === "login"
+          || (!!response.type &&
+            (response.type === "New Entry" || response.type === "Update"))) {
         PopUp.showError(response.error || PopUp.defaultErrorMessage);
       }
     });
@@ -80,7 +99,7 @@ var PopUp = {
     if (TogglButton.$curEntry === null) {
       PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
       PopUp.$togglButton.setAttribute('title', '');
-      PopUp.$togglButton.textContent = 'Start timer';
+      PopUp.$togglButton.textContent = 'Start new';
       PopUp.$togglButton.parentNode.classList.remove('tracking');
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
@@ -98,6 +117,14 @@ var PopUp = {
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }
+  },
+
+  updateMenuTimer: function (desc, pid) {
+    var description = desc || "(no description)";
+
+    description += PopUp.setProjectBullet(pid, PopUp.$projectBullet);
+    PopUp.$editButton.textContent = description;
+    PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
   },
 
   setProjectBullet: function (pid, elem) {
@@ -208,7 +235,7 @@ var PopUp = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].innerHTML;
+        tag = s.options[i].textContent;
         tags.push(tag);
       }
     }
@@ -244,6 +271,7 @@ var PopUp = {
       };
     PopUp.sendMessage(request);
     PopUp.closeTagsList(true);
+    PopUp.updateMenuTimer(request.description, request.pid);
     PopUp.switchView(PopUp.$menuView);
   },
 
@@ -400,17 +428,18 @@ var PopUp = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  var req = {
-    type: "sync",
-    respond: false
-  };
+  var onClickSendMessage,
+    req = {
+      type: "sync",
+      respond: false
+    };
+
   PopUp.sendMessage(req);
   PopUp.showPage();
   PopUp.$editButton.addEventListener('click', function () {
     PopUp.updateEditForm(PopUp.$editView);
   });
-
-  PopUp.$togglButton.addEventListener('click', function () {
+  onClickSendMessage = function () {
     var request = {
       type: this.getAttribute('data-event'),
       respond: true,
@@ -420,7 +449,9 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.$timer = null;
 
     PopUp.sendMessage(request);
-  });
+  };
+  PopUp.$togglButton.addEventListener('click', onClickSendMessage);
+  PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
   document.querySelector(".settings-button").addEventListener('click', function () {
     chrome.runtime.openOptionsPage();
@@ -445,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelector("#signin").addEventListener('submit', function (event) {
     event.preventDefault();
-    PopUp.$error.style.display = 'none';
+    PopUp.$errorLabel.classList.remove("show");
     var request = {
       type: "login",
       respond: true,
@@ -462,5 +493,4 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector(".user-email").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app/profile"});
   });
-
 });

@@ -8,11 +8,12 @@
     <div class="header" title="Open Toggl.com"></div>
     <div class="user-email" title="Open profile at Toggl.com"></div>
     <div class="error"></div>
-    <ul class="menu view">   
-      <li>
+    <ul class="menu view">
+      <li class="timer">
         <div class="project-bullet"></div>
         <div class="edit-button"></div>
         <div class="stop-button">Stop</div>
+        <div class="resume-button" data-event="resume">Continue latest</div>
       </li>
       <li>
         <button class="settings-button">Settings</button>
@@ -30,16 +31,14 @@
       <p class="error">Couldn't log you in. Please try again!</p>
       <form accept-charset="UTF-8" id="signin">
         <p class="form-row">
-          <label for="login_email">E-mail:</label>
-          <input name="user_login" type="text" id="login_email" class="text-input" value="">
+          <input name="user_login" type="text" id="login_email" class="text-input" value="" placeholder="E-mail">
         </p>
         <p class="form-row">
-          <label for="login_password">Password:</label>
-          <input name="user_password" type="password" id="login_password" class="text-input" value="">
+          <input name="user_password" type="password" id="login_password" class="text-input" value=""  placeholder="Password">
         </p>
         <p class="form-submit-row cf">
-          <a href="https://toggl.com/forgot-password" class="forgot-link">Forgot password?</a>
-          <input type="submit" value="Log in" class="btn-small right login-btn">
+          <a href="https://toggl.com/forgot-password" class="forgot-link" target="_blank">Forgot password?</a>
+          <input type="submit" value="Log in" class="right login-btn">
         </p>
       </form>
     </div>

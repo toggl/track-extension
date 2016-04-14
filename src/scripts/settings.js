@@ -6,6 +6,9 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 var Db = chrome.extension.getBackgroundPage().Db;
 
 var Settings = {
+  $startAutomatically: null,
+  $stopAutomatically: null,
+  $showRightClickButton: null,
   $postPopup: null,
   $socket: null,
   $nanny: null,
@@ -15,17 +18,26 @@ var Settings = {
   $newPermission: document.querySelector("#new-permission"),
   $originsSelect: document.querySelector("#origins"),
   origins: [],
+  $pomodoroStopTimeTracking: null,
+  $stopAtDayEnd: null,
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
+    Settings.toggleState(Settings.$showRightClickButton, Db.get("showRightClickButton"));
+    Settings.toggleState(Settings.$startAutomatically, Db.get("startAutomatically"));
+    Settings.toggleState(Settings.$stopAutomatically, Db.get("stopAutomatically"));
     Settings.toggleState(Settings.$postPopup, Db.get("showPostPopup"));
     Settings.toggleState(Settings.$nanny, Db.get("nannyCheckEnabled"));
-    Settings.toggleSetting(Settings.$socket, Db.get("socketEnabled") && TogglButton.$socket);
+    Settings.toggleState(Settings.$socket, Db.get("socketEnabled"));
     Settings.toggleState(Settings.$idleDetection, Db.get("idleDetectionEnabled"));
     Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
     Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
+    Settings.toggleState(Settings.$pomodoroStopTimeTracking, Db.get("pomodoroStopTimeTrackingWhenTimerEnds"));
     document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
+
+    Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
+    document.querySelector("#day-end-time").value = Db.get("dayEndTime");
 
     TogglButton.analytics("settings", null);
     Settings.loadSitesIntoList();
@@ -96,16 +108,29 @@ var Settings = {
     });
   }
 };
-
 document.addEventListener('DOMContentLoaded', function (e) {
+  Settings.$startAutomatically = document.querySelector("#start_automatically");
+  Settings.$stopAutomatically = document.querySelector("#stop_automatically");
+  Settings.$showRightClickButton = document.querySelector("#show_right_click_button");
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
   Settings.$socket = document.querySelector("#websocket");
   Settings.$nanny = document.querySelector("#nag-nanny");
   Settings.$idleDetection = document.querySelector("#idle-detection");
   Settings.$pomodoroMode = document.querySelector("#pomodoro-mode");
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
+  Settings.$pomodoroStopTimeTracking = document.querySelector("#pomodoro-stop-time");
+  Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
   Settings.showPage();
-
+  Settings.$showRightClickButton.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
+    TogglButton.toggleRightClickButton((localStorage.getItem("showRightClickButton") !== "true"));
+  });
+  Settings.$startAutomatically.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("startAutomatically") !== "true"), "toggle-start-automatically");
+  });
+  Settings.$stopAutomatically.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("stopAutomatically") !== "true"), "toggle-stop-automatically");
+  });
   Settings.$postPopup.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
   });
@@ -124,7 +149,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroSound.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroSoundEnabled") !== "true"), "toggle-pomodoro-sound");
   });
+  Settings.$pomodoroStopTimeTracking.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroStopTimeTrackingWhenTimerEnds") !== "true"), "toggle-pomodoro-stop-time");
+  });
 
+  Settings.$stopAtDayEnd.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
+  });
   document.querySelector(".tab-links").addEventListener('click', function (e) {
     var tab = e.target.getAttribute("data-tab");
     if (!document.querySelector(".tab-" + tab).classList.contains("active")) {
@@ -212,4 +243,19 @@ document.addEventListener('DOMContentLoaded', function (e) {
     }
   });
 
+  document.querySelector("#day-end-time").addEventListener('blur', function (e) {
+    if (e.target.value < 1) {
+      e.target.value = 1;
+      return;
+    }
+    Settings.saveSetting((document.querySelector('#day-end-time').value), "toggle-day-end-time");
+  });
+
+  document.querySelector(".container").addEventListener("transitionend", function (e) {
+    if (e.propertyName === "height"
+        && e.target.className === "subsettings-details"
+        && e.target.clientHeight > 0) {
+      e.target.scrollIntoView();
+    }
+  }, false);
 });

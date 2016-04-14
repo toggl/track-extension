@@ -156,23 +156,39 @@ header .active, header li:hover {
   background: #F1F0F0;
 }
 
-.container .tab {
+.container .tabs {
   position: absolute;
   bottom: 42px;
   top: 35px;
+  left: 0px;
+  width: 2600px;
+  overflow: hidden;
   transition:left 300ms ease-in-out;
 }
 
-.container .tab-1 {
+.container .tabs[data-tab="2"] {
   left: -830px;
 }
 
-.container .tab-2 {
-  left: 830px;
+.container .tabs:not([data-tab="1"]) .tab-1{
+  overflow: hidden;
 }
 
-.container .active {
-  left: 15px!important;
+.container .tabs[data-tab="3"] {
+  left: -1660px;
+}
+
+.container .tab {
+  float: left;
+  height: 323px;
+  overflow-y: auto;
+  width: 815px;
+  padding-left: 15px;
+}
+
+.container .tab-3 {
+  padding-right: 15px;
+  width: 800px;
 }
 
 /* Permissions tab */

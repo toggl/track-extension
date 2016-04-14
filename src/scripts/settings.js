@@ -20,6 +20,7 @@ var Settings = {
   origins: [],
   $pomodoroStopTimeTracking: null,
   $stopAtDayEnd: null,
+  $tabs: null,
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
@@ -120,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
   Settings.$pomodoroStopTimeTracking = document.querySelector("#pomodoro-stop-time");
   Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
+  Settings.$tabs = document.querySelector(".tabs");
   Settings.showPage();
   Settings.$showRightClickButton.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
@@ -156,14 +158,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$stopAtDayEnd.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
   });
+
   document.querySelector(".tab-links").addEventListener('click', function (e) {
-    var tab = e.target.getAttribute("data-tab");
-    if (!document.querySelector(".tab-" + tab).classList.contains("active")) {
-      document.querySelector(".tab.active").classList.remove("active");
-      document.querySelector("header .active").classList.remove("active");
-      document.querySelector(".tab-" + tab).classList.add("active");
-      e.target.classList.add("active");
-    }
+    document.querySelector("header .active").classList.remove("active");
+    e.target.classList.add("active");
+    Settings.$tabs.setAttribute("data-tab", e.target.getAttribute("data-tab"));
   });
 
   document.querySelector("#nag-nanny-from").addEventListener('blur', function (e) {

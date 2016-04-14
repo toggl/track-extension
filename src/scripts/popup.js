@@ -119,6 +119,14 @@ var PopUp = {
     }
   },
 
+  updateMenuTimer: function (desc, pid) {
+    var description = desc || "(no description)";
+
+    description += PopUp.setProjectBullet(pid, PopUp.$projectBullet);
+    PopUp.$editButton.textContent = description;
+    PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
+  },
+
   setProjectBullet: function (pid, elem) {
     var project,
       id = parseInt(pid, 10);
@@ -263,6 +271,7 @@ var PopUp = {
       };
     PopUp.sendMessage(request);
     PopUp.closeTagsList(true);
+    PopUp.updateMenuTimer(request.description, request.pid);
     PopUp.switchView(PopUp.$menuView);
   },
 

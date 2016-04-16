@@ -167,6 +167,19 @@ TogglButton = {
         } catch (e) {
           Bugsnag.notifyException(e);
         }
+      },
+      onError: function (xhr) {
+        TogglButton.setBrowserActionBadge();
+        if (TogglButton.$sendResponse !== null) {
+          TogglButton.$sendResponse(
+            {
+              success: false,
+              type: "login",
+              error: "Connectivity error"
+            }
+          );
+          TogglButton.$sendResponse = null;
+        }
       }
     });
   },

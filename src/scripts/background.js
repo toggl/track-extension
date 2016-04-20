@@ -1640,3 +1640,15 @@ if (!FF) {
     }
   });
 }
+
+chrome.commands.onCommand.addListener(function (command) {
+  if (command === "quick-start-stop-entry") {
+    if (TogglButton.$curEntry !== null) {
+      TogglButton.stopTimeEntry(TogglButton.$curEntry);
+    } else {
+      if (TogglButton.$latestStoppedEntry !== null) {
+        TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, null);
+      }
+    }
+  }
+});

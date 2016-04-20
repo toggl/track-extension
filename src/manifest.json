@@ -21,6 +21,14 @@
     "default_popup": "html/popup.html",
     "default_title": "Toggl Time Tracker"
   },
+  "commands": {
+    "quick-start-stop-entry": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E"
+      },
+      "description": "Quick start/stop current entry"
+    }
+  },
   "icons": {
     "16": "images/icon-16.png",
     "48": "images/icon-48.png",

@@ -434,11 +434,11 @@ TogglButton = {
               ctx = canvas.getContext('2d');
             ctx.drawImage(this, 0, 0);
             ctx.beginPath();
-            ctx.strokeStyle = '#ffffff'; //'#99CC33';
-            ctx.lineCap = 'square';
+            ctx.strokeStyle = '#00cc00';
+            ctx.lineCap = 'round';
             ctx.closePath();
             ctx.fill();
-            ctx.lineWidth = 2.0;
+            ctx.lineWidth = 2.5;
             ctx.beginPath();
             ctx.arc(this.naturalWidth / 2, this.naturalHeight / 2, (this.naturalWidth / 2) - 1, quart * -1, (circ * current) - quart, false);
             ctx.stroke();

@@ -39,6 +39,7 @@
     "idle",
     "*://*.toggl.com/*",
     "*://toggl.com/*",
+    "*://*.bitrix24.com/*",
     "*://*.teamweek.com/*",
     "*://*.pivotaltracker.com/*",
     "*://*.github.com/*",
@@ -135,6 +136,7 @@
   "content_scripts": [
     {
       "matches": [
+        "*://*.bitrix24.com/*",
         "*://*.teamweek.com/*",
         "*://*.pivotaltracker.com/*",
         "*://*.github.com/*",
@@ -243,6 +245,10 @@
         "*://toggl.com/*"
       ],
       "js": ["scripts/content/toggl.js"]
+    },
+    {
+      "matches": ["*://*.bitrix24.com/*"],
+      "js": ["scripts/content/bitrix24.js"]
     },
     {
       "matches": ["*://app.teamweek.com/*"],

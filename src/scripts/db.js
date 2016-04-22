@@ -20,6 +20,8 @@ var Db = {
     "pomodoroInterval": 25,
     "stopAtDayEnd": false,
     "dayEndTime": "17:00",
+    "defaultProject": "0",
+    "projects": "",
   },
 
   get: function (setting) {
@@ -115,6 +117,8 @@ var Db = {
         TogglButton.startCheckingDayEnd(request.state);
       } else if (request.type === 'toggle-day-end-time') {
         Db.updateSetting("dayEndTime", request.state);
+      } else if (request.type === 'change-default-project') {
+        Db.updateSetting("defaultProject", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

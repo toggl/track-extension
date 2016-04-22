@@ -16,7 +16,9 @@ var Settings = {
   $pomodoroSound: null,
   $pomodoroStopTimeTracking: null,
   $stopAtDayEnd: null,
+  $defaultProject: null,
   showPage: function () {
+    var key, project, clientName, projects, clients;
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
@@ -30,11 +32,27 @@ var Settings = {
     Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
     Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
     Settings.toggleState(Settings.$pomodoroStopTimeTracking, Db.get("pomodoroStopTimeTrackingWhenTimerEnds"));
+
     document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
 
     Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
     document.querySelector("#day-end-time").value = Db.get("dayEndTime");
-
+    if (Db.get("projects") !== '') {
+      projects = JSON.parse(Db.get("projects"));
+      clients = JSON.parse(Db.get("clients"));
+      Settings.$defaultProject.innerHTML = '<option value="0">- No project -</option>';
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          project = projects[key];
+          clientName = (!!project.cid && !!clients[project.cid]) ? ' . ' + clients[project.cid].name  : '';
+          if (parseInt(Db.get('defaultProject'), 10) === project.id) {
+            Settings.$defaultProject.innerHTML += "<option selected value='" + project.id + "'>" + project.name + clientName + "</option>";
+          } else {
+            Settings.$defaultProject.innerHTML += "<option value='" + project.id + "'>" + project.name + clientName +  "</option>";
+          }
+        }
+      }
+    }
     TogglButton.analytics("settings", null);
   },
   setFromTo: function () {
@@ -71,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
   Settings.$pomodoroStopTimeTracking = document.querySelector("#pomodoro-stop-time");
   Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
+  Settings.$defaultProject = document.querySelector("#default-project");
   Settings.showPage();
   Settings.$showRightClickButton.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
@@ -103,9 +122,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroStopTimeTracking.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroStopTimeTrackingWhenTimerEnds") !== "true"), "toggle-pomodoro-stop-time");
   });
+  Settings.$defaultProject.addEventListener('change', function (e) {
+    var defaultProject = Settings.$defaultProject.options[Settings.$defaultProject.selectedIndex].value;
+    Settings.saveSetting(defaultProject, "change-default-project");
+  });
 
   Settings.$stopAtDayEnd.addEventListener('click', function (e) {
-    Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
+    Settings.save(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
   });
   document.querySelector(".tab-links").addEventListener('click', function (e) {
     var tab = e.target.getAttribute("data-tab");

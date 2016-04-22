@@ -138,6 +138,8 @@ TogglButton = {
                 return false;
               });
             }
+            Db.set('projects', JSON.stringify(projectMap));
+            Db.set('clients', JSON.stringify(clientMap));
             TogglButton.$user = resp.data;
             TogglButton.$user.projectMap = projectMap;
             TogglButton.$user.clientMap = clientMap;
@@ -1228,7 +1230,7 @@ TogglButton = {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
         TogglButton.setBrowserActionBadge();
-        sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion});
+        sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion, defaults: { project: parseInt(Db.get("defaultProject"), 10) }});
         TogglButton.triggerNotification();
       } else if (request.type === 'login') {
         TogglButton.loginUser(request, sendResponse);

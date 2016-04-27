@@ -15,6 +15,7 @@ var Settings = {
   $pomodoroMode: null,
   $pomodoroSound: null,
   $permissionsList: document.querySelector("#permissions-list"),
+  $customPermissionsList: document.querySelector("#custom-permissions-list"),
   $newPermission: document.querySelector("#new-permission"),
   $originsSelect: document.querySelector("#origins"),
   origins: [],
@@ -85,12 +86,15 @@ var Settings = {
   loadSitesIntoList: function () {
     var html = "",
       html_list = "",
+      custom_html = "",
       url, name,
       i, key,
       origins,
       disabled,
-      checked;
+      checked,
+      customs;
 
+    // Load permissions list
     chrome.permissions.getAll(function (results) {
       origins = results.origins;
       console.log("origins: ALL("+Object.keys(TogglOrigins).length+ ") | Enabled ("+origins.length+")");
@@ -125,6 +129,15 @@ var Settings = {
       document.querySelector("#origins").innerHTML = html;
       Settings.$permissionsList.innerHTML = html_list;
     });
+
+    // Load Custom Permissions list
+    customs = Db.getAllOrigins();
+    for (key in customs) {
+      if (customs.hasOwnProperty(key)) {
+        custom_html += "<li><a id='toggl-button-hide'>×</a><strong>" + key + "</strong> - <i>" + customs[key] + "</i></li>";
+      }
+    }
+    Settings.$customPermissionsList.innerHTML = custom_html;
   }
 };
 document.addEventListener('DOMContentLoaded', function (e) {
@@ -231,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     chrome.permissions.request(permission, function(result) {
       if (result) {
         console.log(domain +" > [ " + document.querySelector("#origins").value + " ]");
-        Db.setOrigin(Settings.$newPermission.value, o.value);
+        Db.setOrigin(Settings.$newPermission.value, Settings.$originsSelect.value);
         Settings.$newPermission.value = "";
       }
       Settings.loadSitesIntoList();

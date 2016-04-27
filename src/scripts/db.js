@@ -59,6 +59,16 @@ var Db = {
     console.log(obj);
   },
 
+  getAllOrigins: function () {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj;
+    if (!!origins) {
+      obj = JSON.parse(origins);
+      return obj;
+    }
+    return null;
+  },
+
   get: function (setting) {
     var value = localStorage.getItem(setting);
     if (!!value) {

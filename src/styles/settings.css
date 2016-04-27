@@ -205,9 +205,19 @@ header .active, header li:hover {
   overflow: auto;
 }
 
-#permissions-list li {
+.origin-list li {
   height: 23px;
   border-bottom: 1px solid #E8E8E8;
+}
+
+.origin-list li:hover {
+  background: #f5f5f5;
+}
+
+#custom-permissions-list li {
+  line-height: 23px;
+  vertical-align: middle;
+  padding-left: 5px;
 }
 
 #permissions-list li.disabled {
@@ -219,7 +229,7 @@ header .active, header li:hover {
   outline: 2px solid blue;
 }
 
-#permissions-list li:last-child {
+.origin-list li:last-child {
   border-bottom: none;
 }
 

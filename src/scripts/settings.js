@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   Settings.$stopAtDayEnd.addEventListener('click', function (e) {
-    Settings.save(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
+    Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
   });
   document.querySelector(".tab-links").addEventListener('click', function (e) {
     var tab = e.target.getAttribute("data-tab");

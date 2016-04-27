@@ -18,7 +18,7 @@ var Settings = {
   $stopAtDayEnd: null,
   $defaultProject: null,
   showPage: function () {
-    var key, project, clientName, projects, clients;
+    var key, project, clientName, projects, clients, selected;
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
@@ -43,13 +43,13 @@ var Settings = {
       Settings.$defaultProject.innerHTML = '<option value="0">- No project -</option>';
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
+          selected = '';
           project = projects[key];
           clientName = (!!project.cid && !!clients[project.cid]) ? ' . ' + clients[project.cid].name  : '';
           if (parseInt(Db.get('defaultProject'), 10) === project.id) {
-            Settings.$defaultProject.innerHTML += "<option selected value='" + project.id + "'>" + project.name + clientName + "</option>";
-          } else {
-            Settings.$defaultProject.innerHTML += "<option value='" + project.id + "'>" + project.name + clientName +  "</option>";
+            selected = "selected ";
           }
+          Settings.$defaultProject.innerHTML += "<option " + selected +"value='" + project.id + "'>" + project.name + clientName + "</option>";
         }
       }
     }

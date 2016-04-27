@@ -174,3 +174,7 @@ header .active, header li:hover {
 .container .active {
   left: 15px!important;
 }
+
+#default-project {
+  margin-left: 5px;
+}

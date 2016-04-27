@@ -49,7 +49,7 @@ var Settings = {
           if (parseInt(Db.get('defaultProject'), 10) === project.id) {
             selected = "selected ";
           }
-          Settings.$defaultProject.innerHTML += "<option " + selected +"value='" + project.id + "'>" + project.name + clientName + "</option>";
+          Settings.$defaultProject.innerHTML += "<option " + selected + "value='" + project.id + "'>" + project.name + clientName + "</option>";
         }
       }
     }

@@ -117,7 +117,7 @@ var Settings = {
             checked = '';
           }
 
-          html += "<option id='origin' data-id='" + i + "' value='" + key + "'>" + key + "</option>";
+          html += "<option id='origin' data-id='" + i + "' value='" + key + "'>" + TogglOrigins[key].name + "</option>";
           html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" data-host="' + TogglOrigins[key] + '" ' + checked + '><div>' + key + '</div></li>';
         }
       }

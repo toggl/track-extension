@@ -236,3 +236,7 @@ header .active, header li:hover {
   margin-left: 5px;
   margin-top: 5px;
 }
+
+#default-project {
+  margin-left: 5px;
+}

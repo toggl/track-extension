@@ -167,7 +167,7 @@ var PopUp = {
 
   /* Edit form functions */
   updateEditForm: function (view) {
-    var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
+    var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : parseInt(Db.get('defaultProject'), 10),
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
       togglButtonDescription = document.querySelector("#toggl-button-description"),
       projectSelect,

@@ -100,6 +100,7 @@ var togglbutton = {
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
   fullVersion: "TogglButton",
+  defaultProject: 0,
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
@@ -108,6 +109,7 @@ var togglbutton = {
           togglbutton.projects = response.user.projectMap;
           togglbutton.fullVersion = response.version;
           togglbutton.duration_format = response.user.duration_format;
+          togglbutton.defaultProject = response.defaults.project;
           if (opts.observe) {
             var observer = new MutationObserver(function (mutations) {
               togglbutton.renderTo(selector, renderer);
@@ -215,7 +217,7 @@ var togglbutton = {
       return;
     }
 
-    var pid = (!!response.entry.pid) ? response.entry.pid : 0,
+    var pid = (!!response.entry.pid) ? response.entry.pid : togglbutton.defaultProject,
       projectSelect,
       placeholder,
       handler,
@@ -444,7 +446,7 @@ var togglbutton = {
 
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
-    togglbutton.currentDescription = params.description;
+    togglbutton.currentDescription = invokeIfFunction(params.description);
     togglbutton.currentProject = params.projectName;
     link.title = invokeIfFunction(togglbutton.currentDescription) + (!!invokeIfFunction(togglbutton.currentProject) ? " - " + invokeIfFunction(togglbutton.currentProject) : "");
     if (!!params.calculateTotal) {
@@ -552,7 +554,7 @@ var togglbutton = {
       link = togglbutton.links[i].link;
       minimal = link.classList.contains("min");
 
-      if (!entry || togglbutton.links[i].params.description !== entry.description) {
+      if (!entry || invokeIfFunction(togglbutton.links[i].params.description) !== entry.description) {
         link.classList.remove('active');
         if (!minimal) {
           linkText = 'Start timer';

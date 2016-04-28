@@ -240,12 +240,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
   document.querySelector('#add-permission').addEventListener('click', function(e) {
     var domain = "*://" + Settings.$newPermission.value + "/",
       permission = {origins: [domain]},
-      e = Settings.$originsSelect;
+      o = Settings.$originsSelect;
 
     chrome.permissions.request(permission, function(result) {
       if (result) {
         console.log(domain +" > [ " + document.querySelector("#origins").value + " ]");
-        Db.setOrigin(Settings.$newPermission.value, Settings.$originsSelect.value);
+        Db.setOrigin(Settings.$newPermission.value, o.value);
         Settings.$newPermission.value = "";
       }
       Settings.loadSitesIntoList();

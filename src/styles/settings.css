@@ -250,3 +250,19 @@ header .active, header li:hover {
 #default-project {
   margin-left: 5px;
 }
+
+.remove-custom {
+  display: block;
+  float: left;
+  text-align: left;
+  text-decoration: none;
+  color: #EF2D2D;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.remove-custom:hover {
+  font-weight: bold;
+}

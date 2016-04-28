@@ -135,7 +135,7 @@ var Settings = {
     customs = Db.getAllOrigins();
     for (key in customs) {
       if (customs.hasOwnProperty(key)) {
-        custom_html += "<li><a id='toggl-button-hide'>×</a><strong>" + key + "</strong> - <i>" + customs[key] + "</i></li>";
+        custom_html += "<li><a class='remove-custom'>&times;</a><strong>" + key + "</strong> - <i>" + customs[key] + "</i></li>";
       }
     }
     Settings.$customPermissionsList.innerHTML = custom_html;
@@ -277,6 +277,33 @@ document.addEventListener('DOMContentLoaded', function (e) {
       }
     });
     }
+  });
+
+  document.querySelector('#custom-permissions-list').addEventListener('click', function(e) {
+    var custom, domain, permission, parent;
+    if (e.target.className === "remove-custom") {
+      parent = e.target.parentNode;
+      custom = parent.querySelector('strong').textContent;
+      domain = "*://" + custom + "/";
+      permission = {origins: [domain]};
+
+      chrome.permissions.contains(permission, function(allowed) {
+        if (allowed) {
+          chrome.permissions.remove(permission, function(result) {
+            if (result) {
+              Db.removeOrigin(custom);
+              parent.remove();
+            } else {
+              alert("Fail");
+            }
+          });
+        } else {
+          alert('No "' + custom + '" host permission found.');
+        }
+      });
+
+    }
+    return false;
   });
 
   document.querySelector("#day-end-time").addEventListener('blur', function (e) {

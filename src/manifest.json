@@ -7,6 +7,7 @@
   "background": {
     "scripts": [
       "scripts/vendor/bugsnag-2.min.js",
+      "scripts/origins.js",
       "scripts/db.js",
       "scripts/background.js"
     ]

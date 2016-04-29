@@ -119,6 +119,7 @@
     "*://*.rememberthemilk.com/*",
     "*://*.evernote.com/*",
     "*://*.mantishub.com/*",
+    "*://*.mantishub.io/*",
     "*://*.proworkflow.net/*",
     "*://*.proworkflow2.net/*",
     "*://*.proworkflow3.net/*",
@@ -219,6 +220,7 @@
         "*://*.rememberthemilk.com/*",
         "*://*.evernote.com/*",
         "*://*.mantishub.com/*",
+        "*://*.mantishub.io/*",
         "*://*.proworkflow.net/*",
         "*://*.proworkflow2.net/*",
         "*://*.proworkflow3.net/*",
@@ -500,7 +502,10 @@
       "js": ["scripts/content/proworkflow.js"]
     },
     {
-      "matches": ["*://*.mantishub.com/*"],
+      "matches": [
+        "*://*.mantishub.com/*",
+        "*://*.mantishub.io/*"
+      ],
       "js": ["scripts/content/mantishub.js"]
     },
     {

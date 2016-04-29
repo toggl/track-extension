@@ -1,5 +1,8 @@
+/*jslint indent: 2*/
+/*global window: false */
+
 window.TogglOrigins = {
-    "agenocrm.com" : {"url" : "//*.agenocrm.com/*","name":"AgenoCRM"},
+    "agenocrm.com" : {"url" : "*://*.agenocrm.com/*","name":"AgenoCRM"},
     "any.do" : {"url":"*://web.any.do/*","name":"Any.do"},
     "asana.com":{"url":"*://app.asana.com/*","name":"Asana"},
     "assembla.com":{"url":"*://www.assembla.com/*","name":"Assembla"},
@@ -29,8 +32,7 @@ window.TogglOrigins = {
     "gingkoapp.com":{"url":"*://gingkoapp.com/*","name":"Gingkoapp"},
     "github.com":{"url":"*://*.github.com/*","name":"Github"},
     "gitlab.com":{"url":"*://*.gitlab.com/*","name":"Gitlab"},
-    "calendar.google.com/calendar*":{"url":"*://calendar.google.com/calendar*","name":"Google Calendar"},
-    "google.com/calendar":{"url":"*://www.google.com/calendar/*","name":"Google Calendar", "clone" : "true"},
+    "calendar.google.com":{"url":"*://calendar.google.com/*","name":"Google Calendar"},
     "docs.google.com":{"url":"*://docs.google.com/*","name":"Google Docs"},
     "inbox.google.com":{"url":"*://inbox.google.com/*","name":"Google Inbox"},
     "keep.google.com":{"url":"*://keep.google.com/*","name":"Google Keep"},
@@ -79,6 +81,8 @@ window.TogglOrigins = {
     "testrail.com":{"url":"*://*.testrail.com/*","name":"Testrail"},
     "testrail.net":{"url":"*://*.testrail.net/*","name":"Testrail", "clone" : "true"},
     "todoist.com":{"url":"*://*.todoist.com/app*","name":"Todoist"},
+    "toggl.com":{"url":"*://toggl.com/*","name":"Toggl", "clone": "true"},
+    "www.toggl.com":{"url":"*://*.toggl.com/*","name":"Toggl", "clone": "true"},
     "toodledo.com":{"url":"*://*.toodledo.com/*","name":"Toodledo"},
     "tpondemand.com":{"url":"*://*.tpondemand.com/*","name":"Targetprocess", "clone" : "true"},
     "trac-hacks.org":{"url":"*://trac-hacks.org/*","name":"Trac"},

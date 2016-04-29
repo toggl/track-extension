@@ -32,6 +32,8 @@
     "chrome_style": true
   },
   "permissions": [
+    "*://*.toggl.com/*",
+    "*://toggl.com/*",
     "webRequest",
     "webRequestBlocking",
     "alarms",
@@ -59,7 +61,7 @@
     "*://app.breeze.pm/*",
     "*://bugs.jquery.com/*",
     "*://bugzilla.mozilla.org/*",
-    "*://calendar.google.com/calendar*",
+    "*://calendar.google.com/*",
     "*://calendar.sunrise.am/*",
     "*://*.capsulecrm.com/*",
     "*://*.cloudes.me/*",
@@ -81,7 +83,6 @@
     "*://gingkoapp.com/*",
     "*://*.github.com/*",
     "*://*.gitlab.com/*",
-    "*://www.google.com/calendar/*",
     "*://www.gqueues.com/*",
     "*://*.habitica.com/*",
     "*://secure.helpscout.net/*",

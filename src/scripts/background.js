@@ -1290,29 +1290,11 @@ TogglButton = {
   },
 
   tabUpdated: function (tabId, changeInfo, tab) {
-    
-    console.log (tabId);
-    console.log (changeInfo);
-    console.log (tab);
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins},
         origins,
         html = "";
-
-      console.log(permission);
-      //Db.checkUrl();
-      chrome.permissions.getAll(function(results){
-        origins = results.origins;
-        console.log(results);
-      /*
-        for (var i = origins.length - 1; i >= 0; i--) {
-          html = "<option id='origin' data-id='"+ i +"'>"+origins[i]+"</option>" + html;
-        };
-
-        document.querySelector("#origins").innerHTML = html;
-        */
-      });
 
       chrome.permissions.contains(permission, function(result) {
         console.log("url ["+permission.origins+"] | Tabs: " + result);

@@ -44,9 +44,6 @@
   ],
   "optional_permissions": [
     "*://*/",
-    "*://in.ts/*",
-    "*://*.toggl.com/*",
-    "*://toggl.com/*",
     "*://*.agenocrm.com/*",
     "*://web.any.do/*",
     "*://app.asana.com/*",

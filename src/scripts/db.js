@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var Db = {
@@ -26,14 +26,21 @@ var Db = {
   },
 
   getOriginFileName: function (domain) {
-    var origin = Db.getOrigin(domain);
+    var origin = Db.getOrigin(domain),
+      page;
 
     if (!origin) {
       origin = domain;
     }
 
     if (!TogglOrigins[origin]) {
-      return null;
+      // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
+      origin = origin.split(".");
+      origin.shift();
+      origin = origin.join(".");
+      if (!TogglOrigins[origin]) {
+        return null;
+      }
     }
 
     return TogglOrigins[origin].name.toLowerCase().replace(" ", "_") + ".js";

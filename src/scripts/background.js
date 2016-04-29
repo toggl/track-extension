@@ -1340,16 +1340,23 @@ TogglButton = {
 
     //find & remove protocol (http, ftp, etc.) and get domain
     if (url.indexOf("://") > -1) {
-        domain = url.split('/')[2];
+      domain = url.split('/')[2];
+    } else {
+      domain = url.split('/')[0];
     }
-    else {
-        domain = url.split('/')[0];
-    }
+
+    //remove www if needed
+    domain = domain.replace("www.", "");
+
+    //remove /* from the end
+    domain = domain.split('/*')[0];
 
     //find & remove port number
     domain = domain.split(':')[0];
 
     file = Db.getOriginFileName(domain);
+
+    //console.log("URL: " + url + " | Domain: " + domain);
 
     return {
       file: file,

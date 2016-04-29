@@ -25,6 +25,20 @@ var Db = {
     "projects": "",
   },
 
+  getOriginFileName: function (domain) {
+    var origin = Db.getOrigin(domain);
+
+    if (!origin) {
+      origin = domain;
+    }
+
+    if (!TogglOrigins[origin]) {
+      return null;
+    }
+
+    return TogglOrigins[origin].name.toLowerCase().replace(" ", "_") + ".js";
+  },
+
   getOrigin: function (origin) {
     var origins = localStorage.getItem(Db.originsKey),
       obj;

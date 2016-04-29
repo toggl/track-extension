@@ -1349,13 +1349,7 @@ TogglButton = {
     //find & remove port number
     domain = domain.split(':')[0];
 
-    origin = Db.getOrigin(domain);
-
-    if (!!origin) {
-      file = origin.split(".")[0] + ".js";
-    } else {
-      file = domain.split(".")[0] + ".js";
-    }
+    file = Db.getOriginFileName(domain);
 
     return {
       file: file,

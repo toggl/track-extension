@@ -1279,7 +1279,7 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        Bugsnag.notifyException(error);
+        Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
       }
 
     } catch (e) {

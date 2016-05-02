@@ -27,7 +27,9 @@ var Db = {
 
   getOriginFileName: function (domain) {
     var origin = Db.getOrigin(domain),
-      page;
+      page,
+      name,
+      item;
 
     if (!origin) {
       origin = domain;
@@ -43,7 +45,13 @@ var Db = {
       }
     }
 
-    return TogglOrigins[origin].name.toLowerCase().replace(" ", "_") + ".js";
+    item = TogglOrigins[origin];
+
+    if (!!item.file) {
+      return item.file
+    }
+
+    return item.name.toLowerCase().replace(" ", "-") + ".js";
   },
 
   getOrigin: function (origin) {

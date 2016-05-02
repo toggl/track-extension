@@ -3,6 +3,7 @@
 
 'use strict';
 
+// Jira
 togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
     container = createTag('div', 'ghx-toggl-button'),
@@ -25,6 +26,7 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (e
   $('#ghx-detail-head').appendChild(container);
 });
 
+// Jira
 togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, function (elem) {
   var link, description, ul, li,
     numElem = $('#key-val', elem),
@@ -47,4 +49,20 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
   li.appendChild(link);
   ul.appendChild(li);
   $('.toolbar-split-left').appendChild(ul);
+});
+
+
+//Confluence
+togglbutton.render('#title-heading:not(.toggl)', {observe: true}, function (elem) {
+  var link, description,
+    titleElem = $('[id="title-text"]', elem);
+
+  description = titleElem.innerText;
+
+  link = togglbutton.createTimerLink({
+    className: 'confluence',
+    description: description
+  });
+
+  $('#title-text').appendChild(link);
 });

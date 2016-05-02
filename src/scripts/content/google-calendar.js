@@ -7,7 +7,7 @@ togglbutton.render('.ep:not(.toggl)', {observe: true}, function (elem) {
   var link, description, togglButtonElement;
 
   togglButtonElement = $('.ep-dpc', elem);
-  description = $('.ep-title input', elem).value;
+  description = $('.ep-title', elem).textContent;
 
   link = togglbutton.createTimerLink({
     className: 'google-calendar',

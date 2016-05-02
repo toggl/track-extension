@@ -314,9 +314,17 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // Add custom permission (custom domain)
   document.querySelector('#add-permission').addEventListener('click', function(e) {
-    var domain = "*://" + Settings.$newPermission.value + "/",
-      permission = {origins: [domain]},
+    var text = Settings.$newPermission.value,
+      domain,
+      permission,
       o = Settings.$originsSelect;
+
+    if (text.indexOf("//") != -1) {
+      Settings.$newPermission.value = text.split("//")[1];
+    }
+
+    domain = "*://" + Settings.$newPermission.value + "/";
+    permission = {origins: [domain]};
 
     chrome.permissions.request(permission, function(result) {
       if (result) {

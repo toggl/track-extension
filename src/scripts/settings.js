@@ -112,8 +112,8 @@ var Settings = {
 
     // Load permissions list
     chrome.permissions.getAll(function (results) {
+      Settings.origins = [];
       origins = results.origins;
-      console.log("origins: ALL("+Object.keys(TogglOrigins).length+ ") | Enabled ("+origins.length+")");
       for (i = 0; i < origins.length; i++) {
         name = url = origins[i].replace("*://*.", "").replace("*://", "").replace("/*", "");
         if (url.split(".").length > 2) {
@@ -126,11 +126,7 @@ var Settings = {
           name: name
         };
       }
-console.log ("Settings----------");
-console.log (Settings.origins);
-console.log ("TOggl Ogir");
-console.log (TogglOrigins);
-console.log ("--------------------------");
+
       for (key in TogglOrigins) {
         if (TogglOrigins.hasOwnProperty(key)) {
           disabled = '';
@@ -173,6 +169,7 @@ console.log ("--------------------------");
     Settings.$customPermissionsList.innerHTML = custom_html;
   }
 };
+
 document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$startAutomatically = document.querySelector("#start_automatically");
   Settings.$stopAutomatically = document.querySelector("#stop_automatically");
@@ -323,7 +320,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     chrome.permissions.request(permission, function(result) {
       if (result) {
-        console.log(domain +" > [ " + document.querySelector("#origins").value + " ]");
         Db.setOrigin(Settings.$newPermission.value, o.value);
         Settings.$newPermission.value = "";
       }

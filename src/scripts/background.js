@@ -1305,11 +1305,12 @@ TogglButton = {
             code: text
           });
           console.log("FILE: " + domain.file);
-          /*
-          chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-          chrome.tabs.executeScript(tabId, {file: "scripts/common.js"});
-          chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-          */
+
+          if (!!domain.file) {
+            chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
+            chrome.tabs.executeScript(tabId, {file: "scripts/common.js"});
+            chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
+          }
         }
       });
     }

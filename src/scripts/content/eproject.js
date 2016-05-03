@@ -40,8 +40,7 @@ togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', 
     container = $('.times', elem),
     titleElem = $('.entry-title a span', elem),
     trackedContainer = createTag('span', 'toggl-tracked'),
-    trackedElem = $('.toggl-span', elem),
-    description = titleElem.textContent.trim();
+    trackedElem = $('.toggl-span', elem);
 
   if (container === null) {
     return;
@@ -50,6 +49,8 @@ togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', 
   if ($('.entry-title a span', elem) === null) {
     return;
   }
+  // This needs to be after the null check above
+  var description = titleElem.textContent.trim();
 
   projectName = '';
   if ($('.project-title a span.label')) {
@@ -109,8 +110,7 @@ togglbutton.render('.home .table-recent-tasks tr:not(.toggl)', {observe: true}, 
     container = $('.actions', elem),
     titleElem = $('.task-title', elem),
     trackedContainer = createTag('span', 'toggl-tracked'),
-    trackedElem = $('.toggl-span', elem),
-    description = titleElem.textContent.trim();
+    trackedElem = $('.toggl-span', elem);
 
   if (container === null) {
     return;
@@ -119,6 +119,8 @@ togglbutton.render('.home .table-recent-tasks tr:not(.toggl)', {observe: true}, 
   if ($('.task-title', elem) === null) {
     return;
   }
+  // This needs to be after the null check above
+  var description = titleElem.textContent.trim()
 
   projectName = '';
   if ($('.project a span.label')) {

@@ -9,7 +9,7 @@ togglbutton.render('#frmMain', {}, function (elem) {
   link = togglbutton.createTimerLink({
     className: 'xero',
     projectName: 'Finance',
-    description: $('#frmMain h1').innerText
+    description: $('#frmMain h1').textContent.trim()
   });
 
   liTag = createTag("li", "xn-h-menu");

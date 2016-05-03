@@ -5,9 +5,15 @@
 
 // Tasks listing page in project
 togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
-  var link, spanTag, projectName, desc,
+  var link, spanTag, desc,
     className = 'huh',
-    container = $('.taskIcons', elem);
+    container = $('.taskIcons', elem),
+    projectFunc = function () {
+      if ($("#projectName")) {
+        return $("#projectName").childNodes[0].textContent.trim();
+      }
+      return "";
+    };
 
   if (container === null) {
     return;
@@ -17,16 +23,12 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
     return;
   }
 
-  if ($("#projectName")) {
-    projectName = $("#projectName").innerHTML;
-  }
-
   desc = $('.taskName', elem).textContent;
 
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
     description: desc,
-    projectName: projectName
+    projectName: projectFunc
   });
 
   link.classList.add(className);
@@ -54,28 +56,30 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
   container.insertBefore(spanTag, container.lastChild);
 });
 
-// Tasks View Page
+// Tasks Detail View Page
 togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: true}, function (elem) {
-  var link, liTag, titleEl, projectName, desc;
+  var link, liTag, titleEl, desc,
+    projectFunc = function () {
+      if ($("#projectName")) {
+        return $("#projectName").childNodes[0].textContent.trim();
+      }
+      return "";
+    };
+
   liTag = document.createElement("li");
   liTag.classList.add("toggl-li");
 
   titleEl = document.getElementById("Task");
   desc = titleEl.getAttribute("data-taskname");
 
-  if ($("#projectName")) {
-    projectName = $("#projectName").innerHTML;
-  }
-
   link = togglbutton.createTimerLink({
     className: 'teamworkpm',
     description: desc,
-    projectName: projectName
+    projectName: projectFunc
   });
 
   link.classList.add("btn");
   link.classList.add("btn-default");
-  link.setAttribute("title", "Toggl Timer");
   liTag.appendChild(link);
   elem.insertBefore(liTag, elem.firstChild);
 

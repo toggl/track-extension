@@ -16,6 +16,27 @@
       <div class="tab tab-1 active">
         <ul class="list">
           <li>
+            <label for="default-project">Default Project</label>
+            <select id="default-project" name="default-project">
+            </select>
+            <div class="description">The default project will be selected when timer is started with no matched project</div>
+          </li>
+          <li>
+            <input type="checkbox" id="show_right_click_button">
+            <label for="show_right_click_button">Show button in right click menu</label>
+            <div class="description">Shows a "Start timer" button in the right click menu</div>
+          </li>
+          <li>
+            <input type="checkbox" id="start_automatically">
+            <label for="start_automatically">Start automatically</label>
+            <div class="description">Start time tracking of latest task when chrome starts</div>
+          </li>
+          <li>
+            <input type="checkbox" id="stop_automatically">
+            <label for="stop_automatically">Stop automatically</label>
+            <div class="description">Stop time tracking when the browser is closed</div>
+          </li>
+          <li>
             <input type="checkbox" id="show_post_start_popup">
             <label for="show_post_start_popup">Show post-start popup</label>
             <div class="description">Opens up edit form right after clicking "Start timer" link</div>
@@ -50,6 +71,17 @@
             <label for="discard-notification">Idle detection</label>
             <div class="description">Shows notification when timer was tracking but user has been idle and allows to discard idle time</div>
           </li>
+          <li class="stop-at-day-end">
+            <input type="checkbox" id="stop-at-day-end">
+            <label for="stop-at-day-end">Stop automatically at the end of the day</label>
+            <p class="description">The timer will be stopped automatically at this time of day</p>
+            <div class="subsettings-details">
+              <p>
+                <label for="day-end-time">End of day time:</label>
+                <input type="time" id="day-end-time">
+              </p>
+            </div>
+          </li>
         </ul>
       </div>
       <div class="tab tab-2">
@@ -57,7 +89,8 @@
           <li class="pomodoro-mode">
             <input type="checkbox" id="pomodoro-mode">
             <label for="pomodoro-mode">Enable Pomodoro mode</label>
-            <p class="description">Allows user to define Pomodoro Timer interval. Pomodoro timer start running every time time entry is started. At the end of the interval the timer is stopped and user is shown notification to take a break</p>
+            <p class="description">Allows user to define Pomodoro Timer interval. Pomodoro timer starts running every time a time entry is started. At the end of the interval the user is shown notification to take a break.
+              User can set an option to stop or continue time tracking when pomodoro timer ends.</p>
             <div class="subsettings-details">
               <p>
                 <input type="checkbox" id="enable-sound-signal">
@@ -67,14 +100,18 @@
                 <label for="pomodoro-interval">Length of Pomodoro time interval in minutes</label>
                 <input type="number" id="pomodoro-interval" min="1">
               </p>
+              <p>
+                <input type="checkbox" id="pomodoro-stop-time">
+                <label for ="pomodoro-stop-time">Stop time tracking when pomodoro time ends</label>
+              </p>
             </div>
           </li>
         <ul>
       </div>
-      <p class="changelog">Change log: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a></p>
     </div>
     <div class="footer">
       Version <span id="version"></span>
+      <p class="changelog">Change log: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a></p>
     </div>
     <script src="../scripts/settings.js"></script>
   </body>

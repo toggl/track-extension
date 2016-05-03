@@ -5,6 +5,9 @@
 var Db = {
   // settings: key, default value
   settings: {
+    "startAutomatically": false,
+    "stopAutomatically": false,
+    "showRightClickButton": true,
     "showPostPopup": true,
     "socketEnabled": true,
     "nannyCheckEnabled": true,
@@ -13,7 +16,12 @@ var Db = {
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
-    "pomodoroInterval": 25
+    "pomodoroStopTimeTrackingWhenTimerEnds": true,
+    "pomodoroInterval": 25,
+    "stopAtDayEnd": false,
+    "dayEndTime": "17:00",
+    "defaultProject": "0",
+    "projects": "",
   },
 
   get: function (setting) {
@@ -96,6 +104,21 @@ var Db = {
         Db.set("pomodoroSoundEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
         Db.updateSetting("pomodoroInterval", request.state);
+      } else if (request.type === 'toggle-pomodoro-stop-time') {
+        Db.set("pomodoroStopTimeTrackingWhenTimerEnds", request.state);
+      } else if (request.type === 'toggle-right-click-button') {
+        Db.updateSetting("showRightClickButton", request.state);
+      } else if (request.type === 'toggle-start-automatically') {
+        Db.updateSetting("startAutomatically", request.state);
+      } else if (request.type === 'toggle-stop-automatically') {
+        Db.updateSetting("stopAutomatically", request.state);
+      } else if (request.type === 'toggle-stop-at-day-end') {
+        Db.updateSetting("stopAtDayEnd", request.state);
+        TogglButton.startCheckingDayEnd(request.state);
+      } else if (request.type === 'toggle-day-end-time') {
+        Db.updateSetting("dayEndTime", request.state);
+      } else if (request.type === 'change-default-project') {
+        Db.updateSetting("defaultProject", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

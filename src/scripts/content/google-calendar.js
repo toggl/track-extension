@@ -2,16 +2,12 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.eb-root:not(.toggl), .ep:not(.toggl)', {observe: true}, function (elem) {
+// Detail view
+togglbutton.render('.ep:not(.toggl)', {observe: true}, function (elem) {
   var link, description, togglButtonElement;
 
-  if ($('.eb-title', elem) !== null) {
-    togglButtonElement = $('.eb-date', elem);
-    description = $('.eb-title', elem).textContent;
-  } else {
-    togglButtonElement = $('.ep-dpc .ep-drs', elem);
-    description = $('.ep .ep-title input', elem).value;
-  }
+  togglButtonElement = $('.ep-dpc', elem);
+  description = $('.ep-title', elem).textContent;
 
   link = togglbutton.createTimerLink({
     className: 'google-calendar',
@@ -19,4 +15,17 @@ togglbutton.render('.eb-root:not(.toggl), .ep:not(.toggl)', {observe: true}, fun
   });
 
   togglButtonElement.appendChild(link);
+});
+
+
+// Popup view
+togglbutton.render('#mtb:not(.toggl)', {observe: true}, function (elem) {
+  var link;
+
+  link = togglbutton.createTimerLink({
+    className: 'google-calendar',
+    description: elem.textContent
+  });
+
+  elem.parentNode.insertBefore(link, elem.nextSibling);
 });

@@ -1,4 +1,4 @@
-/*jslint indent: 2, unparam: true*/
+/*jslint indent: 2, unparam: true, plusplus: true*/
 /*global document: false, MutationObserver: false, chrome: false, window: false*/
 "use strict";
 
@@ -87,6 +87,7 @@ function secondsToTime(duration, format) {
 var togglbutton = {
   isStarted: false,
   element: null,
+  links: [],
   serviceName: '',
   mousedownTrigger: null,
   projectBlurTrigger: null,
@@ -99,20 +100,26 @@ var togglbutton = {
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
   fullVersion: "TogglButton",
+  defaultProject: 0,
   render: function (selector, opts, renderer) {
     chrome.extension.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
-        togglbutton.entries = response.user.time_entries;
-        togglbutton.projects = response.user.projectMap;
-        togglbutton.fullVersion = response.version;
-        togglbutton.duration_format = response.user.duration_format;
-        if (opts.observe) {
-          var observer = new MutationObserver(function (mutations) {
-            togglbutton.renderTo(selector, renderer);
-          });
-          observer.observe(document, {childList: true, subtree: true});
+        try {
+          togglbutton.entries = response.user.time_entries;
+          togglbutton.projects = response.user.projectMap;
+          togglbutton.fullVersion = response.version;
+          togglbutton.duration_format = response.user.duration_format;
+          togglbutton.defaultProject = response.defaults.project;
+          if (opts.observe) {
+            var observer = new MutationObserver(function (mutations) {
+              togglbutton.renderTo(selector, renderer);
+            });
+            observer.observe(document, {childList: true, subtree: true});
+          }
+          togglbutton.renderTo(selector, renderer);
+        } catch (e) {
+          chrome.extension.sendMessage({type: 'error', stack: e.stack});
         }
-        togglbutton.renderTo(selector, renderer);
       }
     });
   },
@@ -163,7 +170,7 @@ var togglbutton = {
       s = document.getElementById("toggl-button-tag");
     for (i = 0; i < s.options.length; i += 1) {
       if (s.options[i].selected === true) {
-        tag = s.options[i].innerHTML;
+        tag = s.options[i].textContent;
         tags.push(tag);
       }
     }
@@ -210,7 +217,7 @@ var togglbutton = {
       return;
     }
 
-    var pid = (!!response.entry.pid) ? response.entry.pid : 0,
+    var pid = (!!response.entry.pid) ? response.entry.pid : togglbutton.defaultProject,
       projectSelect,
       placeholder,
       handler,
@@ -233,7 +240,7 @@ var togglbutton = {
     if (editForm !== null) {
       togglbutton.fetchTasks(pid, editForm);
       togglButtonDescription = $("#toggl-button-description");
-      togglButtonDescription.value = response.entry.description;
+      togglButtonDescription.value = response.entry.description || "";
       $("#toggl-button-project").value = pid;
       projectSelect = document.getElementById("toggl-button-project");
       placeholder = $("#toggl-button-project-placeholder > div");
@@ -316,7 +323,7 @@ var togglbutton = {
     };
 
     togglButtonDescription = $("#toggl-button-description", editForm);
-    togglButtonDescription.value = response.entry.description;
+    togglButtonDescription.value = response.entry.description || "";
     setCursorAtBeginning(togglButtonDescription);
     $("#toggl-button-project", editForm).value = pid;
     projectSelect = $("#toggl-button-project", editForm);
@@ -440,20 +447,10 @@ var togglbutton = {
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
     togglbutton.currentDescription = invokeIfFunction(params.description);
-    togglbutton.currentProject = invokeIfFunction(params.projectName);
+    togglbutton.currentProject = params.projectName;
+    link.title = invokeIfFunction(togglbutton.currentDescription) + (!!invokeIfFunction(togglbutton.currentProject) ? " - " + invokeIfFunction(togglbutton.currentProject) : "");
     if (!!params.calculateTotal) {
       togglbutton.mainDescription = invokeIfFunction(params.description);
-    }
-
-    function activate() {
-      if (document.querySelector(".toggl-button.active")) {
-        document.querySelector(".toggl-button.active").classList.remove('active');
-      }
-      link.classList.add('active');
-      link.style.color = '#1ab351';
-      if (params.buttonType !== 'minimal') {
-        link.innerHTML = 'Stop timer';
-      }
     }
 
     function deactivate() {
@@ -464,17 +461,34 @@ var togglbutton = {
       }
     }
 
+    function activate() {
+      var currentLink = link;
+      if (document.querySelector(".toggl-button.active")) {
+        link = document.querySelector(".toggl-button.active");
+        deactivate();
+        link = currentLink;
+      }
+      link.classList.add('active');
+      link.style.color = '#1ab351';
+      if (params.buttonType !== 'minimal') {
+        link.innerHTML = 'Stop timer';
+      }
+    }
+
     link.classList.add(params.className);
     togglbutton.serviceName = params.className;
 
     if (params.buttonType === 'minimal') {
       link.classList.add('min');
       link.removeChild(link.firstChild);
+      link.title = "Start timer: " + link.title;
     }
 
     link.addEventListener('click', function (e) {
       var opts;
       e.preventDefault();
+      e.stopPropagation();
+      link = e.target;
 
       if (link.classList.contains('active')) {
         deactivate();
@@ -502,14 +516,21 @@ var togglbutton = {
       return false;
     });
 
+    // Add created link to links array
+    togglbutton.links.push({params: params, link: link});
+
     // new button created - set state
     chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
-      var description, currentEntry;
+      var currentEntry, i;
       if (response.success) {
         currentEntry = response.currentEntry;
-        description = invokeIfFunction(params.description);
-        if (description === currentEntry.description) {
-          activate(link);
+        for (i = 0;  i < togglbutton.links.length; i++) {
+          link = togglbutton.links[i].link;
+          if (invokeIfFunction(togglbutton.links[i].params.description)  === currentEntry.description) {
+            activate();
+          } else {
+            deactivate();
+          }
         }
       }
     });
@@ -521,34 +542,41 @@ var togglbutton = {
   updateTimerLink: function (entry) {
     var linkText = '',
       color = '',
-      link = $(".toggl-button"),
+      link,
+      i,
       minimal;
-    if (link === null) {
+
+    if (togglbutton.links.length < 1) {
       return;
     }
-    minimal = link.classList.contains("min");
 
-    if (!entry || togglbutton.currentDescription !== entry.description) {
-      link.classList.remove('active');
-      if (!minimal) {
-        linkText = 'Start timer';
+    for (i = 0;  i < togglbutton.links.length; i++) {
+      link = togglbutton.links[i].link;
+      minimal = link.classList.contains("min");
+
+      if (!entry || invokeIfFunction(togglbutton.links[i].params.description) !== entry.description) {
+        link.classList.remove('active');
+        if (!minimal) {
+          linkText = 'Start timer';
+        }
+      } else {
+        link.classList.add('active');
+        color = '#1ab351';
+        if (!minimal) {
+          linkText = 'Stop timer';
+        }
       }
-    } else {
-      link.classList.add('active');
-      color = '#1ab351';
-      if (!minimal) {
-        linkText = 'Stop timer';
-      }
+      link.style.color = color;
+      link.innerHTML = linkText;
     }
-    link.style.color = color;
-    link.innerHTML = linkText;
   },
 
   updateTrackedTimerLink: function () {
     var totalTime = $(".toggl-tracked"),
-      duration = togglbutton.calculateTrackedTime();
+      duration;
 
     if (!!totalTime) {
+      duration = togglbutton.calculateTrackedTime();
       totalTime.innerHTML = "<h3>Time tracked</h3><p title='Time tracked with Toggl: " + duration + "'>" + duration + "</p>";
     }
   },

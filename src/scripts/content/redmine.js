@@ -8,6 +8,10 @@ togglbutton.render('body.controller-issues.action-show h2:not(.toggl)', {}, func
     titleElem = $('.subject h3'),
     projectElem = $('h1');
 
+  if (!!$('.toggl-button')) {
+    return;
+  }
+
   description = titleElem.innerText;
   if (numElem !== null) {
     description = numElem.innerText + " " + description;

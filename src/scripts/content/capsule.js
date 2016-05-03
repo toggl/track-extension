@@ -2,18 +2,26 @@
 /*global $: false, document: false, togglbutton: false*/
 
 'use strict';
-// observe: true
-togglbutton.render('body', {}, function (elem) {
-  var link, liTag;
+
+// List items
+togglbutton.render('.list li:not(.toggl)', {observe: true}, function (elem) {
+  var link,
+    taskElement = $('.task-title', elem),
+    description = $('a', taskElement).textContent.trim(),
+    projectName = function () {
+      var label = $('span.highlight', taskElement);
+      if (!!label) {
+        return label.textContent;
+      }
+      return "";
+    };
 
   link = togglbutton.createTimerLink({
     className: 'capsule',
-    description: $('.currentPage', elem).textContent,
-    projectName: ''
+    description: description,
+    projectName: projectName,
+    buttonType: 'minimal'
   });
 
-  liTag = document.createElement("li");
-  liTag.className = 'item';
-  liTag.appendChild(link);
-  $('ul.pageActions').insertBefore(liTag, $('ul.pageActions li'));
+  taskElement.appendChild(link);
 });

@@ -48,6 +48,8 @@
 .toggl-button.min {
   height: 19px;
   padding-left: 19px;
+  width: 0px;
+  overflow: hidden;
 }
 
 .toggl-button.min:not(.active) {
@@ -404,12 +406,11 @@ only screen and (min-resolution: 192dpi) {
 
 /********* SIFTER *********/
 .toggl-button.sifterapp {
-  color: white;
   float: right;
 }
 
-.toggl-button.sifterapp.active {
-  color: rgb(52, 255, 125) !important;
+.issue-detail-subject .toggl-button.sifterapp {
+  margin-top: 7px;
 }
 
 /********* GOOGLE DOCS *********/
@@ -433,9 +434,8 @@ only screen and (min-resolution: 192dpi) {
 
 /********* CAPSULECRM *********/
 .toggl-button.capsule {
-  line-height: 15px;
-  background-position: 7% 40%;
-  padding-left: 30px !important;
+  position: absolute;
+  margin-left: 5px;
 }
 
 /********* ZENDESK *********/
@@ -793,7 +793,13 @@ only screen and (min-resolution: 192dpi) {
 
 /********* GOOGLE CALENDAR *********/
 .toggl-button.google-calendar {
-  margin-left: 10px;
+  margin-left: 30px;
+  margin-bottom: 10px;
+  margin-top: -2px;;
+}
+
+.bubblecontent .toggl-button.google-calendar {
+  margin: 0;
 }
 
 /********* DOBAMBAM *********/
@@ -868,7 +874,154 @@ only screen and (min-resolution: 192dpi) {
   font-weight: normal;
 }
 
+.toggl-button.salesforce-lightning {
+  position: absolute;
+  top: 35px;
+  left: 10px;
+}
+#toggl-button-edit-form .toggl-button.salesforce-lightning {
+  position: static;
+}
+
 /********* DRAFTIN *********/
 .toggl-button.draftin {
   margin-right: 15px;
+}
+
+/********* PHABRICATOR *********/
+.toggl-button.phabricator {
+  margin-left: 5px;
+  position: absolute;
+}
+
+/********* MANTISHUB *********/
+.toggl-button.mantishub {
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+/********* REMEMEBER THE MILK *********/
+.toggl-button.rememberthemilk {
+  margin-left: 5px;
+  position: absolute;
+}
+
+/********* FRESHDESK *********/
+.toggl-button.freshdesk {
+  margin-top: 3px;
+}
+/********* CLOUDES.ME *********/
+.boxedDotted .toggl-button.cloudes {
+  margin-left: 7px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+/********* DOIT *********/
+.title > .toggl-button.doit {
+  position: absolute;
+  top: 10px;
+}
+
+.title > .ng-hide + .toggl-button.doit {
+  margin-left: 5px;
+}
+
+.task-op > .toggl-button.doit {
+  color: #222;
+  font-size: 14px;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #d6d6d6;
+  padding: 0 12px;
+  text-decoration: none;
+  box-shadow: 0 1px 0 #d6d6d6;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  padding: 0 10px 0 35px;
+  background-position: 10px 2px!important;
+}
+
+/********* SLACK *********/
+#active_channel_name .toggl-button.slack {
+  position: absolute;
+  right: 60px;
+  top: 9pt;
+  margin-top: 5px;
+  background-position-x: 5px;
+  background-color: #fff!important;
+  width: 25px;
+  height: 30px;
+  background-position-x: 5px!important;
+}
+
+/********* ZOHO BOOKS *********/
+.toggl-button.zoho_books {
+  margin-top: 5px;
+  margin-left: 4px;
+}
+/********* KEEP *********/
+.toggl-button.keep {
+  margin-bottom: 7px;
+}
+
+/********* GOOGLE INBOX *********/
+.toggl-button.google-inbox {
+  margin-top: 5px;
+}
+
+/********* WORDPRESS *********/
+.toggl-button.wordpress {
+  float: left;
+  margin-left: 10px;
+}
+
+/********* PLANBOX *********/
+.toggl-button.planbox {
+  color: black;
+  font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  margin-left: -5px;
+}
+
+/********* EPROJECT *********/
+.toggl-timer {
+  margin-left: 5px!important;
+}
+
+/********* EVERNOTE *********/
+.toggl-wrapper.evernote {
+  display: inline-block;
+  margin-top: 5px;
+  min-width: 100px;
+}
+
+.toggl-button.evernote {
+  font-family: gotham, helvetica, arial, sans-serif !important;
+  font-size: 13px !important;
+}
+
+/********* OPENPROJECT *********/
+.subject-header .toggl-button.openproject {
+  float: left;
+}
+
+/********* ZUBE *********/
+.toggl-button.zube {
+  float: left;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.toggl-button.zube.min {
+  margin-right: 5px;
+  margin-top: -2px;
+  margin-left: 0;
+}
+
+#tickets-show-main-container .toggl-button.zube {
+  float:none;
 }

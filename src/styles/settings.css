@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -10,7 +11,7 @@ input[type="number"], input[type="time"]{
   vertical-align: middle;
   padding: 0 0 0 10px !important;
   margin-left: 10px !important;
-  max-width: 70px;
+  max-width: 90px;
   border: 1px solid rgb(191, 191, 191);
   border-radius: 2px;
 }
@@ -21,19 +22,22 @@ input[type="number"] {
 
 .container {
   width: 800px;
-  margin: 20px 15px auto;
+  margin: 20px 15px 0px;
   padding: 0;
   color: #505050!important;
   float: left;
-  height: 380px;
+  min-height: 380px;
+  max-height: 400px;
+  overflow: hidden;
 }
 
 .list {
   width: 800px;
-  margin-bottom: 80px;
   padding: 0;
   list-style: none;
   float: left;
+  overflow-y: auto;
+  margin-bottom: 40px;
 }
 
 .list li {
@@ -46,6 +50,10 @@ input[type="number"] {
 
 .list li #pomodoro-mode:checked ~ div {
   height: 200px;
+}
+
+.list li #stop-at-day-end:checked ~ div{
+  height:70px;
 }
 
 .list li label {
@@ -92,11 +100,15 @@ input[type="number"] {
   font-size: 12px;
   color: #8A8888;
   float: left;
+  position: fixed;
+  bottom: 0;
 }
 
 .changelog {
-  position: absolute;
-  bottom: 36px;
+  float: right;
+  margin: 0;
+  padding: 0;
+  margin-right: 10px;
 }
 
 #version a {
@@ -119,6 +131,14 @@ input[type="number"] {
   visibility: visible;
 }
 
+header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  z-index: 100;
+}
+
 header ul {
   list-style: none;
   padding: 0;
@@ -138,8 +158,24 @@ header .active, header li:hover {
 }
 
 .container .tab {
-  display: none;
+  position: absolute;
+  bottom: 42px;
+  top: 35px;
+  transition:left 300ms ease-in-out;
 }
+
+.container .tab-1 {
+  left: -830px;
+}
+
+.container .tab-2 {
+  left: 830px;
+}
+
 .container .active {
-  display: block!important;
+  left: 15px!important;
+}
+
+#default-project {
+  margin-left: 5px;
 }

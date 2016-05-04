@@ -179,3 +179,38 @@ header .active, header li:hover {
 #default-project {
   margin-left: 5px;
 }
+
+#sound-volume {
+  width: 80px;
+  margin-left: 20px;
+  position: relative;
+  top: 4px;
+}
+
+#volume-label {
+  display: inline-block;
+  margin-left: 8px;
+  height: 16px;
+  width: 40px;
+  text-align: right;
+  margin-right: 5px;
+}
+
+#sound-test {
+  position: relative;
+  right: -28px;
+}
+
+.pomodoro-sound {
+  clear: both;
+}
+
+.pomodoro-sound-volume {
+  overflow: hidden;
+  height: 0px;
+  transition:height 300ms ease-in-out;
+}
+
+#enable-sound-signal:checked ~.pomodoro-sound-volume {
+  height: 36px;
+}

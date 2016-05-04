@@ -615,6 +615,7 @@ TogglButton = {
     if (Db.get("pomodoroSoundEnabled")) {
       stopSound = new Audio();
       stopSound.src = 'sounds/time_is_up_1.mp3'; //As an option we can add multiple sounds and make it configurable
+      stopSound.volume = Db.get("pomodoroSoundVolume");
       stopSound.play();
     }
 

@@ -16,12 +16,13 @@ var Db = {
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
     "pomodoroSoundEnabled": true,
+    "pomodoroSoundVolume": 1,
     "pomodoroStopTimeTrackingWhenTimerEnds": true,
     "pomodoroInterval": 25,
     "stopAtDayEnd": false,
     "dayEndTime": "17:00",
     "defaultProject": "0",
-    "projects": "",
+    "projects": ""
   },
 
   get: function (setting) {
@@ -106,6 +107,8 @@ var Db = {
         Db.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'toggle-pomodoro-stop-time') {
         Db.set("pomodoroStopTimeTrackingWhenTimerEnds", request.state);
+      } else if (request.type === 'update-pomodoro-sound-volume') {
+        Db.set("pomodoroSoundVolume", request.state);
       } else if (request.type === 'toggle-right-click-button') {
         Db.updateSetting("showRightClickButton", request.state);
       } else if (request.type === 'toggle-start-automatically') {

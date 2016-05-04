@@ -93,10 +93,6 @@
               User can set an option to stop or continue time tracking when pomodoro timer ends.</p>
             <div class="subsettings-details">
               <p>
-                <input type="checkbox" id="enable-sound-signal">
-                <label for="enable-sound-signal">Enable sound notification at the end of an interval</label>
-              </p>
-              <p>
                 <label for="pomodoro-interval">Length of Pomodoro time interval in minutes</label>
                 <input type="number" id="pomodoro-interval" min="1">
               </p>
@@ -104,7 +100,18 @@
                 <input type="checkbox" id="pomodoro-stop-time">
                 <label for ="pomodoro-stop-time">Stop time tracking when pomodoro time ends</label>
               </p>
-            </div>
+              <div class="pomodoro-sound">
+                <input type="checkbox" id="enable-sound-signal">
+                <label for="enable-sound-signal">Enable sound notification at the end of an interval</label>
+
+                <p class="pomodoro-sound-volume">
+                  <label for="sound-volume">Sound volume</label>
+                  <input type="range" id="sound-volume">
+                  <span id="volume-label">100%</span>
+                  <button id="sound-test">Test &#9658;</button>
+                </p>
+              </div>
+          </div>
           </li>
         <ul>
       </div>

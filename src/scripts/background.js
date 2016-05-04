@@ -437,16 +437,31 @@ TogglButton = {
 
   analytics: function (event, service) {
     if (event === "settings") {
-      _gaq.push(['_trackEvent', 'stop-automatically', "settings/stop-automatically-" + Db.get("stopAutomatically")]);
       _gaq.push(['_trackEvent', 'start-automatically', "settings/start-automatically-" + Db.get("startAutomatically")]);
+      _gaq.push(['_trackEvent', 'stop-automatically', "settings/stop-automatically-" + Db.get("stopAutomatically")]);
       _gaq.push(['_trackEvent', 'right-click-button', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
-      _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
-      _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
       _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + Db.get("socketEnabled")]);
+      _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
+      _gaq.push(['_trackEvent', 'reminder-minutes', "settings/reminder-minutes-" + Db.get("nannyInterval")]);
+      _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
+
       _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + Db.get("pomodoroModeEnabled")]);
-      _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + Db.get("pomodoroSoundEnabled")]);
+      if (Db.get("pomodoroModeEnabled")) {
+        _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + Db.get("pomodoroSoundEnabled")]);
+        if (Db.get("pomodoroSoundEnabled")) {
+          _gaq.push(['_trackEvent', 'pomodoro-volume', "settings/pomodoro-volume-" + Db.get("pomodoroSoundVolume")]);
+        }
+        _gaq.push(['_trackEvent', 'pomodoro-stop', "settings/pomodoro-stop-" + Db.get("pomodoroStopTimeTrackingWhenTimerEnds")]);
+        _gaq.push(['_trackEvent', 'pomodoro-interval', "settings/pomodoro-interval-" + Db.get("pomodoroInterval")]);
+      }
+
       _gaq.push(['_trackEvent', 'stop-at-day-end', "settings/stop-at-day-end" + Db.get("stopAtDayEnd")]);
+      if (Db.get("stopAtDayEnd")) {
+        _gaq.push(['_trackEvent', 'stop-at-day-end-time', "settings/stop-at-day-end-time" + Db.get("dayEndTime")]);
+      }
+
+      _gaq.push(['_trackEvent', 'default-project', "settings/default-project" + Db.get("defaultProject")]);
     } else {
       _gaq.push(['_trackEvent', event, event + "-" + service]);
       chrome.runtime.getPlatformInfo(function (info) {

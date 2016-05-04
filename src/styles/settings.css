@@ -114,6 +114,7 @@ input[type="number"] {
 #version a {
   color: #8A8888!important;
   text-decoration: none;
+  line-height: 21px;
 }
 
 .description {

@@ -11,7 +11,7 @@ input[type="number"], input[type="time"]{
   vertical-align: middle;
   padding: 0 0 0 10px !important;
   margin-left: 10px !important;
-  max-width: 90px;
+  max-width: 100px;
   border: 1px solid rgb(191, 191, 191);
   border-radius: 2px;
 }

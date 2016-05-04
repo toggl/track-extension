@@ -178,6 +178,7 @@ header .active, header li:hover {
 
 #default-project {
   margin-left: 5px;
+  max-width: 280px;
 }
 
 #sound-volume {

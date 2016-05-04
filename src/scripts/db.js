@@ -15,6 +15,7 @@ var Db = {
     "nannyFromTo": "09:00-17:00",
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
+    "pomodoroSoundFile": "sounds/time_is_up_1.mp3",
     "pomodoroSoundEnabled": true,
     "pomodoroSoundVolume": 1,
     "pomodoroStopTimeTrackingWhenTimerEnds": true,

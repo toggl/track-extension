@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   document.querySelector("#sound-test").addEventListener('click', function (e) {
     var sound = new Audio();
-    sound.src = '../sounds/time_is_up_1.mp3';
+    sound.src = "../" + Db.get("pomodoroSoundFile");
     sound.volume = Settings.$pomodoroVolume.value / 100;
     sound.play();
   });

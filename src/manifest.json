@@ -131,7 +131,8 @@
     "*://*.visualstudio.com/*",
     "*://*.smartboard.cl/*",
     "*://*.openproject.com/*",
-    "*://zube.io/*"
+    "*://zube.io/*",
+    "*://*.rindle.com/*"
   ],
   "content_scripts": [
     {
@@ -234,7 +235,8 @@
         "*://*.openproject.com/*",
         "*://zube.io/*",
         "*://*.minicrm.pl/*",
-        "*://*.agenocrm.com/*"
+        "*://*.agenocrm.com/*",
+        "*://*.rindle.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -605,6 +607,10 @@
         "*://*.minicrm.pl/*"
       ],
       "js": ["scripts/content/minicrm.js"]
+    },
+    {
+      "matches": ["*://*.rindle.com/*"],
+      "js": ["scripts/content/rindle.js"]
     }
   ]
 }

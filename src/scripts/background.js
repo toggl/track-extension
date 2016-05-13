@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false, Image: false */
 "use strict";
 var TogglButton, openWindowsCount = 0;
 
@@ -57,6 +57,7 @@ TogglButton = {
   $checkingUserState: false,
   checkingWorkdayEnd: false,
   pomodoroAlarm: null,
+  pomodoroProgressTimer: null,
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
@@ -267,7 +268,7 @@ TogglButton = {
     } else {
       // Clear pomodoro timer
       clearTimeout(TogglButton.pomodoroAlarm);
-
+      clearInterval(TogglButton.pomodoroProgressTimer);
       TogglButton.$nannyTimer = null;
     }
     // Toggle workday end check
@@ -428,11 +429,67 @@ TogglButton = {
   triggerPomodoroAlarm: function (value) {
     if (TogglButton.pomodoroAlarm !== null) {
       clearTimeout(TogglButton.pomodoroAlarm);
+      clearInterval(TogglButton.pomodoroProgressTimer);
     }
     if (Db.get("pomodoroModeEnabled")) {
-      var interval = value || (parseInt(Db.get("pomodoroInterval"), 10) * 60000);
+      var interval = value || (parseInt(Db.get("pomodoroInterval"), 10) * 60000), steps = 120;
       TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
+      TogglButton.pomodoroProgressTimer = setInterval(TogglButton.updatePomodoroProgress(interval, steps), interval / steps);
     }
+  },
+
+  updatePomodoroProgress: function (interval, steps) {
+    var current = 0, intervalCount = 0;
+    return function () {
+      var key, img, imagePaths = {'19': 'images/active-19.png', '38': 'images/active-38.png'},
+        imageData = {}, imageLoadedCount = 0,
+        imageLoaded = function (key) {
+          return function () {
+            var canvas = document.createElement('canvas'),
+              ctx = canvas.getContext('2d');
+            ctx.drawImage(this, 0, 0);
+            ctx.beginPath();
+            ctx.strokeStyle = '#c0c0c0';
+            ctx.lineCap = 'round';
+            ctx.closePath();
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(2, this.naturalHeight - 5);
+            ctx.lineTo(this.naturalWidth - 2, this.naturalHeight - 5);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.strokeStyle = '#00cc00';
+            ctx.moveTo(1, this.naturalHeight - 5);
+            ctx.lineTo((this.naturalWidth - 1) * current, this.naturalHeight - 5);
+            ctx.stroke();
+            imageData[key] = ctx.getImageData(0, 0, this.naturalWidth, this.naturalHeight);
+            ++imageLoadedCount;
+            if (imageLoadedCount === 2) {
+              chrome.browserAction.setIcon({
+                imageData: imageData
+              });
+            }
+          };
+        };
+      intervalCount += (interval / steps);
+      current = intervalCount / interval;
+
+      if (Db.get("pomodoroModeEnabled")) {
+        for (key in imagePaths) {
+          if (imagePaths.hasOwnProperty(key)) {
+            img = new Image();
+            img.onload = imageLoaded(key);
+            img.src = imagePaths[key];
+          }
+        }
+      } else {
+        clearInterval(TogglButton.pomodoroProgressTimer);
+        chrome.browserAction.setIcon({
+          path: imagePaths
+        });
+      }
+    };
   },
 
   analytics: function (event, service) {
@@ -594,6 +651,7 @@ TogglButton = {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
+    clearInterval(TogglButton.pomodoroProgressTimer);
     var notificationId = 'pomodoro-time-is-up',
       stopSound,
       latestDescription = (TogglButton.$curEntry && TogglButton.$curEntry.description) ? " (" + TogglButton.$curEntry.description + ")" : "",

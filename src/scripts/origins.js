@@ -28,6 +28,7 @@ window.TogglOrigins = {
   "esa.io": {"url": "*://*.esa.io/*", "name": "Esa.io"},
   "eventum": {"url": "", "name": "Eventum"},
   "evernote.com": {"url": "*://*.evernote.com/*", "name": "Evernote"},
+  "exana.io": {"url": "*://*.exana.io/*", "name": "Phabricator"},
   "fogbugz.com": {"url": "*://*.fogbugz.com/*", "name": "Fogbugz"},
   "freshdesk.com": {"url": "*://*.freshdesk.com/*", "name": "Freshdesk"},
   "getflow.com": {"url": "*://*.getflow.com/*", "name": "Getflow"},

@@ -2,11 +2,11 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-// Workboard view
+// Phacility Workboard view
 togglbutton.render('#phabricator-standard-page-body .phui-workpanel-view .phui-object-item:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    description = $('.phui-object-item-name', elem).textContent,
-    projectName = $('.phui-crumb-view[href^="/project/view"]:not(.phabricator-last-crumb)').textContent.trim();
+    description = $('.phui-object-item-name', elem).textContent.trim(),
+    projectName = $('.phui-crumb-view[href^="/project/view"]:not(.phabricator-last-crumb), .phui-header-view > a').textContent.trim();
 
   link = togglbutton.createTimerLink({
     className: 'phabricator',
@@ -19,17 +19,27 @@ togglbutton.render('#phabricator-standard-page-body .phui-workpanel-view .phui-o
 });
 
 // Task detail view
-togglbutton.render('.phui-header-header .fa-exclamation-circle:not(.toggl)', {observe: true}, function (elem) {
-  var link,
+togglbutton.render('#phabricator-standard-page-body:not(.toggl)', {observe: true}, function (elem) {
+  var link, index, description_elem,
     parent = elem.parentNode,
-    description = parent.textContent,
-    projectName = $('.phui-side-column .phui-icon-view.fa-briefcase').parentNode.textContent.trim();
+    description = elem.querySelectorAll('.phui-header-header, .phui-header-view'),
+    number = $('.phabricator-last-crumb .phui-crumb-name').textContent.trim(),
+    projectName = $('.phabricator-handle-tag-list-item > a').textContent.trim();
+
+  if (description.length == 4) {
+    description_elem = description[1];
+    description = description_elem.textContent.trim();
+  } else {
+    description_elem = description[0];
+    description = description_elem.textContent.trim();
+  }
+
 
   link = togglbutton.createTimerLink({
     className: 'phabricator',
-    description: description,
+    description: number + ' ' + description,
     projectName: projectName
   });
 
-  parent.appendChild(link);
+  description_elem.appendChild(link);
 });

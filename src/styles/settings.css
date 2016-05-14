@@ -56,6 +56,10 @@ input[type="number"] {
   height:70px;
 }
 
+.list li #use-custom-format:checked ~ div{
+  height:70px;
+}
+
 .list li label {
   font-size: 14px;
   height: 22px;

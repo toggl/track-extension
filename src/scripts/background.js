@@ -1323,9 +1323,12 @@ TogglButton = {
     if(Db.get('useCustomFormat')) {
       var customFormat = Db.get('customFormat');
 
-      if (taskId) {
-        customFormat = customFormat.replace(TogglButton.customFormatTokens.taskId, taskId);
+      if (!taskId) {
+        taskId = '';
       }
+
+      customFormat = customFormat.replace(TogglButton.customFormatTokens.taskId, taskId);
+
       if (description) {
         customFormat = customFormat.replace(TogglButton.customFormatTokens.description, description);
       }

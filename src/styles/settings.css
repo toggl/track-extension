@@ -178,3 +178,7 @@ header .active, header li:hover {
 .container .active {
   left: 15px!important;
 }
+
+#custom-format {
+  width: 243px;
+}

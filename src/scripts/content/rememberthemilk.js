@@ -5,6 +5,11 @@
 togglbutton.render('.b-eb-Uk-Vj:not(.toggl)', {observe: true}, function (elem) {
   var link,
     project = function () {
+      var p = $('.zl-Uk-hl .zl-Uk-xf .zl-Uk-Tl');
+      if (!p) {
+        return;
+      }
+
       return $('.zl-Uk-hl .zl-Uk-xf .zl-Uk-Tl').innerText;
     },
     description = $('.b-eb-Uk-Tl', elem).textContent.trim();

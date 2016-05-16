@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true*/
-/*global document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global document: false, window: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
@@ -23,11 +23,15 @@ var Settings = {
   $stopAtDayEnd: null,
   $tabs: null,
   $defaultProject: null,
+  $pomodoroVolume: null,
+  $pomodoroVolumeLabel: null,
   showPage: function () {
-    var key, project, clientName, projects, clients, selected;
+    var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10);
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
+    Settings.$pomodoroVolume.value = volume;
+    Settings.$pomodoroVolumeLabel.innerHTML = volume + "%";
     Settings.toggleState(Settings.$showRightClickButton, Db.get("showRightClickButton"));
     Settings.toggleState(Settings.$startAutomatically, Db.get("startAutomatically"));
     Settings.toggleState(Settings.$stopAutomatically, Db.get("stopAutomatically"));
@@ -171,6 +175,8 @@ var Settings = {
 };
 
 document.addEventListener('DOMContentLoaded', function (e) {
+  Settings.$pomodoroVolume = document.querySelector("#sound-volume");
+  Settings.$pomodoroVolumeLabel = document.querySelector("#volume-label");
   Settings.$startAutomatically = document.querySelector("#start_automatically");
   Settings.$stopAutomatically = document.querySelector("#stop_automatically");
   Settings.$showRightClickButton = document.querySelector("#show_right_click_button");
@@ -229,6 +235,22 @@ document.addEventListener('DOMContentLoaded', function (e) {
     document.querySelector("header .active").classList.remove("active");
     e.target.classList.add("active");
     Settings.$tabs.setAttribute("data-tab", e.target.getAttribute("data-tab"));
+  });
+
+  Settings.$pomodoroVolume.addEventListener('input', function (e) {
+    Settings.$pomodoroVolumeLabel.innerHTML = e.target.value + "%";
+  });
+
+  Settings.$pomodoroVolume.addEventListener('change', function (e) {
+    Settings.saveSetting(e.target.value / 100, "update-pomodoro-sound-volume");
+    Settings.$pomodoroVolumeLabel.innerHTML = e.target.value + "%";
+  });
+
+  document.querySelector("#sound-test").addEventListener('click', function (e) {
+    var sound = new Audio();
+    sound.src = "../" + Db.get("pomodoroSoundFile");
+    sound.volume = Settings.$pomodoroVolume.value / 100;
+    sound.play();
   });
 
   document.querySelector("#nag-nanny-from").addEventListener('blur', function (e) {

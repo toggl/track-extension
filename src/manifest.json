@@ -1,7 +1,7 @@
 {
-  "name": "Toggl Button - Timer with Pomodoro Add-On",
+  "name": "Toggl Button: Productivity & Time Tracker",
   "short_name": "Toggl Button",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "manifest_version": 2,
   "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
@@ -100,6 +100,7 @@
     "*://*.planbox.com/*",
     "*://*.podio.com/*",
     "*://*.producteev.com/*",
+    "*://*.mantishub.io/*",
     "*://*.proworkflow.net/*",
     "*://*.proworkflow2.net/*",
     "*://*.proworkflow3.net/*",

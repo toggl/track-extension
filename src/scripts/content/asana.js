@@ -11,7 +11,7 @@ togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (
     project = $('#details_pane_project_tokenizer .token_name', elem);
 
   descFunc = function () {
-    return description.value;
+    return !!description ? description.value : "";
   };
 
   projectFunc = function () {

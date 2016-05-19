@@ -194,6 +194,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$tabs = document.querySelector(".tabs");
   Settings.$defaultProject = document.querySelector("#default-project");
 
+  // Show permissions page with notice
+  if (Db.get("show-permissions-info") && !Db.get("dont-show-permissions")) {
+    document.querySelector(".guide-container").style.display = "block";
+    Db.set("show-permissions-info", false);
+  }
+
   // Set selected tab
   Settings.$tabs.setAttribute("data-tab", Db.get("selected-settings-tab"));
   document.querySelector("header .active").classList.remove("active");
@@ -421,4 +427,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
       e.target.scrollIntoView();
     }
   }, false);
+
+  document.querySelector(".guide button").addEventListener('click', function (e) {
+    var disableChecked = document.querySelector("#disable-permission-notice").checked;
+    Db.set("dont-show-permissions", disableChecked);
+    document.querySelector(".guide-container").style.display = "none";
+  });
+
 });

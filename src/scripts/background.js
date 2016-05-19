@@ -1390,6 +1390,18 @@ TogglButton = {
     if (Db.get("stopAutomatically") && openWindowsCount === 0 && TogglButton.$curEntry) {
       TogglButton.stopTimeEntry(TogglButton.$curEntry);
     }
+  },
+
+  checkPermissions: function () {
+    if (!Db.get("dont-show-permissions")) {
+      chrome.permissions.getAll(function (results) {
+        if (results.origins.length === 2) {
+          Db.set("selected-settings-tab", 3);
+          Db.set("show-permissions-info", true);
+          chrome.runtime.openOptionsPage();
+        }
+      });
+    }
   }
 
 };
@@ -1415,3 +1427,5 @@ window.onbeforeunload = function () {
     TogglButton.stopTimeEntry(TogglButton.$curEntry);
   }
 };
+
+TogglButton.checkPermissions();

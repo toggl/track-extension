@@ -289,6 +289,36 @@ header .active, header li:hover {
   font-weight: bold;
 }
 
+.guide-container {
+  display: none;
+}
+
+.guide-back {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: grey;
+  z-index: 999;
+  opacity: 0.5;
+}
+
+.guide {
+  width: 400px;
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 15px;
+  line-height: 20px;
+  z-index: 999;
+  margin: 30px auto;
+  box-shadow: 1px 1px 10px #CACACA;
+}
+
+/* Pomodoro tab */
+
 #sound-volume {
   width: 80px;
   margin-left: 20px;

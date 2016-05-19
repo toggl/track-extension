@@ -300,14 +300,22 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // Enable/Disable origin permissions
   document.querySelector('#permissions-list').addEventListener('click', function (e) {
-    var permission = {origins: [e.target.getAttribute("data-host")]};
+    var permission,
+      target = e.target;
 
-    if (e.target.checked) {
+    if (e.target.tagName !== "INPUT") {
+      target = e.target.querySelector("input");
+      target.checked = !target.checked;
+    }
+
+    permission = {origins: [target.getAttribute("data-host")]};
+
+    if (target.checked) {
       chrome.permissions.request(permission, function (result) {
         if (result) {
-          e.target.parentNode.classList.remove("disabled");
+          target.parentNode.classList.remove("disabled");
         } else {
-          e.target.checked = false;
+          target.checked = false;
         }
       });
     } else {
@@ -315,13 +323,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
         if (allowed) {
           chrome.permissions.remove(permission, function (result) {
             if (result) {
-              e.target.parentNode.classList.add("disabled");
+              target.parentNode.classList.add("disabled");
             } else {
-              e.target.checked = true;
+              target.checked = true;
             }
           });
         } else {
-          alert('No "' + Settings.origins[e.target.getAttribute("data-id")] + '" host permission found.');
+          alert('No "' + Settings.origins[target.getAttribute("data-id")] + '" host permission found.');
         }
       });
     }

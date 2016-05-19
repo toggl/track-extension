@@ -193,6 +193,10 @@ header .active, header li:hover {
 
 /* Permissions tab */
 
+.tab-3 .description {
+  width: 40%;
+}
+
 .container .tab-3 {
   padding-right: 15px;
   width: 800px;
@@ -200,6 +204,7 @@ header .active, header li:hover {
 
 .container .tab-3 h2 {
   margin-bottom: 15px;
+  clear: both;
 }
 
 .origin-list {
@@ -210,6 +215,7 @@ header .active, header li:hover {
   padding: 5px 10px;
   overflow: auto;
   width: 50%;
+  float: left;
 }
 
 .origin-list li {
@@ -238,6 +244,14 @@ header .active, header li:hover {
 
 .origin-list li:last-child {
   border-bottom: none;
+}
+
+.section {
+  float: left;
+}
+
+.section:hover .description {
+  visibility: visible;
 }
 
 #permissions-list li div {

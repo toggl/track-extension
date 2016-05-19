@@ -190,6 +190,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
   Settings.$tabs = document.querySelector(".tabs");
   Settings.$defaultProject = document.querySelector("#default-project");
+
+  // Set selected tab
+  Settings.$tabs.setAttribute("data-tab", Db.get("selected-settings-tab"));
+  document.querySelector("header .active").classList.remove("active");
+  document.querySelector("header [data-tab='" + Db.get("selected-settings-tab") + "']").classList.add("active");
+  document.querySelector("body").style.display = "block";
+
   Settings.showPage();
   Settings.$showRightClickButton.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
@@ -235,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     document.querySelector("header .active").classList.remove("active");
     e.target.classList.add("active");
     Settings.$tabs.setAttribute("data-tab", e.target.getAttribute("data-tab"));
+    Settings.saveSetting(e.target.getAttribute("data-tab"), "update-selected-settings-tab");
   });
 
   Settings.$pomodoroVolume.addEventListener('input', function (e) {

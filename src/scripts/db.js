@@ -27,6 +27,12 @@ var Db = {
     "projects": ""
   },
 
+  // core settings: key, default value
+  core: {
+    "dont-show-permissions": false,
+    "selected-settings-tab": 1
+  },
+
   getOriginFileName: function (domain) {
     var origin = Db.getOrigin(domain),
       page,
@@ -134,6 +140,12 @@ var Db = {
         Db.load(k, Db.settings[k]);
       }
     }
+
+    for (k in Db.core) {
+      if (Db.core.hasOwnProperty(k)) {
+        Db.load(k, Db.core[k]);
+      }
+    }
   },
 
   updateSetting: function (key, state, callback, condition) {
@@ -197,6 +209,8 @@ var Db = {
         Db.updateSetting("dayEndTime", request.state);
       } else if (request.type === 'change-default-project') {
         Db.updateSetting("defaultProject", request.state);
+      } else if (request.type === 'update-dont-show-permissions' || request.type === 'update-selected-settings-tab') {
+        Db.updateSetting(request.type.substr(7), request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

@@ -432,17 +432,19 @@ TogglButton = {
       clearInterval(TogglButton.pomodoroProgressTimer);
     }
     if (Db.get("pomodoroModeEnabled")) {
-      var interval = value || (parseInt(Db.get("pomodoroInterval"), 10) * 60000), steps = 120;
+      var pomodoroInterval = (parseInt(Db.get("pomodoroInterval"), 10) * 60000),
+          interval = value || pomodoroInterval, steps = 120,
+          elapsedTime = ((pomodoroInterval - interval) / pomodoroInterval);
       TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
-      TogglButton.pomodoroProgressTimer = setInterval(TogglButton.updatePomodoroProgress(interval, steps), interval / steps);
+      TogglButton.pomodoroProgressTimer = setInterval(TogglButton.updatePomodoroProgress(interval, steps, elapsedTime), pomodoroInterval / steps);
     }
   },
 
-  updatePomodoroProgress: function (interval, steps) {
+  updatePomodoroProgress: function (interval, steps, elapsedTime) {
     var current = 0, intervalCount = 0;
     return function () {
       var key, img, imagePaths = {'19': 'images/active-19.png', '38': 'images/active-38.png'},
-        imageData = {}, circ = Math.PI * 2, quart = Math.PI / 2, imageLoadedCount = 0,
+        imageData = {}, circ = Math.PI * 2, quart = Math.PI * 0.5, imageLoadedCount = 0,
         imageLoaded = function (key) {
           return function () {
             var canvas = document.createElement('canvas'),
@@ -450,12 +452,12 @@ TogglButton = {
             ctx.drawImage(this, 0, 0);
             ctx.beginPath();
             ctx.strokeStyle = '#00cc00';
-            ctx.lineCap = 'round';
+            ctx.lineCap = 'butt';
             ctx.closePath();
             ctx.fill();
             ctx.lineWidth = 2.5;
             ctx.beginPath();
-            ctx.arc(this.naturalWidth / 2, this.naturalHeight / 2, (this.naturalWidth / 2) - 1, quart * -1, (circ * current) - quart, false);
+            ctx.arc(this.naturalWidth * 0.5, this.naturalHeight * 0.5, (this.naturalWidth * 0.5) - 1, quart * -1, (circ * current) - quart, false);
             ctx.stroke();
             imageData[key] = ctx.getImageData(0, 0, this.naturalWidth, this.naturalHeight);
             ++imageLoadedCount;
@@ -467,7 +469,7 @@ TogglButton = {
           };
         };
       intervalCount += (interval / steps);
-      current = intervalCount / interval;
+      current = (intervalCount / interval) + elapsedTime;
 
       if (Db.get("pomodoroModeEnabled")) {
         for (key in imagePaths) {

@@ -1,5 +1,5 @@
-/*jslint indent: 2, unparam: true*/
-/*global document: false, window: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*jslint indent: 2, unparam: true, plusplus: true*/
+/*global alert: false, document: false, window: false, TogglOrigins: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
@@ -72,9 +72,9 @@ var Settings = {
       i,
       current;
 
-    for(i=0; i<items.length; i++) {
+    for (i = 0; i < items.length; i++) {
       current = items[i].getAttribute("data-host");
-      if (current.indexOf("toggl")== -1) {
+      if (current.indexOf("toggl") === -1) {
         urls.push(current);
       }
     }
@@ -106,8 +106,10 @@ var Settings = {
     var html = "",
       html_list = "",
       custom_html = "",
-      url, name,
-      i, key,
+      url,
+      name,
+      i,
+      k,
       origins,
       disabled,
       checked,
@@ -116,15 +118,16 @@ var Settings = {
 
     // Load permissions list
     chrome.permissions.getAll(function (results) {
+      var key;
       Settings.origins = [];
       origins = results.origins;
       for (i = 0; i < origins.length; i++) {
         name = url = origins[i].replace("*://*.", "").replace("*://", "").replace("/*", "");
         if (url.split(".").length > 2) {
-          name = url.substr(url.indexOf(".")+1)
+          name = url.substr(url.indexOf(".") + 1);
         }
         Settings.origins[name] = {
-          id: i, 
+          id: i,
           origin: origins[i],
           url: url,
           name: name
@@ -153,7 +156,7 @@ var Settings = {
           }
 
           // Don't show toggl.com as it's not optional
-          if (key.indexOf("toggl")== -1) {
+          if (key.indexOf("toggl") === -1) {
             html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" class="toggle" data-host="' + TogglOrigins[key].url + '" ' + checked + '><div>' + key + '</div></li>';
           }
         }
@@ -165,9 +168,9 @@ var Settings = {
 
     // Load Custom Permissions list
     customs = Db.getAllOrigins();
-    for (key in customs) {
-      if (customs.hasOwnProperty(key)) {
-        custom_html += "<li><a class='remove-custom'>&times;</a><strong>" + key + "</strong> - <i>" + customs[key] + "</i></li>";
+    for (k in customs) {
+      if (customs.hasOwnProperty(k)) {
+        custom_html += "<li><a class='remove-custom'>&times;</a><strong>" + k + "</strong> - <i>" + customs[k] + "</i></li>";
       }
     }
     Settings.$customPermissionsList.innerHTML = custom_html;
@@ -296,11 +299,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   // Enable/Disable origin permissions
-  document.querySelector('#permissions-list').addEventListener('click', function(e) {
+  document.querySelector('#permissions-list').addEventListener('click', function (e) {
     var permission = {origins: [e.target.getAttribute("data-host")]};
 
     if (e.target.checked) {
-      chrome.permissions.request(permission, function(result) {
+      chrome.permissions.request(permission, function (result) {
         if (result) {
           e.target.parentNode.classList.remove("disabled");
         } else {
@@ -308,9 +311,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
         }
       });
     } else {
-      chrome.permissions.contains(permission, function(allowed) {
+      chrome.permissions.contains(permission, function (allowed) {
         if (allowed) {
-          chrome.permissions.remove(permission, function(result) {
+          chrome.permissions.remove(permission, function (result) {
             if (result) {
               e.target.parentNode.classList.add("disabled");
             } else {
@@ -325,8 +328,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   // Enable all predefined origins
-  document.querySelector('.enable-all').addEventListener('click', function(e) {
-    chrome.permissions.request(Settings.getAllPermissions(), function(result) {
+  document.querySelector('.enable-all').addEventListener('click', function (e) {
+    chrome.permissions.request(Settings.getAllPermissions(), function (result) {
       if (result) {
         Settings.loadSitesIntoList();
       }
@@ -334,8 +337,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   // Disable all predefined origins
-  document.querySelector('.disable-all').addEventListener('click', function(e) {
-    chrome.permissions.remove(Settings.getAllPermissions(), function(result) {
+  document.querySelector('.disable-all').addEventListener('click', function (e) {
+    chrome.permissions.remove(Settings.getAllPermissions(), function (result) {
       if (result) {
         Settings.loadSitesIntoList();
       }
@@ -343,20 +346,20 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   // Add custom permission (custom domain)
-  document.querySelector('#add-permission').addEventListener('click', function(e) {
+  document.querySelector('#add-permission').addEventListener('click', function (e) {
     var text = Settings.$newPermission.value,
       domain,
       permission,
       o = Settings.$originsSelect;
 
-    if (text.indexOf("//") != -1) {
+    if (text.indexOf("//") !== -1) {
       Settings.$newPermission.value = text.split("//")[1];
     }
 
     domain = "*://" + Settings.$newPermission.value + "/";
     permission = {origins: [domain]};
 
-    chrome.permissions.request(permission, function(result) {
+    chrome.permissions.request(permission, function (result) {
       if (result) {
         Db.setOrigin(Settings.$newPermission.value, o.value);
         Settings.$newPermission.value = "";
@@ -368,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     });
   });
 
-  document.querySelector('#custom-permissions-list').addEventListener('click', function(e) {
+  document.querySelector('#custom-permissions-list').addEventListener('click', function (e) {
     var custom, domain, permission, parent;
     if (e.target.className === "remove-custom") {
       parent = e.target.parentNode;
@@ -376,9 +379,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
       domain = "*://" + custom + "/";
       permission = {origins: [domain]};
 
-      chrome.permissions.contains(permission, function(allowed) {
+      chrome.permissions.contains(permission, function (allowed) {
         if (allowed) {
-          chrome.permissions.remove(permission, function(result) {
+          chrome.permissions.remove(permission, function (result) {
             if (result) {
               Db.removeOrigin(custom);
               parent.remove();

@@ -81,7 +81,6 @@ var Db = {
     }
     obj[newOrigin] = baseOrigin;
     localStorage.setItem(Db.originsKey, JSON.stringify(obj));
-    console.log(obj);
   },
 
   removeOrigin: function (origin) {
@@ -93,7 +92,6 @@ var Db = {
       delete obj[origin];
       localStorage.setItem(Db.originsKey, JSON.stringify(obj));  
     }
-    console.log(obj);
   },
 
   getAllOrigins: function () {

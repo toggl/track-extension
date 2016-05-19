@@ -1308,17 +1308,19 @@ TogglButton = {
   tabUpdated: function (tabId, changeInfo, tab) {
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url),
-        permission = {origins: domain.origins},
-        origins,
-        html = "";
+        permission = {origins: domain.origins};
 
-      chrome.permissions.contains(permission, function(result) {
+      chrome.permissions.contains(permission, function (result) {
+        /* // Debug
         var text = "var a = document.createElement('div');document.body.appendChild(a);console.log(a);a.classList.add('permission');";
         text += 'a.setAttribute("style","background:red;border-radius:25px;border: 2px solid white;z-index:999999;width:25px;height:25px;position:fixed;top:5px;left:5px;");';
+        */
         if (result) {
+          /* // Debug
           chrome.tabs.executeScript({
             code: text
           });
+*/
 
           if (!!domain.file) {
             chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
@@ -1331,9 +1333,7 @@ TogglButton = {
   },
 
   extractDomain: function (url) {
-    var domain,
-      origin,
-      file;
+    var domain, file;
 
     //find & remove protocol (http, ftp, etc.) and get domain
     if (url.indexOf("://") > -1) {
@@ -1360,7 +1360,7 @@ TogglButton = {
       origins: [
         "*://" + domain + "/*"
       ]
-    }
+    };
   },
 
   toggleRightClickButton: function (show) {

@@ -35,8 +35,6 @@ var Db = {
 
   getOriginFileName: function (domain) {
     var origin = Db.getOrigin(domain),
-      page,
-      name,
       item;
 
     if (!origin) {
@@ -56,7 +54,7 @@ var Db = {
     item = TogglOrigins[origin];
 
     if (!!item.file) {
-      return item.file
+      return item.file;
     }
 
     return item.name.toLowerCase().replace(" ", "-") + ".js";
@@ -90,7 +88,7 @@ var Db = {
     if (!!origins) {
       obj = JSON.parse(origins);
       delete obj[origin];
-      localStorage.setItem(Db.originsKey, JSON.stringify(obj));  
+      localStorage.setItem(Db.originsKey, JSON.stringify(obj));
     }
   },
 

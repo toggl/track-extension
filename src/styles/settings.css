@@ -191,16 +191,17 @@ header .active, header li:hover {
   padding-left: 15px;
 }
 
+/* Permissions tab */
+
 .container .tab-3 {
   padding-right: 15px;
   width: 800px;
 }
 
-/* Permissions tab */
-
-#new-permission {
-  margin: 10px 0;
+.container .tab-3 h2 {
+  margin-bottom: 15px;
 }
+
 .origin-list {
   border: 1px solid #CCCACA;
   list-style: none;
@@ -208,6 +209,7 @@ header .active, header li:hover {
   border-radius: 3px;
   padding: 5px 10px;
   overflow: auto;
+  width: 50%;
 }
 
 .origin-list li {

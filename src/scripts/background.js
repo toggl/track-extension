@@ -433,8 +433,9 @@ TogglButton = {
     }
     if (Db.get("pomodoroModeEnabled")) {
       var pomodoroInterval = (parseInt(Db.get("pomodoroInterval"), 10) * 60000),
-          interval = value || pomodoroInterval, steps = 120,
-          elapsedTime = ((pomodoroInterval - interval) / pomodoroInterval);
+        interval = value || pomodoroInterval,
+        steps = 120,
+        elapsedTime = ((pomodoroInterval - interval) / pomodoroInterval);
       TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
       TogglButton.pomodoroProgressTimer = setInterval(TogglButton.updatePomodoroProgress(interval, steps, elapsedTime), pomodoroInterval / steps);
     }

@@ -4,7 +4,7 @@
 'use strict';
 
 togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (elem) {
-  var link, description,
+  var link, description, id,
     container = createTag('div', 'ghx-toggl-button'),
     titleElem = $('[data-field-id="summary"]', elem),
     numElem = $('.ghx-fieldname-issuekey a'),
@@ -12,11 +12,12 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (e
 
   description = titleElem.innerText;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    id = numElem.innerText;
   }
 
   link = togglbutton.createTimerLink({
     className: 'jira',
+    taskId: id,
     description: description,
     projectName: projectElem && projectElem.innerText
   });
@@ -26,18 +27,19 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (e
 });
 
 togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, function (elem) {
-  var link, description, ul, li,
+  var link, description, id, ul, li,
     numElem = $('#key-val', elem),
     titleElem = $('#summary-val', elem),
     projectElem = $('#project-name-val', elem);
 
   description = titleElem.innerText;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    id = numElem.innerText;
   }
 
   link = togglbutton.createTimerLink({
     className: 'jira',
+    taskId: id,
     description: description,
     projectName: projectElem && projectElem.innerText
   });

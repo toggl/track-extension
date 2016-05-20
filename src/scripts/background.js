@@ -61,6 +61,7 @@ TogglButton = {
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
   queque: [],
+  customFormatTokens: { taskId: '$$taskid$$', description: '$$description$$' },
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -362,6 +363,8 @@ TogglButton = {
           duronly: timeEntry.duronly || !TogglButton.$user.store_start_and_stop_time
         }
       };
+
+    entry.time_entry.description = TogglButton.applyCustomFormat(timeEntry.taskId, entry.time_entry.description);
 
     if (timeEntry.projectName !== null && !entry.time_entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);
@@ -1313,6 +1316,27 @@ TogglButton = {
     openWindowsCount--;
     if (Db.get("stopAutomatically") && openWindowsCount === 0 && TogglButton.$curEntry) {
       TogglButton.stopTimeEntry(TogglButton.$curEntry);
+    }
+  },
+
+  applyCustomFormat: function (taskId, description) {
+    if(Db.get('useCustomFormat')) {
+      var customFormat = Db.get('customFormat');
+
+      if (!taskId) {
+        taskId = '';
+      }
+
+      customFormat = customFormat.replace(TogglButton.customFormatTokens.taskId, taskId);
+
+      if (description) {
+        customFormat = customFormat.replace(TogglButton.customFormatTokens.description, description);
+      }
+
+      return customFormat;
+    } else {
+      // fallback
+      return taskId + ' ' + description;
     }
   }
 };

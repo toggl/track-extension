@@ -16,6 +16,7 @@ var Settings = {
   $pomodoroSound: null,
   $pomodoroStopTimeTracking: null,
   $stopAtDayEnd: null,
+  $useCustomFormat: null,
   showPage: function () {
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
@@ -34,6 +35,9 @@ var Settings = {
 
     Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
     document.querySelector("#day-end-time").value = Db.get("dayEndTime");
+
+    Settings.toggleState(Settings.$useCustomFormat, Db.get("useCustomFormat"));
+    document.querySelector("#custom-format").value = Db.get("customFormat");
 
     TogglButton.analytics("settings", null);
   },
@@ -71,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
   Settings.$pomodoroStopTimeTracking = document.querySelector("#pomodoro-stop-time");
   Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
+  Settings.$useCustomFormat = document.querySelector("#use-custom-format");
   Settings.showPage();
   Settings.$showRightClickButton.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
@@ -157,6 +162,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
       return;
     }
     Settings.saveSetting((document.querySelector('#day-end-time').value), "toggle-day-end-time");
+  });
+
+  Settings.$useCustomFormat.addEventListener('click', function (e) {
+    Settings.toggleSetting(e.target, (localStorage.getItem("useCustomFormat") !== "true"), "toggle-use-custom-format");
+  });
+  document.querySelector("#custom-format").addEventListener('blur', function (e) {
+    Settings.saveSetting((document.querySelector('#custom-format').value), "toggle-custom-format");
   });
 
   document.querySelector(".container").addEventListener("transitionend", function (e) {

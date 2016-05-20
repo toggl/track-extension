@@ -444,6 +444,7 @@ var togglbutton = {
 
   createTimerLink: function (params) {
     var link = createLink('toggl-button');
+    togglbutton.currentTaskId = invokeIfFunction(params.taskId);
     togglbutton.currentDescription = invokeIfFunction(params.description);
     togglbutton.currentProject = params.projectName;
     link.title = invokeIfFunction(togglbutton.currentDescription) + (!!invokeIfFunction(togglbutton.currentProject) ? " - " + invokeIfFunction(togglbutton.currentProject) : "");
@@ -501,7 +502,8 @@ var togglbutton = {
           type: 'timeEntry',
           respond: true,
           projectId: invokeIfFunction(params.projectId),
-          description: invokeIfFunction(params.description),
+          taskId: togglbutton.currentTaskId,
+          description: togglbutton.currentDescription,
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
           createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName,

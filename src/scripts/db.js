@@ -20,6 +20,8 @@ var Db = {
     "pomodoroInterval": 25,
     "stopAtDayEnd": false,
     "dayEndTime": "17:00",
+    "useCustomFormat": false,
+    "customFormat": ""
   },
 
   get: function (setting) {
@@ -115,6 +117,10 @@ var Db = {
         TogglButton.startCheckingDayEnd(request.state);
       } else if (request.type === 'toggle-day-end-time') {
         Db.updateSetting("dayEndTime", request.state);
+      } else if (request.type === 'toggle-use-custom-format') {
+        Db.updateSetting("useCustomFormat", request.state);
+      } else if (request.type === 'toggle-custom-format') {
+        Db.updateSetting("customFormat", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

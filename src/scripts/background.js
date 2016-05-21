@@ -1335,8 +1335,13 @@ TogglButton = {
 
       return customFormat;
     } else {
-      // fallback
-      return taskId + ' ' + description;
+      if (taskId) {
+        // fallback with ID
+        return taskId + ' ' + description;
+      } else {
+        // fallback without ID
+        return description;
+      }
     }
   }
 };

@@ -1,3 +1,17 @@
+[0.9.2]
+- Updated integrations: Google Calendar, GMail, Google Drive, Evernote, Basecamp 3, Salesforce, Gitlab, Liquid Planner
+- Added support for Salesforce Lightning
+- Improved settings design
+- Added smooth timer update for popup timer
+- Fixed running timer check for "Start timer" link
+- Added support for mantishub.io
+- Updated Asana description fetching
+- Added improved bugtracking
+- Fixed Todoist freezing issues
+- Added volume control for Pomodoro alarm sound
+- Added support for Bugzilla 5
+- Settings style fixes
+
 [0.9.1]
 - Added support for Basecamp 3
 - Added support for OpenProject

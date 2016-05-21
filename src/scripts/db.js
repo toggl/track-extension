@@ -15,13 +15,17 @@ var Db = {
     "nannyFromTo": "09:00-17:00",
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
+    "pomodoroSoundFile": "sounds/time_is_up_1.mp3",
     "pomodoroSoundEnabled": true,
+    "pomodoroSoundVolume": 1,
     "pomodoroStopTimeTrackingWhenTimerEnds": true,
     "pomodoroInterval": 25,
     "stopAtDayEnd": false,
     "dayEndTime": "17:00",
     "useCustomFormat": false,
-    "customFormat": ""
+    "customFormat": "",
+    "defaultProject": "0",
+    "projects": ""
   },
 
   get: function (setting) {
@@ -106,6 +110,8 @@ var Db = {
         Db.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'toggle-pomodoro-stop-time') {
         Db.set("pomodoroStopTimeTrackingWhenTimerEnds", request.state);
+      } else if (request.type === 'update-pomodoro-sound-volume') {
+        Db.set("pomodoroSoundVolume", request.state);
       } else if (request.type === 'toggle-right-click-button') {
         Db.updateSetting("showRightClickButton", request.state);
       } else if (request.type === 'toggle-start-automatically') {
@@ -121,6 +127,8 @@ var Db = {
         Db.updateSetting("useCustomFormat", request.state);
       } else if (request.type === 'toggle-custom-format') {
         Db.updateSetting("customFormat", request.state);
+      } else if (request.type === 'change-default-project') {
+        Db.updateSetting("defaultProject", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

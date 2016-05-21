@@ -11,7 +11,7 @@ input[type="number"], input[type="time"]{
   vertical-align: middle;
   padding: 0 0 0 10px !important;
   margin-left: 10px !important;
-  max-width: 90px;
+  max-width: 100px;
   border: 1px solid rgb(191, 191, 191);
   border-radius: 2px;
 }
@@ -37,7 +37,7 @@ input[type="number"] {
   list-style: none;
   float: left;
   overflow-y: auto;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .list li {
@@ -106,17 +106,21 @@ input[type="number"] {
   float: left;
   position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .changelog {
   float: right;
   margin: 0;
   padding: 0;
+  margin-right: 10px;
 }
 
 #version a {
   color: #8A8888!important;
   text-decoration: none;
+  line-height: 21px;
 }
 
 .description {
@@ -181,4 +185,44 @@ header .active, header li:hover {
 
 .custom-format-input {
   width: 243px;
+}
+
+#default-project {
+  margin-left: 5px;
+  max-width: 280px;
+}
+
+#sound-volume {
+  width: 80px;
+  margin-left: 20px;
+  position: relative;
+  top: 4px;
+}
+
+#volume-label {
+  display: inline-block;
+  margin-left: 8px;
+  height: 16px;
+  width: 40px;
+  text-align: right;
+  margin-right: 5px;
+}
+
+#sound-test {
+  position: relative;
+  right: -28px;
+}
+
+.pomodoro-sound {
+  clear: both;
+}
+
+.pomodoro-sound-volume {
+  overflow: hidden;
+  height: 0px;
+  transition:height 300ms ease-in-out;
+}
+
+#enable-sound-signal:checked ~.pomodoro-sound-volume {
+  height: 36px;
 }

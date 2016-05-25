@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$defaultProject = document.querySelector("#default-project");
 
   // Show permissions page with notice
-  if (!!Db.get("show-permissions-info") && !Db.get("dont-show-permissions")) {
+  if (!!parseInt(Db.get("show-permissions-info"), 10) && !Db.get("dont-show-permissions")) {
     document.querySelector(".guide-container").style.display = "block";
     document.querySelector(".guide > div[data-id='" + Db.get("show-permissions-info") + "']").style.display = "block";
     Db.set("show-permissions-info", 0);

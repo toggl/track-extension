@@ -1437,8 +1437,9 @@ chrome.runtime.onInstalled.addListener(function (details) {
   if (details.reason === "install") {
     TogglButton.checkPermissions(1);
   } else if (details.reason === "update") {
-    if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "0") {
+    if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
       TogglButton.checkPermissions(2);
     }
   }
 });
+

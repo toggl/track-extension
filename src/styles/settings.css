@@ -212,10 +212,14 @@ header .active, header li:hover {
   list-style: none;
   max-height: 290px;
   border-radius: 3px;
-  padding: 5px 10px;
+  padding: 5px;
   overflow: auto;
   width: 50%;
   float: left;
+}
+
+.origin-list:empty {
+  visibility: hidden;
 }
 
 .origin-list li {
@@ -283,6 +287,7 @@ header .active, header li:hover {
   cursor: pointer;
   border-radius: 5px;
   margin-right: 5px;
+  line-height: 22px;
 }
 
 .remove-custom:hover {

@@ -1392,12 +1392,13 @@ TogglButton = {
     }
   },
 
-  checkPermissions: function () {
+  checkPermissions: function (show) {
     if (!Db.get("dont-show-permissions")) {
       chrome.permissions.getAll(function (results) {
-        if (results.origins.length === 2) {
+        if (!!show || results.origins.length === 2) {
+          show = show || 3;
           Db.set("selected-settings-tab", 3);
-          Db.set("show-permissions-info", true);
+          Db.set("show-permissions-info", show);
           chrome.runtime.openOptionsPage();
         }
       });
@@ -1429,3 +1430,14 @@ window.onbeforeunload = function () {
 };
 
 TogglButton.checkPermissions();
+
+// Check whether new version is installed
+chrome.runtime.onInstalled.addListener(function (details) {
+  if (details.reason === "install") {
+    TogglButton.checkPermissions(1);
+  } else if (details.reason === "update") {
+    if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "0") {
+      TogglButton.checkPermissions(2);
+    }
+  }
+});

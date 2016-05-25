@@ -318,8 +318,12 @@ header .active, header li:hover {
   padding: 15px;
   line-height: 20px;
   z-index: 999;
-  margin: 30px auto;
+  margin: 20px auto;
   box-shadow: 1px 1px 10px #CACACA;
+}
+
+.guide > div {
+  display: none;
 }
 
 /* Pomodoro tab */

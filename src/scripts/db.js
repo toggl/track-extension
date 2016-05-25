@@ -30,7 +30,7 @@ var Db = {
   // core settings: key, default value
   core: {
     "dont-show-permissions": false,
-    "show-permissions-info": false,
+    "show-permissions-info": 0,
     "selected-settings-tab": 1
   },
 

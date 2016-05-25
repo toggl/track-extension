@@ -195,9 +195,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$defaultProject = document.querySelector("#default-project");
 
   // Show permissions page with notice
-  if (Db.get("show-permissions-info") && !Db.get("dont-show-permissions")) {
+  if (!!Db.get("show-permissions-info") && !Db.get("dont-show-permissions")) {
     document.querySelector(".guide-container").style.display = "block";
-    Db.set("show-permissions-info", false);
+    document.querySelector(".guide > div[data-id='" + Db.get("show-permissions-info") + "']").style.display = "block";
+    Db.set("show-permissions-info", 0);
   }
 
   // Set selected tab
@@ -432,6 +433,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     var disableChecked = document.querySelector("#disable-permission-notice").checked;
     Db.set("dont-show-permissions", disableChecked);
     document.querySelector(".guide-container").style.display = "none";
+    document.querySelector(".guide > div[data-id='" + Db.get("show-permissions-info") + "']").style.display = "none";
   });
 
 });

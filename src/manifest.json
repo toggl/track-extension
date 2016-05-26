@@ -131,7 +131,8 @@
     "*://*.visualstudio.com/*",
     "*://*.smartboard.cl/*",
     "*://*.openproject.com/*",
-    "*://zube.io/*"
+    "*://zube.io/*",
+    "*://*.attask-ondemand.com/*"
   ],
   "content_scripts": [
     {
@@ -234,7 +235,8 @@
         "*://*.openproject.com/*",
         "*://zube.io/*",
         "*://*.minicrm.pl/*",
-        "*://*.agenocrm.com/*"
+        "*://*.agenocrm.com/*",
+        "*://*.attask-ondemand.com/*"
       ],
       "css": ["styles/style.css"],
       "js": ["scripts/common.js"]
@@ -594,6 +596,10 @@
     {
       "matches": ["*://*.openproject.com/*"],
       "js": ["scripts/content/openproject.js"]
+    },
+    {
+      "matches": ["*://*.attask-ondemand.com/*"],
+      "js": ["scripts/content/attask.js"]
     },
     {
       "matches": ["*://zube.io/*"],

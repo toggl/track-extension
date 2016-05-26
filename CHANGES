@@ -1,3 +1,10 @@
+[1.0.0]
+- Implemented new permissions system
+- Added possibility to enable/disable integrations from Settings
+- Added possibility to define custom domains in Settings
+- Fixed Remember the milk search issue
+- Fixed Slack integration
+
 [0.9.2]
 - Updated integrations: Google Calendar, GMail, Google Drive, Evernote, Basecamp 3, Salesforce, Gitlab, Liquid Planner
 - Added support for Salesforce Lightning

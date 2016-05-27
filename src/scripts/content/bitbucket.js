@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#issue-header', {}, function (elem) {
+togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
   var link, description,
     numElem = $('.issue-id'),
     titleElem = $('#issue-title'),
@@ -22,7 +22,7 @@ togglbutton.render('#issue-header', {}, function (elem) {
   $('#issue-header').appendChild(link);
 });
 
-togglbutton.render('#pull-request-header', {}, function (elem) {
+togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
   var link, description,
     numElem = $('.pull-request-self-link'),
     titleElem = $('.pull-request-title'),

@@ -3,7 +3,7 @@
 
 'use strict';
 
-togglbutton.render('#issue_view:not(.toggl)', {}, function (elem) {
+togglbutton.render('.issue_view:not(.toggl)', {}, function (elem) {
   var
     projectSelect, project, link, container, spanTag,
     issue_id = $('#issue_overview', elem).getAttribute('data-issue-id'),

@@ -60,7 +60,7 @@ TogglButton = {
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
-  queque: [],
+  queue: [],
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -157,7 +157,7 @@ TogglButton = {
               TogglButton.setupSocket();
             }
             TogglButton.updateBugsnag();
-            TogglButton.handelQueQue();
+            TogglButton.handleQueue();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
             if (apiToken) {
@@ -186,9 +186,9 @@ TogglButton = {
     });
   },
 
-  handelQueQue: function () {
-    while (!!TogglButton.queque.length) {
-      TogglButton.queque.shift()();
+  handleQueue: function () {
+    while (!!TogglButton.queue.length) {
+      TogglButton.queue.shift()();
     }
   },
 
@@ -1335,7 +1335,7 @@ TogglButton = {
   }
 };
 
-TogglButton.queque.push(TogglButton.startAutomatically);
+TogglButton.queue.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();
 TogglButton.triggerNotification();

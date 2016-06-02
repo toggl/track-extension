@@ -81,7 +81,7 @@
     "*://*.github.com/*",
     "*://*.gitlab.com/*",
     "*://www.gqueues.com/*",
-    "*://*.habitica.com/*",
+    "*://habitica.com/*",
     "*://secure.helpscout.net/*",
     "*://inbox.google.com/*",
     "*://*.jira.com/*",

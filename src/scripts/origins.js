@@ -39,7 +39,7 @@ window.TogglOrigins = {
   "keep.google.com": {"url": "*://keep.google.com/*", "name": "Google Keep"},
   "mail.google.com": {"url": "*://mail.google.com/*", "name": "Google Mail"},
   "gqueues.com": {"url": "*://www.gqueues.com/*", "name": "GQueues"},
-  "habitica.com": {"url": "*://*.habitica.com/*", "name": "Habitica"},
+  "habitica.com": {"url": "*://habitica.com/*", "name": "Habitica"},
   "helpscout.net": {"url": "*://secure.helpscout.net/*", "name": "Helpscout"},
   "jira.com": {"url": "*://*.jira.com/*", "name": "Jira", "file": "atlassian.js"},
   "bugs.jquery.com": {"url": "*://bugs.jquery.com/*", "name": "Jquery Bugs", "file": "trac.js"},

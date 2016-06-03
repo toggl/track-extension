@@ -81,6 +81,7 @@ window.TogglOrigins = {
   "teamworkpm.net": {"url": "*://*.teamworkpm.net/*", "name": "Teamwork", "clone" : "true"},
   "testrail.com": {"url": "*://*.testrail.com/*", "name": "Testrail"},
   "testrail.net": {"url": "*://*.testrail.net/*", "name": "Testrail", "clone" : "true"},
+  "ticktick.com": { "url": "*://ticktick.com/*", "name": "TickTick"},
   "todoist.com": {"url": "*://*.todoist.com/app*", "name": "Todoist"},
   "toggl.com": {"url": "*://toggl.com/*", "name": "Toggl", "clone": "true"},
   "www.toggl.com": {"url": "*://*.toggl.com/*", "name": "Toggl", "clone": "true"},

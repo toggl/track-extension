@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false, Image: false */
 "use strict";
 var TogglButton, openWindowsCount = 0;
 
@@ -57,6 +57,7 @@ TogglButton = {
   $checkingUserState: false,
   checkingWorkdayEnd: false,
   pomodoroAlarm: null,
+  pomodoroProgressTimer: null,
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
@@ -267,7 +268,7 @@ TogglButton = {
     } else {
       // Clear pomodoro timer
       clearTimeout(TogglButton.pomodoroAlarm);
-
+      clearInterval(TogglButton.pomodoroProgressTimer);
       TogglButton.$nannyTimer = null;
     }
     // Toggle workday end check
@@ -428,11 +429,64 @@ TogglButton = {
   triggerPomodoroAlarm: function (value) {
     if (TogglButton.pomodoroAlarm !== null) {
       clearTimeout(TogglButton.pomodoroAlarm);
+      clearInterval(TogglButton.pomodoroProgressTimer);
     }
     if (Db.get("pomodoroModeEnabled")) {
-      var interval = value || (parseInt(Db.get("pomodoroInterval"), 10) * 60000);
+      var pomodoroInterval = (parseInt(Db.get("pomodoroInterval"), 10) * 60000),
+        interval = value || pomodoroInterval,
+        steps = 120,
+        elapsedTime = ((pomodoroInterval - interval) / pomodoroInterval);
       TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
+      TogglButton.pomodoroProgressTimer = setInterval(TogglButton.updatePomodoroProgress(interval, steps, elapsedTime), pomodoroInterval / steps);
     }
+  },
+
+  updatePomodoroProgress: function (interval, steps, elapsedTime) {
+    var current = 0, intervalCount = 0;
+    return function () {
+      var key, img, imagePaths = {'19': 'images/active-19.png', '38': 'images/active-38.png'},
+        imageData = {}, circ = Math.PI * 2, quart = Math.PI * 0.5, imageLoadedCount = 0,
+        imageLoaded = function (key) {
+          return function () {
+            var canvas = document.createElement('canvas'),
+              ctx = canvas.getContext('2d');
+            ctx.drawImage(this, 0, 0);
+            ctx.beginPath();
+            ctx.strokeStyle = '#00cc00';
+            ctx.lineCap = 'butt';
+            ctx.closePath();
+            ctx.fill();
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(this.naturalWidth * 0.5, this.naturalHeight * 0.5, (this.naturalWidth * 0.5) - 1, quart * -1, (circ * current) - quart, false);
+            ctx.stroke();
+            imageData[key] = ctx.getImageData(0, 0, this.naturalWidth, this.naturalHeight);
+            ++imageLoadedCount;
+            if (imageLoadedCount === 2) {
+              chrome.browserAction.setIcon({
+                imageData: imageData
+              });
+            }
+          };
+        };
+      intervalCount += (interval / steps);
+      current = (intervalCount / interval) + elapsedTime;
+
+      if (Db.get("pomodoroModeEnabled")) {
+        for (key in imagePaths) {
+          if (imagePaths.hasOwnProperty(key)) {
+            img = new Image();
+            img.onload = imageLoaded(key);
+            img.src = imagePaths[key];
+          }
+        }
+      } else {
+        clearInterval(TogglButton.pomodoroProgressTimer);
+        chrome.browserAction.setIcon({
+          path: imagePaths
+        });
+      }
+    };
   },
 
   analytics: function (event, service) {
@@ -594,6 +648,7 @@ TogglButton = {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
+    clearInterval(TogglButton.pomodoroProgressTimer);
     var notificationId = 'pomodoro-time-is-up',
       stopSound,
       latestDescription = (TogglButton.$curEntry && TogglButton.$curEntry.description) ? " (" + TogglButton.$curEntry.description + ")" : "",

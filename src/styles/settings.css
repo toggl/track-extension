@@ -214,7 +214,7 @@ header .active, header li:hover {
   border-radius: 3px;
   padding: 5px;
   overflow: auto;
-  width: 50%;
+  width: 375px;
   float: left;
 }
 
@@ -231,10 +231,22 @@ header .active, header li:hover {
   background: #f5f5f5;
 }
 
+.permissions-toolbar {
+  width: 375px;
+}
+
 #custom-permissions-list li {
   line-height: 23px;
   vertical-align: middle;
   padding-left: 5px;
+}
+
+#permissions-list.filtered li {
+  display: none;
+}
+
+#permissions-list.filtered li.filter {
+  display: block;
 }
 
 #permissions-list li.disabled {
@@ -270,6 +282,43 @@ header .active, header li:hover {
   margin-right: 10px;
   margin-left: 5px;
   margin-top: 5px;
+}
+
+#permission-filter {
+  width: 210px;
+  float: left;
+  padding-right: 20px;
+}
+
+#filter-clear {
+  display: none;
+  width: 18px;
+  height: 18px;
+  line-height: 14px;
+  vertical-align: middle;
+  text-decoration: none;
+  color: #6b6969;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: -21px;
+  position: relative;
+  float: left;
+  text-align: center;
+  margin-top: 3px;
+}
+
+#filter-clear:hover {
+  color: #ffffff;
+  background-color: #6b6969;
+  border-radius: 20px;
+}
+
+.filtered ~#filter-clear {
+  display: block;
+}
+
+.button-container {
+  float: right;
 }
 
 #default-project {

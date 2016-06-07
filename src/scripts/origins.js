@@ -12,6 +12,7 @@ window.TogglOrigins = {
   "basecamp.com": {"url": "*://*.basecamp.com/*", "name": "Basecamp"},
   "basecamphq.com": {"url": "*://*.basecamphq.com/*", "name": "BasecampHQ", "clone": "true", "file": "basecamp.js"},
   "bitbucket.org": {"url": "*://*.bitbucket.org/*", "name": "Bitbucket"},
+  "bitrix24.com": {"url": "*://*.bitrix24.com/*", "name": "Bitrix24"},
   "breeze.pm": {"url": "*://app.breeze.pm/*", "name": "Breeze"},
   "bugzilla.mozilla.org": {"url": "*://bugzilla.mozilla.org/*", "name": "Bugzilla"},
   "capsulecrm.com": {"url": "*://*.capsulecrm.com/*", "name": "CapsuleCRM"},

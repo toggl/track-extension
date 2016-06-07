@@ -132,7 +132,7 @@ TogglButton = {
             if (resp.data.time_entries) {
               resp.data.time_entries.some(function (entry) {
                 if (entry.duration < 0) {
-                  TogglButton.updateTriggers(entry);
+                  TogglButton.updateTriggers(entry, true);
                   return true;
                 }
                 return false;
@@ -246,7 +246,7 @@ TogglButton = {
       data = JSON.parse(msg.data);
       if (data.model !== null) {
         if (data.model === "time_entry") {
-          TogglButton.updateCurrentEntry(data);
+          TogglButton.updateCurrentEntry(data, true);
         }
       } else if (TogglButton.$socket !== null) {
         try {
@@ -259,16 +259,15 @@ TogglButton = {
 
   },
 
-  updateTriggers: function (entry) {
+  updateTriggers: function (entry, sync) {
     TogglButton.$curEntry = entry;
-    if (!!entry) {
+    if (!!entry && !sync) {
       TogglButton.checkPomodoroAlarm(entry);
       clearTimeout(TogglButton.$nannyTimer);
+      TogglButton.$nannyTimer = null;
     } else {
       // Clear pomodoro timer
       clearTimeout(TogglButton.pomodoroAlarm);
-
-      TogglButton.$nannyTimer = null;
     }
     // Toggle workday end check
     TogglButton.startCheckingDayEnd(!!entry);
@@ -277,8 +276,7 @@ TogglButton = {
     TogglButton.setBrowserAction(entry);
   },
 
-
-  updateCurrentEntry: function (data) {
+  updateCurrentEntry: function (data, sync) {
     var entry = data.data;
     if (data.action === "INSERT") {
       TogglButton.updateTriggers(entry);
@@ -288,7 +286,7 @@ TogglButton = {
         TogglButton.updateEntriesDb();
         entry = null;
       }
-      TogglButton.updateTriggers(entry);
+      TogglButton.updateTriggers(entry, sync);
     }
   },
 

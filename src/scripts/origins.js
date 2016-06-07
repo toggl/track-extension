@@ -48,7 +48,7 @@ window.TogglOrigins = {
   "mantishub.com": {"url": "*://*.mantishub.com/*", "name": "Mantishub"},
   "mantishub.io": {"url": "*://*.mantishub.io/*", "name": "Mantishub", "clone" : "true"},
   "minicrm.pl": {"url": "*://*.minicrm.pl/*", "name": "Minicrm", "clone": "true", "file": "agenocrm.js"},
-  "myjetbrains.com": {"url": "*://*.myjetbrains.com/*", "name": "Myjetbrains"},
+  "myjetbrains.com": {"url": "*://*.myjetbrains.com/*", "name": "Myjetbrains", "file": "youtrack.js"},
   "newsletter2go.com": {"url": "*://*.newsletter2go.com/*", "name": "Newsletter2go"},
   "ongemini.com": {"url": "*://*.ongemini.com/*", "name": "Gemini"},
   "openproject.com": {"url": "*://*.openproject.com/*", "name": "Openproject"},

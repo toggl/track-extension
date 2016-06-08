@@ -407,10 +407,14 @@ document.addEventListener('DOMContentLoaded', function (e) {
       permission,
       o = Settings.$originsSelect;
 
+    if (text.indexOf(":") !== -1) {
+      text = text.split(":")[0];
+    }
     if (text.indexOf("//") !== -1) {
-      Settings.$newPermission.value = text.split("//")[1];
+      text = text.split("//")[1];
     }
 
+    Settings.$newPermission.value = text;
     domain = "*://" + Settings.$newPermission.value + "/";
     permission = {origins: [domain]};
 

@@ -67,6 +67,7 @@ window.TogglOrigins = {
   "redbooth.com": {"url": "*://*.redbooth.com/*", "name": "Redbooth"},
   "redmine.org": {"url": "*://*.redmine.org/*", "name": "Redmine"},
   "rememberthemilk.com": {"url": "*://*.rememberthemilk.com/*", "name": "RememberTheMilk"},
+  "rindle.com": {"url": "*://*.rindle.com/*", "name": "Rindle"},
   "salesforce.com": {"url": "*://*.salesforce.com/*", "name": "Salesforce"},
   "force.com": {"url": "*://*.force.com/*", "name": "Salesforce Lightning", "file": "salesforce.js"},
   "calendar.sunrise.am": {"url": "*://calendar.sunrise.am/*", "name": "Sunrise Calendar"},

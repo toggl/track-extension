@@ -26,6 +26,7 @@ window.TogglOrigins = {
   "drupal.org": {"url": "*://*.drupal.org/*", "name": "Drupal"},
   "eproject.me": {"url": "*://*.eproject.me/*", "name": "Eproject.me"},
   "esa.io": {"url": "*://*.esa.io/*", "name": "Esa.io"},
+  "eventum": {"url": "", "name": "Eventum"},
   "evernote.com": {"url": "*://*.evernote.com/*", "name": "Evernote"},
   "fogbugz.com": {"url": "*://*.fogbugz.com/*", "name": "Fogbugz"},
   "freshdesk.com": {"url": "*://*.freshdesk.com/*", "name": "Freshdesk"},

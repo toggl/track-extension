@@ -1248,7 +1248,7 @@ TogglButton = {
   },
 
   contextMenuClick: function (info, tab) {
-    TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": info.selectionText || ""}, null);
+    TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": (info.selectionText || tab.title)}, null);
   },
 
   newMessage: function (request, sender, sendResponse) {

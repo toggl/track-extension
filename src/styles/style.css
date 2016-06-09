@@ -1022,3 +1022,8 @@ only screen and (min-resolution: 192dpi) {
 #tickets-show-main-container .toggl-button.zube {
   float:none;
 }
+
+/********* HABITICA *********/
+.toggl-button.habitica {
+  margin-bottom: -4px!important;
+}

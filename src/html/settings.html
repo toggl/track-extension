@@ -157,8 +157,12 @@
           <div class="section">
             <h2>Url Permissions</h2>
             <div class="permissions-toolbar" data-id="regular">
-              <button class="enable-all">Enable all</button>
-              <button class="disable-all">Disable all</button>
+              <input type="text" id="permission-filter" placeholder="Filter permissions"/>
+              <a href="#clear" id="filter-clear">&times;</a>
+              <div class="button-container">
+                <button class="enable-all">Enable all</button>
+                <button class="disable-all">Disable all</button>
+              </div>
             </div>
             <ul id="permissions-list" class="origin-list"></ul>
             <p class="description">Enable tools you want to use with Toggl Button. You can enable all by clicking "Enable all" button in the top.</p>
@@ -170,7 +174,7 @@
             <h2>Custom Domain Url Permissions</h2>
             <input type="text" id="new-permission" placeholder="custom domain url"/>
             <select id="origins"></select>
-            <p class="description">Define custom domains here. Just type in the domain name without http(s) in format "toggl.com" and select the integration from dropdown.</p>
+            <p class="description">Define custom domains here. Just type in the domain name without http(s) in format "toggl.com" and select the integration from dropdown. Ports are currently not supported.</p>
             <button id="add-permission">Add</button>
             <div class="permissions-toolbar" data-id="custom">
             </div>

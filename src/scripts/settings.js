@@ -14,6 +14,10 @@ var Settings = {
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
+  lastFilter: null,
+  $permissionFilter: document.querySelector("#permission-filter"),
+  $permissionFilterClear: document.querySelector("#filter-clear"),
+  permissionItems: [],
   $permissionsList: document.querySelector("#permissions-list"),
   $customPermissionsList: document.querySelector("#custom-permissions-list"),
   $newPermission: document.querySelector("#new-permission"),
@@ -156,7 +160,7 @@ var Settings = {
           }
 
           // Don't show toggl.com as it's not optional
-          if (key.indexOf("toggl") === -1) {
+          if (key.indexOf("toggl") === -1 && !!TogglOrigins[key].url) {
             html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" class="toggle" data-host="' + TogglOrigins[key].url + '" ' + checked + '><div>' + key + '</div></li>';
           }
         }
@@ -208,6 +212,42 @@ document.addEventListener('DOMContentLoaded', function (e) {
   document.querySelector("body").style.display = "block";
 
   Settings.showPage();
+
+  Settings.$permissionFilter.addEventListener('focus', function (e) {
+    Settings.permissionItems = document.querySelectorAll("#permissions-list li");
+  });
+  Settings.$permissionFilter.addEventListener('keyup', function (e) {
+    var key, val = Settings.$permissionFilter.value;
+    if (val === Settings.lastFilter) {
+      return;
+    }
+
+    if (val.length === 1) {
+      Settings.$permissionsList.classList.add("filtered");
+      Settings.$permissionFilterClear.style.display = "block";
+    }
+    if (val.length === 0) {
+      Settings.$permissionsList.classList.remove("filtered");
+      Settings.$permissionFilterClear.style.display = "none";
+    }
+    Settings.lastFilter = val;
+    for (key in Settings.permissionItems) {
+      if (Settings.permissionItems.hasOwnProperty(key)) {
+        if (Settings.permissionItems[key].id.indexOf(val) !== -1) {
+          Settings.permissionItems[key].classList.add("filter");
+        } else if (!!Settings.permissionItems[key].classList) {
+          Settings.permissionItems[key].classList.remove("filter");
+        }
+      }
+    }
+  });
+
+  Settings.$permissionFilterClear.addEventListener('click', function (e) {
+    Settings.$permissionFilterClear.style.display = "none";
+    Settings.$permissionFilter.value = "";
+    Settings.$permissionsList.classList.remove("filtered");
+  });
+
   Settings.$showRightClickButton.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showRightClickButton") !== "true"), "toggle-right-click-button");
     TogglButton.toggleRightClickButton((localStorage.getItem("showRightClickButton") !== "true"));
@@ -367,10 +407,14 @@ document.addEventListener('DOMContentLoaded', function (e) {
       permission,
       o = Settings.$originsSelect;
 
+    if (text.indexOf(":") !== -1) {
+      text = text.split(":")[0];
+    }
     if (text.indexOf("//") !== -1) {
-      Settings.$newPermission.value = text.split("//")[1];
+      text = text.split("//")[1];
     }
 
+    Settings.$newPermission.value = text;
     domain = "*://" + Settings.$newPermission.value + "/";
     permission = {origins: [domain]};
 

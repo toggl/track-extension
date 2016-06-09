@@ -5,7 +5,7 @@ window.TogglOrigins = {
   "agenocrm.com": {"url" : "*://*.agenocrm.com/*", "name": "AgenoCRM"},
   "any.do": {"url": "*://web.any.do/*", "name": "Anydo"},
   "asana.com": {"url": "*://app.asana.com/*", "name": "Asana"},
-  "assembla.com": {"url": "*://www.assembla.com/*", "name": "Assembla"},
+  "assembla.com": {"url": "*://*.assembla.com/*", "name": "Assembla"},
   "atlassian.com": {"url": "*://*.atlassian.com/*", "name": "Atlassian"},
   "atlassian.net": {"url": "*://*.atlassian.net/*", "name": "Atlassian", "clone": "true"},
   "axosoft.com": {"url": "*://*.axosoft.com/*", "name": "Axosoft"},

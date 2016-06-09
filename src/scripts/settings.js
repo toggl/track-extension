@@ -160,7 +160,7 @@ var Settings = {
           }
 
           // Don't show toggl.com as it's not optional
-          if (key.indexOf("toggl") === -1) {
+          if (key.indexOf("toggl") === -1 && !!TogglOrigins[key].url) {
             html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" class="toggle" data-host="' + TogglOrigins[key].url + '" ' + checked + '><div>' + key + '</div></li>';
           }
         }

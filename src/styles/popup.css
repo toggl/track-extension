@@ -19,6 +19,7 @@ body {
 #login-form {
   margin-bottom: 30px;
   padding-top: 0px;
+  width: 192px;
 }
 #login-form .form-submit-row label.left {
   padding: 10px 0;
@@ -31,6 +32,7 @@ body {
   color: #aaa;
   float: left;
   display: block;
+  font-size: 12px;
 }
 .forgot-link:hover {
   color: #767676;

@@ -259,11 +259,12 @@ var PopUp = {
   submitForm: function (that) {
     var taskButton = document.querySelector("#toggl-button-task"),
       selectedProject = document.querySelector("#toggl-button-project"),
+      projectName = (selectedProject.selectedIndex != -1) ? selectedProject.options[selectedProject.selectedIndex].text : "",
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
         pid: selectedProject.value,
-        projectName: selectedProject.options[selectedProject.selectedIndex].text,
+        projectName: projectName,
         tags: PopUp.getSelectedTags(),
         tid: (taskButton && taskButton.value) ? taskButton.value : null,
         respond: true,

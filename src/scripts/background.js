@@ -798,7 +798,7 @@ TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
         if (xhr.status === 200) {
-          TogglButton.queque.push(TogglButton.checkPermissions);
+          TogglButton.queue.push(TogglButton.checkPermissions);
           TogglButton.fetchUser();
           TogglButton.refreshPage();
         } else {

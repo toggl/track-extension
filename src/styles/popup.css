@@ -212,6 +212,7 @@ hr {
   text-align: center;
   color: #999;
   cursor: pointer;
+  font-size: 12px;
 }
 
 .edit-button, .stop-button, .resume-button {
@@ -227,6 +228,7 @@ hr {
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 12px;
 }
 
 .stop-button {

@@ -205,7 +205,7 @@ var Db = {
       } else if (request.type === 'toggle-day-end-time') {
         Db.updateSetting("dayEndTime", request.state);
       } else if (request.type === 'change-default-project') {
-        Db.updateSetting("defaultProject", request.state);
+        Db.updateSetting(chrome.extension.getBackgroundPage().TogglButton.$user.id + "-defaultProject", request.state);
       } else if (request.type === 'update-dont-show-permissions' || request.type === 'update-selected-settings-tab') {
         Db.updateSetting(request.type.substr(7), request.state);
       }

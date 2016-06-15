@@ -217,7 +217,7 @@ var togglbutton = {
       return;
     }
 
-    var pid = (!!response.entry.pid) ? response.entry.pid : togglbutton.defaultProject,
+    var pid = response.entry.pid,
       projectSelect,
       placeholder,
       handler,

@@ -60,7 +60,7 @@ var Settings = {
           selected = '';
           project = projects[key];
           clientName = (!!project.cid && !!clients[project.cid]) ? ' . ' + clients[project.cid].name  : '';
-          if (parseInt(Db.get('defaultProject'), 10) === project.id) {
+          if (parseInt(Db.get(TogglButton.$user.id + "-defaultProject"), 10) === project.id) {
             selected = "selected ";
           }
           Settings.$defaultProject.innerHTML += "<option " + selected + "value='" + project.id + "'>" + project.name + clientName + "</option>";

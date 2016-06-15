@@ -374,6 +374,11 @@ TogglButton = {
       entry.time_entry.billable = project && project.billable;
     }
 
+    // set Default project if needed
+    if (!entry.time_entry.pid) {
+      entry.time_entry.pid = parseInt(Db.get(TogglButton.$user.id + "-defaultProject"), 10);
+    }
+
     TogglButton.ajax('/time_entries', {
       method: 'POST',
       payload: entry,

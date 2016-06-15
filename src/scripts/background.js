@@ -358,7 +358,7 @@ TogglButton = {
           start: start.toISOString(),
           description: timeEntry.description || "",
           wid: timeEntry.wid || TogglButton.$user.default_wid,
-          pid: timeEntry.pid || timeEntry.projectId || parseInt(Db.get("defaultProject"), 10) || null,
+          pid: timeEntry.pid || timeEntry.projectId || null,
           tid: timeEntry.tid || null,
           tags: timeEntry.tags || null,
           billable: timeEntry.billable || false,

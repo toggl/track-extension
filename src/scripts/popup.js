@@ -462,7 +462,12 @@ document.addEventListener('DOMContentLoaded', function () {
   PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
   document.querySelector(".settings-button").addEventListener('click', function () {
-    chrome.runtime.openOptionsPage();
+    var request = {
+      type: "options",
+      respond: false
+    };
+
+    CH.sendMessage(request, function (response) {});
   });
 
   document.querySelector(".logout-button").addEventListener('click', function () {

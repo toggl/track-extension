@@ -2,7 +2,15 @@
 /*global window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
-var Db = {
+var Db,
+  CH = chrome.extension,
+  FF = navigator.userAgent.indexOf("Chrome") == -1;
+
+if (FF) {
+  CH = chrome.runtime;
+}
+
+Db = {
   originsKey: "TogglButton-origins",
   // settings: key, default value
   settings: {
@@ -210,12 +218,13 @@ var Db = {
         Db.updateSetting(request.type.substr(7), request.state);
       }
     } catch (e) {
-      Bugsnag.notifyException(e);
+      console.log(e);
+      //Bugsnag.notifyException(e);
     }
 
     return true;
   }
 };
 
-chrome.extension.onMessage.addListener(Db.newMessage);
+CH.onMessage.addListener(Db.newMessage);
 Db.loadAll();

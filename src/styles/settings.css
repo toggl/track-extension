@@ -158,7 +158,7 @@ header .tab-link {
 
 header .active, header li:hover {
   border-bottom: 1px solid red;
-  background: #F1F0F0;
+  background: #F1F0F0!important;
 }
 
 .container .tabs {
@@ -410,4 +410,30 @@ header .active, header li:hover {
 
 #enable-sound-signal:checked ~.pomodoro-sound-volume {
   height: 36px;
+}
+
+.ff .tab-link[data-tab="3"], .ff .tab-3 {
+  display: none!important;
+}
+
+.ff .tab {
+  height: 100%;
+}
+
+.ff .footer, .ff .header {
+  background: transparent;
+}
+
+.ff .list {
+  width: auto;
+  padding-right: 15px;
+  font-size: 12px;
+}
+
+.ff .subsettings-details {
+  max-width: 45%;
+}
+
+.ff header, .ff header .tab-link {
+  background: transparent;
 }

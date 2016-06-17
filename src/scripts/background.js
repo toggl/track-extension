@@ -1,13 +1,31 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton, openWindowsCount = 0;
+var TogglButton, openWindowsCount = 0,
+  FF = navigator.userAgent.indexOf("Chrome") == -1,
+  debug = true,
+  CH = chrome.extension;
 
-Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
-Bugsnag.appVersion = chrome.runtime.getManifest().version;
+if (FF) {
+  CH = chrome.runtime;
+}
 
-Bugsnag.beforeNotify = function (error, metaData) {
+
+
+//Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
+//Bugsnag.appVersion = chrome.runtime.getManifest().version;
+
+/*Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
+};
+*/
+
+var report = function (error) {
+  if (debug) {
+    console.log(e);
+  } else {
+    //Bugsnag.notifyException(e);
+  }
 };
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -99,7 +117,7 @@ TogglButton = {
                   chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
                 }
               } catch (e) {
-                Bugsnag.notifyException(e);
+                report(e);
               }
             });
             resp = JSON.parse(xhr.responseText);
@@ -157,7 +175,7 @@ TogglButton = {
             if (Db.get("socketEnabled")) {
               TogglButton.setupSocket();
             }
-            TogglButton.updateBugsnag();
+            //TogglButton.updateBugsnag();
             TogglButton.handleQueue();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
@@ -168,7 +186,7 @@ TogglButton = {
             TogglButton.setBrowserActionBadge();
           }
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -195,9 +213,11 @@ TogglButton = {
 
   updateBugsnag: function () {
     // Set user data
+    /*
     Bugsnag.user = {
       id: TogglButton.$user.id
     };
+    */
   },
 
   setupSocket: function () {
@@ -409,7 +429,7 @@ TogglButton = {
             );
           }
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -744,7 +764,7 @@ TogglButton = {
           }
           TogglButton.analytics(timeEntry.type, timeEntry.service);
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -956,7 +976,7 @@ TogglButton = {
         }
       }
     } catch (e) {
-      Bugsnag.notifyException(e);
+      report(e);
     }
 
     return html;
@@ -1376,7 +1396,7 @@ TogglButton = {
       }
 
     } catch (e) {
-      Bugsnag.notifyException(e);
+      report(e);
     }
 
     return true;
@@ -1386,16 +1406,26 @@ TogglButton = {
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins};
-
-      chrome.permissions.contains(permission, function (result) {
-        if (result) {
-          if (!!domain.file) {
-            chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-            chrome.tabs.executeScript(tabId, {file: "scripts/common.js"});
+      console.log("url: " + tab.url + " | domain-file: " + domain.file);
+      if (FF) {
+        if (!!domain.file) {
+          chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
+          chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
             chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-          }
+          });
         }
-      });
+      } else {
+        chrome.permissions.contains(permission, function (result) {
+          if (result) {
+            if (!!domain.file) {
+              chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
+              chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
+                chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
+              });
+            }
+          }
+        });
+      }
     }
   },
 
@@ -1460,7 +1490,7 @@ TogglButton = {
   },
 
   checkPermissions: function (show) {
-    if (!Db.get("dont-show-permissions")) {
+    if (!Db.get("dont-show-permissions") && !FF) {
       chrome.permissions.getAll(function (results) {
         if (!!show || results.origins.length === 2) {
           show = show || 3;
@@ -1482,7 +1512,7 @@ TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
-chrome.extension.onMessage.addListener(TogglButton.newMessage);
+CH.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
@@ -1496,16 +1526,18 @@ window.onbeforeunload = function () {
   }
 };
 
-TogglButton.checkPermissions();
+if (!FF) {
+  TogglButton.checkPermissions();
 
-// Check whether new version is installed
-chrome.runtime.onInstalled.addListener(function (details) {
-  if (details.reason === "install") {
-    TogglButton.checkPermissions(1);
-  } else if (details.reason === "update") {
-    if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
-      TogglButton.checkPermissions(2);
+  // Check whether new version is installed
+  chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason === "install") {
+      TogglButton.checkPermissions(1);
+    } else if (details.reason === "update") {
+      if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
+        TogglButton.checkPermissions(2);
+      }
     }
-  }
-});
+  });
+}
 

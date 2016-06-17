@@ -1,6 +1,13 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
 /*global document: false, MutationObserver: false, chrome: false, window: false*/
 "use strict";
+console.log(">> COMMON");
+var FF = navigator.userAgent.indexOf("Chrome") == -1,
+  CH = chrome.extension;
+
+if (FF) {
+  CH = chrome.runtime;
+}
 
 function $(s, elem) {
   elem = elem || document;
@@ -101,7 +108,7 @@ var togglbutton = {
   fullPageHeight: getFullPageHeight(),
   fullVersion: "TogglButton",
   render: function (selector, opts, renderer) {
-    chrome.extension.sendMessage({type: 'activate'}, function (response) {
+    CH.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
         try {
           togglbutton.entries = response.user.time_entries;
@@ -116,7 +123,7 @@ var togglbutton = {
           }
           togglbutton.renderTo(selector, renderer);
         } catch (e) {
-          chrome.extension.sendMessage({type: 'error', stack: e.stack});
+          CH.sendMessage({type: 'error', stack: e.stack});
         }
       }
     });
@@ -326,7 +333,7 @@ var togglbutton = {
           tid: (taskButton && taskButton.value) ? taskButton.value : null,
           service: togglbutton.serviceName
         };
-      chrome.extension.sendMessage(request);
+      CH.sendMessage(request);
       closeTagsList(true);
       editForm.style.display = "none";
     };
@@ -389,7 +396,7 @@ var togglbutton = {
       if (!link.classList.contains("min")) {
         link.innerHTML = 'Start timer';
       }
-      chrome.extension.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
+      CH.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
       closeTagsList(true);
       editForm.style.display = "none";
       return false;
@@ -470,7 +477,7 @@ var togglbutton = {
       return;
     }
     // If tasks are available, populate the task dropdown.
-    chrome.extension.sendMessage({type: 'getTasksHtml', projectId: projectId}, function (response) {
+    CH.sendMessage({type: 'getTasksHtml', projectId: projectId}, function (response) {
       if (response && response.success && response.html) {
         $('#toggl-button-task').innerHTML = response.html;
         $("#toggl-button-task-placeholder", editForm).addEventListener('click', togglbutton.delegateTaskClick);
@@ -548,7 +555,7 @@ var togglbutton = {
         };
       }
       togglbutton.element = e.target;
-      chrome.extension.sendMessage(opts, togglbutton.addEditForm);
+      CH.sendMessage(opts, togglbutton.addEditForm);
 
       return false;
     });
@@ -557,7 +564,7 @@ var togglbutton = {
     togglbutton.links.push({params: params, link: link});
 
     // new button created - set state
-    chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
+    CH.sendMessage({type: 'currentEntry'}, function (response) {
       var currentEntry, i;
       if (response.success) {
         currentEntry = response.currentEntry;
@@ -642,10 +649,10 @@ var togglbutton = {
   }
 };
 
-chrome.extension.onMessage.addListener(togglbutton.newMessage);
+CH.onMessage.addListener(togglbutton.newMessage);
 window.addEventListener('focus', function (e) {
   // update button state
-  chrome.extension.sendMessage({type: 'currentEntry'}, function (response) {
+  CH.sendMessage({type: 'currentEntry'}, function (response) {
     togglbutton.updateTimerLink(response.currentEntry);
   });
 });

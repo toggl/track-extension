@@ -1,8 +1,8 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global document: false, MutationObserver: false, chrome: false, window: false*/
+/*global document: false, MutationObserver: false, chrome: false, window: false, navigator: false*/
 "use strict";
 console.log(">> COMMON");
-var FF = navigator.userAgent.indexOf("Chrome") == -1,
+var FF = navigator.userAgent.indexOf("Chrome") === -1,
   CH = chrome.extension;
 
 if (FF) {

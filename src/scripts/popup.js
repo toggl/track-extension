@@ -1,11 +1,11 @@
 /*jslint indent: 2, unparam: true*/
-/*global document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   Db = chrome.extension.getBackgroundPage().Db,
   CH = chrome.extension,
-  FF = navigator.userAgent.indexOf("Chrome") == -1;
+  FF = navigator.userAgent.indexOf("Chrome") === -1;
 
 if (FF) {
   CH = chrome.runtime;
@@ -266,7 +266,7 @@ var PopUp = {
   submitForm: function (that) {
     var taskButton = document.querySelector("#toggl-button-task"),
       selectedProject = document.querySelector("#toggl-button-project"),
-      projectName = (selectedProject.selectedIndex != -1) ? selectedProject.options[selectedProject.selectedIndex].text : "",
+      projectName = (selectedProject.selectedIndex !== -1) ? selectedProject.options[selectedProject.selectedIndex].text : "",
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function () {
       respond: false
     };
 
-    CH.sendMessage(request, function (response) {});
+    CH.sendMessage(request);
   });
 
   document.querySelector(".logout-button").addEventListener('click', function () {

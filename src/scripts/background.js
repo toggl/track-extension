@@ -1,8 +1,8 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 var TogglButton, openWindowsCount = 0,
-  FF = navigator.userAgent.indexOf("Chrome") == -1,
+  FF = navigator.userAgent.indexOf("Chrome") === -1,
   debug = true,
   CH = chrome.extension;
 
@@ -10,17 +10,17 @@ if (FF) {
   CH = chrome.runtime;
 }
 
+/*
+Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
+Bugsnag.appVersion = chrome.runtime.getManifest().version;
 
 
-//Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
-//Bugsnag.appVersion = chrome.runtime.getManifest().version;
-
-/*Bugsnag.beforeNotify = function (error, metaData) {
+Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
 };
 */
 
-var report = function (error) {
+var report = function (e) {
   if (debug) {
     console.log(e);
   } else {
@@ -1389,7 +1389,7 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        console.log (e);
+        console.log(error);
         //Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();

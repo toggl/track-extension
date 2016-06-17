@@ -1,10 +1,10 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global navigator: false, window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var Db,
   CH = chrome.extension,
-  FF = navigator.userAgent.indexOf("Chrome") == -1;
+  FF = navigator.userAgent.indexOf("Chrome") === -1;
 
 if (FF) {
   CH = chrome.runtime;

@@ -9,6 +9,7 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
 
 if (FF) {
   CH = chrome.runtime;
+  document.querySelector("body").classList.add("ff");
 }
 
 var PopUp = {

@@ -891,6 +891,7 @@ TogglButton = {
       wsHtml = {},
       clientHtml = {},
       client,
+      classNames = "",
       project,
       key = null,
       ckey = null,
@@ -930,7 +931,8 @@ TogglButton = {
           if (projects.hasOwnProperty(key)) {
             project = projects[key];
             clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
-            wsHtml[project.wid][clientName] += '<li class="project-row" data-pid="' + project.id + '">' + project.name + '</li>';
+            classNames = "project-color " + "color-" + project.color;
+            wsHtml[project.wid][clientName] += '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet ' + classNames + '"></span>' + project.name + '</li>';
           }
         }
 

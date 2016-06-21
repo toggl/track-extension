@@ -20,6 +20,11 @@ var PopUp = {
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
+  $projectAutocomplete: null,
+  $projectFilter: null,
+  $projectFilterClear: null,
+  projectItems: [],
+  lastFilter: null,
   $error: document.querySelector(".error"),
   $timerRow: document.querySelector(".timer"),
   $timer: null,
@@ -174,17 +179,23 @@ var PopUp = {
 
   /* Edit form functions */
   updateEditForm: function (view) {
-    var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : parseInt(Db.get('defaultProject'), 10),
+    var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
       togglButtonDescription = document.querySelector("#toggl-button-description"),
-      projectSelect,
-      placeholder;
+      placeholder,
+      selected = PopUp.$projectAutocomplete.querySelector(".selected-project");
 
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
-    projectSelect = document.getElementById("toggl-button-project");
-    projectSelect.value = pid;
+
+    if (!!selected) {
+      selected.classList.remove("selected-project");
+    }
+    if (!!pid) {
+      PopUp.$projectAutocomplete.querySelector("li[data-pid='" + pid + "']").classList.add("selected-project");
+    }
+
     placeholder = document.querySelector("#toggl-button-project-placeholder > .toggl-button-text");
-    placeholder.innerHTML = placeholder.title = PopUp.generateLabel(projectSelect, pid, "project");
+    placeholder.innerHTML = placeholder.title = PopUp.generateLabel(null, pid, "project");
     PopUp.fetchTasks(pid, tid);
     PopUp.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
     if (!!TogglButton.$curEntry.tags && TogglButton.$curEntry.tags.length) {
@@ -250,28 +261,41 @@ var PopUp = {
   },
 
   generateLabel: function (select, id, type) {
-    var selected = select.options[select.selectedIndex],
-      parent,
-      result = "";
+    var selected = false,
+      client,
+      result = "",
+      selectedElem = document.querySelector(".selected-project");
+
+    if (type === "project") {
+      if (!!selectedElem) {
+        selected = parseInt(selectedElem.getAttribute("data-pid"), 10);
+        client = selectedElem.parentNode.querySelector(".client-row");
+        if (!!client) {
+          result = client.textContent + " - ";
+        }
+        result += selectedElem.textContent;
+      }
+    } else {
+      selected = select.options[select.selectedIndex];
+      result = selected.text;
+    }
+
     if (parseInt(id, 10) === 0 || !selected) {
       return "Add " + type;
     }
-    parent = selected.parentNode;
-    if (type === "project" && parent.tagName === "OPTGROUP") {
-      result = parent.label + " - ";
-    }
-    return result + selected.text;
+    return result;
   },
 
   submitForm: function (that) {
     var taskButton = document.querySelector("#toggl-button-task"),
-      selectedProject = document.querySelector("#toggl-button-project"),
-      projectName = (selectedProject.selectedIndex !== -1) ? selectedProject.options[selectedProject.selectedIndex].text : "",
+      selectedProject = document.querySelector(".selected-project"),
+      selectedPid = (!!selectedProject) ? selectedProject.getAttribute("data-pid") : 0,
+      selectedProjectName = (!!selectedProject) ? selectedProject.textContent : "",
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
-        pid: selectedProject.value,
-        projectName: projectName,
+        pid: selectedPid,
+        projectName: selectedProjectName,
         tags: PopUp.getSelectedTags(),
         tid: (taskButton && taskButton.value) ? taskButton.value : null,
         respond: true,
@@ -347,9 +371,12 @@ var PopUp = {
 
   addEditEvents: function () {
     /* Edit form events */
-    var projectSelect = document.querySelector("#toggl-button-project"),
-      taskSelect = document.querySelector("#toggl-button-task"),
+    var taskSelect = document.querySelector("#toggl-button-task"),
       handler;
+
+    PopUp.$projectAutocomplete = document.querySelector("#project-autocomplete");
+    PopUp.$projectFilter = document.querySelector("#toggl-button-project-filter");
+    PopUp.$projectFilterClear = document.querySelector("#filter-clear");
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
@@ -375,41 +402,93 @@ var PopUp = {
     });
 
     document.querySelector("#toggl-button-project-placeholder").addEventListener('click', function (e) {
-      // Ignore this click if it caused the last project blur.
-      if (PopUp.projectBlurTrigger === e.target) {
-        PopUp.projectBlurTrigger = null;
+      this.parentNode.classList.toggle("open");
+      PopUp.$projectFilter.focus();
+    });
+
+    PopUp.$projectFilter.addEventListener('focus', function (e) {
+      PopUp.projectItems = document.querySelectorAll("#project-autocomplete li");
+    });
+
+    PopUp.$projectFilter.addEventListener('keyup', function (e) {
+      var key,
+        val = PopUp.$projectFilter.value.toLowerCase(),
+        row;
+
+      if (val === PopUp.lastFilter) {
         return;
       }
 
-      var dropdown = document.getElementById('toggl-button-project'),
-        event = document.createEvent('MouseEvents');
-      event.initMouseEvent('mousedown', true, true, window);
-      dropdown.dispatchEvent(event);
+      if (val.length === 1) {
+        PopUp.$projectAutocomplete.classList.add("filtered");
+        PopUp.$projectFilterClear.style.display = "block";
+      }
+      if (val.length === 0) {
+        PopUp.$projectAutocomplete.classList.remove("filtered");
+        PopUp.$projectFilterClear.style.display = "none";
+      }
+      PopUp.lastFilter = val;
+      for (key in PopUp.projectItems) {
+        if (PopUp.projectItems.hasOwnProperty(key)) {
+          row = PopUp.projectItems[key];
+          if (row.textContent.toLowerCase().indexOf(val) !== -1) {
+            row.classList.add("filter");
+            if (row.classList.contains("project-row")) {
+              row.parentNode.classList.add("filter");
+              row.parentNode.parentNode.classList.add("filter");
+            }
+            if (row.classList.contains("client-row")) {
+              row.parentNode.classList.add("filter-match");
+            }
+          } else if (!!row.classList) {
+            row.classList.remove("filter");
+            if (row.parentNode.querySelectorAll(".filter").length === 0) {
+              row.parentNode.classList.remove("filter");
+            }
+            if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
+              row.parentNode.parentNode.classList.remove("filter");
+            }
+            if (row.classList.contains("client-row")) {
+              row.classList.remove("filter-match");
+              row.parentNode.classList.remove("filter-match");
+              row.parentNode.parentNode.classList.remove("filter-match");
+            }
+          }
+        }
+      }
+    });
+
+    PopUp.$projectFilterClear.addEventListener('click', function (e) {
+      PopUp.$projectFilter.value = "";
+      PopUp.$projectAutocomplete.classList.remove("filtered");
+      this.parentNode.classList.toggle("open");
+    });
+
+    PopUp.$projectAutocomplete.addEventListener('click', function (e) {
+      if (!e.target.classList.contains("project-row")) {
+        return;
+      }
+      var currentSelected = document.querySelector(".selected-project"),
+        val = e.target.getAttribute("data-pid"),
+        placeholder = document.querySelector("#toggl-button-project-placeholder > div");
+
+      if (!!currentSelected) {
+        currentSelected.classList.remove("selected-project");
+      }
+      e.target.classList.add("selected-project");
+
+      placeholder.innerHTML = placeholder.title = PopUp.generateLabel(this, val, "project");
+      PopUp.setProjectBullet(this.value, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
+      PopUp.fetchTasks(val);
+
+      // Close dropdown
+      PopUp.$projectFilter.value = "";
+      PopUp.$projectAutocomplete.classList.remove("filtered");
+      PopUp.$projectFilterClear.parentNode.classList.toggle("open");
     });
 
     document.querySelector("#toggl-button-tag-placeholder").addEventListener('click', function (e) {
       PopUp.closeTagsList(false);
-    });
-
-    projectSelect.addEventListener('change', function (e) {
-      var placeholder = document.querySelector("#toggl-button-project-placeholder > div");
-      placeholder.innerHTML = placeholder.title = PopUp.generateLabel(this, this.value, "project");
-      PopUp.setProjectBullet(this.value, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
-      // Force blur.
-      PopUp.projectBlurTrigger = null;
-      projectSelect.blur();
-
-      PopUp.fetchTasks(this.value);
-    });
-
-    projectSelect.addEventListener('click', function () {
-      // Catch click in case user selects an already-selected item - force blur.
-      PopUp.projectBlurTrigger = null;
-      projectSelect.blur();
-    });
-
-    projectSelect.addEventListener('blur', function () {
-      PopUp.projectBlurTrigger = PopUp.mousedownTrigger;
     });
 
     taskSelect.addEventListener('change', function (e) {
@@ -424,7 +503,6 @@ var PopUp = {
     taskSelect.addEventListener('click', function () {
       // Catch click in case user selects an already-selected item - force blur.
       PopUp.taskBlurTrigger = null;
-      projectSelect.blur();
     });
 
     taskSelect.addEventListener('blur', function (e) {

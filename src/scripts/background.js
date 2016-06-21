@@ -88,8 +88,10 @@ TogglButton = {
         '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
+        '<input name="toggl-button-project-filter" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Add project" autocomplete="off">' +
+        '<a href="#clear" id="filter-clear">&times;</a>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
+        '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
       '<div class="toggl-button-row" id="toggl-button-tasks-row">' +
         '<select class="toggl-button-input" id="toggl-button-task" name="toggl-button-task"></select>' +
@@ -882,7 +884,7 @@ TogglButton = {
   },
 
   fillProjects: function () {
-    var html = "<option value='0'>- No Project -</option>",
+    var html = '<p class="project-row" data-pid="0">No project</p>',
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
       clientNames = TogglButton.$user.clientNameMap,
@@ -896,9 +898,7 @@ TogglButton = {
       clientName = 0,
       i,
       validate = function (item) {
-        return item.indexOf("</option>") !== -1 &&
-          !!item &&
-          ((item.match(/\/option/g) || []).length > 1 || item.length > 1);
+        return item.indexOf("project-row") !== -1 && !!item;
       };
 
     try {
@@ -915,13 +915,14 @@ TogglButton = {
         // Add Workspace names
         TogglButton.$user.workspaces.forEach(function (element, index) {
           wsHtml[element.id] = {};
-          wsHtml[element.id][0] = '<option disabled="disabled">  ---  ' + element.name.toUpperCase() + '  ---  </option>';
+          wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '"><li class="ws-row">' + element.name.toUpperCase() + '</li>' +
+            '<ul class="client-list" data-cid="0">';
         });
 
         // Add client optgroups
         for (i = 0; i < keys.length; i++) {
           client = clientNames[keys[i]];
-          wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
+          wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row">' + client.name + '</li>';
         }
 
         // Add projects
@@ -929,7 +930,7 @@ TogglButton = {
           if (projects.hasOwnProperty(key)) {
             project = projects[key];
             clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
-            wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
+            wsHtml[project.wid][clientName] += '<li class="project-row" data-pid="' + project.id + '">' + project.name + '</li>';
           }
         }
 
@@ -939,9 +940,10 @@ TogglButton = {
             Object.keys(wsHtml[key]).sort();
             for (ckey in wsHtml[key]) {
               if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
-                html += wsHtml[key][ckey] + "</optgroup>";
+                html += wsHtml[key][ckey] + "</ul>";
               }
             }
+            html += "</ul>";
           }
         }
 

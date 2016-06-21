@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global alert: false, document: false, window: false, TogglOrigins: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global navigator: false, alert: false, document: false, window: false, TogglOrigins: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   if (FF) {
-    window.onresize = function(event) {
+    window.onresize = function (event) {
       w = window.innerWidth;
       document.querySelector(".tab-1").style.width = w + "px";
       document.querySelector(".tab-2").style.width = w + "px";

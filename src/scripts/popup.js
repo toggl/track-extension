@@ -253,16 +253,16 @@ var PopUp = {
     var selected = false,
       client,
       result = "",
-      selectedElem = document.querySelector(".selected-project");
+      selectedElem = PopUp.$projectAutocomplete.getSelected();
 
     if (type === "project") {
-      if (!!selectedElem) {
-        selected = parseInt(selectedElem.getAttribute("data-pid"), 10);
-        client = selectedElem.parentNode.querySelector(".client-row");
+      if (!!selectedElem.el) {
+        selected = selectedElem.pid;
+        client = selectedElem.el.parentNode.querySelector(".client-row");
         if (!!client) {
           result = client.textContent + " - ";
         }
-        result += selectedElem.textContent;
+        result += selectedElem.el.textContent;
       }
     } else {
       selected = select.options[select.selectedIndex];
@@ -277,14 +277,12 @@ var PopUp = {
 
   submitForm: function (that) {
     var taskButton = document.querySelector("#toggl-button-task"),
-      selectedProject = document.querySelector(".selected-project"),
-      selectedPid = (!!selectedProject) ? selectedProject.getAttribute("data-pid") : 0,
-      selectedProjectName = (!!selectedProject) ? selectedProject.textContent : "",
+      selected = PopUp.$projectAutocomplete.getSelected(),
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
-        pid: selectedPid,
-        projectName: selectedProjectName,
+        pid: selected.pid,
+        projectName: selected.name,
         tags: PopUp.getSelectedTags(),
         tid: (taskButton && taskButton.value) ? taskButton.value : null,
         respond: true,

@@ -115,3 +115,15 @@ AutoComplete.prototype.setSelected = function (pid) {
     this.el.querySelector("li[data-pid='" + pid + "']").classList.add("selected-project");
   }
 };
+
+AutoComplete.prototype.getSelected = function () {
+  var selected = this.el.querySelector(".selected-project"),
+    pid = (!!selected) ? parseInt(selected.getAttribute("data-pid"), 10) : 0,
+    name = (!!selected) ? selected.textContent : "";
+
+  return {
+    el: selected,
+    pid: pid,
+    name: name
+  };
+};

@@ -1412,29 +1412,28 @@ TogglButton = {
         permission = {origins: domain.origins};
       console.log("url: " + tab.url + " | domain-file: " + domain.file);
       if (FF) {
-        if (!!domain.file) {
-          chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-          chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
-            chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-          });
-        }
+        TogglButton.loadFiles(tabId, domain.file);
       } else {
         chrome.permissions.contains(permission, function (result) {
           if (result) {
-            if (!!domain.file) {
-              chrome.tabs.insertCSS(tabId, {file: "styles/style.css"}, function () {
-                chrome.tabs.insertCSS(tabId, {file: "styles/autocomplete.css"});
-              });
-
-              chrome.tabs.executeScript(tabId, {file: "scripts/autocomplete.js"}, function () {
-                chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
-                  chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-                });
-              });
-            }
+            TogglButton.loadFiles(tabId, domain.file);
           }
         });
       }
+    }
+  },
+
+  loadFiles: function (tabId, file) {
+    if (!!file) {
+      chrome.tabs.insertCSS(tabId, {file: "styles/style.css"}, function () {
+        chrome.tabs.insertCSS(tabId, {file: "styles/autocomplete.css"});
+      });
+
+      chrome.tabs.executeScript(tabId, {file: "scripts/autocomplete.js"}, function () {
+        chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
+          chrome.tabs.executeScript(tabId, {file: "scripts/content/" + file});
+        });
+      });
     }
   },
 

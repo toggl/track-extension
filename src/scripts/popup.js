@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true*/
-/*global navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global AutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
@@ -21,10 +21,6 @@ var PopUp = {
   $editButton: document.querySelector(".edit-button"),
   $projectBullet: document.querySelector(".project-bullet"),
   $projectAutocomplete: null,
-  $projectFilter: null,
-  $projectFilterClear: null,
-  projectItems: [],
-  lastFilter: null,
   $error: document.querySelector(".error"),
   $timerRow: document.querySelector(".timer"),
   $timer: null,
@@ -182,17 +178,10 @@ var PopUp = {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
       togglButtonDescription = document.querySelector("#toggl-button-description"),
-      placeholder,
-      selected = PopUp.$projectAutocomplete.querySelector(".selected-project");
+      placeholder;
 
+    PopUp.$projectAutocomplete.setSelected(pid);
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
-
-    if (!!selected) {
-      selected.classList.remove("selected-project");
-    }
-    if (!!pid) {
-      PopUp.$projectAutocomplete.querySelector("li[data-pid='" + pid + "']").classList.add("selected-project");
-    }
 
     placeholder = document.querySelector("#toggl-button-project-placeholder > .toggl-button-text");
     placeholder.innerHTML = placeholder.title = PopUp.generateLabel(null, pid, "project");
@@ -374,9 +363,7 @@ var PopUp = {
     var taskSelect = document.querySelector("#toggl-button-task"),
       handler;
 
-    PopUp.$projectAutocomplete = document.querySelector("#project-autocomplete");
-    PopUp.$projectFilter = document.querySelector("#toggl-button-project-filter");
-    PopUp.$projectFilterClear = document.querySelector("#filter-clear");
+    PopUp.$projectAutocomplete = new AutoComplete("project", "li", PopUp);
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
@@ -399,92 +386,6 @@ var PopUp = {
     });
     document.addEventListener('mouseup', function (e) {
       PopUp.mousedownTrigger = null;
-    });
-
-    document.querySelector("#toggl-button-project-placeholder").addEventListener('click', function (e) {
-      this.parentNode.classList.toggle("open");
-      PopUp.$projectFilter.focus();
-    });
-
-    PopUp.$projectFilter.addEventListener('focus', function (e) {
-      PopUp.projectItems = document.querySelectorAll("#project-autocomplete li");
-    });
-
-    PopUp.$projectFilter.addEventListener('keyup', function (e) {
-      var key,
-        val = PopUp.$projectFilter.value.toLowerCase(),
-        row;
-
-      if (val === PopUp.lastFilter) {
-        return;
-      }
-
-      if (val.length === 1) {
-        PopUp.$projectAutocomplete.classList.add("filtered");
-        PopUp.$projectFilterClear.style.display = "block";
-      }
-      if (val.length === 0) {
-        PopUp.$projectAutocomplete.classList.remove("filtered");
-        PopUp.$projectFilterClear.style.display = "none";
-      }
-      PopUp.lastFilter = val;
-      for (key in PopUp.projectItems) {
-        if (PopUp.projectItems.hasOwnProperty(key)) {
-          row = PopUp.projectItems[key];
-          if (row.textContent.toLowerCase().indexOf(val) !== -1) {
-            row.classList.add("filter");
-            if (row.classList.contains("project-row")) {
-              row.parentNode.classList.add("filter");
-              row.parentNode.parentNode.classList.add("filter");
-            }
-            if (row.classList.contains("client-row")) {
-              row.parentNode.classList.add("filter-match");
-            }
-          } else if (!!row.classList) {
-            row.classList.remove("filter");
-            if (row.parentNode.querySelectorAll(".filter").length === 0) {
-              row.parentNode.classList.remove("filter");
-            }
-            if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
-              row.parentNode.parentNode.classList.remove("filter");
-            }
-            if (row.classList.contains("client-row")) {
-              row.classList.remove("filter-match");
-              row.parentNode.classList.remove("filter-match");
-              row.parentNode.parentNode.classList.remove("filter-match");
-            }
-          }
-        }
-      }
-    });
-
-    PopUp.$projectFilterClear.addEventListener('click', function (e) {
-      PopUp.$projectFilter.value = "";
-      PopUp.$projectAutocomplete.classList.remove("filtered");
-      this.parentNode.classList.toggle("open");
-    });
-
-    PopUp.$projectAutocomplete.addEventListener('click', function (e) {
-      if (!e.target.classList.contains("project-row")) {
-        return;
-      }
-      var currentSelected = document.querySelector(".selected-project"),
-        val = e.target.getAttribute("data-pid"),
-        placeholder = document.querySelector("#toggl-button-project-placeholder > div");
-
-      if (!!currentSelected) {
-        currentSelected.classList.remove("selected-project");
-      }
-      e.target.classList.add("selected-project");
-
-      placeholder.innerHTML = placeholder.title = PopUp.generateLabel(this, val, "project");
-      PopUp.setProjectBullet(this.value, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
-      PopUp.fetchTasks(val);
-
-      // Close dropdown
-      PopUp.$projectFilter.value = "";
-      PopUp.$projectAutocomplete.classList.remove("filtered");
-      PopUp.$projectFilterClear.parentNode.classList.toggle("open");
     });
 
     document.querySelector("#toggl-button-tag-placeholder").addEventListener('click', function (e) {

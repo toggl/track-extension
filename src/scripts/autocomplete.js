@@ -135,14 +135,17 @@ AutoComplete.prototype.setProjectBullet = function (pid, elem) {
     className,
     id = parseInt(pid, 10);
 
-  if (!!pid && id !== 0) {
+  if (!!pid) {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
-    className = project.querySelector(".project-bullet").className;
-    if (!!project) {
-      elem.className = className;
-      return " - " + project.name;
+    if (id !== 0) {
+      if (!!project) {
+        className = project.querySelector(".project-bullet").className;
+        elem.className = className;
+        return " - " + project.name;
+      }
     }
   }
+  elem.className = "project-bullet";
   return "";
 };
 

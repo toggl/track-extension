@@ -413,7 +413,6 @@ var togglbutton = {
     taskSelect.addEventListener('click', function () {
       // Catch click in case user selects an already-selected item - force blur.
       togglbutton.taskBlurTrigger = null;
-      projectSelect.blur();
     });
 
     taskSelect.addEventListener('blur', function (e) {

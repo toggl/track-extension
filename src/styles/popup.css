@@ -289,34 +289,6 @@ hr {
   opacity: 0.7;
 }
 
-.project-bullet {
-    border-radius: 50%;
-    float: left;
-    width: 8px;
-    height: 8px;
-    display: none;
-    position: absolute;
-    margin: 11px 5px auto 16px;
-}
-
-/* Project colors */
-.project-color { display: block; }
-.color-0 { background-color: #4dc3ff }
-.color-1 { background-color: #bc85e6 }
-.color-2 { background-color: #df7baa }
-.color-3 { background-color: #f68d38 }
-.color-4 { background-color: #b27636 }
-.color-5 { background-color: #8ab734 }
-.color-6 { background-color: #14a88e }
-.color-7 { background-color: #268bb5 }
-.color-8 { background-color: #6668b4 }
-.color-9 { background-color: #a4506c }
-.color-10 { background-color: #67412c }
-.color-11 { background-color: #3c6526 }
-.color-12 { background-color: #094558 }
-.color-13 { background-color: #bc2d07 }
-.color-14 { background-color: #999999}
-
 .error {
   overflow: hidden;
   max-height: 0px;
@@ -521,16 +493,6 @@ hr {
 
 .toggl-button, #toggl-button-hide {
   display: none;
-}
-
-#toggl-button-project-placeholder .project-color + .toggl-button-text {
-  padding-left: 12px;
-  width: 174px;
-}
-
-#toggl-button-project-placeholder .project-bullet {
-  margin-top: 16px;
-  margin-left: 0;
 }
 
 /** FIREFOX **/

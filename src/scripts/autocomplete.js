@@ -84,6 +84,7 @@ AutoComplete.prototype.addEvents = function () {
     if (!e.target.classList.contains(that.type + "-row")) {
       return;
     }
+    e.stopPropagation();
     var currentSelected = document.querySelector(".selected-project"),
       val = e.target.getAttribute("data-pid"),
       placeholder = document.querySelector("#toggl-button-" + that.type + "-placeholder > div");
@@ -94,14 +95,15 @@ AutoComplete.prototype.addEvents = function () {
     e.target.classList.add("selected-project");
 
     // Update placeholder
-    placeholder.innerHTML = placeholder.title = that.elem.generateLabel(this, val, that.type);
-    that.elem.setProjectBullet(val, document.querySelector("#toggl-button-" + that.type + "-placeholder > .project-bullet"));
+    placeholder.innerHTML = placeholder.title = that.generateLabel(that.getSelected(), val, that.type);
+    that.setProjectBullet(val, document.querySelector("#toggl-button-" + that.type + "-placeholder > .project-bullet"));
     that.elem.fetchTasks(val);
 
     // Close dropdown
     that.filter.value = "";
     that.el.classList.remove("filtered");
     that.filterClear.parentNode.classList.toggle("open");
+    return false;
   });
 };
 
@@ -126,4 +128,49 @@ AutoComplete.prototype.getSelected = function () {
     pid: pid,
     name: name
   };
+};
+
+AutoComplete.prototype.setProjectBullet = function (pid, elem) {
+  var project,
+    className,
+    id = parseInt(pid, 10);
+
+  if (!!pid && id !== 0) {
+    project = this.el.querySelector("li[data-pid='" + pid + "']");
+    className = project.querySelector(".project-bullet").className;
+    if (!!project) {
+      elem.className = className;
+      return " - " + project.name;
+    }
+  }
+  return "";
+};
+
+AutoComplete.prototype.generateLabel = function (select, id, type) {
+  var selected = false,
+    client,
+    result = "";
+
+  if (!select) {
+    select = this.getSelected();
+  }
+
+  if (type === "project") {
+    if (!!select && !!select.el) {
+      selected = select.pid;
+      client = select.el.parentNode.querySelector(".client-row");
+      if (!!client) {
+        result = client.textContent + " - ";
+      }
+      result += select.el.textContent;
+    }
+  } else {
+    selected = select.options[select.selectedIndex];
+    result = selected.text;
+  }
+
+  if (parseInt(id, 10) === 0 || !selected) {
+    return "Add " + type;
+  }
+  return result;
 };

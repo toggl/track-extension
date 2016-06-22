@@ -1422,9 +1422,14 @@ TogglButton = {
         chrome.permissions.contains(permission, function (result) {
           if (result) {
             if (!!domain.file) {
-              chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-              chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
-                chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
+              chrome.tabs.insertCSS(tabId, {file: "styles/style.css"}, function () {
+                chrome.tabs.insertCSS(tabId, {file: "styles/autocomplete.css"});
+              });
+
+              chrome.tabs.executeScript(tabId, {file: "scripts/autocomplete.js"}, function () {
+                chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
+                  chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
+                });
               });
             }
           }

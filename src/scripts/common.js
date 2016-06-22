@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global document: false, MutationObserver: false, chrome: false, window: false, navigator: false*/
+/*global AutoComplete: false, document: false, MutationObserver: false, chrome: false, window: false, navigator: false*/
 "use strict";
 console.log(">> COMMON");
 var FF = navigator.userAgent.indexOf("Chrome") === -1,
@@ -98,6 +98,7 @@ var togglbutton = {
   serviceName: '',
   mousedownTrigger: null,
   projectBlurTrigger: null,
+  projectAutocomplete: null,
   taskBlurTrigger: null,
   tagsVisible: false,
   hasTasks: false,
@@ -202,20 +203,6 @@ var togglbutton = {
     document.querySelector("#toggl-button-task").innerHTML = "";
   },
 
-  generateProjectLabel: function (select, pid) {
-    var selected = select.options[select.selectedIndex],
-      parent,
-      result = "";
-    if (parseInt(pid, 10) === 0 || !selected) {
-      return "Add project";
-    }
-    parent = selected.parentNode;
-    if (parent.tagName === "OPTGROUP") {
-      result = parent.label + " - ";
-    }
-    return result + selected.text;
-  },
-
   addEditForm: function (response) {
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {
@@ -223,7 +210,6 @@ var togglbutton = {
     }
 
     var pid = response.entry.pid,
-      projectSelect,
       placeholder,
       handler,
       position,
@@ -289,11 +275,11 @@ var togglbutton = {
       togglbutton.fetchTasks(pid, editForm);
       togglButtonDescription = $("#toggl-button-description");
       togglButtonDescription.value = response.entry.description || "";
-      $("#toggl-button-project").value = pid;
-      projectSelect = document.getElementById("toggl-button-project");
+      togglbutton.projectAutocomplete.setSelected(pid);
       placeholder = $("#toggl-button-project-placeholder > div");
-      placeholder.innerHTML = placeholder.title = togglbutton.generateProjectLabel(projectSelect, pid);
+      placeholder.innerHTML = placeholder.title = togglbutton.projectAutocomplete.generateLabel(null, pid, "project");
       togglbutton.resetTasks();
+      togglbutton.projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
       $("#toggl-button-tag-placeholder > div", editForm).innerHTML = "Add tags";
       $("#toggl-button-tag").value = "";
       if (!!response.entry.tags && response.entry.tags.length) {
@@ -313,6 +299,8 @@ var togglbutton = {
     document.body.appendChild(editForm);
     togglbutton.fetchTasks(pid, editForm);
 
+    togglbutton.projectAutocomplete = new AutoComplete("project", "li", togglbutton);
+
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
         closeTagsList(true);
@@ -323,12 +311,12 @@ var togglbutton = {
 
     submitForm = function (that) {
       var taskButton = $("#toggl-button-task"),
-        selectedProject = $("#toggl-button-project"),
+        selected = togglbutton.projectAutocomplete.getSelected(),
         request = {
           type: "update",
           description: $("#toggl-button-description").value,
-          pid: selectedProject.value,
-          projectName: selectedProject.options[selectedProject.selectedIndex].text,
+          pid: selected.pid,
+          projectName: selected.name,
           tags: togglbutton.getSelectedTags(),
           tid: (taskButton && taskButton.value) ? taskButton.value : null,
           service: togglbutton.serviceName
@@ -360,10 +348,10 @@ var togglbutton = {
     togglButtonDescription = $("#toggl-button-description", editForm);
     togglButtonDescription.value = response.entry.description || "";
     setCursorAtBeginning(togglButtonDescription);
-    $("#toggl-button-project", editForm).value = pid;
-    projectSelect = $("#toggl-button-project", editForm);
+    togglbutton.projectAutocomplete.setSelected(pid);
     placeholder = $("#toggl-button-project-placeholder > div", editForm);
-    placeholder.innerHTML = placeholder.title = togglbutton.generateProjectLabel(projectSelect, pid);
+    placeholder.innerHTML = placeholder.title = togglbutton.projectAutocomplete.generateLabel(null, pid, "project");
+    togglbutton.projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
     if (!!response.entry.tags && response.entry.tags.length) {
       setSelecedTags(response.entry.tags);
     } else {
@@ -408,42 +396,8 @@ var togglbutton = {
       togglbutton.mousedownTrigger = null;
     });
 
-    $("#toggl-button-project-placeholder", editForm).addEventListener('click', function (e) {
-      // Ignore this click if it caused the last project blur.
-      if (togglbutton.projectBlurTrigger === e.target) {
-        togglbutton.projectBlurTrigger = null;
-        return;
-      }
-
-      var dropdown = document.getElementById('toggl-button-project'),
-        event = document.createEvent('MouseEvents');
-      event.initMouseEvent('mousedown', true, true, window);
-      dropdown.dispatchEvent(event);
-    });
-
     $("#toggl-button-tag-placeholder", editForm).addEventListener('click', function (e) {
       closeTagsList(false);
-    });
-
-    projectSelect.addEventListener('change', function (e) {
-      placeholder = $("#toggl-button-project-placeholder > div", editForm);
-      placeholder.innerHTML = placeholder.title = togglbutton.generateProjectLabel(this, this.value);
-
-      // Force blur.
-      togglbutton.projectBlurTrigger = null;
-      projectSelect.blur();
-
-      togglbutton.fetchTasks(this.value, editForm);
-    });
-
-    projectSelect.addEventListener('click', function () {
-      // Catch click in case user selects an already-selected item - force blur.
-      togglbutton.projectBlurTrigger = null;
-      projectSelect.blur();
-    });
-
-    projectSelect.addEventListener('blur', function () {
-      togglbutton.projectBlurTrigger = togglbutton.mousedownTrigger;
     });
 
     taskSelect = $("#toggl-button-task", editForm);

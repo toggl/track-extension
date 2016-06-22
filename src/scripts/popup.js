@@ -121,7 +121,7 @@ var PopUp = {
     PopUp.$togglButton.textContent = duration;
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
-      description += PopUp.setProjectBullet(TogglButton.$curEntry.pid, PopUp.$projectBullet);
+      description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }
@@ -130,24 +130,9 @@ var PopUp = {
   updateMenuTimer: function (desc, pid) {
     var description = desc || "(no description)";
 
-    description += PopUp.setProjectBullet(pid, PopUp.$projectBullet);
+    description += PopUp.$projectAutocomplete.setProjectBullet(pid, PopUp.$projectBullet);
     PopUp.$editButton.textContent = description;
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
-  },
-
-  setProjectBullet: function (pid, elem) {
-    var project,
-      id = parseInt(pid, 10);
-    elem.className = "project-bullet";
-    if (!!pid && id !== 0) {
-      project = TogglButton.findProjectByPid(id);
-      if (!!project) {
-        elem.classList.add("color-" + project.color);
-        elem.classList.add("project-color");
-        return " - " + project.name;
-      }
-    }
-    return "";
   },
 
   switchView: function (view) {
@@ -184,9 +169,9 @@ var PopUp = {
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
 
     placeholder = document.querySelector("#toggl-button-project-placeholder > .toggl-button-text");
-    placeholder.innerHTML = placeholder.title = PopUp.generateLabel(null, pid, "project");
+    placeholder.innerHTML = placeholder.title = PopUp.$projectAutocomplete.generateLabel(null, pid, "project");
     PopUp.fetchTasks(pid, tid);
-    PopUp.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
+    PopUp.$projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
     if (!!TogglButton.$curEntry.tags && TogglButton.$curEntry.tags.length) {
       PopUp.setSelecedTags();
     } else {
@@ -247,32 +232,6 @@ var PopUp = {
       }
     }
     return tags;
-  },
-
-  generateLabel: function (select, id, type) {
-    var selected = false,
-      client,
-      result = "",
-      selectedElem = PopUp.$projectAutocomplete.getSelected();
-
-    if (type === "project") {
-      if (!!selectedElem.el) {
-        selected = selectedElem.pid;
-        client = selectedElem.el.parentNode.querySelector(".client-row");
-        if (!!client) {
-          result = client.textContent + " - ";
-        }
-        result += selectedElem.el.textContent;
-      }
-    } else {
-      selected = select.options[select.selectedIndex];
-      result = selected.text;
-    }
-
-    if (parseInt(id, 10) === 0 || !selected) {
-      return "Add " + type;
-    }
-    return result;
   },
 
   submitForm: function (that) {
@@ -347,7 +306,7 @@ var PopUp = {
           taskPlaceholder = document.querySelector("#toggl-button-task-placeholder > div");
           taskSelect = document.getElementById("toggl-button-task");
           taskSelect.value = tid;
-          taskPlaceholder.innerHTML = taskPlaceholder.title = PopUp.generateLabel(taskSelect, tid, "task");
+          taskPlaceholder.innerHTML = taskPlaceholder.title = PopUp.$projectAutocomplete.generateLabel(taskSelect, tid, "task");
         }
         tasksRow.style.display = "block";
       } else {

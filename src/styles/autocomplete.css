@@ -3,7 +3,7 @@
   max-height: 105px;
   overflow: auto;
   position: absolute;
-  width: 220px;
+  width: 214px;
   background: white;
   outline: 1px solid #f5f5f5;
   z-index: 5;
@@ -85,13 +85,20 @@
   cursor: default;
 }
 
-.toggl-button-row.open #toggl-button-project-placeholder,
-#toggl-button-project-filter {
+.toggl-button-row.open #toggl-button-project-placeholder {
   display: none;
 }
 
-.toggl-button-row.open #project-autocomplete,
+#toggl-button-project-filter {
+  max-height: 0;
+  position: absolute;
+}
 .toggl-button-row.open #toggl-button-project-filter {
+  max-height: 40px;
+  position: static;
+}
+
+.toggl-button-row.open #project-autocomplete{
   display: block;
 }
 

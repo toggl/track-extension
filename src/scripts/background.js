@@ -85,10 +85,10 @@ TogglButton = {
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
+        '<input name="toggl-button-description" tabindex="1" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-project-filter" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Add project" autocomplete="off">' +
+        '<input name="toggl-button-project-filter" tabindex="2" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Add project" autocomplete="off">' +
         '<a href="#clear" id="filter-clear">&times;</a>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
         '<div id="project-autocomplete">{projects}</div>' +
@@ -101,7 +101,7 @@ TogglButton = {
         '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
       '</div>' +
-      '<div id="toggl-button-update">DONE</div>' +
+      '<div id="toggl-button-update" tabindex="3">DONE</div>' +
       '</from>' +
     '</div>',
 

@@ -7,6 +7,7 @@ var AutoComplete = function (el, item, elem) {
   this.el = document.querySelector("#" + el + "-autocomplete");
   this.filter = document.querySelector("#toggl-button-project-filter");
   this.filterClear = document.querySelector("#filter-clear");
+  this.placeholderItem = document.querySelector("#toggl-button-" + this.type + "-placeholder");
 
   this.elem = elem;
   this.item = item;
@@ -19,13 +20,20 @@ var AutoComplete = function (el, item, elem) {
 AutoComplete.prototype.addEvents = function () {
   var that = this;
 
-  document.querySelector("#toggl-button-" + that.type + "-placeholder").addEventListener('click', function (e) {
+  that.placeholderItem.addEventListener('click', function (e) {
     this.parentNode.classList.toggle("open");
     that.filter.focus();
   });
 
   that.filter.addEventListener('focus', function (e) {
     that.listItems = that.el.querySelectorAll(that.item);
+    if (!this.parentNode.classList.contains("open")) {
+      this.parentNode.classList.toggle("open");
+    }
+  });
+
+  that.filter.addEventListener('blur', function (e) {
+    that.closeDropdown();
   });
 
   that.filter.addEventListener('keyup', function (e) {
@@ -75,9 +83,7 @@ AutoComplete.prototype.addEvents = function () {
   });
 
   that.filterClear.addEventListener('click', function (e) {
-    that.filter.value = "";
-    that.el.classList.remove("filtered");
-    this.parentNode.classList.toggle("open");
+    that.closeDropdown();
   });
 
   that.el.addEventListener('click', function (e) {
@@ -105,6 +111,12 @@ AutoComplete.prototype.addEvents = function () {
     that.filterClear.parentNode.classList.toggle("open");
     return false;
   });
+};
+
+AutoComplete.prototype.closeDropdown = function () {
+  this.filter.value = "";
+  this.el.classList.remove("filtered");
+  this.placeholderItem.parentNode.classList.toggle("open");
 };
 
 AutoComplete.prototype.setSelected = function (pid) {

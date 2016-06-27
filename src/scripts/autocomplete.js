@@ -37,7 +37,7 @@ AutoComplete.prototype.addEvents = function () {
       return;
     }
 
-    if (val.length === 1) {
+    if (val.length > 0 && !that.el.classList.contains("filtered")) {
       that.el.classList.add("filtered");
     }
     if (val.length === 0) {

@@ -3,7 +3,8 @@
 "use strict";
 console.log(">> COMMON");
 var FF = navigator.userAgent.indexOf("Chrome") === -1,
-  CH = chrome.extension;
+  CH = chrome.extension,
+  projectAutocomplete;
 
 if (FF) {
   CH = chrome.runtime;
@@ -275,11 +276,11 @@ var togglbutton = {
       togglbutton.fetchTasks(pid, editForm);
       togglButtonDescription = $("#toggl-button-description");
       togglButtonDescription.value = response.entry.description || "";
-      togglbutton.projectAutocomplete.setSelected(pid);
+      projectAutocomplete.setSelected(pid);
       placeholder = $("#toggl-button-project-placeholder > div");
-      placeholder.innerHTML = placeholder.title = togglbutton.projectAutocomplete.generateLabel(null, pid, "project");
+      placeholder.innerHTML = placeholder.title = projectAutocomplete.generateLabel(null, pid, "project");
       togglbutton.resetTasks();
-      togglbutton.projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
+      projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
       $("#toggl-button-tag-placeholder > div", editForm).innerHTML = "Add tags";
       $("#toggl-button-tag").value = "";
       if (!!response.entry.tags && response.entry.tags.length) {
@@ -299,7 +300,7 @@ var togglbutton = {
     document.body.appendChild(editForm);
     togglbutton.fetchTasks(pid, editForm);
 
-    togglbutton.projectAutocomplete = new AutoComplete("project", "li", togglbutton);
+    projectAutocomplete = new AutoComplete("project", "li", togglbutton);
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
@@ -311,7 +312,7 @@ var togglbutton = {
 
     submitForm = function (that) {
       var taskButton = $("#toggl-button-task"),
-        selected = togglbutton.projectAutocomplete.getSelected(),
+        selected = projectAutocomplete.getSelected(),
         request = {
           type: "update",
           description: $("#toggl-button-description").value,
@@ -348,10 +349,10 @@ var togglbutton = {
     togglButtonDescription = $("#toggl-button-description", editForm);
     togglButtonDescription.value = response.entry.description || "";
     setCursorAtBeginning(togglButtonDescription);
-    togglbutton.projectAutocomplete.setSelected(pid);
+    projectAutocomplete.setSelected(pid);
     placeholder = $("#toggl-button-project-placeholder > div", editForm);
-    placeholder.innerHTML = placeholder.title = togglbutton.projectAutocomplete.generateLabel(null, pid, "project");
-    togglbutton.projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
+    placeholder.innerHTML = placeholder.title = projectAutocomplete.generateLabel(null, pid, "project");
+    projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
     if (!!response.entry.tags && response.entry.tags.length) {
       setSelecedTags(response.entry.tags);
     } else {

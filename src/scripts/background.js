@@ -884,7 +884,7 @@ TogglButton = {
   },
 
   fillProjects: function () {
-    var html = '<p class="project-row" data-pid="0">No project</p>',
+    var html = '<p class="project-row" data-pid="0"><span class="project-bullet project-color no-color"></span>No project</p>',
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
       clientNames = TogglButton.$user.clientNameMap,
@@ -916,14 +916,14 @@ TogglButton = {
         // Add Workspace names
         TogglButton.$user.workspaces.forEach(function (element, index) {
           wsHtml[element.id] = {};
-          wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '"><li class="ws-row">' + element.name.toUpperCase() + '</li>' +
+          wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '"><li class="ws-row" title="' + element.name.toUpperCase() + '">' + element.name.toUpperCase() + '</li>' +
             '<ul class="client-list" data-cid="0">';
         });
 
         // Add client optgroups
         for (i = 0; i < keys.length; i++) {
           client = clientNames[keys[i]];
-          wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row">' + client.name + '</li>';
+          wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + client.name + '</li>';
         }
 
         // Add projects

@@ -85,11 +85,11 @@ TogglButton = {
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-description" tabindex="1" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
+        '<input name="toggl-button-description" tabindex="100" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-project-filter" tabindex="2" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Add project" autocomplete="off">' +
-        '<a href="#clear" id="filter-clear">&times;</a>' +
+        '<input name="toggl-button-project-filter" tabindex="101" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
+        '<a href="#clear" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
         '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
@@ -98,10 +98,12 @@ TogglButton = {
         '<div id="toggl-button-task-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add task</div><span>▼</span></div>' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
+        '<input name="toggl-button-tag-filter" tabindex="102" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
+        '<a href="#clear" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
+        '<div id="tag-autocomplete">{tags}</div>' +
       '</div>' +
-      '<div id="toggl-button-update" tabindex="3">DONE</div>' +
+      '<div id="toggl-button-update" tabindex="103">DONE</div>' +
       '</from>' +
     '</div>',
 
@@ -987,7 +989,7 @@ TogglButton = {
   },
 
   fillTags: function () {
-    var html = "",
+    var html = '<ul class="tag-list">',
       tags = TogglButton.$user.tagMap,
       i,
       key = null,
@@ -1002,9 +1004,9 @@ TogglButton = {
 
     for (i = 0; i < keys.length; i++) {
       key = keys[i];
-      html += "<option value='" + tags[key].name + "'>" + key + "</option>";
+      html += '<li class="tag-item" title="' + tags[key].name + '">' + tags[key].name + '</li>';
     }
-    return html;
+    return html + "</ul>";
   },
 
   fillTasks: function (projectId) {

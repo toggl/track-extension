@@ -19,8 +19,9 @@ var PopUp = {
   $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
-  $projectBullet: document.querySelector(".project-bullet"),
+  $projectBullet: document.querySelector(".timer .project-bullet"),
   $projectAutocomplete: null,
+  $tagAutocomplete: null,
   $error: document.querySelector(".error"),
   $timerRow: document.querySelector(".timer"),
   $timer: null,
@@ -162,43 +163,19 @@ var PopUp = {
   updateEditForm: function (view) {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
-      togglButtonDescription = document.querySelector("#toggl-button-description"),
-      placeholder;
+      togglButtonDescription = document.querySelector("#toggl-button-description");
 
-    PopUp.$projectAutocomplete.setSelected(pid);
+    PopUp.fetchTasks(pid, tid);
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
 
-    placeholder = document.querySelector("#toggl-button-project-placeholder > .toggl-button-text");
-    placeholder.innerHTML = placeholder.title = PopUp.$projectAutocomplete.generateLabel(null, pid, "project");
-    PopUp.fetchTasks(pid, tid);
-    PopUp.$projectAutocomplete.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
-    if (!!TogglButton.$curEntry.tags && TogglButton.$curEntry.tags.length) {
-      PopUp.setSelecedTags();
-    } else {
-      document.querySelector("#toggl-button-tag-placeholder > div").innerHTML = "Add tags";
-      document.querySelector("#toggl-button-tag").value = "";
-    }
+    PopUp.$projectAutocomplete.setup(pid);
+    PopUp.$tagAutocomplete.setSelectedTags(TogglButton.$curEntry.tags);
     PopUp.switchView(view);
+
     // Put focus to the beginning of desctiption field
     togglButtonDescription.focus();
     togglButtonDescription.setSelectionRange(0, 0);
     togglButtonDescription.scrollLeft = 0;
-  },
-
-  setSelecedTags: function () {
-    var j, i,
-      s = document.getElementById("toggl-button-tag");
-    for (i = 0; i < TogglButton.$curEntry.tags.length; i += 1) {
-      for (j = 0; j < s.options.length; j += 1) {
-        if (s.options[j].textContent === TogglButton.$curEntry.tags[i]) {
-          s.options[j].selected = true;
-          i += 1;
-          j = 0;
-        }
-      }
-    }
-
-    PopUp.updateTags();
   },
 
   resetTasks: function () {
@@ -220,20 +197,6 @@ var PopUp = {
     dropdown.dispatchEvent(event);
   },
 
-  getSelectedTags: function () {
-    var tags = [],
-      tag,
-      i,
-      s = document.getElementById("toggl-button-tag");
-    for (i = 0; i < s.options.length; i += 1) {
-      if (s.options[i].selected === true) {
-        tag = s.options[i].textContent;
-        tags.push(tag);
-      }
-    }
-    return tags;
-  },
-
   submitForm: function (that) {
     var taskButton = document.querySelector("#toggl-button-task"),
       selected = PopUp.$projectAutocomplete.getSelected(),
@@ -242,49 +205,14 @@ var PopUp = {
         description: document.querySelector("#toggl-button-description").value,
         pid: selected.pid,
         projectName: selected.name,
-        tags: PopUp.getSelectedTags(),
+        tags: PopUp.$tagAutocomplete.getSelectedTags(),
         tid: (taskButton && taskButton.value) ? taskButton.value : null,
         respond: true,
         service: "dropdown"
       };
     PopUp.sendMessage(request);
-    PopUp.closeTagsList(true);
     PopUp.updateMenuTimer(request.description, request.pid);
     PopUp.switchView(PopUp.$menuView);
-  },
-
-  updateTags: function (open) {
-    var tags = PopUp.getSelectedTags(),
-      tagsPlaceholder = document.querySelector("#toggl-button-tag-placeholder > div");
-
-    if (open) {
-      tagsPlaceholder.innerHTML = tagsPlaceholder.title = "Save tags";
-      return;
-    }
-
-    if (tags.length) {
-      tags = tags.join(',');
-    } else {
-      tags = "Add tags";
-    }
-    tagsPlaceholder.innerHTML = tagsPlaceholder.title = tags;
-  },
-
-  closeTagsList: function (close) {
-    var dropdown = document.getElementById('toggl-button-tag');
-    if (close) {
-      dropdown.style.display = "none";
-      PopUp.$tagsVisible = false;
-      return;
-    }
-    if (PopUp.$tagsVisible) {
-      dropdown.style.display = "none";
-      PopUp.updateTags();
-    } else {
-      dropdown.style.display = "block";
-      PopUp.updateTags(true);
-    }
-    PopUp.$tagsVisible = !PopUp.$tagsVisible;
   },
 
   fetchTasks: function (projectId, tid) {
@@ -321,10 +249,10 @@ var PopUp = {
       handler;
 
     PopUp.$projectAutocomplete = new AutoComplete("project", "li", PopUp);
+    PopUp.$tagAutocomplete = new AutoComplete("tag", "li", PopUp);
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        PopUp.closeTagsList(true);
         this.removeEventListener("click", handler);
       }
     };
@@ -343,10 +271,6 @@ var PopUp = {
     });
     document.addEventListener('mouseup', function (e) {
       PopUp.mousedownTrigger = null;
-    });
-
-    document.querySelector("#toggl-button-tag-placeholder").addEventListener('click', function (e) {
-      PopUp.closeTagsList(false);
     });
 
     taskSelect.addEventListener('change', function (e) {

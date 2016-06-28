@@ -371,7 +371,8 @@ hr {
 #toggl-button-edit-form #toggl-button-description,
 #toggl-button-edit-form #toggl-button-project,
 #toggl-button-edit-form #toggl-button-project-filter,
-#toggl-button-edit-form #toggl-button-task {
+#toggl-button-edit-form #toggl-button-task,
+#toggl-button-edit-form #toggl-button-tag-filter {
   height: 40px !important;
   line-height: 40px;
   vertical-align: middle;
@@ -418,7 +419,12 @@ hr {
   max-width: 220px;
 }
 
-#toggl-button-description, #toggl-button-project, #toggl-button-project-filter, #toggl-button-tag, #toggl-button-task {
+#toggl-button-description,
+#toggl-button-project,
+#toggl-button-project-filter,
+#toggl-button-tag,
+#toggl-button-task,
+#toggl-button-tag-filter {
   font-size: 13px !important;
   margin: 0 !important;
   padding: 0 10px !important;
@@ -426,7 +432,8 @@ hr {
   box-sizing :border-box !important;
 }
 
-#toggl-button-project-filter {
+#toggl-button-project-filter,
+#toggl-button-tag-filter {
   font-size: 13px !important;
   margin: 0 !important;
   padding: 0 10px ;

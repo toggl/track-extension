@@ -10,11 +10,12 @@ var AutoComplete = function (el, item, elem) {
   this.placeholderItem = document.querySelector("#toggl-button-" + el + "-placeholder");
   this.placeholderDiv = this.placeholderItem.querySelector("div");
   this.clearSelected = this.el.querySelector("." + el + "-clear");
-  this.closer = this.el.querySelector("." + el + "-close");
+  this.addLink = this.el.parentNode.querySelector(".add-new-" + el);
   this.elem = elem;
   this.item = item;
   this.lastFilter = "";
   this.listItems = [];
+  this.exactMatch = false;
 
   this.addEvents();
 };
@@ -54,53 +55,7 @@ AutoComplete.prototype.addEvents = function () {
   });
 
   that.filter.addEventListener('keyup', function (e) {
-    var key,
-      val = that.filter.value.toLowerCase(),
-      row;
-
-    if (val === that.lastFilter) {
-      return;
-    }
-
-    if (val.length > 0 && !that.el.classList.contains("filtered")) {
-      that.el.classList.add("filtered");
-    }
-    if (val.length === 0) {
-      that.el.classList.remove("filtered");
-    }
-    that.lastFilter = val;
-    for (key in that.listItems) {
-      if (that.listItems.hasOwnProperty(key)) {
-        row = that.listItems[key];
-        if (row.textContent.toLowerCase().indexOf(val) !== -1) {
-          row.classList.add("filter");
-          if (that.type === "project") {
-            if (row.classList.contains("project-row")) {
-              row.parentNode.classList.add("filter");
-              row.parentNode.parentNode.classList.add("filter");
-            }
-            if (row.classList.contains("client-row")) {
-              row.parentNode.classList.add("filter-match");
-            }
-          }
-        } else if (!!row.classList) {
-          row.classList.remove("filter");
-          if (that.type === "project") {
-            if (row.parentNode.querySelectorAll(".filter").length === 0) {
-              row.parentNode.classList.remove("filter");
-            }
-            if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
-              row.parentNode.parentNode.classList.remove("filter");
-            }
-            if (row.classList.contains("client-row")) {
-              row.classList.remove("filter-match");
-              row.parentNode.classList.remove("filter-match");
-              row.parentNode.parentNode.classList.remove("filter-match");
-            }
-          }
-        }
-      }
-    }
+    that.filterSelection();
   });
 
   that.filterClear.addEventListener('click', function (e) {
@@ -121,15 +76,96 @@ AutoComplete.prototype.addEvents = function () {
       that.clearSelectedTags();
     });
 
-    that.closer.addEventListener('click', function (e) {
-      that.closeDropdown();
+    that.addLink.addEventListener('click', function (e) {
+      that.addNew();
     });
   }
+};
+
+AutoComplete.prototype.filterSelection = function () {
+  var key,
+    that = this,
+    val = that.filter.value.toLowerCase(),
+    row;
+
+  if (val === that.lastFilter) {
+    return;
+  }
+
+  if (val.length > 0 && !that.el.classList.contains("filtered")) {
+    that.el.classList.add("filtered");
+  }
+  if (val.length === 0) {
+    that.el.classList.remove("filtered");
+  }
+  that.lastFilter = val;
+  that.exactMatch = false;
+  for (key in that.listItems) {
+    if (that.listItems.hasOwnProperty(key)) {
+      row = that.listItems[key];
+      if (row.textContent.toLowerCase().indexOf(val) !== -1) {
+        if (row.textContent.toLowerCase() === val) {
+          that.exactMatch = val;
+        }
+        row.classList.add("filter");
+        if (that.type === "project") {
+          if (row.classList.contains("project-row")) {
+            row.parentNode.classList.add("filter");
+            row.parentNode.parentNode.classList.add("filter");
+          }
+          if (row.classList.contains("client-row")) {
+            row.parentNode.classList.add("filter-match");
+          }
+        }
+      } else if (!!row.classList) {
+        row.classList.remove("filter");
+        if (that.type === "project") {
+          if (row.parentNode.querySelectorAll(".filter").length === 0) {
+            row.parentNode.classList.remove("filter");
+          }
+          if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
+            row.parentNode.parentNode.classList.remove("filter");
+          }
+          if (row.classList.contains("client-row")) {
+            row.classList.remove("filter-match");
+            row.parentNode.classList.remove("filter-match");
+            row.parentNode.parentNode.classList.remove("filter-match");
+          }
+        }
+      }
+    }
+  }
+  that.updateAddLink();
 };
 
 AutoComplete.prototype.selectTag = function (e) {
   e.target.classList.toggle("selected-tag");
 };
+
+AutoComplete.prototype.addNew = function (text) {
+  var val = text || this.filter.value,
+    list = this.el.querySelector("." + this.type + "-list"),
+    item = document.createElement("li");
+
+  item.className = this.type + "-item selected-" + this.type;
+  item.setAttribute("title", val);
+  item.innerHTML = val;
+
+  list.insertBefore(item, list.querySelector("li:first-child"));
+  this.filter.value = "";
+  this.filterSelection();
+};
+
+AutoComplete.prototype.updateAddLink = function (e) {
+  if (!!this.addLink) {
+    if (!!this.exactMatch) {
+      this.placeholderItem.parentNode.classList.remove("add-allowed");
+    } else {
+      this.placeholderItem.parentNode.classList.add("add-allowed");
+    }
+  }
+};
+
 
 AutoComplete.prototype.selectProject = function (e) {
   if (!e.target.classList.contains(this.type + "-row")) {
@@ -158,6 +194,7 @@ AutoComplete.prototype.closeDropdown = function () {
   this.filter.value = "";
   this.el.classList.remove("filtered");
   this.placeholderItem.parentNode.classList.toggle("open");
+  this.placeholderItem.parentNode.classList.remove("add-allowed");
 
   if (this.type === "tag") {
     this.updatePlaceholder();
@@ -173,13 +210,19 @@ AutoComplete.prototype.setSelected = function (ids) {
 };
 
 AutoComplete.prototype.setSelectedTags = function (tags) {
-  var i;
+  var i,
+    item;
 
   this.clearSelectedTags();
 
   if (!!tags) {
     for (i = 0; i < tags.length; i += 1) {
-      this.el.querySelector("li[title='" + tags[i] + "']").classList.add("selected-" + this.type);
+      item = this.el.querySelector("li[title='" + tags[i] + "']");
+      if (!item) {
+        this.addNew(tags[i]);
+      } else {
+        item.classList.add("selected-" + this.type);
+      }
     }
   }
 

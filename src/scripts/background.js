@@ -99,10 +99,10 @@ TogglButton = {
       '</div>' +
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-tag-filter" tabindex="102" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
+        '<a href="#add" class="add-new-tag">+ Add</a>' +
         '<a href="#clear" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
         '<div id="tag-autocomplete">' +
-        '<div class="tag-close">Close</div>' +
         '<div class="tag-clear">Clear selected tags</div>' +
         '{tags}</div>' +
       '</div>' +

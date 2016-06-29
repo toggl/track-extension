@@ -249,3 +249,20 @@
   background-color: rgba(75, 200, 0, 0.12);
   color: #4bc800;
 }
+
+.tag-clear, .tag-close {
+  cursor: pointer;
+  text-align: right;
+  height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
+  padding: 0 5px;
+  display: block;
+  color: #a6a6a6;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.tag-close {
+  float: left;
+}

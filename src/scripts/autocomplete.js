@@ -9,6 +9,8 @@ var AutoComplete = function (el, item, elem) {
   this.filterClear = this.el.parentNode.querySelector(".filter-clear");
   this.placeholderItem = document.querySelector("#toggl-button-" + el + "-placeholder");
   this.placeholderDiv = this.placeholderItem.querySelector("div");
+  this.clearSelected = this.el.querySelector("." + el + "-clear");
+  this.closer = this.el.querySelector("." + el + "-close");
   this.elem = elem;
   this.item = item;
   this.lastFilter = "";
@@ -113,6 +115,16 @@ AutoComplete.prototype.addEvents = function () {
       that.selectTag(e);
     }
   });
+
+  if (this.type === "tag") {
+    that.clearSelected.addEventListener('click', function (e) {
+      that.clearSelectedTags();
+    });
+
+    that.closer.addEventListener('click', function (e) {
+      that.closeDropdown();
+    });
+  }
 };
 
 AutoComplete.prototype.selectTag = function (e) {

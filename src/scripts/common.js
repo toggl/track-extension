@@ -256,7 +256,7 @@ var togglbutton = {
           pid: selected.pid,
           projectName: selected.name,
           tags: tagAutocomplete.getSelectedTags(),
-          tid: (taskButton && taskButton.value) ? taskButton.value : null,
+          tid: selected.tid,
           service: togglbutton.serviceName
         };
       CH.sendMessage(request);

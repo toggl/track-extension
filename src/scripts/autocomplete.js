@@ -237,7 +237,7 @@ AutoComplete.prototype.selectProject = function (elem, silent, removeTask) {
     return;
   }
 
-  if (!removeTask) {
+  if (!removeTask && this.el.querySelector(".selected-task")) {
     this.el.querySelector(".selected-task").classList.remove("selected-task");
   }
 

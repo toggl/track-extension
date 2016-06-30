@@ -318,6 +318,8 @@
 #project-autocomplete ul.task-list {
   height: 0;
   margin-left: -20px;
+  display: none;
+  clear: both;
 }
 
 .task-item {
@@ -335,6 +337,7 @@
   background-color: var(--pale-grey);
   box-shadow: inset 0 1px 0 0 #ececec, inset 0 -1px 0 0 #ececec;
   height: auto;
+  display: block;
 }
 
 #project-autocomplete .tasklist-opened ul li.task-item {

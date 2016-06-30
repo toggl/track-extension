@@ -122,16 +122,16 @@ var PopUp = {
     PopUp.$togglButton.textContent = duration;
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
-      description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, PopUp.$projectBullet);
+      description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }
   },
 
-  updateMenuTimer: function (desc, pid) {
+  updateMenuTimer: function (desc, pid, tid) {
     var description = desc || "(no description)";
 
-    description += PopUp.$projectAutocomplete.setProjectBullet(pid, PopUp.$projectBullet);
+    description += PopUp.$projectAutocomplete.setProjectBullet(pid, tid, PopUp.$projectBullet);
     PopUp.$editButton.textContent = description;
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
   },
@@ -168,7 +168,7 @@ var PopUp = {
     PopUp.fetchTasks(pid, tid);
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
 
-    PopUp.$projectAutocomplete.setup(pid);
+    PopUp.$projectAutocomplete.setup(pid, tid);
     PopUp.$tagAutocomplete.setSelectedTags(TogglButton.$curEntry.tags);
     PopUp.switchView(view);
 
@@ -198,20 +198,19 @@ var PopUp = {
   },
 
   submitForm: function (that) {
-    var taskButton = document.querySelector("#toggl-button-task"),
-      selected = PopUp.$projectAutocomplete.getSelected(),
+    var selected = PopUp.$projectAutocomplete.getSelected(),
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
         pid: selected.pid,
         projectName: selected.name,
         tags: PopUp.$tagAutocomplete.getSelectedTags(),
-        tid: (taskButton && taskButton.value) ? taskButton.value : null,
+        tid: selected.tid,
         respond: true,
         service: "dropdown"
       };
     PopUp.sendMessage(request);
-    PopUp.updateMenuTimer(request.description, request.pid);
+    PopUp.updateMenuTimer(request.description, request.pid, request.tid);
     PopUp.switchView(PopUp.$menuView);
   },
 

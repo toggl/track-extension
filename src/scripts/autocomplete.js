@@ -20,11 +20,11 @@ var AutoComplete = function (el, item, elem) {
   this.addEvents();
 };
 
-AutoComplete.prototype.setup = function (selected) {
+AutoComplete.prototype.setup = function (selected, tid) {
   if (this.type === "project") {
-    this.setSelected(selected);
-    this.updateLabel(selected);
-    this.setProjectBullet(selected);
+    this.setSelected(selected, tid);
+    this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(null, selected, this.type, tid);
+    this.setProjectBullet(selected, tid);
   } else {
     this.setSelectedTags(selected);
   }
@@ -65,7 +65,7 @@ AutoComplete.prototype.addEvents = function () {
   that.el.addEventListener('click', function (e) {
     e.stopPropagation();
     if (that.type === "project") {
-      that.selectProject(e);
+      that.selectProject(e.target);
     } else {
       that.selectTag(e);
     }
@@ -82,11 +82,27 @@ AutoComplete.prototype.addEvents = function () {
   }
 };
 
+AutoComplete.prototype.clearFilters = function () {
+  this.el.classList.remove("filtered");
+  var i,
+    a = this.el.querySelectorAll(".filter"),
+    b = this.el.querySelectorAll(".tasklist-opened");
+
+  for (i = 0; i < a.length; i++) {
+    a[i].classList.remove("filter");
+  }
+
+  for (i = 0; i < b.length; i++) {
+    b[i].classList.remove("tasklist-opened");
+  }
+};
+
 AutoComplete.prototype.filterSelection = function () {
   var key,
     that = this,
     val = that.filter.value.toLowerCase(),
-    row;
+    row,
+    text;
 
   if (val === that.lastFilter) {
     return;
@@ -96,18 +112,21 @@ AutoComplete.prototype.filterSelection = function () {
     that.el.classList.add("filtered");
   }
   if (val.length === 0) {
-    that.el.classList.remove("filtered");
+    that.clearFilters();
+    return;
   }
   that.lastFilter = val;
   that.exactMatch = false;
   for (key in that.listItems) {
     if (that.listItems.hasOwnProperty(key)) {
       row = that.listItems[key];
-      if (row.textContent.toLowerCase().indexOf(val) !== -1) {
-        if (row.textContent.toLowerCase() === val) {
+      text = row.getAttribute("title").toLowerCase();
+      if (text.indexOf(val) !== -1) {
+        if (text === val) {
           that.exactMatch = val;
         }
         row.classList.add("filter");
+
         if (that.type === "project") {
           if (row.classList.contains("project-row")) {
             row.parentNode.classList.add("filter");
@@ -116,20 +135,35 @@ AutoComplete.prototype.filterSelection = function () {
           if (row.classList.contains("client-row")) {
             row.parentNode.classList.add("filter-match");
           }
+
+          if (row.classList.contains("task-item")) {
+            row.parentNode.parentNode.classList.add("filter");
+            row.parentNode.parentNode.classList.add("tasklist-opened");
+            row.classList.add("filter");
+          }
         }
+
       } else if (!!row.classList) {
         row.classList.remove("filter");
+
         if (that.type === "project") {
-          if (row.parentNode.querySelectorAll(".filter").length === 0) {
-            row.parentNode.classList.remove("filter");
-          }
-          if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
-            row.parentNode.parentNode.classList.remove("filter");
-          }
-          if (row.classList.contains("client-row")) {
-            row.classList.remove("filter-match");
-            row.parentNode.classList.remove("filter-match");
-            row.parentNode.parentNode.classList.remove("filter-match");
+          if (row.classList.contains("task-item")) {
+            row.classList.remove("filter");
+            if (row.parentNode.querySelectorAll(".filter").length === 0) {
+              row.parentNode.parentNode.classList.remove("tasklist-opened");
+            }
+          } else {
+            if (row.parentNode.querySelectorAll(".filter").length === 0) {
+              row.parentNode.classList.remove("filter");
+            }
+            if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
+              row.parentNode.parentNode.classList.remove("filter");
+            }
+            if (row.classList.contains("client-row")) {
+              row.classList.remove("filter-match");
+              row.parentNode.classList.remove("filter-match");
+              row.parentNode.parentNode.classList.remove("filter-match");
+            }
           }
         }
       }
@@ -166,27 +200,64 @@ AutoComplete.prototype.updateAddLink = function (e) {
   }
 };
 
+AutoComplete.prototype.toggleTaskList = function (elem) {
+  var opened = this.el.querySelector(".tasklist-opened");
+  if (!!opened) {
+    opened.classList.remove("tasklist-opened");
+  }
+  if (opened !== elem.parentNode) {
+    elem.parentNode.classList.toggle("tasklist-opened");
+  }
+};
 
-AutoComplete.prototype.selectProject = function (e) {
-  if (!e.target.classList.contains(this.type + "-row")) {
+AutoComplete.prototype.selectTask = function (elem, silent) {
+  // Set selected task
+  var currentSelected = this.el.querySelector(".selected-task");
+
+  if (!!currentSelected) {
+    currentSelected.classList.remove("selected-task");
+  }
+  elem.classList.add("selected-task");
+
+  // Set selected project
+  this.selectProject(elem.parentNode.parentNode, silent, true);
+};
+
+AutoComplete.prototype.selectProject = function (elem, silent, removeTask) {
+  if (elem.classList.contains("item-name")) {
+    elem = elem.parentNode;
+  }
+  if (!elem.classList.contains(this.type + "-row")) {
+    if (elem.classList.contains("task-count")) {
+      this.toggleTaskList(elem);
+    }
+    if (elem.classList.contains("task-item")) {
+      this.selectTask(elem);
+    }
     return;
   }
 
+  if (!removeTask) {
+    this.el.querySelector(".selected-task").classList.remove("selected-task");
+  }
+
   var currentSelected = this.el.querySelector(".selected-" + this.type),
-    val = e.target.getAttribute("data-pid");
+    val = elem.getAttribute("data-pid");
 
   if (!!currentSelected) {
     currentSelected.classList.remove("selected-" + this.type);
   }
-  e.target.classList.add("selected-" + this.type);
+  elem.classList.add("selected-" + this.type);
 
   // Update placeholder
   this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(this.getSelected(), val, this.type);
   this.setProjectBullet(val);
   this.elem.fetchTasks(val);
 
-  // Close dropdown
-  this.closeDropdown();
+  if (!silent) {
+    // Close dropdown
+    this.closeDropdown();
+  }
   return false;
 };
 
@@ -199,10 +270,16 @@ AutoComplete.prototype.closeDropdown = function () {
   if (this.type === "tag") {
     this.updatePlaceholder();
   }
+  this.clearFilters();
 };
 
-AutoComplete.prototype.setSelected = function (ids) {
+AutoComplete.prototype.setSelected = function (ids, tid) {
   if (this.type === "project") {
+    var t = this.el.querySelector("li[data-tid='" + tid + "']");
+    if (!!t) {
+      this.selectTask(t, true);
+      return;
+    }
     this.setSelectedProject(ids);
   } else {
     this.setSelecedTags(ids);
@@ -296,12 +373,15 @@ AutoComplete.prototype.getSelectedTags = function () {
 
 AutoComplete.prototype.getSelectedProject = function () {
   var selected = this.el.querySelector(".selected-" + this.type),
+    task = this.el.querySelector(".selected-task"),
     pid = (!!selected) ? parseInt(selected.getAttribute("data-pid"), 10) : 0,
-    name = (!!selected) ? selected.textContent : "";
+    tid = (!!task) ? parseInt(task.getAttribute("data-tid"), 10) : null,
+    name = (!!selected) ? selected.getAttribute("title") : "";
 
   return {
     el: selected,
     pid: pid,
+    tid: tid,
     name: name
   };
 };
@@ -317,11 +397,13 @@ AutoComplete.prototype.getSelectedProjectByPid = function (pid) {
   };
 };
 
-AutoComplete.prototype.setProjectBullet = function (pid, el) {
+AutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   var project,
     className,
     id = parseInt(pid, 10),
-    elem = el || this.placeholderItem.querySelector(".project-bullet");
+    elem = el || this.placeholderItem.querySelector(".project-bullet"),
+    result,
+    task;
 
   if (!!pid) {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
@@ -329,7 +411,12 @@ AutoComplete.prototype.setProjectBullet = function (pid, el) {
       if (!!project) {
         className = project.querySelector(".project-bullet").className;
         elem.className = className;
-        return " - " + project.textContent;
+        result = " - " + project.getAttribute("title");
+        task = project.querySelector("li[data-tid='" + tid + "']");
+        if (!!task) {
+          result += " . " + task.getAttribute("title");
+        }
+        return result;
       }
     }
   }
@@ -337,14 +424,11 @@ AutoComplete.prototype.setProjectBullet = function (pid, el) {
   return "";
 };
 
-AutoComplete.prototype.updateLabel = function (pid) {
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(null, pid, this.type);
-};
-
-AutoComplete.prototype.generateLabel = function (select, id, type) {
+AutoComplete.prototype.generateLabel = function (select, id, type, tid) {
   var selected = false,
     client,
-    result = "";
+    result = "",
+    task;
 
   if (type === "project") {
     select = this.getSelectedProjectByPid(id);
@@ -357,11 +441,15 @@ AutoComplete.prototype.generateLabel = function (select, id, type) {
   if (type === "project") {
     if (!!select && !!select.el) {
       selected = select.pid;
+      task = select.el.querySelector(".selected-task") || select.el.querySelector("li[data-tid='" + tid + "']");
+      if (!!task) {
+        result += task.getAttribute("title") + " . ";
+      }
       client = select.el.parentNode.querySelector(".client-row");
       if (!!client) {
         result = client.textContent + " - ";
       }
-      result += select.el.textContent;
+      result += select.el.getAttribute("title");
     }
   } else {
     selected = select.options[select.selectedIndex];

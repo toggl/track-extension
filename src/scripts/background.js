@@ -896,7 +896,6 @@ TogglButton = {
       wsHtml = {},
       clientHtml = {},
       client,
-      classNames = "",
       project,
       key = null,
       ckey = null,
@@ -921,7 +920,7 @@ TogglButton = {
         // Add Workspace names
         TogglButton.$user.workspaces.forEach(function (element, index) {
           wsHtml[element.id] = {};
-          wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '"><li class="ws-row" title="' + element.name.toUpperCase() + '">' + element.name.toUpperCase() + '</li>' +
+          wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + element.name + '"><li class="ws-row" title="' + element.name.toUpperCase() + '">' + element.name.toUpperCase() + '</li>' +
             '<ul class="client-list" data-cid="0">';
         });
 
@@ -936,8 +935,7 @@ TogglButton = {
           if (projects.hasOwnProperty(key)) {
             project = projects[key];
             clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
-            classNames = "project-color " + "color-" + project.color;
-            wsHtml[project.wid][clientName] += '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet ' + classNames + '"></span>' + project.name + '</li>';
+            wsHtml[project.wid][clientName] += TogglButton.generateProjectItem(project);
           }
         }
 
@@ -989,6 +987,32 @@ TogglButton = {
     }
 
     return html;
+  },
+
+  generateProjectItem: function (project) {
+    var tasks = TogglButton.$user.projectTaskList[project.id],
+      i,
+      tasksCount,
+      html = '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
+        '<span class="item-name">' + project.name + '</span>';
+     //return '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' + project.name + '</li>';
+
+    if (!!tasks) {
+      tasksCount = tasks.length + " task";
+      if (tasks.length > 1) {
+        tasksCount += "s";
+      }
+      html += '<span class="task-count">' + tasksCount + '</span>';
+      html += '<ul class="task-list">';
+
+      for (i = 0; i < tasks.length; i++) {
+        html += '<li class="task-item" data-tid="' + tasks[i].id + '" title="' + tasks[i].name + '">' + tasks[i].name + '</li>';
+      }
+
+      html += '</ul>';
+    }
+
+    return html + '</li>';
   },
 
   fillTags: function () {

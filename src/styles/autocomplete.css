@@ -76,6 +76,7 @@
 
 #project-autocomplete .project-row {
   padding-left: 22px;
+  overflow: hidden;
 }
 
 #project-autocomplete .project-row[data-pid="0"] {
@@ -299,4 +300,58 @@
 .open.add-allowed #toggl-button-project-filter,
 .open.add-allowed #toggl-button-tag-filter {
   padding-right: 80px!important;
+}
+
+.task-count {
+  color: #a3a3a3;
+  font-size: 12px;
+  cursor: pointer;
+  float: right;
+  padding-right: 5px;
+  font-weight: 400;
+}
+
+.task-count:hover {
+  opacity: .8;
+}
+
+#project-autocomplete ul.task-list {
+  height: 0;
+  margin-left: -20px;
+}
+
+.task-item {
+  padding-left: 25px;
+  color: #a3a3a3;
+}
+
+.tasklist-opened {
+  height: auto!important;
+  border-radius: 0!important;
+}
+
+#project-autocomplete .tasklist-opened ul.task-list {
+  background-color: #fafbfc;
+  background-color: var(--pale-grey);
+  box-shadow: inset 0 1px 0 0 #ececec, inset 0 -1px 0 0 #ececec;
+  height: auto;
+}
+
+#project-autocomplete .tasklist-opened ul li.task-item {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.selected-task {
+  background-color: rgba(75, 200, 0, 0.12);
+  color: #4bc800;
+}
+
+.filtered .tasklist-opened.filter li.task-item {
+  display: none;
+}
+
+.filtered .tasklist-opened li.task-item.filter {
+  display: block!important;
 }

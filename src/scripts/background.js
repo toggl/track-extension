@@ -986,7 +986,7 @@ TogglButton = {
   },
 
   generateProjectItem: function (project) {
-    var tasks = TogglButton.$user.projectTaskList[project.id],
+    var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id]: null,
       i,
       tasksCount,
       html = '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +

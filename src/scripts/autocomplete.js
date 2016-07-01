@@ -252,7 +252,6 @@ AutoComplete.prototype.selectProject = function (elem, silent, removeTask) {
   // Update placeholder
   this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(this.getSelected(), val, this.type);
   this.setProjectBullet(val);
-  this.elem.fetchTasks(val);
 
   if (!silent) {
     // Close dropdown

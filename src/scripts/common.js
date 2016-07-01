@@ -183,13 +183,6 @@ var togglbutton = {
     dropdown.dispatchEvent(event);
   },
 
-
-  resetTasks: function () {
-    document.querySelector("#toggl-button-task-placeholder").removeEventListener('click', togglbutton.delegateTaskClick);
-    document.querySelector("#toggl-button-task-placeholder > div").innerHTML = "Add task";
-    document.querySelector("#toggl-button-task").innerHTML = "";
-  },
-
   addEditForm: function (response) {
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {
@@ -214,14 +207,11 @@ var togglbutton = {
     position = togglbutton.topPosition(elemRect, editFormWidth, editFormHeight);
 
     if (editForm !== null) {
-      togglbutton.fetchTasks(pid, editForm);
       togglButtonDescription = $("#toggl-button-description");
       togglButtonDescription.value = response.entry.description || "";
 
       projectAutocomplete.setup(pid, tid);
       tagAutocomplete.setSelectedTags(response.entry.tags);
-
-      togglbutton.resetTasks();
 
       editForm.style.left = position.left + "px";
       editForm.style.top = position.top + "px";
@@ -236,7 +226,6 @@ var togglbutton = {
     editForm.style.top = position.top + "px";
     editForm.classList.add("toggl-integration");
     document.body.appendChild(editForm);
-    togglbutton.fetchTasks(pid, editForm);
 
     projectAutocomplete = new AutoComplete("project", "li", togglbutton);
     tagAutocomplete = new AutoComplete("tag", "li", togglbutton);
@@ -249,8 +238,7 @@ var togglbutton = {
     };
 
     submitForm = function (that) {
-      var taskButton = $("#toggl-button-task"),
-        selected = projectAutocomplete.getSelected(),
+      var selected = projectAutocomplete.getSelected(),
         request = {
           type: "update",
           description: $("#toggl-button-description").value,
@@ -331,25 +319,6 @@ var togglbutton = {
     });
 
     document.addEventListener("click", handler);
-  },
-
-  fetchTasks: function (projectId, editForm) {
-    var tasksRow = document.getElementById("toggl-button-tasks-row");
-    togglbutton.resetTasks();
-    if (!togglbutton.hasTasks || projectId === 0) {
-      tasksRow.style.display = "none";
-      return;
-    }
-    // If tasks are available, populate the task dropdown.
-    CH.sendMessage({type: 'getTasksHtml', projectId: projectId}, function (response) {
-      if (response && response.success && response.html) {
-        $('#toggl-button-task').innerHTML = response.html;
-        $("#toggl-button-task-placeholder", editForm).addEventListener('click', togglbutton.delegateTaskClick);
-        tasksRow.style.display = "block";
-      } else {
-        tasksRow.style.display = "none";
-      }
-    });
   },
 
   createTimerLink: function (params) {

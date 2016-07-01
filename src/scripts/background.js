@@ -93,10 +93,6 @@ TogglButton = {
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
         '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
-      '<div class="toggl-button-row" id="toggl-button-tasks-row">' +
-        '<select class="toggl-button-input" id="toggl-button-task" name="toggl-button-task"></select>' +
-        '<div id="toggl-button-task-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add task</div><span>▼</span></div>' +
-      '</div>' +
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-tag-filter" tabindex="102" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
         '<a href="#add" class="add-new-tag">+ Add</a>' +
@@ -1036,21 +1032,6 @@ TogglButton = {
     return html + "</ul>";
   },
 
-  fillTasks: function (projectId) {
-    if (TogglButton.$user && TogglButton.$user.projectTaskList) {
-      var tasks = TogglButton.$user.projectTaskList[projectId];
-
-      if (tasks) {
-        return [{id: 0, name: '- No Task -'}]
-          .concat(tasks)
-            .map(function (task) { return '<option value="' + task.id + '">' + task.name + '</option>'; })
-            .join("");
-      }
-    }
-
-    return "";
-  },
-
   refreshPage: function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
       if (!!tabs[0]) {
@@ -1380,8 +1361,7 @@ TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
-    var success,
-      error;
+    var error;
     try {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
@@ -1410,13 +1390,6 @@ TogglButton = {
         }
       } else if (request.type === 'currentEntry') {
         sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
-      } else if (request.type === 'getTasksHtml') {
-        success = TogglButton.$user && TogglButton.$user.projectTaskList;
-
-        sendResponse({
-          success: success,
-          html: success ? TogglButton.fillTasks(request.projectId) : ''
-        });
       } else if (request.type === 'error') {
         // Handling integration errors
         error = new Error();

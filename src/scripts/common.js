@@ -197,6 +197,7 @@ var togglbutton = {
     }
 
     var pid = response.entry.pid,
+      tid = response.entry.tid,
       handler,
       position,
       editFormHeight = 350,
@@ -217,7 +218,7 @@ var togglbutton = {
       togglButtonDescription = $("#toggl-button-description");
       togglButtonDescription.value = response.entry.description || "";
 
-      projectAutocomplete.setup(pid);
+      projectAutocomplete.setup(pid, tid);
       tagAutocomplete.setSelectedTags(response.entry.tags);
 
       togglbutton.resetTasks();
@@ -269,7 +270,7 @@ var togglbutton = {
     togglButtonDescription = $("#toggl-button-description", editForm);
     togglButtonDescription.value = response.entry.description || "";
     setCursorAtBeginning(togglButtonDescription);
-    projectAutocomplete.setup(pid);
+    projectAutocomplete.setup(pid, tid);
     tagAutocomplete.setSelectedTags(response.entry.tags);
 
     // Data fill end

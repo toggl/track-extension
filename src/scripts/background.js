@@ -3,28 +3,25 @@
 "use strict";
 var TogglButton, openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
-  debug = true,
+  debug = false,
   CH = chrome.extension;
 
 if (FF) {
   CH = chrome.runtime;
 }
 
-/*
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
-
 
 Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
 };
-*/
 
 var report = function (e) {
   if (debug) {
     console.log(e);
   } else {
-    //Bugsnag.notifyException(e);
+    Bugsnag.notifyException(e);
   }
 };
 
@@ -213,11 +210,9 @@ TogglButton = {
 
   updateBugsnag: function () {
     // Set user data
-    /*
     Bugsnag.user = {
       id: TogglButton.$user.id
     };
-    */
   },
 
   setupSocket: function () {

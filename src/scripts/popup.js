@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true*/
-/*global AutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
@@ -166,7 +166,7 @@ var PopUp = {
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
 
     PopUp.$projectAutocomplete.setup(pid, tid);
-    PopUp.$tagAutocomplete.setSelectedTags(TogglButton.$curEntry.tags);
+    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags);
     PopUp.switchView(view);
 
     // Put focus to the beginning of desctiption field
@@ -195,7 +195,7 @@ var PopUp = {
         description: document.querySelector("#toggl-button-description").value,
         pid: selected.pid,
         projectName: selected.name,
-        tags: PopUp.$tagAutocomplete.getSelectedTags(),
+        tags: PopUp.$tagAutocomplete.getSelected(),
         tid: selected.tid,
         respond: true,
         service: "dropdown"
@@ -209,8 +209,8 @@ var PopUp = {
     /* Edit form events */
     var handler;
 
-    PopUp.$projectAutocomplete = new AutoComplete("project", "li", PopUp);
-    PopUp.$tagAutocomplete = new AutoComplete("tag", "li", PopUp);
+    PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
+    PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {

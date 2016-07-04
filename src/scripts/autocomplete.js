@@ -2,6 +2,11 @@
 /*global document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
+var inheritsFrom = function (child, parent) {
+  child.prototype = Object.create(parent.prototype);
+  child.prototype.super = parent.prototype;
+};
+
 var AutoComplete = function (el, item, elem) {
   this.type = el;
   this.el = document.querySelector("#" + el + "-autocomplete");
@@ -18,16 +23,6 @@ var AutoComplete = function (el, item, elem) {
   this.exactMatch = false;
 
   this.addEvents();
-};
-
-AutoComplete.prototype.setup = function (selected, tid) {
-  if (this.type === "project") {
-    this.setSelected(selected, tid);
-    this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(null, selected, this.type, tid);
-    this.setProjectBullet(selected, tid);
-  } else {
-    this.setSelectedTags(selected);
-  }
 };
 
 AutoComplete.prototype.addEvents = function () {
@@ -61,25 +56,6 @@ AutoComplete.prototype.addEvents = function () {
   that.filterClear.addEventListener('click', function (e) {
     that.closeDropdown();
   });
-
-  that.el.addEventListener('click', function (e) {
-    e.stopPropagation();
-    if (that.type === "project") {
-      that.selectProject(e.target);
-    } else {
-      that.selectTag(e);
-    }
-  });
-
-  if (this.type === "tag") {
-    that.clearSelected.addEventListener('click', function (e) {
-      that.clearSelectedTags();
-    });
-
-    that.addLink.addEventListener('click', function (e) {
-      that.addNew();
-    });
-  }
 };
 
 AutoComplete.prototype.clearFilters = function () {
@@ -97,85 +73,6 @@ AutoComplete.prototype.clearFilters = function () {
   }
 };
 
-AutoComplete.prototype.filterSelection = function () {
-  var key,
-    that = this,
-    val = that.filter.value.toLowerCase(),
-    row,
-    text;
-
-  if (val === that.lastFilter) {
-    return;
-  }
-
-  if (val.length > 0 && !that.el.classList.contains("filtered")) {
-    that.el.classList.add("filtered");
-  }
-  if (val.length === 0) {
-    that.clearFilters();
-    return;
-  }
-  that.lastFilter = val;
-  that.exactMatch = false;
-  for (key in that.listItems) {
-    if (that.listItems.hasOwnProperty(key)) {
-      row = that.listItems[key];
-      text = row.getAttribute("title").toLowerCase();
-      if (text.indexOf(val) !== -1) {
-        if (text === val) {
-          that.exactMatch = val;
-        }
-        row.classList.add("filter");
-
-        if (that.type === "project") {
-          if (row.classList.contains("project-row")) {
-            row.parentNode.classList.add("filter");
-            row.parentNode.parentNode.classList.add("filter");
-          }
-          if (row.classList.contains("client-row")) {
-            row.parentNode.classList.add("filter-match");
-          }
-
-          if (row.classList.contains("task-item")) {
-            row.parentNode.parentNode.classList.add("filter");
-            row.parentNode.parentNode.classList.add("tasklist-opened");
-            row.classList.add("filter");
-          }
-        }
-
-      } else if (!!row.classList) {
-        row.classList.remove("filter");
-
-        if (that.type === "project") {
-          if (row.classList.contains("task-item")) {
-            row.classList.remove("filter");
-            if (row.parentNode.querySelectorAll(".filter").length === 0) {
-              row.parentNode.parentNode.classList.remove("tasklist-opened");
-            }
-          } else {
-            if (row.parentNode.querySelectorAll(".filter").length === 0) {
-              row.parentNode.classList.remove("filter");
-            }
-            if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
-              row.parentNode.parentNode.classList.remove("filter");
-            }
-            if (row.classList.contains("client-row")) {
-              row.classList.remove("filter-match");
-              row.parentNode.classList.remove("filter-match");
-              row.parentNode.parentNode.classList.remove("filter-match");
-            }
-          }
-        }
-      }
-    }
-  }
-  that.updateAddLink();
-};
-
-AutoComplete.prototype.selectTag = function (e) {
-  e.target.classList.toggle("selected-tag");
-};
-
 AutoComplete.prototype.addNew = function (text) {
   var val = text || this.filter.value,
     list = this.el.querySelector("." + this.type + "-list"),
@@ -190,16 +87,6 @@ AutoComplete.prototype.addNew = function (text) {
   this.filterSelection();
 };
 
-AutoComplete.prototype.updateAddLink = function (e) {
-  if (!!this.addLink) {
-    if (!!this.exactMatch) {
-      this.placeholderItem.parentNode.classList.remove("add-allowed");
-    } else {
-      this.placeholderItem.parentNode.classList.add("add-allowed");
-    }
-  }
-};
-
 AutoComplete.prototype.toggleTaskList = function (elem) {
   var opened = this.el.querySelector(".tasklist-opened");
   if (!!opened) {
@@ -210,7 +97,73 @@ AutoComplete.prototype.toggleTaskList = function (elem) {
   }
 };
 
-AutoComplete.prototype.selectTask = function (elem, silent) {
+AutoComplete.prototype.closeDropdown = function (t) {
+  var that = t || this;
+  that.filter.value = "";
+  that.el.classList.remove("filtered");
+  that.placeholderItem.parentNode.classList.toggle("open");
+  that.placeholderItem.parentNode.classList.remove("add-allowed");
+  that.clearFilters();
+};
+
+//* Project autocomplete *//
+
+var ProjectAutoComplete = function (el, item, elem) {
+  AutoComplete.call(this, el, item, elem);
+};
+
+inheritsFrom(ProjectAutoComplete, AutoComplete);
+
+ProjectAutoComplete.prototype.setup = function (selected, tid) {
+  this.setSelected(selected, tid);
+  this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(null, selected, this.type, tid);
+  this.setProjectBullet(selected, tid);
+};
+
+ProjectAutoComplete.prototype.addEvents = function () {
+  var that = this;
+  this.super.addEvents.call(this);
+
+  that.el.addEventListener('click', function (e) {
+    e.stopPropagation();
+    that.selectProject(e.target);
+  });
+};
+
+ProjectAutoComplete.prototype.setSelected = function (ids, tid) {
+  var t = this.el.querySelector("li[data-tid='" + tid + "']");
+  if (!!t) {
+    this.selectTask(t, true);
+    return;
+  }
+  this.setSelectedProject(ids);
+};
+
+ProjectAutoComplete.prototype.setSelectedProject = function (ids) {
+  var selected = this.el.querySelectorAll(".selected-" + this.type),
+    i;
+
+  if (selected.length >= 1) {
+    for (i = 0; i < selected.length; i++) {
+      selected[i].classList.remove("selected-" + this.type);
+    }
+  }
+  if (!!ids) {
+    if (typeof ids === "object") {
+      for (i = 0; i < ids.length; i++) {
+        this.el.querySelector("li[title='" + ids[i] + "']").classList.add("selected-" + this.type);
+      }
+    } else {
+      if (this.type === "project") {
+        this.el.querySelector("li[data-pid='" + ids + "']").classList.add("selected-" + this.type);
+      } else {
+        this.el.querySelector("li[title='" + ids + "']").classList.add("selected-" + this.type);
+      }
+    }
+  }
+};
+
+ProjectAutoComplete.prototype.selectTask = function (elem, silent) {
   // Set selected task
   var currentSelected = this.el.querySelector(".selected-task");
 
@@ -223,7 +176,7 @@ AutoComplete.prototype.selectTask = function (elem, silent) {
   this.selectProject(elem.parentNode.parentNode, silent, true);
 };
 
-AutoComplete.prototype.selectProject = function (elem, silent, removeTask) {
+ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask) {
   if (elem.classList.contains("item-name")) {
     elem = elem.parentNode;
   }
@@ -260,117 +213,7 @@ AutoComplete.prototype.selectProject = function (elem, silent, removeTask) {
   return false;
 };
 
-AutoComplete.prototype.closeDropdown = function () {
-  this.filter.value = "";
-  this.el.classList.remove("filtered");
-  this.placeholderItem.parentNode.classList.toggle("open");
-  this.placeholderItem.parentNode.classList.remove("add-allowed");
-
-  if (this.type === "tag") {
-    this.updatePlaceholder();
-  }
-  this.clearFilters();
-};
-
-AutoComplete.prototype.setSelected = function (ids, tid) {
-  if (this.type === "project") {
-    var t = this.el.querySelector("li[data-tid='" + tid + "']");
-    if (!!t) {
-      this.selectTask(t, true);
-      return;
-    }
-    this.setSelectedProject(ids);
-  } else {
-    this.setSelecedTags(ids);
-  }
-};
-
-AutoComplete.prototype.setSelectedTags = function (tags) {
-  var i,
-    item;
-
-  this.clearSelectedTags();
-
-  if (!!tags) {
-    for (i = 0; i < tags.length; i += 1) {
-      item = this.el.querySelector("li[title='" + tags[i] + "']");
-      if (!item) {
-        this.addNew(tags[i]);
-      } else {
-        item.classList.add("selected-" + this.type);
-      }
-    }
-  }
-
-  this.updatePlaceholder(tags);
-};
-
-AutoComplete.prototype.clearSelectedTags = function (tags) {
-  var current = this.el.querySelectorAll(".tag-list li.selected-tag"),
-    i;
-
-  for (i = 0; i < current.length; i += 1) {
-    current[i].classList.remove("selected-tag");
-  }
-};
-
-AutoComplete.prototype.updatePlaceholder = function (tags) {
-  if (!tags) {
-    tags = this.getSelectedTags();
-  }
-
-  if (!!tags && tags.length) {
-    tags = tags.join(',');
-  } else {
-    tags = "Add tags";
-  }
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = tags;
-};
-
-AutoComplete.prototype.setSelectedProject = function (ids) {
-  var selected = this.el.querySelectorAll(".selected-" + this.type),
-    i;
-
-  if (selected.length >= 1) {
-    for (i = 0; i < selected.length; i++) {
-      selected[i].classList.remove("selected-" + this.type);
-    }
-  }
-  if (!!ids) {
-    if (typeof ids === "object") {
-      for (i = 0; i < ids.length; i++) {
-        this.el.querySelector("li[title='" + ids[i] + "']").classList.add("selected-" + this.type);
-      }
-    } else {
-      if (this.type === "project") {
-        this.el.querySelector("li[data-pid='" + ids + "']").classList.add("selected-" + this.type);
-      } else {
-        this.el.querySelector("li[title='" + ids + "']").classList.add("selected-" + this.type);
-      }
-    }
-  }
-};
-
-AutoComplete.prototype.getSelected = function () {
-  if (this.type === "project") {
-    return this.getSelectedProject();
-  }
-  return this.getSelectedTags();
-};
-
-AutoComplete.prototype.getSelectedTags = function () {
-  var tags = [],
-    tag,
-    i,
-    s = this.el.querySelectorAll(".tag-list .selected-tag");
-  for (i = 0; i < s.length; i += 1) {
-    tag = s[i].textContent;
-    tags.push(tag);
-  }
-  return tags;
-};
-
-AutoComplete.prototype.getSelectedProject = function () {
+ProjectAutoComplete.prototype.getSelected = function () {
   var selected = this.el.querySelector(".selected-" + this.type),
     task = this.el.querySelector(".selected-task"),
     pid = (!!selected) ? parseInt(selected.getAttribute("data-pid"), 10) : 0,
@@ -385,7 +228,7 @@ AutoComplete.prototype.getSelectedProject = function () {
   };
 };
 
-AutoComplete.prototype.getSelectedProjectByPid = function (pid) {
+ProjectAutoComplete.prototype.getSelectedProjectByPid = function (pid) {
   var selected = this.el.querySelector("li[data-pid='" + pid + "']"),
     name = (!!selected) ? selected.textContent : "";
 
@@ -396,7 +239,7 @@ AutoComplete.prototype.getSelectedProjectByPid = function (pid) {
   };
 };
 
-AutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
+ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   var project,
     className,
     id = parseInt(pid, 10),
@@ -423,40 +266,244 @@ AutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   return "";
 };
 
-AutoComplete.prototype.generateLabel = function (select, id, type, tid) {
+ProjectAutoComplete.prototype.generateLabel = function (select, id, type, tid) {
   var selected = false,
     client,
     result = "",
     task;
 
-  if (type === "project") {
-    select = this.getSelectedProjectByPid(id);
-  }
+  select = this.getSelectedProjectByPid(id);
 
   if (!select) {
     select = this.getSelected();
   }
 
-  if (type === "project") {
-    if (!!select && !!select.el) {
-      selected = select.pid;
-      task = select.el.querySelector(".selected-task") || select.el.querySelector("li[data-tid='" + tid + "']");
-      if (!!task) {
-        result += task.getAttribute("title") + " . ";
-      }
-      client = select.el.parentNode.querySelector(".client-row");
-      if (!!client) {
-        result = client.textContent + " - ";
-      }
-      result += select.el.getAttribute("title");
+  if (!!select && !!select.el) {
+    selected = select.pid;
+    task = select.el.querySelector(".selected-task") || select.el.querySelector("li[data-tid='" + tid + "']");
+    if (!!task) {
+      result += task.getAttribute("title") + " . ";
     }
-  } else {
-    selected = select.options[select.selectedIndex];
-    result = selected.text;
+    client = select.el.parentNode.querySelector(".client-row");
+    if (!!client) {
+      result = client.textContent + " - ";
+    }
+    result += select.el.getAttribute("title");
   }
 
   if (parseInt(id, 10) === 0 || !selected) {
     return "Add " + type;
   }
   return result;
+};
+
+ProjectAutoComplete.prototype.filterSelection = function () {
+  var key,
+    that = this,
+    val = that.filter.value.toLowerCase(),
+    row,
+    text;
+
+  if (val === that.lastFilter) {
+    return;
+  }
+
+  if (val.length > 0 && !that.el.classList.contains("filtered")) {
+    that.el.classList.add("filtered");
+  }
+  if (val.length === 0) {
+    that.clearFilters();
+    return;
+  }
+  that.lastFilter = val;
+  that.exactMatch = false;
+  for (key in that.listItems) {
+    if (that.listItems.hasOwnProperty(key)) {
+      row = that.listItems[key];
+      text = row.getAttribute("title").toLowerCase();
+      if (text.indexOf(val) !== -1) {
+        if (text === val) {
+          that.exactMatch = val;
+        }
+        row.classList.add("filter");
+
+        if (row.classList.contains("project-row")) {
+          row.parentNode.classList.add("filter");
+          row.parentNode.parentNode.classList.add("filter");
+        }
+        if (row.classList.contains("client-row")) {
+          row.parentNode.classList.add("filter-match");
+        }
+
+        if (row.classList.contains("task-item")) {
+          row.parentNode.parentNode.classList.add("filter");
+          row.parentNode.parentNode.classList.add("tasklist-opened");
+          row.classList.add("filter");
+        }
+
+      } else if (!!row.classList) {
+        row.classList.remove("filter");
+
+        if (row.classList.contains("task-item")) {
+          row.classList.remove("filter");
+          if (row.parentNode.querySelectorAll(".filter").length === 0) {
+            row.parentNode.parentNode.classList.remove("tasklist-opened");
+          }
+        } else {
+          if (row.parentNode.querySelectorAll(".filter").length === 0) {
+            row.parentNode.classList.remove("filter");
+          }
+          if (row.parentNode.parentNode.querySelectorAll(".filter").length === 0) {
+            row.parentNode.parentNode.classList.remove("filter");
+          }
+          if (row.classList.contains("client-row")) {
+            row.classList.remove("filter-match");
+            row.parentNode.classList.remove("filter-match");
+            row.parentNode.parentNode.classList.remove("filter-match");
+          }
+        }
+      }
+    }
+  }
+};
+
+
+//* Tag autocomplete *//
+
+var TagAutoComplete = function (el, item, elem) {
+  AutoComplete.call(this, el, item, elem);
+};
+
+inheritsFrom(TagAutoComplete, AutoComplete);
+
+TagAutoComplete.prototype.setup = function (selected) {
+  this.setSelected(selected);
+};
+
+TagAutoComplete.prototype.addEvents = function () {
+  var that = this;
+  this.super.addEvents.call(this);
+
+  that.el.addEventListener('click', function (e) {
+    e.stopPropagation();
+    that.selectTag(e);
+  });
+
+  that.clearSelected.addEventListener('click', function (e) {
+    that.clearSelectedTags();
+  });
+
+  that.addLink.addEventListener('click', function (e) {
+    that.addNew();
+  });
+};
+
+TagAutoComplete.prototype.closeDropdown = function () {
+  this.super.closeDropdown(this, this);
+  this.updatePlaceholder();
+};
+
+TagAutoComplete.prototype.selectTag = function (e) {
+  e.target.classList.toggle("selected-tag");
+};
+
+TagAutoComplete.prototype.setSelected = function (tags) {
+  var i,
+    item;
+
+  this.clearSelectedTags();
+
+  if (!!tags) {
+    for (i = 0; i < tags.length; i += 1) {
+      item = this.el.querySelector("li[title='" + tags[i] + "']");
+      if (!item) {
+        this.addNew(tags[i]);
+      } else {
+        item.classList.add("selected-" + this.type);
+      }
+    }
+  }
+
+  this.updatePlaceholder(tags);
+};
+
+TagAutoComplete.prototype.clearSelectedTags = function (tags) {
+  var current = this.el.querySelectorAll(".tag-list li.selected-tag"),
+    i;
+
+  for (i = 0; i < current.length; i += 1) {
+    current[i].classList.remove("selected-tag");
+  }
+};
+
+TagAutoComplete.prototype.updatePlaceholder = function (tags) {
+  if (!tags) {
+    tags = this.getSelected();
+  }
+
+  if (!!tags && tags.length) {
+    tags = tags.join(',');
+  } else {
+    tags = "Add tags";
+  }
+  this.placeholderDiv.innerHTML = this.placeholderDiv.title = tags;
+};
+
+TagAutoComplete.prototype.getSelected = function () {
+  var tags = [],
+    tag,
+    i,
+    s = this.el.querySelectorAll(".tag-list .selected-tag");
+  for (i = 0; i < s.length; i += 1) {
+    tag = s[i].textContent;
+    tags.push(tag);
+  }
+  return tags;
+};
+
+TagAutoComplete.prototype.filterSelection = function () {
+  var key,
+    that = this,
+    val = that.filter.value.toLowerCase(),
+    row,
+    text;
+
+  if (val === that.lastFilter) {
+    return;
+  }
+
+  if (val.length > 0 && !that.el.classList.contains("filtered")) {
+    that.el.classList.add("filtered");
+  }
+  if (val.length === 0) {
+    that.clearFilters();
+    return;
+  }
+  that.lastFilter = val;
+  that.exactMatch = false;
+  for (key in that.listItems) {
+    if (that.listItems.hasOwnProperty(key)) {
+      row = that.listItems[key];
+      text = row.getAttribute("title").toLowerCase();
+      if (text.indexOf(val) !== -1) {
+        if (text === val) {
+          that.exactMatch = val;
+        }
+        row.classList.add("filter");
+      } else if (!!row.classList) {
+        row.classList.remove("filter");
+      }
+    }
+  }
+  that.updateAddLink();
+};
+
+TagAutoComplete.prototype.updateAddLink = function (e) {
+  if (!!this.addLink) {
+    if (!!this.exactMatch) {
+      this.placeholderItem.parentNode.classList.remove("add-allowed");
+    } else {
+      this.placeholderItem.parentNode.classList.add("add-allowed");
+    }
+  }
 };

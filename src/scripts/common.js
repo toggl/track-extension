@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global AutoComplete: false, document: false, MutationObserver: false, chrome: false, window: false, navigator: false*/
+/*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, document: false, MutationObserver: false, chrome: false, window: false, navigator: false*/
 "use strict";
 console.log(">> COMMON");
 var FF = navigator.userAgent.indexOf("Chrome") === -1,
@@ -211,7 +211,7 @@ var togglbutton = {
       togglButtonDescription.value = response.entry.description || "";
 
       projectAutocomplete.setup(pid, tid);
-      tagAutocomplete.setSelectedTags(response.entry.tags);
+      tagAutocomplete.setup(response.entry.tags);
 
       editForm.style.left = position.left + "px";
       editForm.style.top = position.top + "px";
@@ -227,8 +227,8 @@ var togglbutton = {
     editForm.classList.add("toggl-integration");
     document.body.appendChild(editForm);
 
-    projectAutocomplete = new AutoComplete("project", "li", togglbutton);
-    tagAutocomplete = new AutoComplete("tag", "li", togglbutton);
+    projectAutocomplete = new ProjectAutoComplete("project", "li", togglbutton);
+    tagAutocomplete = new TagAutoComplete("tag", "li", togglbutton);
 
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
@@ -244,7 +244,7 @@ var togglbutton = {
           description: $("#toggl-button-description").value,
           pid: selected.pid,
           projectName: selected.name,
-          tags: tagAutocomplete.getSelectedTags(),
+          tags: tagAutocomplete.getSelected(),
           tid: selected.tid,
           service: togglbutton.serviceName
         };
@@ -259,7 +259,7 @@ var togglbutton = {
     togglButtonDescription.value = response.entry.description || "";
     setCursorAtBeginning(togglButtonDescription);
     projectAutocomplete.setup(pid, tid);
-    tagAutocomplete.setSelectedTags(response.entry.tags);
+    tagAutocomplete.setSelected(response.entry.tags);
 
     // Data fill end
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {

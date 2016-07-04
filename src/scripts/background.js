@@ -981,12 +981,11 @@ TogglButton = {
   },
 
   generateProjectItem: function (project) {
-    var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id]: null,
+    var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id] : null,
       i,
       tasksCount,
       html = '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
         '<span class="item-name">' + project.name + '</span>';
-     //return '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' + project.name + '</li>';
 
     if (!!tasks) {
       tasksCount = tasks.length + " task";

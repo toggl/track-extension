@@ -98,6 +98,7 @@ window.TogglOrigins = {
   "worksection.eu": {"url": "*://*.worksection.eu/*", "name": "Worksection", "clone" : "true"},
   "worksection.net": {"url": "*://*.worksection.net/*", "name": "Worksection", "clone" : "true"},
   "wrike.com": {"url": "*://*.wrike.com/*", "name": "Wrike"},
+  "sherpadesk.com": {"url": "*://*.sherpadesk.com/*", "name": "Sherpadesk"},
   "wunderlist.com": {"url": "*://*.wunderlist.com/*", "name": "Wunderlist"},
   "xero.com": {"url": "*://go.xero.com/*", "name": "Xero"},
   "zendesk.com": {"url": "*://*.zendesk.com/*", "name": "Zendesk"},

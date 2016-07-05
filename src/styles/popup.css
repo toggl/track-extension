@@ -19,7 +19,9 @@ body {
 #login-form {
   margin-bottom: 30px;
   padding-top: 0px;
+  width: 192px;
 }
+
 #login-form .form-submit-row label.left {
   padding: 10px 0;
 }
@@ -31,6 +33,7 @@ body {
   color: #aaa;
   float: left;
   display: block;
+  font-size: 12px;
 }
 .forgot-link:hover {
   color: #767676;
@@ -210,6 +213,7 @@ hr {
   text-align: center;
   color: #999;
   cursor: pointer;
+  font-size: 12px;
 }
 
 .edit-button, .stop-button, .resume-button {
@@ -218,6 +222,7 @@ hr {
   line-height: 29px;
   vertical-align: middle;
   cursor: pointer;
+  font-size: 12px;
 }
 
 .edit-button {
@@ -225,6 +230,7 @@ hr {
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 12px;
 }
 
 .stop-button {
@@ -515,4 +521,39 @@ hr {
 #toggl-button-project-placeholder .project-bullet {
   margin-top: 16px;
   margin-left: 0;
+}
+
+/** FIREFOX **/
+.ff {
+  width: 240px;
+  height: 328px;
+}
+.ff #login-form {
+  width: 240px;
+}
+
+.ff .text-input {
+  width: 228px;
+}
+
+.ff .tracking .edit-button {
+  width: 144px;
+}
+
+.ff #toggl-button-edit-form {
+  bottom: 0;
+  height: 100%;
+}
+
+.ff #toggl-button-update {
+  position: absolute;
+  bottom: 0;
+}
+
+.ff #entry-form {
+  height: 260px;
+}
+
+.ff #toggl-button-tag {
+  max-height: 55px;
 }

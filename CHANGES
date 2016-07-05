@@ -1,3 +1,14 @@
+[1.0.1]
+- Added support for Bitrix24
+- Added support for Rindle
+- Added support for TickTick
+- Added Eventum to custom domains select
+- Added filter field to the top of Settings permissions list
+- Added Pomodoro progress meter to extension icon
+- Fixed Assembla, Habitica, Youtrack and Visual Studio Online integrations
+- Fixed multiple timer links issue in Bitbucket pull request page
+- Fixed Toggl Button Pomodoro stopping entries created elsewhere
+
 [1.0.0]
 - Implemented new permissions system
 - Added possibility to enable/disable integrations from Settings

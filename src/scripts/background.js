@@ -1,13 +1,28 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, Db: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton, openWindowsCount = 0;
+var TogglButton, openWindowsCount = 0,
+  FF = navigator.userAgent.indexOf("Chrome") === -1,
+  debug = false,
+  CH = chrome.extension;
+
+if (FF) {
+  CH = chrome.runtime;
+}
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
 
 Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
+};
+
+var report = function (e) {
+  if (debug) {
+    console.log(e);
+  } else {
+    Bugsnag.notifyException(e);
+  }
 };
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -57,6 +72,7 @@ TogglButton = {
   $checkingUserState: false,
   checkingWorkdayEnd: false,
   pomodoroAlarm: null,
+  pomodoroProgressTimer: null,
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
@@ -98,11 +114,11 @@ TogglButton = {
                   chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
                 }
               } catch (e) {
-                Bugsnag.notifyException(e);
+                report(e);
               }
             });
             resp = JSON.parse(xhr.responseText);
-            TogglButton.updateTriggers(null);
+            TogglButton.updateTriggers(null, true);
             if (resp.data.projects) {
               resp.data.projects.forEach(function (project) {
                 if (project.active && !project.server_deleted_at) {
@@ -132,7 +148,7 @@ TogglButton = {
             if (resp.data.time_entries) {
               resp.data.time_entries.some(function (entry) {
                 if (entry.duration < 0) {
-                  TogglButton.updateTriggers(entry);
+                  TogglButton.updateTriggers(entry, true);
                   return true;
                 }
                 return false;
@@ -156,7 +172,7 @@ TogglButton = {
             if (Db.get("socketEnabled")) {
               TogglButton.setupSocket();
             }
-            TogglButton.updateBugsnag();
+            //TogglButton.updateBugsnag();
             TogglButton.handleQueue();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
@@ -167,7 +183,7 @@ TogglButton = {
             TogglButton.setBrowserActionBadge();
           }
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -246,7 +262,7 @@ TogglButton = {
       data = JSON.parse(msg.data);
       if (data.model !== null) {
         if (data.model === "time_entry") {
-          TogglButton.updateCurrentEntry(data);
+          TogglButton.updateCurrentEntry(data, true);
         }
       } else if (TogglButton.$socket !== null) {
         try {
@@ -259,16 +275,19 @@ TogglButton = {
 
   },
 
-  updateTriggers: function (entry) {
+  updateTriggers: function (entry, sync) {
     TogglButton.$curEntry = entry;
-    if (!!entry) {
-      TogglButton.checkPomodoroAlarm(entry);
-      clearTimeout(TogglButton.$nannyTimer);
-    } else {
-      // Clear pomodoro timer
-      clearTimeout(TogglButton.pomodoroAlarm);
 
-      TogglButton.$nannyTimer = null;
+    if (!sync) {
+      if (!!entry) {
+        TogglButton.checkPomodoroAlarm(entry);
+        clearTimeout(TogglButton.$nannyTimer);
+        TogglButton.$nannyTimer = null;
+      } else {
+        // Clear pomodoro timer
+        clearTimeout(TogglButton.pomodoroAlarm);
+        clearInterval(TogglButton.pomodoroProgressTimer);
+      }
     }
     // Toggle workday end check
     TogglButton.startCheckingDayEnd(!!entry);
@@ -277,8 +296,7 @@ TogglButton = {
     TogglButton.setBrowserAction(entry);
   },
 
-
-  updateCurrentEntry: function (data) {
+  updateCurrentEntry: function (data, sync) {
     var entry = data.data;
     if (data.action === "INSERT") {
       TogglButton.updateTriggers(entry);
@@ -288,7 +306,7 @@ TogglButton = {
         TogglButton.updateEntriesDb();
         entry = null;
       }
-      TogglButton.updateTriggers(entry);
+      TogglButton.updateTriggers(entry, sync);
     }
   },
 
@@ -371,6 +389,11 @@ TogglButton = {
       entry.time_entry.billable = project && project.billable;
     }
 
+    // set Default project if needed
+    if (!entry.time_entry.pid) {
+      entry.time_entry.pid = parseInt(Db.get(TogglButton.$user.id + "-defaultProject"), 10);
+    }
+
     TogglButton.ajax('/time_entries', {
       method: 'POST',
       payload: entry,
@@ -401,7 +424,7 @@ TogglButton = {
             );
           }
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -428,11 +451,65 @@ TogglButton = {
   triggerPomodoroAlarm: function (value) {
     if (TogglButton.pomodoroAlarm !== null) {
       clearTimeout(TogglButton.pomodoroAlarm);
+      TogglButton.pomodoroAlarm = null;
+      clearInterval(TogglButton.pomodoroProgressTimer);
     }
     if (Db.get("pomodoroModeEnabled")) {
-      var interval = value || (parseInt(Db.get("pomodoroInterval"), 10) * 60000);
+      var pomodoroInterval = (parseInt(Db.get("pomodoroInterval"), 10) * 60000),
+        interval = value || pomodoroInterval,
+        steps = 120,
+        elapsedTime = ((pomodoroInterval - interval) / pomodoroInterval);
       TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
+      TogglButton.pomodoroProgressTimer = setInterval(TogglButton.updatePomodoroProgress(interval, steps, elapsedTime), pomodoroInterval / steps);
     }
+  },
+
+  updatePomodoroProgress: function (interval, steps, elapsedTime) {
+    var current = 0, intervalCount = 0;
+    return function () {
+      var key, img, imagePaths = {'19': 'images/active-19.png', '38': 'images/active-38.png'},
+        imageData = {}, circ = Math.PI * 2, quart = Math.PI * 0.5, imageLoadedCount = 0,
+        imageLoaded = function (key) {
+          return function () {
+            var canvas = document.createElement('canvas'),
+              ctx = canvas.getContext('2d');
+            ctx.drawImage(this, 0, 0);
+            ctx.beginPath();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineCap = 'butt';
+            ctx.closePath();
+            ctx.fill();
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(this.naturalWidth * 0.5, this.naturalHeight * 0.5, (this.naturalWidth * 0.5) - 1, quart * -1, (circ * current) - quart, false);
+            ctx.stroke();
+            imageData[key] = ctx.getImageData(0, 0, this.naturalWidth, this.naturalHeight);
+            ++imageLoadedCount;
+            if (imageLoadedCount === 2) {
+              chrome.browserAction.setIcon({
+                imageData: imageData
+              });
+            }
+          };
+        };
+      intervalCount += (interval / steps);
+      current = (intervalCount / interval) + elapsedTime;
+
+      if (Db.get("pomodoroModeEnabled")) {
+        for (key in imagePaths) {
+          if (imagePaths.hasOwnProperty(key)) {
+            img = new Image();
+            img.onload = imageLoaded(key);
+            img.src = imagePaths[key];
+          }
+        }
+      } else {
+        clearInterval(TogglButton.pomodoroProgressTimer);
+        chrome.browserAction.setIcon({
+          path: imagePaths
+        });
+      }
+    };
   },
 
   analytics: function (event, service) {
@@ -494,6 +571,12 @@ TogglButton = {
     xhr.send(JSON.stringify(opts.payload));
   },
 
+  resetPomodoroProgress: function () {
+    TogglButton.updateTriggers(null);
+    TogglButton.pomodoroProgressTimer = null;
+    TogglButton.setBrowserAction();
+  },
+
   stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {
     var entry,
       pomodoroDuration = parseInt(Db.get("pomodoroInterval"), 10) * 60;
@@ -513,7 +596,7 @@ TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
           TogglButton.updateEntriesDb();
-          TogglButton.updateTriggers(null);
+          TogglButton.resetPomodoroProgress();
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -557,7 +640,7 @@ TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
           TogglButton.updateEntriesDb();
-          TogglButton.updateTriggers(null);
+          TogglButton.resetPomodoroProgress();
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -594,6 +677,7 @@ TogglButton = {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
+    clearInterval(TogglButton.pomodoroProgressTimer);
     var notificationId = 'pomodoro-time-is-up',
       stopSound,
       latestDescription = (TogglButton.$curEntry && TogglButton.$curEntry.description) ? " (" + TogglButton.$curEntry.description + ")" : "",
@@ -675,7 +759,7 @@ TogglButton = {
           }
           TogglButton.analytics(timeEntry.type, timeEntry.service);
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -703,6 +787,11 @@ TogglButton = {
   setBrowserAction: function (runningEntry) {
     var imagePath = {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'},
       title = chrome.runtime.getManifest().browser_action.default_title;
+
+    TogglButton.updatePopup();
+    if (!!TogglButton.pomodoroProgressTimer) {
+      return;
+    }
     if (!!runningEntry) {
       imagePath = {'19': 'images/active-19.png', '38': 'images/active-38.png'};
       if (!!runningEntry.description && runningEntry.description.length > 0) {
@@ -720,7 +809,6 @@ TogglButton = {
     chrome.browserAction.setIcon({
       path: imagePath
     });
-    TogglButton.updatePopup();
   },
 
   loginUser: function (request, sendResponse) {
@@ -730,7 +818,7 @@ TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
         if (xhr.status === 200) {
-          TogglButton.queque.push(TogglButton.checkPermissions);
+          TogglButton.queue.push(TogglButton.checkPermissions);
           TogglButton.fetchUser();
           TogglButton.refreshPage();
         } else {
@@ -883,7 +971,7 @@ TogglButton = {
         }
       }
     } catch (e) {
-      Bugsnag.notifyException(e);
+      report(e);
     }
 
     return html;
@@ -1250,7 +1338,7 @@ TogglButton = {
   },
 
   contextMenuClick: function (info, tab) {
-    TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": info.selectionText || ""}, null);
+    TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": (info.selectionText || tab.title)}, null);
   },
 
   newMessage: function (request, sender, sendResponse) {
@@ -1296,11 +1384,14 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
+        console.log(error);
+        //Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
+      } else if (request.type === 'options') {
+        chrome.runtime.openOptionsPage();
       }
 
     } catch (e) {
-      Bugsnag.notifyException(e);
+      report(e);
     }
 
     return true;
@@ -1310,26 +1401,26 @@ TogglButton = {
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins};
-
-      chrome.permissions.contains(permission, function (result) {
-        /* // Debug
-        var text = "var a = document.createElement('div');document.body.appendChild(a);console.log(a);a.classList.add('permission');";
-        text += 'a.setAttribute("style","background:red;border-radius:25px;border: 2px solid white;z-index:999999;width:25px;height:25px;position:fixed;top:5px;left:5px;");';
-        */
-        if (result) {
-          /* // Debug
-          chrome.tabs.executeScript({
-            code: text
-          });
-*/
-
-          if (!!domain.file) {
-            chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-            chrome.tabs.executeScript(tabId, {file: "scripts/common.js"});
+      console.log("url: " + tab.url + " | domain-file: " + domain.file);
+      if (FF) {
+        if (!!domain.file) {
+          chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
+          chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
             chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-          }
+          });
         }
-      });
+      } else {
+        chrome.permissions.contains(permission, function (result) {
+          if (result) {
+            if (!!domain.file) {
+              chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
+              chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
+                chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
+              });
+            }
+          }
+        });
+      }
     }
   },
 
@@ -1394,7 +1485,7 @@ TogglButton = {
   },
 
   checkPermissions: function (show) {
-    if (!Db.get("dont-show-permissions")) {
+    if (!Db.get("dont-show-permissions") && !FF) {
       chrome.permissions.getAll(function (results) {
         if (!!show || results.origins.length === 2) {
           show = show || 3;
@@ -1416,7 +1507,7 @@ TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
-chrome.extension.onMessage.addListener(TogglButton.newMessage);
+CH.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
@@ -1430,16 +1521,18 @@ window.onbeforeunload = function () {
   }
 };
 
-TogglButton.checkPermissions();
+if (!FF) {
+  TogglButton.checkPermissions();
 
-// Check whether new version is installed
-chrome.runtime.onInstalled.addListener(function (details) {
-  if (details.reason === "install") {
-    TogglButton.checkPermissions(1);
-  } else if (details.reason === "update") {
-    if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
-      TogglButton.checkPermissions(2);
+  // Check whether new version is installed
+  chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason === "install") {
+      TogglButton.checkPermissions(1);
+    } else if (details.reason === "update") {
+      if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
+        TogglButton.checkPermissions(2);
+      }
     }
-  }
-});
+  });
+}
 

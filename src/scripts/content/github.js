@@ -6,7 +6,7 @@ togglbutton.render('#partial-discussion-header:not(.toggl)', {observe: true}, fu
   var link, description,
     numElem = $('.gh-header-number', elem),
     titleElem = $('.js-issue-title', elem),
-    projectElem = $('.entry-title strong a');
+    projectElem = $('h1.public strong a');
 
   description = titleElem.innerText;
   if (numElem !== null) {

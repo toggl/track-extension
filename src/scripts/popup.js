@@ -1,9 +1,16 @@
 /*jslint indent: 2, unparam: true*/
-/*global document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
-var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
-var Db = chrome.extension.getBackgroundPage().Db;
+var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
+  Db = chrome.extension.getBackgroundPage().Db,
+  CH = chrome.extension,
+  FF = navigator.userAgent.indexOf("Chrome") === -1;
+
+if (FF) {
+  CH = chrome.runtime;
+  document.querySelector("body").classList.add("ff");
+}
 
 var PopUp = {
   $postStartText: " post-start popup",
@@ -69,7 +76,7 @@ var PopUp = {
   },
 
   sendMessage: function (request) {
-    chrome.extension.sendMessage(request, function (response) {
+    CH.sendMessage(request, function (response) {
       if (!response) {
         return;
       }
@@ -259,11 +266,12 @@ var PopUp = {
   submitForm: function (that) {
     var taskButton = document.querySelector("#toggl-button-task"),
       selectedProject = document.querySelector("#toggl-button-project"),
+      projectName = (selectedProject.selectedIndex !== -1) ? selectedProject.options[selectedProject.selectedIndex].text : "",
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
         pid: selectedProject.value,
-        projectName: selectedProject.options[selectedProject.selectedIndex].text,
+        projectName: projectName,
         tags: PopUp.getSelectedTags(),
         tid: (taskButton && taskButton.value) ? taskButton.value : null,
         respond: true,
@@ -320,7 +328,7 @@ var PopUp = {
       return;
     }
     // If tasks are available, populate the task dropdown.
-    chrome.extension.sendMessage({type: 'getTasksHtml', projectId: projectId}, function (response) {
+    CH.sendMessage({type: 'getTasksHtml', projectId: projectId}, function (response) {
       if (response && response.success && response.html) {
         document.querySelector('#toggl-button-task').innerHTML = response.html;
         document.querySelector("#toggl-button-task-placeholder").addEventListener('click', PopUp.delegateTaskClick);
@@ -454,7 +462,12 @@ document.addEventListener('DOMContentLoaded', function () {
   PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
   document.querySelector(".settings-button").addEventListener('click', function () {
-    chrome.runtime.openOptionsPage();
+    var request = {
+      type: "options",
+      respond: false
+    };
+
+    CH.sendMessage(request);
   });
 
   document.querySelector(".logout-button").addEventListener('click', function () {

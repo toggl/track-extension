@@ -1,8 +1,16 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global navigator: false, window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
-var Db = {
+var Db,
+  CH = chrome.extension,
+  FF = navigator.userAgent.indexOf("Chrome") === -1;
+
+if (FF) {
+  CH = chrome.runtime;
+}
+
+Db = {
   originsKey: "TogglButton-origins",
   // settings: key, default value
   settings: {
@@ -205,17 +213,18 @@ var Db = {
       } else if (request.type === 'toggle-day-end-time') {
         Db.updateSetting("dayEndTime", request.state);
       } else if (request.type === 'change-default-project') {
-        Db.updateSetting("defaultProject", request.state);
+        Db.updateSetting(chrome.extension.getBackgroundPage().TogglButton.$user.id + "-defaultProject", request.state);
       } else if (request.type === 'update-dont-show-permissions' || request.type === 'update-selected-settings-tab') {
         Db.updateSetting(request.type.substr(7), request.state);
       }
     } catch (e) {
-      Bugsnag.notifyException(e);
+      console.log(e);
+      //Bugsnag.notifyException(e);
     }
 
     return true;
   }
 };
 
-chrome.extension.onMessage.addListener(Db.newMessage);
+CH.onMessage.addListener(Db.newMessage);
 Db.loadAll();

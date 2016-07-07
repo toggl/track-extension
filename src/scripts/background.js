@@ -280,7 +280,6 @@ TogglButton = {
 
   updateTriggers: function (entry, sync) {
     TogglButton.$curEntry = entry;
-
     if (!sync) {
       if (!!entry) {
         TogglButton.checkPomodoroAlarm(entry);
@@ -574,10 +573,10 @@ TogglButton = {
     xhr.send(JSON.stringify(opts.payload));
   },
 
-  resetPomodoroProgress: function () {
-    TogglButton.updateTriggers(null);
+  resetPomodoroProgress: function (entry) {
+    clearInterval(TogglButton.pomodoroProgressTimer);
     TogglButton.pomodoroProgressTimer = null;
-    TogglButton.setBrowserAction();
+    TogglButton.updateTriggers(entry);
   },
 
   stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {
@@ -599,7 +598,7 @@ TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
           TogglButton.updateEntriesDb();
-          TogglButton.resetPomodoroProgress();
+          TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -643,7 +642,7 @@ TogglButton = {
         if (xhr.status === 200) {
           TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
           TogglButton.updateEntriesDb();
-          TogglButton.resetPomodoroProgress();
+          TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -672,7 +671,9 @@ TogglButton = {
 
   pomodoroStopTimeTracking: function () {
     if (Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
-      TogglButton.stopTimeEntry({type: 'pomodoro-stop'});
+      TogglButton.stopTimeEntryPomodoro({type: 'pomodoro-stop', service: 'dropdown'});
+    } else {
+      TogglButton.resetPomodoroProgress(TogglButton.$curEntry);
     }
   },
 
@@ -680,7 +681,7 @@ TogglButton = {
     if (!Db.get("pomodoroModeEnabled")) {
       return;
     }
-    clearInterval(TogglButton.pomodoroProgressTimer);
+
     var notificationId = 'pomodoro-time-is-up',
       stopSound,
       latestDescription = (TogglButton.$curEntry && TogglButton.$curEntry.description) ? " (" + TogglButton.$curEntry.description + ")" : "",

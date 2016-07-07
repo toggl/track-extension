@@ -4,11 +4,9 @@
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   Db = chrome.extension.getBackgroundPage().Db,
-  CH = chrome.extension,
   FF = navigator.userAgent.indexOf("Chrome") === -1;
 
 if (FF) {
-  CH = chrome.runtime;
   document.querySelector("body").classList.add("ff");
 }
 
@@ -76,7 +74,7 @@ var PopUp = {
   },
 
   sendMessage: function (request) {
-    CH.sendMessage(request, function (response) {
+    chrome.runtime.sendMessage(request, function (response) {
       if (!response) {
         return;
       }
@@ -270,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
       respond: false
     };
 
-    CH.sendMessage(request);
+    chrome.runtime.sendMessage(request);
   });
 
   document.querySelector(".logout-button").addEventListener('click', function () {

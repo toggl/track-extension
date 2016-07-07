@@ -3,12 +3,7 @@
 "use strict";
 var TogglButton, openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
-  debug = false,
-  CH = chrome.extension;
-
-if (FF) {
-  CH = chrome.runtime;
-}
+  debug = false;
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -1516,7 +1511,7 @@ TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
-CH.onMessage.addListener(TogglButton.newMessage);
+chrome.runtime.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);

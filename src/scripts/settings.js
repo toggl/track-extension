@@ -4,12 +4,10 @@
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   Db = chrome.extension.getBackgroundPage().Db,
-  CH = chrome.extension,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
   w = window.innerWidth;
 
 if (FF) {
-  CH = chrome.runtime;
   document.querySelector("html").classList.add("ff");
 }
 
@@ -111,7 +109,7 @@ var Settings = {
     if (elem !== null) {
       Settings.toggleState(elem, state);
     }
-    CH.sendMessage(request);
+    chrome.runtime.sendMessage(request);
   },
   saveSetting: function (value, type) {
     Settings.toggleSetting(null, value, type);

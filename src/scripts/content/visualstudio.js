@@ -14,5 +14,5 @@ togglbutton.render('.work-item-form-main-core:not(.toggl)', {observe: true}, fun
     projectName: project
   });
 
-  document.querySelector('.discussion-adornment-container').appendChild(link);
+  document.querySelector('.work-item-form-header-controls-container').appendChild(link);
 });

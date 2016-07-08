@@ -4,8 +4,9 @@
 'use strict';
 
 // Tasks listing page in project
-togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)', {observe: true}, function (elem) {
   var link, spanTag, desc,
+    isTKO = false,
     className = 'huh',
     container = $('.taskIcons', elem),
     projectFunc = function () {
@@ -16,17 +17,24 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
     };
 
   if (container === null) {
-    return;
+    container = $('.task-options', elem);
+    isTKO = true;
+    if (container === null) {
+      return;
+    }
   }
 
   if ($('.taskName', elem) === null) {
+    if ($('p.task-name a', elem.parentElement) !== null) {
+      desc = $('p.task-name a', el.parentElement).textContent;
+    }
     return;
+  } else {
+    desc = $('.taskName', elem).textContent;
   }
 
-  desc = $('.taskName', elem).textContent;
-
   link = togglbutton.createTimerLink({
-    className: 'teamworkpm',
+    className: 'teamwork',
     description: desc,
     projectName: projectFunc
   });
@@ -53,11 +61,15 @@ togglbutton.render('div.taskRHS:not(.toggl)', {observe: true}, function (elem) {
   link.style.paddingLeft = '20px';
   link.setAttribute("title", "Toggl Timer");
   spanTag.appendChild(link);
-  container.insertBefore(spanTag, container.lastChild);
+  if (isTKO) {
+    container.insertBefore(spanTag, container.querySelector('a:not(.active)'));
+  } else {
+    container.insertBefore(spanTag, container.lastChild);
+  }
 });
 
 // Tasks Detail View Page
-togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-header ul.task-details-options:not(.toggl)', {observe: true}, function (elem) {
   var link, liTag, titleEl, desc,
     projectFunc = function () {
       if ($("#projectName")) {
@@ -70,10 +82,16 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl)', {observe: 
   liTag.classList.add("toggl-li");
 
   titleEl = document.getElementById("Task");
-  desc = titleEl.getAttribute("data-taskname");
+  if (titleEl === null) {
+    // TKO support
+    titleEl = document.querySelector('p.task-name a');
+    desc = titleEl.textContent;
+  } else {
+    desc = titleEl.getAttribute("data-taskname");
+  }
 
   link = togglbutton.createTimerLink({
-    className: 'teamworkpm',
+    className: 'teamwork',
     description: desc,
     projectName: projectFunc
   });

@@ -1040,3 +1040,9 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.habitica {
   margin-bottom: -4px!important;
 }
+
+/********* SHERPADESK *********/
+.toggl-button.sherpadesk {
+  line-height: 20px;
+  vertical-align: middle;
+}

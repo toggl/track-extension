@@ -965,6 +965,19 @@ only screen and (min-resolution: 192dpi) {
   margin-bottom: 7px;
 }
 
+.notes-container .CmABtb.RNfche .toggl-button.keep {
+  display: none!important;
+}
+
+.IZ65Hb-MPu53c-haAclf .toggl-button.keep {
+  margin-left: 24px;
+  margin-top: 5px;
+}
+
+.IZ65Hb-YPqjbf.CmABtb-YPqjbf {
+  padding-left: 73px;
+}
+
 /********* GOOGLE INBOX *********/
 .toggl-button.google-inbox {
   margin-top: 5px;

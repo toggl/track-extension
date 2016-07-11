@@ -18,8 +18,6 @@ togglbutton.render('#ctl00_ctl00_PageBody_tktHeader', {}, function () {
     className: 'sherpadesk',
     description: description
   });
-	
-  link.setAttribute('style', 'line-height: 20px;vertical-align: middle;');
 
   object.parentElement.appendChild(link);
 });

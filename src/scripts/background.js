@@ -172,7 +172,7 @@ TogglButton = {
             if (Db.get("socketEnabled")) {
               TogglButton.setupSocket();
             }
-            //TogglButton.updateBugsnag();
+            TogglButton.updateBugsnag();
             TogglButton.handleQueue();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
@@ -1384,8 +1384,7 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        console.log(error);
-        //Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
+        Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();
       }

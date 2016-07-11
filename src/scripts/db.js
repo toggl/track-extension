@@ -218,8 +218,7 @@ Db = {
         Db.updateSetting(request.type.substr(7), request.state);
       }
     } catch (e) {
-      console.log(e);
-      //Bugsnag.notifyException(e);
+      Bugsnag.notifyException(e);
     }
 
     return true;

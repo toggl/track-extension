@@ -20,13 +20,14 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
     container = $('.task-options', elem);
     isTKO = true;
     if (container === null) {
+      elem.classList.remove('toggl');
       return;
     }
   }
 
   if ($('.taskName', elem) === null) {
     if ($('p.task-name a', elem.parentElement) !== null) {
-      desc = $('p.task-name a', el.parentElement).textContent;
+      desc = $('p.task-name a', elem.parentElement).textContent;
     }
     return;
   } else {
@@ -70,7 +71,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
 
 // Tasks Detail View Page
 togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-header ul.task-details-options:not(.toggl)', {observe: true}, function (elem) {
-  var link, liTag, titleEl, desc,
+  var link, liTag, desc, p,
     projectFunc = function () {
       if ($("#projectName")) {
         return $("#projectName").childNodes[0].textContent.trim();
@@ -81,24 +82,46 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
   liTag = document.createElement("li");
   liTag.classList.add("toggl-li");
 
-  titleEl = document.getElementById("Task");
-  if (titleEl === null) {
-    // TKO support
-    titleEl = document.querySelector('p.task-name a');
-    desc = titleEl.textContent;
-  } else {
-    desc = titleEl.getAttribute("data-taskname");
-  }
-
-  link = togglbutton.createTimerLink({
-    className: 'teamwork',
-    description: desc,
-    projectName: projectFunc
+  // TKO data is loaded asynchronously,
+  // get task name using exponential backoff
+  // if using new UI
+  p = new Promise(function(resolve, reject){
+    var titleEl = document.getElementById("Task");
+    if (titleEl === null) {
+      // TKO support
+      var setDesc = function(timeout) {
+            if (timeout > 1000 * 60 * 5) {
+              reject();
+            }
+            titleEl = document.querySelector('p.task-name a');
+            if (titleEl == null) {
+              setTimeout(function(){
+                setDesc(timeout * 2);
+              }, timeout);
+            } else {
+              desc = titleEl.textContent;
+              resolve();
+            }
+          }
+      setDesc();
+    } else {
+      desc = titleEl.getAttribute("data-taskname");
+      resolve();
+    }
   });
 
-  link.classList.add("btn");
-  link.classList.add("btn-default");
-  liTag.appendChild(link);
-  elem.insertBefore(liTag, elem.firstChild);
+  p.then(function(){
+    link = togglbutton.createTimerLink({
+      className: 'teamwork',
+      description: desc,
+      projectName: projectFunc
+    });
 
+    link.classList.add("btn");
+    link.classList.add("btn-default");
+    liTag.appendChild(link);
+    elem.insertBefore(liTag, elem.firstChild);
+  }).catch(function(){
+    return;
+  });
 });

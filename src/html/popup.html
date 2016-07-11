@@ -6,8 +6,12 @@
     <link rel="stylesheet" href="../styles/autocomplete.css"/>
   </head>
   <body>
-    <div class="header" title="Open Toggl.com"></div>
-    <div class="user-email" title="Open profile at Toggl.com"></div>
+    <ul class="header">
+      <li class="icon" title="Open Toggl.com"></li>
+      <li class="cog"></li>
+      <li class="sync"></li>
+      <li class="logout">Log out</li>
+    </ul>
     <div class="error"></div>
     <ul class="menu view">
       <li class="timer">
@@ -15,16 +19,6 @@
         <div class="edit-button"></div>
         <div class="stop-button">Stop</div>
         <div class="resume-button" data-event="resume">Continue latest</div>
-      </li>
-      <li>
-        <button class="settings-button">Settings</button>
-      </li>
-      <li>
-        <button class="sync-button">Sync</button>
-      </li>
-      <hr>
-      <li>
-        <button class="logout-button">Logout</button>
       </li>
     </ul>
 

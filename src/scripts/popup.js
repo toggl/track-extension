@@ -45,7 +45,7 @@ var PopUp = {
         PopUp.addEditEvents();
         PopUp.editFormAdded = true;
       }
-      document.querySelector(".user-email").textContent = TogglButton.$user.email;
+      document.querySelector(".header .icon").setAttribute("title", "Open toggl.com - " + TogglButton.$user.email);
       PopUp.$timerRow.classList.remove("has-resume");
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
   PopUp.$togglButton.addEventListener('click', onClickSendMessage);
   PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
-  document.querySelector(".settings-button").addEventListener('click', function () {
+  document.querySelector(".header .cog").addEventListener('click', function () {
     var request = {
       type: "options",
       respond: false
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
     CH.sendMessage(request);
   });
 
-  document.querySelector(".logout-button").addEventListener('click', function () {
+  document.querySelector(".header .logout").addEventListener('click', function () {
     var request = {
       type: "logout",
       respond: true
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.sendMessage(request);
   });
 
-  document.querySelector(".sync-button").addEventListener('click', function () {
+  document.querySelector(".header .sync").addEventListener('click', function () {
     var request = {
       type: "sync",
       respond: false
@@ -302,11 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.sendMessage(request);
   });
 
-  document.querySelector(".header").addEventListener('click', function () {
+  document.querySelector(".header .icon").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app"});
-  });
-
-  document.querySelector(".user-email").addEventListener('click', function () {
-    chrome.tabs.create({url: "https://toggl.com/app/profile"});
   });
 });

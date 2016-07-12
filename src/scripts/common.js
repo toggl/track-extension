@@ -190,7 +190,6 @@ var togglbutton = {
       editFormHeight = 350,
       editFormWidth = 240,
       submitForm,
-      taskSelect,
       elemRect,
       div = document.createElement('div'),
       editForm,
@@ -291,25 +290,6 @@ var togglbutton = {
     });
     document.addEventListener('mouseup', function (e) {
       togglbutton.mousedownTrigger = null;
-    });
-
-    taskSelect = $("#toggl-button-task", editForm);
-    taskSelect.addEventListener('change', function (e) {
-      var taskPlaceholder = $("#toggl-button-task-placeholder > div", editForm);
-      taskPlaceholder.innerHTML = taskPlaceholder.title = (taskSelect.value === "0") ? "Add task" : taskSelect.options[taskSelect.selectedIndex].text;
-
-      // Force blur.
-      togglbutton.taskBlurTrigger = null;
-      taskSelect.blur();
-    });
-
-    taskSelect.addEventListener('click', function () {
-      // Catch click in case user selects an already-selected item - force blur.
-      togglbutton.taskBlurTrigger = null;
-    });
-
-    taskSelect.addEventListener('blur', function (e) {
-      togglbutton.taskBlurTrigger = togglbutton.mousedownTrigger;
     });
 
     document.addEventListener("click", handler);

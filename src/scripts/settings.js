@@ -38,7 +38,8 @@ var Settings = {
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function () {
-    var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10);
+    var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10),
+      defProject;
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
@@ -68,7 +69,8 @@ var Settings = {
           selected = '';
           project = projects[key];
           clientName = (!!project.cid && !!clients[project.cid]) ? ' . ' + clients[project.cid].name  : '';
-          if (parseInt(Db.get(TogglButton.$user.id + "-defaultProject"), 10) === project.id) {
+          defProject = Db.get(TogglButton.$user.id + "-defaultProject");
+          if (!!defProject && parseInt(defProject, 10) === project.id) {
             selected = "selected ";
           }
           Settings.$defaultProject.innerHTML += "<option " + selected + "value='" + project.id + "'>" + project.name + clientName + "</option>";

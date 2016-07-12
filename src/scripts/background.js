@@ -368,6 +368,7 @@ TogglButton = {
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       error = "",
+      defaultProject = Db.get(TogglButton.$user.id + "-defaultProject"),
       entry = {
         time_entry: {
           start: start.toISOString(),
@@ -390,8 +391,8 @@ TogglButton = {
     }
 
     // set Default project if needed
-    if (!entry.time_entry.pid) {
-      entry.time_entry.pid = parseInt(Db.get(TogglButton.$user.id + "-defaultProject"), 10);
+    if (!entry.time_entry.pid && !!defaultProject) {
+      entry.time_entry.pid = parseInt(defaultProject, 10);
     }
 
     TogglButton.ajax('/time_entries', {

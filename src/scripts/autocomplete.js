@@ -80,7 +80,7 @@ AutoComplete.prototype.addNew = function (text) {
 
   item.className = this.type + "-item selected-" + this.type;
   item.setAttribute("title", val);
-  item.innerHTML = val;
+  item.textContent = val;
 
   list.insertBefore(item, list.querySelector("li:first-child"));
   this.filter.value = "";
@@ -116,7 +116,7 @@ inheritsFrom(ProjectAutoComplete, AutoComplete);
 
 ProjectAutoComplete.prototype.setup = function (selected, tid) {
   this.setSelected(selected, tid);
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(null, selected, this.type, tid);
+  this.placeholderDiv.textContent = this.placeholderDiv.title = this.generateLabel(null, selected, this.type, tid);
   this.setProjectBullet(selected, tid);
 };
 
@@ -203,7 +203,7 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
   elem.classList.add("selected-" + this.type);
 
   // Update placeholder
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(this.getSelected(), val, this.type);
+  this.placeholderDiv.textContent = this.placeholderDiv.title = this.generateLabel(this.getSelected(), val, this.type);
   this.setProjectBullet(val);
 
   if (!silent) {
@@ -446,7 +446,7 @@ TagAutoComplete.prototype.updatePlaceholder = function (tags) {
   } else {
     tags = "Add tags";
   }
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = tags;
+  this.placeholderDiv.textContent = this.placeholderDiv.title = tags;
 };
 
 TagAutoComplete.prototype.getSelected = function () {

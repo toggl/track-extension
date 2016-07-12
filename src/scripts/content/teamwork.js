@@ -17,19 +17,23 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
     };
 
   if (container === null) {
+    // check if TKO container is there
     container = $('.task-options', elem);
     isTKO = true;
     if (container === null) {
+      // remove class so we re-check after async data is loaded
       elem.classList.remove('toggl');
       return;
     }
   }
 
   if ($('.taskName', elem) === null) {
+    // check if TKO element is there
     if ($('p.task-name a', elem.parentElement) !== null) {
       desc = $('p.task-name a', elem.parentElement).textContent;
+    } else {
+      return;
     }
-    return;
   } else {
     desc = $('.taskName', elem).textContent;
   }
@@ -40,30 +44,45 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
     projectName: projectFunc
   });
 
-  link.classList.add(className);
-  link.addEventListener('click', function () {
+  if (isTKO) {
+    // different behaviour in TKO
+    link.classList.add('option');
+  } else {
+    link.classList.add(className);
+    link.addEventListener('click', function () {
 
-    // Run through and hide all others
-    var i, len, elems = document.querySelectorAll(".toggl-button");
-    for (i = 0, len = elems.length; i < len; i += 1) {
-      elems[i].classList.add('huh');
-    }
+      // Run through and hide all others
+      var i, len, elems = document.querySelectorAll(".toggl-button");
+      for (i = 0, len = elems.length; i < len; i += 1) {
+        elems[i].classList.add('huh');
+      }
 
-    if (link.classList.contains(className)) {
-      link.classList.remove(className);
-    } else {
-      link.classList.add(className);
-    }
-  });
+      if (link.classList.contains(className)) {
+        link.classList.remove(className);
+      } else {
+        link.classList.add(className);
+      }
+    });
+  }
 
   spanTag = document.createElement("span");
   spanTag.classList.add("toggl-span");
   link.style.width = 'auto';
-  link.style.paddingLeft = '20px';
+  if (isTKO) {
+    // different styling due to different layout in TKO
+    link.style.paddingLeft = '25px';
+    link.style.transform = 'scale(1)';
+    link.style.fontSize = '13px';
+    link.style.marginRight = '10px';
+  } else {
+    link.style.paddingLeft = '20px';
+  }
   link.setAttribute("title", "Toggl Timer");
   spanTag.appendChild(link);
   if (isTKO) {
-    container.insertBefore(spanTag, container.querySelector('a:not(.active)'));
+    // need to use parent, some <a>'s can be nested e.g. HubSpot integration,
+    // can't just use "unused icons" container as the layout has changed
+    container.insertBefore(spanTag, container.parentElement.querySelector('.task-options > a:not(.active)'));
   } else {
     container.insertBefore(spanTag, container.lastChild);
   }
@@ -71,7 +90,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
 
 // Tasks Detail View Page
 togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-header ul.task-details-options:not(.toggl)', {observe: true}, function (elem) {
-  var link, liTag, desc, p,
+  var link, liTag, desc,
     projectFunc = function () {
       if ($("#projectName")) {
         return $("#projectName").childNodes[0].textContent.trim();
@@ -85,7 +104,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
   // TKO data is loaded asynchronously,
   // get task name using exponential backoff
   // if using new UI
-  p = new Promise(function(resolve, reject){
+  new Promise(function(resolve, reject){
     var titleEl = document.getElementById("Task");
     if (titleEl === null) {
       // TKO support
@@ -108,9 +127,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
       desc = titleEl.getAttribute("data-taskname");
       resolve();
     }
-  });
-
-  p.then(function(){
+  }).then(function(){
     link = togglbutton.createTimerLink({
       className: 'teamwork',
       description: desc,

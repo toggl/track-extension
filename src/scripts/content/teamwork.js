@@ -9,12 +9,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
     isTKO = false,
     className = 'huh',
     container = $('.taskIcons', elem),
-    projectFunc = function () {
-      if ($("#projectName")) {
-        return $("#projectName").childNodes[0].textContent.trim();
-      }
-      return "";
-    };
+    project = $("#projectName > span").textContent;
 
   if (container === null) {
     // check if TKO container is there
@@ -41,7 +36,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
   link = togglbutton.createTimerLink({
     className: 'teamwork',
     description: desc,
-    projectName: projectFunc
+    projectName: project
   });
 
   if (isTKO) {
@@ -91,12 +86,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
 // Tasks Detail View Page
 togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-header ul.task-details-options:not(.toggl)', {observe: true}, function (elem) {
   var link, liTag, desc,
-    projectFunc = function () {
-      if ($("#projectName")) {
-        return $("#projectName").childNodes[0].textContent.trim();
-      }
-      return "";
-    };
+  project = $("#projectName > span").textContent;
 
   liTag = document.createElement("li");
   liTag.classList.add("toggl-li");
@@ -131,7 +121,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
     link = togglbutton.createTimerLink({
       className: 'teamwork',
       description: desc,
-      projectName: projectFunc
+      projectName: project
     });
 
     link.classList.add("btn");

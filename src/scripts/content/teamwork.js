@@ -1,5 +1,5 @@
 /*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
+/*global $: false, document: false, togglbutton: false, createTag:false, Promise: false*/
 
 'use strict';
 
@@ -86,7 +86,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
 // Tasks Detail View Page
 togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-header ul.task-details-options:not(.toggl)', {observe: true}, function (elem) {
   var link, liTag, desc,
-  project = $("#projectName > span").textContent;
+    project = $("#projectName > span").textContent;
 
   liTag = document.createElement("li");
   liTag.classList.add("toggl-li");
@@ -94,30 +94,31 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
   // TKO data is loaded asynchronously,
   // get task name using exponential backoff
   // if using new UI
-  new Promise(function(resolve, reject){
-    var titleEl = document.getElementById("Task");
+  new Promise(function (resolve, reject) {
+    var titleEl = document.getElementById("Task"),
+      setDesc;
     if (titleEl === null) {
       // TKO support
-      var setDesc = function(timeout) {
-            if (timeout > 1000 * 60 * 5) {
-              reject();
-            }
-            titleEl = document.querySelector('p.task-name a');
-            if (titleEl == null) {
-              setTimeout(function(){
-                setDesc(timeout * 2);
-              }, timeout);
-            } else {
-              desc = titleEl.textContent;
-              resolve();
-            }
-          }
+      setDesc = function (timeout) {
+        if (timeout > 1000 * 60 * 5) {
+          reject();
+        }
+        titleEl = document.querySelector('p.task-name a');
+        if (titleEl === null) {
+          setTimeout(function () {
+            setDesc(timeout * 2);
+          }, timeout);
+        } else {
+          desc = titleEl.textContent;
+          resolve();
+        }
+      };
       setDesc();
     } else {
       desc = titleEl.getAttribute("data-taskname");
       resolve();
     }
-  }).then(function(){
+  }).then(function () {
     link = togglbutton.createTimerLink({
       className: 'teamwork',
       description: desc,
@@ -128,7 +129,7 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
     link.classList.add("btn-default");
     liTag.appendChild(link);
     elem.insertBefore(liTag, elem.firstChild);
-  }).catch(function(){
+  }).catch(function () {
     return;
   });
 });

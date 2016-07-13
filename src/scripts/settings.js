@@ -1,9 +1,17 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global alert: false, document: false, window: false, TogglOrigins: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global navigator: false, alert: false, document: false, window: false, TogglOrigins: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
-var TogglButton = chrome.extension.getBackgroundPage().TogglButton;
-var Db = chrome.extension.getBackgroundPage().Db;
+var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
+  Db = chrome.extension.getBackgroundPage().Db,
+  CH = chrome.extension,
+  FF = navigator.userAgent.indexOf("Chrome") === -1,
+  w = window.innerWidth;
+
+if (FF) {
+  CH = chrome.runtime;
+  document.querySelector("html").classList.add("ff");
+}
 
 var Settings = {
   $startAutomatically: null,
@@ -30,7 +38,8 @@ var Settings = {
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function () {
-    var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10);
+    var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10),
+      defProject;
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
@@ -60,7 +69,8 @@ var Settings = {
           selected = '';
           project = projects[key];
           clientName = (!!project.cid && !!clients[project.cid]) ? ' . ' + clients[project.cid].name  : '';
-          if (parseInt(Db.get('defaultProject'), 10) === project.id) {
+          defProject = Db.get(TogglButton.$user.id + "-defaultProject");
+          if (!!defProject && parseInt(defProject, 10) === project.id) {
             selected = "selected ";
           }
           Settings.$defaultProject.innerHTML += "<option " + selected + "value='" + project.id + "'>" + project.name + clientName + "</option>";
@@ -68,7 +78,9 @@ var Settings = {
       }
     }
     TogglButton.analytics("settings", null);
-    Settings.loadSitesIntoList();
+    if (!FF) {
+      Settings.loadSitesIntoList();
+    }
   },
   getAllPermissions: function () {
     var items = document.querySelectorAll("#permissions-list li input"),
@@ -101,7 +113,7 @@ var Settings = {
     if (elem !== null) {
       Settings.toggleState(elem, state);
     }
-    chrome.extension.sendMessage(request);
+    CH.sendMessage(request);
   },
   saveSetting: function (value, type) {
     Settings.toggleSetting(null, value, type);
@@ -207,6 +219,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // Set selected tab
   Settings.$tabs.setAttribute("data-tab", Db.get("selected-settings-tab"));
+  if (FF) {
+    if (Settings.$tabs.getAttribute("data-tab") === "1") {
+      Settings.$tabs.style.left = "0";
+    } else {
+      Settings.$tabs.style.left = "-" + (w + 15) + "px";
+    }
+  }
   document.querySelector("header .active").classList.remove("active");
   document.querySelector("header [data-tab='" + Db.get("selected-settings-tab") + "']").classList.add("active");
   document.querySelector("body").style.display = "block";
@@ -293,6 +312,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
     e.target.classList.add("active");
     Settings.$tabs.setAttribute("data-tab", e.target.getAttribute("data-tab"));
     Settings.saveSetting(e.target.getAttribute("data-tab"), "update-selected-settings-tab");
+    if (FF) {
+      if (e.target.getAttribute("data-tab") === "1") {
+        Settings.$tabs.style.left = "0";
+      } else {
+        Settings.$tabs.style.left = "-" + (w + 15) + "px";
+      }
+    }
   });
 
   Settings.$pomodoroVolume.addEventListener('input', function (e) {
@@ -479,5 +505,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
     document.querySelector(".guide-container").style.display = "none";
     document.querySelector(".guide > div[data-id='" + Db.get("show-permissions-info") + "']").style.display = "none";
   });
+
+  if (FF) {
+    window.onresize = function (event) {
+      w = window.innerWidth;
+      document.querySelector(".tab-1").style.width = w + "px";
+      document.querySelector(".tab-2").style.width = w + "px";
+    };
+  }
 
 });

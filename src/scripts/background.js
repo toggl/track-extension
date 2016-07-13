@@ -1,13 +1,28 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton, openWindowsCount = 0;
+var TogglButton, openWindowsCount = 0,
+  FF = navigator.userAgent.indexOf("Chrome") === -1,
+  debug = false,
+  CH = chrome.extension;
+
+if (FF) {
+  CH = chrome.runtime;
+}
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
 
 Bugsnag.beforeNotify = function (error, metaData) {
   error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
+};
+
+var report = function (e) {
+  if (debug) {
+    console.log(e);
+  } else {
+    Bugsnag.notifyException(e);
+  }
 };
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -99,7 +114,7 @@ TogglButton = {
                   chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
                 }
               } catch (e) {
-                Bugsnag.notifyException(e);
+                report(e);
               }
             });
             resp = JSON.parse(xhr.responseText);
@@ -168,7 +183,7 @@ TogglButton = {
             TogglButton.setBrowserActionBadge();
           }
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -353,6 +368,7 @@ TogglButton = {
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       error = "",
+      defaultProject = Db.get(TogglButton.$user.id + "-defaultProject"),
       entry = {
         time_entry: {
           start: start.toISOString(),
@@ -372,6 +388,11 @@ TogglButton = {
       project = TogglButton.findProjectByName(timeEntry.projectName);
       entry.time_entry.pid = project && project.id;
       entry.time_entry.billable = project && project.billable;
+    }
+
+    // set Default project if needed
+    if (!entry.time_entry.pid && !!defaultProject) {
+      entry.time_entry.pid = parseInt(defaultProject, 10);
     }
 
     TogglButton.ajax('/time_entries', {
@@ -404,7 +425,7 @@ TogglButton = {
             );
           }
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -739,7 +760,7 @@ TogglButton = {
           }
           TogglButton.analytics(timeEntry.type, timeEntry.service);
         } catch (e) {
-          Bugsnag.notifyException(e);
+          report(e);
         }
       },
       onError: function (xhr) {
@@ -798,7 +819,7 @@ TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$sendResponse = sendResponse;
         if (xhr.status === 200) {
-          TogglButton.queque.push(TogglButton.checkPermissions);
+          TogglButton.queue.push(TogglButton.checkPermissions);
           TogglButton.fetchUser();
           TogglButton.refreshPage();
         } else {
@@ -951,7 +972,7 @@ TogglButton = {
         }
       }
     } catch (e) {
-      Bugsnag.notifyException(e);
+      report(e);
     }
 
     return html;
@@ -1365,10 +1386,12 @@ TogglButton = {
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
         Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
+      } else if (request.type === 'options') {
+        chrome.runtime.openOptionsPage();
       }
 
     } catch (e) {
-      Bugsnag.notifyException(e);
+      report(e);
     }
 
     return true;
@@ -1378,16 +1401,26 @@ TogglButton = {
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins};
-
-      chrome.permissions.contains(permission, function (result) {
-        if (result) {
-          if (!!domain.file) {
-            chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-            chrome.tabs.executeScript(tabId, {file: "scripts/common.js"});
+      console.log("url: " + tab.url + " | domain-file: " + domain.file);
+      if (FF) {
+        if (!!domain.file) {
+          chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
+          chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
             chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-          }
+          });
         }
-      });
+      } else {
+        chrome.permissions.contains(permission, function (result) {
+          if (result) {
+            if (!!domain.file) {
+              chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
+              chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
+                chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
+              });
+            }
+          }
+        });
+      }
     }
   },
 
@@ -1452,7 +1485,7 @@ TogglButton = {
   },
 
   checkPermissions: function (show) {
-    if (!Db.get("dont-show-permissions")) {
+    if (!Db.get("dont-show-permissions") && !FF) {
       chrome.permissions.getAll(function (results) {
         if (!!show || results.origins.length === 2) {
           show = show || 3;
@@ -1474,7 +1507,7 @@ TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
-chrome.extension.onMessage.addListener(TogglButton.newMessage);
+CH.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
@@ -1488,16 +1521,18 @@ window.onbeforeunload = function () {
   }
 };
 
-TogglButton.checkPermissions();
+if (!FF) {
+  TogglButton.checkPermissions();
 
-// Check whether new version is installed
-chrome.runtime.onInstalled.addListener(function (details) {
-  if (details.reason === "install") {
-    TogglButton.checkPermissions(1);
-  } else if (details.reason === "update") {
-    if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
-      TogglButton.checkPermissions(2);
+  // Check whether new version is installed
+  chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason === "install") {
+      TogglButton.checkPermissions(1);
+    } else if (details.reason === "update") {
+      if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
+        TogglButton.checkPermissions(2);
+      }
     }
-  }
-});
+  });
+}
 

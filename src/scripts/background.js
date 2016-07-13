@@ -879,8 +879,8 @@ TogglButton = {
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
       clientNames = TogglButton.$user.clientNameMap,
+      hideWs = (TogglButton.$user.workspaces.length > 1) ? "" : " hide",
       wsHtml = {},
-      clientHtml = {},
       client,
       project,
       key = null,
@@ -901,73 +901,41 @@ TogglButton = {
       }
       keys.sort();
 
-      if (TogglButton.$user.workspaces.length > 1) {
+      // Add Workspace names
+      TogglButton.$user.workspaces.forEach(function (element, index) {
+        wsHtml[element.id] = {};
+        wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + element.name + '"><li class="ws-row' + hideWs + '" title="' + element.name.toUpperCase() + '">' + element.name.toUpperCase() + '</li>' +
+          '<ul class="client-list" data-cid="0">';
+      });
 
-        // Add Workspace names
-        TogglButton.$user.workspaces.forEach(function (element, index) {
-          wsHtml[element.id] = {};
-          wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + element.name + '"><li class="ws-row" title="' + element.name.toUpperCase() + '">' + element.name.toUpperCase() + '</li>' +
-            '<ul class="client-list" data-cid="0">';
-        });
+      // Add client optgroups
+      for (i = 0; i < keys.length; i++) {
+        client = clientNames[keys[i]];
+        wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + client.name + '</li>';
+      }
 
-        // Add client optgroups
-        for (i = 0; i < keys.length; i++) {
-          client = clientNames[keys[i]];
-          wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + client.name + '</li>';
-        }
-
-        // Add projects
-        for (key in projects) {
-          if (projects.hasOwnProperty(key)) {
-            project = projects[key];
-            clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
-            wsHtml[project.wid][clientName] += TogglButton.generateProjectItem(project);
-          }
-        }
-
-        // create html
-        for (key in wsHtml) {
-          if (wsHtml.hasOwnProperty(key)) {
-            Object.keys(wsHtml[key]).sort();
-            for (ckey in wsHtml[key]) {
-              if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
-                html += wsHtml[key][ckey] + "</ul>";
-              }
-            }
-            html += "</ul>";
-          }
-        }
-
-      } else {
-
-        // Add clients
-
-        for (i = 0; i < keys.length; i++) {
-          client = clientNames[keys[i]];
-          clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
-        }
-
-        // Add projects
-
-        for (key in projects) {
-          if (projects.hasOwnProperty(key)) {
-            project = projects[key];
-            clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
-            clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
-          }
-        }
-
-        // Create html
-
-        for (key in clientHtml) {
-          if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
-            html += clientHtml[key];
-            if (key !== "0") {
-              html += "</optgroup>";
-            }
-          }
+      // Add projects
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          project = projects[key];
+          clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
+          wsHtml[project.wid][clientName] += TogglButton.generateProjectItem(project);
         }
       }
+
+      // create html
+      for (key in wsHtml) {
+        if (wsHtml.hasOwnProperty(key)) {
+          Object.keys(wsHtml[key]).sort();
+          for (ckey in wsHtml[key]) {
+            if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
+              html += wsHtml[key][ckey] + "</ul>";
+            }
+          }
+          html += "</ul>";
+        }
+      }
+
     } catch (e) {
       report(e);
     }

@@ -74,6 +74,10 @@
   overflow: hidden;
 }
 
+#project-autocomplete .ws-row.hide {
+  display: none;
+}
+
 #project-autocomplete .project-row {
   padding-left: 22px;
   overflow: hidden;

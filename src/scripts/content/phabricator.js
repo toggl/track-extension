@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-// Phacility Workboard view
+// Workboard view
 togglbutton.render('#phabricator-standard-page-body .phui-workpanel-view .phui-object-item:not(.toggl)', {observe: true}, function (elem) {
   var link,
     description = $('.phui-object-item-name', elem).textContent.trim(),
@@ -20,26 +20,18 @@ togglbutton.render('#phabricator-standard-page-body .phui-workpanel-view .phui-o
 
 // Task detail view
 togglbutton.render('#phabricator-standard-page-body:not(.toggl)', {observe: true}, function (elem) {
-  var link, index, description_elem,
-    parent = elem.parentNode,
-    description = elem.querySelectorAll('.phui-header-header, .phui-header-view'),
+  var link,
+    desc = elem.querySelector(".phui-two-column-header .phui-header-view .phui-header-header"),
     number = $('.phabricator-last-crumb .phui-crumb-name').textContent.trim(),
-    projectName = $('.phabricator-handle-tag-list-item > a').textContent.trim();
+    projectName = $('.phabricator-handle-tag-list-item > a');
 
-  if (description.length == 4) {
-    description_elem = description[1];
-    description = description_elem.textContent.trim();
-  } else {
-    description_elem = description[0];
-    description = description_elem.textContent.trim();
-  }
-
+  projectName = (!!projectName) ? projectName.textContent.trim() : "";
 
   link = togglbutton.createTimerLink({
     className: 'phabricator',
-    description: number + ' ' + description,
+    description: number + ' ' + desc.textContent,
     projectName: projectName
   });
 
-  description_elem.appendChild(link);
+  desc.appendChild(link);
 });

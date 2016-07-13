@@ -8,6 +8,7 @@ window.TogglOrigins = {
   "assembla.com": {"url": "*://*.assembla.com/*", "name": "Assembla"},
   "atlassian.com": {"url": "*://*.atlassian.com/*", "name": "Atlassian"},
   "atlassian.net": {"url": "*://*.atlassian.net/*", "name": "Atlassian", "clone": "true"},
+  "attask-ondemand.com": {"url": "*://*.attask-ondemand.com/*", "name": "AtTask"},
   "axosoft.com": {"url": "*://*.axosoft.com/*", "name": "Axosoft"},
   "basecamp.com": {"url": "*://*.basecamp.com/*", "name": "Basecamp"},
   "basecamphq.com": {"url": "*://*.basecamphq.com/*", "name": "BasecampHQ", "clone": "true", "file": "basecamp.js"},

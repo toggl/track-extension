@@ -1,9 +1,24 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton, openWindowsCount = 0,
+
+var TogglButton,
+  openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
-  debug = false;
+  debug = false,
+  entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  },
+  escapeHtml = function (string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
+  };
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -904,14 +919,14 @@ TogglButton = {
       // Add Workspace names
       TogglButton.$user.workspaces.forEach(function (element, index) {
         wsHtml[element.id] = {};
-        wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + element.name + '"><li class="ws-row' + hideWs + '" title="' + element.name.toUpperCase() + '">' + element.name.toUpperCase() + '</li>' +
+        wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + escapeHtml(element.name) + '"><li class="ws-row' + hideWs + '" title="' + escapeHtml(element.name.toUpperCase()) + '">' + escapeHtml(element.name.toUpperCase()) + '</li>' +
           '<ul class="client-list" data-cid="0">';
       });
 
       // Add client optgroups
       for (i = 0; i < keys.length; i++) {
         client = clientNames[keys[i]];
-        wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + client.name + '</li>';
+        wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + escapeHtml(client.name) + '</li>';
       }
 
       // Add projects
@@ -947,8 +962,8 @@ TogglButton = {
     var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id] : null,
       i,
       tasksCount,
-      html = '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
-        '<span class="item-name">' + project.name + '</span>';
+      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
+        '<span class="item-name">' + escapeHtml(project.name) + '</span>';
 
     if (!!tasks) {
       tasksCount = tasks.length + " task";
@@ -959,7 +974,7 @@ TogglButton = {
       html += '<ul class="task-list">';
 
       for (i = 0; i < tasks.length; i++) {
-        html += '<li class="task-item" data-tid="' + tasks[i].id + '" title="' + tasks[i].name + '">' + tasks[i].name + '</li>';
+        html += '<li class="task-item" data-tid="' + tasks[i].id + '" title="' + escapeHtml(tasks[i].name) + '">' + escapeHtml(tasks[i].name) + '</li>';
       }
 
       html += '</ul>';
@@ -984,7 +999,7 @@ TogglButton = {
 
     for (i = 0; i < keys.length; i++) {
       key = keys[i];
-      html += '<li class="tag-item" title="' + tags[key].name + '">' + tags[key].name + '</li>';
+      html += '<li class="tag-item" title="' + escapeHtml(tags[key].name) + '">' + escapeHtml(tags[key].name) + '</li>';
     }
     return html + "</ul>";
   },

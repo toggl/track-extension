@@ -145,7 +145,7 @@ p.form-row.first {
   list-style: none;
   margin: 0;
   padding: 5px 10px;
-  min-width: 180px;
+  min-width: 220px;
 }
 .header li {
   float: left;
@@ -347,7 +347,7 @@ hr {
 }
 
 .tracking .edit-button{
-  width: 104px;
+  width: 144px;
   padding-left: 30px;
   display: block;
 }

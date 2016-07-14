@@ -938,7 +938,6 @@ TogglButton = {
       // create html
       for (key in wsHtml) {
         if (wsHtml.hasOwnProperty(key)) {
-          Object.keys(wsHtml[key]).sort();
           for (ckey in wsHtml[key]) {
             if (wsHtml[key].hasOwnProperty(ckey) && wsHtml[key][ckey].indexOf("project-row") !== -1) {
               html += wsHtml[key][ckey] + "</ul>";

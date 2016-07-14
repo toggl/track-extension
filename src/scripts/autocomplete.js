@@ -33,7 +33,7 @@ AutoComplete.prototype.addEvents = function () {
   });
 
   that.filter.addEventListener('focus', function (e) {
-    this.parentNode.classList.add("open");
+    that.filter.parentNode.classList.add("open");
     that.listItems = that.el.querySelectorAll(that.item);
   });
 

@@ -905,7 +905,7 @@ TogglButton = {
       i;
 
     try {
-      // Sort clients
+      // Sort clients by name
       for (key in clientNames) {
         if (clientNames.hasOwnProperty(key)) {
           keys.push(key.toLowerCase());
@@ -913,14 +913,14 @@ TogglButton = {
       }
       keys.sort();
 
-      // Add Workspace names
+      // Add Workspace list and names
       TogglButton.$user.workspaces.forEach(function (element, index) {
         wsHtml[element.id] = {};
         wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + escapeHtml(element.name) + '"><li class="ws-row' + hideWs + '" title="' + escapeHtml(element.name.toUpperCase()) + '">' + escapeHtml(element.name.toUpperCase()) + '</li>' +
           '<ul class="client-list" data-cid="0">';
       });
 
-      // Add client optgroups
+      // Add client list
       for (i = 0; i < keys.length; i++) {
         client = clientNames[keys[i]];
         wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + escapeHtml(client.name) + '</li>';
@@ -935,7 +935,7 @@ TogglButton = {
         }
       }
 
-      // create html
+      // create html from array
       for (key in wsHtml) {
         if (wsHtml.hasOwnProperty(key)) {
           for (ckey in wsHtml[key]) {

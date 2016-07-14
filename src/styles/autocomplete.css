@@ -75,7 +75,7 @@
 }
 
 #project-autocomplete .ws-row.hide {
-  display: none;
+  display: none!important;
 }
 
 #project-autocomplete .project-row {

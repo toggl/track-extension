@@ -923,7 +923,7 @@ TogglButton = {
       // Add client list
       for (i = 0; i < keys.length; i++) {
         client = clientNames[keys[i]];
-        wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + escapeHtml(client.name) + '</li>';
+        wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + escapeHtml(client.name) + '">' + escapeHtml(client.name) + '</li>';
       }
 
       // Add projects

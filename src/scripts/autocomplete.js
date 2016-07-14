@@ -73,20 +73,6 @@ AutoComplete.prototype.clearFilters = function () {
   }
 };
 
-AutoComplete.prototype.addNew = function (text) {
-  var val = text || this.filter.value,
-    list = this.el.querySelector("." + this.type + "-list"),
-    item = document.createElement("li");
-
-  item.className = this.type + "-item selected-" + this.type;
-  item.setAttribute("title", val);
-  item.textContent = val;
-
-  list.insertBefore(item, list.querySelector("li:first-child"));
-  this.filter.value = "";
-  this.filterSelection();
-};
-
 AutoComplete.prototype.closeDropdown = function (t) {
   var that = t || this;
   that.filter.value = "";
@@ -498,4 +484,18 @@ TagAutoComplete.prototype.updateAddLink = function (e) {
       this.placeholderItem.parentNode.classList.add("add-allowed");
     }
   }
+};
+
+TagAutoComplete.prototype.addNew = function (text) {
+  var val = text || this.filter.value,
+    list = this.el.querySelector("." + this.type + "-list"),
+    item = document.createElement("li");
+
+  item.className = this.type + "-item selected-" + this.type;
+  item.setAttribute("title", val);
+  item.textContent = val;
+
+  list.insertBefore(item, list.querySelector("li:first-child"));
+  this.filter.value = "";
+  this.filterSelection();
 };

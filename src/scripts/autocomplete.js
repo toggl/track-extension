@@ -317,14 +317,18 @@ ProjectAutoComplete.prototype.filterSelection = function () {
         row.classList.add("filter");
 
         if (row.classList.contains("project-row")) {
+          // row.parentNode refers to ul.client-list
           row.parentNode.classList.add("filter");
+          // row.parentNode.parentNode refers to ul.ws-list
           row.parentNode.parentNode.classList.add("filter");
         }
         if (row.classList.contains("client-row")) {
+          // row.parentNode refers to ul.client-list
           row.parentNode.classList.add("filter-match");
         }
 
         if (row.classList.contains("task-item")) {
+          // row.parentNode.parentNode refers to li.project-row
           row.parentNode.parentNode.classList.add("filter");
           row.parentNode.parentNode.classList.add("tasklist-opened");
           row.classList.add("filter");

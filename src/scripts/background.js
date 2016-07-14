@@ -902,10 +902,7 @@ TogglButton = {
       ckey = null,
       keys = [],
       clientName = 0,
-      i,
-      validate = function (item) {
-        return item.indexOf("project-row") !== -1 && !!item;
-      };
+      i;
 
     try {
       // Sort clients
@@ -943,7 +940,7 @@ TogglButton = {
         if (wsHtml.hasOwnProperty(key)) {
           Object.keys(wsHtml[key]).sort();
           for (ckey in wsHtml[key]) {
-            if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
+            if (wsHtml[key].hasOwnProperty(ckey) && wsHtml[key][ckey].indexOf("project-row") !== -1) {
               html += wsHtml[key][ckey] + "</ul>";
             }
           }

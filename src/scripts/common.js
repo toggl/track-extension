@@ -164,19 +164,6 @@ var togglbutton = {
     return secondsToTime(duration, togglbutton.duration_format);
   },
 
-  delegateTaskClick: function (e) {
-    // Ignore this click if it caused the last task blur.
-    if (togglbutton.taskBlurTrigger === e.target) {
-      togglbutton.taskBlurTrigger = null;
-      return;
-    }
-
-    var dropdown = document.getElementById('toggl-button-task'),
-      event = document.createEvent('MouseEvents');
-    event.initMouseEvent('mousedown', true, true, window);
-    dropdown.dispatchEvent(event);
-  },
-
   addEditForm: function (response) {
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {

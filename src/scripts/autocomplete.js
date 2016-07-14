@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global document: false */
 "use strict";
 
 var inheritsFrom = function (child, parent) {

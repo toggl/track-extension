@@ -91,10 +91,6 @@ only screen and (min-resolution: 192dpi) {
   opacity: 1 !important;
 }
 
-#toggl-button-edit-form #toggl-button-tasks-row {
-  display: none;
-}
-
 #toggl-button-edit-form .toggl-button:hover{
   background-color: transparent;
 }
@@ -130,12 +126,10 @@ only screen and (min-resolution: 192dpi) {
 
 #toggl-button-edit-form #toggl-button-project-placeholder,
 #toggl-button-edit-form #toggl-button-tag-placeholder,
-#toggl-button-edit-form #toggl-button-task-placeholder,
 #toggl-button-edit-form #toggl-button-description,
 #toggl-button-edit-form #toggl-button-project,
 #toggl-button-edit-form #toggl-button-project-filter,
-#toggl-button-edit-form #toggl-button-tag-filter,
-#toggl-button-edit-form #toggl-button-task {
+#toggl-button-edit-form #toggl-button-tag-filter {
   height: 40px !important;
   line-height: 40px;
   vertical-align: middle;
@@ -152,35 +146,30 @@ only screen and (min-resolution: 192dpi) {
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder,
-#toggl-button-edit-form #toggl-button-tag-placeholder,
-#toggl-button-edit-form #toggl-button-task-placeholder {
+#toggl-button-edit-form #toggl-button-tag-placeholder {
   color: #8a8989;
   cursor: pointer;
 }
 
-#toggl-button-edit-form #toggl-button-project-placeholder,
-#toggl-button-edit-form #toggl-button-task-placeholder {
+#toggl-button-edit-form #toggl-button-project-placeholder {
   position: relative;
   z-index: 2;
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder span,
-#toggl-button-edit-form #toggl-button-tag-placeholder span,
-#toggl-button-edit-form #toggl-button-task-placeholder span {
+#toggl-button-edit-form #toggl-button-tag-placeholder span {
   float: right;
   color: #abaaaa;
   cursor: pointer;
 }
 
 #toggl-button-edit-form #toggl-button-project,
-#toggl-button-edit-form #toggl-button-tag,
-#toggl-button-edit-form #toggl-button-task {
+#toggl-button-edit-form #toggl-button-tag {
   visibility: hidden;
   position: absolute;
 }
 
-#toggl-button-edit-form #toggl-button-project,
-#toggl-button-edit-form #toggl-button-task {
+#toggl-button-edit-form #toggl-button-project {
   visibility: visible!important;
   z-index: 1;
   max-width: 220px;
@@ -190,7 +179,7 @@ only screen and (min-resolution: 192dpi) {
 #toggl-button-project,
 #toggl-button-project-filter,
 #toggl-button-tag-filter,
-#toggl-button-tag, #toggl-button-task {
+#toggl-button-tag {
   font-size: 13px !important;
   margin: 0 !important;
   padding: 0 10px !important;

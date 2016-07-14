@@ -133,23 +133,16 @@ ProjectAutoComplete.prototype.setSelectedProject = function (ids) {
   var selected = this.el.querySelectorAll(".selected-" + this.type),
     i;
 
+  // Clear previously selected
   if (selected.length >= 1) {
     for (i = 0; i < selected.length; i++) {
       selected[i].classList.remove("selected-" + this.type);
     }
   }
+
+  // Select project
   if (!!ids) {
-    if (typeof ids === "object") {
-      for (i = 0; i < ids.length; i++) {
-        this.el.querySelector("li[title='" + ids[i] + "']").classList.add("selected-" + this.type);
-      }
-    } else {
-      if (this.type === "project") {
-        this.el.querySelector("li[data-pid='" + ids + "']").classList.add("selected-" + this.type);
-      } else {
-        this.el.querySelector("li[title='" + ids + "']").classList.add("selected-" + this.type);
-      }
-    }
+    this.el.querySelector("li[data-pid='" + ids + "']").classList.add("selected-" + this.type);
   }
 };
 

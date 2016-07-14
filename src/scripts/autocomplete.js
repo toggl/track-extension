@@ -240,19 +240,17 @@ ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
     result,
     task;
 
-  if (!!pid) {
-    project = this.el.querySelector("li[data-pid='" + pid + "']");
-    if (id !== 0) {
-      if (!!project) {
-        className = project.querySelector(".project-bullet").className;
-        elem.className = className;
-        result = " - " + project.getAttribute("title");
-        task = project.querySelector("li[data-tid='" + tid + "']");
-        if (!!task) {
-          result += " . " + task.getAttribute("title");
-        }
-        return result;
+  project = this.el.querySelector("li[data-pid='" + pid + "']");
+  if (id !== 0) {
+    if (!!project) {
+      className = project.querySelector(".project-bullet").className;
+      elem.className = className;
+      result = " - " + project.getAttribute("title");
+      task = project.querySelector("li[data-tid='" + tid + "']");
+      if (!!task) {
+        result += " . " + task.getAttribute("title");
       }
+      return result;
     }
   }
   elem.className = "project-bullet";

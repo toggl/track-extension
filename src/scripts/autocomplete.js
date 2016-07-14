@@ -234,21 +234,20 @@ ProjectAutoComplete.prototype.getSelectedProjectByPid = function (pid) {
 
 ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   var project,
-    className,
-    id = parseInt(pid, 10),
     elem = el || this.placeholderItem.querySelector(".project-bullet"),
     result,
     task;
 
-  project = this.el.querySelector("li[data-pid='" + pid + "']");
-  if (id !== 0) {
+  if (!!pid || pid === "0") {
+    project = this.el.querySelector("li[data-pid='" + pid + "']");
     if (!!project) {
-      className = project.querySelector(".project-bullet").className;
-      elem.className = className;
+      elem.className = project.querySelector(".project-bullet").className;
       result = " - " + project.getAttribute("title");
-      task = project.querySelector("li[data-tid='" + tid + "']");
-      if (!!task) {
-        result += " . " + task.getAttribute("title");
+      if (!!tid) {
+        task = project.querySelector("li[data-tid='" + tid + "']");
+        if (!!task) {
+          result += " . " + task.getAttribute("title");
+        }
       }
       return result;
     }

@@ -87,16 +87,6 @@ AutoComplete.prototype.addNew = function (text) {
   this.filterSelection();
 };
 
-AutoComplete.prototype.toggleTaskList = function (elem) {
-  var opened = this.el.querySelector(".tasklist-opened");
-  if (!!opened) {
-    opened.classList.remove("tasklist-opened");
-  }
-  if (opened !== elem.parentNode) {
-    elem.parentNode.classList.toggle("tasklist-opened");
-  }
-};
-
 AutoComplete.prototype.closeDropdown = function (t) {
   var that = t || this;
   that.filter.value = "";
@@ -211,6 +201,16 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
     this.closeDropdown();
   }
   return false;
+};
+
+AutoComplete.prototype.toggleTaskList = function (elem) {
+  var opened = this.el.querySelector(".tasklist-opened");
+  if (!!opened) {
+    opened.classList.remove("tasklist-opened");
+  }
+  if (opened !== elem.parentNode) {
+    elem.parentNode.classList.toggle("tasklist-opened");
+  }
 };
 
 ProjectAutoComplete.prototype.getSelected = function () {

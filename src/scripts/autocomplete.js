@@ -289,31 +289,30 @@ ProjectAutoComplete.prototype.generateLabel = function (select, id, type, tid) {
 
 ProjectAutoComplete.prototype.filterSelection = function () {
   var key,
-    that = this,
-    val = that.filter.value.toLowerCase(),
+    val = this.filter.value.toLowerCase(),
     row,
     text;
 
-  if (val === that.lastFilter) {
+  if (val === this.lastFilter) {
     return;
   }
 
-  if (val.length > 0 && !that.el.classList.contains("filtered")) {
-    that.el.classList.add("filtered");
+  if (val.length > 0 && !this.el.classList.contains("filtered")) {
+    this.el.classList.add("filtered");
   }
   if (val.length === 0) {
-    that.clearFilters();
+    this.clearFilters();
     return;
   }
-  that.lastFilter = val;
-  that.exactMatch = false;
-  for (key in that.listItems) {
-    if (that.listItems.hasOwnProperty(key)) {
-      row = that.listItems[key];
+  this.lastFilter = val;
+  this.exactMatch = false;
+  for (key in this.listItems) {
+    if (this.listItems.hasOwnProperty(key)) {
+      row = this.listItems[key];
       text = row.getAttribute("title").toLowerCase();
       if (text.indexOf(val) !== -1) {
         if (text === val) {
-          that.exactMatch = val;
+          this.exactMatch = val;
         }
         row.classList.add("filter");
 
@@ -374,12 +373,12 @@ TagAutoComplete.prototype.addEvents = function () {
   var that = this;
   this.super.addEvents.call(this);
 
-  that.el.addEventListener('click', function (e) {
+  this.el.addEventListener('click', function (e) {
     e.stopPropagation();
     that.selectTag(e);
   });
 
-  that.clearSelected.addEventListener('click', function (e) {
+  this.clearSelected.addEventListener('click', function (e) {
     that.clearSelectedTags();
   });
 
@@ -453,31 +452,30 @@ TagAutoComplete.prototype.getSelected = function () {
 
 TagAutoComplete.prototype.filterSelection = function () {
   var key,
-    that = this,
-    val = that.filter.value.toLowerCase(),
+    val = this.filter.value.toLowerCase(),
     row,
     text;
 
-  if (val === that.lastFilter) {
+  if (val === this.lastFilter) {
     return;
   }
 
-  if (val.length > 0 && !that.el.classList.contains("filtered")) {
-    that.el.classList.add("filtered");
+  if (val.length > 0 && !this.el.classList.contains("filtered")) {
+    this.el.classList.add("filtered");
   }
   if (val.length === 0) {
-    that.clearFilters();
+    this.clearFilters();
     return;
   }
-  that.lastFilter = val;
-  that.exactMatch = false;
-  for (key in that.listItems) {
-    if (that.listItems.hasOwnProperty(key)) {
-      row = that.listItems[key];
+  this.lastFilter = val;
+  this.exactMatch = false;
+  for (key in this.listItems) {
+    if (this.listItems.hasOwnProperty(key)) {
+      row = this.listItems[key];
       text = row.getAttribute("title").toLowerCase();
       if (text.indexOf(val) !== -1) {
         if (text === val) {
-          that.exactMatch = val;
+          this.exactMatch = val;
         }
         row.classList.add("filter");
       } else if (!!row.classList) {
@@ -485,7 +483,7 @@ TagAutoComplete.prototype.filterSelection = function () {
       }
     }
   }
-  that.updateAddLink();
+  this.updateAddLink();
 };
 
 TagAutoComplete.prototype.updateAddLink = function (e) {

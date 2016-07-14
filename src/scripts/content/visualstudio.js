@@ -3,16 +3,17 @@
 
 'use strict';
 
-togglbutton.render('.work-item-form-main-core:not(.toggl)', {observe: true}, function () {
+togglbutton.render('.witform-layout-content-container:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    description = document.querySelector('.work-item-form-title input').value,
-    project = document.querySelector('.work-item-form-areaIteration input').value;
+    description = $('.work-item-form-title input', elem).value,
+    project = $('.work-item-form-areaIteration input', elem).value,
+    container = $('.work-item-form-header-controls-container', elem);
 
   link = togglbutton.createTimerLink({
-    className:   'visual-studio-online',
+    className: 'visual-studio-online',
     description: description,
     projectName: project
   });
 
-  document.querySelector('.discussion-adornment-container').appendChild(link);
+  container.appendChild(link);
 });

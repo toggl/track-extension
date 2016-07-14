@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global document: false */
 "use strict";
 
 var inheritsFrom = function (child, parent) {
@@ -33,7 +33,7 @@ AutoComplete.prototype.addEvents = function () {
   });
 
   that.filter.addEventListener('focus', function (e) {
-    this.parentNode.classList.add("open");
+    that.filter.parentNode.classList.add("open");
     that.listItems = that.el.querySelectorAll(that.item);
   });
 
@@ -73,30 +73,6 @@ AutoComplete.prototype.clearFilters = function () {
   }
 };
 
-AutoComplete.prototype.addNew = function (text) {
-  var val = text || this.filter.value,
-    list = this.el.querySelector("." + this.type + "-list"),
-    item = document.createElement("li");
-
-  item.className = this.type + "-item selected-" + this.type;
-  item.setAttribute("title", val);
-  item.innerHTML = val;
-
-  list.insertBefore(item, list.querySelector("li:first-child"));
-  this.filter.value = "";
-  this.filterSelection();
-};
-
-AutoComplete.prototype.toggleTaskList = function (elem) {
-  var opened = this.el.querySelector(".tasklist-opened");
-  if (!!opened) {
-    opened.classList.remove("tasklist-opened");
-  }
-  if (opened !== elem.parentNode) {
-    elem.parentNode.classList.toggle("tasklist-opened");
-  }
-};
-
 AutoComplete.prototype.closeDropdown = function (t) {
   var that = t || this;
   that.filter.value = "";
@@ -116,7 +92,7 @@ inheritsFrom(ProjectAutoComplete, AutoComplete);
 
 ProjectAutoComplete.prototype.setup = function (selected, tid) {
   this.setSelected(selected, tid);
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(null, selected, this.type, tid);
+  this.placeholderDiv.textContent = this.placeholderDiv.title = this.generateLabel(null, selected, this.type, tid);
   this.setProjectBullet(selected, tid);
 };
 
@@ -143,23 +119,16 @@ ProjectAutoComplete.prototype.setSelectedProject = function (ids) {
   var selected = this.el.querySelectorAll(".selected-" + this.type),
     i;
 
+  // Clear previously selected
   if (selected.length >= 1) {
     for (i = 0; i < selected.length; i++) {
       selected[i].classList.remove("selected-" + this.type);
     }
   }
+
+  // Select project
   if (!!ids) {
-    if (typeof ids === "object") {
-      for (i = 0; i < ids.length; i++) {
-        this.el.querySelector("li[title='" + ids[i] + "']").classList.add("selected-" + this.type);
-      }
-    } else {
-      if (this.type === "project") {
-        this.el.querySelector("li[data-pid='" + ids + "']").classList.add("selected-" + this.type);
-      } else {
-        this.el.querySelector("li[title='" + ids + "']").classList.add("selected-" + this.type);
-      }
-    }
+    this.el.querySelector("li[data-pid='" + ids + "']").classList.add("selected-" + this.type);
   }
 };
 
@@ -203,7 +172,7 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
   elem.classList.add("selected-" + this.type);
 
   // Update placeholder
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = this.generateLabel(this.getSelected(), val, this.type);
+  this.placeholderDiv.textContent = this.placeholderDiv.title = this.generateLabel(this.getSelected(), val, this.type);
   this.setProjectBullet(val);
 
   if (!silent) {
@@ -211,6 +180,16 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
     this.closeDropdown();
   }
   return false;
+};
+
+AutoComplete.prototype.toggleTaskList = function (elem) {
+  var opened = this.el.querySelector(".tasklist-opened");
+  if (!!opened) {
+    opened.classList.remove("tasklist-opened");
+  }
+  if (opened !== elem.parentNode) {
+    elem.parentNode.classList.toggle("tasklist-opened");
+  }
 };
 
 ProjectAutoComplete.prototype.getSelected = function () {
@@ -241,25 +220,22 @@ ProjectAutoComplete.prototype.getSelectedProjectByPid = function (pid) {
 
 ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   var project,
-    className,
-    id = parseInt(pid, 10),
     elem = el || this.placeholderItem.querySelector(".project-bullet"),
     result,
     task;
 
-  if (!!pid) {
+  if (!!pid || pid === "0") {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
-    if (id !== 0) {
-      if (!!project) {
-        className = project.querySelector(".project-bullet").className;
-        elem.className = className;
-        result = " - " + project.getAttribute("title");
+    if (!!project) {
+      elem.className = project.querySelector(".project-bullet").className;
+      result = " - " + project.getAttribute("title");
+      if (!!tid) {
         task = project.querySelector("li[data-tid='" + tid + "']");
         if (!!task) {
           result += " . " + task.getAttribute("title");
         }
-        return result;
       }
+      return result;
     }
   }
   elem.className = "project-bullet";
@@ -299,43 +275,46 @@ ProjectAutoComplete.prototype.generateLabel = function (select, id, type, tid) {
 
 ProjectAutoComplete.prototype.filterSelection = function () {
   var key,
-    that = this,
-    val = that.filter.value.toLowerCase(),
+    val = this.filter.value.toLowerCase(),
     row,
     text;
 
-  if (val === that.lastFilter) {
+  if (val === this.lastFilter) {
     return;
   }
 
-  if (val.length > 0 && !that.el.classList.contains("filtered")) {
-    that.el.classList.add("filtered");
+  if (val.length > 0 && !this.el.classList.contains("filtered")) {
+    this.el.classList.add("filtered");
   }
   if (val.length === 0) {
-    that.clearFilters();
+    this.clearFilters();
     return;
   }
-  that.lastFilter = val;
-  that.exactMatch = false;
-  for (key in that.listItems) {
-    if (that.listItems.hasOwnProperty(key)) {
-      row = that.listItems[key];
+  this.lastFilter = val;
+  this.exactMatch = false;
+  for (key in this.listItems) {
+    if (this.listItems.hasOwnProperty(key)) {
+      row = this.listItems[key];
       text = row.getAttribute("title").toLowerCase();
       if (text.indexOf(val) !== -1) {
         if (text === val) {
-          that.exactMatch = val;
+          this.exactMatch = val;
         }
         row.classList.add("filter");
 
         if (row.classList.contains("project-row")) {
+          // row.parentNode refers to ul.client-list
           row.parentNode.classList.add("filter");
+          // row.parentNode.parentNode refers to ul.ws-list
           row.parentNode.parentNode.classList.add("filter");
         }
         if (row.classList.contains("client-row")) {
+          // row.parentNode refers to ul.client-list
           row.parentNode.classList.add("filter-match");
         }
 
         if (row.classList.contains("task-item")) {
+          // row.parentNode.parentNode refers to li.project-row
           row.parentNode.parentNode.classList.add("filter");
           row.parentNode.parentNode.classList.add("tasklist-opened");
           row.classList.add("filter");
@@ -384,12 +363,12 @@ TagAutoComplete.prototype.addEvents = function () {
   var that = this;
   this.super.addEvents.call(this);
 
-  that.el.addEventListener('click', function (e) {
+  this.el.addEventListener('click', function (e) {
     e.stopPropagation();
     that.selectTag(e);
   });
 
-  that.clearSelected.addEventListener('click', function (e) {
+  this.clearSelected.addEventListener('click', function (e) {
     that.clearSelectedTags();
   });
 
@@ -446,7 +425,7 @@ TagAutoComplete.prototype.updatePlaceholder = function (tags) {
   } else {
     tags = "Add tags";
   }
-  this.placeholderDiv.innerHTML = this.placeholderDiv.title = tags;
+  this.placeholderDiv.textContent = this.placeholderDiv.title = tags;
 };
 
 TagAutoComplete.prototype.getSelected = function () {
@@ -463,31 +442,30 @@ TagAutoComplete.prototype.getSelected = function () {
 
 TagAutoComplete.prototype.filterSelection = function () {
   var key,
-    that = this,
-    val = that.filter.value.toLowerCase(),
+    val = this.filter.value.toLowerCase(),
     row,
     text;
 
-  if (val === that.lastFilter) {
+  if (val === this.lastFilter) {
     return;
   }
 
-  if (val.length > 0 && !that.el.classList.contains("filtered")) {
-    that.el.classList.add("filtered");
+  if (val.length > 0 && !this.el.classList.contains("filtered")) {
+    this.el.classList.add("filtered");
   }
   if (val.length === 0) {
-    that.clearFilters();
+    this.clearFilters();
     return;
   }
-  that.lastFilter = val;
-  that.exactMatch = false;
-  for (key in that.listItems) {
-    if (that.listItems.hasOwnProperty(key)) {
-      row = that.listItems[key];
+  this.lastFilter = val;
+  this.exactMatch = false;
+  for (key in this.listItems) {
+    if (this.listItems.hasOwnProperty(key)) {
+      row = this.listItems[key];
       text = row.getAttribute("title").toLowerCase();
       if (text.indexOf(val) !== -1) {
         if (text === val) {
-          that.exactMatch = val;
+          this.exactMatch = val;
         }
         row.classList.add("filter");
       } else if (!!row.classList) {
@@ -495,7 +473,7 @@ TagAutoComplete.prototype.filterSelection = function () {
       }
     }
   }
-  that.updateAddLink();
+  this.updateAddLink();
 };
 
 TagAutoComplete.prototype.updateAddLink = function (e) {
@@ -506,4 +484,18 @@ TagAutoComplete.prototype.updateAddLink = function (e) {
       this.placeholderItem.parentNode.classList.add("add-allowed");
     }
   }
+};
+
+TagAutoComplete.prototype.addNew = function (text) {
+  var val = text || this.filter.value,
+    list = this.el.querySelector("." + this.type + "-list"),
+    item = document.createElement("li");
+
+  item.className = this.type + "-item selected-" + this.type;
+  item.setAttribute("title", val);
+  item.textContent = val;
+
+  list.insertBefore(item, list.querySelector("li:first-child"));
+  this.filter.value = "";
+  this.filterSelection();
 };

@@ -2,14 +2,8 @@
 /*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, document: false, MutationObserver: false, chrome: false, window: false, navigator: false*/
 "use strict";
 console.log(">> COMMON");
-var FF = navigator.userAgent.indexOf("Chrome") === -1,
-  CH = chrome.extension,
-  projectAutocomplete,
+var projectAutocomplete,
   tagAutocomplete;
-
-if (FF) {
-  CH = chrome.runtime;
-}
 
 function $(s, elem) {
   elem = elem || document;
@@ -110,7 +104,7 @@ var togglbutton = {
   fullPageHeight: getFullPageHeight(),
   fullVersion: "TogglButton",
   render: function (selector, opts, renderer) {
-    CH.sendMessage({type: 'activate'}, function (response) {
+    chrome.runtime.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
         try {
           togglbutton.entries = response.user.time_entries;
@@ -125,7 +119,7 @@ var togglbutton = {
           }
           togglbutton.renderTo(selector, renderer);
         } catch (e) {
-          CH.sendMessage({type: 'error', stack: e.stack});
+          chrome.runtime.sendMessage({type: 'error', stack: e.stack});
         }
       }
     });
@@ -170,19 +164,6 @@ var togglbutton = {
     return secondsToTime(duration, togglbutton.duration_format);
   },
 
-  delegateTaskClick: function (e) {
-    // Ignore this click if it caused the last task blur.
-    if (togglbutton.taskBlurTrigger === e.target) {
-      togglbutton.taskBlurTrigger = null;
-      return;
-    }
-
-    var dropdown = document.getElementById('toggl-button-task'),
-      event = document.createEvent('MouseEvents');
-    event.initMouseEvent('mousedown', true, true, window);
-    dropdown.dispatchEvent(event);
-  },
-
   addEditForm: function (response) {
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {
@@ -196,7 +177,6 @@ var togglbutton = {
       editFormHeight = 350,
       editFormWidth = 240,
       submitForm,
-      taskSelect,
       elemRect,
       div = document.createElement('div'),
       editForm,
@@ -248,7 +228,7 @@ var togglbutton = {
           tid: selected.tid,
           service: togglbutton.serviceName
         };
-      CH.sendMessage(request);
+      chrome.runtime.sendMessage(request);
       projectAutocomplete.closeDropdown();
       tagAutocomplete.closeDropdown();
       editForm.style.display = "none";
@@ -286,7 +266,7 @@ var togglbutton = {
       if (!link.classList.contains("min")) {
         link.innerHTML = 'Start timer';
       }
-      CH.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
+      chrome.runtime.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
       projectAutocomplete.closeDropdown();
       tagAutocomplete.closeDropdown();
       editForm.style.display = "none";
@@ -297,25 +277,6 @@ var togglbutton = {
     });
     document.addEventListener('mouseup', function (e) {
       togglbutton.mousedownTrigger = null;
-    });
-
-    taskSelect = $("#toggl-button-task", editForm);
-    taskSelect.addEventListener('change', function (e) {
-      var taskPlaceholder = $("#toggl-button-task-placeholder > div", editForm);
-      taskPlaceholder.innerHTML = taskPlaceholder.title = (taskSelect.value === "0") ? "Add task" : taskSelect.options[taskSelect.selectedIndex].text;
-
-      // Force blur.
-      togglbutton.taskBlurTrigger = null;
-      taskSelect.blur();
-    });
-
-    taskSelect.addEventListener('click', function () {
-      // Catch click in case user selects an already-selected item - force blur.
-      togglbutton.taskBlurTrigger = null;
-    });
-
-    taskSelect.addEventListener('blur', function (e) {
-      togglbutton.taskBlurTrigger = togglbutton.mousedownTrigger;
     });
 
     document.addEventListener("click", handler);
@@ -388,7 +349,7 @@ var togglbutton = {
         };
       }
       togglbutton.element = e.target;
-      CH.sendMessage(opts, togglbutton.addEditForm);
+      chrome.runtime.sendMessage(opts, togglbutton.addEditForm);
 
       return false;
     });
@@ -397,7 +358,7 @@ var togglbutton = {
     togglbutton.links.push({params: params, link: link});
 
     // new button created - set state
-    CH.sendMessage({type: 'currentEntry'}, function (response) {
+    chrome.runtime.sendMessage({type: 'currentEntry'}, function (response) {
       var currentEntry, i;
       if (response.success) {
         currentEntry = response.currentEntry;
@@ -482,10 +443,10 @@ var togglbutton = {
   }
 };
 
-CH.onMessage.addListener(togglbutton.newMessage);
+chrome.runtime.onMessage.addListener(togglbutton.newMessage);
 window.addEventListener('focus', function (e) {
   // update button state
-  CH.sendMessage({type: 'currentEntry'}, function (response) {
+  chrome.runtime.sendMessage({type: 'currentEntry'}, function (response) {
     togglbutton.updateTimerLink(response.currentEntry);
   });
 });

@@ -1,14 +1,24 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton, openWindowsCount = 0,
+
+var TogglButton,
+  openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
   debug = false,
-  CH = chrome.extension;
-
-if (FF) {
-  CH = chrome.runtime;
-}
+  entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  },
+  escapeHtml = function (string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
+  };
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -175,7 +185,7 @@ TogglButton = {
             if (Db.get("socketEnabled")) {
               TogglButton.setupSocket();
             }
-            //TogglButton.updateBugsnag();
+            TogglButton.updateBugsnag();
             TogglButton.handleQueue();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
@@ -370,6 +380,7 @@ TogglButton = {
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       error = "",
+      defaultProject = Db.get(TogglButton.$user.id + "-defaultProject"),
       entry = {
         time_entry: {
           start: start.toISOString(),
@@ -392,8 +403,8 @@ TogglButton = {
     }
 
     // set Default project if needed
-    if (!entry.time_entry.pid) {
-      entry.time_entry.pid = parseInt(Db.get(TogglButton.$user.id + "-defaultProject"), 10);
+    if (!entry.time_entry.pid && !!defaultProject) {
+      entry.time_entry.pid = parseInt(defaultProject, 10);
     }
 
     TogglButton.ajax('/time_entries', {
@@ -885,21 +896,18 @@ TogglButton = {
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
       clientNames = TogglButton.$user.clientNameMap,
+      hideWs = (TogglButton.$user.workspaces.length > 1) ? "" : " hide",
       wsHtml = {},
-      clientHtml = {},
       client,
       project,
       key = null,
       ckey = null,
       keys = [],
       clientName = 0,
-      i,
-      validate = function (item) {
-        return item.indexOf("project-row") !== -1 && !!item;
-      };
+      i;
 
     try {
-      // Sort clients
+      // Sort clients by name
       for (key in clientNames) {
         if (clientNames.hasOwnProperty(key)) {
           keys.push(key.toLowerCase());
@@ -907,73 +915,40 @@ TogglButton = {
       }
       keys.sort();
 
-      if (TogglButton.$user.workspaces.length > 1) {
+      // Add Workspace list and names
+      TogglButton.$user.workspaces.forEach(function (element, index) {
+        wsHtml[element.id] = {};
+        wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + escapeHtml(element.name) + '"><li class="ws-row' + hideWs + '" title="' + escapeHtml(element.name.toUpperCase()) + '">' + escapeHtml(element.name.toUpperCase()) + '</li>' +
+          '<ul class="client-list" data-cid="0">';
+      });
 
-        // Add Workspace names
-        TogglButton.$user.workspaces.forEach(function (element, index) {
-          wsHtml[element.id] = {};
-          wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + element.name + '"><li class="ws-row" title="' + element.name.toUpperCase() + '">' + element.name.toUpperCase() + '</li>' +
-            '<ul class="client-list" data-cid="0">';
-        });
+      // Add client list
+      for (i = 0; i < keys.length; i++) {
+        client = clientNames[keys[i]];
+        wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + escapeHtml(client.name) + '">' + escapeHtml(client.name) + '</li>';
+      }
 
-        // Add client optgroups
-        for (i = 0; i < keys.length; i++) {
-          client = clientNames[keys[i]];
-          wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + client.name + '">' + client.name + '</li>';
-        }
-
-        // Add projects
-        for (key in projects) {
-          if (projects.hasOwnProperty(key)) {
-            project = projects[key];
-            clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
-            wsHtml[project.wid][clientName] += TogglButton.generateProjectItem(project);
-          }
-        }
-
-        // create html
-        for (key in wsHtml) {
-          if (wsHtml.hasOwnProperty(key)) {
-            Object.keys(wsHtml[key]).sort();
-            for (ckey in wsHtml[key]) {
-              if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
-                html += wsHtml[key][ckey] + "</ul>";
-              }
-            }
-            html += "</ul>";
-          }
-        }
-
-      } else {
-
-        // Add clients
-
-        for (i = 0; i < keys.length; i++) {
-          client = clientNames[keys[i]];
-          clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
-        }
-
-        // Add projects
-
-        for (key in projects) {
-          if (projects.hasOwnProperty(key)) {
-            project = projects[key];
-            clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
-            clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
-          }
-        }
-
-        // Create html
-
-        for (key in clientHtml) {
-          if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
-            html += clientHtml[key];
-            if (key !== "0") {
-              html += "</optgroup>";
-            }
-          }
+      // Add projects
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          project = projects[key];
+          clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
+          wsHtml[project.wid][clientName] += TogglButton.generateProjectItem(project);
         }
       }
+
+      // create html from array
+      for (key in wsHtml) {
+        if (wsHtml.hasOwnProperty(key)) {
+          for (ckey in wsHtml[key]) {
+            if (wsHtml[key].hasOwnProperty(ckey) && wsHtml[key][ckey].indexOf("project-row") !== -1) {
+              html += wsHtml[key][ckey] + "</ul>";
+            }
+          }
+          html += "</ul>";
+        }
+      }
+
     } catch (e) {
       report(e);
     }
@@ -985,8 +960,8 @@ TogglButton = {
     var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id] : null,
       i,
       tasksCount,
-      html = '<li class="project-row" title="' + project.name + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
-        '<span class="item-name">' + project.name + '</span>';
+      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
+        '<span class="item-name">' + escapeHtml(project.name) + '</span>';
 
     if (!!tasks) {
       tasksCount = tasks.length + " task";
@@ -997,7 +972,7 @@ TogglButton = {
       html += '<ul class="task-list">';
 
       for (i = 0; i < tasks.length; i++) {
-        html += '<li class="task-item" data-tid="' + tasks[i].id + '" title="' + tasks[i].name + '">' + tasks[i].name + '</li>';
+        html += '<li class="task-item" data-tid="' + tasks[i].id + '" title="' + escapeHtml(tasks[i].name) + '">' + escapeHtml(tasks[i].name) + '</li>';
       }
 
       html += '</ul>';
@@ -1022,7 +997,7 @@ TogglButton = {
 
     for (i = 0; i < keys.length; i++) {
       key = keys[i];
-      html += '<li class="tag-item" title="' + tags[key].name + '">' + tags[key].name + '</li>';
+      html += '<li class="tag-item" title="' + escapeHtml(tags[key].name) + '">' + escapeHtml(tags[key].name) + '</li>';
     }
     return html + "</ul>";
   },
@@ -1390,8 +1365,7 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        console.log(error);
-        //Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
+        Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();
       }
@@ -1517,7 +1491,7 @@ TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
-CH.onMessage.addListener(TogglButton.newMessage);
+chrome.runtime.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);

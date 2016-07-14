@@ -289,34 +289,6 @@ hr {
   opacity: 0.7;
 }
 
-.project-bullet {
-    border-radius: 50%;
-    float: left;
-    width: 8px;
-    height: 8px;
-    display: none;
-    position: absolute;
-    margin: 11px 5px auto 16px;
-}
-
-/* Project colors */
-.project-color { display: block; }
-.color-0 { background-color: #4dc3ff }
-.color-1 { background-color: #bc85e6 }
-.color-2 { background-color: #df7baa }
-.color-3 { background-color: #f68d38 }
-.color-4 { background-color: #b27636 }
-.color-5 { background-color: #8ab734 }
-.color-6 { background-color: #14a88e }
-.color-7 { background-color: #268bb5 }
-.color-8 { background-color: #6668b4 }
-.color-9 { background-color: #a4506c }
-.color-10 { background-color: #67412c }
-.color-11 { background-color: #3c6526 }
-.color-12 { background-color: #094558 }
-.color-13 { background-color: #bc2d07 }
-.color-14 { background-color: #999999}
-
 .error {
   overflow: hidden;
   max-height: 0px;
@@ -356,10 +328,6 @@ hr {
   opacity: 1 !important;
 }
 
-#toggl-button-edit-form #toggl-button-tasks-row {
-  display: none;
-}
-
 #toggl-button-edit-form .toggl-button:hover{
   background-color: transparent;
 }
@@ -395,10 +363,10 @@ hr {
 
 #toggl-button-edit-form #toggl-button-project-placeholder,
 #toggl-button-edit-form #toggl-button-tag-placeholder,
-#toggl-button-edit-form #toggl-button-task-placeholder,
 #toggl-button-edit-form #toggl-button-description,
 #toggl-button-edit-form #toggl-button-project,
-#toggl-button-edit-form #toggl-button-task {
+#toggl-button-edit-form #toggl-button-project-filter,
+#toggl-button-edit-form #toggl-button-tag-filter {
   height: 40px !important;
   line-height: 40px;
   vertical-align: middle;
@@ -411,46 +379,55 @@ hr {
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder,
-#toggl-button-edit-form #toggl-button-tag-placeholder,
-#toggl-button-edit-form #toggl-button-task-placeholder {
+#toggl-button-edit-form #toggl-button-tag-placeholder {
   color: #8a8989;
   cursor: pointer;
 }
 
-#toggl-button-edit-form #toggl-button-project-placeholder,
-#toggl-button-edit-form #toggl-button-task-placeholder {
+#toggl-button-edit-form #toggl-button-project-placeholder {
   position: relative;
   z-index: 2;
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder span,
-#toggl-button-edit-form #toggl-button-tag-placeholder span,
-#toggl-button-edit-form #toggl-button-task-placeholder span {
+#toggl-button-edit-form #toggl-button-tag-placeholder span {
   float: right;
   color: #abaaaa;
   cursor: pointer;
 }
 
 #toggl-button-edit-form #toggl-button-project,
-#toggl-button-edit-form #toggl-button-tag,
-#toggl-button-edit-form #toggl-button-task {
+#toggl-button-edit-form #toggl-button-tag {
   visibility: hidden;
   position: absolute;
 }
 
-#toggl-button-edit-form #toggl-button-project,
-#toggl-button-edit-form #toggl-button-task {
+#toggl-button-edit-form #toggl-button-project {
   visibility: visible!important;
   z-index: 1;
   max-width: 220px;
 }
 
-#toggl-button-description, #toggl-button-project, #toggl-button-tag, #toggl-button-task {
+#toggl-button-description,
+#toggl-button-project,
+#toggl-button-project-filter,
+#toggl-button-tag,
+#toggl-button-tag-filter {
   font-size: 13px !important;
   margin: 0 !important;
   padding: 0 10px !important;
   width: 100% !important;
   box-sizing :border-box !important;
+}
+
+#toggl-button-project-filter,
+#toggl-button-tag-filter {
+  font-size: 13px !important;
+  margin: 0 !important;
+  padding: 0 10px ;
+  width: 100% !important;
+  box-sizing :border-box !important;
+  padding-right: 28px!important;
 }
 
 #toggl-button-edit-form #toggl-button-tag {
@@ -513,27 +490,17 @@ hr {
   display: none;
 }
 
-#toggl-button-project-placeholder .project-color + .toggl-button-text {
-  padding-left: 12px;
-  width: 174px;
-}
-
-#toggl-button-project-placeholder .project-bullet {
-  margin-top: 16px;
-  margin-left: 0;
-}
-
 /** FIREFOX **/
 .ff {
   width: 240px;
   height: 328px;
 }
 .ff #login-form {
-  width: 240px;
+  width: 195px;
 }
 
 .ff .text-input {
-  width: 228px;
+  width: 183px;
 }
 
 .ff .tracking .edit-button {
@@ -556,4 +523,8 @@ hr {
 
 .ff #toggl-button-tag {
   max-height: 55px;
+}
+
+.ff .error {
+  font-size: 12px;
 }

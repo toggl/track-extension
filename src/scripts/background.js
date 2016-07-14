@@ -1,14 +1,24 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
 /*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
-var TogglButton, openWindowsCount = 0,
+
+var TogglButton,
+  openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
   debug = false,
-  CH = chrome.extension;
-
-if (FF) {
-  CH = chrome.runtime;
-}
+  entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  },
+  escapeHtml = function (string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
+  };
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -82,21 +92,24 @@ TogglButton = {
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-description" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
+        '<input name="toggl-button-description" tabindex="100" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<select class="toggl-button-input" id="toggl-button-project" name="toggl-button-project">{projects}</select>' +
+        '<input name="toggl-button-project-filter" tabindex="101" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
+        '<a href="#clear" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
-      '</div>' +
-      '<div class="toggl-button-row" id="toggl-button-tasks-row">' +
-        '<select class="toggl-button-input" id="toggl-button-task" name="toggl-button-task"></select>' +
-        '<div id="toggl-button-task-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add task</div><span>▼</span></div>' +
+        '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<select class="toggl-button-input" id="toggl-button-tag" name="toggl-button-tag" multiple>{tags}</select>' +
+        '<input name="toggl-button-tag-filter" tabindex="102" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
+        '<a href="#add" class="add-new-tag">+ Add</a>' +
+        '<a href="#clear" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
+        '<div id="tag-autocomplete">' +
+        '<div class="tag-clear">Clear selected tags</div>' +
+        '{tags}</div>' +
       '</div>' +
-      '<div id="toggl-button-update">DONE</div>' +
+      '<div id="toggl-button-update" tabindex="103">DONE</div>' +
       '</from>' +
     '</div>',
 
@@ -878,27 +891,22 @@ TogglButton = {
   },
 
   fillProjects: function () {
-    var html = "<option value='0'>- No Project -</option>",
+    var html = '<p class="project-row" data-pid="0"><span class="project-bullet project-color no-color"></span>No project</p>',
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
       clientNames = TogglButton.$user.clientNameMap,
+      hideWs = (TogglButton.$user.workspaces.length > 1) ? "" : " hide",
       wsHtml = {},
-      clientHtml = {},
       client,
       project,
       key = null,
       ckey = null,
       keys = [],
       clientName = 0,
-      i,
-      validate = function (item) {
-        return item.indexOf("</option>") !== -1 &&
-          !!item &&
-          ((item.match(/\/option/g) || []).length > 1 || item.length > 1);
-      };
+      i;
 
     try {
-      // Sort clients
+      // Sort clients by name
       for (key in clientNames) {
         if (clientNames.hasOwnProperty(key)) {
           keys.push(key.toLowerCase());
@@ -906,71 +914,40 @@ TogglButton = {
       }
       keys.sort();
 
-      if (TogglButton.$user.workspaces.length > 1) {
+      // Add Workspace list and names
+      TogglButton.$user.workspaces.forEach(function (element, index) {
+        wsHtml[element.id] = {};
+        wsHtml[element.id][0] = '<ul class="ws-list" data-wid="' + element.id + '" title="' + escapeHtml(element.name) + '"><li class="ws-row' + hideWs + '" title="' + escapeHtml(element.name.toUpperCase()) + '">' + escapeHtml(element.name.toUpperCase()) + '</li>' +
+          '<ul class="client-list" data-cid="0">';
+      });
 
-        // Add Workspace names
-        TogglButton.$user.workspaces.forEach(function (element, index) {
-          wsHtml[element.id] = {};
-          wsHtml[element.id][0] = '<option disabled="disabled">  ---  ' + element.name.toUpperCase() + '  ---  </option>';
-        });
+      // Add client list
+      for (i = 0; i < keys.length; i++) {
+        client = clientNames[keys[i]];
+        wsHtml[client.wid][client.name + client.id] = '<ul class="client-list" data-cid="' + client.id + '"><li class="client-row" title="' + escapeHtml(client.name) + '">' + escapeHtml(client.name) + '</li>';
+      }
 
-        // Add client optgroups
-        for (i = 0; i < keys.length; i++) {
-          client = clientNames[keys[i]];
-          wsHtml[client.wid][client.name + client.id] = '<optgroup label="' + client.name + '">';
-        }
-
-        // Add projects
-        for (key in projects) {
-          if (projects.hasOwnProperty(key)) {
-            project = projects[key];
-            clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
-            wsHtml[project.wid][clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
-          }
-        }
-
-        // create html
-        for (key in wsHtml) {
-          if (wsHtml.hasOwnProperty(key)) {
-            Object.keys(wsHtml[key]).sort();
-            for (ckey in wsHtml[key]) {
-              if (wsHtml[key].hasOwnProperty(ckey) && validate(wsHtml[key][ckey])) {
-                html += wsHtml[key][ckey] + "</optgroup>";
-              }
-            }
-          }
-        }
-
-      } else {
-
-        // Add clients
-
-        for (i = 0; i < keys.length; i++) {
-          client = clientNames[keys[i]];
-          clientHtml[client.name + client.id] = '<optgroup label="' + client.name + '">';
-        }
-
-        // Add projects
-
-        for (key in projects) {
-          if (projects.hasOwnProperty(key)) {
-            project = projects[key];
-            clientName = (!!project.cid) ? (clients[project.cid].name + project.cid) : 0;
-            clientHtml[clientName] += "<option value='" + project.id + "'>" + project.name + "</option>";
-          }
-        }
-
-        // Create html
-
-        for (key in clientHtml) {
-          if (clientHtml.hasOwnProperty(key) && clientHtml[key].indexOf("</option>") !== -1) {
-            html += clientHtml[key];
-            if (key !== "0") {
-              html += "</optgroup>";
-            }
-          }
+      // Add projects
+      for (key in projects) {
+        if (projects.hasOwnProperty(key)) {
+          project = projects[key];
+          clientName = (!!project.cid && !!clients[project.cid]) ? (clients[project.cid].name + project.cid) : 0;
+          wsHtml[project.wid][clientName] += TogglButton.generateProjectItem(project);
         }
       }
+
+      // create html from array
+      for (key in wsHtml) {
+        if (wsHtml.hasOwnProperty(key)) {
+          for (ckey in wsHtml[key]) {
+            if (wsHtml[key].hasOwnProperty(ckey) && wsHtml[key][ckey].indexOf("project-row") !== -1) {
+              html += wsHtml[key][ckey] + "</ul>";
+            }
+          }
+          html += "</ul>";
+        }
+      }
+
     } catch (e) {
       report(e);
     }
@@ -978,8 +955,33 @@ TogglButton = {
     return html;
   },
 
+  generateProjectItem: function (project) {
+    var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id] : null,
+      i,
+      tasksCount,
+      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
+        '<span class="item-name">' + escapeHtml(project.name) + '</span>';
+
+    if (!!tasks) {
+      tasksCount = tasks.length + " task";
+      if (tasks.length > 1) {
+        tasksCount += "s";
+      }
+      html += '<span class="task-count">' + tasksCount + '</span>';
+      html += '<ul class="task-list">';
+
+      for (i = 0; i < tasks.length; i++) {
+        html += '<li class="task-item" data-tid="' + tasks[i].id + '" title="' + escapeHtml(tasks[i].name) + '">' + escapeHtml(tasks[i].name) + '</li>';
+      }
+
+      html += '</ul>';
+    }
+
+    return html + '</li>';
+  },
+
   fillTags: function () {
-    var html = "",
+    var html = '<ul class="tag-list">',
       tags = TogglButton.$user.tagMap,
       i,
       key = null,
@@ -994,24 +996,9 @@ TogglButton = {
 
     for (i = 0; i < keys.length; i++) {
       key = keys[i];
-      html += "<option value='" + tags[key].name + "'>" + key + "</option>";
+      html += '<li class="tag-item" title="' + escapeHtml(tags[key].name) + '">' + escapeHtml(tags[key].name) + '</li>';
     }
-    return html;
-  },
-
-  fillTasks: function (projectId) {
-    if (TogglButton.$user && TogglButton.$user.projectTaskList) {
-      var tasks = TogglButton.$user.projectTaskList[projectId];
-
-      if (tasks) {
-        return [{id: 0, name: '- No Task -'}]
-          .concat(tasks)
-            .map(function (task) { return '<option value="' + task.id + '">' + task.name + '</option>'; })
-            .join("");
-      }
-    }
-
-    return "";
+    return html + "</ul>";
   },
 
   refreshPage: function () {
@@ -1343,8 +1330,7 @@ TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
-    var success,
-      error;
+    var error;
     try {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
@@ -1373,13 +1359,6 @@ TogglButton = {
         }
       } else if (request.type === 'currentEntry') {
         sendResponse({success: TogglButton.$curEntry !== null, currentEntry: TogglButton.$curEntry});
-      } else if (request.type === 'getTasksHtml') {
-        success = TogglButton.$user && TogglButton.$user.projectTaskList;
-
-        sendResponse({
-          success: success,
-          html: success ? TogglButton.fillTasks(request.projectId) : ''
-        });
       } else if (request.type === 'error') {
         // Handling integration errors
         error = new Error();
@@ -1403,24 +1382,28 @@ TogglButton = {
         permission = {origins: domain.origins};
       console.log("url: " + tab.url + " | domain-file: " + domain.file);
       if (FF) {
-        if (!!domain.file) {
-          chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-          chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
-            chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-          });
-        }
+        TogglButton.loadFiles(tabId, domain.file);
       } else {
         chrome.permissions.contains(permission, function (result) {
           if (result) {
-            if (!!domain.file) {
-              chrome.tabs.insertCSS(tabId, {file: "styles/style.css"});
-              chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
-                chrome.tabs.executeScript(tabId, {file: "scripts/content/" + domain.file});
-              });
-            }
+            TogglButton.loadFiles(tabId, domain.file);
           }
         });
       }
+    }
+  },
+
+  loadFiles: function (tabId, file) {
+    if (!!file) {
+      chrome.tabs.insertCSS(tabId, {file: "styles/style.css"}, function () {
+        chrome.tabs.insertCSS(tabId, {file: "styles/autocomplete.css"});
+      });
+
+      chrome.tabs.executeScript(tabId, {file: "scripts/autocomplete.js"}, function () {
+        chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
+          chrome.tabs.executeScript(tabId, {file: "scripts/content/" + file});
+        });
+      });
     }
   },
 
@@ -1507,7 +1490,7 @@ TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
-CH.onMessage.addListener(TogglButton.newMessage);
+chrome.runtime.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);

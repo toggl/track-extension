@@ -223,35 +223,49 @@ only screen and (min-resolution: 2dppx) {
   opacity: .6;
 }
 
+.views > div,
+.views > ul {
+  display: none;
+}
+
+.header[data-view="menu"] ~ .views #menu,
+.header[data-view="login-form"] ~ .views #login-form,
+.header[data-view="entry-form"] ~ .views #entry-form {
+  display: block!important;
+}
+
+.header[data-view="login-form"] li:not(.icon) {
+  display: none;
+}
+
 .running, .stopped {
   display: none;
 }
 
-.menu {
+#menu {
   background: #fff;
   list-style: none;
   margin: 0;
   padding: 6px 0;
   min-width: 100%;
   font-weight: 400;
-  display: block;
 }
-.menu li {
+#menu li {
   white-space: nowrap;
   list-style: none;
   height: 29px;
 }
-.menu li:not(.has-resume):hover {
+#menu li:not(.has-resume):hover {
   background-color: #e6e6e6;
   color: #222;
 }
 
-.menu li.has-resume .stop-button:hover, .menu li.has-resume .resume-button:hover {
+#menu li.has-resume .stop-button:hover, #menu li.has-resume .resume-button:hover {
   background-color: #e6e6e6;
   color: #222;
 }
 
-.menu li>button {
+#menu li>button {
   width: 100%;
   padding: 8px 36px 8px 30px;
   font-weight: 400;

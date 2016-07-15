@@ -27,7 +27,8 @@ var PopUp = {
   mousedownTrigger: null,
   projectBlurTrigger: null,
   editFormAdded: false,
-  $menuView: document.querySelector(".menu"),
+  $header: document.querySelector(".header"),
+  $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
   defaultErrorMessage: "Error connecting to server",
@@ -64,7 +65,7 @@ var PopUp = {
         PopUp.$togglButton.parentNode.classList.add('tracking');
         PopUp.showCurrentDuration(true);
       }
-      if (PopUp.$menuView.style.display === "none" && PopUp.$editView.style.display === "none") {
+      if (!PopUp.$header.getAttribute("data-view")) {
         PopUp.switchView(PopUp.$menuView);
       }
     } else {
@@ -133,10 +134,7 @@ var PopUp = {
   },
 
   switchView: function (view) {
-    PopUp.$menuView.style.display = "none";
-    PopUp.$editView.style.display = "none";
-    PopUp.$loginView.style.display = "none";
-    view.style.display = "block";
+    PopUp.$header.setAttribute("data-view", view.id);
   },
 
   formatMe: function (n) {

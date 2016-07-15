@@ -1381,7 +1381,11 @@ TogglButton = {
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins};
-      console.log("url: " + tab.url + " | domain-file: " + domain.file);
+
+      if (debug) {
+        console.log("url: " + tab.url + " | domain-file: " + domain.file);
+      }
+
       if (FF) {
         TogglButton.loadFiles(tabId, domain.file);
       } else {

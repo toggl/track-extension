@@ -338,7 +338,6 @@
 
 #project-autocomplete .tasklist-opened ul.task-list {
   background-color: #fafbfc;
-  background-color: var(--pale-grey);
   box-shadow: inset 0 1px 0 0 #ececec, inset 0 -1px 0 0 #ececec;
   height: auto;
   display: block;

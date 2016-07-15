@@ -38,6 +38,11 @@ var Settings = {
   showPage: function () {
     var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10),
       defProject;
+
+    if (!TogglButton) {
+      TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+    }
+
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;

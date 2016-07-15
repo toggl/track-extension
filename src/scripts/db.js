@@ -10,7 +10,6 @@ var Db = {
     "stopAutomatically": false,
     "showRightClickButton": true,
     "showPostPopup": true,
-    "socketEnabled": true,
     "nannyCheckEnabled": true,
     "nannyInterval": 3600000,
     "nannyFromTo": "09:00-17:00",
@@ -154,27 +153,10 @@ var Db = {
     }
   },
 
-  setSocket: function (state) {
-    Db.set("socketEnabled", state);
-    if (TogglButton.$socket !== null) {
-      TogglButton.$socket.close();
-      TogglButton.$socket = null;
-    }
-    if (state) {
-      if (!!TogglButton.$user) {
-        TogglButton.setupSocket();
-      } else {
-        TogglButton.fetchUser();
-      }
-    }
-  },
-
   newMessage: function (request, sender, sendResponse) {
     try {
       if (request.type === 'toggle-popup') {
         Db.set("showPostPopup", request.state);
-      } else if (request.type === 'toggle-socket') {
-        Db.setSocket(request.state);
       } else if (request.type === 'toggle-nanny') {
         Db.updateSetting("nannyCheckEnabled", request.state, TogglButton.triggerNotification);
       } else if (request.type === 'toggle-nanny-from-to') {

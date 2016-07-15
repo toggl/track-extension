@@ -182,9 +182,7 @@ TogglButton = {
               TogglButton.$sendResponse = null;
             }
             TogglButton.setBrowserActionBadge();
-            if (Db.get("socketEnabled")) {
-              TogglButton.setupSocket();
-            }
+            TogglButton.setupSocket();
             TogglButton.updateBugsnag();
             TogglButton.handleQueue();
           } else if (!token) {
@@ -531,7 +529,6 @@ TogglButton = {
       _gaq.push(['_trackEvent', 'stop-automatically', "settings/stop-automatically-" + Db.get("stopAutomatically")]);
       _gaq.push(['_trackEvent', 'right-click-button', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
       _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
-      _gaq.push(['_trackEvent', 'websocket', "settings/websocket-" + Db.get("socketEnabled")]);
       _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
       _gaq.push(['_trackEvent', 'reminder-minutes', "settings/reminder-minutes-" + Db.get("nannyInterval")]);
       _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);

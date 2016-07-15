@@ -20,7 +20,6 @@ var PopUp = {
   $projectBullet: document.querySelector(".timer .project-bullet"),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
-  $error: document.querySelector(".error"),
   $timerRow: document.querySelector(".timer"),
   $timer: null,
   $tagsVisible: false,

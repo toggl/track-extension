@@ -1037,6 +1037,10 @@ only screen and (min-resolution: 192dpi) {
   margin-left: 0;
 }
 
+#card-modal-view .modal-header .zube {
+  margin-top: 3px;
+}
+
 #tickets-show-main-container .toggl-button.zube {
   float:none;
 }

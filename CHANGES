@@ -1,3 +1,19 @@
+[1.0.2]
+- Fixed Default project assignement issues
+- Added project select with autocomplete
+- Added project color bullet to project select
+- Moved task select to project select dropdown
+- Added autocomplete to Tag selection
+- Added possibility to add new tags from edit view
+- Popup view design update to minimalistic icon based layout
+- Updated github integration
+- Updated Zube.io integration
+- Updated Visual Studio on line integration
+- Added Sherpadesk integration
+- Added Exana.io (Phacility) integration
+- Added tasklist item support for Google Keep
+- Added support for new Teamwork Projects UI
+
 [1.0.1]
 - Added support for Bitrix24
 - Added support for Rindle

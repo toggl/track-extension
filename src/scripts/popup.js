@@ -170,19 +170,6 @@ var PopUp = {
     togglButtonDescription.scrollLeft = 0;
   },
 
-  delegateTaskClick: function (e) {
-    // Ignore this click if it caused the last task blur.
-    if (PopUp.$taskBlurTrigger === e.target) {
-      PopUp.$taskBlurTrigger = null;
-      return;
-    }
-
-    var dropdown = document.getElementById('toggl-button-task'),
-      event = document.createEvent('MouseEvents');
-    event.initMouseEvent('mousedown', true, true, window);
-    dropdown.dispatchEvent(event);
-  },
-
   submitForm: function (that) {
     var selected = PopUp.$projectAutocomplete.getSelected(),
       request = {

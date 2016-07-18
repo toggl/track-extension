@@ -87,6 +87,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Rindle][83]
   - [TickTick][84]
   - [Exana][85]
+  - [SherpaDesk][86]
 
 ## Installing from the Web Store
 
@@ -99,7 +100,7 @@ https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaec
 3.  Choose "Load unpacked extension..."
 4.  Open the src directory in the toggl-button directory you just cloned and follow the prompts to install.
 
-## Change log
+## Changelog
 
 List of all the changes and added features can be found at http://toggl.github.io/toggl-button
 
@@ -108,30 +109,29 @@ List of all the changes and added features can be found at http://toggl.github.i
 2.  Go to your [TeamWeek][2], [Pivotal Tracker][3], [Github][4], [Asana][5], [Unfuddle][6], [Gitlab][7],
 [Trello][8], [Worksection][9], [Redbooth][10], [Podio][11], [Basecamp][12], [JIRA][13], [Producteev][14],
 [Bitbucket][15], [Stifer][16], [Google Docs][17], [Redmine][18], [YouTrack][19], [CapsuleCRM][20],
-[Xero][21], [Zendesk][22], [Any.do][23], [Todoist][24], [Trac][25], [Wunderlist][26], [Toodledo][27], [Teamwork.com][28], [Google Mail][29], [Taiga][30], [HabitRPG][31], [Axosoft][32], [Countersoft Gemini][33], [Drupal][34], [Esa][35], [Help Scout][36], [Flow][37], [Sprintly][38], [Google Calendar][39], [TestRail][40], [Bugzilla][41], [Breeze][42], [BamBam][43], [GQueue][44], [Wrike][45], [Assembla][46], [Waffle][47], [Codeable][48], [Eventum][49], [Salesforce][50], [Draftin][51], [FogBugz][52], [Google Keep][53], [Gingko][54], [Google Inbox][55], [Wordpress][56], [Kanbanery][57], [Planbox][58], [Zoho Books][59], [Slack][60], [Doit.im][61], [Sunrise Calendar][62], [Cloudes.me][63], [eProject.me][64], [Freshdesk][65], [Newsletter2Go][66], [Gogs][67], [DevDocs][68], [LiquidPlanner][69], [SourceLair][70], [Remember The Milk][71], [Evernote][72], [MantisHub][73], [TargetProcess][74], [VisualStudioOnline (TFS)][75], [SmartBoard][76], [Phabricator][77], [OpenProject][78], [Zube][79], [miniCRM.pl][80], [AgenoCRM][81], [Bitrix24][82], [Rindle][83], [TickTick][84], [Exana][85] account and start your Toggl timer there.
+[Xero][21], [Zendesk][22], [Any.do][23], [Todoist][24], [Trac][25], [Wunderlist][26], [Toodledo][27], [Teamwork.com][28], [Google Mail][29], [Taiga][30], [HabitRPG][31], [Axosoft][32], [Countersoft Gemini][33], [Drupal][34], [Esa][35], [Help Scout][36], [Flow][37], [Sprintly][38], [Google Calendar][39], [TestRail][40], [Bugzilla][41], [Breeze][42], [BamBam][43], [GQueue][44], [Wrike][45], [Assembla][46], [Waffle][47], [Codeable][48], [Eventum][49], [Salesforce][50], [Draftin][51], [FogBugz][52], [Google Keep][53], [Gingko][54], [Google Inbox][55], [Wordpress][56], [Kanbanery][57], [Planbox][58], [Zoho Books][59], [Slack][60], [Doit.im][61], [Sunrise Calendar][62], [Cloudes.me][63], [eProject.me][64], [Freshdesk][65], [Newsletter2Go][66], [Gogs][67], [DevDocs][68], [LiquidPlanner][69], [SourceLair][70], [Remember The Milk][71], [Evernote][72], [MantisHub][73], [TargetProcess][74], [VisualStudioOnline (TFS)][75], [SmartBoard][76], [Phabricator][77], [OpenProject][78], [Zube][79], [miniCRM.pl][80], [AgenoCRM][81], [Bitrix24][82], [Rindle][83], [TickTick][84], [Exana][85], [SherpaDesk][86] account and start your Toggl timer there.
 
 
 Or start entry from the extension icon menu
 
 3. To edit the running time entry
   - Edit entry details from the post start popup that is shown right after you click the "Start timer" button
-  - Edit entry details from the extesnion icon menu by clicking the running duration
+  - Edit entry details from the extesnion icon menu by clicking the running time entry name
 
 4. To stop the current running timer:
   - Press the button again
   - Stop the entry from the extension icon menu
   - Start another time entry inside your account.
-  - Go to Toggl to stop or edit your time entry.
 
 ## Custom domains
-If you use a setup, where one of the supported services is on a custom domain you can customize the extension to fit your needs. Here is a step by step guide on how to [add custom domain][98] to the extension.
+If you use a setup, where one of the supported services is on a custom domain you can define the custom domains in settings "Permissions" tab.
 
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
 
 When adding new integrations please use `git squash` and merge all your commits into one commit. This keeps the git log more compact and clear.
 
-Don't know how to start? Just check out the [user requested services][97] that have not yet been implemented, pick one and start hacking.
+Don't know how to start? Just check out the [user requested services][98] that have not yet been implemented, pick one and start hacking.
 
 [1]: https://www.toggl.com/
 [2]: https://teamweek.com/
@@ -218,7 +218,7 @@ Don't know how to start? Just check out the [user requested services][97] that h
 [83]: https://rindle.com/
 [84]: https://ticktick.com/
 [85]: https://exana.io/
+[86]: http://www.sherpadesk.com/
 
-[97]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
-[98]: https://github.com/toggl/toggl-button/wiki/Adding-custom-domains
+[98]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [99]: https://github.com/toggl/toggl-button/pulls

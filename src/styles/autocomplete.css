@@ -19,7 +19,7 @@
   width: 220px;
 }
 
-#toggl-button-edit-form.toggl-integration #project-autocomplete .filter-clear {
+#toggl-button-edit-form.toggl-integration #project-autocomplete a.filter-clear {
   line-height: 16px;
 }
 
@@ -140,13 +140,13 @@
   display: block!important;
 }
 
-.filter-clear {
+a.filter-clear {
   display: none;
   width: 18px;
   height: 18px;
   line-height: 14px;
   vertical-align: middle;
-  text-decoration: none;
+  text-decoration: none!important;
   color: #6b6969;
   font-size: 16px;
   font-weight: bold;
@@ -157,14 +157,18 @@
   right: 16px;
 }
 
-.filter-clear:hover {
+a.filter-clear:hover {
   color: #ffffff;
-  background-color: #6b6969;
+  background-color: #6b6969!important;
   border-radius: 20px;
 }
 
-.open .filter-clear {
+.open a.filter-clear {
   display: block;
+}
+
+span.item-name {
+  font-weight: 300;
 }
 
 /* PROJECT BULLETS */
@@ -306,7 +310,7 @@
   padding-right: 80px!important;
 }
 
-.task-count {
+#project-autocomplete .task-count {
   color: #a3a3a3;
   font-size: 12px;
   cursor: pointer;
@@ -315,7 +319,7 @@
   font-weight: 400;
 }
 
-.task-count:hover {
+#project-autocomplete .task-count:hover {
   opacity: .8;
 }
 
@@ -326,12 +330,12 @@
   clear: both;
 }
 
-.task-item {
+#project-autocomplete .task-item {
   padding-left: 25px;
   color: #a3a3a3;
 }
 
-.tasklist-opened {
+#project-autocomplete .tasklist-opened {
   height: auto!important;
   border-radius: 0!important;
 }

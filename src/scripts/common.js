@@ -1,7 +1,7 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
 /*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, document: false, MutationObserver: false, chrome: false, window: false, navigator: false*/
 "use strict";
-console.log(">> COMMON");
+
 var projectAutocomplete,
   tagAutocomplete;
 

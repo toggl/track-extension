@@ -17,6 +17,7 @@ var PopUp = {
   $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
+  $tagIcon: document.querySelector(".tag-icon"),
   $projectBullet: document.querySelector(".timer .project-bullet"),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
@@ -121,15 +122,23 @@ var PopUp = {
       description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
+      PopUp.setTagIcon(TogglButton.$curEntry.tags);
     }
   },
 
-  updateMenuTimer: function (desc, pid, tid) {
-    var description = desc || "(no description)";
+  updateMenuTimer: function (data) {
+    var description = data.description || "(no description)";
 
-    description += PopUp.$projectAutocomplete.setProjectBullet(pid, tid, PopUp.$projectBullet);
+    description += PopUp.$projectAutocomplete.setProjectBullet(data.pid, data.tid, PopUp.$projectBullet);
     PopUp.$editButton.textContent = description;
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
+
+    PopUp.setTagIcon(data.tags);
+  },
+
+  setTagIcon: function (tags) {
+    PopUp.$tagIcon.classList.toggle("visible", !!tags.length);
+    PopUp.$tagIcon.setAttribute("title", tags.join(", "));
   },
 
   switchView: function (view) {
@@ -183,7 +192,7 @@ var PopUp = {
         service: "dropdown"
       };
     PopUp.sendMessage(request);
-    PopUp.updateMenuTimer(request.description, request.pid, request.tid);
+    PopUp.updateMenuTimer(request);
     PopUp.switchView(PopUp.$menuView);
   },
 

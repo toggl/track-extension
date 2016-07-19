@@ -314,6 +314,27 @@ hr {
   font-size: 12px;
 }
 
+.tag-icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARBAMAAADJQ1rJAAAAAXNSR0IArs4c6QAAACpQTFRFAAAA19fX0dHR0NDQz8/Pzs7Oz8/Pz8/Pzs7Oz8/Pz8/Pzs7Oz8/Pzs7Og6ZZ9AAAAA10Uk5TABMcPEp4e4CotuP8/rXdOgkAAABdSURBVAjXY/C6e3eFAQMIrL179+4xMOvuJM27dwvALAWmu3evw1lgQbAsWBCkAyLYC2FdZWCwgbBuCzCwwVkMtTBZBnaYDogg2GiwIFgIJAgRYmBg3R0AZTEIgggAaI1FSkguN/cAAAAASUVORK5CYII=');
+  width: 23px;
+  height: 29px;
+  position: absolute;
+  right: 65px;
+  bottom: 6px;
+  display: none;
+}
+
+.tag-icon.visible {
+  display: block;
+}
+
+.tag-icon.visible ~ .edit-button {
+  width: 124px;
+  padding-right: 20px;
+}
+
 .stop-button {
   width: 170px;
   padding-left: 30px;
@@ -361,9 +382,10 @@ hr {
 }
 
 .tracking .edit-button{
-  width: 144px;
+  width: 140px;
   padding-left: 30px;
   display: block;
+  padding-right: 4px;
 }
 
 .tracking .edit-button:hover {

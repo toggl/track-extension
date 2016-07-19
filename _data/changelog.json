@@ -1,5 +1,27 @@
 {
-    "versions": [{
+    "versions": [
+    {
+      "version":"1.0.2",
+      "short-version": "102",
+      "date": "July 18th 2016",
+      "rows":[
+        "Fixed Default project assignement issues",
+        "Added project select with autocomplete",
+        "Added project color bullet to project select",
+        "Moved task select to project select dropdown",
+        "Added autocomplete to Tag selection",
+        "Added possibility to add new tags from edit view",
+        "Popup view design update to minimalistic icon based layout",
+        "Updated github integration",
+        "Updated Zube.io integration",
+        "Updated Visual Studio on line integration",
+        "Added Sherpadesk integration",
+        "Added Exana.io (Phacility) integration",
+        "Added tasklist item support for Google Keep",
+        "Added support for new Teamwork Projects UI"
+      ]
+    },
+    {
         "version": "1.0.1",
         "short-version": "101",
         "date": "June 10th 2016",

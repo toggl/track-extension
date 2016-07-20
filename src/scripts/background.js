@@ -110,6 +110,7 @@ TogglButton = {
         '{tags}</div>' +
       '</div>' +
       '<div id="toggl-button-update" tabindex="103">DONE</div>' +
+      '<input type="submit" class="hidden">' +
       '</from>' +
     '</div>',
 

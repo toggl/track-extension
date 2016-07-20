@@ -1385,29 +1385,40 @@ TogglButton = {
       }
 
       if (FF) {
-        TogglButton.loadFiles(tabId, domain.file);
+        TogglButton.checkLoadedScripts(tabId, domain.file);
       } else {
         chrome.permissions.contains(permission, function (result) {
-          if (result) {
-            TogglButton.loadFiles(tabId, domain.file);
+          if (result && !!domain.file) {
+            TogglButton.checkLoadedScripts(tabId, domain.file);
           }
         });
       }
     }
   },
 
-  loadFiles: function (tabId, file) {
-    if (!!file) {
-      chrome.tabs.insertCSS(tabId, {file: "styles/style.css"}, function () {
-        chrome.tabs.insertCSS(tabId, {file: "styles/autocomplete.css"});
-      });
+  checkLoadedScripts: function (tabId, file) {
+    chrome.tabs.executeScript(tabId, {
+      "code": "(typeof togglbutton === 'undefined')"
+    }, function (firstLoad) {
+      if (!!firstLoad[0]) {
+        TogglButton.loadFiles(tabId, file);
+      }
+    });
+  },
 
-      chrome.tabs.executeScript(tabId, {file: "scripts/autocomplete.js"}, function () {
-        chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
-          chrome.tabs.executeScript(tabId, {file: "scripts/content/" + file});
-        });
-      });
+  loadFiles: function (tabId, file) {
+    if (debug) {
+      console.log("Load content script: [" + file + "]");
     }
+    chrome.tabs.insertCSS(tabId, {file: "styles/style.css"}, function () {
+      chrome.tabs.insertCSS(tabId, {file: "styles/autocomplete.css"});
+    });
+
+    chrome.tabs.executeScript(tabId, {file: "scripts/autocomplete.js"}, function () {
+      chrome.tabs.executeScript(tabId, {file: "scripts/common.js"}, function () {
+        chrome.tabs.executeScript(tabId, {file: "scripts/content/" + file});
+      });
+    });
   },
 
   extractDomain: function (url) {

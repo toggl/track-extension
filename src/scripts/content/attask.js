@@ -24,7 +24,7 @@ togglbutton.render('#layout-container:not(.toggl)', {observe: true}, function (e
   });
 
   var t_style = document.createElement("style");
-  t_style.innerHTML = ".toggl-button{height: 62px;line-height: 62px;background-color:#333;background-position: 1em 50%;padding: 0 1em 0 2.75em;transition: all 0.5s ease;}#nav-toggl{height: 62px; vertical-align: middle; } .toggl-button:hover{background-color:#000 !important;} .toggl-button.active{background-color:#000;}";
+  t_style.innerHTML = ".toggl-button{height: 62px;line-height: 62px;background-position: 1em 50%;padding: 0 1em 0 2.75em;}#nav-toggl{height: 62px; vertical-align: middle; } .toggl-button:hover{background-color:#eee !important;} .toggl-button.active{background-color:#f5f5f5;}";
   document.head.appendChild(t_style);
 
   var t_container = document.createElement("li");

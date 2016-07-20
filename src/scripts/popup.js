@@ -189,16 +189,8 @@ var PopUp = {
 
   addEditEvents: function () {
     /* Edit form events */
-    var handler;
-
     PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
     PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
-
-    handler = function (e) {
-      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        this.removeEventListener("click", handler);
-      }
-    };
 
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
@@ -208,15 +200,6 @@ var PopUp = {
       PopUp.submitForm(this);
       e.preventDefault();
     });
-
-    document.addEventListener('mousedown', function (e) {
-      PopUp.mousedownTrigger = e.target;
-    });
-    document.addEventListener('mouseup', function (e) {
-      PopUp.mousedownTrigger = null;
-    });
-
-    document.addEventListener("click", handler);
   }
 };
 

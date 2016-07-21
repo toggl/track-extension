@@ -1385,7 +1385,9 @@ TogglButton = {
       }
 
       if (FF) {
-        TogglButton.checkLoadedScripts(tabId, domain.file);
+        if (!!domain.file) {
+          TogglButton.checkLoadedScripts(tabId, domain.file);
+        }
       } else {
         chrome.permissions.contains(permission, function (result) {
           if (result && !!domain.file) {

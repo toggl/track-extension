@@ -109,7 +109,7 @@ TogglButton = {
         '<div class="tag-clear">Clear selected tags</div>' +
         '{tags}</div>' +
       '</div>' +
-      '<div class="toggl-button-row tb-billable">' +
+      '<div class="toggl-button-row tb-billable {billable}">' +
         '<div class="toggl-button-billable-label">Billable</div>' +
         '<div class="toggl-button-billable-flag"><span></span></div>' +
       '</div>' +
@@ -770,10 +770,6 @@ TogglButton = {
       }
     };
 
-    if (timeEntry.pid !== null && timeEntry.projectName !== null) {
-      project = TogglButton.$user.projectMap[timeEntry.projectName + timeEntry.pid];
-    }
-
     TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
       method: 'PUT',
       payload: entry,
@@ -909,7 +905,16 @@ TogglButton = {
     }
     return TogglButton.$editForm
         .replace("{projects}", TogglButton.fillProjects())
-        .replace("{tags}", TogglButton.fillTags());
+        .replace("{tags}", TogglButton.fillTags())
+        .replace("{billable}", TogglButton.setupBillable());
+  },
+
+  setupBillable: function () {
+    if (!!TogglButton.canSeeBillable) {
+      return "";
+    }
+
+    return "no-billable";
   },
 
   fillProjects: function () {

@@ -1,4 +1,4 @@
-/*jslint indent: 2, unparam: true*/
+/*jslint indent: 2, unparam: true, plusplus: true*/
 /*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
@@ -27,6 +27,7 @@ var PopUp = {
   mousedownTrigger: null,
   projectBlurTrigger: null,
   editFormAdded: false,
+  $billable: null,
   $header: document.querySelector(".header"),
   $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
@@ -175,7 +176,7 @@ var PopUp = {
     PopUp.$projectAutocomplete.setup(pid, tid);
     PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags);
 
-    PopUp.setupBillable(TogglButton.$curEntry.billable);
+    PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
     PopUp.switchView(view);
 
     // Put focus to the beginning of desctiption field
@@ -184,9 +185,46 @@ var PopUp = {
     togglButtonDescription.scrollLeft = 0;
   },
 
-  setupBillable: function (billable) {
-    document.querySelector(".tb-billable").classList.toggle("no-billable", !TogglButton.canSeeBillable);
-    document.querySelector(".tb-billable").classList.toggle("tb-checked", billable);
+  updateBillable: function (pid, no_overwrite) {
+    var project, i,
+      pwid = TogglButton.$user.default_wid,
+      ws = TogglButton.$user.workspaces,
+      premium;
+
+    if (pid === 0) {
+      pwid = TogglButton.$user.default_wid;
+    } else {
+      project = TogglButton.findProjectByPid(pid);
+      if (!project) {
+        return;
+      }
+      pwid = project.wid;
+    }
+
+    for (i = 0; i < ws.length; i++) {
+      if (ws[i].id === pwid) {
+        premium = ws[i].premium;
+        break;
+      }
+    }
+
+    PopUp.toggleBillable(premium);
+
+    if (!no_overwrite && project.billable) {
+      PopUp.$billable.classList.toggle("tb-checked", true);
+    }
+  },
+
+  toggleBillable: function (visible) {
+    PopUp.$billable.classList.toggle("no-billable", !visible);
+    if (!visible) {
+      PopUp.$billable.classList.toggle("tb-checked", visible);
+    }
+  },
+
+  setupBillable: function (billable, pid) {
+    PopUp.updateBillable(pid, true);
+    PopUp.$billable.classList.toggle("tb-checked", billable);
   },
 
   submitForm: function (that) {
@@ -214,6 +252,8 @@ var PopUp = {
     PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
     PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
 
+    PopUp.$billable = document.querySelector(".tb-billable");
+
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
     });
@@ -223,7 +263,7 @@ var PopUp = {
       e.preventDefault();
     });
 
-    document.querySelector(".tb-billable").addEventListener('click', function () {
+    PopUp.$billable.addEventListener('click', function () {
       this.classList.toggle("tb-checked");
     });
   }

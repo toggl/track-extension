@@ -1,6 +1,17 @@
 {
     "versions": [
     {
+      "version":"1.0.3",
+      "short-version": "103",
+      "date": "July 21st 2016",
+      "rows":[
+        "Fixed Google Inbox integration",
+        "Autocomplete style fixes",
+        "Fixed Google Docs multiple load issue",
+        "Fixed submitting popup with Enter"
+      ]
+    },
+    {
       "version":"1.0.2",
       "short-version": "102",
       "date": "July 18th 2016",

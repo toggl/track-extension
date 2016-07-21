@@ -182,7 +182,7 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
   return false;
 };
 
-AutoComplete.prototype.toggleTaskList = function (elem) {
+ProjectAutoComplete.prototype.toggleTaskList = function (elem) {
   var opened = this.el.querySelector(".tasklist-opened");
   if (!!opened) {
     opened.classList.remove("tasklist-opened");

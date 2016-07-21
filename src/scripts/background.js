@@ -109,6 +109,10 @@ TogglButton = {
         '<div class="tag-clear">Clear selected tags</div>' +
         '{tags}</div>' +
       '</div>' +
+      '<div class="toggl-button-row tb-billable">' +
+        '<div class="toggl-button-billable-label">Billable</div>' +
+        '<div class="toggl-button-billable-flag"><span></span></div>' +
+      '</div>' +
       '<div id="toggl-button-update" tabindex="103">DONE</div>' +
       '<input type="submit" class="hidden">' +
       '</from>' +
@@ -186,6 +190,7 @@ TogglButton = {
             TogglButton.setupSocket();
             TogglButton.updateBugsnag();
             TogglButton.handleQueue();
+            TogglButton.setCanSeeBillable();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
             if (apiToken) {
@@ -225,6 +230,22 @@ TogglButton = {
     Bugsnag.user = {
       id: TogglButton.$user.id
     };
+  },
+
+  setCanSeeBillable: function () {
+    var canSeeBillable = false,
+      ws,
+      k;
+    for (k in TogglButton.$user.workspaces) {
+      if (TogglButton.$user.workspaces.hasOwnProperty(k)) {
+        ws = TogglButton.$user.workspaces[k];
+        if (ws.premium) {
+          canSeeBillable = true;
+          break;
+        }
+      }
+    }
+    TogglButton.canSeeBillable = canSeeBillable;
   },
 
   setupSocket: function () {
@@ -742,13 +763,13 @@ TogglButton = {
         description: timeEntry.description,
         pid: timeEntry.pid,
         tags: timeEntry.tags,
-        tid: timeEntry.tid
+        tid: timeEntry.tid,
+        billable: timeEntry.billable
       }
     };
 
     if (timeEntry.pid !== null && timeEntry.projectName !== null) {
       project = TogglButton.$user.projectMap[timeEntry.projectName + timeEntry.pid];
-      entry.time_entry.billable = project && project.billable;
     }
 
     TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {

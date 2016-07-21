@@ -171,6 +171,8 @@ var PopUp = {
 
     PopUp.$projectAutocomplete.setup(pid, tid);
     PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags);
+
+    PopUp.setupBillable(TogglButton.$curEntry.billable);
     PopUp.switchView(view);
 
     // Put focus to the beginning of desctiption field
@@ -179,8 +181,14 @@ var PopUp = {
     togglButtonDescription.scrollLeft = 0;
   },
 
+  setupBillable: function (billable) {
+    document.querySelector(".tb-billable").classList.toggle("no-billable", !TogglButton.canSeeBillable);
+    document.querySelector(".tb-billable").classList.toggle("tb-checked", billable);
+  },
+
   submitForm: function (that) {
     var selected = PopUp.$projectAutocomplete.getSelected(),
+      billable = !!document.querySelector(".tb-billable.tb-checked:not(.no-billable)"),
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
@@ -189,8 +197,10 @@ var PopUp = {
         tags: PopUp.$tagAutocomplete.getSelected(),
         tid: selected.tid,
         respond: true,
+        billable: billable,
         service: "dropdown"
       };
+
     PopUp.sendMessage(request);
     PopUp.updateMenuTimer(request);
     PopUp.switchView(PopUp.$menuView);
@@ -208,6 +218,10 @@ var PopUp = {
     document.querySelector("#entry-form form").addEventListener('submit', function (e) {
       PopUp.submitForm(this);
       e.preventDefault();
+    });
+
+    document.querySelector(".tb-billable").addEventListener('click', function () {
+      this.classList.toggle("tb-checked");
     });
   }
 };

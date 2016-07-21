@@ -867,7 +867,7 @@ TogglButton = {
         if (xhr.status === 200) {
           TogglButton.setBrowserActionBadge();
         }
-        TogglButton.refreshPage();
+        TogglButton.refreshPageLogout();
       },
       onError: function (xhr) {
         sendResponse(
@@ -1001,9 +1001,27 @@ TogglButton = {
   },
 
   refreshPage: function () {
+    var domain;
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
       if (!!tabs[0]) {
-        chrome.tabs.reload(tabs[0].id);
+        domain = TogglButton.extractDomain(tabs[0].url);
+        if (!!domain.file) {
+          chrome.tabs.reload(tabs[0].id);
+        }
+      }
+    });
+  },
+
+  refreshPageLogout: function () {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+      if (!!tabs[0]) {
+        chrome.tabs.executeScript(tabs[0].id, {
+          "code": "!!document.querySelector('.toggl-button')"
+        }, function (reload) {
+          if (!!reload[0]) {
+            chrome.tabs.reload(tabs[0].id);
+          }
+        });
       }
     });
   },

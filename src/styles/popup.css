@@ -631,3 +631,7 @@ hr {
 .ff .error {
   font-size: 12px;
 }
+
+.hidden {
+  display: none;
+}

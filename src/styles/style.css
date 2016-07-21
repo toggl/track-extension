@@ -986,6 +986,8 @@ only screen and (min-resolution: 192dpi) {
 /********* GOOGLE INBOX *********/
 .toggl-button.google-inbox {
   margin-top: 5px;
+  position: absolute;
+  margin-left: -15px;
 }
 
 /********* WORDPRESS *********/

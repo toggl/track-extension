@@ -425,6 +425,8 @@ TogglButton = {
     // set Default project if needed
     if (!entry.time_entry.pid && !!defaultProject) {
       entry.time_entry.pid = parseInt(defaultProject, 10);
+      project = TogglButton.findProjectByPid(entry.time_entry.pid);
+      entry.time_entry.billable = project && project.billable;
     }
 
     TogglButton.ajax('/time_entries', {

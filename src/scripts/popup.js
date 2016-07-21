@@ -137,8 +137,11 @@ var PopUp = {
   },
 
   setTagIcon: function (tags) {
-    PopUp.$tagIcon.classList.toggle("visible", !!tags.length);
-    PopUp.$tagIcon.setAttribute("title", tags.join(", "));
+    var t = !!tags && !!tags.length,
+      joinedTags = t ? tags.join(", ") : "";
+
+    PopUp.$tagIcon.classList.toggle("visible", t);
+    PopUp.$tagIcon.setAttribute("title", joinedTags);
   },
 
   switchView: function (view) {

@@ -1,6 +1,15 @@
 {
   "versions":[
     {
+      "version":"1.0.3",
+      "rows":[
+        "Fixed Google Inbox integration",
+        "Autocomplete style fixes",
+        "Fixed Google Docs multiple load issue",
+        "Fixed submitting popup with Enter"
+      ]
+    },
+    {
       "version":"1.0.2",
       "rows":[
         "Fixed Default project assignement issues",

@@ -314,25 +314,51 @@ hr {
   font-size: 12px;
 }
 
-.tag-icon {
+.tag-icon,
+.billable-icon {
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARBAMAAADJQ1rJAAAAAXNSR0IArs4c6QAAACpQTFRFAAAA19fX0dHR0NDQz8/Pzs7Oz8/Pz8/Pzs7Oz8/Pz8/Pzs7Oz8/Pzs7Og6ZZ9AAAAA10Uk5TABMcPEp4e4CotuP8/rXdOgkAAABdSURBVAjXY/C6e3eFAQMIrL179+4xMOvuJM27dwvALAWmu3evw1lgQbAsWBCkAyLYC2FdZWCwgbBuCzCwwVkMtTBZBnaYDogg2GiwIFgIJAgRYmBg3R0AZTEIgggAaI1FSkguN/cAAAAASUVORK5CYII=');
-  width: 23px;
-  height: 29px;
-  position: absolute;
-  right: 65px;
-  bottom: 6px;
+  width: 20px;
+  height: 30px;
   display: none;
+  float: left;
 }
 
-.tag-icon.visible {
-  display: block;
+.tag-icon {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARBAMAAADJQ1rJAAAAAXNSR0IArs4c6QAAACpQTFRFAAAArq6upKSkpqampaWlpKSkpKSko6OjpKSkpKSkpKSkpKSkpKSko6Ojxtw9PQAAAA10Uk5TABMcPEp4e4CotuP8/rXdOgkAAABdSURBVAjXY/C6e3eFAQMIrL179+4xMOvuJM27dwvALAWmu3evw1lgQbAsWBCkAyLYC2FdZWCwgbBuCzCwwVkMtTBZBnaYDogg2GiwIFgIJAgRYmBg3R0AZTEIgggAaI1FSkguN/cAAAAASUVORK5CYII=');
 }
 
 .tag-icon.visible ~ .edit-button {
   width: 124px;
   padding-right: 20px;
+}
+
+.billable-icon {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAUCAMAAACDMFxkAAAAAXNSR0IArs4c6QAAAFpQTFRFAAAA////qqqqp6enqqqqp6enqKioo6OjpqampaWlpKSkpaWlo6OjpKSkpKSko6OjpKSko6OjpKSkpKSkpKSkpKSko6OjpKSkpKSkpKSkpKSkpKSko6Ojo6OjwiB/AwAAAB10Uk5TAAEPGhsgJicrR3t/gJ+osrPDxMrS1Nzd5ebo8fVWC5UqAAAAaElEQVQI13VPRw7AMAyiTle6R9LN/7/ZdCpSVU5Y2IABh67FA/JDpTCkyQVQI08MChWtFtGWFVZGx1rEFRtj3IYNlyy9DMLe3UylDhwPdDm7qVeXlGYL6yc/4eabeRFe8F2nkN++70M7wSMIvPS86/IAAAAASUVORK5CYII=');
+}
+
+.timer.tag-icon-visible .tag-icon,
+.timer.billable-icon-visible .billable-icon {
+  display: block;
+}
+
+/* Only billable icon visible */
+.timer.billable-icon-visible:not(.tag-icon-visible) .edit-button {
+  width: 120px;
+}
+
+/* Only tag icon visible */
+.timer.tag-icon-visible:not(.billable-icon-visible) .edit-button {
+  width: 117px;
+}
+
+.timer.tag-icon-visible:not(.billable-icon-visible) .tag-icon {
+  width: 23px;
+}
+
+/* Both icons visible */
+.timer.tag-icon-visible.billable-icon-visible .edit-button {
+  width: 100px;
 }
 
 .stop-button {

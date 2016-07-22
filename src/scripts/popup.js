@@ -123,7 +123,8 @@ var PopUp = {
       description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
-      PopUp.setTagIcon(TogglButton.$curEntry.tags);
+
+      PopUp.setupIcons(TogglButton.$curEntry);
     }
   },
 
@@ -137,12 +138,21 @@ var PopUp = {
     PopUp.setTagIcon(data.tags);
   },
 
+  setupIcons: function (data) {
+    PopUp.setTagIcon(data.tags);
+    PopUp.setBillableIcon(!!data.billable);
+  },
+
   setTagIcon: function (tags) {
     var t = !!tags && !!tags.length,
       joinedTags = t ? tags.join(", ") : "";
 
-    PopUp.$tagIcon.classList.toggle("visible", t);
+    PopUp.$timerRow.classList.toggle("tag-icon-visible", t);
     PopUp.$tagIcon.setAttribute("title", joinedTags);
+  },
+
+  setBillableIcon: function (billable) {
+    PopUp.$timerRow.classList.toggle("billable-icon-visible", billable);
   },
 
   switchView: function (view) {

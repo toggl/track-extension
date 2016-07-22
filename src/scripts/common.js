@@ -92,7 +92,6 @@ var togglbutton = {
   element: null,
   links: [],
   serviceName: '',
-  mousedownTrigger: null,
   projectBlurTrigger: null,
   taskBlurTrigger: null,
   tagsVisible: false,
@@ -271,12 +270,6 @@ var togglbutton = {
       tagAutocomplete.closeDropdown();
       editForm.style.display = "none";
       return false;
-    });
-    document.addEventListener('mousedown', function (e) {
-      togglbutton.mousedownTrigger = e.target;
-    });
-    document.addEventListener('mouseup', function (e) {
-      togglbutton.mousedownTrigger = null;
     });
 
     document.addEventListener("click", handler);

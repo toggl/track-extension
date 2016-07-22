@@ -758,7 +758,7 @@ TogglButton = {
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {
-    var entry, project, error = "";
+    var entry, error = "";
     if (!TogglButton.$curEntry) { return; }
     entry = {
       time_entry: {

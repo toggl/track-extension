@@ -25,7 +25,7 @@ togglbutton.render('.fsi-toolbar-content:not(.toggl), .toolbar_fsi:not(.toggl)',
 togglbutton.render('#board .sb-task:not(.toggl)', {observe: true}, function (elem) {
   var link,
     container = $('.sb-task-details', elem),
-    description = $('.sb-task-summary', elem).textContent,
+    description = $('.sb-task-issue-ref').textContent + ' ' + $('.sb-task-summary', elem).textContent,
     projectName = $('#selectAgile').value.split("(")[1].replace(")", "").trim();
 
   link = togglbutton.createTimerLink({

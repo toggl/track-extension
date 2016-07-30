@@ -9,7 +9,7 @@ togglbutton.render('.fsi-toolbar-content:not(.toggl), .toolbar_fsi:not(.toggl)',
   var link, description,
     numElem = $('a.issueId'),
     titleElem = $(".issue-summary"),
-    projectElem = $('.fsi-properties .disabled.bold');
+    projectElem = $('.fsi-properties a[title^="Project"], .fsi-properties .disabled.bold');
 
   description = titleElem.textContent;
   description = numElem.firstChild.textContent.trim() + " " + description.trim();

@@ -1,5 +1,5 @@
 # Toggl Button Chrome extension
-# Test
+
 
 Add Toggl one-click time tracking to popular web tools.
 

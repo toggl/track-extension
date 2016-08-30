@@ -958,8 +958,9 @@ TogglButton = {
     var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id] : null,
       i,
       tasksCount,
+      hasTasks = !!tasks ? "has-tasks" : "",
       html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
-        '<span class="item-name">' + escapeHtml(project.name) + '</span>';
+        '<span class="item-name ' + hasTasks + '" title="' + escapeHtml(project.name) + '">' + escapeHtml(project.name) + '</span>';
 
     if (!!tasks) {
       tasksCount = tasks.length + " task";

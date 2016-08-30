@@ -32,7 +32,7 @@ togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)'
 
   description = titleElem.textContent.trim();
   if (numElem !== null) {
-    description = "MR" + numElem.innerText.split(" ").pop().trim().replace("!", "") + "::"+ description;
+    description = "MR" + numElem.innerText.split(" ").pop().trim().replace("!", "") + "::" + description;
   }
 
   link = togglbutton.createTimerLink({

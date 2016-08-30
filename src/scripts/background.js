@@ -289,16 +289,19 @@ TogglButton = {
 
   updateTriggers: function (entry, sync) {
     TogglButton.$curEntry = entry;
-    if (!sync) {
-      if (!!entry) {
+    if (!!entry) {
+      if (!sync) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
         TogglButton.$nannyTimer = null;
-      } else {
-        // Clear pomodoro timer
-        clearTimeout(TogglButton.pomodoroAlarm);
-        clearInterval(TogglButton.pomodoroProgressTimer);
       }
+    } else {
+      // Clear pomodoro timer
+      clearTimeout(TogglButton.pomodoroAlarm);
+      clearInterval(TogglButton.pomodoroProgressTimer);
+      chrome.browserAction.setIcon({
+        path: {'19': 'images/active-19.png', '38': 'images/active-38.png'}
+      });
     }
     // Toggle workday end check
     TogglButton.startCheckingDayEnd(!!entry);

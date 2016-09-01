@@ -4,12 +4,10 @@
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   Db = chrome.extension.getBackgroundPage().Db,
-  CH = chrome.extension,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
   w = window.innerWidth;
 
 if (FF) {
-  CH = chrome.runtime;
   document.querySelector("html").classList.add("ff");
 }
 
@@ -18,7 +16,6 @@ var Settings = {
   $stopAutomatically: null,
   $showRightClickButton: null,
   $postPopup: null,
-  $socket: null,
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
@@ -40,6 +37,11 @@ var Settings = {
   showPage: function () {
     var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10),
       defProject;
+
+    if (!TogglButton) {
+      TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+    }
+
     document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
@@ -50,7 +52,6 @@ var Settings = {
     Settings.toggleState(Settings.$stopAutomatically, Db.get("stopAutomatically"));
     Settings.toggleState(Settings.$postPopup, Db.get("showPostPopup"));
     Settings.toggleState(Settings.$nanny, Db.get("nannyCheckEnabled"));
-    Settings.toggleState(Settings.$socket, Db.get("socketEnabled"));
     Settings.toggleState(Settings.$idleDetection, Db.get("idleDetectionEnabled"));
     Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
     Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
@@ -113,7 +114,7 @@ var Settings = {
     if (elem !== null) {
       Settings.toggleState(elem, state);
     }
-    CH.sendMessage(request);
+    chrome.runtime.sendMessage(request);
   },
   saveSetting: function (value, type) {
     Settings.toggleSetting(null, value, type);
@@ -200,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$stopAutomatically = document.querySelector("#stop_automatically");
   Settings.$showRightClickButton = document.querySelector("#show_right_click_button");
   Settings.$postPopup = document.querySelector("#show_post_start_popup");
-  Settings.$socket = document.querySelector("#websocket");
   Settings.$nanny = document.querySelector("#nag-nanny");
   Settings.$idleDetection = document.querySelector("#idle-detection");
   Settings.$pomodoroMode = document.querySelector("#pomodoro-mode");
@@ -279,9 +279,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
   Settings.$postPopup.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("showPostPopup") !== "true"), "toggle-popup");
-  });
-  Settings.$socket.addEventListener('click', function (e) {
-    Settings.toggleSetting(e.target, (localStorage.getItem("socketEnabled") !== "true"), "toggle-socket");
   });
   Settings.$nanny.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("nannyCheckEnabled") !== "true"), "toggle-nanny");

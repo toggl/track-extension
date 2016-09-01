@@ -1,14 +1,12 @@
 /*jslint indent: 2, unparam: true*/
-/*global navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   Db = chrome.extension.getBackgroundPage().Db,
-  CH = chrome.extension,
   FF = navigator.userAgent.indexOf("Chrome") === -1;
 
 if (FF) {
-  CH = chrome.runtime;
   document.querySelector("body").classList.add("ff");
 }
 
@@ -19,17 +17,17 @@ var PopUp = {
   $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
-  $projectBullet: document.querySelector(".project-bullet"),
-  $error: document.querySelector(".error"),
+  $projectBullet: document.querySelector(".timer .project-bullet"),
+  $projectAutocomplete: null,
+  $tagAutocomplete: null,
   $timerRow: document.querySelector(".timer"),
   $timer: null,
   $tagsVisible: false,
-  $taskBlurTrigger: null,
   mousedownTrigger: null,
   projectBlurTrigger: null,
-  taskBlurTrigger: null,
   editFormAdded: false,
-  $menuView: document.querySelector(".menu"),
+  $header: document.querySelector(".header"),
+  $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
   defaultErrorMessage: "Error connecting to server",
@@ -45,7 +43,7 @@ var PopUp = {
         PopUp.addEditEvents();
         PopUp.editFormAdded = true;
       }
-      document.querySelector(".user-email").textContent = TogglButton.$user.email;
+      document.querySelector(".header .icon").setAttribute("title", "Open toggl.com - " + TogglButton.$user.email);
       PopUp.$timerRow.classList.remove("has-resume");
       if (TogglButton.$curEntry === null) {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
@@ -66,7 +64,7 @@ var PopUp = {
         PopUp.$togglButton.parentNode.classList.add('tracking');
         PopUp.showCurrentDuration(true);
       }
-      if (PopUp.$menuView.style.display === "none" && PopUp.$editView.style.display === "none") {
+      if (!PopUp.$header.getAttribute("data-view")) {
         PopUp.switchView(PopUp.$menuView);
       }
     } else {
@@ -76,7 +74,7 @@ var PopUp = {
   },
 
   sendMessage: function (request) {
-    CH.sendMessage(request, function (response) {
+    chrome.runtime.sendMessage(request, function (response) {
       if (!response) {
         return;
       }
@@ -120,40 +118,22 @@ var PopUp = {
     PopUp.$togglButton.textContent = duration;
     if (startTimer) {
       PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
-      description += PopUp.setProjectBullet(TogglButton.$curEntry.pid, PopUp.$projectBullet);
+      description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
     }
   },
 
-  updateMenuTimer: function (desc, pid) {
+  updateMenuTimer: function (desc, pid, tid) {
     var description = desc || "(no description)";
 
-    description += PopUp.setProjectBullet(pid, PopUp.$projectBullet);
+    description += PopUp.$projectAutocomplete.setProjectBullet(pid, tid, PopUp.$projectBullet);
     PopUp.$editButton.textContent = description;
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
   },
 
-  setProjectBullet: function (pid, elem) {
-    var project,
-      id = parseInt(pid, 10);
-    elem.className = "project-bullet";
-    if (!!pid && id !== 0) {
-      project = TogglButton.findProjectByPid(id);
-      if (!!project) {
-        elem.classList.add("color-" + project.color);
-        elem.classList.add("project-color");
-        return " - " + project.name;
-      }
-    }
-    return "";
-  },
-
   switchView: function (view) {
-    PopUp.$menuView.style.display = "none";
-    PopUp.$editView.style.display = "none";
-    PopUp.$loginView.style.display = "none";
-    view.style.display = "block";
+    PopUp.$header.setAttribute("data-view", view.id);
   },
 
   formatMe: function (n) {
@@ -174,189 +154,43 @@ var PopUp = {
 
   /* Edit form functions */
   updateEditForm: function (view) {
-    var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : parseInt(Db.get('defaultProject'), 10),
+    var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
-      togglButtonDescription = document.querySelector("#toggl-button-description"),
-      projectSelect,
-      placeholder;
+      togglButtonDescription = document.querySelector("#toggl-button-description");
 
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
-    projectSelect = document.getElementById("toggl-button-project");
-    projectSelect.value = pid;
-    placeholder = document.querySelector("#toggl-button-project-placeholder > .toggl-button-text");
-    placeholder.innerHTML = placeholder.title = PopUp.generateLabel(projectSelect, pid, "project");
-    PopUp.fetchTasks(pid, tid);
-    PopUp.setProjectBullet(pid, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
-    if (!!TogglButton.$curEntry.tags && TogglButton.$curEntry.tags.length) {
-      PopUp.setSelecedTags();
-    } else {
-      document.querySelector("#toggl-button-tag-placeholder > div").innerHTML = "Add tags";
-      document.querySelector("#toggl-button-tag").value = "";
-    }
+
+    PopUp.$projectAutocomplete.setup(pid, tid);
+    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags);
     PopUp.switchView(view);
+
     // Put focus to the beginning of desctiption field
     togglButtonDescription.focus();
     togglButtonDescription.setSelectionRange(0, 0);
     togglButtonDescription.scrollLeft = 0;
   },
 
-  setSelecedTags: function () {
-    var j, i,
-      s = document.getElementById("toggl-button-tag");
-    for (i = 0; i < TogglButton.$curEntry.tags.length; i += 1) {
-      for (j = 0; j < s.options.length; j += 1) {
-        if (s.options[j].textContent === TogglButton.$curEntry.tags[i]) {
-          s.options[j].selected = true;
-          i += 1;
-          j = 0;
-        }
-      }
-    }
-
-    PopUp.updateTags();
-  },
-
-  resetTasks: function () {
-    document.querySelector("#toggl-button-task-placeholder").removeEventListener('click', PopUp.delegateTaskClick);
-    document.querySelector("#toggl-button-task-placeholder > div").innerHTML = "Add task";
-    document.querySelector("#toggl-button-task").innerHTML = "";
-  },
-
-  delegateTaskClick: function (e) {
-    // Ignore this click if it caused the last task blur.
-    if (PopUp.$taskBlurTrigger === e.target) {
-      PopUp.$taskBlurTrigger = null;
-      return;
-    }
-
-    var dropdown = document.getElementById('toggl-button-task'),
-      event = document.createEvent('MouseEvents');
-    event.initMouseEvent('mousedown', true, true, window);
-    dropdown.dispatchEvent(event);
-  },
-
-  getSelectedTags: function () {
-    var tags = [],
-      tag,
-      i,
-      s = document.getElementById("toggl-button-tag");
-    for (i = 0; i < s.options.length; i += 1) {
-      if (s.options[i].selected === true) {
-        tag = s.options[i].textContent;
-        tags.push(tag);
-      }
-    }
-    return tags;
-  },
-
-  generateLabel: function (select, id, type) {
-    var selected = select.options[select.selectedIndex],
-      parent,
-      result = "";
-    if (parseInt(id, 10) === 0 || !selected) {
-      return "Add " + type;
-    }
-    parent = selected.parentNode;
-    if (type === "project" && parent.tagName === "OPTGROUP") {
-      result = parent.label + " - ";
-    }
-    return result + selected.text;
-  },
-
   submitForm: function (that) {
-    var taskButton = document.querySelector("#toggl-button-task"),
-      selectedProject = document.querySelector("#toggl-button-project"),
-      projectName = (selectedProject.selectedIndex !== -1) ? selectedProject.options[selectedProject.selectedIndex].text : "",
+    var selected = PopUp.$projectAutocomplete.getSelected(),
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
-        pid: selectedProject.value,
-        projectName: projectName,
-        tags: PopUp.getSelectedTags(),
-        tid: (taskButton && taskButton.value) ? taskButton.value : null,
+        pid: selected.pid,
+        projectName: selected.name,
+        tags: PopUp.$tagAutocomplete.getSelected(),
+        tid: selected.tid,
         respond: true,
         service: "dropdown"
       };
     PopUp.sendMessage(request);
-    PopUp.closeTagsList(true);
-    PopUp.updateMenuTimer(request.description, request.pid);
+    PopUp.updateMenuTimer(request.description, request.pid, request.tid);
     PopUp.switchView(PopUp.$menuView);
-  },
-
-  updateTags: function (open) {
-    var tags = PopUp.getSelectedTags(),
-      tagsPlaceholder = document.querySelector("#toggl-button-tag-placeholder > div");
-
-    if (open) {
-      tagsPlaceholder.innerHTML = tagsPlaceholder.title = "Save tags";
-      return;
-    }
-
-    if (tags.length) {
-      tags = tags.join(',');
-    } else {
-      tags = "Add tags";
-    }
-    tagsPlaceholder.innerHTML = tagsPlaceholder.title = tags;
-  },
-
-  closeTagsList: function (close) {
-    var dropdown = document.getElementById('toggl-button-tag');
-    if (close) {
-      dropdown.style.display = "none";
-      PopUp.$tagsVisible = false;
-      return;
-    }
-    if (PopUp.$tagsVisible) {
-      dropdown.style.display = "none";
-      PopUp.updateTags();
-    } else {
-      dropdown.style.display = "block";
-      PopUp.updateTags(true);
-    }
-    PopUp.$tagsVisible = !PopUp.$tagsVisible;
-  },
-
-  fetchTasks: function (projectId, tid) {
-    var tasksRow = document.getElementById("toggl-button-tasks-row"),
-      taskSelect,
-      taskPlaceholder;
-
-    PopUp.resetTasks();
-    if (!TogglButton.$user.projectTaskList || projectId === 0) {
-      tasksRow.style.display = "none";
-      return;
-    }
-    // If tasks are available, populate the task dropdown.
-    CH.sendMessage({type: 'getTasksHtml', projectId: projectId}, function (response) {
-      if (response && response.success && response.html) {
-        document.querySelector('#toggl-button-task').innerHTML = response.html;
-        document.querySelector("#toggl-button-task-placeholder").addEventListener('click', PopUp.delegateTaskClick);
-        if (!!tid) {
-          taskPlaceholder = document.querySelector("#toggl-button-task-placeholder > div");
-          taskSelect = document.getElementById("toggl-button-task");
-          taskSelect.value = tid;
-          taskPlaceholder.innerHTML = taskPlaceholder.title = PopUp.generateLabel(taskSelect, tid, "task");
-        }
-        tasksRow.style.display = "block";
-      } else {
-        tasksRow.style.display = "none";
-      }
-    });
   },
 
   addEditEvents: function () {
     /* Edit form events */
-    var projectSelect = document.querySelector("#toggl-button-project"),
-      taskSelect = document.querySelector("#toggl-button-task"),
-      handler;
-
-    handler = function (e) {
-      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        PopUp.closeTagsList(true);
-        this.removeEventListener("click", handler);
-      }
-    };
+    PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
+    PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
 
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
@@ -366,72 +200,6 @@ var PopUp = {
       PopUp.submitForm(this);
       e.preventDefault();
     });
-
-    document.addEventListener('mousedown', function (e) {
-      PopUp.mousedownTrigger = e.target;
-    });
-    document.addEventListener('mouseup', function (e) {
-      PopUp.mousedownTrigger = null;
-    });
-
-    document.querySelector("#toggl-button-project-placeholder").addEventListener('click', function (e) {
-      // Ignore this click if it caused the last project blur.
-      if (PopUp.projectBlurTrigger === e.target) {
-        PopUp.projectBlurTrigger = null;
-        return;
-      }
-
-      var dropdown = document.getElementById('toggl-button-project'),
-        event = document.createEvent('MouseEvents');
-      event.initMouseEvent('mousedown', true, true, window);
-      dropdown.dispatchEvent(event);
-    });
-
-    document.querySelector("#toggl-button-tag-placeholder").addEventListener('click', function (e) {
-      PopUp.closeTagsList(false);
-    });
-
-    projectSelect.addEventListener('change', function (e) {
-      var placeholder = document.querySelector("#toggl-button-project-placeholder > div");
-      placeholder.innerHTML = placeholder.title = PopUp.generateLabel(this, this.value, "project");
-      PopUp.setProjectBullet(this.value, document.querySelector("#toggl-button-project-placeholder > .project-bullet"));
-      // Force blur.
-      PopUp.projectBlurTrigger = null;
-      projectSelect.blur();
-
-      PopUp.fetchTasks(this.value);
-    });
-
-    projectSelect.addEventListener('click', function () {
-      // Catch click in case user selects an already-selected item - force blur.
-      PopUp.projectBlurTrigger = null;
-      projectSelect.blur();
-    });
-
-    projectSelect.addEventListener('blur', function () {
-      PopUp.projectBlurTrigger = PopUp.mousedownTrigger;
-    });
-
-    taskSelect.addEventListener('change', function (e) {
-      var taskPlaceholder = document.querySelector("#toggl-button-task-placeholder > div");
-      taskPlaceholder.innerHTML = taskPlaceholder.title = (taskSelect.value === "0") ? "Add task" : taskSelect.options[taskSelect.selectedIndex].text;
-
-      // Force blur.
-      PopUp.taskBlurTrigger = null;
-      taskSelect.blur();
-    });
-
-    taskSelect.addEventListener('click', function () {
-      // Catch click in case user selects an already-selected item - force blur.
-      PopUp.taskBlurTrigger = null;
-      projectSelect.blur();
-    });
-
-    taskSelect.addEventListener('blur', function (e) {
-      PopUp.taskBlurTrigger = PopUp.mousedownTrigger;
-    });
-
-    document.addEventListener("click", handler);
   }
 };
 
@@ -461,16 +229,16 @@ document.addEventListener('DOMContentLoaded', function () {
   PopUp.$togglButton.addEventListener('click', onClickSendMessage);
   PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
-  document.querySelector(".settings-button").addEventListener('click', function () {
+  document.querySelector(".header .cog").addEventListener('click', function () {
     var request = {
       type: "options",
       respond: false
     };
 
-    CH.sendMessage(request);
+    chrome.runtime.sendMessage(request);
   });
 
-  document.querySelector(".logout-button").addEventListener('click', function () {
+  document.querySelector(".header .logout").addEventListener('click', function () {
     var request = {
       type: "logout",
       respond: true
@@ -478,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.sendMessage(request);
   });
 
-  document.querySelector(".sync-button").addEventListener('click', function () {
+  document.querySelector(".header .sync").addEventListener('click', function () {
     var request = {
       type: "sync",
       respond: false
@@ -499,11 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.sendMessage(request);
   });
 
-  document.querySelector(".header").addEventListener('click', function () {
+  document.querySelector(".header .icon").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app"});
-  });
-
-  document.querySelector(".user-email").addEventListener('click', function () {
-    chrome.tabs.create({url: "https://toggl.com/app/profile"});
   });
 });

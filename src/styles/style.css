@@ -447,6 +447,11 @@ only screen and (min-resolution: 192dpi) {
   margin-left: 5px;
 }
 
+.task-item-title .toggl-button.capsule {
+  position: relative;
+  top: 5px;
+  margin-top: -5px;
+}
 /********* ZENDESK *********/
 .toggl-button.zendesk {
   float: right;

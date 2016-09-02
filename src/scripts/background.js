@@ -1411,8 +1411,8 @@ TogglButton = {
           TogglButton.checkLoadedScripts(tabId, domain.file);
         }
       } else {
-        chrome.permissions.contains(permission, function (result) {
-          if (result && !!domain.file) {
+        chrome.permissions.getAll(function (result) {
+          if (result.origins.indexOf(domain.origins[0]) != -1) {
             TogglButton.checkLoadedScripts(tabId, domain.file);
           }
         });

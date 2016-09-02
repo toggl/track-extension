@@ -34,7 +34,7 @@ window.TogglOrigins = {
   "freshdesk.com": {"url": "*://*.freshdesk.com/*", "name": "Freshdesk"},
   "getflow.com": {"url": "*://*.getflow.com/*", "name": "Getflow"},
   "gingkoapp.com": {"url": "*://gingkoapp.com/*", "name": "Gingkoapp"},
-  "github.com": {"url": "*://*.github.com/*", "name": "Github"},
+  "github.com": {"url": "*://github.com/*", "name": "Github"},
   "gitlab.com": {"url": "*://*.gitlab.com/*", "name": "Gitlab"},
   "gogs.io": {"url": "*://*.gogs.io/*", "name": "Gogs"},
   "calendar.google.com": {"url": "*://calendar.google.com/*", "name": "Google Calendar"},

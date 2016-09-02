@@ -61,7 +61,7 @@ var Settings = {
 
     Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
     document.querySelector("#day-end-time").value = Db.get("dayEndTime");
-    if (Db.get("projects") !== '') {
+    if (Db.get("projects") !== '' && !!TogglButton.$user) {
       projects = JSON.parse(Db.get("projects"));
       clients = JSON.parse(Db.get("clients"));
       Settings.$defaultProject.innerHTML = '<option value="0">- No project -</option>';

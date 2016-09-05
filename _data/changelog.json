@@ -1,6 +1,22 @@
 {
     "versions": [
     {
+      "version":"1.0.4",
+      "short-version": "104",
+      "date": "September 5th 2016",
+      "rows":[
+        "Fixes and updates for Youtrack",
+        "Fixed agenocrm and minicrm issues",
+        "Added Toggl Button to gitlab merge request",
+        "Improved permissions handling",
+        "Fixed issues with pomodoro update and sync",
+        "Fixed long project name hiding tasks",
+        "Fixed github private projects name matching",
+        "Added support for Workfront (attask)",
+        "Fixed default project setting billable"
+      ]
+    },
+    {
       "version":"1.0.3",
       "short-version": "103",
       "date": "July 21st 2016",

@@ -1399,8 +1399,7 @@ TogglButton = {
 
   tabUpdated: function (tabId, changeInfo, tab) {
     if (changeInfo.status === "complete") {
-      var domain = TogglButton.extractDomain(tab.url),
-        permission = {origins: domain.origins};
+      var domain = TogglButton.extractDomain(tab.url);
 
       if (debug) {
         console.log("url: " + tab.url + " | domain-file: " + domain.file);
@@ -1412,7 +1411,7 @@ TogglButton = {
         }
       } else {
         chrome.permissions.getAll(function (result) {
-          if (result.origins.indexOf(domain.origins[0]) != -1) {
+          if (result.origins.indexOf(domain.origins[0]) !== -1) {
             TogglButton.checkLoadedScripts(tabId, domain.file);
           }
         });

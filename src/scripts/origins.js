@@ -87,7 +87,7 @@ window.TogglOrigins = {
   "testrail.com": {"url": "*://*.testrail.com/*", "name": "Testrail"},
   "testrail.net": {"url": "*://*.testrail.net/*", "name": "Testrail", "clone" : "true"},
   "ticktick.com": { "url": "*://ticktick.com/*", "name": "TickTick"},
-  "ticktick.com": { "url": "*://*.ticktick.com/*", "name": "TickTick", "clone": "true"},
+  "www.ticktick.com": { "url": "*://*.ticktick.com/*", "name": "TickTick", "clone": "true"},
   "todoist.com": {"url": "*://*.todoist.com/app*", "name": "Todoist"},
   "toggl.com": {"url": "*://toggl.com/*", "name": "Toggl", "clone": "true"},
   "www.toggl.com": {"url": "*://*.toggl.com/*", "name": "Toggl", "clone": "true"},

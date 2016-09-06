@@ -360,19 +360,25 @@ header .active, header li:hover {
 
 .guide {
   width: 400px;
-  position: relative;
+  position: absolute;
   background: #ffffff;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   padding: 15px;
   line-height: 20px;
   z-index: 999;
-  margin: 20px auto;
   box-shadow: 1px 1px 10px #CACACA;
+  top: 20px;
+  left: 50%;
+  margin-left: -200px;
 }
 
 .guide > div {
   display: none;
+}
+
+.guide.changelog .popup-footer {
+  display: none !important;
 }
 
 /* Pomodoro tab */

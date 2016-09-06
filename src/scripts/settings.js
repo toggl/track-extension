@@ -220,6 +220,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
     Db.set("show-permissions-info", 0);
   }
 
+  // Show changelog
+  if (!!parseInt(Db.get("show-changelog"), 10)) {
+    document.querySelector(".guide").classList.add("changelog");
+    document.querySelector(".guide-container").style.display = "block";
+    document.querySelector(".guide > div[data-id='" + Db.get("show-changelog") + "']").style.display = "block";
+    document.querySelector(".cl-button").setAttribute("data-version", Db.get("show-changelog"));
+    Db.set("show-changelog", 0);
+  }
+
   // Set selected tab
   Settings.$tabs.setAttribute("data-tab", Db.get("selected-settings-tab"));
   if (FF) {
@@ -513,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     }
   }, false);
 
-  document.querySelector(".guide button").addEventListener('click', function (e) {
+  document.querySelector(".guide .popup-footer button").addEventListener('click', function (e) {
     var disableChecked = document.querySelector("#disable-permission-notice").checked;
     Db.set("dont-show-permissions", disableChecked);
     document.querySelector(".guide-container").style.display = "none";
@@ -528,4 +537,33 @@ document.addEventListener('DOMContentLoaded', function (e) {
     };
   }
 
+  // Migration 1.0.5
+  document.querySelector(".guide .cl-button").addEventListener('click', function (e) {
+    var i,
+      current,
+      permission = {
+        origins: []
+      };
+    chrome.permissions.getAll(function (result) {
+      if (!!result) {
+        for (i = 0; i < result.origins.length; i++) {
+          current = result.origins[i].replace("*://*.", "").replace("*://", "");
+          if (current.indexOf("toggl") === -1) {
+            permission.origins.push("*://" + current);
+            if (current.split(".").length < 3) {
+              permission.origins.push("*://*." + current);
+            }
+          }
+        }
+
+        chrome.permissions.request(permission, function (result) {
+          if (result) {
+            console.log("Migration: 1.0.5 success");
+          }
+        });
+      }
+    });
+    document.querySelector(".guide-container").style.display = "none";
+    document.querySelector(".guide > div[data-id='" + e.target.getAttribute("data-version") + "']").style.display = "none";
+  });
 });

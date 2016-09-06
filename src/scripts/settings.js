@@ -457,9 +457,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
       }
     });
   });
-
+  // Remove item from custom domain list
   document.querySelector('#custom-permissions-list').addEventListener('click', function (e) {
-    var custom, domain, permission, parent;
+    var custom, domain, permission, parent, removed = false;
     if (e.target.className === "remove-custom") {
       parent = e.target.parentNode;
       custom = parent.querySelector('strong').textContent;
@@ -470,6 +470,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         if (allowed) {
           chrome.permissions.remove(permission, function (result) {
             if (result) {
+              removed = true;
               Db.removeOrigin(custom);
               parent.remove();
             } else {
@@ -480,6 +481,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
           alert('No "' + custom + '" host permission found.');
         }
       });
+
+      if (!removed) {
+        Db.removeOrigin(custom);
+        parent.remove();
+      }
 
     }
     return false;

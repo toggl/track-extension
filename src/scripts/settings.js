@@ -93,7 +93,9 @@ var Settings = {
       current = items[i].parentNode.id;
       if (current.indexOf("toggl") === -1) {
         urls.push("*://" + current + "/*");
-        urls.push("*://*." + current + "/*");
+        if (current.split(".").length < 3) {
+          urls.push("*://*." + current + "/*");
+        }
       }
     }
 
@@ -381,10 +383,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     permission = {
       origins: [
-        "*://" + target.parentNode.id + "/*",
-        "*://*." + target.parentNode.id + "/*"
+        "*://" + target.parentNode.id + "/*"
       ]
     };
+
+    if (target.parentNode.id.split(".").length < 3) {
+      permission.origins.push("*://*." + target.parentNode.id + "/*");
+    }
 
     if (target.checked) {
       chrome.permissions.request(permission, function (result) {

@@ -1558,3 +1558,31 @@ if (!FF) {
   });
 }
 
+// Migration 1.0.5
+
+chrome.permissions.getAll(function (result) {
+  if (!!result) {
+    var permission = {
+        origins: []
+      };
+
+    for (var i = 0; i < result.origins.length; i++) {
+      var current = result.origins[i].replace("*://*.","").replace("*://","");
+      if (current.indexOf("toggl") === -1) {
+        permission.origins.push("*://" + current);
+        if (current.split(".").length < 3) {
+          permission.origins.push("*://*." + current);
+        }
+      }
+    };
+
+    chrome.permissions.request(permission, function (result) {
+      if (result) {
+        if (debug) {
+          console.log("Migration: 1.0.5 success");
+        }
+      }
+    });
+  }
+});
+

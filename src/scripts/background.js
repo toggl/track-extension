@@ -1413,7 +1413,7 @@ TogglButton = {
         }
       } else {
         chrome.permissions.getAll(function (result) {
-          if (result.origins.indexOf(domain.origins[0]) !== -1 || result.origins.indexOf(domain.origins[1]) !== -1) {
+          if (result.origins.indexOf(domain.origins[0]) !== -1) {
             TogglButton.checkLoadedScripts(tabId, domain.file);
           }
         });

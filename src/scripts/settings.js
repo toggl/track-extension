@@ -90,10 +90,9 @@ var Settings = {
       current;
 
     for (i = 0; i < items.length; i++) {
-      current = items[i].parentNode.id;
+      current = items[i].getAttribute("data-host");
       if (current.indexOf("toggl") === -1) {
-        urls.push("*://" + current + "/*");
-        urls.push("*://*." + current + "/*");
+        urls.push(current);
       }
     }
 

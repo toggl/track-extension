@@ -53,14 +53,11 @@ var Db = {
 
     item = TogglOrigins[origin];
 
-    item.origin = origin;
-
     if (!!item.file) {
-      return item;
+      return item.file;
     }
 
-    item.file = item.name.toLowerCase().replace(" ", "-") + ".js";
-    return item;
+    return item.name.toLowerCase().replace(" ", "-") + ".js";
   },
 
   getOrigin: function (origin) {

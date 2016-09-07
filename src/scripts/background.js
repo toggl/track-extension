@@ -1403,10 +1403,6 @@ TogglButton = {
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url);
 
-      if (!domain) {
-        return;
-      }
-
       if (debug) {
         console.log("url: " + tab.url + " | domain-file: " + domain.file);
       }
@@ -1451,7 +1447,7 @@ TogglButton = {
   },
 
   extractDomain: function (url) {
-    var domain, file, item;
+    var domain, file;
 
     //find & remove protocol (http, ftp, etc.) and get domain
     if (url.indexOf("://") > -1) {
@@ -1469,21 +1465,14 @@ TogglButton = {
     //find & remove port number
     domain = domain.split(':')[0];
 
-    item = Db.getOriginFileName(domain);
-
-    if (!item) {
-      return false;
-    }
-
-    file = item.file
+    file = Db.getOriginFileName(domain);
 
     //console.log("URL: " + url + " | Domain: " + domain);
 
     return {
       file: file,
       origins: [
-        "*://" + item.origin + "/*",
-        "*://*." + item.origin + "/*"
+        "*://" + domain + "/*"
       ]
     };
   },

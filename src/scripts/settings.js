@@ -378,11 +378,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       target.checked = !target.checked;
     }
 
-    permission = {
-      origins: [
-      "*://" + target.parentNode.id + "/*",
-      "*://*." + target.parentNode.id + "/*"
-      ]};
+    permission = {origins: [target.getAttribute("data-host")]};
 
     if (target.checked) {
       chrome.permissions.request(permission, function (result) {

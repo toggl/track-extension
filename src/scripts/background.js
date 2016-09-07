@@ -1401,11 +1401,14 @@ TogglButton = {
 
   tabUpdated: function (tabId, changeInfo, tab) {
     if (changeInfo.status === "complete") {
-      var domain = TogglButton.extractDomain(tab.url);
+      var domain = TogglButton.extractDomain(tab.url),
+        permission;
 
       if (!domain) {
         return;
       }
+
+      permission = {origins: domain.origins};
 
       if (debug) {
         console.log("url: " + tab.url + " | domain-file: " + domain.file);
@@ -1416,8 +1419,8 @@ TogglButton = {
           TogglButton.checkLoadedScripts(tabId, domain.file);
         }
       } else {
-        chrome.permissions.getAll(function (result) {
-          if (result.origins.indexOf(domain.origins[0]) !== -1 || result.origins.indexOf(domain.origins[1]) !== -1) {
+        chrome.permissions.contains(permission, function (result) {
+          if (result && !!domain.file) {
             TogglButton.checkLoadedScripts(tabId, domain.file);
           }
         });

@@ -264,6 +264,11 @@ span.item-name.has-tasks  {
   color: #a3a3a3;
   padding:0 5px;
   margin-top: 5px;
+  max-width: 175px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 23px;
+  word-wrap: break-word;
 }
 
 #tag-autocomplete .tag-list li:hover {

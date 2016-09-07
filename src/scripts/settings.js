@@ -419,10 +419,21 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // Disable all predefined origins
   document.querySelector('.disable-all').addEventListener('click', function (e) {
-    chrome.permissions.remove(Settings.getAllPermissions(), function (result) {
-      if (result) {
-        Settings.loadSitesIntoList();
+    chrome.permissions.getAll(function (result) {
+      var origins = [],
+        i;
+
+      for (i = 0; i < result.origins.length; i++) {
+        if (result.origins[i].indexOf("toggl") === -1) {
+          origins.push(result.origins[i]);
+        }
       }
+
+      chrome.permissions.remove({origins: origins}, function (result) {
+        if (result) {
+          Settings.loadSitesIntoList();
+        }
+      });
     });
   });
 

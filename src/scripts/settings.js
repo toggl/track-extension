@@ -380,10 +380,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     permission = {
       origins: [
-        "*://" + target.parentNode.id + "/*",
-        "*://*." + target.parentNode.id + "/*"
-      ]
-    };
+      "*://" + target.parentNode.id + "/*",
+      "*://*." + target.parentNode.id + "/*"
+      ]};
 
     if (target.checked) {
       chrome.permissions.request(permission, function (result) {

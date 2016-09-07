@@ -92,10 +92,13 @@ var Settings = {
     for (i = 0; i < items.length; i++) {
       current = items[i].getAttribute("data-host");
       if (current.indexOf("toggl") === -1) {
-        urls.push(current);
+        if (current.indexOf(",") !== -1) {
+          urls = urls.concat(current.split(","));
+        } else {
+          urls.push(current);
+        }
       }
     }
-
     return {origins: urls};
   },
   setFromTo: function () {
@@ -378,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       target.checked = !target.checked;
     }
 
-    permission = {origins: [target.getAttribute("data-host")]};
+    permission = {origins: target.getAttribute("data-host").split(",")};
 
     if (target.checked) {
       chrome.permissions.request(permission, function (result) {

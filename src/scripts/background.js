@@ -1528,12 +1528,6 @@ TogglButton = {
         }
       });
     }
-  },
-
-  showChangelog: function (show) {
-    Db.set("selected-settings-tab", 3);
-    Db.set("show-changelog", show);
-    chrome.runtime.openOptionsPage();
   }
 
 };
@@ -1568,7 +1562,38 @@ if (!FF) {
     if (details.reason === "install") {
       TogglButton.checkPermissions(1);
     } else if (details.reason === "update") {
-      TogglButton.showChangelog(105);
+      if (details.previousVersion[0] === "0" && chrome.runtime.getManifest().version[0] === "1") {
+        TogglButton.checkPermissions(2);
+      }
     }
   });
 }
+
+// Migration 1.0.5
+
+chrome.permissions.getAll(function (result) {
+  if (!!result) {
+    var permission = {
+        origins: []
+      };
+
+    for (var i = 0; i < result.origins.length; i++) {
+      var current = result.origins[i].replace("*://*.","").replace("*://","");
+      if (current.indexOf("toggl") === -1) {
+        permission.origins.push("*://" + current);
+        if (current.split(".").length < 3) {
+          permission.origins.push("*://*." + current);
+        }
+      }
+    };
+
+    chrome.permissions.request(permission, function (result) {
+      if (result) {
+        if (debug) {
+          console.log("Migration: 1.0.5 success");
+        }
+      }
+    });
+  }
+});
+

@@ -1,6 +1,15 @@
 {
   "versions":[
     {
+      "version":"1.0.5",
+      "rows":[
+        "Fixes for permission issues",
+        "Fixed long tag name issue",
+        "Fixed default project select issue",
+        "Fixed custom domain remove issue"
+      ]
+    },
+    {
       "version":"1.0.4",
       "rows":[
         "Fixes and updates for Youtrack",

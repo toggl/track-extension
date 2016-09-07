@@ -421,12 +421,24 @@ document.addEventListener('DOMContentLoaded', function (e) {
   document.querySelector('.disable-all').addEventListener('click', function (e) {
     chrome.permissions.getAll(function (result) {
       var origins = [],
-        i;
+        i,
+        key,
+        customOrigins = Db.getAllOrigins(),
+        skip = false;
 
       for (i = 0; i < result.origins.length; i++) {
-        if (result.origins[i].indexOf("toggl") === -1) {
+        for (key in customOrigins) {
+          if (customOrigins.hasOwnProperty(key) && !skip) {
+            if (result.origins[i].indexOf(key) !== -1) {
+              skip = true;
+            }
+          }
+        }
+
+        if (result.origins[i].indexOf("toggl") === -1 && !skip) {
           origins.push(result.origins[i]);
         }
+        skip = false;
       }
 
       chrome.permissions.remove({origins: origins}, function (result) {

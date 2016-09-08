@@ -1,6 +1,17 @@
 {
     "versions": [
     {
+      "version":"1.0.5",
+      "short-version": "105",
+      "date": "September 8th 2016",
+      "rows":[
+        "Fixes for permission issues",
+        "Fixed long tag name issue",
+        "Fixed default project select issue",
+        "Fixed custom domain remove issue"
+      ]
+    },
+    {
       "version":"1.0.4",
       "short-version": "104",
       "date": "September 5th 2016",

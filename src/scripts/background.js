@@ -143,7 +143,7 @@ TogglButton = {
             if (resp.data.clients) {
               resp.data.clients.forEach(function (client) {
                 clientMap[client.id] = client;
-                clientNameMap[client.name.toLowerCase()] = client;
+                clientNameMap[client.name.toLowerCase() + client.id] = client;
               });
             }
             if (resp.data.tags) {

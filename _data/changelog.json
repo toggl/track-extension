@@ -1,6 +1,15 @@
 {
     "versions": [
     {
+      "version":"1.0.6",
+      "short-version": "106",
+      "date": "September 9th 2016",
+      "rows":[
+        "Fixed same name client issue with multiple workspaces",
+        "Improvements to disabling all permissions"
+      ]
+    },
+    {
       "version":"1.0.5",
       "short-version": "105",
       "date": "September 8th 2016",

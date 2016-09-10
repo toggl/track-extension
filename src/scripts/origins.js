@@ -56,6 +56,7 @@ window.TogglOrigins = {
   "newsletter2go.com": {"url": "*://*.newsletter2go.com/*", "name": "Newsletter2go"},
   "ongemini.com": {"url": "*://*.ongemini.com/*", "name": "Gemini"},
   "openproject.com": {"url": "*://*.openproject.com/*", "name": "Openproject"},
+  "onlyoffice.com": {"url": "*://*.onlyoffice.com/*", "name": "OnlyOffice"},
   "phacility.com": {"url": "*://*.phacility.com/*", "name": "Phabricator"},
   "pivotaltracker.com": {"url": "*://*.pivotaltracker.com/*", "name": "PivotalTracker"},
   "planbox.com": {"url": "*://*.planbox.com/*", "name": "Planbox"},

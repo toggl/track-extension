@@ -1,6 +1,36 @@
 {
   "versions":[
     {
+      "version":"1.0.6",
+      "rows":[
+        "Fixed same name client issue with multiple workspaces",
+        "Improvements to disabling all permissions"
+      ]
+    },
+    {
+      "version":"1.0.5",
+      "rows":[
+        "Fixes for permission issues",
+        "Fixed long tag name issue",
+        "Fixed default project select issue",
+        "Fixed custom domain remove issue"
+      ]
+    },
+    {
+      "version":"1.0.4",
+      "rows":[
+        "Fixes and updates for Youtrack",
+        "Fixed agenocrm and minicrm issues",
+        "Added Toggl Button to gitlab merge request",
+        "Improved permissions handling",
+        "Fixed issues with pomodoro update and sync",
+        "Fixed long project name hiding tasks",
+        "Fixed github private projects name matching",
+        "Added support for Workfront (attask)",
+        "Fixed default project setting billable"
+      ]
+    },
+    {
       "version":"1.0.3",
       "rows":[
         "Fixed Google Inbox integration",

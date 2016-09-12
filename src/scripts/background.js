@@ -147,7 +147,7 @@ TogglButton = {
             if (resp.data.clients) {
               resp.data.clients.forEach(function (client) {
                 clientMap[client.id] = client;
-                clientNameMap[client.name.toLowerCase()] = client;
+                clientNameMap[client.name.toLowerCase() + client.id] = client;
               });
             }
             if (resp.data.tags) {
@@ -310,16 +310,19 @@ TogglButton = {
 
   updateTriggers: function (entry, sync) {
     TogglButton.$curEntry = entry;
-    if (!sync) {
-      if (!!entry) {
+    if (!!entry) {
+      if (!sync) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
         TogglButton.$nannyTimer = null;
-      } else {
-        // Clear pomodoro timer
-        clearTimeout(TogglButton.pomodoroAlarm);
-        clearInterval(TogglButton.pomodoroProgressTimer);
       }
+    } else {
+      // Clear pomodoro timer
+      clearTimeout(TogglButton.pomodoroAlarm);
+      clearInterval(TogglButton.pomodoroProgressTimer);
+      chrome.browserAction.setIcon({
+        path: {'19': 'images/active-19.png', '38': 'images/active-38.png'}
+      });
     }
     // Toggle workday end check
     TogglButton.startCheckingDayEnd(!!entry);
@@ -424,8 +427,8 @@ TogglButton = {
 
     // set Default project if needed
     if (!entry.time_entry.pid && !!defaultProject) {
-      entry.time_entry.pid = parseInt(defaultProject, 10);
-      project = TogglButton.findProjectByPid(entry.time_entry.pid);
+      project = TogglButton.findProjectByPid(parseInt(defaultProject, 10));
+      entry.time_entry.pid = project && project.id;
       entry.time_entry.billable = project && project.billable;
     }
 
@@ -986,8 +989,9 @@ TogglButton = {
     var tasks = !!TogglButton.$user.projectTaskList ? TogglButton.$user.projectTaskList[project.id] : null,
       i,
       tasksCount,
+      hasTasks = !!tasks ? "has-tasks" : "",
       html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
-        '<span class="item-name">' + escapeHtml(project.name) + '</span>';
+        '<span class="item-name ' + hasTasks + '" title="' + escapeHtml(project.name) + '">' + escapeHtml(project.name) + '</span>';
 
     if (!!tasks) {
       tasksCount = tasks.length + " task";

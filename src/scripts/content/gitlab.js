@@ -23,3 +23,24 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
 
   $(".detail-page-header").appendChild(link);
 });
+
+togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
+  var link, description,
+    numElem = $(".identifier"),
+    titleElem = $(".title", elem),
+    projectElem = $("h1 .project-item-select-holder");
+
+  description = titleElem.textContent.trim();
+  if (numElem !== null) {
+    description = "MR" + numElem.innerText.split(" ").pop().trim().replace("!", "") + "::" + description;
+  }
+
+  link = togglbutton.createTimerLink({
+    className: 'gitlab',
+    description: description,
+    projectName: projectElem.textContent
+  });
+
+  $(".detail-page-header").appendChild(link);
+});
+

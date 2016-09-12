@@ -169,6 +169,23 @@ a.filter-clear:hover {
 
 span.item-name {
   font-weight: 300;
+  max-width: 165px;
+  overflow: hidden;
+  float: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+span.item-name.has-tasks  {
+  max-width: 125px;
+}
+
+.toggl-integration span.item-name{
+  max-width: 185px;
+}
+
+.toggl-integration span.item-name.has-tasks  {
+  max-width: 145px;
 }
 
 /* PROJECT BULLETS */
@@ -247,6 +264,11 @@ span.item-name {
   color: #a3a3a3;
   padding:0 5px;
   margin-top: 5px;
+  max-width: 175px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 23px;
+  word-wrap: break-word;
 }
 
 #tag-autocomplete .tag-list li:hover {

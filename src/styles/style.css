@@ -16,7 +16,7 @@
 }
 
 #toggl-button-edit-form form {
-  text-align: left!important;
+  text-align: left !important;
 }
 
 #toggl-button-edit-form a {
@@ -28,8 +28,12 @@
 }
 
 #toggl-button-edit-form select option {
-  color: black!important;
-  background-color: white!important;
+  color: black !important;
+  background-color: white !important;
+}
+
+#toggl-button-edit-form .hidden {
+  display: none;
 }
 
 .toggl-button {
@@ -42,7 +46,7 @@
 }
 
 .toggl-button:hover {
-  background-color: transparent!important;
+  background-color: transparent !important;
 }
 
 .toggl-button.min {
@@ -142,7 +146,7 @@ only screen and (min-resolution: 192dpi) {
 }
 
 #toggl-button-edit-form #toggl-button-description img {
-  display: none!important;
+  display: none !important;
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder,
@@ -170,7 +174,7 @@ only screen and (min-resolution: 192dpi) {
 }
 
 #toggl-button-edit-form #toggl-button-project {
-  visibility: visible!important;
+  visibility: visible !important;
   z-index: 1;
   max-width: 220px;
 }
@@ -194,7 +198,7 @@ only screen and (min-resolution: 192dpi) {
   padding: 0 10px ;
   width: 100% !important;
   box-sizing :border-box !important;
-  padding-right: 28px!important;
+  padding-right: 28px !important;
 }
 
 #toggl-button-edit-form #toggl-button-tag {
@@ -203,8 +207,8 @@ only screen and (min-resolution: 192dpi) {
   background: #ffffff;
   max-width: 220px;
   position: absolute;
-  margin-top: 40px!important;
-  height: 100px!important;
+  margin-top: 40px !important;
+  height: 100px !important;
   z-index: 1;
 }
 
@@ -419,12 +423,12 @@ only screen and (min-resolution: 192dpi) {
 }
 
 .toggl-button.basecamphq:hover {
-  color: #000000!important;
+  color: #000000 !important;
 }
 
 .active_selection .toggl-button.basecamphq,
 .toggl-button.basecamphq[data-behavior="selectable_target"] {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 
 /********* TEAMWEEK *********/
@@ -494,6 +498,11 @@ only screen and (min-resolution: 192dpi) {
   margin-left: 5px;
 }
 
+.task-item-title .toggl-button.capsule {
+  position: relative;
+  top: 5px;
+  margin-top: -5px;
+}
 /********* ZENDESK *********/
 .toggl-button.zendesk {
   float: right;
@@ -998,17 +1007,17 @@ only screen and (min-resolution: 192dpi) {
   -o-border-radius: 2px;
   border-radius: 2px;
   padding: 0 10px 0 35px;
-  background-position: 10px 2px!important;
+  background-position: 10px 2px !important;
 }
 
 /********* SLACK *********/
 .toggl-button.slack {
-  background-color: #fff!important;
+  background-color: #fff !important;
   height: 45px;
   z-index: 9;
   width: 40px;
-  background-position-y: 10px!important;
-  background-position-x: 8px!important;
+  background-position-y: 10px !important;
+  background-position-x: 8px !important;
 }
 
 /********* ZOHO BOOKS *********/
@@ -1022,7 +1031,7 @@ only screen and (min-resolution: 192dpi) {
 }
 
 .notes-container .CmABtb.RNfche .toggl-button.keep {
-  display: none!important;
+  display: none !important;
 }
 
 .IZ65Hb-MPu53c-haAclf .toggl-button.keep {
@@ -1057,7 +1066,7 @@ only screen and (min-resolution: 192dpi) {
 
 /********* EPROJECT *********/
 .toggl-timer {
-  margin-left: 5px!important;
+  margin-left: 5px !important;
 }
 
 /********* EVERNOTE *********/
@@ -1100,11 +1109,27 @@ only screen and (min-resolution: 192dpi) {
 
 /********* HABITICA *********/
 .toggl-button.habitica {
-  margin-bottom: -4px!important;
+  margin-bottom: -4px !important;
 }
 
 /********* SHERPADESK *********/
 .toggl-button.sherpadesk {
   line-height: 20px;
   vertical-align: middle;
+}
+
+/********* ATTASK (WORKFRONT) *********/
+.toggl-button.attask {
+  height: 62px;
+  line-height: 62px;
+  background-position: 1em 50%;
+  padding: 0 1em 0 2.75em;
+}
+
+.toggl-button.attask:hover {
+  background-color:#eee !important;
+}
+
+.toggl-button.attask.active {
+  background-color:#f5f5f5;
 }

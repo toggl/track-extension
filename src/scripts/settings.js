@@ -61,7 +61,7 @@ var Settings = {
 
     Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
     document.querySelector("#day-end-time").value = Db.get("dayEndTime");
-    if (Db.get("projects") !== '') {
+    if (Db.get("projects") !== '' && !!TogglButton.$user) {
       projects = JSON.parse(Db.get("projects"));
       clients = JSON.parse(Db.get("clients"));
       Settings.$defaultProject.innerHTML = '<option value="0">- No project -</option>';
@@ -92,10 +92,13 @@ var Settings = {
     for (i = 0; i < items.length; i++) {
       current = items[i].getAttribute("data-host");
       if (current.indexOf("toggl") === -1) {
-        urls.push(current);
+        if (current.indexOf(",") !== -1) {
+          urls = urls.concat(current.split(","));
+        } else {
+          urls.push(current);
+        }
       }
     }
-
     return {origins: urls};
   },
   setFromTo: function () {
@@ -378,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       target.checked = !target.checked;
     }
 
-    permission = {origins: [target.getAttribute("data-host")]};
+    permission = {origins: target.getAttribute("data-host").split(",")};
 
     if (target.checked) {
       chrome.permissions.request(permission, function (result) {
@@ -416,10 +419,33 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
   // Disable all predefined origins
   document.querySelector('.disable-all').addEventListener('click', function (e) {
-    chrome.permissions.remove(Settings.getAllPermissions(), function (result) {
-      if (result) {
-        Settings.loadSitesIntoList();
+    chrome.permissions.getAll(function (result) {
+      var origins = [],
+        i,
+        key,
+        customOrigins = Db.getAllOrigins(),
+        skip = false;
+
+      for (i = 0; i < result.origins.length; i++) {
+        for (key in customOrigins) {
+          if (customOrigins.hasOwnProperty(key) && !skip) {
+            if (result.origins[i].indexOf(key) !== -1) {
+              skip = true;
+            }
+          }
+        }
+
+        if (result.origins[i].indexOf("toggl") === -1 && !skip) {
+          origins.push(result.origins[i]);
+        }
+        skip = false;
       }
+
+      chrome.permissions.remove({origins: origins}, function (result) {
+        if (result) {
+          Settings.loadSitesIntoList();
+        }
+      });
     });
   });
 
@@ -452,9 +478,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
       }
     });
   });
-
+  // Remove item from custom domain list
   document.querySelector('#custom-permissions-list').addEventListener('click', function (e) {
-    var custom, domain, permission, parent;
+    var custom, domain, permission, parent, removed = false;
     if (e.target.className === "remove-custom") {
       parent = e.target.parentNode;
       custom = parent.querySelector('strong').textContent;
@@ -465,6 +491,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         if (allowed) {
           chrome.permissions.remove(permission, function (result) {
             if (result) {
+              removed = true;
               Db.removeOrigin(custom);
               parent.remove();
             } else {
@@ -475,6 +502,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
           alert('No "' + custom + '" host permission found.');
         }
       });
+
+      if (!removed) {
+        Db.removeOrigin(custom);
+        parent.remove();
+      }
 
     }
     return false;

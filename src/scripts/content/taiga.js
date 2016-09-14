@@ -49,10 +49,10 @@ togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (el
 });
 
 /* Kanban button */
-togglbutton.render('.kanban-task-inner:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.kanban .card-title:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    refElem = $('.task-num', elem),
-    titleElem = $('.task-name', elem),
+    refElem = $('a > span:nth-child(1)', elem),
+    titleElem = $('a > span:nth-child(2)', elem),
     projectElem = $('.kanban .project-name');
 
   link = togglbutton.createTimerLink({
@@ -62,15 +62,17 @@ togglbutton.render('.kanban-task-inner:not(.toggl)', {observe: true}, function (
     projectName: projectElem.textContent
   });
 
-  elem.appendChild(link);
+  elem.insertBefore(link, $('a', elem));
 });
 
 /* Sprint Taskboard tasks button */
-togglbutton.render('.taskboard-task-inner:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.taskboard .card-title:not(.toggl)', {observe: true}, function (elem) {
+
   var link,
-    refElem = $('.task-num', elem),
-    titleElem = $('.task-name', elem),
+    refElem = $('.card-title > a > span:nth-child(1)', elem),
+    titleElem = $('.card-title > a > span:nth-child(2)', elem),
     projectElem = $('.taskboard .project-name-short');
+
 
   link = togglbutton.createTimerLink({
     className: 'taiga',
@@ -79,5 +81,23 @@ togglbutton.render('.taskboard-task-inner:not(.toggl)', {observe: true}, functio
     projectName: projectElem.textContent
   });
 
-  elem.appendChild(link);
+  elem.insertBefore(link, $('a', elem));
+});
+
+/* Epics Dashboard */
+togglbutton.render('.epic-row .name:not(.toggl)', {observe: true}, function (elem) {
+
+  var link,
+    titleElem = $('a', elem),
+    projectElem = $('.epics .project-name');
+
+
+  link = togglbutton.createTimerLink({
+    className: 'taiga',
+    buttonType: 'minimal',
+    description: titleElem.textContent,
+    projectName: projectElem.textContent
+  });
+
+  elem.insertBefore(link, $('a', elem));
 });

@@ -765,48 +765,14 @@ only screen and (min-resolution: 192dpi) {
   flex-grow: 0;
 }
 
-.kanban-task-inner a.toggl-button {
-    position: absolute;
-    opacity: 0;
-    bottom: .2rem;
-    right: 2rem;
+.epic-row a.toggl-button,
+.card-title a.toggl-button {
+    margin: 0 .25rem 0 0;
+    position: relative;
+    top: 3px;
 }
 
-.taskboard-task-inner a.toggl-button {
-    position: absolute;
-    opacity: 0;
-    bottom: .5rem;
-    right: 2.5rem;
-}
-
-.kanban-task-minimized .kanban-task-inner a.toggl-button,
-.kanban-task-minimized .taskboard-task-inner a.toggl-button {
-    right: 2.3rem;
-    top: 1.4rem;
-    margin: 0px;
-}
-
-.row-fold .taskboard-task-inner a.toggl-button,
-.colum-fold .taskboard-task-inner a.toggl-button {
-    display: none;
-}
-
-
-.kanban-task-inner:hover a.toggl-button,
-.taskboard-task-inner:hover a.toggl-button {
-    opacity: .7;
-    transition: opacity .3s linear;
-}
-
-.kanban-task-inner:hover a.toggl-button.active,
-.kanban-task-inner a.toggl-button.active,
-.taskboard-task-inner:hover a.toggl-button.active,
-.taskboard-task-inner a.toggl-button.active {
-    opacity: 1;
-}
-
-.column-fold .taskboard-task-inner a.toggl-button,
-.row-fold .taskboard-task-inner a.toggl-button {
+.column-fold .card-title  a.toggl-button.active {
     opacity: 0;
     display: none !important;
 }

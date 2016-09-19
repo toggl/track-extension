@@ -18,7 +18,7 @@ var PopUp = {
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $tagIcon: document.querySelector(".tag-icon"),
-  $projectBullet: document.querySelector(".timer .project-bullet"),
+  $projectBullet: document.querySelector(".timer .tb-project-bullet"),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
   $timerRow: document.querySelector(".timer"),
@@ -51,7 +51,7 @@ var PopUp = {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
         PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
-        PopUp.$projectBullet.className = "project-bullet";
+        PopUp.$projectBullet.className = "tb-project-bullet";
         if (TogglButton.$latestStoppedEntry) {
           p = TogglButton.findProjectByPid(TogglButton.$latestStoppedEntry.pid);
           p = (!!p) ? " - " + p.name : "";
@@ -110,7 +110,7 @@ var PopUp = {
       PopUp.$togglButton.parentNode.classList.remove('tracking');
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
-      PopUp.$projectBullet.className = "project-bullet";
+      PopUp.$projectBullet.className = "tb-project-bullet";
       return;
     }
 

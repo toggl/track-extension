@@ -58,7 +58,7 @@
   margin: 0px;
 }
 
-#project-autocomplete .project-bullet {
+#project-autocomplete .tb-project-bullet {
   margin: 0;
   left: 12px;
   margin-top: 6px;
@@ -87,7 +87,7 @@
   color: #a3a3a3;
 }
 
-#project-autocomplete .client-list:not([data-cid="0"]) .project-row .project-bullet {
+#project-autocomplete .client-list:not([data-cid="0"]) .project-row .tb-project-bullet {
   left: 22px;
 }
 
@@ -190,7 +190,7 @@ span.item-name.has-tasks  {
 
 /* PROJECT BULLETS */
 
-.project-bullet {
+.tb-project-bullet {
   border-radius: 50%;
   float: left;
   width: 8px;
@@ -219,7 +219,7 @@ span.item-name.has-tasks  {
 .color-14 { background-color: #999999 }
 .no-color { background-color: #cecece }
 
-#toggl-button-project-placeholder .project-bullet {
+#toggl-button-project-placeholder .tb-project-bullet {
   margin-top: 16px;
   margin-left: 0;
 }

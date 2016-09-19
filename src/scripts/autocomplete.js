@@ -222,14 +222,14 @@ ProjectAutoComplete.prototype.getSelectedProjectByPid = function (pid) {
 
 ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   var project,
-    elem = el || this.placeholderItem.querySelector(".project-bullet"),
+    elem = el || this.placeholderItem.querySelector(".tb-project-bullet"),
     result,
     task;
 
   if (!!pid || pid === "0") {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
     if (!!project) {
-      elem.className = project.querySelector(".project-bullet").className;
+      elem.className = project.querySelector(".tb-project-bullet").className;
       result = " - " + project.getAttribute("title");
       if (!!tid) {
         task = project.querySelector("li[data-tid='" + tid + "']");
@@ -240,7 +240,7 @@ ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
       return result;
     }
   }
-  elem.className = "project-bullet";
+  elem.className = "tb-project-bullet";
   return "";
 };
 

@@ -108,7 +108,7 @@ TogglButton = {
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-project-filter" tabindex="101" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
         '<a href="#clear" class="filter-clear">&times;</a>' +
-        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
+        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="tb-project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
         '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
       '<div class="toggl-button-row">' +
@@ -944,7 +944,7 @@ TogglButton = {
   },
 
   fillProjects: function () {
-    var html = '<p class="project-row" data-pid="0"><span class="project-bullet project-color no-color"></span>No project</p>',
+    var html = '<p class="project-row" data-pid="0"><span class="tb-project-bullet project-color no-color"></span>No project</p>',
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
       clientNames = TogglButton.$user.clientNameMap,
@@ -1013,7 +1013,7 @@ TogglButton = {
       i,
       tasksCount,
       hasTasks = !!tasks ? "has-tasks" : "",
-      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
+      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="tb-project-bullet project-color color-' + project.color + '"></span>' +
         '<span class="item-name ' + hasTasks + '" title="' + escapeHtml(project.name) + '">' + escapeHtml(project.name) + '</span>';
 
     if (!!tasks) {

@@ -1,4 +1,4 @@
-/*jslint indent: 2, unparam: true*/
+/*jslint indent: 2, unparam: true, plusplus: true*/
 /*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
@@ -17,6 +17,7 @@ var PopUp = {
   $resumeButton: document.querySelector(".resume-button"),
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
+  $tagIcon: document.querySelector(".tag-icon"),
   $projectBullet: document.querySelector(".timer .project-bullet"),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
@@ -26,6 +27,7 @@ var PopUp = {
   mousedownTrigger: null,
   projectBlurTrigger: null,
   editFormAdded: false,
+  $billable: null,
   $header: document.querySelector(".header"),
   $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
@@ -121,15 +123,36 @@ var PopUp = {
       description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
+
+      PopUp.setupIcons(TogglButton.$curEntry);
     }
   },
 
-  updateMenuTimer: function (desc, pid, tid) {
-    var description = desc || "(no description)";
+  updateMenuTimer: function (data) {
+    var description = data.description || "(no description)";
 
-    description += PopUp.$projectAutocomplete.setProjectBullet(pid, tid, PopUp.$projectBullet);
+    description += PopUp.$projectAutocomplete.setProjectBullet(data.pid, data.tid, PopUp.$projectBullet);
     PopUp.$editButton.textContent = description;
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
+
+    PopUp.setTagIcon(data.tags);
+  },
+
+  setupIcons: function (data) {
+    PopUp.setTagIcon(data.tags);
+    PopUp.setBillableIcon(!!data.billable);
+  },
+
+  setTagIcon: function (tags) {
+    var t = !!tags && !!tags.length,
+      joinedTags = t ? tags.join(", ") : "";
+
+    PopUp.$timerRow.classList.toggle("tag-icon-visible", t);
+    PopUp.$tagIcon.setAttribute("title", joinedTags);
+  },
+
+  setBillableIcon: function (billable) {
+    PopUp.$timerRow.classList.toggle("billable-icon-visible", billable);
   },
 
   switchView: function (view) {
@@ -162,6 +185,8 @@ var PopUp = {
 
     PopUp.$projectAutocomplete.setup(pid, tid);
     PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags);
+
+    PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
     PopUp.switchView(view);
 
     // Put focus to the beginning of desctiption field
@@ -170,8 +195,51 @@ var PopUp = {
     togglButtonDescription.scrollLeft = 0;
   },
 
+  updateBillable: function (pid, no_overwrite) {
+    var project, i,
+      pwid = TogglButton.$user.default_wid,
+      ws = TogglButton.$user.workspaces,
+      premium;
+
+    if (pid === 0) {
+      pwid = TogglButton.$user.default_wid;
+    } else {
+      project = TogglButton.findProjectByPid(pid);
+      if (!project) {
+        return;
+      }
+      pwid = project.wid;
+    }
+
+    for (i = 0; i < ws.length; i++) {
+      if (ws[i].id === pwid) {
+        premium = ws[i].premium;
+        break;
+      }
+    }
+
+    PopUp.toggleBillable(premium);
+
+    if (!no_overwrite && project.billable) {
+      PopUp.$billable.classList.toggle("tb-checked", true);
+    }
+  },
+
+  toggleBillable: function (visible) {
+    PopUp.$billable.classList.toggle("no-billable", !visible);
+    if (!visible) {
+      PopUp.$billable.classList.toggle("tb-checked", visible);
+    }
+  },
+
+  setupBillable: function (billable, pid) {
+    PopUp.updateBillable(pid, true);
+    PopUp.$billable.classList.toggle("tb-checked", billable);
+  },
+
   submitForm: function (that) {
     var selected = PopUp.$projectAutocomplete.getSelected(),
+      billable = !!document.querySelector(".tb-billable.tb-checked:not(.no-billable)"),
       request = {
         type: "update",
         description: document.querySelector("#toggl-button-description").value,
@@ -180,10 +248,12 @@ var PopUp = {
         tags: PopUp.$tagAutocomplete.getSelected(),
         tid: selected.tid,
         respond: true,
+        billable: billable,
         service: "dropdown"
       };
+
     PopUp.sendMessage(request);
-    PopUp.updateMenuTimer(request.description, request.pid, request.tid);
+    PopUp.updateMenuTimer(request);
     PopUp.switchView(PopUp.$menuView);
   },
 
@@ -192,6 +262,8 @@ var PopUp = {
     PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
     PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
 
+    PopUp.$billable = document.querySelector(".tb-billable");
+
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
     });
@@ -199,6 +271,10 @@ var PopUp = {
     document.querySelector("#entry-form form").addEventListener('submit', function (e) {
       PopUp.submitForm(this);
       e.preventDefault();
+    });
+
+    PopUp.$billable.addEventListener('click', function () {
+      this.classList.toggle("tb-checked");
     });
   }
 };

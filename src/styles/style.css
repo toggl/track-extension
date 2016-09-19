@@ -257,6 +257,57 @@ only screen and (min-resolution: 192dpi) {
   margin-top: 0px;
 }
 
+/** Billable flag **/
+
+#toggl-button-edit-form .tb-billable {
+  outline: none;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  padding-left: 10px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #8a8989;
+  transition:height 200ms ease-in-out;
+  overflow: hidden;
+}
+
+#toggl-button-edit-form .tb-billable.no-billable {
+  height: 0;
+}
+
+#toggl-button-edit-form .toggl-button-billable-label {
+  float: left;
+}
+
+#toggl-button-edit-form .toggl-button-billable-flag {
+  width: 42px;
+  height: 24px;
+  border-radius: 100px;
+  background-color: #cecece;
+  float: right;
+  margin-top: 6px;
+  position: relative;
+}
+
+#toggl-button-edit-form .toggl-button-billable-flag span {
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: 100px;
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  transition:left 200ms ease-in-out;
+}
+
+#toggl-button-edit-form .tb-billable.tb-checked .toggl-button-billable-flag {
+  background-color: #4bc800;
+}
+
+#toggl-button-edit-form .tb-billable.tb-checked .toggl-button-billable-flag span {
+  left: 20px;
+}
+
 /********* PIVOTAL *********/
 .toggl-button.pivotal {
   margin-top: 10px;

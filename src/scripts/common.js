@@ -88,17 +88,18 @@ function secondsToTime(duration, format) {
 }
 
 var togglbutton = {
+  $billable: null,
   isStarted: false,
   element: null,
   links: [],
   serviceName: '',
-  mousedownTrigger: null,
   projectBlurTrigger: null,
   taskBlurTrigger: null,
   tagsVisible: false,
   hasTasks: false,
   entries: {},
   projects: {},
+  user: {},
   duration_format: "",
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
@@ -107,6 +108,7 @@ var togglbutton = {
     chrome.runtime.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
         try {
+          togglbutton.user = response.user;
           togglbutton.entries = response.user.time_entries;
           togglbutton.projects = response.user.projectMap;
           togglbutton.fullVersion = response.version;
@@ -164,6 +166,58 @@ var togglbutton = {
     return secondsToTime(duration, togglbutton.duration_format);
   },
 
+  findProjectByPid: function (pid) {
+    var key;
+    for (key in togglbutton.user.projectMap) {
+      if (togglbutton.user.projectMap.hasOwnProperty(key) && togglbutton.user.projectMap[key].id === pid) {
+        return togglbutton.user.projectMap[key];
+      }
+    }
+    return undefined;
+  },
+
+  updateBillable: function (pid, no_overwrite) {
+    var project, i,
+      pwid = togglbutton.user.default_wid,
+      ws = togglbutton.user.workspaces,
+      premium;
+
+    if (pid === 0) {
+      pwid = togglbutton.user.default_wid;
+    } else {
+      project = togglbutton.findProjectByPid(pid);
+      if (!project) {
+        return;
+      }
+      pwid = project.wid;
+    }
+
+    for (i = 0; i < ws.length; i++) {
+      if (ws[i].id === pwid) {
+        premium = ws[i].premium;
+        break;
+      }
+    }
+
+    togglbutton.toggleBillable(premium);
+
+    if (!no_overwrite && project.billable) {
+      togglbutton.$billable.classList.toggle("tb-checked", true);
+    }
+  },
+
+  toggleBillable: function (visible) {
+    togglbutton.$billable.classList.toggle("no-billable", !visible);
+    if (!visible) {
+      togglbutton.$billable.classList.toggle("tb-checked", visible);
+    }
+  },
+
+  setupBillable: function (billable, pid) {
+    togglbutton.updateBillable(pid, true);
+    togglbutton.$billable.classList.toggle("tb-checked", billable);
+  },
+
   addEditForm: function (response) {
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {
@@ -206,6 +260,7 @@ var togglbutton = {
     editForm.style.top = position.top + "px";
     editForm.classList.add("toggl-integration");
     document.body.appendChild(editForm);
+    togglbutton.$billable = $(".tb-billable", editForm);
 
     projectAutocomplete = new ProjectAutoComplete("project", "li", togglbutton);
     tagAutocomplete = new TagAutoComplete("tag", "li", togglbutton);
@@ -219,6 +274,7 @@ var togglbutton = {
 
     submitForm = function (that) {
       var selected = projectAutocomplete.getSelected(),
+        billable = !!document.querySelector(".tb-billable.tb-checked:not(.no-billable)"),
         request = {
           type: "update",
           description: $("#toggl-button-description").value,
@@ -226,6 +282,7 @@ var togglbutton = {
           projectName: selected.name,
           tags: tagAutocomplete.getSelected(),
           tid: selected.tid,
+          billable: billable,
           service: togglbutton.serviceName
         };
       chrome.runtime.sendMessage(request);
@@ -240,6 +297,8 @@ var togglbutton = {
     setCursorAtBeginning(togglButtonDescription);
     projectAutocomplete.setup(pid, tid);
     tagAutocomplete.setSelected(response.entry.tags);
+
+    togglbutton.setupBillable(!!response.entry.billable, pid);
 
     // Data fill end
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
@@ -272,11 +331,9 @@ var togglbutton = {
       editForm.style.display = "none";
       return false;
     });
-    document.addEventListener('mousedown', function (e) {
-      togglbutton.mousedownTrigger = e.target;
-    });
-    document.addEventListener('mouseup', function (e) {
-      togglbutton.mousedownTrigger = null;
+
+    togglbutton.$billable.addEventListener('click', function () {
+      this.classList.toggle("tb-checked");
     });
 
     document.addEventListener("click", handler);

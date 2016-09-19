@@ -314,6 +314,53 @@ hr {
   font-size: 12px;
 }
 
+.tag-icon,
+.billable-icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 30px;
+  display: none;
+  float: left;
+}
+
+.tag-icon {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARBAMAAADJQ1rJAAAAAXNSR0IArs4c6QAAACpQTFRFAAAArq6upKSkpqampaWlpKSkpKSko6OjpKSkpKSkpKSkpKSkpKSko6Ojxtw9PQAAAA10Uk5TABMcPEp4e4CotuP8/rXdOgkAAABdSURBVAjXY/C6e3eFAQMIrL179+4xMOvuJM27dwvALAWmu3evw1lgQbAsWBCkAyLYC2FdZWCwgbBuCzCwwVkMtTBZBnaYDogg2GiwIFgIJAgRYmBg3R0AZTEIgggAaI1FSkguN/cAAAAASUVORK5CYII=');
+}
+
+.tag-icon.visible ~ .edit-button {
+  width: 124px;
+  padding-right: 20px;
+}
+
+.billable-icon {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAUCAMAAACDMFxkAAAAAXNSR0IArs4c6QAAAFpQTFRFAAAA////qqqqp6enqqqqp6enqKioo6OjpqampaWlpKSkpaWlo6OjpKSkpKSko6OjpKSko6OjpKSkpKSkpKSkpKSko6OjpKSkpKSkpKSkpKSkpKSko6Ojo6OjwiB/AwAAAB10Uk5TAAEPGhsgJicrR3t/gJ+osrPDxMrS1Nzd5ebo8fVWC5UqAAAAaElEQVQI13VPRw7AMAyiTle6R9LN/7/ZdCpSVU5Y2IABh67FA/JDpTCkyQVQI08MChWtFtGWFVZGx1rEFRtj3IYNlyy9DMLe3UylDhwPdDm7qVeXlGYL6yc/4eabeRFe8F2nkN++70M7wSMIvPS86/IAAAAASUVORK5CYII=');
+}
+
+.timer.tag-icon-visible .tag-icon,
+.timer.billable-icon-visible .billable-icon {
+  display: block;
+}
+
+/* Only billable icon visible */
+.timer.billable-icon-visible:not(.tag-icon-visible) .edit-button {
+  width: 120px;
+}
+
+/* Only tag icon visible */
+.timer.tag-icon-visible:not(.billable-icon-visible) .edit-button {
+  width: 117px;
+}
+
+.timer.tag-icon-visible:not(.billable-icon-visible) .tag-icon {
+  width: 23px;
+}
+
+/* Both icons visible */
+.timer.tag-icon-visible.billable-icon-visible .edit-button {
+  width: 100px;
+}
+
 .stop-button {
   width: 170px;
   padding-left: 30px;
@@ -361,9 +408,10 @@ hr {
 }
 
 .tracking .edit-button{
-  width: 144px;
+  width: 140px;
   padding-left: 30px;
   display: block;
+  padding-right: 4px;
 }
 
 .tracking .edit-button:hover {
@@ -610,6 +658,59 @@ hr {
   font-size: 12px;
 }
 
+/** FIREFOX END **/
+
 .hidden {
   display: none;
+}
+
+/** Billable flag **/
+
+#toggl-button-edit-form .tb-billable {
+  outline: none;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  padding-left: 10px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #8a8989;
+  transition:height 200ms ease-in-out;
+  overflow: hidden;
+}
+
+#toggl-button-edit-form .tb-billable.no-billable {
+  height: 0;
+}
+
+#toggl-button-edit-form .toggl-button-billable-label {
+  float: left;
+}
+
+#toggl-button-edit-form .toggl-button-billable-flag {
+  width: 42px;
+  height: 24px;
+  border-radius: 100px;
+  background-color: #cecece;
+  float: right;
+  margin-top: 6px;
+  position: relative;
+}
+
+#toggl-button-edit-form .toggl-button-billable-flag span {
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: 100px;
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  transition:left 200ms ease-in-out;
+}
+
+#toggl-button-edit-form .tb-billable.tb-checked .toggl-button-billable-flag {
+  background-color: #4bc800;
+}
+
+#toggl-button-edit-form .tb-billable.tb-checked .toggl-button-billable-flag span {
+  left: 20px;
 }

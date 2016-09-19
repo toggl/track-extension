@@ -83,6 +83,7 @@ TogglButton = {
   checkingWorkdayEnd: false,
   pomodoroAlarm: null,
   pomodoroProgressTimer: null,
+  localEntry: null,
   $userState: 'active',
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
@@ -109,6 +110,10 @@ TogglButton = {
         '<div class="tag-clear">Clear selected tags</div>' +
         '{tags}</div>' +
       '</div>' +
+      '<div class="toggl-button-row tb-billable {billable}">' +
+        '<div class="toggl-button-billable-label">Billable</div>' +
+        '<div class="toggl-button-billable-flag"><span></span></div>' +
+      '</div>' +
       '<div id="toggl-button-update" tabindex="103">DONE</div>' +
       '<input type="submit" class="hidden">' +
       '</from>' +
@@ -119,7 +124,8 @@ TogglButton = {
       token: token || ' ',
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null;
+        var resp, apiToken, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null,
+          entry = null;
         try {
           if (xhr.status === 200) {
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -132,7 +138,6 @@ TogglButton = {
               }
             });
             resp = JSON.parse(xhr.responseText);
-            TogglButton.updateTriggers(null, true);
             if (resp.data.projects) {
               resp.data.projects.forEach(function (project) {
                 if (project.active && !project.server_deleted_at) {
@@ -160,14 +165,16 @@ TogglButton = {
               });
             }
             if (resp.data.time_entries) {
-              resp.data.time_entries.some(function (entry) {
-                if (entry.duration < 0) {
-                  TogglButton.updateTriggers(entry, true);
+              resp.data.time_entries.some(function (time_entry) {
+                if (time_entry.duration < 0) {
+                  entry = time_entry;
                   return true;
                 }
                 return false;
               });
             }
+
+            TogglButton.updateTriggers(entry);
             Db.set('projects', JSON.stringify(projectMap));
             Db.set('clients', JSON.stringify(clientMap));
             TogglButton.$user = resp.data;
@@ -186,6 +193,7 @@ TogglButton = {
             TogglButton.setupSocket();
             TogglButton.updateBugsnag();
             TogglButton.handleQueue();
+            TogglButton.setCanSeeBillable();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
             if (apiToken) {
@@ -225,6 +233,22 @@ TogglButton = {
     Bugsnag.user = {
       id: TogglButton.$user.id
     };
+  },
+
+  setCanSeeBillable: function () {
+    var canSeeBillable = false,
+      ws,
+      k;
+    for (k in TogglButton.$user.workspaces) {
+      if (TogglButton.$user.workspaces.hasOwnProperty(k)) {
+        ws = TogglButton.$user.workspaces[k];
+        if (ws.premium) {
+          canSeeBillable = true;
+          break;
+        }
+      }
+    }
+    TogglButton.canSeeBillable = canSeeBillable;
   },
 
   setupSocket: function () {
@@ -274,7 +298,7 @@ TogglButton = {
       data = JSON.parse(msg.data);
       if (data.model !== null) {
         if (data.model === "time_entry") {
-          TogglButton.updateCurrentEntry(data, true);
+          TogglButton.updateCurrentEntry(data);
         }
       } else if (TogglButton.$socket !== null) {
         try {
@@ -287,20 +311,28 @@ TogglButton = {
 
   },
 
-  updateTriggers: function (entry, sync) {
+  updateTriggers: function (entry) {
+    var update = !!TogglButton.localEntry && !!entry && TogglButton.localEntry.id === entry.id;
+
     TogglButton.$curEntry = entry;
     if (!!entry) {
-      if (!sync) {
+      if (update) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
         TogglButton.$nannyTimer = null;
+      } else {
+        chrome.browserAction.setIcon({
+          path: {'19': 'images/active-19.png', '38': 'images/active-38.png'}
+        });
       }
     } else {
       // Clear pomodoro timer
       clearTimeout(TogglButton.pomodoroAlarm);
+      TogglButton.pomodoroAlarm = null;
       clearInterval(TogglButton.pomodoroProgressTimer);
+      TogglButton.pomodoroProgressTimer = null;
       chrome.browserAction.setIcon({
-        path: {'19': 'images/active-19.png', '38': 'images/active-38.png'}
+        path: {'19': 'images/inactive-19.png', '38': 'images/inactive-38.png'}
       });
     }
     // Toggle workday end check
@@ -310,7 +342,7 @@ TogglButton = {
     TogglButton.setBrowserAction(entry);
   },
 
-  updateCurrentEntry: function (data, sync) {
+  updateCurrentEntry: function (data) {
     var entry = data.data;
     if (data.action === "INSERT") {
       TogglButton.updateTriggers(entry);
@@ -320,7 +352,7 @@ TogglButton = {
         TogglButton.updateEntriesDb();
         entry = null;
       }
-      TogglButton.updateTriggers(entry, sync);
+      TogglButton.updateTriggers(entry);
     }
   },
 
@@ -422,6 +454,7 @@ TogglButton = {
           if (success) {
             responseData = JSON.parse(xhr.responseText);
             entry = responseData && responseData.data;
+            TogglButton.localEntry = entry;
             TogglButton.updateTriggers(entry);
             TogglButton.analytics(timeEntry.type, timeEntry.service);
           } else {
@@ -462,6 +495,13 @@ TogglButton = {
       interval = parseInt(Db.get("pomodoroInterval"), 10) * 60000;
     if (duration < interval) {
       TogglButton.triggerPomodoroAlarm(interval - duration);
+    } else {
+      clearTimeout(TogglButton.pomodoroAlarm);
+      TogglButton.pomodoroAlarm = null;
+      clearInterval(TogglButton.pomodoroProgressTimer);
+      TogglButton.pomodoroProgressTimer = null;
+      TogglButton.pomodoroAlarmStop();
+      TogglButton.updateTriggers(null);
     }
   },
 
@@ -740,21 +780,17 @@ TogglButton = {
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {
-    var entry, project, error = "";
+    var entry, error = "";
     if (!TogglButton.$curEntry) { return; }
     entry = {
       time_entry: {
         description: timeEntry.description,
         pid: timeEntry.pid,
         tags: timeEntry.tags,
-        tid: timeEntry.tid
+        tid: timeEntry.tid,
+        billable: timeEntry.billable
       }
     };
-
-    if (timeEntry.pid !== null && timeEntry.projectName !== null) {
-      project = TogglButton.$user.projectMap[timeEntry.projectName + timeEntry.pid];
-      entry.time_entry.billable = project && project.billable;
-    }
 
     TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
       method: 'PUT',
@@ -891,7 +927,16 @@ TogglButton = {
     }
     return TogglButton.$editForm
         .replace("{projects}", TogglButton.fillProjects())
-        .replace("{tags}", TogglButton.fillTags());
+        .replace("{tags}", TogglButton.fillTags())
+        .replace("{billable}", TogglButton.setupBillable());
+  },
+
+  setupBillable: function () {
+    if (!!TogglButton.canSeeBillable) {
+      return "";
+    }
+
+    return "no-billable";
   },
 
   fillProjects: function () {

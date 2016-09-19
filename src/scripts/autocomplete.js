@@ -179,6 +179,8 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
     // Close dropdown
     this.closeDropdown();
   }
+
+  this.elem.updateBillable(parseInt(val, 10));
   return false;
 };
 

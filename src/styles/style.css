@@ -1082,3 +1082,8 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.attask.active {
   background-color:#f5f5f5;
 }
+
+/********* ONLYOFFICE *********/
+.toggl-button.onlyoffice {
+  margin-top: 4px;
+}

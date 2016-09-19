@@ -6,13 +6,17 @@ togglbutton.render('.commonInfoTaskDescription:not(.toggl)', {observe: true}, fu
   'use strict';
 
   var link, description, project;
-  description = $('#essenceTitle') || {};
-  project = $('.task-desc-block .value a') || {};
+
+  description = $('#essenceTitle');
+  description = (!!description) ? description.textContent.trim() : null;
+
+  project = $('.task-desc-block .value a');
+  project = (!!project) ? project.textContent.trim() : null;
 
   link = togglbutton.createTimerLink({
     className: 'onlyoffice',
-    description: description.textContent,
-    projectName: project.textContent,
+    description: description,
+    projectName: project,
     buttonType: 'minimal'
   });
   $('.project-title').appendChild(link);
@@ -23,13 +27,17 @@ togglbutton.render('.subtasks .subtask:not(.toggl):not(.closed)', {observe: true
   'use strict';
 
   var link, description, project, button;
-  description = $('.taskName span', elem) || {};
-  project = $('.task-desc-block .value a') || {};
+
+  description = $('.taskName span', elem);
+  description = (!!description) ? description.textContent.trim() : null;
+
+  project = $('.task-desc-block .value a');
+  project = (!!project) ? project.textContent.trim() : null;
 
   link = togglbutton.createTimerLink({
     className: 'onlyoffice',
-    description: description.textContent,
-    projectName: project.textContent,
+    description: description,
+    projectName: project,
     buttonType: 'minimal'
   });
   elem.insertBefore(link, $('.check', elem));
@@ -45,13 +53,16 @@ togglbutton.render('.taskList .task:not(.toggl):not(.closed)', {observe: true}, 
 
   var link, description, project, button;
 
-  description = $('.taskName a', elem) || {};
-  project = $('#essenceTitle') || {};
+  description = $('.taskName a', elem);
+  description = (!!description) ? description.textContent.trim() : null;
+
+  project = $('#essenceTitle');
+  project = (!!project) ? project.textContent.trim() : null;
 
   link = togglbutton.createTimerLink({
     className: 'onlyoffice',
-    description: description.textContent,
-    projectName: project.textContent,
+    description: description,
+    projectName: project,
     buttonType: 'minimal'
   });
   elem.insertBefore(link, $('.check', elem));

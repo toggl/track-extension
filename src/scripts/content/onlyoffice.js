@@ -2,7 +2,7 @@
 /*global $: false, document: false, togglbutton: false*/
 
 /* For main task (not a subtask) */
-togglbutton.render('.commonInfoTaskDescription:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.commonInfoTaskDescription:not(.toggl)', {observe: true}, function () {
   'use strict';
 
   var link, description, project;

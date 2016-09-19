@@ -505,13 +505,6 @@ TogglButton = {
       interval = parseInt(Db.get("pomodoroInterval"), 10) * 60000;
     if (duration < interval) {
       TogglButton.triggerPomodoroAlarm(interval - duration);
-    } else {
-      clearTimeout(TogglButton.pomodoroAlarm);
-      TogglButton.pomodoroAlarm = null;
-      clearInterval(TogglButton.pomodoroProgressTimer);
-      TogglButton.pomodoroProgressTimer = null;
-      TogglButton.pomodoroAlarmStop();
-      TogglButton.updateTriggers(null);
     }
   },
 

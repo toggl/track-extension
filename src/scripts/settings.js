@@ -190,7 +190,7 @@ var Settings = {
     customs = Db.getAllOrigins();
     for (k in customs) {
       if (customs.hasOwnProperty(k)) {
-        custom_html += "<li><a class='remove-custom'>&times;</a><strong>" + k + "</strong> - <i>" + customs[k] + "</i></li>";
+        custom_html += "<li><a class='remove-custom'>&times;</a><strong>" + k + "</strong> - <i>" + TogglOrigins[customs[k]].name + "</i></li>";
       }
     }
     Settings.$customPermissionsList.innerHTML = custom_html;

@@ -37,16 +37,26 @@ var report = function (e) {
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
   function (info) {
-    var headers = info.requestHeaders;
+    var headers = info.requestHeaders,
+      isTogglButton = false,
+      uaIndex = -1;
+
     headers.forEach(function (header, i) {
       if (header.name.toLowerCase() === 'user-agent') {
-        header.value = TogglButton.$fullVersion;
+        uaIndex = i;
+      }
+      if (header.name === 'IsTogglButton') {
+        isTogglButton = true;
       }
     });
+
+    if (!isTogglButton && uaIndex !== -1) {
+      headers[uaIndex].value = TogglButton.$fullVersion;
+    }
     return {requestHeaders: headers};
   },
   {
-    urls: [ "https://www.toggl.com/*" ],
+    urls: [ "https://www.toggl.com/*", "https://toggl.com/*" ],
     types: ["xmlhttprequest"]
   },
   ["blocking", "requestHeaders"]
@@ -611,6 +621,7 @@ TogglButton = {
       credentials = opts.credentials || null;
 
     xhr.open(method, baseUrl + url, true);
+    xhr.setRequestHeader("IsTogglButton", "true");
 
     if (opts.onError) {
       xhr.addEventListener('error', function () { opts.onError(xhr); });

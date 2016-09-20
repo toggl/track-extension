@@ -35,8 +35,7 @@ var Settings = {
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function () {
-    var key, project, clientName, projects, clients, selected, volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10),
-      defProject;
+    var volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10);
 
     if (!TogglButton) {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
@@ -61,26 +60,34 @@ var Settings = {
 
     Settings.toggleState(Settings.$stopAtDayEnd, Db.get("stopAtDayEnd"));
     document.querySelector("#day-end-time").value = Db.get("dayEndTime");
+
+    Settings.fillDefaultProject();
+
+    TogglButton.analytics("settings", null);
+
+    if (!FF) {
+      Settings.loadSitesIntoList();
+    }
+  },
+  fillDefaultProject: function () {
+    var key, project, clientName, projects, clients, defProject, selected, html;
     if (Db.get("projects") !== '' && !!TogglButton.$user) {
+      defProject = Db.get(TogglButton.$user.id + "-defaultProject");
       projects = JSON.parse(Db.get("projects"));
       clients = JSON.parse(Db.get("clients"));
-      Settings.$defaultProject.innerHTML = '<option value="0">- No project -</option>';
+      html = '<option value="0">- No project -</option>';
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
           selected = '';
           project = projects[key];
           clientName = (!!project.cid && !!clients[project.cid]) ? ' . ' + clients[project.cid].name  : '';
-          defProject = Db.get(TogglButton.$user.id + "-defaultProject");
           if (!!defProject && parseInt(defProject, 10) === project.id) {
             selected = "selected ";
           }
-          Settings.$defaultProject.innerHTML += "<option " + selected + "value='" + project.id + "'>" + project.name + clientName + "</option>";
+          html += "<option " + selected + "value='" + project.id + "'>" + project.name + clientName + "</option>";
         }
       }
-    }
-    TogglButton.analytics("settings", null);
-    if (!FF) {
-      Settings.loadSitesIntoList();
+      Settings.$defaultProject.innerHTML = html;
     }
   },
   getAllPermissions: function () {

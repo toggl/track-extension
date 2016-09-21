@@ -1,6 +1,20 @@
 {
     "versions": [
     {
+      "version":"1.0.7",
+      "short-version": "107",
+      "date": "September 21st 2016",
+      "rows":[
+        "Added support for OnlyOffice",
+        "Fixed Pomodoro loading issues with data outside Toggl Button",
+        "Fixed Pomodoro notification not triggering",
+        "Added Billable and tag icon to popup timer",
+        "Added Billable flag editing",
+        "Fixed slow Settings loading with large amount of projects",
+        "Show tool name instead of url in custom domain list"
+      ]
+    },
+    {
       "version":"1.0.6",
       "short-version": "106",
       "date": "September 9th 2016",

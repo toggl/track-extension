@@ -90,6 +90,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [SherpaDesk][86]
   - [Workfront][87]
   - [OnlyOffice][88]
+  - [MeisterTask][89]
 
 ## Installing from the Web Store
 
@@ -223,6 +224,7 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [86]: http://www.sherpadesk.com/
 [87]: https://www.workfront.com/
 [88]: https://www.onlyoffice.com/
+[89]: https://meistertask.com/
 
 [98]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [99]: https://github.com/toggl/toggl-button/pulls

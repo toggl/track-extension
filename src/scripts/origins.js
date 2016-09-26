@@ -51,6 +51,7 @@ window.TogglOrigins = {
   "liquidplanner.com": {"url": "*://app.liquidplanner.com/*", "name": "Liquidplanner"},
   "mantishub.com": {"url": "*://*.mantishub.com/*", "name": "Mantishub"},
   "mantishub.io": {"url": "*://*.mantishub.io/*", "name": "Mantishub", "clone" : "true"},
+  "meistertask.com": {"url": "*://meistertask.com/*", "name": "MeisterTask"},
   "minicrm.pl": {"url": "*://*.minicrm.pl/*", "name": "Minicrm", "clone": "true"},
   "myjetbrains.com": {"url": "*://*.myjetbrains.com/*", "name": "Myjetbrains", "file": "youtrack.js"},
   "newsletter2go.com": {"url": "*://*.newsletter2go.com/*", "name": "Newsletter2go"},

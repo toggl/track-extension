@@ -1138,3 +1138,8 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.onlyoffice {
   margin-top: 4px;
 }
+
+/********* MEISTERTASK *********/
+.toggl-button.meistertask {
+  margin-right: 15px;
+}

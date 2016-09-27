@@ -310,6 +310,12 @@ var togglbutton = {
       submitForm(this);
     });
 
+    $("#toggl-button-update").addEventListener('keydown', function (e) {
+      if (e.code === "Enter" || e.code === "Space") {
+        submitForm(this);
+      }
+    });
+
     $("form", editForm).addEventListener('submit', function (e) {
       submitForm(this);
       e.preventDefault();

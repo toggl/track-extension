@@ -267,6 +267,12 @@ var PopUp = {
       PopUp.submitForm(this);
     });
 
+    document.querySelector("#toggl-button-update").addEventListener('keydown', function (e) {
+      if (e.code === "Enter" || e.code === "Space") {
+        PopUp.submitForm(this);
+      }
+    });
+
     document.querySelector("#entry-form form").addEventListener('submit', function (e) {
       PopUp.submitForm(this);
       e.preventDefault();

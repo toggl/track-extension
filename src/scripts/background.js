@@ -1418,6 +1418,9 @@ TogglButton = {
       } else if (request.type === 'timeEntry') {
         TogglButton.createTimeEntry(request, sendResponse);
         TogglButton.hideNotification('remind-to-track-time');
+      } else if (request.type === 'list-continue') {
+        TogglButton.createTimeEntry(request.data, sendResponse);
+        TogglButton.hideNotification('remind-to-track-time');
       } else if (request.type === 'resume') {
         TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, sendResponse);
         TogglButton.hideNotification('remind-to-track-time');

@@ -255,7 +255,7 @@ only screen and (min-resolution: 2dppx) {
   list-style: none;
   height: 29px;
 }
-#menu li:not(.has-resume):hover {
+#menu li:not(.has-resume):not(.entries-list):hover {
   background-color: #e6e6e6;
   color: #222;
 }
@@ -338,7 +338,9 @@ hr {
 }
 
 .timer.tag-icon-visible .tag-icon,
-.timer.billable-icon-visible .billable-icon {
+.timer.billable-icon-visible .billable-icon,
+.tag-icon-visible .tag-icon,
+.billable-icon-visible .billable-icon {
   display: block;
 }
 
@@ -721,4 +723,85 @@ hr {
 #toggl-button-edit-form .tb-billable:focus .toggl-button-billable-flag {
   border: 1px solid rgb(83, 183, 253);
   box-shadow: 0px 0px 5px rgb(26, 153, 243);
+}
+
+/** Time Entries list **/
+.entries-list p {
+  color: #a3a3a3;
+  font-weight: 200;
+  padding-left: 5px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.entries-list ul {
+  margin-top: 15px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#menu .entries-list ul li {
+  border-top: 1px solid #eceded;
+  height: 45px;
+  width: 100%;
+  float: left;
+  position: relative;
+}
+
+.entries-list ul li:last-child {
+  border-bottom: 1px solid #eceded;
+}
+
+#menu .entries-list ul li .te-desc, #menu .entries-list ul li .te-proj {
+  float: left;
+  position: absolute;
+  left: 5px;
+  right: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 200;
+}
+
+#menu .entries-list ul li .te-desc {
+  top: 5px;
+}
+
+#menu .entries-list ul li .te-proj {
+  bottom: 5px;
+  color: #a3a3a3;
+  padding-left: 10px;
+}
+
+#menu .entries-list ul li .te-icons {
+  float: right;
+  position: relative;
+}
+
+#menu .entries-list ul li .te-icons  > div {
+  padding-top: 15px;
+}
+
+#menu .entries-list .tb-project-bullet {
+  margin: 4px 0 3px -10px;
+}
+
+#menu .te-continue {
+  background-color: #4bc800;
+  width: 0;
+  transition:width 200ms ease-in-out;
+  height: 45px;
+  line-height: 45px;
+  color: #fff;
+  text-align: center;
+  float: right;
+  position: relative;
+  cursor: pointer;
+}
+
+#menu .entries-list ul li:hover .te-continue {
+  width: 65px;
+}
+
+#menu .entries-list ul li:hover .te-icons {
+  background-color: #e6e6e6;
 }

@@ -32,6 +32,7 @@ var PopUp = {
   $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  $entries: document.querySelector(".entries-list"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {
     var p;
@@ -69,6 +70,7 @@ var PopUp = {
       if (!PopUp.$header.getAttribute("data-view")) {
         PopUp.switchView(PopUp.$menuView);
       }
+      PopUp.renderEntriesList();
     } else {
       localStorage.setItem('latestStoppedEntry', '');
       PopUp.switchView(PopUp.$loginView);
@@ -136,6 +138,51 @@ var PopUp = {
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
 
     PopUp.setTagIcon(data.tags);
+  },
+
+  renderEntriesList: function () {
+    var html = "<p>Recent Time entries<p><ul>",
+      entries = TogglButton.$user.time_entries,
+      visibleIcons = "",
+      joinedTags,
+      te,
+      p,
+      t,
+      b,
+      i,
+      count = 0;
+
+    for (i = entries.length - 1; i >= 0; i--) {
+      if (count >= 5) {
+        break;
+      }
+      te = entries[i];
+      if (te.duration >= 0) {
+
+        visibleIcons = "";
+        p = TogglButton.findProjectByPid(te.pid);
+        if (!!p) {
+          p = "<div class='tb-project-bullet project-color color-" + p.color + "'></div>" + p.name;
+        } else {
+          p = "";
+        }
+        t = !!te.tags && te.tags.length;
+        joinedTags = t ? te.tags.join(", ") : "";
+
+        t = t ? "tag-icon-visible" : "";
+        b = !!te.billable ? "billable-icon-visible" : "";
+        visibleIcons = t + " " + b;
+
+        html += "<li data-id='" + i + "'>";
+        html += "<div class='te-desc' title='" + te.description + "'>" + te.description + "</div>";
+        html += "<div class='te-proj'>" + p + "</div>";
+        html += "<div class='te-continue'>Continue</div>";
+        html += "<div class='te-icons " + visibleIcons + "'><div class='tag-icon' title='" + joinedTags + "'></div><div class='billable-icon' title='billable'></div></div>";
+        html += "</li>";
+        count++;
+      }
+    }
+    PopUp.$entries.innerHTML = html;
   },
 
   setupIcons: function (data) {
@@ -373,5 +420,16 @@ document.addEventListener('DOMContentLoaded', function () {
       e.stopPropagation();
       e.preventDefault();
     }
+  });
+
+  PopUp.$entries.addEventListener('click', function (e) {
+    var request = {
+      type: "list-continue",
+      respond: true,
+      service: "dropdown",
+      data: TogglButton.$user.time_entries[e.target.parentNode.getAttribute("data-id")]
+    };
+
+    PopUp.sendMessage(request);
   });
 });

@@ -676,6 +676,8 @@ hr {
   color: #8a8989;
   transition:height 200ms ease-in-out;
   overflow: hidden;
+  padding-top: 0!important;
+  margin-top: 10px;
 }
 
 #toggl-button-edit-form .tb-billable.no-billable {

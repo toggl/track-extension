@@ -226,10 +226,9 @@ var PopUp = {
   },
 
   toggleBillable: function (visible) {
+    var tabIndex = visible ? "103" : "-1";
+    PopUp.$billable.setAttribute("tabindex", tabIndex);
     PopUp.$billable.classList.toggle("no-billable", !visible);
-    if (!visible) {
-      PopUp.$billable.classList.toggle("tb-checked", visible);
-    }
   },
 
   setupBillable: function (billable, pid) {

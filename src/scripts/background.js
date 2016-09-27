@@ -120,11 +120,11 @@ TogglButton = {
         '<div class="tag-clear">Clear selected tags</div>' +
         '{tags}</div>' +
       '</div>' +
-      '<div class="toggl-button-row tb-billable {billable}">' +
+      '<div class="toggl-button-row tb-billable {billable}" tabindex="103">' +
         '<div class="toggl-button-billable-label">Billable</div>' +
         '<div class="toggl-button-billable-flag"><span></span></div>' +
       '</div>' +
-      '<div id="toggl-button-update" tabindex="103">DONE</div>' +
+      '<div id="toggl-button-update" tabindex="104">DONE</div>' +
       '<input type="submit" class="hidden">' +
       '</from>' +
     '</div>',
@@ -937,10 +937,10 @@ TogglButton = {
 
   setupBillable: function () {
     if (!!TogglButton.canSeeBillable) {
-      return "";
+      return '" tabindex="103';
     }
 
-    return "no-billable";
+    return 'no-billable" tabindex="-1';
   },
 
   fillProjects: function () {

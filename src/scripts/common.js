@@ -207,10 +207,9 @@ var togglbutton = {
   },
 
   toggleBillable: function (visible) {
+    var tabIndex = visible ? "103" : "-1";
+    togglbutton.$billable.setAttribute("tabindex", tabIndex);
     togglbutton.$billable.classList.toggle("no-billable", !visible);
-    if (!visible) {
-      togglbutton.$billable.classList.toggle("tb-checked", visible);
-    }
   },
 
   setupBillable: function (billable, pid) {

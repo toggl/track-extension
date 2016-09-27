@@ -29,7 +29,7 @@ AutoComplete.prototype.addEvents = function () {
   var that = this;
 
   that.placeholderItem.addEventListener('click', function (e) {
-    that.filter.focus();
+    setTimeout(function () {that.filter.focus(); }, 50);
   });
 
   that.filter.addEventListener('focus', function (e) {

@@ -335,6 +335,29 @@ var togglbutton = {
       this.classList.toggle("tb-checked");
     });
 
+    togglbutton.$billable.addEventListener('keydown', function (e) {
+      var prevent = false;
+      if (e.code === "Space") {
+        prevent = true;
+        this.classList.toggle("tb-checked");
+      }
+
+      if (e.code === "ArrowLeft") {
+        prevent = true;
+        this.classList.toggle("tb-checked", false);
+      }
+
+      if (e.code === "ArrowRight") {
+        prevent = true;
+        this.classList.toggle("tb-checked", true);
+      }
+
+      if (prevent) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    });
+
     document.addEventListener("click", handler);
   },
 

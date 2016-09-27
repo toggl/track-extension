@@ -226,6 +226,7 @@ var togglbutton = {
     var pid = response.entry.pid,
       tid = response.entry.tid,
       handler,
+      closeForm,
       position,
       editFormHeight = 350,
       editFormWidth = 240,
@@ -264,9 +265,15 @@ var togglbutton = {
     projectAutocomplete = new ProjectAutoComplete("project", "li", togglbutton);
     tagAutocomplete = new TagAutoComplete("tag", "li", togglbutton);
 
+    closeForm = function () {
+      projectAutocomplete.closeDropdown();
+      tagAutocomplete.closeDropdown();
+      editForm.style.display = "none";
+    };
+
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        editForm.style.display = "none";
+        closeForm();
         this.removeEventListener("click", handler);
       }
     };
@@ -285,9 +292,7 @@ var togglbutton = {
           service: togglbutton.serviceName
         };
       chrome.runtime.sendMessage(request);
-      projectAutocomplete.closeDropdown();
-      tagAutocomplete.closeDropdown();
-      editForm.style.display = "none";
+      closeForm();
     };
 
     // Fill in data if edit form was not present
@@ -301,9 +306,7 @@ var togglbutton = {
 
     // Data fill end
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
-      projectAutocomplete.closeDropdown();
-      tagAutocomplete.closeDropdown();
-      editForm.style.display = "none";
+      closeForm();
     });
 
     $("#toggl-button-update", editForm).addEventListener('click', function (e) {
@@ -331,9 +334,7 @@ var togglbutton = {
         link.innerHTML = 'Start timer';
       }
       chrome.runtime.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
-      projectAutocomplete.closeDropdown();
-      tagAutocomplete.closeDropdown();
-      editForm.style.display = "none";
+      closeForm();
       return false;
     });
 

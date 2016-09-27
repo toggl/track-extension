@@ -77,7 +77,7 @@ AutoComplete.prototype.closeDropdown = function (t) {
   var that = t || this;
   that.filter.value = "";
   that.el.classList.remove("filtered");
-  that.placeholderItem.parentNode.classList.toggle("open");
+  that.placeholderItem.parentNode.classList.remove("open");
   that.placeholderItem.parentNode.classList.remove("add-allowed");
   that.clearFilters();
 };

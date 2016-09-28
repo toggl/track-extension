@@ -226,10 +226,9 @@ var PopUp = {
   },
 
   toggleBillable: function (visible) {
+    var tabIndex = visible ? "103" : "-1";
+    PopUp.$billable.setAttribute("tabindex", tabIndex);
     PopUp.$billable.classList.toggle("no-billable", !visible);
-    if (!visible) {
-      PopUp.$billable.classList.toggle("tb-checked", visible);
-    }
   },
 
   setupBillable: function (billable, pid) {
@@ -266,6 +265,12 @@ var PopUp = {
 
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
+    });
+
+    document.querySelector("#toggl-button-update").addEventListener('keydown', function (e) {
+      if (e.code === "Enter" || e.code === "Space") {
+        PopUp.submitForm(this);
+      }
     });
 
     document.querySelector("#entry-form form").addEventListener('submit', function (e) {
@@ -345,5 +350,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelector(".header .icon").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app"});
+  });
+
+  PopUp.$billable.addEventListener('keydown', function (e) {
+    var prevent = false;
+    if (e.code === "Space") {
+      prevent = true;
+      this.classList.toggle("tb-checked");
+    }
+
+    if (e.code === "ArrowLeft") {
+      prevent = true;
+      this.classList.toggle("tb-checked", false);
+    }
+
+    if (e.code === "ArrowRight") {
+      prevent = true;
+      this.classList.toggle("tb-checked", true);
+    }
+
+    if (prevent) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
   });
 });

@@ -207,10 +207,9 @@ var togglbutton = {
   },
 
   toggleBillable: function (visible) {
+    var tabIndex = visible ? "103" : "-1";
+    togglbutton.$billable.setAttribute("tabindex", tabIndex);
     togglbutton.$billable.classList.toggle("no-billable", !visible);
-    if (!visible) {
-      togglbutton.$billable.classList.toggle("tb-checked", visible);
-    }
   },
 
   setupBillable: function (billable, pid) {
@@ -227,6 +226,7 @@ var togglbutton = {
     var pid = response.entry.pid,
       tid = response.entry.tid,
       handler,
+      closeForm,
       position,
       editFormHeight = 350,
       editFormWidth = 240,
@@ -265,9 +265,15 @@ var togglbutton = {
     projectAutocomplete = new ProjectAutoComplete("project", "li", togglbutton);
     tagAutocomplete = new TagAutoComplete("tag", "li", togglbutton);
 
+    closeForm = function () {
+      projectAutocomplete.closeDropdown();
+      tagAutocomplete.closeDropdown();
+      editForm.style.display = "none";
+    };
+
     handler = function (e) {
       if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
-        editForm.style.display = "none";
+        closeForm();
         this.removeEventListener("click", handler);
       }
     };
@@ -286,9 +292,7 @@ var togglbutton = {
           service: togglbutton.serviceName
         };
       chrome.runtime.sendMessage(request);
-      projectAutocomplete.closeDropdown();
-      tagAutocomplete.closeDropdown();
-      editForm.style.display = "none";
+      closeForm();
     };
 
     // Fill in data if edit form was not present
@@ -302,13 +306,17 @@ var togglbutton = {
 
     // Data fill end
     $("#toggl-button-hide", editForm).addEventListener('click', function (e) {
-      projectAutocomplete.closeDropdown();
-      tagAutocomplete.closeDropdown();
-      editForm.style.display = "none";
+      closeForm();
     });
 
     $("#toggl-button-update", editForm).addEventListener('click', function (e) {
       submitForm(this);
+    });
+
+    $("#toggl-button-update").addEventListener('keydown', function (e) {
+      if (e.code === "Enter" || e.code === "Space") {
+        submitForm(this);
+      }
     });
 
     $("form", editForm).addEventListener('submit', function (e) {
@@ -326,14 +334,35 @@ var togglbutton = {
         link.innerHTML = 'Start timer';
       }
       chrome.runtime.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
-      projectAutocomplete.closeDropdown();
-      tagAutocomplete.closeDropdown();
-      editForm.style.display = "none";
+      closeForm();
       return false;
     });
 
     togglbutton.$billable.addEventListener('click', function () {
       this.classList.toggle("tb-checked");
+    });
+
+    togglbutton.$billable.addEventListener('keydown', function (e) {
+      var prevent = false;
+      if (e.code === "Space") {
+        prevent = true;
+        this.classList.toggle("tb-checked");
+      }
+
+      if (e.code === "ArrowLeft") {
+        prevent = true;
+        this.classList.toggle("tb-checked", false);
+      }
+
+      if (e.code === "ArrowRight") {
+        prevent = true;
+        this.classList.toggle("tb-checked", true);
+      }
+
+      if (prevent) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
     });
 
     document.addEventListener("click", handler);

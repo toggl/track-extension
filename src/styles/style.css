@@ -1141,5 +1141,5 @@ only screen and (min-resolution: 192dpi) {
 
 /********* MEISTERTASK *********/
 .toggl-button.meistertask {
-  margin-right: 15px;
+  margin: 9px;
 }

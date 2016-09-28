@@ -1475,7 +1475,7 @@ TogglButton = {
     chrome.tabs.executeScript(tabId, {
       "code": "(typeof togglbutton === 'undefined')"
     }, function (firstLoad) {
-      if (!!firstLoad[0]) {
+      if (!!firstLoad && !!firstLoad[0]) {
         TogglButton.loadFiles(tabId, file);
       }
     });

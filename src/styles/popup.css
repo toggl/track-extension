@@ -757,10 +757,6 @@ hr {
   position: relative;
 }
 
-.entries-list ul li:last-child {
-  border-bottom: 1px solid #eceded;
-}
-
 #menu .entries-list ul li .te-desc, #menu .entries-list ul li .te-proj {
   float: left;
   position: absolute;

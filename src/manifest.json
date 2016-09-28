@@ -34,7 +34,6 @@
   "permissions": [
     "*://*.toggl.com/*",
     "*://toggl.com/*",
-    "*://www.meistertask.com/*",
     "webRequest",
     "webRequestBlocking",
     "alarms",

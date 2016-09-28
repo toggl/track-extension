@@ -30,7 +30,7 @@ togglbutton.render('.js-box-wrapper:not(.toggl)', {observe: true}, function (ele
     buttonType: 'minimal'
   });
 
-  togglButtonElement.prepend(link);
+  togglButtonElement.parentNode.insertBefore(link, togglButtonElement);
 });
 
 

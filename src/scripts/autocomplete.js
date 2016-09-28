@@ -29,7 +29,7 @@ AutoComplete.prototype.addEvents = function () {
   var that = this;
 
   that.placeholderItem.addEventListener('click', function (e) {
-    that.filter.focus();
+    setTimeout(function () {that.filter.focus(); }, 50);
   });
 
   that.filter.addEventListener('focus', function (e) {
@@ -77,7 +77,7 @@ AutoComplete.prototype.closeDropdown = function (t) {
   var that = t || this;
   that.filter.value = "";
   that.el.classList.remove("filtered");
-  that.placeholderItem.parentNode.classList.toggle("open");
+  that.placeholderItem.parentNode.classList.remove("open");
   that.placeholderItem.parentNode.classList.remove("add-allowed");
   that.clearFilters();
 };

@@ -269,6 +269,8 @@ only screen and (min-resolution: 192dpi) {
   color: #8a8989;
   transition:height 200ms ease-in-out;
   overflow: hidden;
+  padding-top: 0!important;
+  margin-top: 10px;
 }
 
 #toggl-button-edit-form .tb-billable.no-billable {
@@ -287,6 +289,7 @@ only screen and (min-resolution: 192dpi) {
   float: right;
   margin-top: 6px;
   position: relative;
+  margin-right: 2px;
 }
 
 #toggl-button-edit-form .toggl-button-billable-flag span {
@@ -306,6 +309,15 @@ only screen and (min-resolution: 192dpi) {
 
 #toggl-button-edit-form .tb-billable.tb-checked .toggl-button-billable-flag span {
   left: 20px;
+}
+
+#toggl-button-edit-form .tb-billable:focus .toggl-button-billable-flag {
+  border: 1px solid rgb(83, 183, 253);
+  box-shadow: 0px 0px 5px rgb(26, 153, 243);
+}
+
+#toggl-button-edit-form .tb-billable:focus .toggl-button-billable-flag span {
+  top: 2px;
 }
 
 /********* PIVOTAL *********/
@@ -1141,5 +1153,5 @@ only screen and (min-resolution: 192dpi) {
 
 /********* MEISTERTASK *********/
 .toggl-button.meistertask {
-  margin-right: 15px;
+  margin: 9px;
 }

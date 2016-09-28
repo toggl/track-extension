@@ -1507,7 +1507,7 @@ TogglButton = {
     }
 
     //remove www if needed
-    domain = domain.replace("www.", "");
+    //domain = domain.replace("www.", "");
 
     //remove /* from the end
     domain = domain.split('/*')[0];

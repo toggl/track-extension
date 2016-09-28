@@ -730,6 +730,11 @@ hr {
 }
 
 /** Time Entries list **/
+
+#menu .entries-list {
+  height: auto;
+}
+
 .entries-list p {
   color: #a3a3a3;
   font-weight: 200;

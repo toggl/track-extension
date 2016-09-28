@@ -152,6 +152,10 @@ var PopUp = {
       i,
       count = 0;
 
+    if (entries.length < 5) {
+      return;
+    }
+
     for (i = entries.length - 1; i >= 0; i--) {
       if (count >= 5) {
         break;

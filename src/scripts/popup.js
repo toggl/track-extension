@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var request = {
       type: "list-continue",
       respond: true,
-      service: "dropdown",
+      service: "dropdown-list",
       data: TogglButton.$user.time_entries[e.target.parentNode.getAttribute("data-id")]
     };
 

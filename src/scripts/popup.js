@@ -141,7 +141,7 @@ var PopUp = {
   },
 
   renderEntriesList: function () {
-    var html = "<p>Recent Time entries<p><ul>",
+    var html = "<p>Recent entries<p><ul>",
       entries = TogglButton.$user.time_entries,
       visibleIcons = "",
       joinedTags,

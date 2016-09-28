@@ -346,12 +346,12 @@ hr {
 
 /* Only billable icon visible */
 .timer.billable-icon-visible:not(.tag-icon-visible) .edit-button {
-  width: 120px;
+  width: 130px;
 }
 
 /* Only tag icon visible */
 .timer.tag-icon-visible:not(.billable-icon-visible) .edit-button {
-  width: 117px;
+  width: 127px;
 }
 
 .timer.tag-icon-visible:not(.billable-icon-visible) .tag-icon {
@@ -360,7 +360,7 @@ hr {
 
 /* Both icons visible */
 .timer.tag-icon-visible.billable-icon-visible .edit-button {
-  width: 100px;
+  width: 110px;
 }
 
 .stop-button {
@@ -396,7 +396,7 @@ hr {
   right: 3px;
   top: 6px;
   background-color: #ec0000;
-  width: 63px;
+  width: 60px;
 }
 
 .tracking .stop-button {
@@ -410,8 +410,8 @@ hr {
 }
 
 .tracking .edit-button{
-  width: 140px;
-  padding-left: 30px;
+  width: 150px;
+  padding-left: 23px;
   display: block;
   padding-right: 4px;
 }
@@ -666,6 +666,10 @@ hr {
   display: none;
 }
 
+#menu .tb-project-bullet {
+  margin-left: 10px;
+}
+
 /** Billable flag **/
 
 #toggl-button-edit-form .tb-billable {
@@ -755,7 +759,7 @@ hr {
 #menu .entries-list ul li .te-desc, #menu .entries-list ul li .te-proj {
   float: left;
   position: absolute;
-  left: 5px;
+  left: 10px;
   right: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -769,7 +773,7 @@ hr {
 #menu .entries-list ul li .te-proj {
   bottom: 5px;
   color: #a3a3a3;
-  padding-left: 10px;
+  padding-left: 13px;
 }
 
 #menu .entries-list ul li .te-icons {
@@ -782,7 +786,7 @@ hr {
 }
 
 #menu .entries-list .tb-project-bullet {
-  margin: 4px 0 3px -10px;
+  margin: 4px 0 3px -13px;
 }
 
 #menu .te-continue {

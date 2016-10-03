@@ -5,8 +5,8 @@
       "short-version": "108",
       "date": "October 3rd 2016",
       "rows":[
-        "Added support for MeisterTask",
-        "Added support for Taiga 3.0",
+        "Added support for <a href='https://www.meistertask.com/' target='_blank'>MeisterTask</a>",
+        "Added support for <a href='https://blog.taiga.io/taiga-stellaria-borealis-release-300.html' target='_blank'>Taiga 3.0</a>",
         "Fixed edit form issues in Trello",
         "Fixed resetting edit form autocompletes on close",
         "Fixed edit form tabbing",
@@ -19,7 +19,7 @@
       "short-version": "107",
       "date": "September 21st 2016",
       "rows":[
-        "Added support for OnlyOffice",
+        "Added support for <a href='http://www.onlyoffice.com/' target='_blank'>OnlyOffice</a>",
         "Fixed Pomodoro loading issues with data outside Toggl Button",
         "Fixed Pomodoro notification not triggering",
         "Added Billable and tag icon to popup timer",

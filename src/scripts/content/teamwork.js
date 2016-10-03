@@ -133,3 +133,53 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
     return;
   });
 });
+
+
+// Ticket View Page
+togglbutton.render('.sections--header ul.right-elements:not(.toggl)', {observe: true}, function (elem) {
+  var link, liTag, titleEl, desc;
+  liTag = document.createElement("li");
+  liTag.classList.add("toggl-li");
+
+
+  // Desk data is loaded asynchronously,
+  // get task name using exponential backoff
+  new Promise(function (resolve, reject) {
+    var titleEl = document.querySelector(".inbox--body .title-label"),
+      setDesc;
+    if (titleEl === null) {
+      // TKO support
+      setDesc = function (timeout) {
+        if (timeout > 1000 * 60 * 5) {
+          reject();
+        }
+        titleEl = document.querySelector(".inbox--body .title-label");
+        if (titleEl === null) {
+          setTimeout(function () {
+            setDesc(timeout * 2);
+          }, timeout);
+        } else {
+          desc = titleEl.textContent.trim();
+          resolve();
+        }
+      };
+      setDesc();
+    } else {
+      desc = titleEl.textContent.trim();
+      resolve();
+    }
+  }).then(function () {
+
+    link = togglbutton.createTimerLink({
+      className: 'teamwork',
+      description: desc,
+      projectName: ''
+    });
+
+    //at the moment, teamwork desk btn styles override the background image. Just using margin-top instead
+    link.style.marginTop = '5px';
+    liTag.appendChild(link);
+    elem.insertBefore(liTag, elem.firstChild);
+
+  });
+});

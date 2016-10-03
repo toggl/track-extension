@@ -18,7 +18,7 @@ var PopUp = {
   $errorLabel: document.querySelector(".error"),
   $editButton: document.querySelector(".edit-button"),
   $tagIcon: document.querySelector(".tag-icon"),
-  $projectBullet: document.querySelector(".timer .project-bullet"),
+  $projectBullet: document.querySelector(".timer .tb-project-bullet"),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
   $timerRow: document.querySelector(".timer"),
@@ -51,7 +51,7 @@ var PopUp = {
         PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
         PopUp.$togglButton.textContent = 'Start new';
         PopUp.$togglButton.parentNode.classList.remove('tracking');
-        PopUp.$projectBullet.className = "project-bullet";
+        PopUp.$projectBullet.className = "tb-project-bullet";
         if (TogglButton.$latestStoppedEntry) {
           p = TogglButton.findProjectByPid(TogglButton.$latestStoppedEntry.pid);
           p = (!!p) ? " - " + p.name : "";
@@ -110,7 +110,7 @@ var PopUp = {
       PopUp.$togglButton.parentNode.classList.remove('tracking');
       clearInterval(PopUp.$timer);
       PopUp.$timer = null;
-      PopUp.$projectBullet.className = "project-bullet";
+      PopUp.$projectBullet.className = "tb-project-bullet";
       return;
     }
 
@@ -226,10 +226,9 @@ var PopUp = {
   },
 
   toggleBillable: function (visible) {
+    var tabIndex = visible ? "103" : "-1";
+    PopUp.$billable.setAttribute("tabindex", tabIndex);
     PopUp.$billable.classList.toggle("no-billable", !visible);
-    if (!visible) {
-      PopUp.$billable.classList.toggle("tb-checked", visible);
-    }
   },
 
   setupBillable: function (billable, pid) {
@@ -266,6 +265,12 @@ var PopUp = {
 
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
+    });
+
+    document.querySelector("#toggl-button-update").addEventListener('keydown', function (e) {
+      if (e.code === "Enter" || e.code === "Space") {
+        PopUp.submitForm(this);
+      }
     });
 
     document.querySelector("#entry-form form").addEventListener('submit', function (e) {
@@ -345,5 +350,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelector(".header .icon").addEventListener('click', function () {
     chrome.tabs.create({url: "https://toggl.com/app"});
+  });
+
+  PopUp.$billable.addEventListener('keydown', function (e) {
+    var prevent = false;
+    if (e.code === "Space") {
+      prevent = true;
+      this.classList.toggle("tb-checked");
+    }
+
+    if (e.code === "ArrowLeft") {
+      prevent = true;
+      this.classList.toggle("tb-checked", false);
+    }
+
+    if (e.code === "ArrowRight") {
+      prevent = true;
+      this.classList.toggle("tb-checked", true);
+    }
+
+    if (prevent) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
   });
 });

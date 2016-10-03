@@ -1,6 +1,19 @@
 {
   "versions":[
     {
+      "version":"1.0.7",
+      "rows":[
+        "Added support for OnlyOffice",
+        "Fixed Pomodoro loading issues with data outside Toggl Button",
+        "Fixed Pomodoro notification not triggering",
+        "Added Billable and tag icon to popup timer",
+        "Added Billable flag editing",
+        "Fixed slow Settings loading wiht large amoung of projects",
+        "Fixed user-agent edit issue",
+        "Show tool name instead of url in custom domain list"
+      ]
+    },
+    {
       "version":"1.0.6",
       "rows":[
         "Fixed same name client issue with multiple workspaces",

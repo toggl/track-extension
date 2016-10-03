@@ -37,16 +37,26 @@ var report = function (e) {
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
   function (info) {
-    var headers = info.requestHeaders;
+    var headers = info.requestHeaders,
+      isTogglButton = false,
+      uaIndex = -1;
+
     headers.forEach(function (header, i) {
       if (header.name.toLowerCase() === 'user-agent') {
-        header.value = TogglButton.$fullVersion;
+        uaIndex = i;
+      }
+      if (header.name === 'IsTogglButton') {
+        isTogglButton = true;
       }
     });
+
+    if (!isTogglButton && uaIndex !== -1) {
+      headers[uaIndex].value = TogglButton.$fullVersion;
+    }
     return {requestHeaders: headers};
   },
   {
-    urls: [ "https://www.toggl.com/*" ],
+    urls: [ "https://www.toggl.com/*", "https://toggl.com/*" ],
     types: ["xmlhttprequest"]
   },
   ["blocking", "requestHeaders"]
@@ -98,7 +108,7 @@ TogglButton = {
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-project-filter" tabindex="101" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
         '<a href="#clear" class="filter-clear">&times;</a>' +
-        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
+        '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="tb-project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
         '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
       '<div class="toggl-button-row">' +
@@ -110,11 +120,11 @@ TogglButton = {
         '<div class="tag-clear">Clear selected tags</div>' +
         '{tags}</div>' +
       '</div>' +
-      '<div class="toggl-button-row tb-billable {billable}">' +
+      '<div class="toggl-button-row tb-billable {billable}" tabindex="103">' +
         '<div class="toggl-button-billable-label">Billable</div>' +
         '<div class="toggl-button-billable-flag"><span></span></div>' +
       '</div>' +
-      '<div id="toggl-button-update" tabindex="103">DONE</div>' +
+      '<div id="toggl-button-update" tabindex="104">DONE</div>' +
       '<input type="submit" class="hidden">' +
       '</from>' +
     '</div>',
@@ -495,13 +505,6 @@ TogglButton = {
       interval = parseInt(Db.get("pomodoroInterval"), 10) * 60000;
     if (duration < interval) {
       TogglButton.triggerPomodoroAlarm(interval - duration);
-    } else {
-      clearTimeout(TogglButton.pomodoroAlarm);
-      TogglButton.pomodoroAlarm = null;
-      clearInterval(TogglButton.pomodoroProgressTimer);
-      TogglButton.pomodoroProgressTimer = null;
-      TogglButton.pomodoroAlarmStop();
-      TogglButton.updateTriggers(null);
     }
   },
 
@@ -611,6 +614,7 @@ TogglButton = {
       credentials = opts.credentials || null;
 
     xhr.open(method, baseUrl + url, true);
+    xhr.setRequestHeader("IsTogglButton", "true");
 
     if (opts.onError) {
       xhr.addEventListener('error', function () { opts.onError(xhr); });
@@ -933,14 +937,14 @@ TogglButton = {
 
   setupBillable: function () {
     if (!!TogglButton.canSeeBillable) {
-      return "";
+      return '" tabindex="103';
     }
 
-    return "no-billable";
+    return 'no-billable" tabindex="-1';
   },
 
   fillProjects: function () {
-    var html = '<p class="project-row" data-pid="0"><span class="project-bullet project-color no-color"></span>No project</p>',
+    var html = '<p class="project-row" data-pid="0"><span class="tb-project-bullet project-color no-color"></span>No project</p>',
       projects = TogglButton.$user.projectMap,
       clients =  TogglButton.$user.clientMap,
       clientNames = TogglButton.$user.clientNameMap,
@@ -1009,7 +1013,7 @@ TogglButton = {
       i,
       tasksCount,
       hasTasks = !!tasks ? "has-tasks" : "",
-      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="project-bullet project-color color-' + project.color + '"></span>' +
+      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="tb-project-bullet project-color color-' + project.color + '"></span>' +
         '<span class="item-name ' + hasTasks + '" title="' + escapeHtml(project.name) + '">' + escapeHtml(project.name) + '</span>';
 
     if (!!tasks) {
@@ -1471,7 +1475,7 @@ TogglButton = {
     chrome.tabs.executeScript(tabId, {
       "code": "(typeof togglbutton === 'undefined')"
     }, function (firstLoad) {
-      if (!!firstLoad[0]) {
+      if (!!firstLoad && !!firstLoad[0]) {
         TogglButton.loadFiles(tabId, file);
       }
     });
@@ -1503,7 +1507,7 @@ TogglButton = {
     }
 
     //remove www if needed
-    domain = domain.replace("www.", "");
+    //domain = domain.replace("www.", "");
 
     //remove /* from the end
     domain = domain.split('/*')[0];

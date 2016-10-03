@@ -29,7 +29,7 @@ AutoComplete.prototype.addEvents = function () {
   var that = this;
 
   that.placeholderItem.addEventListener('click', function (e) {
-    that.filter.focus();
+    setTimeout(function () {that.filter.focus(); }, 50);
   });
 
   that.filter.addEventListener('focus', function (e) {
@@ -77,7 +77,7 @@ AutoComplete.prototype.closeDropdown = function (t) {
   var that = t || this;
   that.filter.value = "";
   that.el.classList.remove("filtered");
-  that.placeholderItem.parentNode.classList.toggle("open");
+  that.placeholderItem.parentNode.classList.remove("open");
   that.placeholderItem.parentNode.classList.remove("add-allowed");
   that.clearFilters();
 };
@@ -222,14 +222,14 @@ ProjectAutoComplete.prototype.getSelectedProjectByPid = function (pid) {
 
 ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   var project,
-    elem = el || this.placeholderItem.querySelector(".project-bullet"),
+    elem = el || this.placeholderItem.querySelector(".tb-project-bullet"),
     result,
     task;
 
   if (!!pid || pid === "0") {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
     if (!!project) {
-      elem.className = project.querySelector(".project-bullet").className;
+      elem.className = project.querySelector(".tb-project-bullet").className;
       result = " - " + project.getAttribute("title");
       if (!!tid) {
         task = project.querySelector("li[data-tid='" + tid + "']");
@@ -240,7 +240,7 @@ ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
       return result;
     }
   }
-  elem.className = "project-bullet";
+  elem.className = "tb-project-bullet";
   return "";
 };
 

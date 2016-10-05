@@ -1,6 +1,17 @@
 {
   "versions":[
     {
+      "version":"1.0.8",
+      "rows":[
+        "Added support for MeisterTask",
+        "Added support for Taiga 3.0",
+        "Fixed edit form issues in Trello",
+        "Fixed resetting edit form on close",
+        "Fixed tabbing and added keyboard events to submit",
+        "Smaller style fixes"
+      ]
+    },
+    {
       "version":"1.0.7",
       "rows":[
         "Added support for OnlyOffice",

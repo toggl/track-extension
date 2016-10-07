@@ -230,6 +230,7 @@ ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
     if (!!project) {
       elem.className = project.querySelector(".tb-project-bullet").className;
+      elem.setAttribute("style", project.querySelector(".tb-project-bullet").getAttribute("style"));
       result = " - " + project.getAttribute("title");
       if (!!tid) {
         task = project.querySelector("li[data-tid='" + tid + "']");

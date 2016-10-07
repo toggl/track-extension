@@ -1013,7 +1013,7 @@ TogglButton = {
       i,
       tasksCount,
       hasTasks = !!tasks ? "has-tasks" : "",
-      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="tb-project-bullet project-color color-' + project.color + '"></span>' +
+      html = '<li class="project-row" title="' + escapeHtml(project.name) + '" data-pid="' + project.id + '"><span class="tb-project-bullet project-color" style="background-color: ' + project.hex_color + '"></span>' +
         '<span class="item-name ' + hasTasks + '" title="' + escapeHtml(project.name) + '">' + escapeHtml(project.name) + '</span>';
 
     if (!!tasks) {

@@ -2,16 +2,28 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.main__header:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.sidebar-workroom:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    description = $('div', elem).textContent,
-    project = $('h3', elem).textContent;
+    description = function () {
+      var first = document.querySelector('.user-box .details span'),
+        second = document.querySelector('.sidebar-table .value-text'),
+        third = document.querySelector('.sub-tasks .number');
+
+      first = (!!first ? first.textContent.trim() : "");
+      second = (!!second ? " · " + second.textContent.trim() : "");
+      third = (!!third ? " · Additional tasks: " + third.textContent.trim() : "");
+      return first + second + third;
+    },
+
+    project = function () {
+      return 'CODEABLE';
+    };
 
   link = togglbutton.createTimerLink({
     className: 'codeable',
     description: description,
-    projectName: project
+	projectName: project
   });
 
-  $('.task-developer .body').appendChild(link);
+  $('.user').appendChild(link);
 });

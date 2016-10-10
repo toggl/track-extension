@@ -758,7 +758,7 @@ TogglButton = {
     options = {
       type: 'basic',
       iconUrl: 'images/icon-128.png',
-      title: "Toggl Button",
+      title: "Toggl Button - Pomodoro Timer",
       message: "Time is up! Take a break",
       priority: 2
     };

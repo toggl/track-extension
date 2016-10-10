@@ -290,6 +290,7 @@ only screen and (min-resolution: 192dpi) {
   margin-top: 6px;
   position: relative;
   margin-right: 2px;
+  cursor: pointer;
 }
 
 #toggl-button-edit-form .toggl-button-billable-flag span {

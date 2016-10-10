@@ -337,8 +337,8 @@ hr {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAUCAMAAACDMFxkAAAAAXNSR0IArs4c6QAAAFpQTFRFAAAA////qqqqp6enqqqqp6enqKioo6OjpqampaWlpKSkpaWlo6OjpKSkpKSko6OjpKSko6OjpKSkpKSkpKSkpKSko6OjpKSkpKSkpKSkpKSkpKSko6Ojo6OjwiB/AwAAAB10Uk5TAAEPGhsgJicrR3t/gJ+osrPDxMrS1Nzd5ebo8fVWC5UqAAAAaElEQVQI13VPRw7AMAyiTle6R9LN/7/ZdCpSVU5Y2IABh67FA/JDpTCkyQVQI08MChWtFtGWFVZGx1rEFRtj3IYNlyy9DMLe3UylDhwPdDm7qVeXlGYL6yc/4eabeRFe8F2nkN++70M7wSMIvPS86/IAAAAASUVORK5CYII=');
 }
 
-.timer.tag-icon-visible .tag-icon,
-.timer.billable-icon-visible .billable-icon {
+.tracking.tag-icon-visible .tag-icon,
+.tracking.billable-icon-visible .billable-icon {
   display: block;
 }
 

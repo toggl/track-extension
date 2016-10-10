@@ -741,6 +741,7 @@ TogglButton = {
     }
 
     var notificationId = 'pomodoro-time-is-up',
+      options,
       stopSound,
       latestDescription = (TogglButton.$curEntry && TogglButton.$curEntry.description) ? " (" + TogglButton.$curEntry.description + ")" : "",
       topButtonTitle = "Continue Latest" + latestDescription,
@@ -754,20 +755,25 @@ TogglButton = {
       bottomButtonTitle = "Stop and Start New";
     }
 
+    options = {
+      type: 'basic',
+      iconUrl: 'images/icon-128.png',
+      title: "Toggl Button",
+      message: "Time is up! Take a break",
+      priority: 2
+    };
+
+    if (!FF) {
+      options.buttons = [
+        { title: topButtonTitle},
+        { title: bottomButtonTitle}
+      ];
+    }
+
     TogglButton.hideNotification(notificationId);
     chrome.notifications.create(
       notificationId,
-      {
-        type: 'basic',
-        iconUrl: 'images/icon-128.png',
-        title: "Toggl Button",
-        message: "Time is up! Take a break",
-        priority: 2,
-        buttons: [
-          { title: topButtonTitle},
-          { title: bottomButtonTitle}
-        ]
-      },
+      options,
       function () {
         return;
       }
@@ -1128,20 +1134,23 @@ TogglButton = {
   showIdleDetectionNotification: function (seconds) {
     var timeString = TogglButton.timeStringFromSeconds(seconds),
       entryDescription = TogglButton.$curEntry.description || "(no description)",
-      notificationOptions = {
+      options = {
         type: 'basic',
         iconUrl: 'images/icon-128.png',
         title: "Toggl Button",
         message: "You've been idle for " + timeString +
-          " while tracking \"" + entryDescription + "\"",
-        buttons: [
-          { title: "Discard idle time" },
-          { title: "Discard idle and continue" }
-        ]
+          " while tracking \"" + entryDescription + "\""
       };
+
+    if (!FF) {
+      options.buttons = [
+        { title: "Discard idle time" },
+        { title: "Discard idle and continue" }
+      ];
+    }
     TogglButton.$idleNotificationDiscardSince = TogglButton.$lastWork.date;
     TogglButton.hideNotification('idle-detection');
-    chrome.notifications.create('idle-detection', notificationOptions);
+    chrome.notifications.create('idle-detection', options);
   },
 
   onUserState: function (state) {
@@ -1170,7 +1179,8 @@ TogglButton = {
   },
 
   checkActivity: function (currentState) {
-    var secondTitle = "Open toggl.com";
+    var secondTitle = "Open toggl.com",
+      options;
     clearTimeout(TogglButton.$nannyTimer);
     TogglButton.$nannyTimer = null;
 
@@ -1183,18 +1193,23 @@ TogglButton = {
         TogglButton.$curEntry === null &&
         TogglButton.workingTime()) {
 
+      options = {
+        type: 'basic',
+        iconUrl: 'images/icon-128.png',
+        title: "Toggl Button",
+        message: "Don't forget to track your time!"
+      };
+
+      if (!FF) {
+        options.buttons = [
+          { title: "Start timer"},
+          { title: secondTitle}
+        ];
+      }
+
       chrome.notifications.create(
         'remind-to-track-time',
-        {
-          type: 'basic',
-          iconUrl: 'images/icon-128.png',
-          title: "Toggl Button",
-          message: "Don't forget to track your time!",
-          buttons: [
-            { title: "Start timer"},
-            { title: secondTitle}
-          ]
-        },
+        options,
         function () {
           return;
         }
@@ -1215,25 +1230,31 @@ TogglButton = {
         TogglButton.$curEntry  &&
         TogglButton.workdayEnded()) {
 
-      var title =  "Continue";
+      var title =  "Continue",
+        options;
       if (!!TogglButton.$curEntry.description) {
         title += " (" + TogglButton.$curEntry.description + ")";
       } else {
         title += " latest";
       }
 
+      options = {
+        type: 'basic',
+        iconUrl: 'images/icon-128.png',
+        title: "Toggl Button",
+        message: "Your workday is over, running entry has been stopped"
+      };
+
+      if (!FF) {
+        options.buttons = [
+          { title: title }
+        ];
+      }
+
       TogglButton.stopTimeEntry(TogglButton.$curEntry);
       chrome.notifications.create(
         'workday-ended-notification',
-        {
-          type: 'basic',
-          iconUrl: 'images/icon-128.png',
-          title: "Toggl Button",
-          message: "Your workday is over, running entry has been stopped",
-          buttons: [
-            { title: title }
-          ]
-        },
+        options,
         function () {
           return;
         }

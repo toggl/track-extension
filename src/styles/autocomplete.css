@@ -18,6 +18,10 @@
   width: 220px;
 }
 
+#toggl-button-edit-form.toggl-integration #tag-autocomplete .tag-list {
+  max-height: 400px;
+}
+
 #toggl-button-edit-form.toggl-integration #project-autocomplete a.filter-clear {
   line-height: 16px;
 }

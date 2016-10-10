@@ -1496,8 +1496,14 @@ TogglButton = {
     chrome.tabs.executeScript(tabId, {
       "code": "(typeof togglbutton === 'undefined')"
     }, function (firstLoad) {
-      if (!!firstLoad && !!firstLoad[0]) {
-        TogglButton.loadFiles(tabId, file);
+      if (FF) {
+        if (!!firstLoad) {
+          TogglButton.loadFiles(tabId, file);
+        }
+      } else {
+        if (!!firstLoad && !!firstLoad[0]) {
+          TogglButton.loadFiles(tabId, file);
+        }
       }
     });
   },

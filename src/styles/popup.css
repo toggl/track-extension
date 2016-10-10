@@ -620,42 +620,8 @@ hr {
 }
 
 /** FIREFOX **/
-.ff {
-  width: 240px;
-  height: 328px;
-}
-.ff #login-form {
-  width: 195px;
-}
-
-.ff .text-input {
-  width: 183px;
-}
-
-.ff .tracking .edit-button {
-  width: 144px;
-}
-
-.ff #toggl-button-edit-form {
-  bottom: 0;
-  height: 100%;
-}
-
-.ff #toggl-button-update {
-  position: absolute;
-  bottom: 0;
-}
-
-.ff #entry-form {
-  height: 260px;
-}
-
-.ff #toggl-button-tag {
-  max-height: 55px;
-}
-
-.ff .error {
-  font-size: 12px;
+.ff #toggl-button-update:focus{
+  box-shadow: 1px 1px 5px #83bffc;
 }
 
 /** FIREFOX END **/

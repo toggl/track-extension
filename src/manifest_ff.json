@@ -20,6 +20,7 @@
   },
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action": {
+    "browser_style": false,
     "default_icon": {
       "19": "images/inactive-19.png",
       "38": "images/inactive-38.png"

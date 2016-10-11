@@ -1,6 +1,15 @@
 {
   "versions":[
     {
+      "version":"1.0.9",
+      "rows":[
+        "Added support for custom colors",
+        "Smaller style fixes",
+        "Firefox conditional logic",
+        "Meistertask fixes"
+      ]
+    },
+    {
       "version":"1.0.8",
       "rows":[
         "Added support for MeisterTask",

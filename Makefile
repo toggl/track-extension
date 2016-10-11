@@ -25,3 +25,4 @@ ff-dist: clean
 	@cp -R src/manifest.json src/images src/scripts src/styles src/html src/sounds out/
 	@cd out && find . -path '*/.*' -prune -o -type f -print | zip ../toggl-button.zip -@
 	@rm -rf out
+	@git checkout .

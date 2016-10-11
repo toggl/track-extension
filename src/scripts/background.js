@@ -768,6 +768,12 @@ TogglButton = {
         { title: topButtonTitle},
         { title: bottomButtonTitle}
       ];
+    } else {
+      if (!Db.get("pomodoroStopTimeTrackingWhenTimerEnds")) {
+        options.message += ". Click to stop tracking.";
+      } else {
+        options.message += ". Click to continue tracking.";
+      }
     }
 
     TogglButton.hideNotification(notificationId);
@@ -1147,7 +1153,10 @@ TogglButton = {
         { title: "Discard idle time" },
         { title: "Discard idle and continue" }
       ];
+    } else {
+      options.message += ". Click to discard time.";
     }
+
     TogglButton.$idleNotificationDiscardSince = TogglButton.$lastWork.date;
     TogglButton.hideNotification('idle-detection');
     chrome.notifications.create('idle-detection', options);
@@ -1205,6 +1214,8 @@ TogglButton = {
           { title: "Start timer"},
           { title: secondTitle}
         ];
+      } else {
+        options.message += ". Click to start timer.";
       }
 
       chrome.notifications.create(
@@ -1249,6 +1260,8 @@ TogglButton = {
         options.buttons = [
           { title: title }
         ];
+      } else {
+        options.message += ". Click to continue latest.";
       }
 
       TogglButton.stopTimeEntry(TogglButton.$curEntry);
@@ -1279,6 +1292,7 @@ TogglButton = {
       timeEntry = TogglButton.$curEntry,
       buttonName = "start_new",
       eventType = "reminder";
+
     if (notificationId === 'remind-to-track-time') {
       type = "dropdown-reminder";
       if (buttonID === 0) {
@@ -1352,7 +1366,9 @@ TogglButton = {
       }
       eventType = "pomodoro";
     }
-    TogglButton.processNotificationEvent(notificationId);
+    if (!FF) {
+      TogglButton.processNotificationEvent(notificationId);
+    }
     TogglButton.analytics(eventType, buttonName);
   },
 
@@ -1386,6 +1402,9 @@ TogglButton = {
   },
 
   processNotificationEvent: function (notificationId) {
+    if (FF) {
+      TogglButton.notificationBtnClick(notificationId, 0);
+    }
     if (notificationId === 'remind-to-track-time') {
       TogglButton.triggerNotification();
     } else {
@@ -1609,7 +1628,9 @@ TogglButton.startCheckingDayEnd(Db.get("stopAtDayEnd"));
 chrome.runtime.onMessage.addListener(TogglButton.newMessage);
 chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
 chrome.notifications.onClicked.addListener(TogglButton.processNotificationEvent);
-chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
+if (!FF) { // not supported in FF
+  chrome.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
+}
 chrome.windows.onCreated.addListener(TogglButton.startAutomatically);
 chrome.windows.getAll(null, function (windows) { openWindowsCount = windows.length; });
 chrome.windows.onCreated.addListener(function (window) { openWindowsCount++; });

@@ -447,6 +447,7 @@ hr {
   max-width: 240px;
   padding: 10px !important;
   box-sizing: border-box;
+  height: 269px;
 }
 
 #toggl-button-edit-form .toggl-button{
@@ -578,7 +579,6 @@ hr {
   line-height: 34px;
   vertical-align: middle;
   margin-left: 55px;
-  margin-top: 15px;
   text-transform: uppercase;
   color: white;
   display: inline-block;
@@ -587,6 +587,8 @@ hr {
   cursor: pointer;
   font-family: inherit;
   text-align: center;
+  position: absolute;
+  bottom: 15px;
 }
 
 #toggl-button-edit-form #toggl-button-update:before {

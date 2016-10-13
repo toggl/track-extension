@@ -112,5 +112,6 @@ window.TogglOrigins = {
   "xero.com": {"url": "*://go.xero.com/*", "name": "Xero"},
   "zendesk.com": {"url": "*://*.zendesk.com/*", "name": "Zendesk"},
   "books.zoho.com": {"url": "*://books.zoho.com/*", "name": "Zoho Books"},
-  "zube.io": {"url": "*://zube.io/*", "name": "Zube"}
+  "zube.io": {"url": "*://zube.io/*", "name": "Zube"},
+  "overv.io": {"url": "*://overv.io/*", "name": "Overv"}
 };

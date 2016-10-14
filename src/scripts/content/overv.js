@@ -6,7 +6,7 @@ togglbutton.render('.modal-header .content:not(.toggl)',  {observe: true}, funct
 
   var link, description;
 
-  description = + $('.modal-header .info .number').textContent + ' ' + $('.modal-header .content .title').textContent;
+  description = $('.modal-header .info .number').textContent + ' ' + $('.modal-header .content .title').textContent;
 
   link = togglbutton.createTimerLink({
     className: 'overv-io',

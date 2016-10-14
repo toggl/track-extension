@@ -396,13 +396,36 @@ TogglButton = {
     }
   },
 
-  findProjectByName: function (name) {
+  findClientByName: function (name) {
     var key,
       result;
+
+    for (key in TogglButton.$user.clientMap) {
+      if (TogglButton.$user.clientMap.hasOwnProperty(key) && TogglButton.$user.clientMap[key].name === name) {
+        result = TogglButton.$user.clientMap[key];
+        if (result.wid === TogglButton.$user.default_wid) {
+          return result;
+        }
+      }
+    }
+    return result;
+  },
+
+  findProjectByName: function (name, clientName) {
+    var key,
+      result,
+      c;
 
     for (key in TogglButton.$user.projectMap) {
       if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].name === name) {
         result = TogglButton.$user.projectMap[key];
+        if (!!clientName) {
+          c = TogglButton.findClientByName(clientName);
+          if (result.cid === c.id) {
+            return result;
+          }
+          continue;
+        }
         if (result.wid === TogglButton.$user.default_wid) {
           return result;
         }
@@ -441,7 +464,7 @@ TogglButton = {
       };
 
     if (timeEntry.projectName !== null && !entry.time_entry.pid) {
-      project = TogglButton.findProjectByName(timeEntry.projectName);
+      project = TogglButton.findProjectByName(timeEntry.projectName, timeEntry.clientName);
       entry.time_entry.pid = project && project.id;
       entry.time_entry.billable = project && project.billable;
     }

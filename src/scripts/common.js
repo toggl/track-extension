@@ -430,6 +430,7 @@ var togglbutton = {
           description: invokeIfFunction(params.description),
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
+          clientName: invokeIfFunction(params.clientName),
           createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName,
           service: togglbutton.serviceName
         };

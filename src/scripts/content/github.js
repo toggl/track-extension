@@ -16,7 +16,8 @@ togglbutton.render('#partial-discussion-header:not(.toggl)', {observe: true}, fu
   link = togglbutton.createTimerLink({
     className: 'github',
     description: description,
-    projectName: projectElem && projectElem.textContent
+    projectName: projectElem && projectElem.textContent,
+    clientName: ""
   });
 
   $('.flex-table-item-primary').appendChild(link);

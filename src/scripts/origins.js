@@ -18,6 +18,7 @@ window.TogglOrigins = {
   "bugzilla.mozilla.org": {"url": "*://bugzilla.mozilla.org/*", "name": "Bugzilla"},
   "capsulecrm.com": {"url": "*://*.capsulecrm.com/*", "name": "CapsuleCRM"},
   "cloudes.me": {"url": "*://*.cloudes.me/*", "name": "Cloudes.me"},
+  "clubhouse.io": {"url": "*://app.clubhouse.io/*", "name": "Clubhouse"},
   "codeable.io": {"url": "*://app.codeable.io/*", "name": "Codeable"},
   "devdocs.io": {"url": "*://devdocs.io/*", "name": "Devdocs.io"},
   "dobambam.com": {"url": "*://*.dobambam.com/*", "name": "Dobambam"},

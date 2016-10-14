@@ -1118,7 +1118,10 @@ only screen and (min-resolution: 192dpi) {
   margin-top: 4px;
 }
 
-/********* MEISTERTASK *********/
-.toggl-button.meistertask {
-  margin: 9px;
+/********* CLUBHOUSE *********/
+.toggl-button.clubhouse {
+  margin-left: 3px;
+  padding-left: 27px;
 }
+
+/********* MEISTERTASK *********/

@@ -5,7 +5,7 @@
       "short-version": "1010",
       "date": "October 17th 2016",
       "rows": [
-        "Added support for <a href='https://overv.io'target='_blank'>Overv.io</a>",
+        "Added support for <a href='https://overv.io' target='_blank'>Overv.io</a>",
         "Style fixes for autocomplete",
         "Improvements for permission enable/disable"
       ]

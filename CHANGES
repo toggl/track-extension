@@ -1,6 +1,14 @@
 {
   "versions":[
     {
+      "version":"1.0.10",
+      "rows":[
+        "Added support for overv.io",
+        "Style fixes for autocomplete",
+        "Improvements for permission enable/disable"
+      ]
+    },
+    {
       "version":"1.0.9",
       "rows":[
         "Added support for custom colors",

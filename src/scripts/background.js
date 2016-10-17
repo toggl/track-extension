@@ -416,11 +416,14 @@ TogglButton = {
       result,
       c;
 
+    if (!!clientName) {
+      c = TogglButton.findClientByName(clientName);
+    }
+
     for (key in TogglButton.$user.projectMap) {
       if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].name === name) {
         result = TogglButton.$user.projectMap[key];
-        if (!!clientName) {
-          c = TogglButton.findClientByName(clientName);
+        if (!!c) {
           if (result.cid === c.id) {
             return result;
           }

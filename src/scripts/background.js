@@ -1033,7 +1033,7 @@ TogglButton = {
       if (tasks.length > 1) {
         tasksCount += "s";
       }
-      html += '<span class="task-count">' + tasksCount + '</span>';
+      html += '<span class="task-count" title="' + tasksCount + '">' + tasksCount + '</span>';
       html += '<ul class="task-list">';
 
       for (i = 0; i < tasks.length; i++) {

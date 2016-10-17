@@ -180,7 +180,7 @@ span.item-name {
 }
 
 span.item-name.has-tasks  {
-  max-width: 125px;
+  max-width: 110px;
 }
 
 .toggl-integration span.item-name{
@@ -188,7 +188,7 @@ span.item-name.has-tasks  {
 }
 
 .toggl-integration span.item-name.has-tasks  {
-  max-width: 145px;
+  max-width: 120px;
 }
 
 /* PROJECT BULLETS */
@@ -346,9 +346,14 @@ span.item-name.has-tasks  {
   color: #a3a3a3;
   font-size: 12px;
   cursor: pointer;
-  float: right;
-  padding-right: 5px;
   font-weight: 400;
+  position: absolute;
+  right: 10px;
+  width: 55px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+  text-align: right;
 }
 
 #project-autocomplete .task-count:hover {

@@ -1,6 +1,16 @@
 {
     "versions": [
     {
+      "version": "1.0.10",
+      "short-version": "1010",
+      "date": "October 17th 2016",
+      "rows": [
+        "Added support for overv.io",
+        "Style fixes for autocomplete",
+        "Improvements for permission enable/disable"
+      ]
+    },
+    {
       "version":"1.0.8",
       "short-version": "108",
       "date": "October 3rd 2016",

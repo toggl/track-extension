@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
           }
         }
 
-        if (result.origins[i].indexOf("toggl") === -1 && !skip) {
+        if (result.origins[i].indexOf("toggl") === -1 && result.origins[i] !== "*://*/*" && !skip) {
           origins.push(result.origins[i]);
         }
         skip = false;

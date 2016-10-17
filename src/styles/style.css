@@ -1122,3 +1122,10 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.meistertask {
   margin: 9px;
 }
+
+/********* OVERV.IO *********/
+.toggl-button.overv-io {
+  margin-left: 10px;
+  position: absolute;
+  margin-top: 13px;
+}

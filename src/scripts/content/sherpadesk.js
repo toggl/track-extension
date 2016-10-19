@@ -8,7 +8,7 @@ togglbutton.render('#ctl00_ctl00_PageBody_tktHeader', {}, function () {
     description = '',
     object = $('#ctl00_ctl00_PageBody_lbSubject');
 
-  description = object.innerText;
+  description = object.textContent;
   returnPos = description.indexOf('\n');
   if (returnPos > 0) {
     description = description.substr(0, description.indexOf('\n'));

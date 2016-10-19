@@ -14,11 +14,11 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
     projectElem = $('.logo_text'),
     buttonsElem = $('.ticket-actions > ul');
 
-  description = idElem.innerText + ' ' + titleElem.innerText;
+  description = idElem.textContent + ' ' + titleElem.textContent;
   link = togglbutton.createTimerLink({
     className: 'freshdesk',
     description: description,
-    projectName: projectElem && projectElem.innerText,
+    projectName: projectElem && projectElem.textContent,
     calculateTotal: true
   });
 

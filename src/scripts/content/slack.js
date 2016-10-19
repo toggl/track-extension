@@ -5,8 +5,8 @@
 togglbutton.render('#channel_name:not(.toggl)', {observe: true}, function () {
   var link,
     placeholder = $('.channel_title_info'),
-    description = $("#channel_name").innerText.trim().substr(1),
-    project = $('#team_name').innerText;
+    description = $("#channel_name").textContent.trim().substr(1),
+    project = $('#team_name').textContent;
 
   link = togglbutton.createTimerLink({
     className: 'slack',

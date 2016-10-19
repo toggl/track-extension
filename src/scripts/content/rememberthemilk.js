@@ -10,7 +10,7 @@ togglbutton.render('.b-eb-Uk-Vj:not(.toggl)', {observe: true}, function (elem) {
         return;
       }
 
-      return $('.zl-Uk-hl .zl-Uk-xf .zl-Uk-Tl').innerText;
+      return $('.zl-Uk-hl .zl-Uk-xf .zl-Uk-Tl').textContent;
     },
     description = $('.b-eb-Uk-Tl', elem).textContent.trim();
 

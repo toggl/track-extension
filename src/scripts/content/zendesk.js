@@ -13,7 +13,7 @@ togglbutton.render('.pane_header:not(.toggl)', {observe: true}, function (elem) 
       ticketNum = location.href.match(/tickets\/(\d+)/);
 
     if (titleElem !== null) {
-      description = titleElem.innerText;
+      description = titleElem.textContent;
     }
 
     if (ticketNum) {

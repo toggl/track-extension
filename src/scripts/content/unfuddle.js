@@ -9,7 +9,7 @@ togglbutton.render('.ticket-fields-panel:not(.toggl)', {observe: true}, function
     numElem   = $("h1.summary .text-field-text", elem),
     projectName = $('#account_header .nav:not(.right-actions-top) .dropdown-toggle').textContent;
 
-  description = titleElem.innerText + ": " + numElem.innerText;
+  description = titleElem.textContent + ": " + numElem.textContent;
 
   link = togglbutton.createTimerLink({
     className: 'unfuddle',

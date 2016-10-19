@@ -12,7 +12,7 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
   description = titleElem.textContent.trim();
 
   if (numElem !== null) {
-    description = numElem.innerText.split(" ").pop().trim() + " " + description;
+    description = numElem.textContent.split(" ").pop().trim() + " " + description;
   }
 
   link = togglbutton.createTimerLink({
@@ -32,7 +32,7 @@ togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)'
 
   description = titleElem.textContent.trim();
   if (numElem !== null) {
-    description = "MR" + numElem.innerText.split(" ").pop().trim().replace("!", "") + "::" + description;
+    description = "MR" + numElem.textContent.split(" ").pop().trim().replace("!", "") + "::" + description;
   }
 
   link = togglbutton.createTimerLink({

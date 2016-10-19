@@ -8,9 +8,9 @@ togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
     titleElem = $('#issue-title'),
     projectElem = $('.repo-link');
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({
@@ -28,9 +28,9 @@ togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
     titleElem = $('.pull-request-title'),
     projectElem = $('.repo-link');
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({

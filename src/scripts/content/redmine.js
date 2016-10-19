@@ -12,9 +12,9 @@ togglbutton.render('body.controller-issues.action-show h2:not(.toggl)', {}, func
     return;
   }
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({

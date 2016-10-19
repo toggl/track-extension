@@ -6,7 +6,7 @@
 togglbutton.render('.IZ65Hb-TBnied:not(.toggl)', {observe: true}, function (elem) {
   var link,
     toolbar = $('.IZ65Hb-INgbqf', elem),
-    description = $('.IZ65Hb-YPqjbf:not(.LwH6nd)', elem).innerText,
+    description = $('.IZ65Hb-YPqjbf:not(.LwH6nd)', elem).textContent,
     tagFunc;
 
   tagFunc = function () {

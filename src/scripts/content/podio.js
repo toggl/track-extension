@@ -16,7 +16,7 @@ togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) 
 
     link = togglbutton.createTimerLink({
       className: 'podio',
-      description: description.innerText
+      description: description.textContent
     });
 
     wrapper = createTag('div', 'item-via');
@@ -37,7 +37,7 @@ togglbutton.render('.task-detail:not(.toggl)', {observe: true}, function (elem) 
 
   link = togglbutton.createTimerLink({
     className: 'podio',
-    description: description.innerText
+    description: description.textContent
   });
 
   wrapper = createTag('div', 'task-via');
@@ -57,7 +57,7 @@ togglbutton.render('.task-header:not(.toggl)', {observe: true}, function (elem) 
 
   link = togglbutton.createTimerLink({
     className: 'podio',
-    description: description.innerText
+    description: description.textContent
   });
 
   wrapper = createTag("li", "float-left");

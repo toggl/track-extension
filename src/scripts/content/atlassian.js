@@ -11,15 +11,15 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (e
     numElem = $('.ghx-fieldname-issuekey a'),
     projectElem = $('.ghx-project', elem);
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'jira',
     description: description,
-    projectName: projectElem && projectElem.innerText
+    projectName: projectElem && projectElem.textContent
   });
 
   container.appendChild(link);
@@ -33,15 +33,15 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
     titleElem = $('#summary-val', elem),
     projectElem = $('#project-name-val', elem);
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'jira',
     description: description,
-    projectName: projectElem && projectElem.innerText
+    projectName: projectElem && projectElem.textContent
   });
 
   ul = createTag('ul', 'toolbar-group');
@@ -57,7 +57,7 @@ togglbutton.render('#title-heading:not(.toggl)', {observe: true}, function (elem
   var link, description,
     titleElem = $('[id="title-text"]', elem);
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
 
   link = togglbutton.createTimerLink({
     className: 'confluence',

@@ -9,15 +9,15 @@ togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, fun
     titleElem = $('.entry-title', elem),
     projectElem = $('.project a span.label');
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'eproject',
     description: description,
-    projectName: projectElem.innerText
+    projectName: projectElem.textContent
   });
 
   $('.toggl-timer').appendChild(link);

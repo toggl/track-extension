@@ -12,8 +12,8 @@ togglbutton.render('section.case:not(.toggl)', {observe: true}, function (elem) 
 
   link = togglbutton.createTimerLink({
     className: 'fogbugz',
-    description: "[" + caseNoElem.innerText + "] " + titleElem.innerText,
-    projectName: projectElem.innerText
+    description: "[" + caseNoElem.textContent + "] " + titleElem.textContent,
+    projectName: projectElem.textContent
   });
 
   container.appendChild(link);

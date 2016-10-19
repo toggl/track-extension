@@ -182,9 +182,7 @@ var togglbutton = {
       ws = togglbutton.user.workspaces,
       premium;
 
-    if (pid === 0) {
-      pwid = togglbutton.user.default_wid;
-    } else {
+    if (pid !== 0) {
       project = togglbutton.findProjectByPid(pid);
       if (!project) {
         return;

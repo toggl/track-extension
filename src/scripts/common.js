@@ -10,12 +10,12 @@ function $(s, elem) {
   return elem.querySelector(s);
 }
 
-function createTag(name, className, innerHTML) {
+function createTag(name, className, textContent) {
   var tag = document.createElement(name);
   tag.className = className;
 
-  if (innerHTML) {
-    tag.innerHTML = innerHTML;
+  if (textContent) {
+    tag.textContent = textContent;
   }
 
   return tag;
@@ -331,7 +331,7 @@ var togglbutton = {
       link.classList.remove('active');
       link.style.color = '';
       if (!link.classList.contains("min")) {
-        link.innerHTML = 'Start timer';
+        link.textContent = 'Start timer';
       }
       chrome.runtime.sendMessage({type: 'stop', respond: true}, togglbutton.addEditForm);
       closeForm();
@@ -381,7 +381,7 @@ var togglbutton = {
       link.classList.remove('active');
       link.style.color = '';
       if (params.buttonType !== 'minimal') {
-        link.innerHTML = 'Start timer';
+        link.textContent = 'Start timer';
       }
     }
 
@@ -395,7 +395,7 @@ var togglbutton = {
       link.classList.add('active');
       link.style.color = '#1ab351';
       if (params.buttonType !== 'minimal') {
-        link.innerHTML = 'Stop timer';
+        link.textContent = 'Stop timer';
       }
     }
 
@@ -491,7 +491,7 @@ var togglbutton = {
         }
       }
       link.style.color = color;
-      link.innerHTML = linkText;
+      link.textContent = linkText;
     }
   },
 

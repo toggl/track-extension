@@ -97,7 +97,7 @@ var PopUp = {
   },
 
   showError: function (errorMessage) {
-    PopUp.$errorLabel.innerHTML = errorMessage;
+    PopUp.$errorLabel.textContent = errorMessage;
     PopUp.$errorLabel.classList.add("show");
     setTimeout(function () { PopUp.$errorLabel.classList.remove("show"); }, 3000);
   },

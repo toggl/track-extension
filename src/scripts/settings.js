@@ -42,11 +42,11 @@ var Settings = {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
     }
 
-    document.querySelector("#version").innerHTML = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
+    document.querySelector("#version").textContent = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
     Settings.$pomodoroVolume.value = volume;
-    Settings.$pomodoroVolumeLabel.innerHTML = volume + "%";
+    Settings.$pomodoroVolumeLabel.textContent = volume + "%";
     Settings.toggleState(Settings.$showRightClickButton, Db.get("showRightClickButton"));
     Settings.toggleState(Settings.$startAutomatically, Db.get("startAutomatically"));
     Settings.toggleState(Settings.$stopAutomatically, Db.get("stopAutomatically"));
@@ -330,12 +330,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
 
   Settings.$pomodoroVolume.addEventListener('input', function (e) {
-    Settings.$pomodoroVolumeLabel.innerHTML = e.target.value + "%";
+    Settings.$pomodoroVolumeLabel.textContent = e.target.value + "%";
   });
 
   Settings.$pomodoroVolume.addEventListener('change', function (e) {
     Settings.saveSetting(e.target.value / 100, "update-pomodoro-sound-volume");
-    Settings.$pomodoroVolumeLabel.innerHTML = e.target.value + "%";
+    Settings.$pomodoroVolumeLabel.textContent = e.target.value + "%";
   });
 
   document.querySelector("#sound-test").addEventListener('click', function (e) {

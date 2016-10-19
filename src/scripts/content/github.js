@@ -8,9 +8,9 @@ togglbutton.render('#partial-discussion-header:not(.toggl)', {observe: true}, fu
     titleElem = $('.js-issue-title', elem),
     projectElem = $('h1.public strong a, h1.private strong a');
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({

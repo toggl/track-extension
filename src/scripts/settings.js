@@ -3,6 +3,7 @@
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
+  GA = chrome.extension.getBackgroundPage().GA,
   Db = chrome.extension.getBackgroundPage().Db,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
   w = window.innerWidth;
@@ -63,7 +64,7 @@ var Settings = {
 
     Settings.fillDefaultProject();
 
-    TogglButton.analytics("settings", null);
+    GA.reportSettings();
 
     if (!FF) {
       Settings.loadSitesIntoList();

@@ -1,79 +1,10 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global debug: true, report: true, escapeHtml: true, GA: false, window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var TogglButton,
   openWindowsCount = 0,
-  FF = navigator.userAgent.indexOf("Chrome") === -1,
-  debug = false,
-  entityMap = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': '&quot;',
-    "'": '&#39;',
-    "/": '&#x2F;'
-  },
-  escapeHtml = function (string) {
-    return String(string).replace(/[&<>"'\/]/g, function (s) {
-      return entityMap[s];
-    });
-  };
-
-Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
-Bugsnag.appVersion = chrome.runtime.getManifest().version;
-
-Bugsnag.beforeNotify = function (error, metaData) {
-  error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
-};
-
-var report = function (e) {
-  if (debug) {
-    console.log(e);
-  } else {
-    Bugsnag.notifyException(e);
-  }
-};
-
-chrome.webRequest.onBeforeSendHeaders.addListener(
-  function (info) {
-    var headers = info.requestHeaders,
-      isTogglButton = false,
-      uaIndex = -1;
-
-    headers.forEach(function (header, i) {
-      if (header.name.toLowerCase() === 'user-agent') {
-        uaIndex = i;
-      }
-      if (header.name === 'IsTogglButton') {
-        isTogglButton = true;
-      }
-    });
-
-    if (!isTogglButton && uaIndex !== -1) {
-      headers[uaIndex].value = TogglButton.$fullVersion;
-    }
-    return {requestHeaders: headers};
-  },
-  {
-    urls: [ "https://www.toggl.com/*", "https://toggl.com/*" ],
-    types: ["xmlhttprequest"]
-  },
-  ["blocking", "requestHeaders"]
-);
-
-var _gaq = window._gaq || [];
-_gaq.push(['_setAccount', 'UA-3215787-22']);
-_gaq.push(['_trackPageview']);
-
-(function () {
-  var ga = document.createElement('script'),
-    s = document.getElementsByTagName('script')[0];
-  ga.type = 'text/javascript';
-  ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  s.parentNode.insertBefore(ga, s);
-}());
+  FF = navigator.userAgent.indexOf("Chrome") === -1;
 
 TogglButton = {
   $user: null,
@@ -204,6 +135,7 @@ TogglButton = {
             TogglButton.updateBugsnag();
             TogglButton.handleQueue();
             TogglButton.setCanSeeBillable();
+            GA.reportOs();
           } else if (!token) {
             apiToken = localStorage.getItem('userToken');
             if (apiToken) {
@@ -466,7 +398,7 @@ TogglButton = {
             entry = responseData && responseData.data;
             TogglButton.localEntry = entry;
             TogglButton.updateTriggers(entry);
-            TogglButton.analytics(timeEntry.type, timeEntry.service);
+            GA.reportEvent(timeEntry.type, timeEntry.service);
           } else {
             error = xhr.responseText;
           }
@@ -572,40 +504,6 @@ TogglButton = {
     };
   },
 
-  analytics: function (event, service) {
-    if (event === "settings") {
-      _gaq.push(['_trackEvent', 'start-automatically', "settings/start-automatically-" + Db.get("startAutomatically")]);
-      _gaq.push(['_trackEvent', 'stop-automatically', "settings/stop-automatically-" + Db.get("stopAutomatically")]);
-      _gaq.push(['_trackEvent', 'right-click-button', "settings/show-right-click-button-" + Db.get("showRightClickButton")]);
-      _gaq.push(['_trackEvent', 'popup', "settings/popup-" + Db.get("showPostPopup")]);
-      _gaq.push(['_trackEvent', 'reminder', "settings/reminder-" + Db.get("nannyCheckEnabled")]);
-      _gaq.push(['_trackEvent', 'reminder-minutes', "settings/reminder-minutes-" + Db.get("nannyInterval")]);
-      _gaq.push(['_trackEvent', 'idle', "settings/idle-detection-" + Db.get("idleDetectionEnabled")]);
-
-      _gaq.push(['_trackEvent', 'pomodoro', "settings/pomodoro-" + Db.get("pomodoroModeEnabled")]);
-      if (Db.get("pomodoroModeEnabled")) {
-        _gaq.push(['_trackEvent', 'pomodoro-sound', "settings/pomodoro-sound-" + Db.get("pomodoroSoundEnabled")]);
-        if (Db.get("pomodoroSoundEnabled")) {
-          _gaq.push(['_trackEvent', 'pomodoro-volume', "settings/pomodoro-volume-" + Db.get("pomodoroSoundVolume")]);
-        }
-        _gaq.push(['_trackEvent', 'pomodoro-stop', "settings/pomodoro-stop-" + Db.get("pomodoroStopTimeTrackingWhenTimerEnds")]);
-        _gaq.push(['_trackEvent', 'pomodoro-interval', "settings/pomodoro-interval-" + Db.get("pomodoroInterval")]);
-      }
-
-      _gaq.push(['_trackEvent', 'stop-at-day-end', "settings/stop-at-day-end" + Db.get("stopAtDayEnd")]);
-      if (Db.get("stopAtDayEnd")) {
-        _gaq.push(['_trackEvent', 'stop-at-day-end-time', "settings/stop-at-day-end-time" + Db.get("dayEndTime")]);
-      }
-
-      _gaq.push(['_trackEvent', 'default-project', "settings/default-project" + Db.get("defaultProject")]);
-    } else {
-      _gaq.push(['_trackEvent', event, event + "-" + service]);
-      chrome.runtime.getPlatformInfo(function (info) {
-        _gaq.push(['_trackEvent', "os", "os-" + info.os]);
-      });
-    }
-  },
-
   ajax: function (url, opts) {
     var xhr = new XMLHttpRequest(),
       method = opts.method || 'GET',
@@ -666,7 +564,7 @@ TogglButton = {
             });
           }
           TogglButton.triggerNotification();
-          TogglButton.analytics(timeEntry.type, timeEntry.service);
+          GA.reportEvent(timeEntry.type, timeEntry.service);
           if (cb) {
             cb();
           }
@@ -710,7 +608,7 @@ TogglButton = {
             });
           }
           TogglButton.triggerNotification();
-          TogglButton.analytics(timeEntry.type, timeEntry.service);
+          GA.reportEvent(timeEntry.type, timeEntry.service);
           if (cb) {
             cb();
           }
@@ -827,7 +725,7 @@ TogglButton = {
           if (!!timeEntry.respond) {
             sendResponse({success: success, type: "Update", error: error});
           }
-          TogglButton.analytics(timeEntry.type, timeEntry.service);
+          GA.reportEvent(timeEntry.type, timeEntry.service);
         } catch (e) {
           report(e);
         }
@@ -1369,7 +1267,7 @@ TogglButton = {
     if (!FF) {
       TogglButton.processNotificationEvent(notificationId);
     }
-    TogglButton.analytics(eventType, buttonName);
+    GA.reportEvent(eventType, buttonName);
   },
 
   workingTime: function () {

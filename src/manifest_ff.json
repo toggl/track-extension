@@ -12,7 +12,7 @@
   "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
     "scripts": [
-      "scripts/vendor/bugsnag-2.min.js",
+      "scripts/vendor/bugsnag-3.min.js",
       "scripts/origins.js",
       "scripts/lib.js",
       "scripts/db.js",

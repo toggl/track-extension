@@ -10,7 +10,7 @@ togglbutton.render('#partial-discussion-header:not(.toggl)', {observe: true}, fu
 
   description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.textContent + " " + description;
+    description = numElem.textContent + " " + description.trim();
   }
 
   link = togglbutton.createTimerLink({

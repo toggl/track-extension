@@ -34,14 +34,16 @@ var PopUp = {
   $loginView: document.querySelector("#login-form"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {
-    var p;
+    var p, dom;
     if (!TogglButton) {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
     }
 
     if (TogglButton.$user !== null) {
       if (!PopUp.editFormAdded) {
-        PopUp.$editView.innerHTML = TogglButton.getEditForm();
+        dom = document.createElement("div");
+        dom.innerHTML = TogglButton.getEditForm();
+        PopUp.$editView.appendChild(dom.firstChild);
         PopUp.addEditEvents();
         PopUp.editFormAdded = true;
       }

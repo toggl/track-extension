@@ -13,8 +13,8 @@ dist: clean
 	@rm -rf out
 
 clean:
-	@if [ -f "ch_toggl-button.zip" ]; then rm toggl-button.zip; fi
-	@if [ -f "ff_toggl-button.zip" ]; then rm toggl-button.zip; fi
+	@if [ -f "ch_toggl-button.zip" ]; then rm ch_toggl-button.zip; fi
+	@if [ -f "ff_toggl-button.zip" ]; then rm ff_toggl-button.zip; fi
 
 authors:
 	git log --all --format='%aN <%cE>' | sort -u > AUTHORS

@@ -321,6 +321,10 @@ header .active, header li:hover {
   float: right;
 }
 
+#default-project-container {
+  display: inline;
+}
+
 #default-project {
   margin-left: 5px;
   max-width: 280px;

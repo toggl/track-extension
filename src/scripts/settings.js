@@ -34,6 +34,7 @@ var Settings = {
   $stopAtDayEnd: null,
   $tabs: null,
   $defaultProject: null,
+  $defaultProjectContainer: null,
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function () {
@@ -72,24 +73,46 @@ var Settings = {
     }
   },
   fillDefaultProject: function () {
-    var key, project, clientName, projects, clients, defProject, selected, html;
+    var key, project, clientName, projects, clients, defProject, html, dom;
     if (Db.get("projects") !== '' && !!TogglButton.$user) {
       defProject = Db.get(TogglButton.$user.id + "-defaultProject");
       projects = JSON.parse(Db.get("projects"));
       clients = JSON.parse(Db.get("clients"));
-      html = '<option value="0">- No project -</option>';
+
+      html = document.createElement("select");
+      html.id = "default-project";
+      html.setAttribute("name", "default-project");
+
+      dom = document.createElement("option");
+      dom.setAttribute("value", "0");
+      dom.textContent = "- No project -";
+
+      html.appendChild(dom);
+
       for (key in projects) {
         if (projects.hasOwnProperty(key)) {
-          selected = '';
           project = projects[key];
           clientName = (!!project.cid && !!clients[project.cid]) ? ' . ' + clients[project.cid].name  : '';
+          dom = document.createElement("option");
+
           if (!!defProject && parseInt(defProject, 10) === project.id) {
-            selected = "selected ";
+            dom.setAttribute("selected", "selected");
           }
-          html += "<option " + selected + "value='" + project.id + "'>" + project.name + clientName + "</option>";
+
+          dom.setAttribute("value", project.id);
+          dom.textContent = project.name + clientName;
+          html.appendChild(dom);
         }
       }
-      Settings.$defaultProject.innerHTML = html;
+
+      Settings.$defaultProjectContainer.appendChild(html);
+
+      Settings.$defaultProject = document.querySelector("#default-project");
+
+      Settings.$defaultProject.addEventListener('change', function (e) {
+        var defaultProject = Settings.$defaultProject.options[Settings.$defaultProject.selectedIndex].value;
+        Settings.saveSetting(defaultProject, "change-default-project");
+      });
     }
   },
   getAllPermissions: function () {
@@ -220,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   Settings.$pomodoroStopTimeTracking = document.querySelector("#pomodoro-stop-time");
   Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
   Settings.$tabs = document.querySelector(".tabs");
-  Settings.$defaultProject = document.querySelector("#default-project");
+  Settings.$defaultProjectContainer = document.querySelector("#default-project-container");
 
   // Show permissions page with notice
   if (!!parseInt(Db.get("show-permissions-info"), 10) && !Db.get("dont-show-permissions")) {
@@ -306,10 +329,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   });
   Settings.$pomodoroStopTimeTracking.addEventListener('click', function (e) {
     Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroStopTimeTrackingWhenTimerEnds") !== "true"), "toggle-pomodoro-stop-time");
-  });
-  Settings.$defaultProject.addEventListener('change', function (e) {
-    var defaultProject = Settings.$defaultProject.options[Settings.$defaultProject.selectedIndex].value;
-    Settings.saveSetting(defaultProject, "change-default-project");
   });
 
   Settings.$stopAtDayEnd.addEventListener('click', function (e) {

@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.0.11",
+      "rows": [
+        "Dynamic content generation security and performance improvements",
+        "Safer analytics gathering",
+        "Updated Bugsnag to v3",
+        "Removed executable json file"
+      ]
+    },
+    {
       "version": "1.0.10",
       "rows": [
         "Added support for overv.io",

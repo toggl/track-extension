@@ -30,7 +30,15 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
   // Add Tracked time text
   /*
   duration = togglbutton.calculateTrackedTime(titleElem.textContent);
-  trackedContainer.innerHTML = "<h3>Time tracked</h3><p title='Time tracked with Toggl: " + duration + "'>" + duration + "</p>";
+  h3 = document.createElement("h3");
+  h3.textContent = "Time tracked";
+
+  p = document.createElement("p");
+  p.setAttribute("title", "Time tracked with Toggl: " + duration);
+  p.textContent = duration;
+
+  trackedContainer.appendChild(h3);
+  trackedContainer.appendChild(p);
   trackedElem.parentNode.insertBefore(trackedContainer, trackedElem);
   */
 });

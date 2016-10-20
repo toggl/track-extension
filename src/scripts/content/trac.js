@@ -9,7 +9,7 @@ togglbutton.render('#main > #content.ticket:not(.toggl)', {observe: true}, funct
     tracTicketId = (
       $('#main > #content.ticket > #ticket > h2 > .trac-id') || // Trac v1.x
       $('#main > #content.ticket > h1#trac-ticket-title > a') // Trac v0.x 
-    ).innerHTML,
+    ).textContent,
     tracTicketDescription = $('#main > #content.ticket > #ticket .summary', elem).textContent,
     tracProjectName = (
       $('title').textContent.split('     – ').pop() || // First try to get project name from title tag

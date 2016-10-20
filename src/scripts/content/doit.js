@@ -7,13 +7,9 @@ togglbutton.render('[id^=taskview_task_]:not(.toggl)', {observe: true}, function
   var link,
     titleElem   = $('h3 > span.title.ng-binding', elem),
     projectElem = $('div > div.item.project.ng-binding', elem),
-    description = !!titleElem ? titleElem.innerHTML : '',
-    project = !!projectElem ? projectElem.innerHTML : '',
+    description = !!titleElem ? titleElem.textContent : '',
+    project = !!projectElem ? projectElem.textContent : '',
     firstOp;
-
-  if (description !== '') {
-    titleElem.innerHTML = description + ' ';
-  }
 
   if (project !== '') {
     project = project.substring(1);  // remove '#'
@@ -34,8 +30,8 @@ togglbutton.render('#taskform > div > div.taskform-main:not(.toggl)', {observe: 
   var link,
     titleElem   = $('li.meta.task-title > div > div > div.textarea-tmp', elem),
     projectElem = $('li.meta.task-project.smart > div > div > ul > li.token > div', elem),
-    description = !!titleElem ? titleElem.innerHTML : '',
-    project = !!projectElem ? projectElem.innerHTML : '';
+    description = !!titleElem ? titleElem.textContent : '',
+    project = !!projectElem ? projectElem.textContent : '';
 
   link = togglbutton.createTimerLink({
     className: 'doit',
@@ -51,21 +47,17 @@ togglbutton.render('li.task:not(.toggl)', {observe: true}, function (elem) {
   var link,
     titleElem   = $('div.title > a.link-title', elem),
     projectElem = $('div.title > a.project', elem),
-    description = !!titleElem ? titleElem.innerHTML : '',
+    description = !!titleElem ? titleElem.textContent : '',
     project,
     projectHeader = $('#project_info:not(.ng-hide)');
 
   if (!!projectHeader) {
     project = document.querySelector("#project_info span.title").textContent;
   } else {
-    project = !!projectElem ? projectElem.innerHTML : '';
+    project = !!projectElem ? projectElem.textContent : '';
     if (project !== '') {
       project = project.substring(1);  // remove '#'
     }
-  }
-
-  if (description !== '') {
-    titleElem.innerHTML = description + ' ';
   }
 
   link = togglbutton.createTimerLink({

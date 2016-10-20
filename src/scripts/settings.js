@@ -6,7 +6,8 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   GA = chrome.extension.getBackgroundPage().GA,
   Db = chrome.extension.getBackgroundPage().Db,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
-  w = window.innerWidth;
+  w = window.innerWidth,
+  TogglOrigins = chrome.extension.getBackgroundPage().TogglOrigins;
 
 if (FF) {
   document.querySelector("html").classList.add("ff");

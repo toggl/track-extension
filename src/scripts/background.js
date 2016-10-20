@@ -504,6 +504,19 @@ TogglButton = {
     };
   },
 
+  loadOrigins: function () {
+    TogglButton.ajax('scripts/origins.json', {
+      method: 'GET',
+      token: ' ',
+      baseUrl: '/',
+      onLoad: function (xhr) {
+        if (xhr.status === 200) {
+          window.TogglOrigins = JSON.parse(xhr.responseText);
+        }
+      }
+    });
+  },
+
   ajax: function (url, opts) {
     var xhr = new XMLHttpRequest(),
       method = opts.method || 'GET',
@@ -1515,6 +1528,7 @@ TogglButton = {
 
 };
 
+TogglButton.queue.push(TogglButton.loadOrigins);
 TogglButton.queue.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();

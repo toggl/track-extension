@@ -7,13 +7,22 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   Db = chrome.extension.getBackgroundPage().Db,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
   w = window.innerWidth,
-  TogglOrigins = chrome.extension.getBackgroundPage().TogglOrigins;
+  TogglOrigins = chrome.extension.getBackgroundPage().TogglOrigins,
+  replaceContent = function (parentSelector, html) {
+    var container = document.querySelector(parentSelector);
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+
+    container.appendChild(html);
+  };
 
 if (FF) {
   document.querySelector("html").classList.add("ff");
 }
 
 var Settings = {
+  eventsSet: false,
   $startAutomatically: null,
   $stopAutomatically: null,
   $showRightClickButton: null,
@@ -26,7 +35,6 @@ var Settings = {
   $permissionFilterClear: document.querySelector("#filter-clear"),
   permissionItems: [],
   $permissionsList: document.querySelector("#permissions-list"),
-  $customPermissionsList: document.querySelector("#custom-permissions-list"),
   $newPermission: document.querySelector("#new-permission"),
   $originsSelect: document.querySelector("#origins"),
   origins: [],
@@ -155,9 +163,13 @@ var Settings = {
     Settings.toggleSetting(null, value, type);
   },
   loadSitesIntoList: function () {
-    var html = "",
-      html_list = "",
-      custom_html = "",
+    var html,
+      html_list,
+      custom_html,
+      option,
+      li,
+      input,
+      dom,
       url,
       name,
       i,
@@ -167,6 +179,39 @@ var Settings = {
       checked,
       customs,
       tmpkey;
+
+    // Load Custom Permissions list
+
+    // Defined custom domain list
+    custom_html = document.createElement("ul");
+    custom_html.id = "custom-permissions-list";
+    custom_html.className = "origin-list";
+
+    customs = Db.getAllOrigins();
+    for (k in customs) {
+      if (customs.hasOwnProperty(k)) {
+        li = document.createElement("li");
+
+        dom = document.createElement("a");
+        dom.className = "remove-custom";
+        dom.textContent = "delete";
+        li.appendChild(dom);
+
+        dom = document.createElement("strong");
+        dom.textContent = k;
+        li.appendChild(dom);
+
+        li.appendChild(document.createTextNode(" - "));
+
+        dom = document.createElement("i");
+        dom.textContent = TogglOrigins[customs[k]].name;
+        li.appendChild(dom);
+
+        custom_html.appendChild(li);
+      }
+    }
+
+    replaceContent("#custom-perm-container", custom_html);
 
     // Load permissions list
     chrome.permissions.getAll(function (results) {
@@ -186,6 +231,15 @@ var Settings = {
         };
       }
 
+      // list of enabled/disabled origins
+      html_list = document.createElement("ul");
+      html_list.id = "permissions-list";
+      html_list.className = "origin-list";
+
+      // custom permission integration select
+      html = document.createElement("select");
+      html.id = "origins";
+
       for (key in TogglOrigins) {
         if (TogglOrigins.hasOwnProperty(key)) {
           disabled = '';
@@ -197,35 +251,204 @@ var Settings = {
             tmpkey.shift();
             tmpkey = tmpkey.join(".");
             if (!Settings.origins[tmpkey]) {
-              disabled = 'class="disabled"';
+              disabled = 'disabled';
               checked = '';
             }
           }
 
           // Don't display all different urls for 1 service
           if (!TogglOrigins[key].clone) {
-            html += "<option id='origin' data-id='" + i + "' value='" + key + "'>" + TogglOrigins[key].name + "</option>";
+            option = document.createElement("option");
+            option.id = "origin";
+            option.value = key;
+            option.setAttribute("data-id", i);
+            option.textContent = TogglOrigins[key].name;
+
+            html.appendChild(option);
           }
 
           // Don't show toggl.com as it's not optional
           if (key.indexOf("toggl") === -1 && !!TogglOrigins[key].url) {
-            html_list += '<li ' + disabled + ' id="' + key + '"><input type="checkbox" class="toggle" data-host="' + TogglOrigins[key].url + '" ' + checked + '><div>' + key + '</div></li>';
+            li = document.createElement("li");
+            li.id = key;
+            li.className = disabled;
+
+            input = document.createElement("input");
+            input.className = "toggle";
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("data-host", TogglOrigins[key].url);
+            if (!!checked) {
+              input.setAttribute("checked", "checked");
+            }
+
+            dom = document.createElement("div");
+            dom.textContent = key;
+
+            li.appendChild(input);
+            li.appendChild(dom);
+
+            html_list.appendChild(li);
           }
         }
       }
 
-      document.querySelector("#origins").innerHTML = html;
-      Settings.$permissionsList.innerHTML = html_list;
+      replaceContent("#perm-container", html_list);
+      replaceContent("#origins-container", html);
+
+      Settings.enablePermissionEvents();
     });
 
-    // Load Custom Permissions list
-    customs = Db.getAllOrigins();
-    for (k in customs) {
-      if (customs.hasOwnProperty(k)) {
-        custom_html += "<li><a class='remove-custom'>&times;</a><strong>" + k + "</strong> - <i>" + TogglOrigins[customs[k]].name + "</i></li>";
-      }
+  },
+
+  enablePermissionEvents: function () {
+    if (Settings.eventsSet) {
+      return;
     }
-    Settings.$customPermissionsList.innerHTML = custom_html;
+    Settings.$originsSelect = document.querySelector("#origins");
+    Settings.$permissionsList = document.querySelector("#permissions-list");
+
+    // Enable/Disable origin permissions
+    document.querySelector('#permissions-list').addEventListener('click', function (e) {
+      var permission,
+        target = e.target;
+
+      if (e.target.tagName !== "INPUT") {
+        target = e.target.querySelector("input");
+        target.checked = !target.checked;
+      }
+
+      permission = {origins: target.getAttribute("data-host").split(",")};
+
+      if (target.checked) {
+        chrome.permissions.request(permission, function (result) {
+          if (result) {
+            target.parentNode.classList.remove("disabled");
+          } else {
+            target.checked = false;
+          }
+        });
+      } else {
+        chrome.permissions.contains(permission, function (allowed) {
+          if (allowed) {
+            chrome.permissions.remove(permission, function (result) {
+              if (result) {
+                target.parentNode.classList.add("disabled");
+              } else {
+                target.checked = true;
+              }
+            });
+          } else {
+            alert('No "' + Settings.origins[target.getAttribute("data-id")] + '" host permission found.');
+          }
+        });
+      }
+    });
+
+    // Enable all predefined origins
+    document.querySelector('.enable-all').addEventListener('click', function (e) {
+      chrome.permissions.request(Settings.getAllPermissions(), function (result) {
+        if (result) {
+          Settings.loadSitesIntoList();
+        }
+      });
+    });
+
+    // Disable all predefined origins
+    document.querySelector('.disable-all').addEventListener('click', function (e) {
+      chrome.permissions.getAll(function (result) {
+        var origins = [],
+          i,
+          key,
+          customOrigins = Db.getAllOrigins(),
+          skip = false;
+
+        for (i = 0; i < result.origins.length; i++) {
+          for (key in customOrigins) {
+            if (customOrigins.hasOwnProperty(key) && !skip) {
+              if (result.origins[i].indexOf(key) !== -1) {
+                skip = true;
+              }
+            }
+          }
+
+          if (result.origins[i].indexOf("toggl") === -1 && result.origins[i] !== "*://*/*" && !skip) {
+            origins.push(result.origins[i]);
+          }
+          skip = false;
+        }
+
+        chrome.permissions.remove({origins: origins}, function (result) {
+          if (result) {
+            Settings.loadSitesIntoList();
+          }
+        });
+      });
+    });
+
+    // Add custom permission (custom domain)
+    document.querySelector('#add-permission').addEventListener('click', function (e) {
+      var text = Settings.$newPermission.value,
+        domain,
+        permission,
+        o = Settings.$originsSelect;
+
+      if (text.indexOf(":") !== -1) {
+        text = text.split(":")[0];
+      }
+      if (text.indexOf("//") !== -1) {
+        text = text.split("//")[1];
+      }
+
+      Settings.$newPermission.value = text;
+      domain = "*://" + Settings.$newPermission.value + "/";
+      permission = {origins: [domain]};
+
+      chrome.permissions.request(permission, function (result) {
+        if (result) {
+          Db.setOrigin(Settings.$newPermission.value, o.value);
+          Settings.$newPermission.value = "";
+        }
+        Settings.loadSitesIntoList();
+        if (result) {
+          document.location.hash = domain;
+        }
+      });
+    });
+    // Remove item from custom domain list
+    document.querySelector('#custom-permissions-list').addEventListener('click', function (e) {
+      var custom, domain, permission, parent, removed = false;
+      if (e.target.className === "remove-custom") {
+        parent = e.target.parentNode;
+        custom = parent.querySelector('strong').textContent;
+        domain = "*://" + custom + "/";
+        permission = {origins: [domain]};
+
+        chrome.permissions.contains(permission, function (allowed) {
+          if (allowed) {
+            chrome.permissions.remove(permission, function (result) {
+              if (result) {
+                removed = true;
+                Db.removeOrigin(custom);
+                parent.remove();
+              } else {
+                alert("Fail");
+              }
+            });
+          } else {
+            alert('No "' + custom + '" host permission found.');
+          }
+        });
+
+        if (!removed) {
+          Db.removeOrigin(custom);
+          parent.remove();
+        }
+
+      }
+      return false;
+    });
+
+    Settings.eventsSet = true;
   }
 };
 
@@ -397,147 +620,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
     }
     Settings.saveSetting(+(document.querySelector('#pomodoro-interval').value), "toggle-pomodoro-interval");
 
-  });
-
-  // Enable/Disable origin permissions
-  document.querySelector('#permissions-list').addEventListener('click', function (e) {
-    var permission,
-      target = e.target;
-
-    if (e.target.tagName !== "INPUT") {
-      target = e.target.querySelector("input");
-      target.checked = !target.checked;
-    }
-
-    permission = {origins: target.getAttribute("data-host").split(",")};
-
-    if (target.checked) {
-      chrome.permissions.request(permission, function (result) {
-        if (result) {
-          target.parentNode.classList.remove("disabled");
-        } else {
-          target.checked = false;
-        }
-      });
-    } else {
-      chrome.permissions.contains(permission, function (allowed) {
-        if (allowed) {
-          chrome.permissions.remove(permission, function (result) {
-            if (result) {
-              target.parentNode.classList.add("disabled");
-            } else {
-              target.checked = true;
-            }
-          });
-        } else {
-          alert('No "' + Settings.origins[target.getAttribute("data-id")] + '" host permission found.');
-        }
-      });
-    }
-  });
-
-  // Enable all predefined origins
-  document.querySelector('.enable-all').addEventListener('click', function (e) {
-    chrome.permissions.request(Settings.getAllPermissions(), function (result) {
-      if (result) {
-        Settings.loadSitesIntoList();
-      }
-    });
-  });
-
-  // Disable all predefined origins
-  document.querySelector('.disable-all').addEventListener('click', function (e) {
-    chrome.permissions.getAll(function (result) {
-      var origins = [],
-        i,
-        key,
-        customOrigins = Db.getAllOrigins(),
-        skip = false;
-
-      for (i = 0; i < result.origins.length; i++) {
-        for (key in customOrigins) {
-          if (customOrigins.hasOwnProperty(key) && !skip) {
-            if (result.origins[i].indexOf(key) !== -1) {
-              skip = true;
-            }
-          }
-        }
-
-        if (result.origins[i].indexOf("toggl") === -1 && result.origins[i] !== "*://*/*" && !skip) {
-          origins.push(result.origins[i]);
-        }
-        skip = false;
-      }
-
-      chrome.permissions.remove({origins: origins}, function (result) {
-        if (result) {
-          Settings.loadSitesIntoList();
-        }
-      });
-    });
-  });
-
-  // Add custom permission (custom domain)
-  document.querySelector('#add-permission').addEventListener('click', function (e) {
-    var text = Settings.$newPermission.value,
-      domain,
-      permission,
-      o = Settings.$originsSelect;
-
-    if (text.indexOf(":") !== -1) {
-      text = text.split(":")[0];
-    }
-    if (text.indexOf("//") !== -1) {
-      text = text.split("//")[1];
-    }
-
-    Settings.$newPermission.value = text;
-    domain = "*://" + Settings.$newPermission.value + "/";
-    permission = {origins: [domain]};
-
-    chrome.permissions.request(permission, function (result) {
-      if (result) {
-        Db.setOrigin(Settings.$newPermission.value, o.value);
-        Settings.$newPermission.value = "";
-      }
-      Settings.loadSitesIntoList();
-      if (result) {
-        document.location.hash = domain;
-      }
-    });
-  });
-  // Remove item from custom domain list
-  document.querySelector('#custom-permissions-list').addEventListener('click', function (e) {
-    var custom, domain, permission, parent, removed = false;
-    if (e.target.className === "remove-custom") {
-      parent = e.target.parentNode;
-      custom = parent.querySelector('strong').textContent;
-      domain = "*://" + custom + "/";
-      permission = {origins: [domain]};
-
-      chrome.permissions.contains(permission, function (allowed) {
-        if (allowed) {
-          chrome.permissions.remove(permission, function (result) {
-            if (result) {
-              removed = true;
-              Db.removeOrigin(custom);
-              parent.remove();
-            } else {
-              alert("Fail");
-            }
-          });
-        } else {
-          alert('No "' + custom + '" host permission found.');
-        }
-      });
-
-      if (!removed) {
-        Db.removeOrigin(custom);
-        parent.remove();
-      }
-
-    }
-    return false;
   });
 
   document.querySelector("#day-end-time").addEventListener('blur', function (e) {

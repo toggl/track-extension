@@ -207,6 +207,10 @@ header .active, header li:hover {
   clear: both;
 }
 
+#origins-container, #perm-container, #custom-perm-container {
+  display: inline;
+}
+
 .origin-list {
   border: 1px solid #CCCACA;
   list-style: none;
@@ -333,18 +337,21 @@ header .active, header li:hover {
 .remove-custom {
   display: block;
   float: left;
+  text-align: center;
   text-align: left;
   text-decoration: none;
   color: #EF2D2D;
-  font-size: 18px;
+  font-size: 9px;
   cursor: pointer;
-  border-radius: 5px;
   margin-right: 5px;
-  line-height: 22px;
+  line-height: 12px;
+  padding: 5px;
+  float: right;
 }
 
 .remove-custom:hover {
-  font-weight: bold;
+  color: #ffffff;
+  background-color: #EF2D2D;
 }
 
 .guide-container {

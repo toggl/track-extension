@@ -141,17 +141,28 @@ var PopUp = {
   },
 
   renderEntriesList: function () {
-    var html = "<p>Recent entries<p><ul>",
+    var html = document.createElement("div"),
       entries = TogglButton.$user.time_entries,
       visibleIcons = "",
       joinedTags,
       te,
+      iconDiv,
       p,
+      pname,
+      pstyle,
+      elem,
+      ul,
+      li,
       t,
       b,
       i,
       count = 0;
 
+    elem = document.createElement("p");
+    elem.textContent = "Recent entries";
+    html.appendChild(elem);
+
+    ul = document.createElement("ul");
     if (entries.length < 5) {
       return;
     }
@@ -166,10 +177,15 @@ var PopUp = {
         visibleIcons = "";
         p = TogglButton.findProjectByPid(te.pid);
         if (!!p) {
-          p = "<div class='tb-project-bullet project-color color-" + p.color + "'></div>" + p.name;
+          pname = p.name;
+          pstyle = "background-color: " + p.hex_color + ";";
+          p = document.createElement("div");
+          p.className = "tb-project-bullet project-color";
+          p.setAttribute("style", pstyle);
         } else {
-          p = "";
+          p = false;
         }
+
         t = !!te.tags && te.tags.length;
         joinedTags = t ? te.tags.join(", ") : "";
 
@@ -177,16 +193,60 @@ var PopUp = {
         b = !!te.billable ? "billable-icon-visible" : "";
         visibleIcons = t + " " + b;
 
-        html += "<li data-id='" + i + "'>";
-        html += "<div class='te-desc' title='" + te.description + "'>" + te.description + "</div>";
-        html += "<div class='te-proj'>" + p + "</div>";
-        html += "<div class='te-continue'>Continue</div>";
-        html += "<div class='te-icons " + visibleIcons + "'><div class='tag-icon' title='" + joinedTags + "'></div><div class='billable-icon' title='billable'></div></div>";
-        html += "</li>";
+        li = document.createElement("li");
+        li.setAttribute('data-id', i);
+
+        // Description
+        elem = document.createElement("div");
+        elem.className = "te-desc";
+        elem.setAttribute("title", te.description);
+        elem.textContent = te.description;
+        li.appendChild(elem);
+
+        // Project bullet and name
+        elem = document.createElement("div");
+        elem.className = "te-proj";
+        if (!!p) {
+          elem.appendChild(p);
+          elem.appendChild(document.createTextNode(pname));
+        }
+        li.appendChild(elem);
+
+        // Continue Button
+        elem = document.createElement("div");
+        elem.className = "te-continue";
+        elem.textContent = "Continue";
+        li.appendChild(elem);
+
+        // Icons
+        elem = document.createElement("div");
+        elem.className = "te-icons " + visibleIcons;
+
+        iconDiv = document.createElement("div");
+        iconDiv.className = "tag-icons";
+        iconDiv.setAttribute("title", joinedTags);
+        elem.appendChild(iconDiv);
+
+        iconDiv = document.createElement("div");
+        iconDiv.className = "billable-icons";
+        iconDiv.setAttribute("title", "billable");
+        elem.appendChild(iconDiv);
+        li.appendChild(elem);
+
+        ul.appendChild(li);
         count++;
       }
     }
-    PopUp.$entries.innerHTML = html;
+
+    html.appendChild(ul);
+
+    // Remove old html
+    while (PopUp.$entries.firstChild) {
+      PopUp.$entries.removeChild(PopUp.$entries.firstChild);
+    }
+
+
+    PopUp.$entries.appendChild(html);
   },
 
   setupIcons: function (data) {

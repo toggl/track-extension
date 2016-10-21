@@ -244,6 +244,7 @@ var togglbutton = {
 
       projectAutocomplete.setup(pid, tid);
       tagAutocomplete.setup(response.entry.tags);
+      togglbutton.setupBillable(!!response.entry.billable, pid);
 
       editForm.style.left = position.left + "px";
       editForm.style.top = position.top + "px";

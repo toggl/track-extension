@@ -158,19 +158,21 @@ var PopUp = {
       b,
       i,
       count = 0,
-      checkUnique = function (te) {
-        var j;
-        if (listEntries.length > 0) {
-          for (j = 0; j < listEntries.length; j++) {
-            if (listEntries[j].description === te.description
-                && listEntries[j].pid === te.pid) {
-              return false;
-            }
+      checkUnique;
+
+    checkUnique = function (te, listEntries) {
+      var j;
+      if (listEntries.length > 0) {
+        for (j = 0; j < listEntries.length; j++) {
+          if (listEntries[j].description === te.description
+              && listEntries[j].pid === te.pid) {
+            return false;
           }
         }
-        listEntries.push(te);
-        return te;
-      };
+      }
+      listEntries.push(te);
+      return te;
+    };
 
     elem = document.createElement("p");
     elem.textContent = "Recent entries";
@@ -185,7 +187,7 @@ var PopUp = {
       if (count >= 5) {
         break;
       }
-      te = checkUnique(entries[i]);
+      te = checkUnique(entries[i], listEntries);
       if (!!te && te.duration >= 0) {
 
         visibleIcons = "";
@@ -214,7 +216,7 @@ var PopUp = {
         elem = document.createElement("div");
         elem.className = "te-desc";
         elem.setAttribute("title", te.description);
-        elem.textContent = te.description;
+        elem.textContent = te.description || "(no description)";
         li.appendChild(elem);
 
         // Project bullet and name

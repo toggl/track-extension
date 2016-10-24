@@ -46,13 +46,16 @@ var Settings = {
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function () {
-    var volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10);
+    var volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10), a;
 
     if (!TogglButton) {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
     }
-
-    document.querySelector("#version").textContent = "<a href='http://toggl.github.io/toggl-button' title='Change log'>(" + chrome.runtime.getManifest().version + ")</a>";
+    a = document.createElement("a");
+    a.title = "Changelog";
+    a.setAttribute("href", "http://toggl.github.io/toggl-button");
+    a.textContent = "(" + chrome.runtime.getManifest().version + ")";
+    document.querySelector("#version").appendChild(a);
     Settings.setFromTo();
     document.querySelector("#nag-nanny-interval").value = Db.get("nannyInterval") / 60000;
     Settings.$pomodoroVolume.value = volume;

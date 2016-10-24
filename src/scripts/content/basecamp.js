@@ -64,11 +64,17 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
 
 // Basecamp 3
 togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}, function (elem) {
-  var link, project,
+  var link, project, parent,
     projectItem,
     description = $('.checkbox__content', elem);
 
   if (!description) {
+    return;
+  }
+
+  parent = $('.todo_assignee', elem);
+
+  if (!parent) {
     return;
   }
 
@@ -83,5 +89,5 @@ togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}
     projectName: project
   });
 
-  $('.todo_assignee', elem).appendChild(link);
+  parent.appendChild(link);
 });

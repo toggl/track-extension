@@ -32,10 +32,16 @@ togglbutton.render('.taskBlock tr:not(.toggl)', {observe: true}, function (elem)
 
 // Detail view
 togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, projectFunc,
+  var link, descFunc, projectFunc, parent,
     container = $('.content', elem);
 
   if (container === null) {
+    return;
+  }
+
+  parent = $('.pageType', container);
+
+  if (!parent) {
     return;
   }
 
@@ -54,7 +60,7 @@ togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
     projectName: projectFunc
   });
 
-  $('.pageType', container).appendChild(link);
+  parent.appendChild(link);
 });
 
 // Lightning

@@ -22,14 +22,18 @@ togglbutton.render('#phabricator-standard-page-body .phui-workpanel-view .phui-o
 togglbutton.render('#phabricator-standard-page-body:not(.toggl)', {observe: true}, function (elem) {
   var link,
     desc = elem.querySelector(".phui-two-column-header .phui-header-view .phui-header-header"),
-    number = $('.phabricator-last-crumb .phui-crumb-name').textContent.trim(),
+    number = $('.phabricator-last-crumb .phui-crumb-name') || "",
     projectName = $('.phabricator-handle-tag-list-item > a');
+
+  if (!!number) {
+    number = number.textContent.trim() + " ";
+  }
 
   projectName = (!!projectName) ? projectName.textContent.trim() : "";
 
   link = togglbutton.createTimerLink({
     className: 'phabricator',
-    description: number + ' ' + desc.textContent,
+    description: number + desc.textContent,
     projectName: projectName
   });
 

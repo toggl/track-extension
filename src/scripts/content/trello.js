@@ -13,6 +13,10 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
     projectElem = $('.board-header > a'),
     descriptionElem = $('.js-move-card');
 
+  if (!descriptionElem) {
+    return;
+  }
+
   descFunc = function () {
     return titleElem.textContent;
   };

@@ -30,12 +30,18 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (e
 togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, function (elem) {
   var link, description, ul, li,
     numElem = $('#key-val', elem),
-    titleElem = $('#summary-val', elem),
+    titleElem = $('#summary-val', elem) || "",
     projectElem = $('#project-name-val', elem);
 
-  description = titleElem.textContent;
+  if (!!titleElem) {
+    description = titleElem.textContent;
+  }
+
   if (numElem !== null) {
-    description = numElem.textContent + " " + description;
+    if (!!description) {
+      description = " " + description;
+    }
+    description = numElem.textContent + description;
   }
 
   link = togglbutton.createTimerLink({

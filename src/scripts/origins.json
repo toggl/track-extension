@@ -71,6 +71,10 @@
     "url": "*://app.codeable.io/*",
     "name": "Codeable"
   },
+  "desk.com": {
+    "url": "*://*.desk.com/web/agent/*",
+    "name": "Desk.com"
+  },
   "devdocs.io": {
     "url": "*://devdocs.io/*",
     "name": "Devdocs.io"

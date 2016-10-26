@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "1.0.12",
+      "rows": [
+        "Fixed billable updating issue",
+        "Fixed undefined param issues in content scripts",
+        "Updated instructions text"
+      ]
+    },
+    {
       "version": "1.0.11",
       "rows": [
         "Dynamic content generation security and performance improvements",

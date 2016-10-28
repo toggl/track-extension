@@ -12,7 +12,7 @@ togglbutton.render('body.controller-issues.action-show h2:not(.toggl)', {}, func
     return;
   }
 
-  if (!!description) {
+  if (!!titleElem) {
     description = titleElem.textContent;
   }
 

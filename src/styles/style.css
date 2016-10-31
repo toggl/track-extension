@@ -1129,3 +1129,9 @@ only screen and (min-resolution: 192dpi) {
   position: absolute;
   margin-top: 13px;
 }
+
+/********* TARGETPROCESS *********/
+.tau-list-line .toggl-button.targetprocess {
+  top: 5px;
+  position: relative;
+}

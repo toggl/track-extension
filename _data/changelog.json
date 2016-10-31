@@ -1,6 +1,38 @@
 {
   "versions": [
     {
+      "version": "1.0.13",
+      "short-version": "1013",
+      "date": "October 31st 2016",
+      "rows": [
+        "Fixed github integration",
+        "Added table view support to TargetProcess",
+        "Updated Salesforce integration",
+        "Fixed redmine dom object check"
+      ]
+    },
+    {
+      "version": "1.0.12",
+      "short-version": "1012",
+      "date": "October 26th 2016",
+      "rows": [
+        "Fixed billable updating issue",
+        "Fixed undefined param issues in content scripts",
+        "Updated instructions text"
+      ]
+    },
+    {
+      "version": "1.0.11",
+      "short-version": "1011",
+      "date": "October 20th 2016",
+      "rows": [
+        "Dynamic content generation security and performance improvements",
+        "Safer analytics gathering",
+        "Updated Bugsnag to v3",
+        "Removed executable json file"
+      ]
+    },
+    {
       "version": "1.0.10",
       "short-version": "1010",
       "date": "October 17th 2016",

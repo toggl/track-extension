@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.0.13",
+      "rows": [
+        "Fixed github integration",
+        "Added table view support to TargetProcess",
+        "Updated Salesforce integration",
+        "Fixed redmine dom object check"
+      ]
+    },
+    {
       "version": "1.0.12",
       "rows": [
         "Fixed billable updating issue",

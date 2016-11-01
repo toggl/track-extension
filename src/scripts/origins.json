@@ -316,10 +316,6 @@
     "name": "Salesforce Lightning",
     "file": "salesforce.js"
   },
-  "calendar.sunrise.am": {
-    "url": "*://calendar.sunrise.am/*",
-    "name": "Sunrise Calendar"
-  },
   "sifterapp.com": {
     "url": "*://*.sifterapp.com/*",
     "name": "Sifterapp"

@@ -3,11 +3,10 @@
 
 'use strict';
 
-// Listing view
-togglbutton.render('.taskBlock tr:not(.toggl)', {observe: true}, function (elem) {
+// Updated Listing view
+togglbutton.render('.bMyTask .list tr.dataRow:not(.toggl)', {observe: true}, function (elem) {
   var link, descFunc, projectFunc,
-    container = $('th.dataCell', elem);
-
+    container = elem.querySelectorAll(".bMyTask .list tr.dataRow .dataCell a")[0];
   if (container === null) {
     return;
   }

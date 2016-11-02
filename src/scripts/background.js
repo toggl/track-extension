@@ -11,6 +11,7 @@ TogglButton = {
   $curEntry: null,
   $latestStoppedEntry: null,
   $ApiV8Url: "https://www.toggl.com/api/v8",
+  $ApiV9Url: "https://www.toggl.com/api/v9/workspaces",
   $sendResponse: null,
   $socket: null,
   $retrySocket: false,
@@ -358,44 +359,42 @@ TogglButton = {
       error = "",
       defaultProject = Db.get(TogglButton.$user.id + "-defaultProject"),
       entry = {
-        time_entry: {
-          start: start.toISOString(),
-          description: timeEntry.description || "",
-          wid: timeEntry.wid || TogglButton.$user.default_wid,
-          pid: timeEntry.pid || timeEntry.projectId || null,
-          tid: timeEntry.tid || null,
-          tags: timeEntry.tags || null,
-          billable: timeEntry.billable || false,
-          duration: -(start.getTime() / 1000),
-          created_with: timeEntry.createdWith || TogglButton.$fullVersion,
-          duronly: timeEntry.duronly || !TogglButton.$user.store_start_and_stop_time
-        }
+        start: start.toISOString(),
+        stop: null,
+        duration: -parseInt((start.getTime() / 1000), 10),
+        description: timeEntry.description || "",
+        pid: timeEntry.pid || timeEntry.projectId || null,
+        tid: timeEntry.tid || null,
+        wid: timeEntry.wid || TogglButton.$user.default_wid,
+        tags: timeEntry.tags || null,
+        billable: timeEntry.billable || false,
+        created_with: timeEntry.createdWith || TogglButton.$fullVersion,
+        duronly: timeEntry.duronly || !TogglButton.$user.store_start_and_stop_time
       };
 
-    if (timeEntry.projectName !== null && !entry.time_entry.pid) {
+    if (timeEntry.projectName !== null && !entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);
-      entry.time_entry.pid = project && project.id;
-      entry.time_entry.billable = project && project.billable;
+      entry.pid = project && project.id;
+      entry.billable = project && project.billable;
     }
 
     // set Default project if needed
-    if (!entry.time_entry.pid && !!defaultProject) {
+    if (!entry.pid && !!defaultProject) {
       project = TogglButton.findProjectByPid(parseInt(defaultProject, 10));
-      entry.time_entry.pid = project && project.id;
-      entry.time_entry.billable = project && project.billable;
+      entry.pid = project && project.id;
+      entry.billable = project && project.billable;
     }
 
-    TogglButton.ajax('/time_entries', {
+    TogglButton.ajax('/' + entry.wid + '/time_entries', {
       method: 'POST',
       payload: entry,
+      baseUrl: TogglButton.$ApiV9Url,
       onLoad: function (xhr) {
-        var responseData,
-          hasTasks = !!TogglButton.$user && !!TogglButton.$user.projectTaskList,
+        var hasTasks = !!TogglButton.$user && !!TogglButton.$user.projectTaskList,
           success = (xhr.status === 200);
         try {
           if (success) {
-            responseData = JSON.parse(xhr.responseText);
-            entry = responseData && responseData.data;
+            entry = JSON.parse(xhr.responseText);
             TogglButton.localEntry = entry;
             TogglButton.updateTriggers(entry);
             GA.reportEvent(timeEntry.type, timeEntry.service);
@@ -555,17 +554,16 @@ TogglButton = {
     if (!TogglButton.$curEntry) { return; }
 
     entry = {
-      time_entry: {
-        duration: pomodoroDuration
-      }
+      duration: pomodoroDuration
     };
 
-    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+    TogglButton.ajax('/' + TogglButton.$curEntry.wid + '/time_entries/' + TogglButton.$curEntry.id, {
       method: 'PUT',
       payload: entry,
+      baseUrl: TogglButton.$ApiV9Url,
       onLoad: function (xhr) {
         if (xhr.status === 200) {
-          TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
+          TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText);
           TogglButton.updateEntriesDb();
           TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
@@ -597,19 +595,19 @@ TogglButton = {
   stopTimeEntry: function (timeEntry, sendResponse, cb) {
     if (!TogglButton.$curEntry) { return; }
     var stopTime = timeEntry.stopDate || new Date(),
-      startTime = new Date(-TogglButton.$curEntry.duration * 1000);
+      startTime = new Date(-TogglButton.$curEntry.duration * 1000),
+      entry = {
+        stop: stopTime.toISOString(),
+        duration: Math.floor(((stopTime - startTime) / 1000))
+      };
 
-    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+    TogglButton.ajax('/' + TogglButton.$curEntry.wid + '/time_entries/' + TogglButton.$curEntry.id, {
       method: 'PUT',
-      payload: {
-        time_entry: {
-          stop: stopTime.toISOString(),
-          duration: Math.floor(((stopTime - startTime) / 1000))
-        }
-      },
+      baseUrl: TogglButton.$ApiV9Url,
+      payload: entry,
       onLoad: function (xhr) {
         if (xhr.status === 200) {
-          TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText).data;
+          TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText);
           TogglButton.updateEntriesDb();
           TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
@@ -710,25 +708,22 @@ TogglButton = {
     var entry, error = "";
     if (!TogglButton.$curEntry) { return; }
     entry = {
-      time_entry: {
-        description: timeEntry.description,
-        pid: timeEntry.pid,
-        tags: timeEntry.tags,
-        tid: timeEntry.tid,
-        billable: timeEntry.billable
-      }
+      description: timeEntry.description,
+      pid: timeEntry.pid,
+      tags: timeEntry.tags,
+      tid: timeEntry.tid,
+      billable: timeEntry.billable
     };
 
-    TogglButton.ajax("/time_entries/" + TogglButton.$curEntry.id, {
+    TogglButton.ajax('/' + TogglButton.$curEntry.wid + '/time_entries/' + TogglButton.$curEntry.id, {
       method: 'PUT',
       payload: entry,
+      baseUrl: TogglButton.$ApiV9Url,
       onLoad: function (xhr) {
-        var responseData,
-          success = (xhr.status === 200);
+        var success = (xhr.status === 200);
         try {
           if (success) {
-            responseData = JSON.parse(xhr.responseText);
-            entry = responseData && responseData.data;
+            entry = JSON.parse(xhr.responseText);
             // Not using TogglButton.updateCurrent as the time is not changed
             TogglButton.$curEntry = entry;
             TogglButton.setBrowserAction(entry);

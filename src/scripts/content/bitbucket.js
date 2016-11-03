@@ -10,7 +10,7 @@ togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
 
   description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.textContent + " " + description;
+    description = numElem.textContent.trim() + " " + description;
   }
 
   link = togglbutton.createTimerLink({

@@ -14,7 +14,7 @@ togglbutton.render('.detail-title-wrapper:not(.toggl)', {observe: true}, functio
     className: 'taiga',
     buttonType: 'minimal',
     projectName: projectElem.textContent,
-    description: refElem.textContent + ' ' + titleElem.textContent
+    description: refElem.textContent.trim() + ' ' + titleElem.textContent
   });
 
   elem.insertBefore(link, $('.detail-title-text', elem));
@@ -49,7 +49,7 @@ togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (el
     className: 'taiga',
     buttonType: 'minimal',
     projectName: projectElem.textContent,
-    description: refElem.textContent + ' ' + taskElem.textContent
+    description: refElem.textContent.trim() + ' ' + taskElem.textContent
   });
 
   elem.insertBefore(link, $('a', elem));
@@ -83,7 +83,7 @@ togglbutton.render('.taskboard .card-title:not(.toggl)', {observe: true}, functi
   link = togglbutton.createTimerLink({
     className: 'taiga',
     buttonType: 'minimal',
-    description: refElem.textContent + ' ' + titleElem.textContent,
+    description: refElem.textContent.trim() + ' ' + titleElem.textContent,
     projectName: projectElem.textContent
   });
 
@@ -98,13 +98,11 @@ togglbutton.render('.issues-table .row:not(.toggl)', {observe: true}, function (
     refElem = $('a > span:nth-child(1)', elem),
     taskElem = $('a > span:nth-child(2)', elem);
 
-  console.log(projectElem, refElem, taskElem)
-
   link = togglbutton.createTimerLink({
     className: 'taiga',
     buttonType: 'minimal',
     projectName: projectElem.textContent,
-    description: refElem.textContent + ' ' + taskElem.textContent
+    description: refElem.textContent.trim() + ' ' + taskElem.textContent
   });
 
   elem.insertBefore(link, $('.subject', elem));

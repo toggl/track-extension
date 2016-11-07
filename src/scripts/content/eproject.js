@@ -10,11 +10,11 @@ togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, fun
     projectElem = $('.project a span.label', elem),
     trackedContainer = createTag('span', 'toggl-tracked'),
     trackedElem = $('.task-id', elem),
-    project = projectElem.innerText.trim();
+    project = projectElem.textContent.trim();
 
   description = titleElem.textContent.trim();
   if (numElem !== null) {
-    description = numElem.innerText + ' ' + description;
+    description = numElem.textContent + ' ' + description;
   }
 
   link = togglbutton.createTimerLink({
@@ -58,7 +58,7 @@ togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', 
   }
 
   if (numElem !== null) {
-    description = 'Task: #' + numElem.innerText.trim() + ' ' + description.trim();
+    description = 'Task: #' + numElem.textContent.trim() + ' ' + description.trim();
     description = description.trim();
   }
 
@@ -128,7 +128,7 @@ togglbutton.render('.home .table-recent-tasks tr:not(.toggl)', {observe: true}, 
   }
 
   if (numElem !== null) {
-    description = 'Task: #' + numElem.innerText.trim() + ' ' + description.trim();
+    description = 'Task: #' + numElem.textContent.trim() + ' ' + description.trim();
     description = description.trim();
   }
 

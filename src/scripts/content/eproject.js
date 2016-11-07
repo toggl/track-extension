@@ -27,9 +27,11 @@ togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, fun
   $('.toggl-timer').appendChild(link);
 
   // Add Tracked time text
+  /*
   duration = togglbutton.calculateTrackedTime(description.toLowerCase());
   trackedContainer.innerHTML = duration;
   trackedElem.parentNode.insertBefore(trackedContainer, trackedElem);
+  */
 });
 
 // Tasks listing page
@@ -96,10 +98,11 @@ togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', 
   container.insertBefore(spanTag, container.lastChild);
 
   // Add Tracked time text @bug stringToLower issue
+  /*
   duration = togglbutton.calculateTrackedTime(description.toLowerCase());
   trackedContainer.innerHTML = duration;
   container.insertBefore(trackedContainer, trackedElem);
-
+  */
 });
 
 // Home page recent tasks table
@@ -164,8 +167,9 @@ togglbutton.render('.home .table-recent-tasks tr:not(.toggl)', {observe: true}, 
   link.setAttribute("title", "Toggl Timer");
   spanTag.appendChild(link);
   container.insertBefore(spanTag, container.lastChild);
-
+  /*
   duration = togglbutton.calculateTrackedTime(description.toLowerCase());
   trackedContainer.innerHTML = duration;
   container.insertBefore(trackedContainer, trackedElem);
+  */
 });

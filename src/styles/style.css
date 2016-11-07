@@ -11,7 +11,7 @@
 }
 
 #toggl-button-edit-form input {
-  background-image: none !important;
+  bckground-image: none !important;
   background-color: #ffffff !important;
 }
 
@@ -763,31 +763,39 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.taiga {
   margin: 13px 0 0 4px;
   text-decoration: none;
-}
-
-.backlog-table-body .user-story-name a.toggl-button.taiga-backlog {
-  margin-right: .5rem;
-  text-decoration: none;
   flex-grow: 0;
 }
 
-.us-detail .us-title a.toggl-button {
+.backlog-table-body .user-story-name a.toggl-button.taiga {
   margin-top: 0;
   margin-right: .5rem;
   text-decoration: none;
   flex-grow: 0;
 }
 
-.epic-row a.toggl-button,
-.card-title a.toggl-button {
-    margin: 0 .25rem 0 0;
-    position: relative;
-    top: 3px;
+.detail-title-wrapper a.toggl-button.taiga {
+  margin:  8px 5px 0px 4px;
+  text-decoration: none;
+  flex-grow: 0;
 }
 
-.column-fold .card-title  a.toggl-button.active {
-    opacity: 0;
-    display: none !important;
+.epic-row a.toggl-button,
+.card-title a.toggl-button {
+  margin: 0 .25rem 0 0;
+  position: relative;
+  top: 3px;
+}
+
+.column-fold .card-title a.toggl-button.taiga.active {
+  opacity: 0;
+  display: none !important;
+}
+
+.issues-table .row a.toggl-button.taiga {
+  margin-top: 0;
+  margin-right: .5rem;
+  text-decoration: none;
+  flex-grow: 0;
 }
 
 /********* AXOSOFT *********/

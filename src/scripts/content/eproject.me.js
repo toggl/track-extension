@@ -4,12 +4,10 @@
 
 // Single task page
 togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, function (elem) {
-  var link, description, duration,
+  var link, description,
     numElem = $('.task-id', elem),
     titleElem = $('.entry-title', elem),
     projectElem = $('.project a span.label', elem),
-    trackedContainer = createTag('span', 'toggl-tracked'),
-    trackedElem = $('.task-id', elem),
     project = projectElem.textContent.trim();
 
   description = titleElem.textContent.trim();
@@ -28,13 +26,11 @@ togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, fun
 
 // Tasks listing page
 togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', {observe: true}, function (elem) {
-  var link, spanTag, projectName, duration, description,
+  var link, spanTag, projectName, description,
     className = 'huh',
     numElem = $('.task-id', elem),
     container = $('.times', elem),
-    titleElem = $('.entry-title a span', elem),
-    trackedContainer = createTag('span', 'toggl-tracked'),
-    trackedElem = $('.toggl-span', elem);
+    titleElem = $('.entry-title a span', elem);
 
   if (container === null) {
     return;
@@ -91,13 +87,11 @@ togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', 
 
 // Home page recent tasks table
 togglbutton.render('.home .table-recent-tasks tr:not(.toggl)', {observe: true}, function (elem) {
-  var link, spanTag, projectName, duration, description,
+  var link, spanTag, projectName, description,
     className = 'huh',
     numElem = $('.task-id', elem),
     container = $('.actions', elem),
-    titleElem = $('.task-title', elem),
-    trackedContainer = createTag('span', 'toggl-tracked'),
-    trackedElem = $('.toggl-span', elem);
+    titleElem = $('.task-title', elem);
 
   if (container === null) {
     return;

@@ -7,6 +7,7 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   Db = chrome.extension.getBackgroundPage().Db,
   FF = navigator.userAgent.indexOf("Chrome") === -1,
   w = window.innerWidth,
+  timer,
   TogglOrigins = chrome.extension.getBackgroundPage().TogglOrigins,
   replaceContent = function (parentSelector, html) {
     var container = document.querySelector(parentSelector);
@@ -654,6 +655,21 @@ document.addEventListener('DOMContentLoaded', function (e) {
       document.querySelector(".tab-1").style.width = w + "px";
       document.querySelector(".tab-2").style.width = w + "px";
     };
+  }
+
+  if (!TogglOrigins) {
+    timer = setInterval(
+      function () {
+        if (!TogglOrigins) {
+          TogglOrigins = chrome.extension.getBackgroundPage().TogglOrigins;
+        } else {
+          clearInterval(timer);
+          timer = null;
+          Settings.loadSitesIntoList();
+        }
+      },
+      250
+    );
   }
 
 });

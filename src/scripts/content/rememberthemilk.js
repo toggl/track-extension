@@ -2,24 +2,26 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.b-eb-Uk-Vj:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    project = function () {
-      var p = $('.zl-Uk-hl .zl-Uk-xf .zl-Uk-Tl');
-      if (!p) {
-        return;
-      }
+togglbutton.render('.b-db-Lm:not(.toggl)', {observe: true}, function (elem) {
+    // Execute main function.
+    injectTogglButton();
 
-      return $('.zl-Uk-hl .zl-Uk-xf .zl-Uk-Tl').textContent;
-    },
-    description = $('.b-eb-Uk-Tl', elem).textContent.trim();
+    // Inject toggl button to each task.
+    function injectTogglButton() {
+        elem.querySelector('.b-db-Lm-xn').appendChild(createTogglButton());
+    }
 
-  link = togglbutton.createTimerLink({
-    className: 'rememberthemilk',
-    description: description,
-    projectName: project,
-    buttonType: 'minimal'
-  });
+    // Create and return toggl button's instance.
+    function createTogglButton() {
+        return togglbutton.createTimerLink({
+            className: 'rememberthemilk',
+            description: getDescription(),
+            buttonType: 'minimal'
+        });
+    }
 
-  elem.appendChild(link);
+    // Get task's description.
+    function getDescription() {
+        return elem.querySelector('.b-db-Lm-xn > .b-db-Lm-Nj').textContent.trim();
+    }
 });

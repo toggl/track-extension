@@ -508,6 +508,7 @@ TogglButton = {
       method: 'GET',
       token: ' ',
       baseUrl: '/',
+      mime: true,
       onLoad: function (xhr) {
         if (xhr.status === 200) {
           window.TogglOrigins = JSON.parse(xhr.responseText);
@@ -537,6 +538,9 @@ TogglButton = {
     }
     if (credentials) {
       xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + ':' + credentials.password));
+    }
+    if (opts.mime) {
+      xhr.overrideMimeType("application/json");
     }
     xhr.send(JSON.stringify(opts.payload));
   },

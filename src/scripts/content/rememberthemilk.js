@@ -15,7 +15,8 @@ togglbutton.render('.b-db-Lm:not(.toggl)', {observe: true}, function (elem) {
     function createTogglButton() {
         return togglbutton.createTimerLink({
             className: 'rememberthemilk',
-            description: getDescription(),
+            description: getDescription,
+            projectName: getProject,
             buttonType: 'minimal'
         });
     }
@@ -23,5 +24,14 @@ togglbutton.render('.b-db-Lm:not(.toggl)', {observe: true}, function (elem) {
     // Get task's description.
     function getDescription() {
         return elem.querySelector('.b-db-Lm-xn > .b-db-Lm-Nj').textContent.trim();
+    }
+
+    // Get project name if in project task view
+    function getProject() {
+        var p = $('.b-Mj.b-wd .b-f-n');
+        if (!p) {
+            return;
+        }
+        return p.textContent;
     }
 });

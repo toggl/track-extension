@@ -374,14 +374,14 @@ TogglButton = {
 
     if (timeEntry.projectName !== null && !entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);
-      entry.pid = project && project.id;
+      entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
     }
 
     // set Default project if needed
     if (!entry.pid && !!defaultProject) {
       project = TogglButton.findProjectByPid(parseInt(defaultProject, 10));
-      entry.pid = project && project.id;
+      entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
     }
 
@@ -713,9 +713,9 @@ TogglButton = {
     if (!TogglButton.$curEntry) { return; }
     entry = {
       description: timeEntry.description,
-      pid: timeEntry.pid,
+      pid: timeEntry.pid || null,
       tags: timeEntry.tags,
-      tid: timeEntry.tid,
+      tid: timeEntry.tid || null,
       billable: timeEntry.billable
     };
 

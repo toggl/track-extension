@@ -67,6 +67,10 @@
     "url": "*://*.cloudes.me/*",
     "name": "Cloudes.me"
   },
+  "clubhouse.io": {
+    "url": "*://app.clubhouse.io/*",
+    "name": "Clubhouse"
+  },
   "codeable.io": {
     "url": "*://app.codeable.io/*",
     "name": "Codeable"

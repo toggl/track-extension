@@ -1143,3 +1143,9 @@ only screen and (min-resolution: 192dpi) {
   top: 5px;
   position: relative;
 }
+
+/********* CLUBHOUSE *********/
+.toggl-button.clubhouse {
+  margin-left: 3px;
+  padding-left: 27px;
+}

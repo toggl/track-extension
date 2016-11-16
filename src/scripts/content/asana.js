@@ -3,12 +3,12 @@
 
 'use strict';
 
-togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe: true}, function (elem) {
 
   var link, descFunc, projectFunc,
-    container = $('.sticky-view-placeholder', elem),
-    description = $('#details_property_sheet_title', elem),
-    project = $('#details_pane_project_tokenizer .token_name', elem);
+    container = $('.SingleTaskTitleRow', elem),
+    description = $('.SingleTaskTitleRow .simpleTextarea', elem),
+    project = $('.TaskProjectPill-projectName div', elem);
 
   descFunc = function () {
     return !!description ? description.value : "";
@@ -24,5 +24,5 @@ togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (
     projectName: projectFunc
   });
 
-  container.parentNode.insertBefore(link, container.nextSibling);
+  container.after(link);
 });

@@ -5,7 +5,7 @@
       "short-version": "1015",
       "date": "November 16th 2016",
       "rows": [
-        "Added support for clubhouse.io",
+        "Added support for <a href='https://clubhouse.io' target='_blank'>clubhouse.io</a>",
         "Text trim fixed for Bitbucket, Fresdesk and Remember The Milk",
         "Added more place to show start timer link in eproject.me",
         "Fixed Settings permissions tab empty issue",

@@ -353,13 +353,17 @@ only screen and (min-resolution: 192dpi) {
 }
 
 /********* ASANA *********/
-.toggl-button.asana {
-  margin-left: 38px;
+.toggl-button.asana,
+.toggl-button.asana-new {
+  margin-left: 68px;
   margin-bottom: 5px;
   color: #596573;
   line-height: 22px;
   font-size: 12px;
   font-weight: 600;
+}
+.toggl-button.asana-new {
+  margin-left: 38px;
 }
 
 /********* PODIO *********/

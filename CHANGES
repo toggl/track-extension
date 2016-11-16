@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "1.0.14",
+      "rows": [
+        "Added support for clubhouse.io",
+        "Text trim fixed for Bitbucket, Fresdesk and Remember The Milk",
+        "Added more place to show start timer link in eproject.me",
+        "Fixed Settings permissions tab empty issue",s
+        "Updated time entry requests to API v9"
+      ]
+    },
+    {
       "version": "1.0.13",
       "rows": [
         "Fixed github integration",

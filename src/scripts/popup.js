@@ -32,6 +32,7 @@ var PopUp = {
   $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  $entries: document.querySelector(".entries-list"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {
     var p, dom;
@@ -71,6 +72,7 @@ var PopUp = {
       if (!PopUp.$header.getAttribute("data-view")) {
         PopUp.switchView(PopUp.$menuView);
       }
+      PopUp.renderEntriesList();
     } else {
       localStorage.setItem('latestStoppedEntry', '');
       PopUp.switchView(PopUp.$loginView);
@@ -138,6 +140,132 @@ var PopUp = {
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
 
     PopUp.setTagIcon(data.tags);
+  },
+
+  renderEntriesList: function () {
+    var html = document.createElement("div"),
+      entries = TogglButton.$user.time_entries,
+      listEntries = [],
+      visibleIcons = "",
+      joinedTags,
+      te,
+      iconDiv,
+      p,
+      pname,
+      pstyle,
+      elem,
+      ul,
+      li,
+      t,
+      b,
+      i,
+      count = 0,
+      checkUnique;
+
+    if (entries.length < 1) {
+      return;
+    }
+
+    checkUnique = function (te, listEntries) {
+      var j;
+      if (listEntries.length > 0) {
+        for (j = 0; j < listEntries.length; j++) {
+          if (listEntries[j].description === te.description
+              && listEntries[j].pid === te.pid) {
+            return false;
+          }
+        }
+      }
+      listEntries.push(te);
+      return te;
+    };
+
+    elem = document.createElement("p");
+    elem.textContent = "Recent entries";
+    html.appendChild(elem);
+
+    ul = document.createElement("ul");
+
+    for (i = entries.length - 1; i >= 0; i--) {
+      if (count >= 5) {
+        break;
+      }
+      te = checkUnique(entries[i], listEntries);
+      if (!!te && te.duration >= 0) {
+
+        visibleIcons = "";
+        p = TogglButton.findProjectByPid(te.pid);
+        if (!!p) {
+          pname = p.name;
+          pstyle = "background-color: " + p.hex_color + ";";
+          p = document.createElement("div");
+          p.className = "tb-project-bullet project-color";
+          p.setAttribute("style", pstyle);
+        } else {
+          p = false;
+        }
+
+        t = !!te.tags && te.tags.length;
+        joinedTags = t ? te.tags.join(", ") : "";
+
+        t = t ? "tag-icon-visible" : "";
+        b = !!te.billable ? "billable-icon-visible" : "";
+        visibleIcons = t + " " + b;
+
+        li = document.createElement("li");
+        li.setAttribute('data-id', i);
+
+        // Description
+        elem = document.createElement("div");
+        elem.className = "te-desc";
+        elem.setAttribute("title", te.description);
+        elem.textContent = te.description || "(no description)";
+        li.appendChild(elem);
+
+        // Project bullet and name
+        elem = document.createElement("div");
+        elem.className = "te-proj";
+        if (!!p) {
+          elem.appendChild(p);
+          elem.appendChild(document.createTextNode(pname));
+        }
+        li.appendChild(elem);
+
+        // Continue Button
+        elem = document.createElement("div");
+        elem.className = "te-continue";
+        elem.textContent = "Continue";
+        li.appendChild(elem);
+
+        // Icons
+        elem = document.createElement("div");
+        elem.className = "te-icons " + visibleIcons;
+
+        iconDiv = document.createElement("div");
+        iconDiv.className = "tag-icon";
+        iconDiv.setAttribute("title", joinedTags);
+        elem.appendChild(iconDiv);
+
+        iconDiv = document.createElement("div");
+        iconDiv.className = "billable-icon";
+        iconDiv.setAttribute("title", "billable");
+        elem.appendChild(iconDiv);
+        li.appendChild(elem);
+
+        ul.appendChild(li);
+        count++;
+      }
+    }
+
+    html.appendChild(ul);
+
+    // Remove old html
+    while (PopUp.$entries.firstChild) {
+      PopUp.$entries.removeChild(PopUp.$entries.firstChild);
+    }
+
+
+    PopUp.$entries.appendChild(html);
   },
 
   setupIcons: function (data) {
@@ -375,5 +503,16 @@ document.addEventListener('DOMContentLoaded', function () {
       e.stopPropagation();
       e.preventDefault();
     }
+  });
+
+  PopUp.$entries.addEventListener('click', function (e) {
+    var request = {
+      type: "list-continue",
+      respond: true,
+      service: "dropdown-list",
+      data: TogglButton.$user.time_entries[e.target.parentNode.getAttribute("data-id")]
+    };
+
+    PopUp.sendMessage(request);
   });
 });

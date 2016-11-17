@@ -255,7 +255,7 @@ only screen and (min-resolution: 2dppx) {
   list-style: none;
   height: 29px;
 }
-#menu li:not(.has-resume):hover {
+#menu li:not(.has-resume):not(.entries-list):hover {
   background-color: #e6e6e6;
   color: #222;
 }
@@ -337,19 +337,21 @@ hr {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAUCAMAAACDMFxkAAAAAXNSR0IArs4c6QAAAFpQTFRFAAAA////qqqqp6enqqqqp6enqKioo6OjpqampaWlpKSkpaWlo6OjpKSkpKSko6OjpKSko6OjpKSkpKSkpKSkpKSko6OjpKSkpKSkpKSkpKSkpKSko6Ojo6OjwiB/AwAAAB10Uk5TAAEPGhsgJicrR3t/gJ+osrPDxMrS1Nzd5ebo8fVWC5UqAAAAaElEQVQI13VPRw7AMAyiTle6R9LN/7/ZdCpSVU5Y2IABh67FA/JDpTCkyQVQI08MChWtFtGWFVZGx1rEFRtj3IYNlyy9DMLe3UylDhwPdDm7qVeXlGYL6yc/4eabeRFe8F2nkN++70M7wSMIvPS86/IAAAAASUVORK5CYII=');
 }
 
-.tracking.tag-icon-visible .tag-icon,
-.tracking.billable-icon-visible .billable-icon {
+.timer.tag-icon-visible .tag-icon,
+.timer.billable-icon-visible .billable-icon,
+.tag-icon-visible .tag-icon,
+.billable-icon-visible .billable-icon {
   display: block;
 }
 
 /* Only billable icon visible */
 .timer.billable-icon-visible:not(.tag-icon-visible) .edit-button {
-  width: 120px;
+  width: 130px;
 }
 
 /* Only tag icon visible */
 .timer.tag-icon-visible:not(.billable-icon-visible) .edit-button {
-  width: 117px;
+  width: 127px;
 }
 
 .timer.tag-icon-visible:not(.billable-icon-visible) .tag-icon {
@@ -358,7 +360,7 @@ hr {
 
 /* Both icons visible */
 .timer.tag-icon-visible.billable-icon-visible .edit-button {
-  width: 100px;
+  width: 110px;
 }
 
 .stop-button {
@@ -394,7 +396,7 @@ hr {
   right: 3px;
   top: 6px;
   background-color: #ec0000;
-  width: 63px;
+  width: 60px;
 }
 
 .tracking .stop-button {
@@ -408,8 +410,8 @@ hr {
 }
 
 .tracking .edit-button{
-  width: 140px;
-  padding-left: 30px;
+  width: 150px;
+  padding-left: 23px;
   display: block;
   padding-right: 4px;
 }
@@ -632,6 +634,10 @@ hr {
   display: none;
 }
 
+#menu .tb-project-bullet {
+  margin-left: 10px;
+}
+
 /** Billable flag **/
 
 #toggl-button-edit-form .tb-billable {
@@ -690,4 +696,86 @@ hr {
 #toggl-button-edit-form .tb-billable:focus .toggl-button-billable-flag {
   border: 1px solid rgb(83, 183, 253);
   box-shadow: 0px 0px 5px rgb(26, 153, 243);
+}
+
+/** Time Entries list **/
+
+#menu .entries-list {
+  height: auto;
+}
+
+.entries-list p {
+  color: #a3a3a3;
+  font-weight: 200;
+  padding-left: 5px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.entries-list ul {
+  margin-top: 15px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#menu .entries-list ul li {
+  border-top: 1px solid #eceded;
+  height: 45px;
+  width: 100%;
+  float: left;
+  position: relative;
+}
+
+#menu .entries-list ul li .te-desc, #menu .entries-list ul li .te-proj {
+  float: left;
+  position: absolute;
+  left: 10px;
+  right: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 200;
+}
+
+#menu .entries-list ul li .te-desc {
+  top: 5px;
+}
+
+#menu .entries-list ul li .te-proj {
+  bottom: 5px;
+  color: #a3a3a3;
+  padding-left: 13px;
+}
+
+#menu .entries-list ul li .te-icons {
+  float: right;
+  position: relative;
+}
+
+#menu .entries-list ul li .te-icons  > div {
+  padding-top: 15px;
+}
+
+#menu .entries-list .tb-project-bullet {
+  margin: 4px 0 3px -13px;
+}
+
+#menu .te-continue {
+  background-color: #4bc800;
+  width: 0;
+  transition:width 200ms ease-in-out;
+  height: 45px;
+  line-height: 45px;
+  color: #fff;
+  text-align: center;
+  float: right;
+  position: relative;
+  cursor: pointer;
+}
+
+#menu .entries-list ul li:hover .te-continue {
+  width: 65px;
+}
+
+#menu .entries-list ul li:hover .te-icons {
+  background-color: #e6e6e6;
 }

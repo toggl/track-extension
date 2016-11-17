@@ -160,6 +160,10 @@ var PopUp = {
       count = 0,
       checkUnique;
 
+    if (entries.length < 1) {
+      return;
+    }
+
     checkUnique = function (te, listEntries) {
       var j;
       if (listEntries.length > 0) {
@@ -179,9 +183,6 @@ var PopUp = {
     html.appendChild(elem);
 
     ul = document.createElement("ul");
-    if (entries.length < 5) {
-      return;
-    }
 
     for (i = entries.length - 1; i >= 0; i--) {
       if (count >= 5) {

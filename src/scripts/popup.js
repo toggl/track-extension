@@ -240,12 +240,12 @@ var PopUp = {
         elem.className = "te-icons " + visibleIcons;
 
         iconDiv = document.createElement("div");
-        iconDiv.className = "tag-icons";
+        iconDiv.className = "tag-icon";
         iconDiv.setAttribute("title", joinedTags);
         elem.appendChild(iconDiv);
 
         iconDiv = document.createElement("div");
-        iconDiv.className = "billable-icons";
+        iconDiv.className = "billable-icon";
         iconDiv.setAttribute("title", "billable");
         elem.appendChild(iconDiv);
         li.appendChild(elem);

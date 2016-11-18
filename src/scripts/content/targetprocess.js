@@ -61,6 +61,6 @@ togglbutton.render('.tau-list-line:not(.toggl)', {observe: true}, function (elem
     buttonType:  'minimal'
   });
 
-  buttonPlaceholder = $('.tau-list-state_full_length-cell', elem);
+  buttonPlaceholder = $('.tau-board-unit_type_entity-name', elem);
   buttonPlaceholder.insertBefore(link, buttonPlaceholder.firstChild);
 });

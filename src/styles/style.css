@@ -1148,6 +1148,11 @@ only screen and (min-resolution: 192dpi) {
   position: relative;
 }
 
+.tau-list-line .tau-board-unit_type_entity-name .toggl-button.targetprocess {
+  top: 0;
+  margin-right: 5px;
+}
+
 /********* CLUBHOUSE *********/
 .toggl-button.clubhouse {
   margin-left: 3px;

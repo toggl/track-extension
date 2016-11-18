@@ -10,7 +10,7 @@ togglbutton.render('.case .content-top-toolbar .controls ul:not(.toggl)', { obse
     projectName = document.querySelector('title').textContent,
     liTag = document.createElement("li");
 
-  titleFunc = function() {
+  titleFunc = function () {
     var titleElem = document.querySelector('.content h1.title'),
       ticketNum = location.href.match(/case\/(\d+)/);
 

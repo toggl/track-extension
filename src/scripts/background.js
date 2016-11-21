@@ -376,7 +376,7 @@ TogglButton = {
       project = TogglButton.findProjectByName(timeEntry.projectName);
       entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
-      entry.wid = (project && project.wid) || timeEntry.wid;
+      entry.wid = (project && project.wid) || entry.wid;
     }
 
     // set Default project if needed
@@ -384,7 +384,7 @@ TogglButton = {
       project = TogglButton.findProjectByPid(parseInt(defaultProject, 10));
       entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
-      entry.wid = (project && project.wid) || timeEntry.wid;
+      entry.wid = (project && project.wid) || entry.wid;
     }
 
     TogglButton.ajax('/' + entry.wid + '/time_entries', {

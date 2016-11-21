@@ -376,6 +376,7 @@ TogglButton = {
       project = TogglButton.findProjectByName(timeEntry.projectName);
       entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
+      entry.wid = (project && project.wid) || timeEntry.wid;
     }
 
     // set Default project if needed
@@ -383,6 +384,7 @@ TogglButton = {
       project = TogglButton.findProjectByPid(parseInt(defaultProject, 10));
       entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
+      entry.wid = (project && project.wid) || timeEntry.wid;
     }
 
     TogglButton.ajax('/' + entry.wid + '/time_entries', {
@@ -709,17 +711,24 @@ TogglButton = {
   },
 
   updateTimeEntry: function (timeEntry, sendResponse) {
-    var entry, error = "";
+    var entry, error = "", project;
     if (!TogglButton.$curEntry) { return; }
     entry = {
       description: timeEntry.description,
       pid: timeEntry.pid || null,
       tags: timeEntry.tags,
       tid: timeEntry.tid || null,
-      billable: timeEntry.billable
+      billable: timeEntry.billable,
+      wid: TogglButton.$curEntry.wid
     };
 
-    TogglButton.ajax('/' + TogglButton.$curEntry.wid + '/time_entries/' + TogglButton.$curEntry.id, {
+    if (entry.pid) {
+      project = TogglButton.findProjectByPid(parseInt(entry.pid, 10));
+      entry.billable = (project && project.billable) || timeEntry.billable;
+      entry.wid = (project && project.wid);
+    }
+
+    TogglButton.ajax('/' + entry.wid + '/time_entries/' + TogglButton.$curEntry.id, {
       method: 'PUT',
       payload: entry,
       baseUrl: TogglButton.$ApiV9Url,

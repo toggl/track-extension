@@ -368,8 +368,7 @@ TogglButton = {
         wid: timeEntry.wid || TogglButton.$user.default_wid,
         tags: timeEntry.tags || null,
         billable: timeEntry.billable || false,
-        created_with: timeEntry.createdWith || TogglButton.$fullVersion,
-        duronly: timeEntry.duronly || !TogglButton.$user.store_start_and_stop_time
+        created_with: timeEntry.createdWith || TogglButton.$fullVersion
       };
 
     if (timeEntry.projectName !== null && !entry.pid) {

@@ -702,6 +702,7 @@ hr {
 
 #menu .entries-list {
   height: auto;
+  font-size: 12px;
 }
 
 .entries-list p {

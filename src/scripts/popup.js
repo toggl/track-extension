@@ -162,7 +162,7 @@ var PopUp = {
       count = 0,
       checkUnique;
 
-    if (entries.length < 1) {
+    if (!entries || entries.length < 1) {
       return;
     }
 

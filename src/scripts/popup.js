@@ -180,10 +180,6 @@ var PopUp = {
       return te;
     };
 
-    elem = document.createElement("p");
-    elem.textContent = "Recent entries";
-    html.appendChild(elem);
-
     ul = document.createElement("ul");
 
     for (i = entries.length - 1; i >= 0; i--) {
@@ -256,6 +252,13 @@ var PopUp = {
         count++;
       }
     }
+    if (count === 0) {
+      return;
+    }
+
+    elem = document.createElement("p");
+    elem.textContent = "Recent entries";
+    html.appendChild(elem);
 
     html.appendChild(ul);
 
@@ -263,7 +266,6 @@ var PopUp = {
     while (PopUp.$entries.firstChild) {
       PopUp.$entries.removeChild(PopUp.$entries.firstChild);
     }
-
 
     PopUp.$entries.appendChild(html);
   },

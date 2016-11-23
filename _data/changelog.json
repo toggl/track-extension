@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.0.16",
+      "short-version": "1016",
+      "date": "November 22nd 2016",
+      "rows": [
+        "Fixes for new Asana UI",
+        "Show list of 5 latest unique time entries",
+        "Fixed Start timer link placement in Targetprocess table view",
+        "Added support for <a href='https://www.desk.com/' target='_blank'>Desk.com</a>",
+        "Fixed workspace restriction issues when changing project",
+        "Fixed no start time saved issue"
+      ]
+    },
+    {
       "version": "1.0.15",
       "short-version": "1015",
       "date": "November 16th 2016",

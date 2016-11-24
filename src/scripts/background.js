@@ -358,18 +358,30 @@ TogglButton = {
     var project, start = new Date(),
       error = "",
       defaultProject = Db.get(TogglButton.$user.id + "-defaultProject"),
-      entry = {
-        start: start.toISOString(),
-        stop: null,
-        duration: -parseInt((start.getTime() / 1000), 10),
-        description: timeEntry.description || "",
-        pid: timeEntry.pid || timeEntry.projectId || null,
-        tid: timeEntry.tid || null,
-        wid: timeEntry.wid || TogglButton.$user.default_wid,
-        tags: timeEntry.tags || null,
-        billable: timeEntry.billable || false,
-        created_with: timeEntry.createdWith || TogglButton.$fullVersion
-      };
+      entry;
+
+    if (!timeEntry) {
+      sendResponse(
+        {
+          success: false,
+          type: "New Entry"
+        }
+      );
+      return;
+    }
+
+    entry = {
+      start: start.toISOString(),
+      stop: null,
+      duration: -parseInt((start.getTime() / 1000), 10),
+      description: timeEntry.description || "",
+      pid: timeEntry.pid || timeEntry.projectId || null,
+      tid: timeEntry.tid || null,
+      wid: timeEntry.wid || TogglButton.$user.default_wid,
+      tags: timeEntry.tags || null,
+      billable: timeEntry.billable || false,
+      created_with: timeEntry.createdWith || TogglButton.$fullVersion
+    };
 
     if (timeEntry.projectName !== null && !entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);

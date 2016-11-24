@@ -121,7 +121,7 @@ var togglbutton = {
           }
           togglbutton.renderTo(selector, renderer);
         } catch (e) {
-          chrome.runtime.sendMessage({type: 'error', stack: e.stack});
+          chrome.runtime.sendMessage({type: 'error', stack: e.stack, category: 'Content'});
         }
       }
     });

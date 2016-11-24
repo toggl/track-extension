@@ -1409,13 +1409,24 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        errorSource = request.stack.split("content/")[1];
-        if (!!errorSource) {
-          errorSource = errorSource.split(".js")[0];
+
+        if (debug) {
+          console.log(error);
+          console.log(request.category + " Script Error [" + errorSource + "]");
         } else {
-          errorSource = "Unknown";
+          if (request.category === "Content") {
+            errorSource = request.stack.split("content/")[1];
+            if (!!errorSource) {
+              errorSource = errorSource.split(".js")[0];
+            } else {
+              errorSource = "Unknown";
+            }
+
+            Bugsnag.notifyException(error, request.category + " Script Error [" + errorSource + "]");
+          } else {
+            report(error);
+          }
         }
-        Bugsnag.notifyException(error, "Content Script Error [" + errorSource + "]");
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();
       }

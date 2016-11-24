@@ -1360,7 +1360,7 @@ TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
-    var error;
+    var error, errorSource;
     try {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
@@ -1397,7 +1397,13 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
+        errorSource = request.stack.split("content/")[1];
+        if (!!errorSource) {
+          errorSource = errorSource.split(".js")[0];
+        } else {
+          errorSource = "Unknown";
+        }
+        Bugsnag.notifyException(error, "Content Script Error [" + errorSource + "]");
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();
       }

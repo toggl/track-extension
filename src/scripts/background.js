@@ -586,7 +586,7 @@ TogglButton = {
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs[0]) {
+              if (!!tabs && !!tabs[0]) {
                 chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
               }
             });
@@ -630,7 +630,7 @@ TogglButton = {
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs[0]) {
+              if (!!tabs && !!tabs[0]) {
                 chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
               }
             });
@@ -1000,7 +1000,7 @@ TogglButton = {
   refreshPage: function () {
     var domain;
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs[0]) {
+      if (!!tabs && !!tabs[0]) {
         domain = TogglButton.extractDomain(tabs[0].url);
         if (!!domain.file) {
           chrome.tabs.reload(tabs[0].id);
@@ -1011,11 +1011,11 @@ TogglButton = {
 
   refreshPageLogout: function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs[0]) {
+      if (!!tabs && !!tabs[0]) {
         chrome.tabs.executeScript(tabs[0].id, {
           "code": "!!document.querySelector('.toggl-button')"
         }, function (reload) {
-          if (!!reload[0]) {
+          if (!!reload && !!reload[0]) {
             chrome.tabs.reload(tabs[0].id);
           }
         });

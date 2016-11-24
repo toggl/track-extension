@@ -72,7 +72,7 @@ TogglButton = {
           if (xhr.status === 200) {
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
               try {
-                if (!!tabs[0]) {
+                if (!!tabs && !!tabs[0]) {
                   chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
                 }
               } catch (e) {

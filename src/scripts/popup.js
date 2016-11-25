@@ -397,8 +397,6 @@ var PopUp = {
     PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
     PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
 
-    PopUp.$billable = document.querySelector(".tb-billable");
-
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
     });
@@ -428,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
   try {
-
+    PopUp.$billable = document.querySelector(".tb-billable");
     PopUp.sendMessage(req);
     PopUp.showPage();
     PopUp.$editButton.addEventListener('click', function () {

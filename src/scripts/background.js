@@ -526,6 +526,9 @@ TogglButton = {
         if (xhr.status === 200) {
           window.TogglOrigins = JSON.parse(xhr.responseText);
         }
+      },
+      onError: function (xhr) {
+        report(xhr);
       }
     });
   },

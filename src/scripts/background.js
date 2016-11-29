@@ -1439,6 +1439,10 @@ TogglButton = {
   },
 
   tabUpdated: function (tabId, changeInfo, tab) {
+    if (!TogglButton.$user) {
+      TogglButton.setBrowserActionBadge();
+      return;
+    }
     if (changeInfo.status === "complete") {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins};
@@ -1494,7 +1498,9 @@ TogglButton = {
 
   extractDomain: function (url) {
     var domain, file;
-
+    if (!TogglButton.$user) {
+      return false;
+    }
     //find & remove protocol (http, ftp, etc.) and get domain
     if (url.indexOf("://") > -1) {
       domain = url.split('/')[2];

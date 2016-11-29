@@ -775,7 +775,7 @@ TogglButton = {
 
   setBrowserActionBadge: function () {
     var badge = "";
-    if (TogglButton.$user === null) {
+    if (!TogglButton.$user) {
       badge = "x";
       TogglButton.setBrowserAction(null);
     }
@@ -868,7 +868,7 @@ TogglButton = {
   },
 
   getEditForm: function () {
-    if (TogglButton.$user === null) {
+    if (!TogglButton.$user) {
       return "";
     }
     return TogglButton.$editForm

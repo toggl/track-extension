@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "1.0.17",
+      "rows": [
+        "Fixed permission list loading issues",
+        "Adde more error loggind",
+        "Disable start timer link functionality when no logged in"
+      ]
+    },
+    {
       "version": "1.0.16",
       "rows": [
         "Fixes for new Asana UI",

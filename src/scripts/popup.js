@@ -396,6 +396,7 @@ var PopUp = {
     /* Edit form events */
     PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
     PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
+    PopUp.$billable = document.querySelector(".tb-billable");
 
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
       PopUp.submitForm(this);
@@ -415,6 +416,29 @@ var PopUp = {
     PopUp.$billable.addEventListener('click', function () {
       this.classList.toggle("tb-checked");
     });
+
+    PopUp.$billable.addEventListener('keydown', function (e) {
+      var prevent = false;
+      if (e.code === "Space") {
+        prevent = true;
+        this.classList.toggle("tb-checked");
+      }
+
+      if (e.code === "ArrowLeft") {
+        prevent = true;
+        this.classList.toggle("tb-checked", false);
+      }
+
+      if (e.code === "ArrowRight") {
+        prevent = true;
+        this.classList.toggle("tb-checked", true);
+      }
+
+      if (prevent) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    });
   }
 };
 
@@ -426,7 +450,6 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
   try {
-    PopUp.$billable = document.querySelector(".tb-billable");
     PopUp.sendMessage(req);
     PopUp.showPage();
     PopUp.$editButton.addEventListener('click', function () {
@@ -486,29 +509,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector(".header .icon").addEventListener('click', function () {
       chrome.tabs.create({url: "https://toggl.com/app"});
-    });
-
-    PopUp.$billable.addEventListener('keydown', function (e) {
-      var prevent = false;
-      if (e.code === "Space") {
-        prevent = true;
-        this.classList.toggle("tb-checked");
-      }
-
-      if (e.code === "ArrowLeft") {
-        prevent = true;
-        this.classList.toggle("tb-checked", false);
-      }
-
-      if (e.code === "ArrowRight") {
-        prevent = true;
-        this.classList.toggle("tb-checked", true);
-      }
-
-      if (prevent) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
     });
 
     PopUp.$entries.addEventListener('click', function (e) {

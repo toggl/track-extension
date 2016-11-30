@@ -1446,7 +1446,7 @@ TogglButton = {
       TogglButton.setBrowserActionBadge();
       return;
     }
-    if (changeInfo.status === "complete") {
+    if (changeInfo.status === "complete" && tab.url.indexOf("chrome://") === -1) {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins};
 

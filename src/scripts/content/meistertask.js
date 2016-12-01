@@ -12,7 +12,14 @@ togglbutton.render('.js-box-wrapper:not(.toggl)', {observe: true}, function (ele
   tagFunc = function () {
     var index,
       tags = [],
-      tagItems = $('.js-box-wrapper .ui-tag', elem).children;
+      tagList = $('.js-box-wrapper .ui-tag', elem),
+      tagItems;
+
+    if (!tagList) {
+      return [];
+    }
+
+    tagItems = tagList.children;
 
     for (index in tagItems) {
       if (tagItems.hasOwnProperty(index)) {

@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "1.0.18",
+      "short-version": "1018",
+      "date": "December 2nd 2016",
+      "rows": [
+        "Fixed billable flag loading and saving issues",
+        "Fixed MeisterTask start timer issues",
+        "Fixed permission list loading issues",
+        "Added more error logging",
+        "Disable start timer link functionality when not logged in"
+      ]
+    },
+    {
       "version": "1.0.16",
       "short-version": "1016",
       "date": "November 22nd 2016",

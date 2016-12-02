@@ -738,7 +738,6 @@ TogglButton = {
 
     if (entry.pid) {
       project = TogglButton.findProjectByPid(parseInt(entry.pid, 10));
-      entry.billable = (project && project.billable) || timeEntry.billable;
       entry.wid = (project && project.wid);
     }
 

@@ -1,6 +1,13 @@
 {
   "versions": [
     {
+      "version": "1.0.18",
+      "rows": [
+        "Fixed billable flag loading issue",
+        "Fixed MeisterTask start timer issues"
+      ]
+    },
+    {
       "version": "1.0.17",
       "rows": [
         "Fixed permission list loading issues",

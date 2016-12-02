@@ -13,7 +13,7 @@
       "rows": [
         "Fixed permission list loading issues",
         "Added more error logging",
-        "Disable start timer link functionality when no logged in"
+        "Disable start timer link functionality when not logged in"
       ]
     },
     {

@@ -198,7 +198,7 @@ var Settings = {
 
       customs = Db.getAllOrigins();
       for (k in customs) {
-        if (customs.hasOwnProperty(k)) {
+        if (customs.hasOwnProperty(k) && !!TogglOrigins[customs[k]]) {
           li = document.createElement("li");
 
           dom = document.createElement("a");

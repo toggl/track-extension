@@ -495,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     if (!!parseInt(Db.get("show-permissions-info"), 10) && !Db.get("dont-show-permissions")) {
       document.querySelector(".guide-container").style.display = "block";
       document.querySelector(".guide > div[data-id='" + Db.get("show-permissions-info") + "']").style.display = "block";
+      document.querySelector(".guide button").setAttribute("data-id", Db.get("show-permissions-info"));
       Db.set("show-permissions-info", 0);
     }
 
@@ -665,7 +666,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       var disableChecked = document.querySelector("#disable-permission-notice").checked;
       Db.set("dont-show-permissions", disableChecked);
       document.querySelector(".guide-container").style.display = "none";
-      document.querySelector(".guide > div[data-id='" + Db.get("show-permissions-info") + "']").style.display = "none";
+      document.querySelector(".guide > div[data-id='" + e.target.getAttribute("data-id") + "']").style.display = "none";
     });
 
     if (FF) {

@@ -1575,7 +1575,7 @@ TogglButton = {
 
 };
 
-TogglButton.queue.push(TogglButton.loadOrigins);
+TogglButton.loadOrigins();
 TogglButton.queue.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();

@@ -52,3 +52,44 @@ togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe
 
   container.after(link);
 });
+
+// Board view
+togglbutton.render('.BoardCard.BoardColumn-item:not(.toggl)', {observe: true}, function (elem) {
+  if (!!$('.toggl-button', elem)) {
+    return;
+  }
+  var link,
+    container = $('.BoardCardMetadata-left', elem),
+    description = $('.BoardCard-name', elem).textContent,
+    project = $('#project_pane_header_name').textContent;
+
+  link = togglbutton.createTimerLink({
+    className: 'asana-board',
+    description: description,
+    projectName: project,
+    buttonType: 'minimal'
+  });
+
+  container.appendChild(link);
+});
+
+// Board task detail view
+togglbutton.render('.SingleTaskTitleRow:not(.toggl)', {observe: true}, function (elem) {
+  if (!!$('.toggl-button', elem)) {
+    return;
+  }
+  var link,
+    container = $('.SingleTaskPaneToolbar', elem.parentNode),
+    description = $('.SingleTaskTitleRow textarea', elem.parentNode).textContent,
+    project = $('.SingleTaskPane-projects .TaskProjectPill-projectName', elem.parentNode).textContent;
+
+  link = togglbutton.createTimerLink({
+    className: 'asana-board',
+    description: description,
+    projectName: project,
+    buttonType: 'minimal'
+  });
+
+  container.appendChild(link);
+});
+

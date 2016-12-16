@@ -365,6 +365,17 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.asana-new {
   margin-left: 38px;
 }
+.toggl-button.asana-board {
+  margin-top: 3px;
+  opacity: 0;
+}
+.BoardCard--hover .toggl-button.asana-board,
+.SingleTaskPaneToolbar .toggl-button.asana-board {
+  opacity: 1;
+}
+.SingleTaskPaneToolbar .toggl-button.asana-board {
+  margin-left: 8px;
+}
 
 /********* PODIO *********/
 .toggl-button.podio {

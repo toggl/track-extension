@@ -93,6 +93,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Overv][90]
   - [Clubhouse][91]
   - [Desk.com][92]
+  - [Backlog.jp][93]
 
 ## Installing from the Web Store
 
@@ -230,6 +231,7 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [90]: https://overv.io/
 [91]: https://clubhouse.io/
 [92]: https://www.desk.com/
+[93]: https://www.backlog.jp/
 
 [98]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [99]: https://github.com/toggl/toggl-button/pulls

@@ -2,8 +2,6 @@
 /*global $: false, document: false, togglbutton: false, window: false*/
 'use strict';
 
-console.info('Loaded Toggl Button');
-
 // Single task/issue/project in main view
 togglbutton.render('#layout-container:not(.toggl)', {observe: true}, function (elem) {
   var link,

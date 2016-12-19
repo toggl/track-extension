@@ -1,6 +1,33 @@
 {
   "versions": [
     {
+      "version": "1.0.18",
+      "rows": [
+        "Fixed billable flag loading issue",
+        "Fixed MeisterTask start timer issues",
+        "Fixed billable flag save issue"
+      ]
+    },
+    {
+      "version": "1.0.17",
+      "rows": [
+        "Fixed permission list loading issues",
+        "Added more error logging",
+        "Disable start timer link functionality when not logged in"
+      ]
+    },
+    {
+      "version": "1.0.16",
+      "rows": [
+        "Fixes for new Asana UI",
+        "Show list on 5 latest unique time entries",
+        "Fixed Start timer link placement in Targetprocess table view",
+        "Added support for desk.com",
+        "Fixed workspace restriction issues when changing project",
+        "Fixed no start time saved issue"
+      ]
+    },
+    {
       "version": "1.0.15",
       "rows": [
         "Added support for clubhouse.io",

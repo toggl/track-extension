@@ -40,42 +40,46 @@ var PopUp = {
       TogglButton = chrome.extension.getBackgroundPage().TogglButton;
     }
 
-    if (TogglButton.$user !== null) {
-      if (!PopUp.editFormAdded) {
-        dom = document.createElement("div");
-        dom.innerHTML = TogglButton.getEditForm();
-        PopUp.$editView.appendChild(dom.firstChild);
-        PopUp.addEditEvents();
-        PopUp.editFormAdded = true;
-      }
-      document.querySelector(".header .icon").setAttribute("title", "Open toggl.com - " + TogglButton.$user.email);
-      PopUp.$timerRow.classList.remove("has-resume");
-      if (TogglButton.$curEntry === null) {
-        PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
-        PopUp.$togglButton.textContent = 'Start new';
-        PopUp.$togglButton.parentNode.classList.remove('tracking');
-        PopUp.$projectBullet.className = "tb-project-bullet";
-        if (TogglButton.$latestStoppedEntry) {
-          p = TogglButton.findProjectByPid(TogglButton.$latestStoppedEntry.pid);
-          p = (!!p) ? " - " + p.name : "";
-          PopUp.$resumeButton.title = TogglButton.$latestStoppedEntry.description + p;
-          PopUp.$timerRow.classList.add("has-resume");
-          localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
-          PopUp.$resumeButton.setAttribute('data-event', 'resume');
+    try {
+      if (TogglButton.$user !== null) {
+        if (!PopUp.editFormAdded) {
+          dom = document.createElement("div");
+          dom.innerHTML = TogglButton.getEditForm();
+          PopUp.$editView.appendChild(dom.firstChild);
+          PopUp.addEditEvents();
+          PopUp.editFormAdded = true;
         }
+        document.querySelector(".header .icon").setAttribute("title", "Open toggl.com - " + TogglButton.$user.email);
+        PopUp.$timerRow.classList.remove("has-resume");
+        if (TogglButton.$curEntry === null) {
+          PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
+          PopUp.$togglButton.textContent = 'Start new';
+          PopUp.$togglButton.parentNode.classList.remove('tracking');
+          PopUp.$projectBullet.className = "tb-project-bullet";
+          if (TogglButton.$latestStoppedEntry) {
+            p = TogglButton.findProjectByPid(TogglButton.$latestStoppedEntry.pid);
+            p = (!!p) ? " - " + p.name : "";
+            PopUp.$resumeButton.title = TogglButton.$latestStoppedEntry.description + p;
+            PopUp.$timerRow.classList.add("has-resume");
+            localStorage.setItem('latestStoppedEntry', JSON.stringify(TogglButton.$latestStoppedEntry));
+            PopUp.$resumeButton.setAttribute('data-event', 'resume');
+          }
+        } else {
+          PopUp.$togglButton.setAttribute('data-event', 'stop');
+          PopUp.$togglButton.textContent = 'Stop';
+          PopUp.$togglButton.parentNode.classList.add('tracking');
+          PopUp.showCurrentDuration(true);
+        }
+        if (!PopUp.$header.getAttribute("data-view")) {
+          PopUp.switchView(PopUp.$menuView);
+        }
+        PopUp.renderEntriesList();
       } else {
-        PopUp.$togglButton.setAttribute('data-event', 'stop');
-        PopUp.$togglButton.textContent = 'Stop';
-        PopUp.$togglButton.parentNode.classList.add('tracking');
-        PopUp.showCurrentDuration(true);
+        localStorage.setItem('latestStoppedEntry', '');
+        PopUp.switchView(PopUp.$loginView);
       }
-      if (!PopUp.$header.getAttribute("data-view")) {
-        PopUp.switchView(PopUp.$menuView);
-      }
-      PopUp.renderEntriesList();
-    } else {
-      localStorage.setItem('latestStoppedEntry', '');
-      PopUp.switchView(PopUp.$loginView);
+    } catch (e) {
+      chrome.runtime.sendMessage({type: 'error', stack: e.stack, category: 'Popup'});
     }
   },
 
@@ -162,7 +166,7 @@ var PopUp = {
       count = 0,
       checkUnique;
 
-    if (entries.length < 1) {
+    if (!entries || entries.length < 1) {
       return;
     }
 
@@ -179,10 +183,6 @@ var PopUp = {
       listEntries.push(te);
       return te;
     };
-
-    elem = document.createElement("p");
-    elem.textContent = "Recent entries";
-    html.appendChild(elem);
 
     ul = document.createElement("ul");
 
@@ -256,6 +256,13 @@ var PopUp = {
         count++;
       }
     }
+    if (count === 0) {
+      return;
+    }
+
+    elem = document.createElement("p");
+    elem.textContent = "Recent entries";
+    html.appendChild(elem);
 
     html.appendChild(ul);
 
@@ -263,7 +270,6 @@ var PopUp = {
     while (PopUp.$entries.firstChild) {
       PopUp.$entries.removeChild(PopUp.$entries.firstChild);
     }
-
 
     PopUp.$entries.appendChild(html);
   },
@@ -390,7 +396,6 @@ var PopUp = {
     /* Edit form events */
     PopUp.$projectAutocomplete = new ProjectAutoComplete("project", "li", PopUp);
     PopUp.$tagAutocomplete = new TagAutoComplete("tag", "li", PopUp);
-
     PopUp.$billable = document.querySelector(".tb-billable");
 
     document.querySelector("#toggl-button-update").addEventListener('click', function (e) {
@@ -411,6 +416,29 @@ var PopUp = {
     PopUp.$billable.addEventListener('click', function () {
       this.classList.toggle("tb-checked");
     });
+
+    PopUp.$billable.addEventListener('keydown', function (e) {
+      var prevent = false;
+      if (e.code === "Space") {
+        prevent = true;
+        this.classList.toggle("tb-checked");
+      }
+
+      if (e.code === "ArrowLeft") {
+        prevent = true;
+        this.classList.toggle("tb-checked", false);
+      }
+
+      if (e.code === "ArrowRight") {
+        prevent = true;
+        this.classList.toggle("tb-checked", true);
+      }
+
+      if (prevent) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    });
   }
 };
 
@@ -421,98 +449,80 @@ document.addEventListener('DOMContentLoaded', function () {
       respond: false
     };
 
-  PopUp.sendMessage(req);
-  PopUp.showPage();
-  PopUp.$editButton.addEventListener('click', function () {
-    PopUp.updateEditForm(PopUp.$editView);
-  });
-  onClickSendMessage = function () {
-    var request = {
-      type: this.getAttribute('data-event'),
-      respond: true,
-      service: "dropdown"
+  try {
+    PopUp.sendMessage(req);
+    PopUp.showPage();
+    PopUp.$editButton.addEventListener('click', function () {
+      PopUp.updateEditForm(PopUp.$editView);
+    });
+    onClickSendMessage = function () {
+      var request = {
+        type: this.getAttribute('data-event'),
+        respond: true,
+        service: "dropdown"
+      };
+      clearInterval(PopUp.$timer);
+      PopUp.$timer = null;
+
+      PopUp.sendMessage(request);
     };
-    clearInterval(PopUp.$timer);
-    PopUp.$timer = null;
+    PopUp.$togglButton.addEventListener('click', onClickSendMessage);
+    PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
-    PopUp.sendMessage(request);
-  };
-  PopUp.$togglButton.addEventListener('click', onClickSendMessage);
-  PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
+    document.querySelector(".header .cog").addEventListener('click', function () {
+      var request = {
+        type: "options",
+        respond: false
+      };
 
-  document.querySelector(".header .cog").addEventListener('click', function () {
-    var request = {
-      type: "options",
-      respond: false
-    };
+      chrome.runtime.sendMessage(request);
+    });
 
-    chrome.runtime.sendMessage(request);
-  });
+    document.querySelector(".header .logout").addEventListener('click', function () {
+      var request = {
+        type: "logout",
+        respond: true
+      };
+      PopUp.sendMessage(request);
+    });
 
-  document.querySelector(".header .logout").addEventListener('click', function () {
-    var request = {
-      type: "logout",
-      respond: true
-    };
-    PopUp.sendMessage(request);
-  });
+    document.querySelector(".header .sync").addEventListener('click', function () {
+      var request = {
+        type: "sync",
+        respond: false
+      };
+      PopUp.sendMessage(request);
+      window.close();
+    });
 
-  document.querySelector(".header .sync").addEventListener('click', function () {
-    var request = {
-      type: "sync",
-      respond: false
-    };
-    PopUp.sendMessage(request);
-    window.close();
-  });
+    document.querySelector("#signin").addEventListener('submit', function (event) {
+      event.preventDefault();
+      PopUp.$errorLabel.classList.remove("show");
+      var request = {
+        type: "login",
+        respond: true,
+        username: document.querySelector("#login_email").value,
+        password: document.querySelector("#login_password").value
+      };
+      PopUp.sendMessage(request);
+    });
 
-  document.querySelector("#signin").addEventListener('submit', function (event) {
-    event.preventDefault();
-    PopUp.$errorLabel.classList.remove("show");
-    var request = {
-      type: "login",
-      respond: true,
-      username: document.querySelector("#login_email").value,
-      password: document.querySelector("#login_password").value
-    };
-    PopUp.sendMessage(request);
-  });
+    document.querySelector(".header .icon").addEventListener('click', function () {
+      chrome.tabs.create({url: "https://toggl.com/app"});
+    });
 
-  document.querySelector(".header .icon").addEventListener('click', function () {
-    chrome.tabs.create({url: "https://toggl.com/app"});
-  });
+    PopUp.$entries.addEventListener('click', function (e) {
+      var request = {
+        type: "list-continue",
+        respond: true,
+        service: "dropdown-list",
+        data: TogglButton.$user.time_entries[e.target.parentNode.getAttribute("data-id")]
+      };
 
-  PopUp.$billable.addEventListener('keydown', function (e) {
-    var prevent = false;
-    if (e.code === "Space") {
-      prevent = true;
-      this.classList.toggle("tb-checked");
-    }
+      PopUp.sendMessage(request);
+    });
 
-    if (e.code === "ArrowLeft") {
-      prevent = true;
-      this.classList.toggle("tb-checked", false);
-    }
-
-    if (e.code === "ArrowRight") {
-      prevent = true;
-      this.classList.toggle("tb-checked", true);
-    }
-
-    if (prevent) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  });
-
-  PopUp.$entries.addEventListener('click', function (e) {
-    var request = {
-      type: "list-continue",
-      respond: true,
-      service: "dropdown-list",
-      data: TogglButton.$user.time_entries[e.target.parentNode.getAttribute("data-id")]
-    };
-
-    PopUp.sendMessage(request);
-  });
+  } catch (e) {
+    chrome.runtime.sendMessage({type: 'error', stack: e.stack, category: 'Popup'});
+  }
 });

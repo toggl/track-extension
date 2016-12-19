@@ -211,12 +211,11 @@ only screen and (min-resolution: 2dppx) {
 
 .header .logout {
   float: right;
-  line-height: 30px;
-  height: 30px;
-  vertical-align: middle;
-  color :#757575;
-  font-size: 11px;
-  font-weight: 400;
+  height: 15px;
+  width: 19px;
+  margin: 8px;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAPCAYAAAAGRPQsAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH4AwGDTceWNsN+wAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAABVElEQVQ4y62UvYrCQBDHx7BBDKQIBJVAmtwjeI+QewStRbNnlVL0EVLZ2VxGsTaPEF/BR7hrRFEQFhJcCAlio0e+hBT5dzsz+5tZZmYbAACIaDLGHM55D1KSJGk/nU4/X+flcum0Wq2f0Wj0ByUiiGgej0cfAECW5V3aKYri/6Vn3IwQ8r1arb7G4/G+AGOMOQAAuq5/vMuYVpIkyvl89hFxYFlWJrnAOe/JsryrAkoDL5fLFhHNTGX5wM1mo9xut9n9flfS9iAIjDKg67oTSqlXCouiqH+9XmdVKzydTlvXdQeUUk+AGvQE9muBvYC1wTRNGwh1gSilXqEBzWbTU1XVyHczjmMjDMPsKBDC2u32+24Oh0MGAPO8HRHNNIwQwjqdTmZwBUmS9mEYmuv12qj6rDIQAABRFGXOOfcPh8PvYrEo7KZt25M8qNvtlu5mo85f4wGoSbWd7KAeEAAAAABJRU5ErkJggg==');
+  margin-right: 0;
 }
 
 .header li:hover {
@@ -702,6 +701,7 @@ hr {
 
 #menu .entries-list {
   height: auto;
+  font-size: 12px;
 }
 
 .entries-list p {

@@ -72,7 +72,7 @@ TogglButton = {
           if (xhr.status === 200) {
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
               try {
-                if (!!tabs[0]) {
+                if (!!tabs && !!tabs[0]) {
                   chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
                 }
               } catch (e) {
@@ -358,18 +358,30 @@ TogglButton = {
     var project, start = new Date(),
       error = "",
       defaultProject = Db.get(TogglButton.$user.id + "-defaultProject"),
-      entry = {
-        start: start.toISOString(),
-        stop: null,
-        duration: -parseInt((start.getTime() / 1000), 10),
-        description: timeEntry.description || "",
-        pid: timeEntry.pid || timeEntry.projectId || null,
-        tid: timeEntry.tid || null,
-        wid: timeEntry.wid || TogglButton.$user.default_wid,
-        tags: timeEntry.tags || null,
-        billable: timeEntry.billable || false,
-        created_with: timeEntry.createdWith || TogglButton.$fullVersion
-      };
+      entry;
+
+    if (!timeEntry) {
+      sendResponse(
+        {
+          success: false,
+          type: "New Entry"
+        }
+      );
+      return;
+    }
+
+    entry = {
+      start: start.toISOString(),
+      stop: null,
+      duration: -parseInt((start.getTime() / 1000), 10),
+      description: timeEntry.description || "",
+      pid: timeEntry.pid || timeEntry.projectId || null,
+      tid: timeEntry.tid || null,
+      wid: timeEntry.wid || TogglButton.$user.default_wid,
+      tags: timeEntry.tags || null,
+      billable: timeEntry.billable || false,
+      created_with: timeEntry.createdWith || TogglButton.$fullVersion
+    };
 
     if (timeEntry.projectName !== null && !entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);
@@ -514,6 +526,9 @@ TogglButton = {
         if (xhr.status === 200) {
           window.TogglOrigins = JSON.parse(xhr.responseText);
         }
+      },
+      onError: function (xhr) {
+        report(xhr);
       }
     });
   },
@@ -574,7 +589,7 @@ TogglButton = {
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs[0]) {
+              if (!!tabs && !!tabs[0]) {
                 chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
               }
             });
@@ -618,7 +633,7 @@ TogglButton = {
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs[0]) {
+              if (!!tabs && !!tabs[0]) {
                 chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
               }
             });
@@ -723,7 +738,6 @@ TogglButton = {
 
     if (entry.pid) {
       project = TogglButton.findProjectByPid(parseInt(entry.pid, 10));
-      entry.billable = (project && project.billable) || timeEntry.billable;
       entry.wid = (project && project.wid);
     }
 
@@ -763,7 +777,7 @@ TogglButton = {
 
   setBrowserActionBadge: function () {
     var badge = "";
-    if (TogglButton.$user === null) {
+    if (!TogglButton.$user) {
       badge = "x";
       TogglButton.setBrowserAction(null);
     }
@@ -856,7 +870,7 @@ TogglButton = {
   },
 
   getEditForm: function () {
-    if (TogglButton.$user === null) {
+    if (!TogglButton.$user) {
       return "";
     }
     return TogglButton.$editForm
@@ -988,7 +1002,7 @@ TogglButton = {
   refreshPage: function () {
     var domain;
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs[0]) {
+      if (!!tabs && !!tabs[0]) {
         domain = TogglButton.extractDomain(tabs[0].url);
         if (!!domain.file) {
           chrome.tabs.reload(tabs[0].id);
@@ -999,11 +1013,11 @@ TogglButton = {
 
   refreshPageLogout: function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs[0]) {
+      if (!!tabs && !!tabs[0]) {
         chrome.tabs.executeScript(tabs[0].id, {
           "code": "!!document.querySelector('.toggl-button')"
         }, function (reload) {
-          if (!!reload[0]) {
+          if (!!reload && !!reload[0]) {
             chrome.tabs.reload(tabs[0].id);
           }
         });
@@ -1360,7 +1374,7 @@ TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
-    var error;
+    var error, errorSource;
     try {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
@@ -1397,7 +1411,24 @@ TogglButton = {
         error = new Error();
         error.stack = request.stack;
         error.message = request.stack.split("\n")[0];
-        Bugsnag.notifyException(error, "Content Script Error [" + request.stack.split("content/")[1].split(".js")[0] + "]");
+
+        if (debug) {
+          console.log(error);
+          console.log(request.category + " Script Error [" + errorSource + "]");
+        } else {
+          if (request.category === "Content") {
+            errorSource = request.stack.split("content/")[1];
+            if (!!errorSource) {
+              errorSource = errorSource.split(".js")[0];
+            } else {
+              errorSource = "Unknown";
+            }
+
+            Bugsnag.notifyException(error, request.category + " Script Error [" + errorSource + "]");
+          } else {
+            report(error);
+          }
+        }
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();
       }
@@ -1410,7 +1441,11 @@ TogglButton = {
   },
 
   tabUpdated: function (tabId, changeInfo, tab) {
-    if (changeInfo.status === "complete") {
+    if (!TogglButton.$user) {
+      TogglButton.setBrowserActionBadge();
+      return;
+    }
+    if (changeInfo.status === "complete" && tab.url.indexOf("chrome://") === -1) {
       var domain = TogglButton.extractDomain(tab.url),
         permission = {origins: domain.origins};
 
@@ -1465,7 +1500,9 @@ TogglButton = {
 
   extractDomain: function (url) {
     var domain, file;
-
+    if (!TogglButton.$user) {
+      return false;
+    }
     //find & remove protocol (http, ftp, etc.) and get domain
     if (url.indexOf("://") > -1) {
       domain = url.split('/')[2];
@@ -1538,7 +1575,7 @@ TogglButton = {
 
 };
 
-TogglButton.queue.push(TogglButton.loadOrigins);
+TogglButton.loadOrigins();
 TogglButton.queue.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(Db.get("showRightClickButton"));
 TogglButton.fetchUser();

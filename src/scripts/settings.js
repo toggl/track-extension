@@ -437,7 +437,7 @@ var Settings = {
       });
     });
     // Remove item from custom domain list
-    document.querySelector('#custom-permissions-list').addEventListener('click', function (e) {
+    document.querySelector('#custom-perm-container').addEventListener('click', function (e) {
       var custom, domain, permission, parent, removed = false;
       if (e.target.className === "remove-custom") {
         parent = e.target.parentNode;

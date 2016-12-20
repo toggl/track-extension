@@ -35,6 +35,7 @@ AutoComplete.prototype.addEvents = function () {
   that.filter.addEventListener('focus', function (e) {
     that.filter.parentNode.classList.add("open");
     that.listItems = that.el.querySelectorAll(that.item);
+    that.updateHeight();
   });
 
   that.filter.addEventListener('keydown', function (e) {
@@ -80,6 +81,26 @@ AutoComplete.prototype.closeDropdown = function (t) {
   that.placeholderItem.parentNode.classList.remove("open");
   that.placeholderItem.parentNode.classList.remove("add-allowed");
   that.clearFilters();
+};
+
+AutoComplete.prototype.updateHeight = function () {
+  var bodyRect = document.body.getBoundingClientRect(),
+    elRect = this.el.getBoundingClientRect(),
+    style = "max-height:auto;",
+    listStyle = "max-height:auto;",
+    calc;
+
+  if (elRect.bottom + 25 >= bodyRect.bottom) {
+    calc = ((elRect.bottom - elRect.top) - (elRect.bottom - bodyRect.bottom + 10));
+    style = "max-height: " + calc + "px;";
+    listStyle = "max-height: " + (calc - 25) + "px;";
+  }
+
+
+  this.el.style = style;
+  if (this.type === "tag") {
+    document.querySelector(".tag-list").style = listStyle;
+  }
 };
 
 //* Project autocomplete *//
@@ -282,6 +303,7 @@ ProjectAutoComplete.prototype.filterSelection = function () {
     row,
     text;
 
+  this.updateHeight();
   if (val === this.lastFilter) {
     return;
   }
@@ -347,6 +369,7 @@ ProjectAutoComplete.prototype.filterSelection = function () {
       }
     }
   }
+  this.updateHeight();
 };
 
 

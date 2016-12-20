@@ -13,6 +13,10 @@
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
 }
 
+#tag-autocomplete {
+  overflow: hidden;
+}
+
 #toggl-button-edit-form.toggl-integration #project-autocomplete {
   max-height: 400px;
   width: 220px;

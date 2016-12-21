@@ -45,7 +45,7 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
   trackedContainer.appendChild(p);
   trackedElem.parentNode.insertBefore(trackedContainer, trackedElem);
   */
-});
+}, "window-wrapper");
 
 /* Checklist buttons */
 togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, function (elem) {
@@ -63,4 +63,4 @@ togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, funct
 
   link.classList.add('checklist-item-button');
   elem.parentNode.appendChild(link);
-});
+}, "window-wrapper");

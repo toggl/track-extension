@@ -104,7 +104,7 @@ var togglbutton = {
   currentDescription: "",
   fullPageHeight: getFullPageHeight(),
   fullVersion: "TogglButton",
-  render: function (selector, opts, renderer) {
+  render: function (selector, opts, renderer, mutationClass) {
     chrome.runtime.sendMessage({type: 'activate'}, function (response) {
       if (response.success) {
         try {
@@ -115,6 +115,11 @@ var togglbutton = {
           togglbutton.duration_format = response.user.duration_format;
           if (opts.observe) {
             var observer = new MutationObserver(function (mutations) {
+              // If mutationClass is defined render the start timer link only when this element is changed
+              if (!!mutationClass
+                  && mutations[0].target.className.indexOf(mutationClass) === -1) {
+                return;
+              }
               togglbutton.renderTo(selector, renderer);
             });
             observer.observe(document, {childList: true, subtree: true});

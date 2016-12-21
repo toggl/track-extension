@@ -98,7 +98,10 @@ Add Toggl one-click time tracking to popular web tools.
 
 https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn
 
+https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
+
 ## Installing from Source
+Works for Chrome, only:
 
 1.  Clone the repository: `git clone git://github.com/toggl/toggl-button`
 2.  Navigate to `chrome://extensions/` and enable "Developer Mode".
@@ -131,6 +134,8 @@ Or start entry from the extension icon menu
 
 ## Custom domains
 If you use a setup, where one of the supported services is on a custom domain you can define the custom domains in settings "Permissions" tab.
+
+This is only available on the Chrome Extension, for Firefox support, see issue [#718][101].
 
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
@@ -234,3 +239,4 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [98]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [99]: https://github.com/toggl/toggl-button/pulls
 [100]: https://github.com/toggl/toggl-button/wiki/Where-can-I-find-the-Button%3F
+[101]: https://github.com/toggl/toggl-button/issues/718

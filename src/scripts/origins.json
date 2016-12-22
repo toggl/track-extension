@@ -124,6 +124,10 @@
     "url": "*://*.exana.io/*",
     "name": "Phabricator"
   },
+  "feedly.com": {
+    "url": "*://*.feedly.com/*",
+    "name": "Feedly"
+  },
   "fogbugz.com": {
     "url": "*://*.fogbugz.com/*",
     "name": "Fogbugz"

@@ -1169,3 +1169,8 @@ only screen and (min-resolution: 192dpi) {
   margin-left: 3px;
   padding-left: 27px;
 }
+
+/********* TEAMLEADER *********/
+.toggl-button.teamleader {
+  background: none;
+}

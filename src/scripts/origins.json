@@ -476,5 +476,9 @@
   "overv.io": {
     "url": "*://overv.io/*",
     "name": "Overv"
+  },
+  "teamleader.eu": {
+    "url": "*://app.teamleader.eu/*",
+    "name": "Teamleader"
   }
 }

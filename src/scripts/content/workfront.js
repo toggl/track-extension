@@ -1,4 +1,4 @@
-/*jslint indent: 2 */
+/*jslint indent: 2, regexp: true*/
 /*global $: false, document: false, togglbutton: false, window: false*/
 'use strict';
 
@@ -33,26 +33,34 @@ togglbutton.render('#layout-container:not(.toggl)', {observe: true}, function (e
 });
 
 // Multiple tasks in project view
-var t = document.querySelector("#minified-scripts").innerHTML;
-var user_name = /\/user\/view.*?label:\"(.*?)\"/.exec(t)[1];
-var myTasks = document.querySelectorAll(`td[data-workvalue*="${user_name}"]`);
+var t = document.querySelector("#minified-scripts").innerHTML,
+  user_name = /\/user\/view.*?label:\"(.*?)\"/.exec(t)[1],
+  myTasks = document.querySelectorAll('td[data-workvalue*="' + user_name + '"]');
 
-myTasks.forEach(function(e){
-  var objid = e.parentElement.getAttribute('objid');
-  var taskName = e.parentElement.querySelector('td[valuefield=name]');
-  var l = taskName.querySelector('.objectlink');
-  var url = l.href;
-  var name = l.innerText;
-  if(url.length>30 && name.length>3){
-    togglbutton.render(`[objid="${objid}"]:not(.toggl)`, {observe: true}, function (elem) {
-      var link;
-      var taskName = elem.querySelector('td[valuefield=name]');
-      var l = taskName.querySelector('.objectlink');
-      var url = l.href;
-      var name = l.innerText;
-      var description = function () {
-          return name + ' ' + url;
-        };
+myTasks.forEach(function (e) {
+  var objid = e.parentElement.getAttribute('objid'),
+    taskName = e.parentElement.querySelector('td[valuefield=name]'),
+    l = taskName.querySelector('.objectlink'),
+    url,
+    name;
+
+  url = l.href;
+  name = l.innerText;
+
+  if (url.length > 30 && name.length > 3) {
+    togglbutton.render('[objid="' + objid + '"]:not(.toggl)', {observe: true}, function (elem) {
+      var link,
+        description,
+        nameDiv,
+        nameDivSpan;
+
+      taskName = elem.querySelector('td[valuefield=name]');
+      l = taskName.querySelector('.objectlink');
+      url = l.href;
+      name = l.innerText;
+      description = function () {
+        return name + ' ' + url;
+      };
 
       link = togglbutton.createTimerLink({
         className: 'workfront',
@@ -61,8 +69,8 @@ myTasks.forEach(function(e){
       });
 
       // Add Toggl button to container
-      var nameDiv = taskName.querySelector('div');
-      var nameDivSpan = nameDiv.querySelector('span');
+      nameDiv = taskName.querySelector('div');
+      nameDivSpan = nameDiv.querySelector('span');
       nameDiv.insertBefore(link, nameDivSpan);
     });
   }

@@ -27,7 +27,8 @@
   },
   "attask-ondemand.com": {
     "url": "*://*.attask-ondemand.com/*",
-    "name": "AtTask"
+    "name": "Workfront",
+    "clone": "true"
   },
   "axosoft.com": {
     "url": "*://*.axosoft.com/*",
@@ -434,6 +435,10 @@
   "wordpress.com": {
     "url": "*://wordpress.com/*",
     "name": "Wordpress"
+  },
+  "my.workfront.com": {
+    "url": "*://*.my.workfront.com/*",
+    "name": "Workfront"
   },
   "worksection.com": {
     "url": "*://*.worksection.com/*",

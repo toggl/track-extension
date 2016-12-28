@@ -16,6 +16,16 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
     }
 
     container.appendChild(html);
+  },
+  setTabPosFF = function (elem) {
+    var left = "0";
+
+    if (elem.getAttribute("data-tab") === "2") {
+      left = "-" + (w + 15) + "px";
+    } else if (elem.getAttribute("data-tab") === "3") {
+      left = "-" + (2 * (w + 15)) + "px";
+    }
+    elem.style.left = left;
   };
 
 if (FF) {
@@ -543,13 +553,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     // Set selected tab
     Settings.$tabs.setAttribute("data-tab", Db.get("selected-settings-tab"));
     if (FF) {
-      if (Settings.$tabs.getAttribute("data-tab") === "1") {
-        Settings.$tabs.style.left = "0";
-      } else if (Settings.$tabs.getAttribute("data-tab") === "2") {
-        Settings.$tabs.style.left = "-" + (w + 15) + "px";
-      } else {
-        Settings.$tabs.style.left = "-" + ((2 * w) + 15) + "px";
-      }
+      setTabPosFF(Settings.$tabs);
     }
     document.querySelector("header .active").classList.remove("active");
     document.querySelector("header [data-tab='" + Db.get("selected-settings-tab") + "']").classList.add("active");
@@ -631,13 +635,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       Settings.$tabs.setAttribute("data-tab", e.target.getAttribute("data-tab"));
       Settings.saveSetting(e.target.getAttribute("data-tab"), "update-selected-settings-tab");
       if (FF) {
-        if (e.target.getAttribute("data-tab") === "1") {
-          Settings.$tabs.style.left = "0";
-        } else if (e.target.getAttribute("data-tab") === "2") {
-          Settings.$tabs.style.left = "-" + (w + 15) + "px";
-        } else {
-          Settings.$tabs.style.left = "-" + (2 * (w + 15)) + "px";
-        }
+        setTabPosFF(Settings.$tabs);
       }
     });
 
@@ -720,7 +718,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
         document.querySelector(".tab-1").style.width = w + "px";
         document.querySelector(".tab-2").style.width = w + "px";
         document.querySelector(".tab-3").style.width = w + "px";
+        Settings.$tabs.style.width = ((w + 20) * 3) + "px";
+        setTabPosFF(Settings.$tabs);
       };
+      Settings.$tabs.style.width = ((w + 20) * 3) + "px";
     }
 
     if (!TogglOrigins) {

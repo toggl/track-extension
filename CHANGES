@@ -1,6 +1,22 @@
 {
   "versions": [
     {
+      "version": "1.1.0",
+      "rows": [
+        "Added support for Feedly",
+        "Added support for Teamleader",
+        "Added support for Asana Boards",
+        "Updated Workfront integration",
+        "Fixed Remember the Milk integration",
+        "Fixed permissions list loading issues",
+        "Added custom domain setttings for Firefox",
+        "Changed logout link to icon",
+        "Fixed Toggl Button slowing down Trello issue",
+        "Fixed custom domain delete issue",
+        "Avoid edit popup being larger than page height"
+      ]
+    },
+    {
       "version": "1.0.18",
       "rows": [
         "Fixed billable flag loading issue",

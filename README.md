@@ -139,8 +139,6 @@ Or start entry from the extension icon menu
 ## Custom domains
 If you use a setup, where one of the supported services is on a custom domain you can define the custom domains in settings "Permissions" tab.
 
-This is currently only available on the Chrome Extension. For Firefox support, see issue [#718][101].
-
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
 
@@ -245,4 +243,3 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [98]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [99]: https://github.com/toggl/toggl-button/pulls
 [100]: https://github.com/toggl/toggl-button/wiki/Where-can-I-find-the-Button%3F
-[101]: https://github.com/toggl/toggl-button/issues/718

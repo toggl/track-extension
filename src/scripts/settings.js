@@ -81,9 +81,7 @@ var Settings = {
 
       GA.reportSettings();
 
-      if (!FF) {
-        Settings.loadSitesIntoList();
-      }
+      Settings.loadSitesIntoList();
 
     } catch (e) {
       chrome.runtime.sendMessage({type: 'error', stack: e.stack, category: 'Settings'});
@@ -187,7 +185,9 @@ var Settings = {
       disabled,
       checked,
       customs,
-      tmpkey;
+      tmpkey,
+      keyc;
+
     try {
       // Load Custom Permissions list
 
@@ -222,95 +222,123 @@ var Settings = {
 
       replaceContent("#custom-perm-container", custom_html);
 
-      // Load permissions list
-      chrome.permissions.getAll(function (results) {
-        var key;
-
+      if (FF) {
         try {
           Settings.origins = [];
-          origins = results.origins;
-          for (i = 0; i < origins.length; i++) {
-            name = url = origins[i].replace("*://*.", "").replace("*://", "").replace("/*", "");
-            if (url.split(".").length > 2) {
-              name = url.substr(url.indexOf(".") + 1);
-            }
-            Settings.origins[name] = {
-              id: i,
-              origin: origins[i],
-              url: url,
-              name: name
-            };
-          }
-
-          // list of enabled/disabled origins
-          html_list = document.createElement("ul");
-          html_list.id = "permissions-list";
-          html_list.className = "origin-list";
-
           // custom permission integration select
           html = document.createElement("select");
           html.id = "origins";
-
-          for (key in TogglOrigins) {
-            if (TogglOrigins.hasOwnProperty(key)) {
-              disabled = '';
-              checked = 'checked';
-
-              if (!Settings.origins[key]) {
-                // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
-                tmpkey = key.split(".");
-                tmpkey.shift();
-                tmpkey = tmpkey.join(".");
-                if (!Settings.origins[tmpkey]) {
-                  disabled = 'disabled';
-                  checked = '';
-                }
-              }
-
+          for (keyc in TogglOrigins) {
+            if (TogglOrigins.hasOwnProperty(keyc)) {
               // Don't display all different urls for 1 service
-              if (!TogglOrigins[key].clone) {
+              if (!TogglOrigins[keyc].clone) {
                 option = document.createElement("option");
                 option.id = "origin";
-                option.value = key;
+                option.value = keyc;
                 option.setAttribute("data-id", i);
-                option.textContent = TogglOrigins[key].name;
+                option.textContent = TogglOrigins[keyc].name;
 
                 html.appendChild(option);
               }
-
-              // Don't show toggl.com as it's not optional
-              if (key.indexOf("toggl") === -1 && !!TogglOrigins[key].url) {
-                li = document.createElement("li");
-                li.id = key;
-                li.className = disabled;
-
-                input = document.createElement("input");
-                input.className = "toggle";
-                input.setAttribute("type", "checkbox");
-                input.setAttribute("data-host", TogglOrigins[key].url);
-                if (!!checked) {
-                  input.setAttribute("checked", "checked");
-                }
-
-                dom = document.createElement("div");
-                dom.textContent = key;
-
-                li.appendChild(input);
-                li.appendChild(dom);
-
-                html_list.appendChild(li);
-              }
             }
           }
-
-          replaceContent("#perm-container", html_list);
           replaceContent("#origins-container", html);
 
           Settings.enablePermissionEvents();
         } catch (e) {
           chrome.runtime.sendMessage({type: 'error', stack: e.stack, category: 'Settings'});
         }
-      });
+      } else {
+        // Load permissions list
+        chrome.permissions.getAll(function (results) {
+          var key;
+
+          try {
+            Settings.origins = [];
+            origins = results.origins;
+            for (i = 0; i < origins.length; i++) {
+              name = url = origins[i].replace("*://*.", "").replace("*://", "").replace("/*", "");
+              if (url.split(".").length > 2) {
+                name = url.substr(url.indexOf(".") + 1);
+              }
+              Settings.origins[name] = {
+                id: i,
+                origin: origins[i],
+                url: url,
+                name: name
+              };
+            }
+
+            // list of enabled/disabled origins
+            html_list = document.createElement("ul");
+            html_list.id = "permissions-list";
+            html_list.className = "origin-list";
+
+            // custom permission integration select
+            html = document.createElement("select");
+            html.id = "origins";
+
+            for (key in TogglOrigins) {
+              if (TogglOrigins.hasOwnProperty(key)) {
+                disabled = '';
+                checked = 'checked';
+
+                if (!Settings.origins[key]) {
+                  // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
+                  tmpkey = key.split(".");
+                  tmpkey.shift();
+                  tmpkey = tmpkey.join(".");
+                  if (!Settings.origins[tmpkey]) {
+                    disabled = 'disabled';
+                    checked = '';
+                  }
+                }
+
+                // Don't display all different urls for 1 service
+                if (!TogglOrigins[key].clone) {
+                  option = document.createElement("option");
+                  option.id = "origin";
+                  option.value = key;
+                  option.setAttribute("data-id", i);
+                  option.textContent = TogglOrigins[key].name;
+
+                  html.appendChild(option);
+                }
+
+                // Don't show toggl.com as it's not optional
+                if (key.indexOf("toggl") === -1 && !!TogglOrigins[key].url) {
+                  li = document.createElement("li");
+                  li.id = key;
+                  li.className = disabled;
+
+                  input = document.createElement("input");
+                  input.className = "toggle";
+                  input.setAttribute("type", "checkbox");
+                  input.setAttribute("data-host", TogglOrigins[key].url);
+                  if (!!checked) {
+                    input.setAttribute("checked", "checked");
+                  }
+
+                  dom = document.createElement("div");
+                  dom.textContent = key;
+
+                  li.appendChild(input);
+                  li.appendChild(dom);
+
+                  html_list.appendChild(li);
+                }
+              }
+            }
+
+            replaceContent("#perm-container", html_list);
+            replaceContent("#origins-container", html);
+
+            Settings.enablePermissionEvents();
+          } catch (e) {
+            chrome.runtime.sendMessage({type: 'error', stack: e.stack, category: 'Settings'});
+          }
+        });
+      }
     } catch (e) {
       chrome.runtime.sendMessage({type: 'error', stack: e.stack, category: 'Settings'});
     }
@@ -322,6 +350,84 @@ var Settings = {
       return;
     }
     Settings.$originsSelect = document.querySelector("#origins");
+
+    // Add custom permission (custom domain)
+    document.querySelector('#add-permission').addEventListener('click', function (e) {
+      var text = Settings.$newPermission.value,
+        domain,
+        permission,
+        o = Settings.$originsSelect;
+
+      if (text.indexOf(":") !== -1) {
+        text = text.split(":")[0];
+      }
+      if (text.indexOf("//") !== -1) {
+        text = text.split("//")[1];
+      }
+
+      Settings.$newPermission.value = text;
+      domain = "*://" + Settings.$newPermission.value + "/";
+      permission = {origins: [domain]};
+      if (FF) {
+        Db.setOrigin(Settings.$newPermission.value, o.value);
+        Settings.$newPermission.value = "";
+        Settings.loadSitesIntoList();
+      } else {
+        chrome.permissions.request(permission, function (result) {
+          if (result) {
+            Db.setOrigin(Settings.$newPermission.value, o.value);
+            Settings.$newPermission.value = "";
+          }
+          Settings.loadSitesIntoList();
+          if (result) {
+            document.location.hash = domain;
+          }
+        });
+      }
+    });
+    // Remove item from custom domain list
+    document.querySelector('#custom-perm-container').addEventListener('click', function (e) {
+      var custom, domain, permission, parent, removed = false;
+      if (e.target.className === "remove-custom") {
+        parent = e.target.parentNode;
+        custom = parent.querySelector('strong').textContent;
+        domain = "*://" + custom + "/";
+        permission = {origins: [domain]};
+
+        if (FF) {
+          Db.removeOrigin(custom);
+          parent.remove();
+        } else {
+          chrome.permissions.contains(permission, function (allowed) {
+            if (allowed) {
+              chrome.permissions.remove(permission, function (result) {
+                if (result) {
+                  removed = true;
+                  Db.removeOrigin(custom);
+                  parent.remove();
+                } else {
+                  alert("Fail");
+                }
+              });
+            } else {
+              alert('No "' + custom + '" host permission found.');
+            }
+          });
+
+          if (!removed) {
+            Db.removeOrigin(custom);
+            parent.remove();
+          }
+        }
+      }
+      return false;
+    });
+
+    if (FF) {
+      Settings.eventsSet = true;
+      return;
+    }
+
     Settings.$permissionsList = document.querySelector("#permissions-list");
 
     // Enable/Disable origin permissions
@@ -406,71 +512,6 @@ var Settings = {
         });
       });
     });
-
-    // Add custom permission (custom domain)
-    document.querySelector('#add-permission').addEventListener('click', function (e) {
-      var text = Settings.$newPermission.value,
-        domain,
-        permission,
-        o = Settings.$originsSelect;
-
-      if (text.indexOf(":") !== -1) {
-        text = text.split(":")[0];
-      }
-      if (text.indexOf("//") !== -1) {
-        text = text.split("//")[1];
-      }
-
-      Settings.$newPermission.value = text;
-      domain = "*://" + Settings.$newPermission.value + "/";
-      permission = {origins: [domain]};
-
-      chrome.permissions.request(permission, function (result) {
-        if (result) {
-          Db.setOrigin(Settings.$newPermission.value, o.value);
-          Settings.$newPermission.value = "";
-        }
-        Settings.loadSitesIntoList();
-        if (result) {
-          document.location.hash = domain;
-        }
-      });
-    });
-    // Remove item from custom domain list
-    document.querySelector('#custom-perm-container').addEventListener('click', function (e) {
-      var custom, domain, permission, parent, removed = false;
-      if (e.target.className === "remove-custom") {
-        parent = e.target.parentNode;
-        custom = parent.querySelector('strong').textContent;
-        domain = "*://" + custom + "/";
-        permission = {origins: [domain]};
-
-        chrome.permissions.contains(permission, function (allowed) {
-          if (allowed) {
-            chrome.permissions.remove(permission, function (result) {
-              if (result) {
-                removed = true;
-                Db.removeOrigin(custom);
-                parent.remove();
-              } else {
-                alert("Fail");
-              }
-            });
-          } else {
-            alert('No "' + custom + '" host permission found.');
-          }
-        });
-
-        if (!removed) {
-          Db.removeOrigin(custom);
-          parent.remove();
-        }
-
-      }
-      return false;
-    });
-
-    Settings.eventsSet = true;
   }
 };
 
@@ -504,8 +545,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
     if (FF) {
       if (Settings.$tabs.getAttribute("data-tab") === "1") {
         Settings.$tabs.style.left = "0";
-      } else {
+      } else if (Settings.$tabs.getAttribute("data-tab") === "2") {
         Settings.$tabs.style.left = "-" + (w + 15) + "px";
+      } else {
+        Settings.$tabs.style.left = "-" + ((2 * w) + 15) + "px";
       }
     }
     document.querySelector("header .active").classList.remove("active");
@@ -590,8 +633,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
       if (FF) {
         if (e.target.getAttribute("data-tab") === "1") {
           Settings.$tabs.style.left = "0";
-        } else {
+        } else if (e.target.getAttribute("data-tab") === "2") {
           Settings.$tabs.style.left = "-" + (w + 15) + "px";
+        } else {
+          Settings.$tabs.style.left = "-" + (2 * (w + 15)) + "px";
         }
       }
     });
@@ -674,6 +719,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         w = window.innerWidth;
         document.querySelector(".tab-1").style.width = w + "px";
         document.querySelector(".tab-2").style.width = w + "px";
+        document.querySelector(".tab-3").style.width = w + "px";
       };
     }
 

@@ -1,6 +1,24 @@
 {
   "versions": [
     {
+      "version": "1.1.0",
+      "short-version": "110",
+      "date": "December 28th 2016",
+      "rows": [
+        "Added support for <a href='https://feedly.com/' target='_blank'>Feedly</a>",
+        "Added support for <a href='http://www.teamleader.eu/' target='_blank'>Teamleader</a>",
+        "Added support for Asana Boards",
+        "Updated Workfront integration",
+        "Fixed Remember the Milk integration",
+        "Fixed permissions list loading issues",
+        "Added custom domain settings for Firefox",
+        "Changed logout link to icon",
+        "Fixed 'Toggl Button slowing down Trello' issue",
+        "Fixed custom domain delete issue",
+        "Avoid edit popup being larger than page height"
+      ]
+    },
+    {
       "version": "1.0.18",
       "short-version": "1018",
       "date": "December 2nd 2016",

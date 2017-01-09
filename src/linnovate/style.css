@@ -1,0 +1,51 @@
+.time_tracker .meter-container {
+  background: #ededed;
+  border-radius: 3px;
+}
+.time_tracker .meter-container .meter-fill {
+  max-width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: #1a97d5;
+}
+.time_tracker .compare-meter.within_estimate .meter-fill {
+  background: #1a97d5;
+}
+.time_tracker .compare-meter.over_estimate .meter-fill {
+  background: #e52c5a;
+}
+.time_tracker .compare-meter.over_estimate .time-remaining, .time_tracker .compare-meter.over_estimate .compare-value.spent {
+  color: #e52c5a;
+}
+.time_tracker .compare-display-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.pull-left {
+  float: left !important;
+}
+.pull-left {
+  float: left;
+}
+.time_tracker .compare-display-container .compare-display {
+  font-size: 13px;
+  color: #8f8f8f;
+}
+.right-sidebar .block span {
+  display: inline-block;
+}
+.time_tracker .compare-display-container .compare-display .compare-value {
+  color: #5c5c5c;
+}
+.time_tracker .help-button, .time_tracker .close-help-button {
+  cursor: pointer;
+}
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

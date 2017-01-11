@@ -189,6 +189,10 @@
     "url": "*://secure.helpscout.net/*",
     "name": "Helpscout"
   },
+  "intercom.io": {
+    "url": "*://*.intercom.io/*",
+    "name": "Intercom"
+  },
   "jira.com": {
     "url": "*://*.jira.com/*",
     "name": "Jira",

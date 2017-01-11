@@ -1184,3 +1184,17 @@ a.toggl-button.workfront.min {
 .toggl-button.teamleader {
   background: none;
 }
+
+/********* INTERCOM *********/
+.toggl-button.intercom {
+  color: #a7bfcb;
+  float: right;
+  font-weight: 700;
+  margin-top: 9px;
+  margin-right: 5px;
+  text-decoration: none;
+}
+
+.toggl-button.intercom:hover {
+  color: #546e7a;
+}

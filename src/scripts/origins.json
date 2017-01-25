@@ -275,6 +275,10 @@
     "url": "*://*.producteev.com/*",
     "name": "Producteev"
   },
+  "protonet.info": {
+    "url": "*://*.protonet.info/*",
+    "name": "Protonet"
+  },
   "proworkflow.net": {
     "url": "*://*.proworkflow.net/*",
     "name": "Proworkflow"

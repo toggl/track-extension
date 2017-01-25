@@ -343,8 +343,13 @@ only screen and (min-resolution: 192dpi) {
 
 /********* GITHUB *********/
 .toggl-button.github {
-  padding-left: 21px;
-  margin-left: 5px;
+  padding-left: 25px;
+  color: #767676;
+  font-size: 12px;
+}
+.toggl-button.github:hover {
+  color: #4078c0;
+  text-decoration: none;
 }
 
 /********* YOUTRACK *********/

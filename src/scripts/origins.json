@@ -64,6 +64,10 @@
     "url": "*://*.capsulecrm.com/*",
     "name": "CapsuleCRM"
   },
+  "checkvist.com": {
+	  "url": "*://*.checkvist.com/*", 
+	  "name": "Checkvist"
+  },
   "cloudes.me": {
     "url": "*://*.cloudes.me/*",
     "name": "Cloudes.me"

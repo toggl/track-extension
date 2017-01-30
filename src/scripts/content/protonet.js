@@ -9,7 +9,9 @@ togglbutton.render('.todo-details:not(.toggl)', {observe: true}, function (elem)
     href = $('.name', elem).getAttribute('href'),
     id = href.split("/").pop(-1),
     description = '#' + id + ': ' + title,
-    project = $('ul.breadcrumb li:nth-child(3) a', elem).textContent.trim();
+    project = $('ul.breadcrumb li:nth-child(3) a', elem).textContent.trim(),
+    tbutton,
+    status;
 
   // check if 'Aufgabenliste' name is an existing project in toggl
   if (togglbutton.findProjectIdByName(project) === undefined) {
@@ -23,7 +25,18 @@ togglbutton.render('.todo-details:not(.toggl)', {observe: true}, function (elem)
     projectName: project
   });
 
-  $('.actions', elem).insertBefore(link, $('.actions', elem).firstChild);
+  tbutton = $('.actions', elem).insertBefore(link, $('.actions', elem).firstChild);
+
+  // on click on a toggl button: set the task to "in progress"
+  tbutton.addEventListener('click', function () {
+    status = $('#todo-status', elem);
+    // set value to progress
+    status.value = 'string:IN-PROGRESS';
+    // trigger change event on select element
+    var event = document.createEvent('HTMLEvents');
+    event.initEvent('change', false, true);
+    status.dispatchEvent(event);
+  });
 });
 
 // toggl button for group main naviagtion

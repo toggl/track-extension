@@ -115,11 +115,16 @@ var togglbutton = {
           togglbutton.duration_format = response.user.duration_format;
           if (opts.observe) {
             var observer = new MutationObserver(function (mutations) {
-              // If mutationSelector is defined render the start timer link only when this element is changed
-              if (!!mutationSelector
-                  && !mutations[0].target.matches(mutationSelector)) {
+              // If mutationSelector is defined, render the start timer link only when an element
+              // matching the selector changes.
+              // Multiple selectors can be used by comma separating them.
+              var matches = mutations.filter(function (mutation) {
+                return mutation.target.matches(mutationSelector);
+              });
+              if (!!mutationSelector && !matches.length) {
                 return;
               }
+
               togglbutton.renderTo(selector, renderer);
             });
             observer.observe(document, {childList: true, subtree: true});

@@ -63,4 +63,4 @@ togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, funct
 
   link.classList.add('checklist-item-button');
   elem.parentNode.appendChild(link);
-}, ".window-wrapper");
+}, ".checklist-items-list, .window-wrapper");

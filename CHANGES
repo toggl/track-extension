@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "1.1.1",
+      "rows": [
+        "Added support for Intercom",
+        "Moved button in github to sidebar",
+        "Fixed issues with the button not appearing in Trello"
+      ]
+    },
+    {
       "version": "1.1.0",
       "rows": [
         "Added support for Feedly",

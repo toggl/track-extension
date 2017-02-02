@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "1.1.1",
+      "short-version": "111",
+      "date": "February 2nd 2017",
+      "rows": [
+        "Added support for Intercom",
+        "Moved button in github to sidebar",
+        "Fixed issues with the button not appearing in Trello"
+      ]
+    },
+    {
       "version": "1.1.0",
       "short-version": "110",
       "date": "December 28th 2016",

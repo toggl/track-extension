@@ -493,5 +493,9 @@
   "teamleader.eu": {
     "url": "*://app.teamleader.eu/*",
     "name": "Teamleader"
+  },
+  "workflowy.com": {
+    "url": "*://workflowy.com/*",
+    "name": "WorkFlowy"
   }
 }

@@ -315,14 +315,13 @@ var PopUp = {
   updateEditForm: function (view) {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
-      togglButtonDescription = document.querySelector("#toggl-button-description"),
-      project = TogglButton.findProjectByPid(PopUp.$projectAutocomplete.getSelected().pid),
-      projectWid = project ? project.wid : null;
+      wid = TogglButton.$curEntry.wid,
+      togglButtonDescription = document.querySelector("#toggl-button-description");
 
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
 
     PopUp.$projectAutocomplete.setup(pid, tid);
-    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, projectWid);
+    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
 
     PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
     PopUp.switchView(view);
@@ -417,7 +416,7 @@ var PopUp = {
 
     PopUp.$projectAutocomplete.onChange(function (selected) {
       var project = TogglButton.findProjectByPid(selected.pid),
-        wid = project ? project.wid : null;
+        wid = project ? project.wid : TogglButton.$curEntry.wid;
 
       PopUp.$tagAutocomplete.setWorkspaceId(wid);
     });

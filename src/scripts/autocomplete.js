@@ -449,7 +449,7 @@ TagAutoComplete.prototype.setSelected = function (tags) {
 TagAutoComplete.prototype.setWorkspaceId = function (wid) {
   this.wid = wid;
   var listItems = this.el.querySelectorAll(this.item),
-    stringWid = wid ? wid.toString() : 'nowid',
+    stringWid = wid.toString(),
     tag,
     key;
 

@@ -209,7 +209,7 @@ var togglbutton = {
 
     togglbutton.toggleBillable(premium);
 
-    if (!no_overwrite && project.billable) {
+    if (!no_overwrite && (pid !== 0 && project.billable)) {
       togglbutton.$billable.classList.toggle("tb-checked", true);
     }
   },
@@ -253,7 +253,7 @@ var togglbutton = {
       togglButtonDescription.value = response.entry.description || "";
 
       projectAutocomplete.setup(pid, tid);
-      tagAutocomplete.setup(response.entry.tags);
+      tagAutocomplete.setup(response.entry.tags, response.entry.wid);
       togglbutton.setupBillable(!!response.entry.billable, pid);
 
       editForm.style.left = position.left + "px";
@@ -310,6 +310,7 @@ var togglbutton = {
     setCursorAtBeginning(togglButtonDescription);
     projectAutocomplete.setup(pid, tid);
     tagAutocomplete.setSelected(response.entry.tags);
+    tagAutocomplete.setWorkspaceId(response.entry.wid);
 
     togglbutton.setupBillable(!!response.entry.billable, pid);
 
@@ -372,6 +373,13 @@ var togglbutton = {
         e.stopPropagation();
         e.preventDefault();
       }
+    });
+
+    projectAutocomplete.onChange(function (selected) {
+      var project = togglbutton.findProjectByPid(selected.pid),
+        wid = project ? project.wid : response.entry.wid;
+
+      tagAutocomplete.setWorkspaceId(wid);
     });
 
     document.addEventListener("click", handler);

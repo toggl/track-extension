@@ -142,6 +142,10 @@
   display: block;
 }
 
+#tag-autocomplete li.workspace-filter {
+  display: none !important;
+}
+
 .client-list.filter .client-row, .ws-list.filter .ws-row,
 .client-list.filter-match li {
   display: block!important;

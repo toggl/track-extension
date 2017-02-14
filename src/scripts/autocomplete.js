@@ -1,6 +1,8 @@
-/*jslint indent: 2, unparam: true, plusplus: true*/
+/*jslint indent: 2, unparam: true, plusplus: true */
 /*global document: false */
 "use strict";
+
+var noop = function () { return undefined; };
 
 var inheritsFrom = function (child, parent) {
   child.prototype = Object.create(parent.prototype);
@@ -107,6 +109,7 @@ AutoComplete.prototype.updateHeight = function () {
 
 var ProjectAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
+  this.onChangeHandler = noop;
 };
 
 inheritsFrom(ProjectAutoComplete, AutoComplete);
@@ -177,6 +180,7 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
     if (elem.classList.contains("task-item")) {
       this.selectTask(elem);
     }
+    this.onChangeHandler(this.getSelected());
     return;
   }
 
@@ -202,6 +206,7 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
   }
 
   this.elem.updateBillable(parseInt(val, 10));
+  this.onChangeHandler(this.getSelected());
   return false;
 };
 
@@ -372,17 +377,26 @@ ProjectAutoComplete.prototype.filterSelection = function () {
   this.updateHeight();
 };
 
+ProjectAutoComplete.prototype.onChange = function (callback) {
+  this.onChangeHandler = callback;
+};
+
+ProjectAutoComplete.prototype.removeChangeHandler = function () {
+  this.onChangeHandler = noop;
+};
 
 //* Tag autocomplete *//
 
 var TagAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
+  this.wid = null;
 };
 
 inheritsFrom(TagAutoComplete, AutoComplete);
 
-TagAutoComplete.prototype.setup = function (selected) {
+TagAutoComplete.prototype.setup = function (selected, wid) {
   this.setSelected(selected);
+  this.setWorkspaceId(wid);
 };
 
 TagAutoComplete.prototype.addEvents = function () {
@@ -430,6 +444,25 @@ TagAutoComplete.prototype.setSelected = function (tags) {
   }
 
   this.updatePlaceholder(tags);
+};
+
+TagAutoComplete.prototype.setWorkspaceId = function (wid) {
+  this.wid = wid;
+  var listItems = this.el.querySelectorAll(this.item),
+    stringWid = wid.toString(),
+    tag,
+    key;
+
+  for (key in listItems) {
+    if (listItems.hasOwnProperty(key)) {
+      tag = listItems[key];
+      if ((tag.dataset.wid === stringWid) || (stringWid === 'nowid')) {
+        tag.classList.remove('workspace-filter');
+      } else {
+        tag.classList.add('workspace-filter');
+      }
+    }
+  }
 };
 
 TagAutoComplete.prototype.clearSelectedTags = function (tags) {

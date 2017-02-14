@@ -315,12 +315,13 @@ var PopUp = {
   updateEditForm: function (view) {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
+      wid = TogglButton.$curEntry.wid,
       togglButtonDescription = document.querySelector("#toggl-button-description");
 
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
 
     PopUp.$projectAutocomplete.setup(pid, tid);
-    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags);
+    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
 
     PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
     PopUp.switchView(view);
@@ -356,7 +357,7 @@ var PopUp = {
 
     PopUp.toggleBillable(premium);
 
-    if (!no_overwrite && project.billable) {
+    if (!no_overwrite && (pid !== 0 && project.billable)) {
       PopUp.$billable.classList.toggle("tb-checked", true);
     }
   },
@@ -411,6 +412,13 @@ var PopUp = {
     document.querySelector("#entry-form form").addEventListener('submit', function (e) {
       PopUp.submitForm(this);
       e.preventDefault();
+    });
+
+    PopUp.$projectAutocomplete.onChange(function (selected) {
+      var project = TogglButton.findProjectByPid(selected.pid),
+        wid = project ? project.wid : TogglButton.$curEntry.wid;
+
+      PopUp.$tagAutocomplete.setWorkspaceId(wid);
     });
 
     PopUp.$billable.addEventListener('click', function () {

@@ -27,7 +27,8 @@
   },
   "attask-ondemand.com": {
     "url": "*://*.attask-ondemand.com/*",
-    "name": "AtTask"
+    "name": "Workfront",
+    "clone": "true"
   },
   "axosoft.com": {
     "url": "*://*.axosoft.com/*",
@@ -128,6 +129,10 @@
     "url": "*://*.exana.io/*",
     "name": "Phabricator"
   },
+  "feedly.com": {
+    "url": "*://*.feedly.com/*",
+    "name": "Feedly"
+  },
   "fogbugz.com": {
     "url": "*://*.fogbugz.com/*",
     "name": "Fogbugz"
@@ -187,6 +192,10 @@
   "helpscout.net": {
     "url": "*://secure.helpscout.net/*",
     "name": "Helpscout"
+  },
+  "intercom.io": {
+    "url": "*://*.intercom.io/*",
+    "name": "Intercom"
   },
   "jira.com": {
     "url": "*://*.jira.com/*",
@@ -435,6 +444,10 @@
     "url": "*://wordpress.com/*",
     "name": "Wordpress"
   },
+  "my.workfront.com": {
+    "url": "*://*.my.workfront.com/*",
+    "name": "Workfront"
+  },
   "worksection.com": {
     "url": "*://*.worksection.com/*",
     "name": "Worksection"
@@ -480,5 +493,9 @@
   "overv.io": {
     "url": "*://overv.io/*",
     "name": "Overv"
+  },
+  "teamleader.eu": {
+    "url": "*://app.teamleader.eu/*",
+    "name": "Teamleader"
   }
 }

@@ -13,6 +13,10 @@
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
 }
 
+#tag-autocomplete {
+  overflow: hidden;
+}
+
 #toggl-button-edit-form.toggl-integration #project-autocomplete {
   max-height: 400px;
   width: 220px;
@@ -136,6 +140,10 @@
 #project-autocomplete.filtered li.filter,
 #tag-autocomplete.filtered li.filter {
   display: block;
+}
+
+#tag-autocomplete li.workspace-filter {
+  display: none !important;
 }
 
 .client-list.filter .client-row, .ws-list.filter .ws-row,

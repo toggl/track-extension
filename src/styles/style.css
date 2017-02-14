@@ -343,8 +343,13 @@ only screen and (min-resolution: 192dpi) {
 
 /********* GITHUB *********/
 .toggl-button.github {
-  padding-left: 21px;
-  margin-left: 5px;
+  padding-left: 25px;
+  color: #767676;
+  font-size: 12px;
+}
+.toggl-button.github:hover {
+  color: #4078c0;
+  text-decoration: none;
 }
 
 /********* YOUTRACK *********/
@@ -1120,20 +1125,30 @@ only screen and (min-resolution: 192dpi) {
   vertical-align: middle;
 }
 
-/********* ATTASK (WORKFRONT) *********/
-.toggl-button.attask {
+/********* WORKFRONT *********/
+.toggl-button.workfront {
   height: 62px;
   line-height: 62px;
   background-position: 1em 50%;
   padding: 0 1em 0 2.75em;
 }
 
-.toggl-button.attask:hover {
+.toggl-button.workfront:hover {
   background-color:#eee !important;
 }
 
-.toggl-button.attask.active {
+.toggl-button.workfront.active {
   background-color:#f5f5f5;
+}
+
+a.toggl-button.workfront.min {
+    width: 19px;
+    height: 19px;
+    float: left;
+    padding: 0px;
+    margin: 0 3px 0 0;
+    vertical-align: bottom;
+    background-position: 0 0;
 }
 
 /********* ONLYOFFICE *********/
@@ -1168,4 +1183,23 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.clubhouse {
   margin-left: 3px;
   padding-left: 27px;
+}
+
+/********* TEAMLEADER *********/
+.toggl-button.teamleader {
+  background: none;
+}
+
+/********* INTERCOM *********/
+.toggl-button.intercom {
+  color: #a7bfcb;
+  float: right;
+  font-weight: 700;
+  margin-top: 9px;
+  margin-right: 5px;
+  text-decoration: none;
+}
+
+.toggl-button.intercom:hover {
+  color: #546e7a;
 }

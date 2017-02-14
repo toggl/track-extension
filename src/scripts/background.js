@@ -994,7 +994,7 @@ TogglButton = {
 
     for (i = 0; i < keys.length; i++) {
       key = keys[i];
-      html += '<li class="tag-item" title="' + escapeHtml(tags[key].name) + '">' + escapeHtml(tags[key].name) + '</li>';
+      html += '<li class="tag-item" data-wid="' + escapeHtml(tags[key].wid) +  '" title="' + escapeHtml(tags[key].name) + '">' + escapeHtml(tags[key].name) + '</li>';
     }
     return html + "</ul>";
   },

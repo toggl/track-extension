@@ -220,6 +220,7 @@ header .active, header li:hover {
   overflow: auto;
   width: 375px;
   float: left;
+  font-size: 12px;
 }
 
 .origin-list:empty {
@@ -423,7 +424,7 @@ header .active, header li:hover {
   height: 36px;
 }
 
-.ff .tab-link[data-tab="3"], .ff .tab-3 {
+.ff .tab-3 .section:first-of-type {
   display: none!important;
 }
 
@@ -447,4 +448,13 @@ header .active, header li:hover {
 
 .ff header, .ff header .tab-link {
   background: transparent;
+}
+
+.ff .container .tabs {
+  width: 2800px;
+}
+
+.ff .tab-3 .section h2 {
+  font-size: 15px;
+  font-weight: 400;
 }

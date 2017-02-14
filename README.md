@@ -96,6 +96,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Feedly][93]
   - [Teamleader][94]
   - [Intercom][95]
+  - [Backlog.jp][96]
 
 ## Installing from the Web Store/Addons page
 
@@ -241,6 +242,7 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [93]: http://feedly.com/
 [94]: http://www.teamleader.eu/
 [95]: https://www.intercom.com/
+[96]: https://www.backlog.jp/
 
 [98]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [99]: https://github.com/toggl/toggl-button/pulls

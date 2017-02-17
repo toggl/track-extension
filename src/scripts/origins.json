@@ -482,6 +482,10 @@
     "url": "*://*.zendesk.com/*",
     "name": "Zendesk"
   },
+  "zenkit.com": {
+    "url": "*://*.zenkit.com/*",
+    "name": "Zenkit"
+  },
   "books.zoho.com": {
     "url": "*://books.zoho.com/*",
     "name": "Zoho Books"

@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "1.1.2",
+      "short-version": "112",
+      "date": "February 21st 2017",
+      "rows": [
+        "Added support for backlog.jp",
+        "Tags are now filtered by the active workspace",
+        "Fixed issues with the button not appearing in Github"
+      ]
+    },
+    {
       "version": "1.1.1",
       "short-version": "111",
       "date": "February 2nd 2017",

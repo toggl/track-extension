@@ -32,5 +32,5 @@ togglbutton.render('.b-db-Om:not(.toggl)', {observe: true}, function (elem) {
   };
 
   // Inject toggl button to each task.
-  elem.querySelector('.b-db-Om-An').appendChild(createTogglButton());
+  elem.querySelector('.b-db-Om-Bn').appendChild(createTogglButton());
 });

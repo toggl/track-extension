@@ -2,10 +2,10 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#section_title .panel_section_jump_links:not(.toggl)', {observe: true}, function (elem) {
-  var link, description = $('#treeitem_panel_name').innerText,
+togglbutton.render('#treeitem_panel .details.page:not(.toggl)', {observe: true}, function (elem) {
+  var link, description = $('#treeitem_panel_name').textContent,
     projectFunc = function () {
-      var text = document.querySelector("#treeitem_panel_parent").innerText.split(">");
+      var text = $("#treeitem_panel_parent").textContent.split(">");
       return text[text.length - 1].trim();
     };
 

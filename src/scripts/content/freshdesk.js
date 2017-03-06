@@ -14,11 +14,11 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
     projectElem = $('.logo_text'),
     buttonsElem = $('.ticket-actions > ul');
 
-  description = idElem.innerText + ' ' + titleElem.innerText;
+  description = idElem.textContent.trim() + ' ' + titleElem.textContent.trim();
   link = togglbutton.createTimerLink({
     className: 'freshdesk',
     description: description,
-    projectName: projectElem && projectElem.innerText,
+    projectName: projectElem && projectElem.textContent.trim(),
     calculateTotal: true
   });
 
@@ -26,7 +26,15 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
   buttonsElem.appendChild(container, buttonsElem);
 /*
   duration = togglbutton.calculateTrackedTime(description);
-  trackedContainer.innerHTML = "<h4 class='title'>Toggl</h4><p>Toggl time tracked: " + duration + "</p>";
+  h3 = document.createElement("h3");
+  h3.textContent = "Time tracked";
+
+  p = document.createElement("p");
+  p.setAttribute("title", "Time tracked with Toggl: " + duration);
+  p.textContent = duration;
+
+  trackedContainer.appendChild(h3);
+  trackedContainer.appendChild(p);
   trackedElem.parentNode.insertBefore(trackedContainer, trackedElem.nextSibling);
 */
 });

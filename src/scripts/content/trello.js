@@ -13,14 +13,18 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
     projectElem = $('.board-header > a'),
     descriptionElem = $('.js-move-card');
 
+  if (!descriptionElem) {
+    return;
+  }
+
   descFunc = function () {
-    return titleElem.innerText;
+    return titleElem.textContent;
   };
 
   link = togglbutton.createTimerLink({
     className: 'trello',
     description: descFunc,
-    projectName: projectElem.innerText,
+    projectName: projectElem.textContent,
     calculateTotal: true
   });
 
@@ -29,11 +33,19 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
 
   // Add Tracked time text
   /*
-  duration = togglbutton.calculateTrackedTime(titleElem.innerText);
-  trackedContainer.innerHTML = "<h3>Time tracked</h3><p title='Time tracked with Toggl: " + duration + "'>" + duration + "</p>";
+  duration = togglbutton.calculateTrackedTime(titleElem.textContent);
+  h3 = document.createElement("h3");
+  h3.textContent = "Time tracked";
+
+  p = document.createElement("p");
+  p.setAttribute("title", "Time tracked with Toggl: " + duration);
+  p.textContent = duration;
+
+  trackedContainer.appendChild(h3);
+  trackedContainer.appendChild(p);
   trackedElem.parentNode.insertBefore(trackedContainer, trackedElem);
   */
-});
+}, ".window-wrapper");
 
 /* Checklist buttons */
 togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, function (elem) {
@@ -45,10 +57,10 @@ togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, funct
   link = togglbutton.createTimerLink({
     className: 'trello',
     buttonType: 'minimal',
-    projectName: projectElem.innerText,
-    description: titleElem.innerText + ' - ' + taskElem.innerText,
+    projectName: projectElem.textContent,
+    description: titleElem.textContent + ' - ' + taskElem.textContent,
   });
 
   link.classList.add('checklist-item-button');
   elem.parentNode.appendChild(link);
-});
+}, ".checklist-items-list, .window-wrapper");

@@ -12,7 +12,7 @@ togglbutton.render('section.task-actions:not(.toggl)', {observe: true}, function
 
   link = togglbutton.createTimerLink({
     className: 'kanbanery',
-    description: taskTitle.innerText
+    description: taskTitle.textContent
   });
 
   linkAction.appendChild(link);

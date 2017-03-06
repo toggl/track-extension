@@ -5,8 +5,8 @@
 
 togglbutton.render('div.importances:not(.toggl)', {observe: true}, function () {
   var link,
-    description = $("#story_name p").innerText,
-    projectName = $(".project .name").innerText,
+    description = $("#story_name p").textContent,
+    projectName = $(".project .name").textContent,
     div = document.createElement("div"),
     importanceDiv = $("div.importances"),
     collectorDiv = importanceDiv.parentNode;

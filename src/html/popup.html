@@ -2,51 +2,53 @@
 <html>
   <head>
     <title>Toggl Button</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="../styles/popup.css"/>
+    <link rel="stylesheet" href="../styles/autocomplete.css"/>
   </head>
   <body>
-    <div class="header" title="Open Toggl.com"></div>
-    <div class="user-email" title="Open profile at Toggl.com"></div>
-    <div class="error"></div>
-    <ul class="menu view">
-      <li class="timer">
-        <div class="project-bullet"></div>
-        <div class="edit-button"></div>
-        <div class="stop-button">Stop</div>
-        <div class="resume-button" data-event="resume">Continue latest</div>
-      </li>
-      <li>
-        <button class="settings-button">Settings</button>
-      </li>
-      <li>
-        <button class="sync-button">Sync</button>
-      </li>
-      <hr>
-      <li>
-        <button class="logout-button">Logout</button>
-      </li>
+    <ul class="header">
+      <li class="icon" title="Open Toggl.com"></li>
+      <li class="cog" title="Open Settings"></li>
+      <li class="sync" title="Sync..."></li>
+      <li class="logout" title="Log out"></li>
     </ul>
+    <div class="error"></div>
+    <div class="views">
 
-    <div id="login-form" class="view">
-      <p class="error">Couldn't log you in. Please try again!</p>
-      <form accept-charset="UTF-8" id="signin">
-        <p class="form-row">
-          <input name="user_login" type="text" id="login_email" class="text-input" value="" placeholder="E-mail">
-        </p>
-        <p class="form-row">
-          <input name="user_password" type="password" id="login_password" class="text-input" value=""  placeholder="Password">
-        </p>
-        <p class="form-submit-row cf">
-          <a href="https://toggl.com/forgot-password" class="forgot-link" target="_blank">Forgot password?</a>
-          <input type="submit" value="Log in" class="right login-btn">
-        </p>
-      </form>
+      <ul id="menu" class="view">
+        <li class="timer">
+          <div class="tb-project-bullet"></div>
+          <div class="edit-button"></div>
+          <div class="tag-icon"></div>
+          <div class="billable-icon" title="billable"></div>
+          <div class="stop-button">Stop</div>
+          <div class="resume-button" data-event="resume">Continue latest</div>
+        </li>
+        <li class="entries-list"></li>
+      </ul>
+
+      <div id="login-form" class="view">
+        <p class="error">Couldn't log you in. Please try again!</p>
+        <form accept-charset="UTF-8" id="signin">
+          <p class="form-row">
+            <input name="user_login" type="text" id="login_email" class="text-input" value="" placeholder="E-mail">
+          </p>
+          <p class="form-row">
+            <input name="user_password" type="password" id="login_password" class="text-input" value=""  placeholder="Password">
+          </p>
+          <p class="form-submit-row cf">
+            <a href="https://toggl.com/forgot-password" class="forgot-link" target="_blank">Forgot password?</a>
+            <input type="submit" value="Log in" class="right login-btn">
+          </p>
+        </form>
+      </div>
+
+      <div id="entry-form" class="view">
+      </div>
+
     </div>
-
-    <div id="entry-form" class="view">
-    </div>
-
-    <div id="error">Error</div>
+    <script src="../scripts/autocomplete.js"></script>
     <script src="../scripts/popup.js"></script>
   </body>
 </html>

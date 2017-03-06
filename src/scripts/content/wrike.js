@@ -6,7 +6,7 @@ togglbutton.render('.wspace-task-view:not(.toggl)', {observe: true}, function (e
   var link,
     container = $('.wrike-panel-header-toolbar', elem),
     titleElem = function () {
-      return $('title').innerText.replace(' - Wrike', '');
+      return $('title').textContent.replace(' - Wrike', '');
     };
 
   link = togglbutton.createTimerLink({

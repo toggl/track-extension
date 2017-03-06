@@ -1,27 +1,107 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global navigator: false, window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var Db = {
+  originsKey: "TogglButton-origins",
   // settings: key, default value
   settings: {
     "startAutomatically": false,
     "stopAutomatically": false,
     "showRightClickButton": true,
     "showPostPopup": true,
-    "socketEnabled": true,
     "nannyCheckEnabled": true,
     "nannyInterval": 3600000,
     "nannyFromTo": "09:00-17:00",
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
+    "pomodoroSoundFile": "sounds/time_is_up_1.mp3",
     "pomodoroSoundEnabled": true,
+    "pomodoroSoundVolume": 1,
     "pomodoroStopTimeTrackingWhenTimerEnds": true,
     "pomodoroInterval": 25,
     "stopAtDayEnd": false,
     "dayEndTime": "17:00",
+    "defaultProject": "0",
+    "projects": "",
     "useCustomFormat": false,
     "customFormat": ""
+  },
+
+  // core settings: key, default value
+  core: {
+    "dont-show-permissions": false,
+    "show-permissions-info": 0,
+    "selected-settings-tab": 1
+  },
+
+  getOriginFileName: function (domain) {
+    var origin = Db.getOrigin(domain),
+      item;
+
+    if (!origin) {
+      origin = domain;
+    }
+
+    if (!TogglOrigins[origin]) {
+      // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
+      origin = origin.split(".");
+      origin.shift();
+      origin = origin.join(".");
+      if (!TogglOrigins[origin]) {
+        return null;
+      }
+    }
+
+    item = TogglOrigins[origin];
+
+    if (!!item.file) {
+      return item.file;
+    }
+
+    return item.name.toLowerCase().replace(" ", "-") + ".js";
+  },
+
+  getOrigin: function (origin) {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj;
+    if (!!origins) {
+      obj = JSON.parse(origins);
+      return obj[origin];
+    }
+    return null;
+  },
+
+  setOrigin: function (newOrigin, baseOrigin) {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj = {};
+
+    if (!!origins) {
+      obj = JSON.parse(origins);
+    }
+    obj[newOrigin] = baseOrigin;
+    localStorage.setItem(Db.originsKey, JSON.stringify(obj));
+  },
+
+  removeOrigin: function (origin) {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj;
+
+    if (!!origins) {
+      obj = JSON.parse(origins);
+      delete obj[origin];
+      localStorage.setItem(Db.originsKey, JSON.stringify(obj));
+    }
+  },
+
+  getAllOrigins: function () {
+    var origins = localStorage.getItem(Db.originsKey),
+      obj;
+    if (!!origins) {
+      obj = JSON.parse(origins);
+      return obj;
+    }
+    return null;
   },
 
   get: function (setting) {
@@ -58,6 +138,12 @@ var Db = {
         Db.load(k, Db.settings[k]);
       }
     }
+
+    for (k in Db.core) {
+      if (Db.core.hasOwnProperty(k)) {
+        Db.load(k, Db.core[k]);
+      }
+    }
   },
 
   updateSetting: function (key, state, callback, condition) {
@@ -69,27 +155,10 @@ var Db = {
     }
   },
 
-  setSocket: function (state) {
-    Db.set("socketEnabled", state);
-    if (TogglButton.$socket !== null) {
-      TogglButton.$socket.close();
-      TogglButton.$socket = null;
-    }
-    if (state) {
-      if (!!TogglButton.$user) {
-        TogglButton.setupSocket();
-      } else {
-        TogglButton.fetchUser();
-      }
-    }
-  },
-
   newMessage: function (request, sender, sendResponse) {
     try {
       if (request.type === 'toggle-popup') {
         Db.set("showPostPopup", request.state);
-      } else if (request.type === 'toggle-socket') {
-        Db.setSocket(request.state);
       } else if (request.type === 'toggle-nanny') {
         Db.updateSetting("nannyCheckEnabled", request.state, TogglButton.triggerNotification);
       } else if (request.type === 'toggle-nanny-from-to') {
@@ -106,6 +175,8 @@ var Db = {
         Db.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'toggle-pomodoro-stop-time') {
         Db.set("pomodoroStopTimeTrackingWhenTimerEnds", request.state);
+      } else if (request.type === 'update-pomodoro-sound-volume') {
+        Db.set("pomodoroSoundVolume", request.state);
       } else if (request.type === 'toggle-right-click-button') {
         Db.updateSetting("showRightClickButton", request.state);
       } else if (request.type === 'toggle-start-automatically') {
@@ -121,6 +192,10 @@ var Db = {
         Db.updateSetting("useCustomFormat", request.state);
       } else if (request.type === 'toggle-custom-format') {
         Db.updateSetting("customFormat", request.state);
+      } else if (request.type === 'change-default-project') {
+        Db.updateSetting(chrome.extension.getBackgroundPage().TogglButton.$user.id + "-defaultProject", request.state);
+      } else if (request.type === 'update-dont-show-permissions' || request.type === 'update-selected-settings-tab') {
+        Db.updateSetting(request.type.substr(7), request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);
@@ -130,5 +205,5 @@ var Db = {
   }
 };
 
-chrome.extension.onMessage.addListener(Db.newMessage);
+chrome.runtime.onMessage.addListener(Db.newMessage);
 Db.loadAll();

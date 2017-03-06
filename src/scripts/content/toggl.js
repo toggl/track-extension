@@ -21,7 +21,7 @@ if (offlineUser) {
   version = chrome.runtime.getManifest().version;
   source = 'window.TogglButton = { version: "' + version + '" }';
   s = document.createElement('script');
-  s.innerHTML = source;
+  s.textContent = source;
   document.body.appendChild(s);
 }());
 

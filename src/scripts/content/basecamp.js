@@ -45,7 +45,7 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
   link = togglbutton.createTimerLink({
     className: 'basecamphq',
     description: elem.querySelector('span.content > span').textContent.trim(),
-    projectName: (!!$(".project")) ? ($(".project > title") || $(".project > header > h1 > a")).innerHTML : ""
+    projectName: (!!$(".project")) ? ($(".project > title") || $(".project > header > h1 > a")).textContent : ""
   });
 
   link.setAttribute('data-behavior', '');
@@ -64,11 +64,17 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
 
 // Basecamp 3
 togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}, function (elem) {
-  var link, project,
+  var link, project, parent,
     projectItem,
     description = $('.checkbox__content', elem);
 
   if (!description) {
+    return;
+  }
+
+  parent = $('.todo_assignee', elem);
+
+  if (!parent) {
     return;
   }
 
@@ -83,5 +89,5 @@ togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}
     projectName: project
   });
 
-  $('.todo_assignee', elem).appendChild(link);
+  parent.appendChild(link);
 });

@@ -29,7 +29,7 @@ togglbutton.render('.axo-view-item-content .item-field-name:not(.toggl)', {obser
     beforeElem = $('.axo-rating', wrapperElem) || titleElem;
 
   if (titleElem !== null) {
-    titleText = titleElem.innerText;
+    titleText = titleElem.textContent;
   }
 
   link = togglbutton.createTimerLink({

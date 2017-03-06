@@ -6,8 +6,8 @@
 togglbutton.render('.content-header:not(.toggl)', {observe: true}, function () {
 
   var link,
-    id = $('div.content-header-id').innerText,
-    title = $('div.content-header-title').innerText.trim(),
+    id = $('div.content-header-id').textContent,
+    title = $('div.content-header-title').textContent.trim(),
     description = '#' + id + ' ' + title;
 
   link = togglbutton.createTimerLink({

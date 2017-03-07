@@ -30,7 +30,7 @@ TogglButton = {
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
   queue: [],
-  customFormatTokens: { taskId: '$$taskid$$', description: '$$description$$' },
+  customFormatTokens: { taskId: '{{taskid}}', description: '{{description}}' },
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +

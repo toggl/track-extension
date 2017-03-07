@@ -5,8 +5,9 @@
 //Board view
 togglbutton.render('.post-it:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    description = $('.heading', elem).textContent.trim(),
-    project = $('.projects .title').textContent.trim();
+    description = $('.heading .title', elem).textContent.trim(),
+    project = $('.projects .title').textContent.trim(),
+    container = $('.heading .title', elem);
 
   link = togglbutton.createTimerLink({
     className: 'zube',
@@ -15,7 +16,7 @@ togglbutton.render('.post-it:not(.toggl)', {observe: true}, function (elem) {
     buttonType: 'minimal'
   });
 
-  $('.heading', elem).insertBefore(link, $('.title', elem));
+  container.insertBefore(link, $('.zube-number', elem));
 });
 
 
@@ -34,11 +35,11 @@ togglbutton.render('#card-modal-view:not(.toggl)', {observe: true}, function (el
     buttonType: 'minimal'
   });
 
-  $('.modal-header', elem).insertBefore(link, $('.number', elem));
+  $('.modal-header div', elem).insertBefore(link, $('.number', elem));
 });
 
 //Ticket detail view
-togglbutton.render('#tickets-title-container:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#tickets-show-main-container:not(.toggl)', {observe: true}, function (elem) {
   var link,
     description = function () {
       var desc = $('.content', elem);

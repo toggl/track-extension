@@ -6,7 +6,7 @@
 togglbutton.render('.convo-toolbar:not(.toggl)', {observe: true}, function () {
 
   var link,
-    description = '#' + $('#tkHeader strong').innerHTML + ' ' + $('#subjectLine').innerHTML;
+    description = '#' + $('#tkHeader strong').textContent + ' ' + $('#subjectLine').textContent;
 
   link = togglbutton.createTimerLink({
     className: 'helpscout',

@@ -8,7 +8,7 @@ togglbutton.render('#ide:not(.toggl)', {observe: true}, function () {
       return $('.project-label .project-name').getAttribute('title');
     },
     descFunc = function () {
-      return $('.project-label .after.actionable').innerHTML;
+      return $('.project-label .after.actionable').textContent;
     },
     inlineCss = 'position: fixed; bottom: 1rem; right: 1rem; z-index: 9999;',
     container = document.createElement('div');

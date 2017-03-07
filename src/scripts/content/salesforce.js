@@ -3,11 +3,10 @@
 
 'use strict';
 
-// Listing view
-togglbutton.render('.taskBlock tr:not(.toggl)', {observe: true}, function (elem) {
+// Updated Listing view
+togglbutton.render('.bMyTask .list tr.dataRow:not(.toggl)', {observe: true}, function (elem) {
   var link, descFunc, projectFunc,
-    container = $('th.dataCell', elem);
-
+    container = elem.querySelectorAll(".bMyTask .list tr.dataRow .dataCell a")[0];
   if (container === null) {
     return;
   }
@@ -32,10 +31,16 @@ togglbutton.render('.taskBlock tr:not(.toggl)', {observe: true}, function (elem)
 
 // Detail view
 togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, projectFunc,
+  var link, descFunc, projectFunc, parent,
     container = $('.content', elem);
 
   if (container === null) {
+    return;
+  }
+
+  parent = $('.pageType', container);
+
+  if (!parent) {
     return;
   }
 
@@ -54,7 +59,7 @@ togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
     projectName: projectFunc
   });
 
-  $('.pageType', container).appendChild(link);
+  parent.appendChild(link);
 });
 
 // Lightning

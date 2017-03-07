@@ -8,15 +8,15 @@ togglbutton.render('#filter-navigator-container:not(.toggl)', {observe: true}, f
     titleElem = $('.item-title'),
     projectElem = $('.project-info a');
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'gemini',
     description: description,
-    projectName: projectElem.innerText
+    projectName: projectElem.textContent
   });
 
   $('#filter-navigator-container').parentNode.insertBefore(link, $('#filter-navigator-container'));

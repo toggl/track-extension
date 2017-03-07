@@ -43,3 +43,24 @@ togglbutton.render('.tau-list__table__row:not(.toggl)', {observe: true}, functio
   buttonPlaceholder.insertBefore(link, buttonPlaceholder.firstChild);
 });
 
+// tasks in table view
+togglbutton.render('.tau-list-line:not(.toggl)', {observe: true}, function (elem) {
+  var link,
+    buttonPlaceholder,
+    taskId      = '#' + $('.tau-list-general_entity_id-cell', elem).textContent.trim(),
+    taskTitle   = $('.tau-list-entity_name_1line-cell', elem).textContent.trim(),
+    projectFunc = function () {
+      var projectItem =  $('.tau-list-project_abbr-unit', elem);
+      return projectItem ? projectItem.title : "";
+    };
+
+  link = togglbutton.createTimerLink({
+    className:   'targetprocess',
+    description: taskId + ' ' + taskTitle,
+    projectName: projectFunc,
+    buttonType:  'minimal'
+  });
+
+  buttonPlaceholder = $('.tau-board-unit_type_entity-name', elem);
+  buttonPlaceholder.insertBefore(link, buttonPlaceholder.firstChild);
+});

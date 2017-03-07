@@ -5,16 +5,22 @@
 togglbutton.render('body.controller-issues.action-show h2:not(.toggl)', {}, function (elem) {
   var link, description,
     numElem = $('h2'),
-    titleElem = $('.subject h3'),
+    titleElem = $('.subject h3') || "",
     projectElem = $('h1');
 
   if (!!$('.toggl-button')) {
     return;
   }
 
-  description = titleElem.innerText;
+  if (!!titleElem) {
+    description = titleElem.textContent;
+  }
+
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    if (!!description) {
+      description = " " + description;
+    }
+    description = numElem.textContent + description;
   }
 
   link = togglbutton.createTimerLink({

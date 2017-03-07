@@ -16,8 +16,8 @@ togglbutton.render('#gqItemList .gq-item-row:not(.toggl)', {observe: true}, func
     link = togglbutton.createTimerLink({
       className: 'gqueues',
       buttonType: 'minimal',
-      description: titleElem.innerText,
-      projectName: projectContainer.innerText
+      description: titleElem.textContent,
+      projectName: projectContainer.textContent
     });
 
     container.appendChild(link);

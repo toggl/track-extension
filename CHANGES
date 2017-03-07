@@ -1,337 +1,788 @@
-[0.9.2]
-- Updated integrations: Google Calendar, GMail, Google Drive, Evernote, Basecamp 3, Salesforce, Gitlab, Liquid Planner
-- Added support for Salesforce Lightning
-- Improved settings design
-- Added smooth timer update for popup timer
-- Fixed running timer check for "Start timer" link
-- Added support for mantishub.io
-- Updated Asana description fetching
-- Added improved bugtracking
-- Fixed Todoist freezing issues
-- Added volume control for Pomodoro alarm sound
-- Added support for Bugzilla 5
-- Settings style fixes
-
-[0.9.1]
-- Added support for Basecamp 3
-- Added support for OpenProject
-- Added support for Zube
-- Added support for AgenoCRM and MiniCRM
-- Changed toggl button to minimal in Remember the milk
-- Fixed Teamwork integration
-- Fixed Capsule CRM integration
-- Added project support to Unfuddle
-- Improved description fetch in Xero
-- Improved Wokrsection selectors
-- Updated SifterApp integration
-- Improved link updating for pages with multiple links
-- Added more error logging to detect integration errors
-- Added classic UI support to MantisHub
-- Redesigned login view
-- Fixed "Forgot password" link
-- Show latest entry name when hovering "Continue latest" button in dropdown
-- Show latest entry name with pomodoro notification "Continue latest" button
-- Added setting "start latest entry automatically on browser start" setting
-- Added setting "stop running entry automatically on browser quit"
-- Added setting "Stop time at workday end"
-- Added setting "Stop entry on pomodoro time end"
-- Added pomodoro support for entries started outside Toggl Button
-- Improved Pomodoro timer calculations
-- Fixed settings view issues and added animation
-- Fixed Trello integration
-
-[0.9.0]
-- Added support for Phacility
-- Added support for LiquidPlanner
-- Added support for Google Keep
-- Added support for Gingko App
-- Added support for Google Inbox
-- Added support for Wordpress
-- Added support for Kanbanery
-- Added support for Planbox
-- Added support for Zoho Books
-- Added support for Slack
-- Added support for Doit.im
-- Added support for Sunrise Calendar
-- Added support for Cloudes.me
-- Added support for eProject.me
-- Added support for Freshdesk
-- Added support for Newsletter2go
-- Added support for DevDocs
-- Added support for SourceLair
-- Added support for Remember The Milk
-- Added support for Evernote
-- Added support for Mantishub
-- Added support for ProWorkflow
-- Added support for TargetProcess
-- Added support for Visual Studio Online
-- Added support for SmartBoard
-- Added support for Confluence
-- Added support for Gogs
-- Improved start link title format
-- Fixed tags saving
-- Fixed description undefined issue
-- Unified Pomodoro Timer notification text with other notfications
-- Added setting for toggl button context menu item
-- Added "Continue latest" option to dropdown
-- Improved Error handling
-- Fixed Redbooth modal "Start timer" button issue
-- Fixed "Start timer" button in GetFlow
-- Added Agile Board support to Youtrack
-- Updated Gitlab to add issue number into description
-
-[0.8.3]
-- Fixed toggl.com url matching
-- Smaller fixes and tweaks
-[0.8.2]
-- Fixed escaping issues when saving tag
-- Added possibility to know if user has button installed while on toggl.com webpage
-[0.8.1]
-- Fixed card coping issue in Trello
-- Updated extension name and description
-- Default tracking reminder time is 60 minutes
-- Improved user data fetching
-[0.8.0]
-- Fixed Pomodoro timer sound issues
-- Updated Trello start time link to match Trello styles
-- Added "Total time tracked" to Trello cards
-[0.7.9]
-- Improved error messages text
-- Fixes for Todoist text fetching
-- Smaller bug fixes
-[0.7.8]
-- Improved settings managment
-- Show "Continue latest" option in Tracking reminder
-- Fixed updating extension icon when logging out
-- Added tabs to settings view
-- Unified input fields design in settings
-- Added animation to subsettings open/close
-- Show error message when time entry start fails
-- Fixed Toggl Button rendering in updated gitlab design
-- Added support for BitBucket pull requests
-- Fixes for Assembla updates
-- Improved Todoist description text fetching
-- Fixed edit form clear issue in dropdown
-- Fixed browser autocomplete issue in dropdown
-[0.7.7]
-- Fixed continuing latest entry with task from Pomodoro notification
-- Added failsafe for starting websocket
-- Show project color dot in dropdown edit view
-- Added tooltips to toggl logo and email in dropdown
-- Clicking the email address opens profile view in web
-- Focus description when opening edit view in dropdown
-[0.7.6]
-- Fixed Settings saving and loading
-- Fixed extension icon updates
-- When hovering setting show additional info
-- Added "Continue latest entry" button to Pomodoro timer notification
-[0.7.5]
-- Added idle detection notification
-- Show description in dropdown timer
-- Show project name in timer and in timer tooltip
-- Show project color bullet in timer
-[0.7.4]
-- Use new way to open Options
-- Added forgot password link to login view
-- Added Pomodoro Setting
-- Added support for Draftin
-- Added support for FogBugz
-- Added Bugsnag bug tracker
-[0.7.3]
-- Added Toggl Button to context menu
-- 16px Icon improvements
-- Fixed Wrike integration
-- Improved font consistency in edit view
-- Fixed Asana start button
-- Converted to Settings view to Options V2
-- Added support for Salesforce
-[0.7.2]
-- Fixed popup font consistency
-- Fixed subtask project selection for Asana
-- Fixed Youtrack project name fetch
-- Added action buttons to tracking reminder
-- Added Start timer buttons to Any.do subtasks
-- Don't show deleted projects in dropdown
-- Added usage statistics gathering
-- Added extension version and change log link to Settings view
-- Fixed task dropdown display in popup
-[0.7.1]
-- Focus tags dropdown when it's opened
-- Fixed Wunderlist styles
-- Remove active state from link when clicking on another start link
-- Fixed Toodledo start timer link positioning
-- Fixed tasks selector
-- Fixed hour calculation for durations longer than 24 hours
-- Added new google calendar url
-- X on the icon should never be shown when tracking
-[0.7.0]
-- Added Edit form to extension popup
-- Added support for Waffle.io
-- Added support for Assembla
-- Fixed Basecamp "Start timer" link issues
-- Fixed Any.Do description issue
-- Fixed Google Drive "Start timer" link
-[0.6.11]
-- HabitRPG to Habitica
-- Enabled extension options page
-[0.6.10]
-- Fixed Teamweek issues
-[0.6.9]
-- Added support for Breeze
-- Added support for BamBam
-- Added support for Wrike
-- Added support for Bugzilla
-- Added support for GQueue
-- Fixed issues with Taiga.io ui
-- Fixed issues with Teamweek ui
-- Show running entry description in running popup item tooltip
-- Fixed project name issue in github
-- Added Worksection .net and .eu domains
-[0.6.8]
-- Fixed Google Calendar description issue
-- Fixed http and https url support
-[0.6.7]
-- Fixed multi workspace issue in project dropdown
-- Added 'Save Tags' placeholder
-- Improved popup menu syncing
-- Improved Login form styles
-[0.6.6]
-- Added sorting for tags
-- Added hover titles to project, tag and task selections
-[0.6.5]
-- Added support for TestRail
-- Projects grouped by Workspaces and Clients
-- Added "Start timer" link to Extension icon menu
-- Added running timer to Extension icon menu
-- Added user email to Extension icon menu
-- Wunderlist UI improvements
-- Teamweek domain name fix
-[0.6.4]
-- Fixed edit popup position in Basecamp Next
-[0.6.3]
-- Fixed setting entry billable if project is billable
-[0.6.2]
-- Added support for Flow
-- Added support for Google Calendar
-- Added support for Sprint.ly
-- Added support for Basecamp Classis (basecamphq.com)
-- Improvements for Taiga.io implementation
-- Improvements for Axosoft implementation
-- Don't display reminders when user is not logged in
-- Improved edit popup position calculations
-- Other smaller improvements and fixes
-[0.6.1]
-- Fixed issues with non-www toggl.com login
-- Added support for Help Scout
-[0.6.0]
-- Added support for Countersoft Gemini
-- Added support for esa.io
-- Added support for drupal.org
-- Fixed Todoist description parsing for links
-[0.5.11]
-- Added atlassian.com to support all JIRA versions
-[0.5.10]
-- Added support for Axosoft
-- Updated edit form hide button to use &times;
-- Fixed Todoist description parsing
-[0.5.9]
-- Added support for Taiga.io
-- Added support for HabitRPG
-- Fixes for GitLab
-- Todoist description parse fix
-[0.5.8]
-- Fixed updating Toggl Button link
-- Fixed Toggl Button in Zendesk
-- Fixed Asana new task description issue
-[0.5.7]
-- Added support for Google mail
-[0.5.6]
-- Fixed minimal mode Toggl Button link refreshing
-[0.5.5]
-- Fixed too bold permissions
-- Removed OTRS because of too strong permissions
-[0.5.4]
-- Grouping projects by workspaces
-- Show client names in project dropdown
-- Show only active projects in dropdown
-- Added tasks dropdown for Pro users
-- Added support for OTRS
-[0.5.3]
-- Fixed Todoist description parsing issue
-[0.5.2]
-- Removed references to deprecated api
-- Clear selected tags when reopening edit form
-- Update "Start timer" link when running entry has changed
-- Reworked user sync so that tabs permission can be removed
-[0.5.1]
-- Added support for Teamwork
-- Style fixes
-[0.5.0]
-- Updated Toggl button position in toodledo
-- Extension icon updating fix
-- UI fixes for different tools
-[0.4.9]
-- Fixed invisible project names in dropdown
-- Fixed some minor UI issues
-[0.4.8]
-- Fixed minor UI issues
-- Removed Font Awesome because issues with some tools
-[0.4.7]
-- Added Font Awesome icons
-[0.4.6]
-- New design for post start popup
-- Fixed Toggl Button in Any.do
-- Added Youtrack 6 support
-- Fixed settings save issue
-- Added duration mode support
-[0.4.5]
-- Added dayly automatic sync
-- Added sync menu item
-[0.4.4]
-- Added support for Toodledo
-- Fixed toggl-button's location for Teamweek's new design
-- Post start popup is always fully visible
-- Post start popup form style fixes
-[0.4.3]
-- Added "Remind me to track" setting
-- Added tags selection to post start popup
-[0.4.2]
-- Added support for Wunderlist
-- Added support for Trac
-- Added websocket support
-- Improved icons
-- Added Settings view
-- Position and z-index fix for post start popup
-[0.4.1]
-- Fixed packaging issue
-[0.4.0]
-- Convert from Page extension to Browser extension
-- Added post Start popup
-- Added Browser extension popup
-- Added Login and logout functionality
-- Added high resolution icons
-- Added offline/online and running/not running indicators to extension icon
-[0.3.9]
-- Github - fix content script for new issues layout
-- Todoist - add button after the notes and strip tags
-[0.3.8]
-- Added support for Todoist
-- Fixed button in new Github issues page
-[0.3.7]
-- Added support for Any.Do
-- Added support for ZenDesk
-- Time entry is marked as billable if the project is billable
-[0.3.6]
-- API requests refactoring
-- Save logged in user to extension localStorage
-- Resolve the 999.00 hours problem with incorrect date and/or time
-[0.3.5]
-- Fix toggl.com regexp to support push state
-[0.3.4]
-- fetchUser API urls corrected
-- Podio content script refactoring
-[0.3.3]
-- Added support for CapsuleCRM
-- Added support for YouTrack InCloud
-- Added support for Xero accountancy software
-- Fixed toggl-button's location for Teamweek's new design
+{
+  "versions": [
+    {
+      "version": "1.1.2",
+      "rows": [
+        "Added support for backlog.jp",
+        "Tags are now filtered by the active workspace",
+        "Fixed issues with the button not appearing in Github"
+      ]
+    },
+    {
+      "version": "1.1.1",
+      "rows": [
+        "Added support for Intercom",
+        "Moved button in github to sidebar",
+        "Fixed issues with the button not appearing in Trello"
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "rows": [
+        "Added support for Feedly",
+        "Added support for Teamleader",
+        "Added support for Asana Boards",
+        "Updated Workfront integration",
+        "Fixed Remember the Milk integration",
+        "Fixed permissions list loading issues",
+        "Added custom domain settings for Firefox",
+        "Changed logout link to icon",
+        "Fixed Toggl Button slowing down Trello issue",
+        "Fixed custom domain delete issue",
+        "Avoid edit popup being larger than page height"
+      ]
+    },
+    {
+      "version": "1.0.18",
+      "rows": [
+        "Fixed billable flag loading issue",
+        "Fixed MeisterTask start timer issues",
+        "Fixed billable flag save issue"
+      ]
+    },
+    {
+      "version": "1.0.17",
+      "rows": [
+        "Fixed permission list loading issues",
+        "Added more error logging",
+        "Disable start timer link functionality when not logged in"
+      ]
+    },
+    {
+      "version": "1.0.16",
+      "rows": [
+        "Fixes for new Asana UI",
+        "Show list on 5 latest unique time entries",
+        "Fixed Start timer link placement in Targetprocess table view",
+        "Added support for desk.com",
+        "Fixed workspace restriction issues when changing project",
+        "Fixed no start time saved issue"
+      ]
+    },
+    {
+      "version": "1.0.15",
+      "rows": [
+        "Added support for clubhouse.io",
+        "Text trim fixed for Bitbucket, Fresdesk and Remember The Milk",
+        "Added more place to show start timer link in eproject.me",
+        "Fixed Settings permissions tab empty issue",s
+        "Updated time entry requests to API v9"
+      ]
+    },
+    {
+      "version": "1.0.13",
+      "rows": [
+        "Fixed github integration",
+        "Added table view support to TargetProcess",
+        "Updated Salesforce integration",
+        "Fixed redmine dom object check"
+      ]
+    },
+    {
+      "version": "1.0.12",
+      "rows": [
+        "Fixed billable updating issue",
+        "Fixed undefined param issues in content scripts",
+        "Updated instructions text"
+      ]
+    },
+    {
+      "version": "1.0.11",
+      "rows": [
+        "Dynamic content generation security and performance improvements",
+        "Safer analytics gathering",
+        "Updated Bugsnag to v3",
+        "Removed executable json file"
+      ]
+    },
+    {
+      "version": "1.0.10",
+      "rows": [
+        "Added support for overv.io",
+        "Style fixes for autocomplete",
+        "Improvements for permission enable/disable"
+      ]
+    },
+    {
+      "version": "1.0.9",
+      "rows": [
+        "Added support for custom colors",
+        "Smaller style fixes",
+        "Firefox conditional logic",
+        "Meistertask fixes"
+      ]
+    },
+    {
+      "version": "1.0.8",
+      "rows": [
+        "Added support for MeisterTask",
+        "Added support for Taiga 3.0",
+        "Fixed edit form issues in Trello",
+        "Fixed resetting edit form on close",
+        "Fixed tabbing and added keyboard events to submit",
+        "Smaller style fixes"
+      ]
+    },
+    {
+      "version": "1.0.7",
+      "rows": [
+        "Added support for OnlyOffice",
+        "Fixed Pomodoro loading issues with data outside Toggl Button",
+        "Fixed Pomodoro notification not triggering",
+        "Added Billable and tag icon to popup timer",
+        "Added Billable flag editing",
+        "Fixed slow Settings loading wiht large amoung of projects",
+        "Fixed user-agent edit issue",
+        "Show tool name instead of url in custom domain list"
+      ]
+    },
+    {
+      "version": "1.0.6",
+      "rows": [
+        "Fixed same name client issue with multiple workspaces",
+        "Improvements to disabling all permissions"
+      ]
+    },
+    {
+      "version": "1.0.5",
+      "rows": [
+        "Fixes for permission issues",
+        "Fixed long tag name issue",
+        "Fixed default project select issue",
+        "Fixed custom domain remove issue"
+      ]
+    },
+    {
+      "version": "1.0.4",
+      "rows": [
+        "Fixes and updates for Youtrack",
+        "Fixed agenocrm and minicrm issues",
+        "Added Toggl Button to gitlab merge request",
+        "Improved permissions handling",
+        "Fixed issues with pomodoro update and sync",
+        "Fixed long project name hiding tasks",
+        "Fixed github private projects name matching",
+        "Added support for Workfront (attask)",
+        "Fixed default project setting billable"
+      ]
+    },
+    {
+      "version": "1.0.3",
+      "rows": [
+        "Fixed Google Inbox integration",
+        "Autocomplete style fixes",
+        "Fixed Google Docs multiple load issue",
+        "Fixed submitting popup with Enter"
+      ]
+    },
+    {
+      "version": "1.0.2",
+      "rows": [
+        "Fixed Default project assignement issues",
+        "Added project select with autocomplete",
+        "Added project color bullet to project select",
+        "Moved task select to project select dropdown",
+        "Added autocomplete to Tag selection",
+        "Added possibility to add new tags from edit view",
+        "Popup view design update to minimalistic icon based layout",
+        "Updated github integration",
+        "Updated Zube.io integration",
+        "Updated Visual Studio on line integration",
+        "Added Sherpadesk integration",
+        "Added Exana.io (Phacility) integration",
+        "Added tasklist item support for Google Keep",
+        "Added support for new Teamwork Projects UI"
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "rows": [
+        "Added support for Bitrix24",
+        "Added support for Rindle",
+        "Added support for TickTick",
+        "Added Eventum to custom domains select",
+        "Added filter field to the top of Settings permissions list",
+        "Added Pomodoro progress meter to extension icon",
+        "Fixed Assembla, Habitica, Youtrack and Visual Studio Online integrations",
+        "Fixed multiple timer links issue in Bitbucket pull request page",
+        "Fixed Toggl Button Pomodoro stopping entries created elsewhere"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "rows": [
+        "Implemented new permissions system",
+        "Added possibility to enable/disable integrations from Settings",
+        "Added possibility to define custom domains in Settings",
+        "Fixed Remember the milk search issue",
+        "Fixed Slack integration"
+      ]
+    },
+    {
+      "version": "0.9.2",
+      "rows": [
+        "Updated integrations: Google Calendar, GMail, Google Drive, Evernote, Basecamp 3, Salesforce, Gitlab, Liquid Planner",
+        "Added support for Salesforce Lightning",
+        "Improved settings design",
+        "Added smooth timer update for popup timer",
+        "Fixed running timer check for 'Start timer' link",
+        "Added support for mantishub.io",
+        "Updated Asana description fetching",
+        "Added improved bugtracking",
+        "Fixed Todoist freezing issues",
+        "Added volume control for Pomodoro alarm sound",
+        "Added support for Bugzilla 5",
+        "Settings style fixes"
+      ]
+    },
+    {
+      "version": "0.9.1",
+      "rows": [
+        "Added support for Basecamp 3",
+        "Added support for OpenProject",
+        "Added support for Zube",
+        "Added support for AgenoCRM and MiniCRM",
+        "Changed toggl button to minimal in Remember the milk",
+        "Fixed Teamwork integration",
+        "Fixed Capsule CRM integration",
+        "Added project support to Unfuddle",
+        "Improved description fetch in Xero",
+        "Improved Wokrsection selectors",
+        "Updated SifterApp integration",
+        "Improved link updating for pages with multiple links",
+        "Added more error logging to detect integration errors",
+        "Added classic UI support to MantisHub",
+        "Redesigned login view",
+        "Fixed 'Forgot password' link",
+        "Show latest entry name when hovering 'Continue latest' button in dropdown",
+        "Show latest entry name with pomodoro notification 'Continue latest' button",
+        "Added setting 'start latest entry automatically on browser start' setting",
+        "Added setting 'stop running entry automatically on browser quit'",
+        "Added setting 'Stop time at workday end'",
+        "Added setting 'Stop entry on pomodoro time end'",
+        "Added pomodoro support for entries started outside Toggl Button",
+        "Improved Pomodoro timer calculations",
+        "Fixed settings view issues and added animation",
+        "Fixed Trello integration"
+      ]
+    },
+    {
+      "version": "0.9.0",
+      "rows": [
+        "Added support for Phacility",
+        "Added support for LiquidPlanner",
+        "Added support for Google Keep",
+        "Added support for Gingko App",
+        "Added support for Google Inbox",
+        "Added support for Wordpress",
+        "Added support for Kanbanery",
+        "Added support for Planbox",
+        "Added support for Zoho Books",
+        "Added support for Slack",
+        "Added support for Doit.im",
+        "Added support for Sunrise Calendar",
+        "Added support for Cloudes.me",
+        "Added support for eProject.me",
+        "Added support for Freshdesk",
+        "Added support for Newsletter2go",
+        "Added support for DevDocs",
+        "Added support for SourceLair",
+        "Added support for Remember The Milk",
+        "Added support for Evernote",
+        "Added support for Mantishub",
+        "Added support for ProWorkflow",
+        "Added support for TargetProcess",
+        "Added support for Visual Studio Online",
+        "Added support for SmartBoard",
+        "Added support for Confluence",
+        "Added support for Gogs",
+        "Improved start link title format",
+        "Fixed tags saving",
+        "Fixed description undefined issue",
+        "Unified Pomodoro Timer notification text with other notfications",
+        "Added setting for toggl button context menu item",
+        "Added 'Continue latest' option to dropdown",
+        "Improved Error handling",
+        "Fixed Redbooth modal 'Start timer' button issue",
+        "Fixed 'Start timer' button in GetFlow",
+        "Added Agile Board support to Youtrack",
+        "Updated Gitlab to add issue number into description"
+      ]
+    },
+    {
+      "version": "0.8.3",
+      "rows": [
+        "Fixed toggl.com url matching",
+        "Smaller fixes and tweaks"
+      ]
+    },
+    {
+      "version": "0.8.2",
+      "rows": [
+        "Fixed escaping issues when saving tag",
+        "Added possibility to know if user has button installed while on toggl.com webpage"
+      ]
+    },
+    {
+      "version": "0.8.1",
+      "rows": [
+        "Fixed card coping issue in Trello",
+        "Updated extension name and description",
+        "Default tracking reminder time is 60 minutes",
+        "Improved user data fetching"
+      ]
+    },
+    {
+      "version": "0.8.0",
+      "rows": [
+        "Fixed Pomodoro timer sound issues",
+        "Updated Trello start time link to match Trello styles",
+        "Added 'Total time tracked' to Trello cards"
+      ]
+    },
+    {
+      "version": "0.7.9",
+      "rows": [
+        "Improved error messages text",
+        "Fixes for Todoist text fetching",
+        "Smaller bug fixes"
+      ]
+    },
+    {
+      "version": "0.7.8",
+      "rows": [
+        "Improved settings managment",
+        "Show 'Continue latest' option in Tracking reminder",
+        "Fixed updating extension icon when logging out",
+        "Added tabs to settings view",
+        "Unified input fields design in settings",
+        "Added animation to subsettings open/close",
+        "Show error message when time entry start fails",
+        "Fixed Toggl Button rendering in updated gitlab design",
+        "Added support for BitBucket pull requests",
+        "Fixes for Assembla updates",
+        "Improved Todoist description text fetching",
+        "Fixed edit form clear issue in dropdown",
+        "Fixed browser autocomplete issue in dropdown"
+      ]
+    },
+    {
+      "version": "0.7.7",
+      "rows": [
+        "Fixed continuing latest entry with task from Pomodoro notification",
+        "Added failsafe for starting websocket",
+        "Show project color dot in dropdown edit view",
+        "Added tooltips to toggl logo and email in dropdown",
+        "Clicking the email address opens profile view in web",
+        "Focus description when opening edit view in dropdown"
+      ]
+    },
+    {
+      "version": "0.7.6",
+      "rows": [
+        "Fixed Settings saving and loading",
+        "Fixed extension icon updates",
+        "When hovering setting show additional info",
+        "Added 'Continue latest entry' button to Pomodoro timer notification"
+      ]
+    },
+    {
+      "version": "0.7.5",
+      "rows": [
+        "Added idle detection notification",
+        "Show description in dropdown timer",
+        "Show project name in timer and in timer tooltip",
+        "Show project color bullet in timer"
+      ]
+    },
+    {
+      "version": "0.7.4",
+      "rows": [
+        "Use new way to open Options",
+        "Added forgot password link to login view",
+        "Added Pomodoro Setting",
+        "Added support for Draftin",
+        "Added support for FogBugz",
+        "Added Bugsnag bug tracker"
+      ]
+    },
+    {
+      "version": "0.7.3",
+      "rows": [
+        "Added Toggl Button to context menu",
+        "16px Icon improvements",
+        "Fixed Wrike integration",
+        "Improved font consistency in edit view",
+        "Fixed Asana start button",
+        "Converted to Settings view to Options V2",
+        "Added support for Salesforce"
+      ]
+    },
+    {
+      "version": "0.7.2",
+      "rows": [
+        "Fixed popup font consistency",
+        "Fixed subtask project selection for Asana",
+        "Fixed Youtrack project name fetch",
+        "Added action buttons to tracking reminder",
+        "Added Start timer buttons to Any.do subtasks",
+        "Don't show deleted projects in dropdown",
+        "Added usage statistics gathering",
+        "Added extension version and change log link to Settings view",
+        "Fixed task dropdown display in popup"
+      ]
+    },
+    {
+      "version": "0.7.1",
+      "rows": [
+        "Focus tags dropdown when it's opened",
+        "Fixed Wunderlist styles",
+        "Remove active state from link when clicking on another start link",
+        "Fixed Toodledo start timer link positioning",
+        "Fixed tasks selector",
+        "Fixed hour calculation for durations longer than 24 hours",
+        "Added new google calendar url",
+        "X on the icon should never be shown when tracking"
+      ]
+    },
+    {
+      "version": "0.7.0",
+      "rows": [
+        "Added Edit form to extension popup",
+        "Added support for Waffle.io",
+        "Added support for Assembla",
+        "Fixed Basecamp 'Start timer' link issues",
+        "Fixed Any.Do description issue",
+        "Fixed Google Drive 'Start timer' link"
+      ]
+    },
+    {
+      "version": "0.6.11",
+      "rows": [
+        "HabitRPG to Habitica",
+        "Enabled extension options page"
+      ]
+    },
+    {
+      "version": "0.6.10",
+      "rows": [
+        "Fixed Teamweek issues"
+      ]
+    },
+    {
+      "version": "0.6.9",
+      "rows": [
+        "Added support for Breeze",
+        "Added support for BamBam",
+        "Added support for Wrike",
+        "Added support for Bugzilla",
+        "Added support for GQueue",
+        "Fixed issues with Taiga.io ui",
+        "Fixed issues with Teamweek ui",
+        "Show running entry description in running popup item tooltip",
+        "Fixed project name issue in github",
+        "Added Worksection .net and .eu domains"
+      ]
+    },
+    {
+      "version": "0.6.8",
+      "rows": [
+        "Fixed Google Calendar description issue",
+        "Fixed http and https url support"
+      ]
+    },
+    {
+      "version": "0.6.7",
+      "rows": [
+        "Fixed multi workspace issue in project dropdown",
+        "Added 'Save Tags' placeholder",
+        "Improved popup menu syncing",
+        "Improved Login form styles"
+      ]
+    },
+    {
+      "version": "0.6.6",
+      "rows": [
+        "Added sorting for tags",
+        "Added hover titles to project, tag and task selections"
+      ]
+    },
+    {
+      "version": "0.6.5",
+      "rows": [
+        "Added support for TestRail",
+        "Projects grouped by Workspaces and Clients",
+        "Added 'Start timer' link to Extension icon menu",
+        "Added running timer to Extension icon menu",
+        "Added user email to Extension icon menu",
+        "Wunderlist UI improvements",
+        "Teamweek domain name fix"
+      ]
+    },
+    {
+      "version": "0.6.4",
+      "rows": [
+        "Fixed edit popup position in Basecamp Next"
+      ]
+    },
+    {
+      "version": "0.6.3",
+      "rows": [
+        "Fixed setting entry billable if project is billable"
+      ]
+    },
+    {
+      "version": "0.6.2",
+      "rows": [
+        "Added support for Flow",
+        "Added support for Google Calendar",
+        "Added support for Sprint.ly",
+        "Added support for Basecamp Classic (basecamphq.com)",
+        "Improvements for Taiga.io implementation",
+        "Improvements for Axosoft implementation",
+        "Don't display reminders when user is not logged in",
+        "Improved edit popup position calculations",
+        "Other smaller improvements and fixes"
+      ]
+    },
+    {
+      "version": "0.6.1",
+      "rows": [
+        "Fixed issues with non-www toggl.com login",
+        "Added support for Help Scout"
+      ]
+    },
+    {
+      "version": "0.6.0",
+      "rows": [
+        "Added support for Countersoft Gemini",
+        "Added support for esa.io",
+        "Added support for drupal.org",
+        "Fixed Todoist description parsing for links"
+      ]
+    },
+    {
+      "version": "0.5.11",
+      "rows": [
+        "Added atlassian.com to support all JIRA versions"
+      ]
+    },
+    {
+      "version": "0.5.10",
+      "rows": [
+        "Added support for Axosoft",
+        "Updated edit form hide button to use &times;",
+        "Fixed Todoist description parsing"
+      ]
+    },
+    {
+      "version": "0.5.9",
+      "rows": [
+        "Added support for Taiga.io",
+        "Added support for HabitRPG",
+        "Fixes for GitLab",
+        "Todoist description parse fix"
+      ]
+    },
+    {
+      "version": "0.5.8",
+      "rows": [
+        "Fixed updating Toggl Button link",
+        "Fixed Toggl Button in Zendesk",
+        "Fixed Asana new task description issue"
+      ]
+    },
+    {
+      "version": "0.5.7",
+      "rows": [
+        "Added support for Google mail"
+      ]
+    },
+    {
+      "version": "0.5.6",
+      "rows": [
+        "Fixed minimal mode Toggl Button link refreshing"
+      ]
+    },
+    {
+      "version": "0.5.5",
+      "rows": [
+        "Fixed too bold permissions",
+        "Removed OTRS because of too strong permissions"
+      ]
+    },
+    {
+      "version": "0.5.4",
+      "rows": [
+        "Grouping projects by workspaces",
+        "Show client names in project dropdown",
+        "Show only active projects in dropdown",
+        "Added tasks dropdown for Pro users",
+        "Added support for OTRS"
+      ]
+    },
+    {
+      "version": "0.5.3",
+      "rows": [
+        "Fixed Todoist description parsing issue"
+      ]
+    },
+    {
+      "version": "0.5.2",
+      "rows": [
+        "Removed references to deprecated api",
+        "Clear selected tags when reopening edit form",
+        "Update 'Start timer' link when running entry has changed",
+        "Reworked user sync so that tabs permission can be removed"
+      ]
+    },
+    {
+      "version": "0.5.1",
+      "rows": [
+        "Added support for Teamwork",
+        "Style fixes"
+      ]
+    },
+    {
+      "version": "0.5.0",
+      "rows": [
+        "Updated Toggl button position in toodledo",
+        "Extension icon updating fix",
+        "UI fixes for different tools"
+      ]
+    },
+    {
+      "version": "0.4.9",
+      "rows": [
+        "Fixed invisible project names in dropdown",
+        "Fixed some minor UI issues"
+      ]
+    },
+    {
+      "version": "0.4.8",
+      "rows": [
+        "Fixed minor UI issues",
+        "Removed Font Awesome because issues with some tools"
+      ]
+    },
+    {
+      "version": "0.4.7",
+      "rows": [
+        "Added Font Awesome icons"
+      ]
+    },
+    {
+      "version": "0.4.6",
+      "rows": [
+        "New design for post start popup",
+        "Fixed Toggl Button in Any.do",
+        "Added Youtrack 6 support",
+        "Fixed settings save issue",
+        "Added duration mode support"
+      ]
+    },
+    {
+      "version": "0.4.5",
+      "rows": [
+        "Added dayly automatic sync",
+        "Added sync menu item"
+      ]
+    },
+    {
+      "version": "0.4.4",
+      "rows": [
+        "Added support for Toodledo",
+        "Fixed toggl-button's location for Teamweek's new design",
+        "Post start popup is always fully visible",
+        "Post start popup form style fixes"
+      ]
+    },
+    {
+      "version": "0.4.3",
+      "rows": [
+        "Added 'Remind me to track' setting",
+        "Added tags selection to post start popup"
+      ]
+    },
+    {
+      "version": "0.4.2",
+      "rows": [
+        "Added support for Wunderlist",
+        "Added support for Trac",
+        "Added websocket support",
+        "Improved icons",
+        "Added Settings view",
+        "Position and z-index fix for post start popup"
+      ]
+    },
+    {
+      "version": "0.4.1",
+      "rows": [
+        "Fixed packaging issue"
+      ]
+    },
+    {
+      "version": "0.4.0",
+      "rows": [
+        "Convert from Page extension to Browser extension",
+        "Added post Start popup",
+        "Added Browser extension popup",
+        "Added Login and logout functionality",
+        "Added high resolution icons",
+        "Added offline/online and running/not running indicators to extension icon"
+      ]
+    },
+    {
+      "version": "0.3.9",
+      "rows": [
+        "Github - fix content script for new issues layout",
+        "Todoist - add button after the notes and strip tags"
+      ]
+    },
+    {
+      "version": "0.3.8",
+      "rows": [
+        "Added support for Todoist",
+        "Fixed button in new Github issues page"
+      ]
+    },
+    {
+      "version": "0.3.7",
+      "rows": [
+        "Added support for Any.Do",
+        "Added support for ZenDesk",
+        "Time entry is marked as billable if the project is billable"
+      ]
+    },
+    {
+      "version": "0.3.6",
+      "rows": [
+        "API requests refactoring",
+        "Save logged in user to extension localStorage",
+        "Resolve the 999.00 hours problem with incorrect date and/or time"
+      ]
+    },
+    {
+      "version": "0.3.5",
+      "rows": [
+        "Fix toggl.com regexp to support push state"
+      ]
+    },
+    {
+      "version": "0.3.4",
+      "rows": [
+        "fetchUser API urls corrected",
+        "Podio content script refactoring"
+      ]
+    },
+    {
+      "version": "0.3.3",
+      "rows": [
+        "Added support for CapsuleCRM",
+        "Added support for YouTrack InCloud",
+        "Added support for Xero accountancy software",
+        "Fixed toggl-button's location for Teamweek's new design"
+      ]
+    }
+  ]
+}

@@ -2,15 +2,15 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#issue-header', {}, function (elem) {
+togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
   var link, description,
     numElem = $('.issue-id'),
     titleElem = $('#issue-title'),
     projectElem = $('.repo-link');
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent.trim() + " " + description;
   }
 
   link = togglbutton.createTimerLink({
@@ -22,15 +22,15 @@ togglbutton.render('#issue-header', {}, function (elem) {
   $('#issue-header').appendChild(link);
 });
 
-togglbutton.render('#pull-request-header', {}, function (elem) {
+togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
   var link, description,
     numElem = $('.pull-request-self-link'),
     titleElem = $('.pull-request-title'),
     projectElem = $('.repo-link');
 
-  description = titleElem.innerText;
+  description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.innerText + " " + description;
+    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({

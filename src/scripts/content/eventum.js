@@ -3,11 +3,11 @@
 
 'use strict';
 
-togglbutton.render('#issue_view:not(.toggl)', {}, function (elem) {
+togglbutton.render('.issue_view:not(.toggl)', {}, function (elem) {
   var
     projectSelect, project, link, container, spanTag,
-    issue_id = $('#issue_overview > div.title > a', elem).innerHTML,
-    description = $('#issue_overview div#summary div.display', elem).textContent;
+    issue_id = $('#issue_overview', elem).getAttribute('data-issue-id'),
+    description = $('#issue_overview #issue_summary', elem).textContent;
 
   // find the project dropdown
   // if the dropdown exists, its multiproject
@@ -23,7 +23,8 @@ togglbutton.render('#issue_view:not(.toggl)', {}, function (elem) {
     projectName: project
   });
 
-  container = $('#issue_overview div.title', elem);
+  container = $('div#issue_menu', elem);
+
   spanTag = document.createElement("span");
-  container.appendChild(spanTag.appendChild(link));
+  container.parentNode.appendChild(spanTag.appendChild(link));
 });

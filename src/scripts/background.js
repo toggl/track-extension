@@ -30,7 +30,7 @@ TogglButton = {
   $fullVersion: ("TogglButton/" + chrome.runtime.getManifest().version),
   $version: (chrome.runtime.getManifest().version),
   queue: [],
-  customFormatTokens: { taskId: '{{taskid}}', description: '{{description}}' },
+  customFormatTokens: { id: '{{id}}', description: '{{description}}' },
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
@@ -384,7 +384,7 @@ TogglButton = {
       created_with: timeEntry.createdWith || TogglButton.$fullVersion
     };
 
-    entry.time_entry.description = TogglButton.applyCustomFormat(timeEntry.taskId, entry.time_entry.description);
+    entry.description = TogglButton.applyCustomFormat(timeEntry.id, entry.description);
 
     if (timeEntry.projectName !== null && !entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);
@@ -1567,11 +1567,11 @@ TogglButton = {
     if(Db.get('useCustomFormat')) {
       var customFormat = Db.get('customFormat');
 
-      if (!taskId) {
-        taskId = '';
+      if (!id) {
+        id = '';
       }
 
-      customFormat = customFormat.replace(TogglButton.customFormatTokens.taskId, taskId);
+      customFormat = customFormat.replace(TogglButton.customFormatTokens.id, id);
 
       if (description) {
         customFormat = customFormat.replace(TogglButton.customFormatTokens.description, description);
@@ -1579,9 +1579,9 @@ TogglButton = {
 
       return customFormat;
     } else {
-      if (taskId) {
+      if (id) {
         // fallback with ID
-        return taskId + ' ' + description;
+        return id + ' ' + description;
       } else {
         // fallback without ID
         return description;

@@ -50,7 +50,7 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
 
   link = togglbutton.createTimerLink({
     className: 'jira',
-    taskId: id,
+    id: id,
     description: description,
     projectName: projectElem && projectElem.textContent
   });

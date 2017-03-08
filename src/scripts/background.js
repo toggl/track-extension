@@ -1579,9 +1579,11 @@ TogglButton = {
 
       customFormat = customFormat.replace(TogglButton.customFormatTokens.id, id);
 
-      if (description) {
-        customFormat = customFormat.replace(TogglButton.customFormatTokens.description, description);
+      if (!description) {
+        description = '';
       }
+
+      customFormat = customFormat.replace(TogglButton.customFormatTokens.description, description);
 
       return customFormat;
     } else {

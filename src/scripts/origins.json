@@ -328,8 +328,8 @@
     "url": "*://*.salesforce.com/*",
     "name": "Salesforce"
   },
-  "force.com": {
-    "url": "*://*.force.com/*",
+  "lightning.force.com": {
+    "url": "*://*.lightning.force.com/*",
     "name": "Salesforce Lightning",
     "file": "salesforce.js"
   },

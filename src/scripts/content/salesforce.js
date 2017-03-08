@@ -63,7 +63,7 @@ togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
 });
 
 // Lightning
-togglbutton.render('.sfaTaskCommon.sfaTaskRow:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.runtime_sales_activitiesTaskCommon.runtime_sales_activitiesTaskRow:not(.toggl)', {observe: true}, function (elem) {
   var link, descFunc, projectFunc;
 
   descFunc = function () {
@@ -71,7 +71,7 @@ togglbutton.render('.sfaTaskCommon.sfaTaskRow:not(.toggl)', {observe: true}, fun
   };
 
   projectFunc = function () {
-    return $(".sfaTaskContentFields ul").lastChild.textContent;
+    return $(".runtime_sales_activitiesTaskContentFields ul").lastChild.textContent;
   };
 
   link = togglbutton.createTimerLink({
@@ -81,5 +81,5 @@ togglbutton.render('.sfaTaskCommon.sfaTaskRow:not(.toggl)', {observe: true}, fun
     buttonType: "minimal"
   });
 
-  $('.sfaTaskContent', elem).appendChild(link);
+  $('.left', elem).appendChild(link);
 });

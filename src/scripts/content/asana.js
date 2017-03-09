@@ -54,7 +54,7 @@ togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe
 });
 
 // Board view
-togglbutton.render('.BoardCard.BoardColumn-item:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.BoardCard.BoardColumnCardsContainer-item:not(.toggl)', {observe: true}, function (elem) {
   if (!!$('.toggl-button', elem)) {
     return;
   }

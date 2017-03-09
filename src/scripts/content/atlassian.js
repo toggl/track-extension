@@ -19,7 +19,7 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (e
 
   link = togglbutton.createTimerLink({
     className: 'jira',
-    taskId: id,
+    id: id,
     description: description,
     projectName: projectElem && projectElem.textContent
   });

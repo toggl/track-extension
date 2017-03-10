@@ -325,11 +325,11 @@
     "name": "Rindle"
   },
   "salesforce.com": {
-    "url": "*://*.salesforce.com/*",
+    "url": "*://*.salesforce.com/*,*://*.my.salesforce.com/*",
     "name": "Salesforce"
   },
   "force.com": {
-    "url": "*://*.force.com/*",
+    "url": "*://*.force.com/*,*://*.lightning.force.com/*",
     "name": "Salesforce Lightning",
     "file": "salesforce.js"
   },

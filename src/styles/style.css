@@ -326,6 +326,35 @@ only screen and (min-resolution: 192dpi) {
   margin-top: 10px;
 }
 
+/*********** BUGIFY ***********/
+.toggl-button.bugify{
+  height: auto;
+}
+
+.toggl-button.bugify.active{
+  color: rgb(255,255,255) !important;
+}
+
+.column-toggl{
+  padding-left: 20px;
+  width: 100px;
+  text-align: right;
+}
+
+.column-toggl > a.toggl-button.active, .box a.toggl-button.active{
+  background: #c63929;
+  background: -moz-linear-gradient(top,#ee432e 0,#ca1725 100%);
+  background: -webkit-gradient(linear,0% 0,0% 100%,from(#ee432e),to(#ca1725));
+  border: 1px solid #951100;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255,115,100,0.4);
+  box-shadow: inset 0 0 0 1px rgba(255,115,100,0.4);
+  color: rgb(255,255,255) !important;
+}
+
+#toggl-button-edit-form a.toggl-button.bugify{
+  color: #638a99 !important;
+}
+
 /********* BITBUCKET *********/
 .toggl-button.bitbucket {
   border-color: #ccc;

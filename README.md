@@ -14,6 +14,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Bitbucket][15]
   - [Bitrix24][82]
   - [Breeze][42]
+  - [Bugify][97]
   - [Bugzilla][41]
   - [CapsuleCRM][20]
   - [Cloudes][63]
@@ -240,6 +241,7 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [94]: http://www.teamleader.eu/
 [95]: https://www.intercom.com/
 [96]: https://www.backlog.jp/
+[97]: https://bugify.com/
 
 [98]: https://github.com/toggl/toggl-button/wiki/User-requested-buttons
 [99]: https://github.com/toggl/toggl-button/pulls

@@ -60,6 +60,9 @@
     "url": "*://app.breeze.pm/*",
     "name": "Breeze"
   },
+  "bugify": {
+    "name": "Bugify"
+  },
   "bugzilla.mozilla.org": {
     "url": "*://bugzilla.mozilla.org/*",
     "name": "Bugzilla"

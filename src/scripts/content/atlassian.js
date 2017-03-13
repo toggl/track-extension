@@ -14,12 +14,11 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (e
   description = titleElem.textContent;
   if (numElem !== null) {
     id = numElem.innerText;
-    description = numElem.textContent + " " + description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'jira',
-    taskId: id,
+    id: id,
     description: description,
     projectName: projectElem && projectElem.textContent
   });
@@ -41,16 +40,11 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
 
   if (numElem !== null) {
     id = numElem.innerText;
-
-    if (!!description) {
-      description = " " + description;
-    }
-    description = numElem.textContent + description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'jira',
-    taskId: id,
+    id: id,
     description: description,
     projectName: projectElem && projectElem.textContent
   });

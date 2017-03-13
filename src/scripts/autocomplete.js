@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true */
-/*global document: false */
+/*global document: false, window: false */
 "use strict";
 
 var noop = function () { return undefined; };
@@ -34,11 +34,11 @@ AutoComplete.prototype.addEvents = function () {
     setTimeout(function () {that.filter.focus(); }, 50);
   });
 
-  that.filter.addEventListener('focus', function (e) {
-    that.filter.parentNode.classList.add("open");
-    that.listItems = that.el.querySelectorAll(that.item);
-    that.updateHeight();
-  });
+  window.addEventListener('focus', function (e) {
+    if (e.target === that.filter) {
+      that.openDropdown();
+    }
+  }, true);
 
   that.filter.addEventListener('keydown', function (e) {
     if (e.code === "Tab" || e.code === "Enter") {
@@ -74,6 +74,12 @@ AutoComplete.prototype.clearFilters = function () {
   for (i = 0; i < b.length; i++) {
     b[i].classList.remove("tasklist-opened");
   }
+};
+
+AutoComplete.prototype.openDropdown = function () {
+  this.filter.parentNode.classList.add("open");
+  this.listItems = this.el.querySelectorAll(this.item);
+  this.updateHeight();
 };
 
 AutoComplete.prototype.closeDropdown = function (t) {

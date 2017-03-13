@@ -44,9 +44,9 @@ var Db = {
     }
 
     if (!TogglOrigins[origin]) {
-      // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
+      // Handle cases where subdomain is used (like web.any.do (or sub1.sub2.any.do), we remove web from the beginning)
       origin = origin.split(".");
-      origin.shift();
+      while (origin.length > 0 && !TogglOrigins[origin.join('.')]) { origin.shift(); }
       origin = origin.join(".");
       if (!TogglOrigins[origin]) {
         return null;

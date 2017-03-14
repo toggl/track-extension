@@ -120,7 +120,13 @@
               <input type="checkbox" id="use-custom-format">
               <label for="use-custom-format">Use custom Time Entry format</label>
               <p class="description">Your custom Time Entry formatting, displayed on the Toggl site. Use following tokens:</p>
-              <p class="description">ID: {{id}}  Description: {{description}}</p>
+              <div class="description">
+                <ul class="description-list">
+                  <li>{{id}} - Id of the task</li>
+                  <li>{{description}} - Description of the task</li>
+                  <li>{{service}} - Service you are tracking the task</li>
+                </ul>
+              </div>
               <div class="subsettings-details">
                 <p>
                   <label for="custom-format">Custom Format:</label>

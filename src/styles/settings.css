@@ -61,6 +61,15 @@ input[type="number"] {
   height:70px;
 }
 
+.description-list {
+  padding-left: 10px;
+}
+
+.description-list li {
+  min-height: 0px;
+  list-style-type: none;
+}
+
 .list li label {
   font-size: 14px;
   height: 22px;

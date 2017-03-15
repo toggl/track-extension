@@ -4,7 +4,7 @@
 'use strict';
 
 togglbutton.render('.pane_header:not(.toggl)', {observe: true}, function (elem) {
-  var link, titleFunc, description,
+  var link, titleFunc, description, id,
     projectName = $('title').textContent,
     divTag = document.createElement("div");
 
@@ -17,14 +17,15 @@ togglbutton.render('.pane_header:not(.toggl)', {observe: true}, function (elem) 
     }
 
     if (ticketNum) {
-      description = '#' + ticketNum[1].trim() + " " + description;
+      id = '#' + ticketNum[1].trim();
     }
-    return description;
+    return [id, description];
   };
 
   link = togglbutton.createTimerLink({
     className: 'zendesk',
-    description: titleFunc,
+    id: titleFunc()[0],
+    description: titleFunc()[1],
     projectName: projectName && projectName.split(' - ').shift()
   });
 

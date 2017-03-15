@@ -154,6 +154,7 @@ Example:
   - [Pivotal Tracker][3]
   - [Redmine][18]
   - [Trac][25]
+  - [Zendesk][22]
 
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]

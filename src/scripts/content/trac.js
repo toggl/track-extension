@@ -23,7 +23,8 @@ togglbutton.render('#main > #content.ticket:not(.toggl)', {observe: true}, funct
 
   link = togglbutton.createTimerLink({
     className: 'trac',
-    description: tracTicketId + " " + tracTicketDescription,
+    id: tracTicketId,
+    description: tracTicketDescription,
     projectName: tracProjectName
   });
 

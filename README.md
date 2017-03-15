@@ -151,6 +151,7 @@ Example:
   - [Gogs][67]
   - [Phabricator][77]
   - [Redmine][18]
+  - [Trac][25]
 
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]

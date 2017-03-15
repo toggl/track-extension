@@ -151,6 +151,7 @@ Example:
   - [Github][4]
   - [Gogs][67]
   - [Phabricator][77]
+  - [Pivotal Tracker][3]
   - [Redmine][18]
   - [Trac][25]
 

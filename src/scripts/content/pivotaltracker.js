@@ -16,7 +16,8 @@ togglbutton.render('form.story:not(.toggl)', {observe: true}, function (elem) {
 
   link = togglbutton.createTimerLink({
     className: 'pivotal',
-    description: id.value + ' ' + titleElem.value,
+    id: id.value,
+    description: titleElem.value,
     projectName: projectName && projectName.split(' -').shift()
   });
 

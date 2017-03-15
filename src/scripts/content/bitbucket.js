@@ -3,18 +3,19 @@
 'use strict';
 
 togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
-  var link, description,
+  var link, description, id,
     numElem = $('.issue-id'),
     titleElem = $('#issue-title'),
     projectElem = $('.repo-link');
 
   description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.textContent.trim() + " " + description;
+    id = numElem.textContent.trim();
   }
 
   link = togglbutton.createTimerLink({
     className: 'bitbucket',
+    id: id,
     description: description,
     projectName: projectElem && projectElem.textContent
   });
@@ -23,18 +24,19 @@ togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
 });
 
 togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
-  var link, description,
+  var link, description, id,
     numElem = $('.pull-request-self-link'),
     titleElem = $('.pull-request-title'),
     projectElem = $('.repo-link');
 
   description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.textContent + " " + description;
+    id = numElem.textContent;
   }
 
   link = togglbutton.createTimerLink({
     className: 'bitbucket',
+    id: id,
     description: description,
     projectName: projectElem && projectElem.textContent
   });

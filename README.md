@@ -146,6 +146,7 @@ If you want to format all your time entries, enable the custom format in the set
 Example:
 > {{id}}:{{description}} will be formatted as #123-Dummy example
 
+  - [Bitbucket][15]
   - [Gitlab][7]
   - [Github][4]
   - [Gogs][67]

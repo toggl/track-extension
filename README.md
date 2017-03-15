@@ -148,6 +148,7 @@ Example:
 
   - [Gitlab][7]
   - [Github][4]
+  - [Gogs][67]
 
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]

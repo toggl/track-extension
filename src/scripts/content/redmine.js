@@ -3,7 +3,7 @@
 'use strict';
 
 togglbutton.render('body.controller-issues.action-show h2:not(.toggl)', {}, function (elem) {
-  var link, description,
+  var link, description, id,
     numElem = $('h2'),
     titleElem = $('.subject h3') || "",
     projectElem = $('h1');
@@ -20,11 +20,13 @@ togglbutton.render('body.controller-issues.action-show h2:not(.toggl)', {}, func
     if (!!description) {
       description = " " + description;
     }
-    description = numElem.textContent + description;
+    id = numElem.textContent;
+    description = description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'redmine',
+    id: id,
     description: description,
     projectName: projectElem && projectElem.textContent
   });

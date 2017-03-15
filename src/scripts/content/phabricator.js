@@ -11,6 +11,7 @@ togglbutton.render('#phabricator-standard-page-body .phui-workpanel-view .phui-o
   link = togglbutton.createTimerLink({
     className: 'phabricator',
     buttonType: 'minimal',
+    id: '',
     description: description,
     projectName: projectName
   });
@@ -33,7 +34,8 @@ togglbutton.render('#phabricator-standard-page-body:not(.toggl)', {observe: true
 
   link = togglbutton.createTimerLink({
     className: 'phabricator',
-    description: number + desc.textContent,
+    id: number,
+    description: desc.textContent,
     projectName: projectName
   });
 

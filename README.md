@@ -147,6 +147,7 @@ Example:
 > {{id}}:{{description}} will be formatted as #123-Dummy example
 
   - [Bitbucket][15]
+  - [Countersoft Gemini][33]
   - [Desk.com][92]
   - [eProject.me][64]
   - [FogBugz][52]

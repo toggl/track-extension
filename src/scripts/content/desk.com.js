@@ -12,22 +12,24 @@ togglbutton.render('.case .content-top-toolbar .controls ul:not(.toggl)', { obse
 
   titleFunc = function () {
     var titleElem = document.querySelector('.content h1.title'),
-      ticketNum = location.href.match(/case\/(\d+)/);
+      ticketNum = location.href.match(/case\/(\d+)/),
+      id;
 
     if (titleElem !== null) {
       description = titleElem.textContent;
     }
 
     if (ticketNum) {
-      description = '#' + ticketNum[1] + " " + description;
+      id = '#' + ticketNum[1];
     }
 
-    return description;
+    return [id, description];
   };
 
   link = togglbutton.createTimerLink({
     className: 'desk',
-    description: titleFunc,
+    id: titleFunc()[0],
+    description: titleFunc()[1],
     projectName: projectName && projectName.split(': ').shift(),
     buttonType: "minimal"
   });

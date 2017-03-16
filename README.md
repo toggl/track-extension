@@ -155,6 +155,7 @@ Example:
   - [Pivotal Tracker][3]
   - [Redmine][18]
   - [Trac][25]
+  - [Waffle][47]
   - [Zendesk][22]
 
 ## Contributing

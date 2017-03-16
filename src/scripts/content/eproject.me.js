@@ -4,7 +4,7 @@
 
 // Single task page
 togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, function (elem) {
-  var link, description,
+  var link, description, id,
     numElem = $('.task-id', elem),
     titleElem = $('.entry-title', elem),
     projectElem = $('.project a span.label', elem),
@@ -12,11 +12,12 @@ togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, fun
 
   description = titleElem.textContent.trim();
   if (numElem !== null) {
-    description = numElem.textContent + ' ' + description;
+    id = numElem.textContent;
   }
 
   link = togglbutton.createTimerLink({
     className: 'eproject',
+    id: id,
     description: description,
     projectName: project
   });
@@ -26,7 +27,7 @@ togglbutton.render('.single-tasks .right-side:not(.toggl)', {observe: true}, fun
 
 // Tasks listing page
 togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', {observe: true}, function (elem) {
-  var link, spanTag, projectName, description,
+  var link, spanTag, projectName, description, id,
     className = 'huh',
     numElem = $('.task-id', elem),
     container = $('.times', elem),
@@ -48,12 +49,12 @@ togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', 
   }
 
   if (numElem !== null) {
-    description = 'Task: #' + numElem.textContent.trim() + ' ' + description.trim();
-    description = description.trim();
+    id = 'Task: #' + numElem.textContent.trim();
   }
 
   link = togglbutton.createTimerLink({
     className: 'eproject',
+    id: id,
     description: description,
     projectName: projectName,
     buttonType: 'minimal'
@@ -87,7 +88,7 @@ togglbutton.render('.post-type-archive-tasks table.tasks-table tr:not(.toggl)', 
 
 // Home page recent tasks table
 togglbutton.render('.home .table-recent-tasks tr:not(.toggl)', {observe: true}, function (elem) {
-  var link, spanTag, projectName, description,
+  var link, spanTag, projectName, description, id,
     className = 'huh',
     numElem = $('.task-id', elem),
     container = $('.actions', elem),
@@ -109,12 +110,12 @@ togglbutton.render('.home .table-recent-tasks tr:not(.toggl)', {observe: true}, 
   }
 
   if (numElem !== null) {
-    description = 'Task: #' + numElem.textContent.trim() + ' ' + description.trim();
-    description = description.trim();
+    id = 'Task: #' + numElem.textContent.trim();
   }
 
   link = togglbutton.createTimerLink({
     className: 'eproject',
+    id: id,
     description: description,
     projectName: projectName,
     buttonType: 'minimal'

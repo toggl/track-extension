@@ -150,6 +150,7 @@ Example:
   - [Desk.com][92]
   - [eProject.me][64]
   - [FogBugz][52]
+  - [Freshdesk][65]
   - [Gitlab][7]
   - [Github][4]
   - [Gogs][67]

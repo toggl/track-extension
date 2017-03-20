@@ -4,17 +4,18 @@
 'use strict';
 
 togglbutton.render('#issue-title:not(.toggl)', {observe: true}, function (elem) {
-  var link,
+  var link, id,
     titleElem = $("#issue-title"),
     description = titleElem.textContent.trim(),
     projectElem = $('.issue .header .breadcrumb a:last-child'),
     project;
 
-  description = $(".index").textContent + " " + description;
+  id = $(".index").textContent;
   project = projectElem.textContent.split(' / ').pop();
 
   link = togglbutton.createTimerLink({
     className: 'gogs',
+    id: id,
     description: description,
     projectName: project
   });

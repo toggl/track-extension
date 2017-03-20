@@ -6,7 +6,6 @@
 togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
   var link, container = createTag('li', 'ticket-btns'),
     //duration,
-    description,
     titleElem = $('h2.subject', elem),
     idElem = $('#ticket-display-id'),
     //trackedContainer = createTag('div', 'open-box toggl-time-tracked'),
@@ -14,10 +13,10 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
     projectElem = $('.logo_text'),
     buttonsElem = $('.ticket-actions > ul');
 
-  description = idElem.textContent.trim() + ' ' + titleElem.textContent.trim();
   link = togglbutton.createTimerLink({
     className: 'freshdesk',
-    description: description,
+    id: idElem.textContent.trim(),
+    description: titleElem.textContent.trim(),
     projectName: projectElem && projectElem.textContent.trim(),
     calculateTotal: true
   });

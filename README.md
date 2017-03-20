@@ -138,6 +138,31 @@ Or start entry from the extension icon menu
 ## Custom domains
 If you use a setup, where one of the supported services is on a custom domain you can define the custom domains in settings "Permissions" tab.
 
+## Custom format
+If you want to format all your time entries, enable the custom format in the settings and use the following:
+  - {{id}} - for the id
+  - {{description}} - for the text
+
+Example:
+> {{id}}:{{description}} will be formatted as #123-Dummy example
+
+  - [Bitbucket][15]
+  - [Countersoft Gemini][33]
+  - [Desk.com][92]
+  - [eProject.me][64]
+  - [FogBugz][52]
+  - [Freshdesk][65]
+  - [Gitlab][7]
+  - [Github][4]
+  - [Gogs][67]
+  - [Overv][90]
+  - [Phabricator][77]
+  - [Pivotal Tracker][3]
+  - [Redmine][18]
+  - [Trac][25]
+  - [Waffle][47]
+  - [Zendesk][22]
+
 ## Contributing
 Want to contribute? Great! Just fork the project, make your changes and open a [Pull Request][99]
 

@@ -4,7 +4,7 @@
 'use strict';
 
 togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
-  var link, description,
+  var link, description, id,
     numElem = $(".identifier"),
     titleElem = $(".title", elem),
     projectElem = $("h1 .project-item-select-holder");
@@ -12,11 +12,13 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
   description = titleElem.textContent.trim();
 
   if (numElem !== null) {
-    description = numElem.textContent.split(" ").pop().trim() + " " + description;
+    id = numElem.textContent.split(" ").pop().trim();
+    description = description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'gitlab',
+    id: id,
     description: description,
     projectName: projectElem.textContent
   });
@@ -25,18 +27,20 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
 });
 
 togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
-  var link, description,
+  var link, description, id,
     numElem = $(".identifier"),
     titleElem = $(".title", elem),
     projectElem = $("h1 .project-item-select-holder");
 
   description = titleElem.textContent.trim();
   if (numElem !== null) {
-    description = "MR" + numElem.textContent.split(" ").pop().trim().replace("!", "") + "::" + description;
+    id = "MR" + numElem.textContent.split(" ").pop().trim().replace("!", "");
+    description = "::" + description;
   }
 
   link = togglbutton.createTimerLink({
     className: 'gitlab',
+    id: id,
     description: description,
     projectName: projectElem.textContent
   });

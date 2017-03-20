@@ -142,9 +142,10 @@ If you use a setup, where one of the supported services is on a custom domain yo
 If you want to format all your time entries, enable the custom format in the settings and use the following:
   - {{id}} - for the id
   - {{description}} - for the text
+  - {{service}} - for the used service 
 
 Example:
-> {{id}}:{{description}} will be formatted as #123-Dummy example
+> {{service}} #{{id}}-{{description}} will be formatted as 'jira #123-Dummy example'
 
   - [Bitbucket][15]
   - [Countersoft Gemini][33]

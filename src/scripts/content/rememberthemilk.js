@@ -2,14 +2,15 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.b-db-Om:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render("div[class^='b-db-'][role='listbox'] [role='option']:not(.toggl)", {observe: true}, function (elem) {
   var getDescription,
     getProject,
     createTogglButton;
 
   // Get task's description.
   getDescription = function () {
-    return elem.querySelector('.b-db-Om-Nj').textContent.trim();
+    return elem.querySelector("div[class^='b-db-'][role='listbox'] [role='option'] span[style*='user-select: text']")
+      .textContent.trim();
   };
 
   // Get project name if in project task view
@@ -32,5 +33,6 @@ togglbutton.render('.b-db-Om:not(.toggl)', {observe: true}, function (elem) {
   };
 
   // Inject toggl button to each task.
-  elem.querySelector('.b-db-Om-Bn').appendChild(createTogglButton());
+  elem.querySelector("div[class^='b-db-'][role='listbox'] [role='option'] span[style*='user-select: text']")
+    .parentElement.appendChild(createTogglButton());
 });

@@ -1242,3 +1242,13 @@ a.toggl-button.workfront.min {
 .ProcessPageEdit h1 .toggl-button.processwire {
   margin-left: 1em;
 }
+
+/********* KHAN ACADEMY *********/
+.toggl-button.khanacademy {
+  position: absolute;
+  right: 5px;
+  bottom: 20px
+}
+#toggl-button-edit-form .toggl-button.khanacademy {
+  position: static;
+}

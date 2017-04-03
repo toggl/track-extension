@@ -118,7 +118,6 @@
 #toggl-button-tag-filter {
   max-height: 0;
   position: absolute;
-  top: -1000px;
 }
 
 .toggl-button-row.open #toggl-button-project-filter,

@@ -58,6 +58,7 @@ AutoComplete.prototype.addEvents = function () {
 
   that.filterClear.addEventListener('click', function (e) {
     that.closeDropdown();
+    e.preventDefault();
   });
 };
 
@@ -98,8 +99,9 @@ AutoComplete.prototype.updateHeight = function () {
     listStyle = "max-height:auto;",
     calc;
 
-  if (elRect.bottom + 25 >= bodyRect.bottom) {
-    calc = ((elRect.bottom - elRect.top) - (elRect.bottom - bodyRect.bottom + 10));
+   if (elRect.bottom + 25 >= bodyRect.bottom) {
+    calc = window.scrollY + bodyRect.bottom - elRect.top - 10;
+    if (calc < 55) calc = 55;
     style = "max-height: " + calc + "px;";
     listStyle = "max-height: " + (calc - 25) + "px;";
   }

@@ -316,7 +316,7 @@ var Settings = {
                 }
 
                 // Don't show toggl.com as it's not optional
-                if (key.indexOf("toggl") === -1 && !!TogglOrigins[key].url) {
+                if (!!TogglOrigins[key].url) {
                   li = document.createElement("li");
                   li.id = key;
                   li.className = disabled;

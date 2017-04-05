@@ -401,6 +401,16 @@
     "name": "Toggl",
     "clone": "true"
   },
+  "toggl.space": {
+    "url": "*://toggl.space/*",
+    "name": "Toggl",
+    "clone": "true"
+  },
+  "gamma.toggl.space": {
+    "url": "*://*.toggl.space/*",
+    "name": "Toggl",
+    "clone": "true"
+  },
   "toodledo.com": {
     "url": "*://*.toodledo.com/*",
     "name": "Toodledo"

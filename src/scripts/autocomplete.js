@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true */
-/*global document: false, window: false */
+/*global document: false, window: false, setTimeout: false */
 "use strict";
 
 var noop = function () { return undefined; };

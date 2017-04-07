@@ -105,7 +105,7 @@ var Db = {
   get: function (setting) {
     var value = localStorage.getItem(setting);
     if (!!value) {
-      if (value === "false" || value === "true") {
+      if (value === "false" || value === "true") {
         value = JSON.parse(value);
       }
     }

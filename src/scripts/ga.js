@@ -2,12 +2,11 @@
 /*global Db: true, window: false, XMLHttpRequest: false, chrome: false, localStorage:false, Bugsnag: false */
 "use strict";
 
-var GA,
-  GA_TRACKING_ID = "UA-3215787-22",
+var GA_TRACKING_ID = "UA-3215787-22",
   GA_KEY = "GA:clientID",
   GA_CLIENT_ID = localStorage.getItem(GA_KEY);
 
-GA = {
+var GA = {
   load: function () {
     if (!GA_CLIENT_ID) {
       GA_CLIENT_ID = this.generateGUID();

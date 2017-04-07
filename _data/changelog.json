@@ -1,6 +1,20 @@
 {
   "versions": [
     {
+      "version": "1.1.5",
+      "short-version": "115",
+      "date": "April 7th 2017",
+      "rows": [
+        "Fixed button missing on Remember The Milk",
+        "Fixed github button disappearing when interacting with the sidebar",
+        "Added namespace to CSS classes to avoid conflicts",
+        "Fixed getting the correct project name from Bitbucket",
+        "Added whitespace trimming from pull request description in Bitbucket",
+        "Added ProcessWire integration",
+        "Fixed dropdown height calculations when near the bottom edge of the window"
+      ]
+    },
+    {
       "version": "1.1.4",
       "short-version": "114",
       "date": "March 11th 2017",

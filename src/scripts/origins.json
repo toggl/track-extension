@@ -279,6 +279,10 @@
     "url": "*://*.podio.com/*",
     "name": "Podio"
   },
+  "processwire": {
+    "url": "",
+    "name": "ProcessWire"
+  },
   "producteev.com": {
     "url": "*://*.producteev.com/*",
     "name": "Producteev"

@@ -1202,3 +1202,33 @@ a.toggl-button.workfront.min {
 .toggl-button.intercom:hover {
   color: #546e7a;
 }
+
+/********* PROCESSWIRE *********/
+.toggl-button.processwire {
+  opacity: .3;
+}
+
+.toggl-button.processwire:hover {
+  opacity: .65;
+}
+.toggl-button.processwire.active  {
+  opacity: 1;
+}
+
+.PageListItem .toggl-button.processwire {
+  position: absolute;
+  left: 0;
+  top: .4em;
+  background-size: 1.2em !important;
+  background-position: center !important;
+}
+
+.PageListItem {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+.ProcessPageEdit h1 .toggl-button.processwire {
+  margin-left: 1em;
+}
+

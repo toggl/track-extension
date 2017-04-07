@@ -2,16 +2,28 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#task:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    description = $('.title', elem).textContent,
-    project = $('.project', elem).textContent;
+togglbutton.render('#tutorial-content [data-reactid="5"]:not(.toggl)', {}, function (elem) {
+  var link, topic, project;
+
+  // remove child nodes. Keep only textContent
+  function cloneText(node) {
+    var i, n, textNode = node.cloneNode(true)
+    for (i=0, n=textNode.children.length; i<n; i++) {
+      textNode.removeChild(textNode.children[i])
+    }
+    return textNode
+  }
+
+  topic = cloneText(elem).textContent.trim();
+  project = elem.querySelector('[role="navigation"] span:first-child a').textContent.trim()
 
   link = togglbutton.createTimerLink({
     className: 'khanacademy',
-    description: description,
+    buttonType: 'minimal',
+    description: topic,
     projectName: project
   });
 
-  $('.link-list').appendChild(link);
+  elem.style.position = 'relative';
+  elem.appendChild(link);
 });

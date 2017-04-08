@@ -188,9 +188,9 @@ var Db = {
         TogglButton.startCheckingDayEnd(request.state);
       } else if (request.type === 'toggle-day-end-time') {
         Db.updateSetting("dayEndTime", request.state);
-      } else if (request.type === 'toggle-use-custom-format') {
+      } else if (request.type === 'update-use-custom-format') {
         Db.updateSetting("useCustomFormat", request.state);
-      } else if (request.type === 'toggle-custom-format') {
+      } else if (request.type === 'update-custom-format') {
         Db.updateSetting("customFormat", request.state);
       } else if (request.type === 'change-default-project') {
         Db.updateSetting(chrome.extension.getBackgroundPage().TogglButton.$user.id + "-defaultProject", request.state);

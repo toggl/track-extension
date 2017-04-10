@@ -5,6 +5,18 @@
 var openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1;
 
+function filterTabs(handler) {
+  return function (tabs) {
+    try {
+      if (Array.isArray(tabs) && tabs.length && tabs[0].url.match('https?://')) {
+        return handler(tabs);
+      }
+    } catch (e) {
+      report(e);
+    }
+  };
+}
+
 var TogglButton = {
   $user: null,
   $curEntry: null,
@@ -69,15 +81,9 @@ var TogglButton = {
           entry = null;
         try {
           if (xhr.status === 200) {
-            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              try {
-                if (!!tabs && !!tabs[0]) {
-                  chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
-                }
-              } catch (e) {
-                report(e);
-              }
-            });
+            chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
+            }));
             resp = JSON.parse(xhr.responseText);
             if (resp.data.projects) {
               resp.data.projects.forEach(function (project) {
@@ -587,11 +593,9 @@ var TogglButton = {
           TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
-            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs && !!tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
-              }
-            });
+            chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
+            }));
           }
           TogglButton.triggerNotification();
           GA.reportEvent(timeEntry.type, timeEntry.service);
@@ -631,11 +635,9 @@ var TogglButton = {
           TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
-            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs && !!tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
-              }
-            });
+            chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
+            }));
           }
           TogglButton.triggerNotification();
           GA.reportEvent(timeEntry.type, timeEntry.service);
@@ -1000,28 +1002,24 @@ var TogglButton = {
 
   refreshPage: function () {
     var domain;
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs && !!tabs[0]) {
-        domain = TogglButton.extractDomain(tabs[0].url);
-        if (!!domain.file) {
-          chrome.tabs.reload(tabs[0].id);
-        }
+    chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+      domain = TogglButton.extractDomain(tabs[0].url);
+      if (!!domain.file) {
+        chrome.tabs.reload(tabs[0].id);
       }
-    });
+    }));
   },
 
   refreshPageLogout: function () {
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs && !!tabs[0]) {
-        chrome.tabs.executeScript(tabs[0].id, {
-          "code": "!!document.querySelector('.toggl-button')"
-        }, function (reload) {
-          if (!!reload && !!reload[0]) {
-            chrome.tabs.reload(tabs[0].id);
-          }
-        });
-      }
-    });
+    chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+      chrome.tabs.executeScript(tabs[0].id, {
+        "code": "!!document.querySelector('.toggl-button')"
+      }, function (reload) {
+        if (!!reload && !!reload[0]) {
+          chrome.tabs.reload(tabs[0].id);
+        }
+      });
+    }));
   },
 
   /**

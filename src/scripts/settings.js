@@ -718,10 +718,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
     });
 
     Settings.$useCustomFormat.addEventListener('click', function (e) {
-        Settings.toggleSetting(e.target, (localStorage.getItem("useCustomFormat") !== "true"), "toggle-use-custom-format");
+        Settings.toggleSetting(e.target, (localStorage.getItem("useCustomFormat") !== "true"), "update-use-custom-format");
     });
     document.querySelector("#custom-format").addEventListener('blur', function (e) {
-        Settings.saveSetting((document.querySelector('#custom-format').value), "toggle-custom-format");
+        Settings.saveSetting((document.querySelector('#custom-format').value), "update-custom-format");
     });
 
     if (FF) {

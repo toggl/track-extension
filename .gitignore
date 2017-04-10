@@ -3,7 +3,8 @@ dist
 node_modules
 tmp
 *.pem
-toggl-button.zip
+ch_toggl-button.zip
+ff_toggl-button.zip
 toggl-button.sublime-project
 toggl-button.sublime-workspace
 .idea

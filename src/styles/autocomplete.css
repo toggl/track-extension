@@ -118,7 +118,6 @@
 #toggl-button-tag-filter {
   max-height: 0;
   position: absolute;
-  top: -1000px;
 }
 
 .toggl-button-row.open #toggl-button-project-filter,
@@ -212,30 +211,14 @@ span.item-name.has-tasks  {
 }
 
 /* Project colors */
-.project-color { display: block; }
-.color-0 { background-color: #4dc3ff }
-.color-1 { background-color: #bc85e6 }
-.color-2 { background-color: #df7baa }
-.color-3 { background-color: #f68d38 }
-.color-4 { background-color: #b27636 }
-.color-5 { background-color: #8ab734 }
-.color-6 { background-color: #14a88e }
-.color-7 { background-color: #268bb5 }
-.color-8 { background-color: #6668b4 }
-.color-9 { background-color: #a4506c }
-.color-10 { background-color: #67412c }
-.color-11 { background-color: #3c6526 }
-.color-12 { background-color: #094558 }
-.color-13 { background-color: #bc2d07 }
-.color-14 { background-color: #999999 }
-.no-color { background-color: #cecece }
+.tb-project-color { display: block; }
 
 #toggl-button-project-placeholder .tb-project-bullet {
   margin-top: 16px;
   margin-left: 0;
 }
 
-#toggl-button-project-placeholder .project-color + .toggl-button-text {
+#toggl-button-project-placeholder .tb-project-color + .toggl-button-text {
   padding-left: 12px;
   width: 174px;
 }

@@ -199,7 +199,7 @@ var PopUp = {
           pname = p.name;
           pstyle = "background-color: " + p.hex_color + ";";
           p = document.createElement("div");
-          p.className = "tb-project-bullet project-color";
+          p.className = "tb-project-bullet tb-project-color";
           p.setAttribute("style", pstyle);
         } else {
           p = false;

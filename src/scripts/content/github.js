@@ -38,4 +38,4 @@ togglbutton.render('#partial-discussion-sidebar', {observe: true}, function (ele
 
   div.appendChild(link);
   elem.prepend(div);
-}, '#js-repo-pjax-container, .discussion-sidebar-item:not(.toggl)');
+});

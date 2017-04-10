@@ -6,7 +6,7 @@ togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
   var link, description, id,
     numElem = $('.issue-id'),
     titleElem = $('#issue-title'),
-    projectElem = $('.repo-link');
+    projectElem = $('.entity-name');
 
   description = titleElem.textContent;
   if (numElem !== null) {
@@ -27,11 +27,11 @@ togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
   var link, description, id,
     numElem = $('.pull-request-self-link'),
     titleElem = $('.pull-request-title'),
-    projectElem = $('.repo-link');
+    projectElem = $('.entity-name');
 
-  description = titleElem.textContent;
+  description = titleElem.textContent.trim();
   if (numElem !== null) {
-    id = numElem.textContent;
+    id = numElem.textContent.trim();
   }
 
   link = togglbutton.createTimerLink({

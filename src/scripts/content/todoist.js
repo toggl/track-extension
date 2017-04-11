@@ -4,9 +4,9 @@
 'use strict';
 
 togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, container = $('.text', elem), description,
+  var link, descFunc, container = $('.text', elem),
     getSidebarEle, getProjectNameHierarchy, isTopLevelProject, levelPattern, getParentEle,
-    getProjectNameFromLabel, sidebarEle, projectNames;
+    getProjectNameFromLabel, getProjectNames;
 
   descFunc = function () {
     var clone = container.cloneNode(true),
@@ -36,12 +36,15 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
   };
 
   getSidebarEle = function (elem) {
-    var editorInstance, projectId, sidebarRoot, sidebarEle;
+    var editorInstance, projectId, sidebarRoot, sidebarColorEle, sidebarEle;
     editorInstance = elem.closest('.project_editor_instance');
     if (editorInstance) {
       projectId = editorInstance.getAttribute('data-project-id');
       sidebarRoot = $('#project_list');
-      sidebarEle = $('#project_color_' + projectId, sidebarRoot).closest('.menu_clickable');
+      sidebarColorEle = $('#project_color_' + projectId, sidebarRoot);
+      if (sidebarColorEle) {
+        sidebarEle = sidebarColorEle.closest('.menu_clickable');
+      }
     }
     return sidebarEle;
   };
@@ -85,18 +88,20 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
     return projectLabel;
   };
 
-  description = descFunc();
-  sidebarEle = getSidebarEle(elem);
-  if (sidebarEle) {
-    projectNames = getProjectNameHierarchy(sidebarEle);
-  } else {
-    projectNames = [getProjectNameFromLabel(elem)];
-  }
+  getProjectNames = function() {
+    var sidebarEle = getSidebarEle(elem);
+    if (sidebarEle) {
+      projectNames = getProjectNameHierarchy(sidebarEle);
+    } else {
+      projectNames = [getProjectNameFromLabel(elem)];
+    }
+    return projectNames;
+  };
 
   link = togglbutton.createTimerLink({
     className: 'todoist',
-    description: description,
-    projectName: projectNames
+    description: descFunc(),
+    projectName: getProjectNames()
   });
 
   container.insertBefore(link, container.lastChild);

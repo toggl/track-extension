@@ -336,7 +336,7 @@ TogglButton = {
       result,
       i;
 
-    for (i=0; i < names.length; i++) {
+    for (i = 0; i < names.length; i++) {
       name = names[i];
       for (key in TogglButton.$user.projectMap) {
         if (TogglButton.$user.projectMap.hasOwnProperty(key) && TogglButton.$user.projectMap[key].name === name) {

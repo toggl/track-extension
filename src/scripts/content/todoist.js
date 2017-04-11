@@ -49,25 +49,24 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
     return sidebarEle;
   };
 
-  getProjectNameHierarchy = function(sidebarEle) {
+  getProjectNameHierarchy = function (sidebarEle) {
     var parentProjectEle, projectName;
     projectName = $('.name', sidebarEle).firstChild.textContent.trim();
     if (isTopLevelProject(sidebarEle)) {
       return [projectName];
-    } else {
-      parentProjectEle = getParentEle(sidebarEle);
-      return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
     }
+    parentProjectEle = getParentEle(sidebarEle);
+    return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
   };
 
   isTopLevelProject = function (sidebarEle) {
     return sidebarEle.classList.contains('indent_1');
   };
 
-  levelPattern = /(?:^|\s)indent_(.*?)(?:\s|$)/;
-  getParentEle = function(sidebarEle) {
+  levelPattern = /(?:^|\s)indent_([0-9]*?)(?:\s|$)/;
+  getParentEle = function (sidebarEle) {
     var curLevel, parentClass, parentCandidate;
-    curLevel = sidebarEle.className.match(levelPattern)[1],
+    curLevel = sidebarEle.className.match(levelPattern)[1];
     parentClass = 'indent_' + (curLevel - 1);
 
     parentCandidate = sidebarEle;
@@ -77,18 +76,18 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
         break;
       }
     }
-   return parentCandidate;
+    return parentCandidate;
   };
 
   getProjectNameFromLabel = function (elem) {
-    var projectLabel='', projectLabelEle = $('.pname', elem.parentNode.parentNode);
+    var projectLabel = '', projectLabelEle = $('.pname', elem.parentNode.parentNode);
     if (projectLabelEle) {
       projectLabel = projectLabelEle.textContent.trim();
     }
     return projectLabel;
   };
 
-  getProjectNames = function() {
+  getProjectNames = function () {
     var projectNames, viewingInbox, sidebarEle;
     viewingInbox = $('#filter_inbox.current, #filter_team_inbox.current');
     if (viewingInbox) {

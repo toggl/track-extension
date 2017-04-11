@@ -89,11 +89,17 @@ togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function 
   };
 
   getProjectNames = function() {
-    var sidebarEle = getSidebarEle(elem);
-    if (sidebarEle) {
-      projectNames = getProjectNameHierarchy(sidebarEle);
+    var projectNames, viewingInbox, sidebarEle;
+    viewingInbox = $('#filter_inbox.current, #filter_team_inbox.current');
+    if (viewingInbox) {
+      projectNames = ['Inbox'];
     } else {
-      projectNames = [getProjectNameFromLabel(elem)];
+      sidebarEle = getSidebarEle(elem);
+      if (sidebarEle) {
+        projectNames = getProjectNameHierarchy(sidebarEle);
+      } else {
+        projectNames = [getProjectNameFromLabel(elem)];
+      }
     }
     return projectNames;
   };

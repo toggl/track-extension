@@ -870,8 +870,8 @@ only screen and (min-resolution: 192dpi) {
   margin-top: -2px;;
 }
 
-.bubblecontent .toggl-button.google-calendar {
-  margin: 0;
+.bubblecontent .toggl-button.google-calendar {  
+  margin-left: -4px;
 }
 
 /********* DOBAMBAM *********/

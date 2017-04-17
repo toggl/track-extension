@@ -501,5 +501,9 @@
   "teamleader.eu": {
     "url": "*://app.teamleader.eu/*",
     "name": "Teamleader"
-  }
+  },
+  "taskworld.com": {
+    "url": "*://*.taskworld.com/*",
+    "name": "Taskworld"
+  }  
 }

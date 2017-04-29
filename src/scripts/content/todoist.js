@@ -41,15 +41,23 @@ function getProjectNameHierarchy(sidebarEle) {
   return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
 }
 
+function projectWasJustCreated(projectId) {
+  return projectId.startsWith('_');
+}
+
 function getSidebarEle(elem) {
   var editorInstance, projectId, sidebarRoot, sidebarColorEle, sidebarEle;
   editorInstance = elem.closest('.project_editor_instance');
   if (editorInstance) {
     projectId = editorInstance.getAttribute('data-project-id');
     sidebarRoot = $('#project_list');
-    sidebarColorEle = $('#project_color_' + projectId, sidebarRoot);
-    if (sidebarColorEle) {
-      sidebarEle = sidebarColorEle.closest('.menu_clickable');
+    if (projectWasJustCreated(projectId)) {
+      sidebarEle = $('.current', sidebarRoot);
+    } else {
+      sidebarColorEle = $('#project_color_' + projectId, sidebarRoot);
+      if (sidebarColorEle) {
+        sidebarEle = sidebarColorEle.closest('.menu_clickable');
+      }
     }
   }
   return sidebarEle;

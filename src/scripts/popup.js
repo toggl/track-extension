@@ -1,5 +1,6 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, setInterval: false, clearInterval: false, setTimeout: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,

@@ -1,12 +1,11 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global debug: true, report: true, escapeHtml: true, GA: false, window: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global debug: true, console: false, report: true, escapeHtml: true, GA: false, window: false, setTimeout: false, clearTimeout: false, setInterval: false, clearInterval: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
-var TogglButton,
-  openWindowsCount = 0,
+var openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1;
 
-TogglButton = {
+var TogglButton = {
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,
@@ -374,9 +373,9 @@ TogglButton = {
       start: start.toISOString(),
       stop: null,
       duration: -parseInt((start.getTime() / 1000), 10),
-      description: timeEntry.description || "",
-      pid: timeEntry.pid || timeEntry.projectId || null,
-      tid: timeEntry.tid || null,
+      description: timeEntry.description || "",
+      pid: timeEntry.pid || timeEntry.projectId || null,
+      tid: timeEntry.tid || null,
       wid: timeEntry.wid || TogglButton.$user.default_wid,
       tags: timeEntry.tags || null,
       billable: timeEntry.billable || false,
@@ -385,7 +384,7 @@ TogglButton = {
 
     if (timeEntry.projectName !== null && !entry.pid) {
       project = TogglButton.findProjectByName(timeEntry.projectName);
-      entry.pid = (project && project.id) || null;
+      entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
       entry.wid = (project && project.wid) || entry.wid;
     }
@@ -393,7 +392,7 @@ TogglButton = {
     // set Default project if needed
     if (!entry.pid && !!defaultProject) {
       project = TogglButton.findProjectByPid(parseInt(defaultProject, 10));
-      entry.pid = (project && project.id) || null;
+      entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
       entry.wid = (project && project.wid) || entry.wid;
     }
@@ -538,7 +537,7 @@ TogglButton = {
       method = opts.method || 'GET',
       baseUrl = opts.baseUrl || TogglButton.$ApiV8Url,
       token = opts.token || (TogglButton.$user && TogglButton.$user.api_token),
-      credentials = opts.credentials || null;
+      credentials = opts.credentials || null;
 
     xhr.open(method, baseUrl + url, true);
     xhr.setRequestHeader("IsTogglButton", "true");
@@ -729,7 +728,7 @@ TogglButton = {
     if (!TogglButton.$curEntry) { return; }
     entry = {
       description: timeEntry.description,
-      pid: timeEntry.pid || null,
+      pid: timeEntry.pid || null,
       tags: timeEntry.tags,
       tid: timeEntry.tid || null,
       billable: timeEntry.billable,
@@ -1071,7 +1070,7 @@ TogglButton = {
 
   showIdleDetectionNotification: function (seconds) {
     var timeString = TogglButton.timeStringFromSeconds(seconds),
-      entryDescription = TogglButton.$curEntry.description || "(no description)",
+      entryDescription = TogglButton.$curEntry.description || "(no description)",
       options = {
         type: 'basic',
         iconUrl: 'images/icon-128.png',
@@ -1312,7 +1311,7 @@ TogglButton = {
       startHelper,
       endHelper;
 
-    if (now.getDay() === 6 || now.getDay() === 0) {
+    if (now.getDay() === 6 || now.getDay() === 0) {
       return false;
     }
     startHelper = fromTo[0].split(":");
@@ -1356,7 +1355,7 @@ TogglButton = {
   checkDailyUpdate: function () {
     var d = new Date(),
       currentDate = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
-    if (TogglButton.$lastSyncDate === null || TogglButton.$lastSyncDate !== currentDate) {
+    if (TogglButton.$lastSyncDate === null || TogglButton.$lastSyncDate !== currentDate) {
       TogglButton.fetchUser();
       TogglButton.$lastSyncDate = currentDate;
     }
@@ -1563,8 +1562,8 @@ TogglButton = {
   checkPermissions: function (show) {
     if (!Db.get("dont-show-permissions") && !FF) {
       chrome.permissions.getAll(function (results) {
-        if (!!show || results.origins.length === 2) {
-          show = show || 3;
+        if (!!show || results.origins.length === 2) {
+          show = show || 3;
           Db.set("selected-settings-tab", 3);
           Db.set("show-permissions-info", show);
           chrome.runtime.openOptionsPage();
@@ -1614,4 +1613,3 @@ if (!FF) {
     }
   });
 }
-

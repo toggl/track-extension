@@ -281,7 +281,7 @@ var togglbutton = {
     };
 
     handler = function (e) {
-      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
+      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
         closeForm();
         this.removeEventListener("click", handler);
       }

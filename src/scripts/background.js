@@ -5,10 +5,23 @@
 var openWindowsCount = 0,
   FF = navigator.userAgent.indexOf("Chrome") === -1;
 
+function filterTabs(handler) {
+  return function (tabs) {
+    try {
+      if (Array.isArray(tabs) && tabs.length && tabs[0].url.match('https?://')) {
+        return handler(tabs);
+      }
+    } catch (e) {
+      report(e);
+    }
+  };
+}
+
 var TogglButton = {
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,
+  $ApiUrl: "https://www.toggl.com/api/",
   $ApiV8Url: "https://www.toggl.com/api/v8",
   $ApiV9Url: "https://www.toggl.com/api/v9/workspaces",
   $sendResponse: null,
@@ -62,22 +75,16 @@ var TogglButton = {
 
   fetchUser: function (token) {
     TogglButton.ajax('/me?with_related_data=true', {
-      token: token || ' ',
+      token: token,
       baseUrl: TogglButton.$ApiV8Url,
       onLoad: function (xhr) {
-        var resp, apiToken, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null,
+        var resp, projectMap = {}, clientMap = {}, clientNameMap = {}, tagMap = {}, projectTaskList = null,
           entry = null;
         try {
           if (xhr.status === 200) {
-            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              try {
-                if (!!tabs && !!tabs[0]) {
-                  chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
-                }
-              } catch (e) {
-                report(e);
-              }
-            });
+            chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "sync"});
+            }));
             resp = JSON.parse(xhr.responseText);
             if (resp.data.projects) {
               resp.data.projects.forEach(function (project) {
@@ -124,7 +131,6 @@ var TogglButton = {
             TogglButton.$user.clientNameMap = clientNameMap;
             TogglButton.$user.tagMap = tagMap;
             TogglButton.$user.projectTaskList = projectTaskList;
-            localStorage.removeItem('userToken');
             localStorage.setItem('userToken', resp.data.api_token);
             if (TogglButton.$sendResponse !== null) {
               TogglButton.$sendResponse({success: (xhr.status === 200)});
@@ -136,11 +142,6 @@ var TogglButton = {
             TogglButton.handleQueue();
             TogglButton.setCanSeeBillable();
             GA.reportOs();
-          } else if (!token) {
-            apiToken = localStorage.getItem('userToken');
-            if (apiToken) {
-              TogglButton.fetchUser(apiToken);
-            }
           } else {
             TogglButton.setBrowserActionBadge();
           }
@@ -518,7 +519,6 @@ var TogglButton = {
   loadOrigins: function () {
     TogglButton.ajax('scripts/origins.json', {
       method: 'GET',
-      token: ' ',
       baseUrl: '/',
       mime: true,
       onLoad: function (xhr) {
@@ -536,23 +536,26 @@ var TogglButton = {
     var xhr = new XMLHttpRequest(),
       method = opts.method || 'GET',
       baseUrl = opts.baseUrl || TogglButton.$ApiV8Url,
-      token = opts.token || (TogglButton.$user && TogglButton.$user.api_token),
-      credentials = opts.credentials || null;
+      resolvedUrl = baseUrl + url,
+      token = opts.token || (TogglButton.$user && TogglButton.$user.api_token) || localStorage.getItem('userToken'),
+      credentials = opts.credentials || null
 
-    xhr.open(method, baseUrl + url, true);
+    xhr.open(method, resolvedUrl, true);
     xhr.setRequestHeader("IsTogglButton", "true");
+
+    if (resolvedUrl.match(TogglButton.$ApiUrl)) {
+      if (token) {
+        xhr.setRequestHeader('Authorization', 'Basic ' + btoa(token + ':api_token'));
+      } else if (credentials) {
+        xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + ':' + credentials.password));
+      }
+    }
 
     if (opts.onError) {
       xhr.addEventListener('error', function () { opts.onError(xhr); });
     }
     if (opts.onLoad) {
       xhr.addEventListener('load', function () { opts.onLoad(xhr); });
-    }
-    if (token && token !== ' ') {
-      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(token + ':api_token'));
-    }
-    if (credentials) {
-      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(credentials.username + ':' + credentials.password));
     }
     if (opts.mime) {
       xhr.overrideMimeType("application/json");
@@ -587,11 +590,9 @@ var TogglButton = {
           TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
-            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs && !!tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
-              }
-            });
+            chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
+            }));
           }
           TogglButton.triggerNotification();
           GA.reportEvent(timeEntry.type, timeEntry.service);
@@ -631,11 +632,9 @@ var TogglButton = {
           TogglButton.resetPomodoroProgress(null);
           if (!!timeEntry.respond) {
             sendResponse({success: true, type: "Stop"});
-            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-              if (!!tabs && !!tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
-              }
-            });
+            chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+              chrome.tabs.sendMessage(tabs[0].id, {type: "stop-entry", user: TogglButton.$user});
+            }));
           }
           TogglButton.triggerNotification();
           GA.reportEvent(timeEntry.type, timeEntry.service);
@@ -850,7 +849,7 @@ var TogglButton = {
       onLoad: function (xhr) {
         TogglButton.$user = null;
         TogglButton.updateTriggers(null);
-        localStorage.setItem('userToken', null);
+        localStorage.removeItem('userToken');
         sendResponse({success: (xhr.status === 200), xhr: xhr});
         if (xhr.status === 200) {
           TogglButton.setBrowserActionBadge();
@@ -1000,28 +999,24 @@ var TogglButton = {
 
   refreshPage: function () {
     var domain;
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs && !!tabs[0]) {
-        domain = TogglButton.extractDomain(tabs[0].url);
-        if (!!domain.file) {
-          chrome.tabs.reload(tabs[0].id);
-        }
+    chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+      domain = TogglButton.extractDomain(tabs[0].url);
+      if (!!domain.file) {
+        chrome.tabs.reload(tabs[0].id);
       }
-    });
+    }));
   },
 
   refreshPageLogout: function () {
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (!!tabs && !!tabs[0]) {
-        chrome.tabs.executeScript(tabs[0].id, {
-          "code": "!!document.querySelector('.toggl-button')"
-        }, function (reload) {
-          if (!!reload && !!reload[0]) {
-            chrome.tabs.reload(tabs[0].id);
-          }
-        });
-      }
-    });
+    chrome.tabs.query({active: true, currentWindow: true}, filterTabs(function (tabs) {
+      chrome.tabs.executeScript(tabs[0].id, {
+        "code": "!!document.querySelector('.toggl-button')"
+      }, function (reload) {
+        if (!!reload && !!reload[0]) {
+          chrome.tabs.reload(tabs[0].id);
+        }
+      });
+    }));
   },
 
   /**

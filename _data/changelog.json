@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.1.6",
+      "short-version": "116",
+      "date": "May 16th 2017",
+      "rows": [
+        "Fixed issue where the extension would sometimes try to interact with a non-website tab",
+        "Fixed issue where logging out sometimes broke the button",
+        "Added support for subprojects in Todoist.",
+        "Fixed pomodoro progress not updating right after clicking Continue"
+      ]
+    },
+    {
       "version": "1.1.5",
       "short-version": "115",
       "date": "April 7th 2017",

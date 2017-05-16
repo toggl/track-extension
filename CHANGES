@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.1.6",
+      "rows": [
+        "Fixed issue where the extension would sometimes try to interact with a non-website tab",
+        "Fixed issue where logging out sometimes broke the button",
+        "Added support for subprojects in Todoist.",
+        "Fixed pomodoro progress not updating right after clicking Continue"
+      ]
+    },
+    {
       "version": "1.1.5",
       "rows": [
         "Fixed button missing on Remember The Milk",

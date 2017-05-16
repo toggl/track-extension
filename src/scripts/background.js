@@ -546,7 +546,7 @@ var TogglButton = {
       baseUrl = opts.baseUrl || TogglButton.$ApiV8Url,
       resolvedUrl = baseUrl + url,
       token = opts.token || (TogglButton.$user && TogglButton.$user.api_token) || localStorage.getItem('userToken'),
-      credentials = opts.credentials || null
+      credentials = opts.credentials || null;
 
     xhr.open(method, resolvedUrl, true);
     xhr.setRequestHeader("IsTogglButton", "true");

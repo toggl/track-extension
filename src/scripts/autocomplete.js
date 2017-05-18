@@ -99,7 +99,7 @@ AutoComplete.prototype.updateHeight = function () {
     listStyle = "max-height:auto;",
     calc;
 
-  if (elRect.bottom + 25 >= bodyRect.bottom) {
+  if (bodyRect.bottom > 0 && elRect.bottom + 25 >= bodyRect.bottom) {
     calc = window.scrollY + bodyRect.bottom - elRect.top - 10;
     if (calc < 55) {
       calc = 55;

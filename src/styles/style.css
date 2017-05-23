@@ -1088,9 +1088,20 @@ only screen and (min-resolution: 192dpi) {
 }
 
 /********* OPENPROJECT *********/
-.subject-header .toggl-button.openproject {
-  float: left;
+.work-packages--show-view .toggl-button.openproject {
+  margin-bottom: 1rem;
 }
+
+table.work-package-table .wp-table--cell-td.id {
+  position: relative;
+}
+
+table.work-package-table .toggl-button.openproject {
+  position: absolute;
+  right: 2px;
+  top: 10px;
+}
+
 
 /********* ZUBE *********/
 .toggl-button.zube {
@@ -1231,4 +1242,3 @@ a.toggl-button.workfront.min {
 .ProcessPageEdit h1 .toggl-button.processwire {
   margin-left: 1em;
 }
-

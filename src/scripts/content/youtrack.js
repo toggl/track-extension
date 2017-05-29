@@ -22,17 +22,21 @@ togglbutton.render('.fsi-toolbar-content:not(.toggl), .toolbar_fsi:not(.toggl)',
 });
 
 // Agile board
-togglbutton.render('#board .sb-task:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.yt-agile-card:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    container = $('.sb-task-details', elem),
-    description = $('.sb-task-issue-ref').textContent + ' ' + $('.sb-task-summary', elem).textContent,
-    projectName = $('#selectAgile').value.split("(")[1].replace(")", "").trim();
+    container = $('.yt-agile-card__header', elem),
+    description = $('.yt-agile-card__summary', elem).textContent,
+    projectName = $('.yt-issue-id').textContent.split('-');
+
+  if (projectName.length > 1) {
+    projectName.pop();
+  }
 
   link = togglbutton.createTimerLink({
     className: 'youtrack',
     buttonType: 'minimal',
-    description: description,
-    projectName: projectName
+    description: description ? description.trim() : '',
+    projectName: projectName.join('')
   });
 
   container.appendChild(link);

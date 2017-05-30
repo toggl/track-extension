@@ -177,6 +177,10 @@
     "url": "*://keep.google.com/*",
     "name": "Google Keep"
   },
+  "khanacademy.org": {
+    "url": "*://www.khanacademy.org/*",
+    "name": "KhanAcademy"
+  },
   "mail.google.com": {
     "url": "*://mail.google.com/*",
     "name": "Google Mail"

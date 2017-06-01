@@ -3,11 +3,11 @@
 'use strict';
 
 // Work packages list items
-togglbutton.render('#work-packages-index table tbody tr:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('table.work-package-table tbody tr td.id:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    container = $('.checkbox .accessible-checkbox', elem),
-    description = $('td.subject', elem).textContent.trim(),
-    projectName = $('.breadcrumb-project-title').textContent.trim();
+    container = elem,
+    description = $('span[data-field-name="subject"]', elem.parentNode).textContent.trim(),
+    projectName = $('#projects-menu').title.trim();
 
   link = togglbutton.createTimerLink({
     className: 'openproject',
@@ -20,11 +20,11 @@ togglbutton.render('#work-packages-index table tbody tr:not(.toggl)', {observe: 
 });
 
 // Work packages details view
-togglbutton.render('.work-packages--page-container:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.work-packages--show-view:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    container = $('.subject-header', elem),
-    description = $('#work-package-subject .inplace-edit--read-value').textContent.trim(),
-    projectName = $('.breadcrumb-project-title').textContent.trim();
+    container = $('.attributes-group--header', elem),
+    description = $('.subject').textContent.trim(),
+    projectName = $('#projects-menu').title.trim();
 
   link = togglbutton.createTimerLink({
     className: 'openproject',
@@ -32,5 +32,5 @@ togglbutton.render('.work-packages--page-container:not(.toggl)', {observe: true}
     projectName: projectName
   });
 
-  container.appendChild(link);
+  container.insertBefore(link, container.firstChild);
 });

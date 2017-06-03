@@ -1,5 +1,6 @@
 # Toggl Button extension for Chrome and Firefox
 
+
 Add Toggl one-click time tracking to popular web tools.
 
 ## Compatible services

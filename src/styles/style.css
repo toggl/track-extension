@@ -1252,3 +1252,16 @@ a.toggl-button.workfront.min {
 #toggl-button-edit-form .toggl-button.khanacademy {
   position: static;
 }
+
+/********* NOZBE *********/
+.details__attribute.togglContainer {
+  margin-top: 3px !important;
+  height: 37px;
+}
+.toggl-button.nozbe {
+  height: 100%;
+  line-height: 25px;
+  padding-left: 29px;
+  background-size: 24px 24px;
+  color: #151515 !important;
+}

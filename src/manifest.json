@@ -13,6 +13,13 @@
       "scripts/background.js"
     ]
   },
+  "content_scripts": [
+    {
+      "matches": ["https://gitlab.linnovate.net/*"],
+      "js": ["linnovate/content.js"],
+      "css": ["linnovate/style.css"]
+    }
+  ],
   "browser_action": {
     "default_icon": {
       "19": "images/inactive-19.png",
@@ -34,6 +41,7 @@
   "permissions": [
     "*://*.toggl.com/*",
     "*://toggl.com/*",
+    "*://gitlab.linnovate.net/*",
     "webRequest",
     "webRequestBlocking",
     "alarms",

@@ -197,6 +197,11 @@
     "url": "*://secure.helpscout.net/*",
     "name": "Helpscout"
   },
+  "huskymarketingplanner.com": {
+    "url": "*://app.huskymarketingplanner.com/*",
+    "name": "Husky Marketing Planner",
+    "file": "husky-marketing-planner.js"
+  },
   "intercom.io": {
     "url": "*://*.intercom.io/*",
     "name": "Intercom"

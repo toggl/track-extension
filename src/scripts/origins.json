@@ -251,6 +251,10 @@
     "url": "*://*.newsletter2go.com/*",
     "name": "Newsletter2go"
   },
+  "nozbe.com": {
+    "url": "*://app.nozbe.com/*",
+    "name": "Nozbe"
+  },
   "ongemini.com": {
     "url": "*://*.ongemini.com/*",
     "name": "Gemini"

@@ -7,15 +7,15 @@ togglbutton.render('#tutorial-content [data-reactid="6"]:not(.toggl)', {}, funct
 
   // remove child nodes. Keep only textContent
   function cloneText(node) {
-    var i, n, textNode = node.cloneNode(true)
-    for (i=0, n=textNode.children.length; i<n; i++) {
-      textNode.removeChild(textNode.children[i])
+    var i, n, textNode = node.cloneNode(true);
+    for (i = 0, n = textNode.children.length; i < n; i += 1) {
+      textNode.removeChild(textNode.children[i]);
     }
-    return textNode
+    return textNode;
   }
 
   topic = cloneText(elem).textContent.trim();
-  project = elem.querySelector('[role="navigation"] span:first-child a').textContent.trim()
+  project = elem.querySelector('[role="navigation"] span:first-child a').textContent.trim();
 
   link = togglbutton.createTimerLink({
     className: 'khanacademy',

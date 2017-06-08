@@ -1,6 +1,20 @@
 {
   "versions": [
     {
+      "version": "1.2.0",
+      "short-version": "120",
+      "date": "June 8th 2017",
+      "rows": [
+        "Fixed button in Toodledo"
+        "Fixed button in OpenProject 7.0",
+        "Fixed button in Youtrack"
+        "Improved dropdown size calculations",
+        "Added support for Khan Academy",
+        "Added support for Husky Marketing Planner",
+        "Added support for Nozbe"
+      ]
+    },
+    {
       "version": "1.1.6",
       "short-version": "116",
       "date": "May 16th 2017",

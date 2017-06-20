@@ -109,6 +109,10 @@
     "url": "*://*.drupal.org/*",
     "name": "Drupal"
   },
+  "easybook.io": {
+    "url": "*://app.easybook.io/*",
+    "name": "easybook.io"
+  },
   "eproject.me": {
     "url": "*://*.eproject.me/*",
     "name": "Eproject.me"

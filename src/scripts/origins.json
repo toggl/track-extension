@@ -244,7 +244,7 @@
   },
   "myjetbrains.com": {
     "url": "*://*.myjetbrains.com/*",
-    "name": "Myjetbrains",
+    "name": "YouTrack",
     "file": "youtrack.js"
   },
   "newsletter2go.com": {

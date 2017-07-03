@@ -286,7 +286,23 @@ var TogglButton = {
   },
 
   updateCurrentEntry: function (data) {
-    var entry = data.data;
+    var entry = data.data,
+      defaultProject = Db.getDefaultProject(),
+      rememberProjectPer = Db.get("rememberProjectPer");
+    /**
+     * setDefaultProject parameters are (pid, scope). So the logic goes:
+     * If we wan't to remember the project specifically for a given scope (from settings),
+     * - If the pid is the same as the default global project, then we set it to null
+     * -- Disabling a specific default for this scope, henceforth taking whatever global default gives us
+     * -- (I think it works best this way. Could be wrong)
+     * - Now, for the scope: If we want to remember per service, then we use current service string
+     * -- Otherwise, we use the current url for scope.
+     * We never use scope=null, so we never touch the global default.
+     */
+    if (rememberProjectPer) {
+      Db.setDefaultProject(entry.pid === defaultProject ? null : entry.pid,
+        rememberProjectPer === "service" ? TogglButton.$curService : TogglButton.$curURL);
+    }
     if (data.action === "INSERT") {
       TogglButton.updateTriggers(entry);
     } else if (data.action === "UPDATE" && (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)) {
@@ -363,8 +379,17 @@ var TogglButton = {
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       error = "",
-      defaultProject = Db.get(TogglButton.$user.id + "-defaultProject"),
+      defaultProject,
+      scope = null,
+      rememberProjectPer = Db.get('rememberProjectPer'),
       entry;
+    TogglButton.$curService = (timeEntry || {}).service;
+    TogglButton.$curURL = (timeEntry || {}).url;
+
+    if (rememberProjectPer) {
+      defaultProject = Db.getDefaultProject(rememberProjectPer === 'service' ?
+        TogglButton.$curService : TogglButton.$curURL)
+    }
 
     if (!timeEntry) {
       sendResponse(
@@ -398,7 +423,7 @@ var TogglButton = {
 
     // set Default project if needed
     if (!entry.pid && !!defaultProject) {
-      project = TogglButton.findProjectByPid(parseInt(defaultProject, 10));
+      project = TogglButton.findProjectByPid(defaultProject);
       entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
       entry.wid = (project && project.wid) || entry.wid;
@@ -1381,7 +1406,7 @@ var TogglButton = {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();
         TogglButton.setBrowserActionBadge();
-        sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion, defaults: { project: parseInt(Db.get("defaultProject"), 10) }});
+        sendResponse({success: TogglButton.$user !== null, user: TogglButton.$user, version: TogglButton.$fullVersion, defaults: { project: Db.getDefaultProject() }});
         TogglButton.triggerNotification();
       } else if (request.type === 'login') {
         TogglButton.loginUser(request, sendResponse);

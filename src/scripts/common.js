@@ -448,7 +448,8 @@ var togglbutton = {
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
           createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName,
-          service: togglbutton.serviceName
+          service: togglbutton.serviceName,
+          url: window.location.href
         };
       }
       togglbutton.element = e.target;

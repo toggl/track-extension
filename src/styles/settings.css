@@ -21,14 +21,23 @@ input[type="number"] {
   width: 50px;
 }
 
+html,
+body,
 .container {
+  height: 400px;
+  width: 800px;
+  max-height: 400px;
+  max-width: 800px;
+}
+
+.container {
+  position: relative;
+  height: 400px;
   width: 800px;
   margin: 20px 15px 0px;
   padding: 0;
   color: #505050!important;
   float: left;
-  min-height: 380px;
-  max-height: 400px;
   overflow: hidden;
 }
 
@@ -128,7 +137,7 @@ input[type="number"] {
   visibility: hidden;
   padding: 5px;
   width: 50%;
-  margin: 0!important;
+  margin: 0 20px!important;
 }
 
 .list li:hover .description {
@@ -186,9 +195,19 @@ header .active, header li:hover {
 .container .tab {
   float: left;
   height: 323px;
+  overflow-x: hidden;
   overflow-y: auto;
-  width: 815px;
-  padding-left: 15px;
+  width: 800px;
+  padding-left: 30px;
+}
+
+.container .tab-1 {
+  width: 785px;
+  padding-left: 0;
+}
+
+.container .tab-2 {
+  padding-left: 45px;
 }
 
 /* Permissions tab */
@@ -198,8 +217,7 @@ header .active, header li:hover {
 }
 
 .container .tab-3 {
-  padding-right: 15px;
-  width: 800px;
+  width: 785px;
 }
 
 .container .tab-3 h2 {

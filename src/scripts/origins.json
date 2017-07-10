@@ -101,6 +101,11 @@
     "name": "Doit",
     "clone": "true"
   },
+  "dokuwiki.org": {
+    "url": "*://*.dokuwiki.org/*",
+    "name": "DokuWiki",
+    "file": "dokuwiki.js"
+  },
   "draftin.com": {
     "url": "*://*.draftin.com/*",
     "name": "Draftin"

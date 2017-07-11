@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "1.3.0",
+      "short-version": "130",
+      "date": "July 11th 2017",
+      "rows": [
+        "Fixed button placement in Feedly",
+        "Fixed Youtrack on custom domains",
+        "Added tasks & goals support to Google Calendar",
+        "Fixed button in Backlog",
+        "Added option to remember last selected project per service/URL"
+      ]
+    },
+    {
       "version": "1.2.0",
       "short-version": "120",
       "date": "June 8th 2017",

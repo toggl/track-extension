@@ -380,7 +380,6 @@ var TogglButton = {
     var project, start = new Date(),
       error = "",
       defaultProject,
-      scope = null,
       rememberProjectPer = Db.get('rememberProjectPer'),
       entry;
     TogglButton.$curService = (timeEntry || {}).service;
@@ -388,7 +387,7 @@ var TogglButton = {
 
     if (rememberProjectPer) {
       defaultProject = Db.getDefaultProject(rememberProjectPer === 'service' ?
-        TogglButton.$curService : TogglButton.$curURL)
+          TogglButton.$curService : TogglButton.$curURL);
     }
 
     if (!timeEntry) {

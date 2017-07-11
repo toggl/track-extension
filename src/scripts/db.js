@@ -113,7 +113,9 @@ var Db = {
   setDefaultProject: function (pid, scope) {
     var userId = TogglButton.$user.id,
       defaultProjects = JSON.parse(this.get(userId + "-defaultProjects")) || {};
-    if (!scope) return this.set(userId + "-defaultProject", pid);
+    if (!scope) {
+      return this.set(userId + "-defaultProject", pid);
+    }
     defaultProjects[scope] = pid;
     this.set(userId + "-defaultProjects", JSON.stringify(defaultProjects));
   },
@@ -128,8 +130,9 @@ var Db = {
     var userId = TogglButton.$user.id,
       defaultProjects = JSON.parse(this.get(userId + "-defaultProjects")),
       defaultProject = parseInt(this.get(userId + "-defaultProject") || '0', 10);
-    if (!scope || !defaultProjects)
+    if (!scope || !defaultProjects) {
       return defaultProject;
+    }
     return defaultProjects[scope] || defaultProject;
   },
 

@@ -57,7 +57,9 @@ var Settings = {
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function () {
-    var volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10), a;
+    var volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10),
+      rememberProjectPer = Db.get("rememberProjectPer"),
+      a;
 
     try {
       if (!TogglButton) {
@@ -81,9 +83,10 @@ var Settings = {
       Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
       Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
       Settings.toggleState(Settings.$pomodoroStopTimeTracking, Db.get("pomodoroStopTimeTrackingWhenTimerEnds"));
-      var rememberProjectPer = Db.get("rememberProjectPer");
-      Array.apply(null, Settings.$rememberProjectPer.options).forEach(function(option) {
-        if (option.value === rememberProjectPer) option.setAttribute("selected", "selected");
+      Array.apply(null, Settings.$rememberProjectPer.options).forEach(function (option) {
+        if (option.value === rememberProjectPer) {
+          option.setAttribute("selected", "selected");
+        }
       });
 
       document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
@@ -637,7 +640,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     Settings.$rememberProjectPer.addEventListener('change', function (e) {
       var rememberPer = Settings.$rememberProjectPer.options[Settings.$rememberProjectPer.selectedIndex].value;
-      if (rememberPer === "false") rememberPer = false;
+      if (rememberPer === "false") {
+        rememberPer = false;
+      }
       Settings.saveSetting(rememberPer, "change-remember-project-per");
     });
 

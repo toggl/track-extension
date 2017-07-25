@@ -218,6 +218,17 @@ only screen and (min-resolution: 2dppx) {
   margin-right: 0;
 }
 
+.header .signup {
+  display: none;
+  float: right;
+  font-size: 14px;
+  padding: 8px 5px 0 0;
+}
+
+.header .signup a {
+  color: #0075ee;
+}
+
 .header li:hover {
   opacity: .6;
 }
@@ -235,6 +246,9 @@ only screen and (min-resolution: 2dppx) {
 
 .header[data-view="login-form"] li:not(.icon) {
   display: none;
+}
+.header[data-view="login-form"] li.signup {
+  display: block;
 }
 
 .running, .stopped {

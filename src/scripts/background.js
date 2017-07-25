@@ -379,7 +379,7 @@ var TogglButton = {
   createTimeEntry: function (timeEntry, sendResponse) {
     var project, start = new Date(),
       error = "",
-      defaultProject,
+      defaultProject = Db.getDefaultProject(),
       rememberProjectPer = Db.get('rememberProjectPer'),
       entry;
     TogglButton.$curService = (timeEntry || {}).service;

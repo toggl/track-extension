@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.4.0",
+      "short-version": "140",
+      "date": "July 28th 2017",
+      "rows": [
+        "Added signup button to login screen",
+        "Fixed global default project not being applied",
+        "Added support for osTicket",
+        "Added support for DokuWiki"
+      ]
+    },
+    {
       "version": "1.3.0",
       "short-version": "130",
       "date": "July 11th 2017",

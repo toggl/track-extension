@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.4.0",
+      "rows": [
+        "Added signup button to login screen",
+        "Fixed global default project not being applied",
+        "Added support for osTicket",
+        "Added support for DokuWiki"
+      ]
+    },
+    {
       "version": "1.3.0",
       "rows": [
         "Fixed button placement in Feedly",

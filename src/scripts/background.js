@@ -1642,13 +1642,12 @@ if (!FF) {
 }
 
 chrome.commands.onCommand.addListener(function (command) {
+  var entry = TogglButton.$latestStoppedEntry || {"type": "timeEntry", "service": "keyboard"};
   if (command === "quick-start-stop-entry") {
     if (TogglButton.$curEntry !== null) {
       TogglButton.stopTimeEntry(TogglButton.$curEntry);
     } else {
-      if (TogglButton.$latestStoppedEntry !== null) {
-        TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, null);
-      }
+      TogglButton.createTimeEntry(entry, null);
     }
   }
 });

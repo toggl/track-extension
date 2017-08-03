@@ -335,6 +335,10 @@
     "name": "Proworkflow",
     "clone": "true"
   },
+  "rally1.rallydev.com": {
+    "url": "*://rally1.rallydev.com/*",
+    "name": "RallyDev"
+  },
   "redbooth.com": {
     "url": "*://*.redbooth.com/*",
     "name": "Redbooth"

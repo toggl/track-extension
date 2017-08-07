@@ -870,7 +870,7 @@ only screen and (min-resolution: 192dpi) {
   margin-top: -2px;;
 }
 
-.bubblecontent .toggl-button.google-calendar {  
+.bubblecontent .toggl-button.google-calendar {
   margin-left: -4px;
 }
 
@@ -1164,6 +1164,11 @@ a.toggl-button.workfront.min {
 /********* ONLYOFFICE *********/
 .toggl-button.onlyoffice {
   margin-top: 4px;
+}
+
+/********* ONSHAPE *********/
+.toggl-button.onshape {
+    margin: 0 auto;
 }
 
 /********* MEISTERTASK *********/

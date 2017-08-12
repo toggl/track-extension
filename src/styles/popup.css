@@ -453,7 +453,7 @@ hr {
   display: none;
   padding: 0;
   width: 240px;
-  height: 269px;
+  height: 315px;
 }
 
 #toggl-button-edit-form {
@@ -462,7 +462,7 @@ hr {
   max-width: 240px;
   padding: 10px !important;
   box-sizing: border-box;
-  height: 269px;
+  height: 315px;
 }
 
 #toggl-button-edit-form .toggl-button{
@@ -509,6 +509,7 @@ hr {
 #toggl-button-edit-form #toggl-button-project-placeholder,
 #toggl-button-edit-form #toggl-button-tag-placeholder,
 #toggl-button-edit-form #toggl-button-description,
+#toggl-button-edit-form #toggl-button-duration,
 #toggl-button-edit-form #toggl-button-project,
 #toggl-button-edit-form #toggl-button-project-filter,
 #toggl-button-edit-form #toggl-button-tag-filter {
@@ -521,6 +522,18 @@ hr {
   border-radius: 0;
   background-color: #ffffff;
   font-size: 14px;
+}
+
+#toggl-button-edit-form #toggl-button-duration-row {
+  outline: none;
+}
+
+#toggl-button-edit-form #toggl-button-duration {
+  font-size: 22px;
+  text-align: center;
+  width: 100%;
+  font-weight: 200;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 #toggl-button-edit-form #toggl-button-project-placeholder,
@@ -639,6 +652,10 @@ hr {
 /** FIREFOX **/
 .ff #toggl-button-update:focus{
   box-shadow: 1px 1px 5px #83bffc;
+}
+
+.ff #toggl-button-edit-form #toggl-button-duration {
+  padding: 0;
 }
 
 /** FIREFOX END **/

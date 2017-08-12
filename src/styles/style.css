@@ -145,6 +145,10 @@ only screen and (min-resolution: 192dpi) {
   font-size: 14px;
 }
 
+#toggl-button-edit-form #toggl-button-duration {
+  display: none;
+}
+
 #toggl-button-edit-form #toggl-button-description img {
   display: none !important;
 }

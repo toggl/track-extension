@@ -31,9 +31,24 @@ togglbutton.render('#phabricator-standard-page-body:not(.toggl)', {observe: true
 
   projectName = (!!projectName) ? projectName.textContent.trim() : "";
 
+  if (number.length > 0 && number[0].toUpperCase() === 'T') {
+      projectName = "Tasks";
+  } else if (number.length > 0 && number[0].toUpperCase() === 'D') {
+      projectName = "Reviews";
+  }
+
+  var
+    properties = elem.querySelectorAll('.phui-property-list-properties .phui-property-list-key'),
+    maniphest = "";
+  properties.forEach(function(propertyName) {
+    if (propertyName.textContent.trim() === 'Maniphest Tasks') {
+      maniphest = " (" + propertyName.nextSibling.textContent.trim() + ")";
+    }
+  });
+
   link = togglbutton.createTimerLink({
     className: 'phabricator',
-    description: number + desc.textContent,
+    description: number + desc.textContent + maniphest,
     projectName: projectName
   });
 

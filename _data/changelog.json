@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "1.5.0",
+      "short-version": "150",
+      "date": "August 22nd 2017",
+      "rows": [
+        "Added keyboard command to start/stop the timer",
+        "Added duration field to extension popup edit view",
+        "Added support for Codebase",
+        "Fixed button in toodledo",
+        "Fixed some button issues in Asana"
+      ]
+    },
+    {
       "version": "1.4.0",
       "short-version": "140",
       "date": "July 28th 2017",

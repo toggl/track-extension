@@ -1277,3 +1277,8 @@ a.toggl-button.workfront.min {
 .sidebar__module .toggl-button {
   margin-bottom: 5px;
 }
+
+/********* SPIDERGAP *********/
+.nav-tabs .toggl-button {
+  margin: 5px 0 0 60px;
+}

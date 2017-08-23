@@ -380,6 +380,10 @@
     "url": "*://www.sourcelair.com/*",
     "name": "Sourcelair"
   },
+  "spidergap.com": {
+    "url": "*://*.spidergap.com/*",
+    "name": "Spidergap"
+  },
   "sprint.ly": {
     "url": "*://sprint.ly/*",
     "name": "Sprintly"

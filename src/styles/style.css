@@ -145,6 +145,10 @@ only screen and (min-resolution: 192dpi) {
   font-size: 14px;
 }
 
+#toggl-button-edit-form #toggl-button-duration {
+  display: none;
+}
+
 #toggl-button-edit-form #toggl-button-description img {
   display: none !important;
 }
@@ -870,7 +874,7 @@ only screen and (min-resolution: 192dpi) {
   margin-top: -2px;;
 }
 
-.bubblecontent .toggl-button.google-calendar {  
+.bubblecontent .toggl-button.google-calendar {
   margin-left: -4px;
 }
 
@@ -1277,4 +1281,12 @@ a.toggl-button.workfront.min {
   padding-left: 29px;
   background-size: 24px 24px;
   color: #151515 !important;
+}
+
+/********* CODEBASE *********/
+.merge-request-summary__title .toggl-button {
+  margin-left: 20px;
+}
+.sidebar__module .toggl-button {
+  margin-bottom: 5px;
 }

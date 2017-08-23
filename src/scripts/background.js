@@ -46,17 +46,20 @@ var TogglButton = {
       '<form autocomplete="off">' +
       '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
       '<a id="toggl-button-hide">&times;</a>' +
-      '<div class="toggl-button-row">' +
-        '<input name="toggl-button-description" tabindex="100" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
+      '<div class="toggl-button-row" id="toggl-button-duration-row">' +
+        '<input name="toggl-button-duration" tabindex="100" type="time" step="1" id="toggl-button-duration" class="toggl-button-input" value="" placeholder="00:00" autocomplete="off">' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-project-filter" tabindex="101" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
+        '<input name="toggl-button-description" tabindex="101" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
+      '</div>' +
+      '<div class="toggl-button-row">' +
+        '<input name="toggl-button-project-filter" tabindex="102" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
         '<a href="#clear" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="tb-project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
         '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
       '<div class="toggl-button-row">' +
-        '<input name="toggl-button-tag-filter" tabindex="102" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
+        '<input name="toggl-button-tag-filter" tabindex="103" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
         '<a href="#add" class="add-new-tag">+ Add</a>' +
         '<a href="#clear" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
@@ -68,7 +71,7 @@ var TogglButton = {
         '<div class="toggl-button-billable-label">Billable</div>' +
         '<div class="toggl-button-billable-flag"><span></span></div>' +
       '</div>' +
-      '<div id="toggl-button-update" tabindex="104">DONE</div>' +
+      '<div id="toggl-button-update" tabindex="105">DONE</div>' +
       '<input type="submit" class="hidden">' +
       '</from>' +
     '</div>',
@@ -769,6 +772,10 @@ var TogglButton = {
     if (entry.pid) {
       project = TogglButton.findProjectByPid(parseInt(entry.pid, 10));
       entry.wid = (project && project.wid);
+    }
+
+    if (timeEntry.start) {
+      entry.start = timeEntry.start;
     }
 
     TogglButton.ajax('/' + entry.wid + '/time_entries/' + TogglButton.$curEntry.id, {
@@ -1640,3 +1647,14 @@ if (!FF) {
     }
   });
 }
+
+chrome.commands.onCommand.addListener(function (command) {
+  var entry = TogglButton.$latestStoppedEntry || {"type": "timeEntry", "service": "keyboard"};
+  if (command === "quick-start-stop-entry") {
+    if (TogglButton.$curEntry !== null) {
+      TogglButton.stopTimeEntry(TogglButton.$curEntry);
+    } else {
+      TogglButton.createTimeEntry(entry, null);
+    }
+  }
+});

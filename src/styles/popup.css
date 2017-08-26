@@ -728,6 +728,29 @@ hr {
   box-shadow: 0px 0px 5px rgb(26, 153, 243);
 }
 
+/** Summary **/
+
+.summary {
+  height: 35px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.summary > div {
+  color: #a3a3a3;
+  font-weight: 200;
+  width: 50%;
+}
+
+.summary .s-today {
+  float: left;
+}
+
+.summary .s-week {
+  float: right;
+}
+
 /** Time Entries list **/
 
 #menu .entries-list {

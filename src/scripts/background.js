@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global debug: true, console: false, report: true, escapeHtml: true, GA: false, window: false, setTimeout: false, clearTimeout: false, setInterval: false, clearInterval: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global secToHHMM: true, debug: true, console: false, report: true, escapeHtml: true, GA: false, window: false, setTimeout: false, clearTimeout: false, setInterval: false, clearInterval: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var openWindowsCount = 0,
@@ -1400,6 +1400,59 @@ var TogglButton = {
     if (!!popup && popup.length && !!popup[0].PopUp) {
       popup[0].PopUp.showPage();
     }
+  },
+
+  calculateSums: function () {
+    var now = new Date(),
+      today,
+      todaySum = 0,
+      weekSum = 0,
+      m = now.getMonth() + 1,
+      getWeekStart,
+      weekStart;
+
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+
+    if (m < 10) {
+      m = "0" + m;
+    }
+    today = now.getFullYear() + "-" + m + "-" + now.getDate();
+    today = "2017-08-25";
+
+    getWeekStart = function (d) {
+      var startDay = TogglButton.$user.beginning_of_week,
+        day = d.getDay(),
+        diff = d.getDate() - day + (day === 0 ? startDay - 7 : startDay);
+
+      return new Date(d.setDate(diff));
+    };
+
+    weekStart = getWeekStart(now);
+
+    TogglButton.$user.time_entries.forEach(function (entry) {
+      // Calc today total
+      if (entry.start.split("T")[0] === today) {
+        if (entry.duration < 0) {
+          todaySum += ((new Date() - new Date(entry.start)) / 1000);
+        } else {
+          todaySum += entry.duration;
+        }
+      }
+
+      // Calc week total
+      if (new Date(entry.start).getTime() > weekStart.getTime()) {
+        if (entry.duration < 0) {
+          weekSum += ((new Date() - new Date(entry.start)) / 1000);
+        } else {
+          weekSum += entry.duration;
+        }
+      }
+
+    });
+
+    return {today: secToHHMM(todaySum), week: secToHHMM(weekSum)};
   },
 
   contextMenuClick: function (info, tab) {

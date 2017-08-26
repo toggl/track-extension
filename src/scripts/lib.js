@@ -16,7 +16,8 @@ var report,
     return String(string).replace(/[&<>"'\/]/g, function (s) {
       return entityMap[s];
     });
-  };
+  },
+  secToHHMM;
 
 Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
@@ -31,6 +32,13 @@ report = function (e) {
   } else {
     Bugsnag.notifyException(e);
   }
+};
+
+secToHHMM = function (sum) {
+  var hours = Math.floor(sum / 3600),
+    minutes = Math.floor((sum % 3600) / 60);
+
+  return hours + "h " + minutes + "m";
 };
 
 chrome.webRequest.onBeforeSendHeaders.addListener(

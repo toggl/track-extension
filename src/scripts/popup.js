@@ -138,7 +138,9 @@ var PopUp = {
     }
 
     if (startTimer) {
-      PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      if (!PopUp.$timer) {
+        PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      }
       description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');

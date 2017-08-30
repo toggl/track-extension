@@ -1270,6 +1270,19 @@ a.toggl-button.workfront.min {
   color: #151515 !important;
 }
 
+/********* RallyDev *********/
+.timer__container.togglContainer {
+  display: inline;
+  margin-left: 20px;
+}
+.toggl-button.rallydev {
+  height: 100%;
+  line-height: 25px;
+  padding-left: 29px;
+  background-size: 24px 24px;
+  color: #151515 !important;
+}
+
 /********* CODEBASE *********/
 .merge-request-summary__title .toggl-button {
   margin-left: 20px;

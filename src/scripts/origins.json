@@ -359,6 +359,10 @@
     "url": "*://*.rindle.com/*",
     "name": "Rindle"
   },
+  "rollbar.com": {
+    "url": "*://*.rollbar.com/*",
+    "name": "Rollbar"
+  },
   "salesforce.com": {
     "url": "*://*.salesforce.com/*,*://*.my.salesforce.com/*",
     "name": "Salesforce"

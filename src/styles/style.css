@@ -1295,3 +1295,9 @@ a.toggl-button.workfront.min {
 .nav-tabs .toggl-button {
   margin: 5px 0 0 60px;
 }
+
+/********* ROLLBAR *********/
+.toggl-button.rollbar {
+  margin-left: 30px;
+  vertical-align: middle;
+}

@@ -11,7 +11,7 @@ togglbutton.render('.document-name-container:not(.toggl)', {observe: true}, func
     className: 'onshape',
     description: description,
     projectName: project,
-    tags: ["3D CAD"]
+    buttonType: 'minimal'
   });
 
   $('.navbar-document-and-workspace-names').appendChild(link);

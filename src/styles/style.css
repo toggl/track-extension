@@ -145,6 +145,10 @@ only screen and (min-resolution: 192dpi) {
   font-size: 14px;
 }
 
+#toggl-button-edit-form #toggl-button-duration {
+  display: none;
+}
+
 #toggl-button-edit-form #toggl-button-description img {
   display: none !important;
 }
@@ -1269,4 +1273,30 @@ a.toggl-button.workfront.min {
   padding-left: 29px;
   background-size: 24px 24px;
   color: #151515 !important;
+}
+
+/********* RallyDev *********/
+.timer__container.togglContainer {
+  display: inline;
+  margin-left: 20px;
+}
+.toggl-button.rallydev {
+  height: 100%;
+  line-height: 25px;
+  padding-left: 29px;
+  background-size: 24px 24px;
+  color: #151515 !important;
+}
+
+/********* CODEBASE *********/
+.merge-request-summary__title .toggl-button {
+  margin-left: 20px;
+}
+.sidebar__module .toggl-button {
+  margin-bottom: 5px;
+}
+
+/********* SPIDERGAP *********/
+.nav-tabs .toggl-button {
+  margin: 5px 0 0 60px;
 }

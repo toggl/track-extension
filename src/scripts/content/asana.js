@@ -61,7 +61,7 @@ togglbutton.render('.BoardCard.BoardColumnCardsContainer-item:not(.toggl)', {obs
   var link,
     container = $('.BoardCardMetadata-left', elem),
     description = $('.BoardCard-name', elem).textContent,
-    project = $('#project_pane_header_name').textContent;
+    project = $('.SidebarItemRow.is-selected').textContent;
 
   link = togglbutton.createTimerLink({
     className: 'asana-board',
@@ -81,12 +81,12 @@ togglbutton.render('.SingleTaskTitleRow:not(.toggl)', {observe: true}, function 
   var link,
     container = $('.SingleTaskPaneToolbar', elem.parentNode),
     description = $('.SingleTaskTitleRow textarea', elem.parentNode).textContent,
-    project = $('.SingleTaskPane-projects .TaskProjectPill-projectName', elem.parentNode).textContent;
+    projectElement = $('.SingleTaskPane-projects .TaskProjectPill-projectName', elem.parentNode);
 
   link = togglbutton.createTimerLink({
     className: 'asana-board',
     description: description,
-    projectName: project,
+    projectName: projectElement ? projectElement.textContent : '',
     buttonType: 'minimal'
   });
 

@@ -4,6 +4,8 @@
 'use strict';
 
 togglbutton.render('.row:not(.toggl), .taskRow:not(.toggl)', {observe: true}, function (elem) {
+  if (elem.querySelectorAll('.toggl-button').length) { return; }
+
   var link,
     newElem,
     landmarkElem,
@@ -26,6 +28,6 @@ togglbutton.render('.row:not(.toggl), .taskRow:not(.toggl)', {observe: true}, fu
     'width:30px;height:20px;');
   if (!newLayout) { link.setAttribute('style', 'top:1px;'); }
 
-  landmarkElem = $('.subm', elem) || $('.subp', elem) || $('.ax', elem) || $('.cellAction', elem);
-  elem.insertBefore(newElem, landmarkElem.nextSibling);
+  landmarkElem = $('.subm', elem) || $('.subp', elem) || $('.ax', elem) || $('.cellAction', elem) || $('.cellStarSmall', elem);
+  landmarkElem.parentElement.insertBefore(newElem, landmarkElem.nextSibling);
 });

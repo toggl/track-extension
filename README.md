@@ -19,6 +19,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Cloudes][63]
   - [Clubhouse][91]
   - [Codeable][48]
+  - [Codebase][107]
   - [Countersoft Gemini][33]
   - [Desk.com][92]
   - [DevDocs][68]
@@ -59,7 +60,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Newsletter2Go][66]
   - [Nozbe][104]
   - [OnlyOffice][88]
-  - [Onshape][107]
+  - [Onshape][110]
   - [OpenProject][78]
   - [osTicket][106]
   - [Overv][90]
@@ -69,6 +70,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Podio][11]
   - [ProcessWire][101]
   - [Producteev][14]
+  - [RallyDev][108]
   - [Redbooth (old UI)][10]
   - [Redmine][18]
   - [Remember The Milk][71]
@@ -79,6 +81,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Slack][60]
   - [SmartBoard][76]
   - [SourceLair][70]
+  - [Spidergap][109]
   - [Sprintly][38]
   - [Taiga][30]
   - [TargetProcess][74]
@@ -127,7 +130,7 @@ List of all the changes and added features can be found at http://toggl.github.i
 
 ## Using the Button
 1.  Log in to your [Toggl][1] account from the extension popup.
-2.  Go to your [AgenoCRM][81], [Any.do][23], [Asana][5], [Assembla][46], [Axosoft][32], [Backlog.jp][96], [BamBam][43], [Basecamp][12], [Bitbucket][15], [Bitrix24][82], [Breeze][42], [Bugzilla][41], [CapsuleCRM][20], [Cloudes.me][63], [Clubhouse][91], [Codeable][48], [Countersoft Gemini][33], [Desk.com][92], [DevDocs][68], [Doit.im][61], [DokuWiki][105], [Draftin][51], [Drupal][34], [eProject.me][64], [Esa][35], [Eventum][49], [Evernote][72], [Exana][85], [Feedly][93], [Flow][37], [FogBugz][52], [Freshdesk][65], [Gingko][54], [Github][4], [Gitlab][7], [Gogs][67], [Google Calendar][39], [Google Docs][17], [Google Inbox][55], [Google Keep][53], [Google Mail][29], [GQueue][44], [HabitRPG][31], [Help Scout][36], [Husky Marketing Planner][103], [Intercom][95], [JIRA][13], [Kanbanery][57], [KhanAcademy][102], [LiquidPlanner][69], [MantisHub][73], [MeisterTask][89], [miniCRM.pl][80], [Newsletter2Go][66], [Nozbe][104], [OnlyOffice][88], [Onshape][107], [OpenProject][78], [osTicket][106], [Overv][90], [Phabricator][77], [Pivotal Tracker][3], [Planbox][58], [Podio][11], [Producteev][14], [Redbooth][10], [Redmine][18], [Remember The Milk][71], [Rindle][83], [Salesforce][50], [SherpaDesk][86], [Slack][60], [SmartBoard][76], [SourceLair][70], [Sprintly][38], [Stifer][16], [Taiga][30], [TargetProcess][74], [Teamleader][94], [TeamWeek][2], [Teamwork.com][28], [TestRail][40], [TickTick][84], [Todoist][24], [Toodledo][27], [Trac][25], [Trello][8], [Unfuddle][6], [VisualStudioOnline (TFS)][75], [Waffle][47], [Wordpress][56], [Workfront][87], [Worksection][9], [Wrike][45], [Wunderlist][26], [Xero][21], [YouTrack][19], [Zendesk][22], [Zoho Books][59], [Zube][79] account and start your Toggl timer there.
+2.  Go to your [AgenoCRM][81], [Any.do][23], [Asana][5], [Assembla][46], [Axosoft][32], [Backlog.jp][96], [BamBam][43], [Basecamp][12], [Bitbucket][15], [Bitrix24][82], [Breeze][42], [Bugzilla][41], [CapsuleCRM][20], [Cloudes.me][63], [Clubhouse][91], [Codeable][48], [Codebase][107], [Countersoft Gemini][33], [Desk.com][92], [DevDocs][68], [Doit.im][61], [DokuWiki][105], [Draftin][51], [Drupal][34], [eProject.me][64], [Esa][35], [Eventum][49], [Evernote][72], [Exana][85], [Feedly][93], [Flow][37], [FogBugz][52], [Freshdesk][65], [Gingko][54], [Github][4], [Gitlab][7], [Gogs][67], [Google Calendar][39], [Google Docs][17], [Google Inbox][55], [Google Keep][53], [Google Mail][29], [GQueue][44], [HabitRPG][31], [Help Scout][36], [Husky Marketing Planner][103], [Intercom][95], [JIRA][13], [Kanbanery][57], [KhanAcademy][102], [LiquidPlanner][69], [MantisHub][73], [MeisterTask][89], [miniCRM.pl][80], [Newsletter2Go][66], [Nozbe][104], [OnlyOffice][88], [Onshape][110], [OpenProject][78], [osTicket][106], [Overv][90], [Phabricator][77], [Pivotal Tracker][3], [Planbox][58], [Podio][11], [Producteev][14], [RallyDev][108], [Redbooth][10], [Redmine][18], [Remember The Milk][71], [Rindle][83], [Salesforce][50], [SherpaDesk][86], [Slack][60], [SmartBoard][76], [SourceLair][70], [Spidergap][109], [Sprintly][38], [Stifer][16], [Taiga][30], [TargetProcess][74], [Teamleader][94], [TeamWeek][2], [Teamwork.com][28], [TestRail][40], [TickTick][84], [Todoist][24], [Toodledo][27], [Trac][25], [Trello][8], [Unfuddle][6], [VisualStudioOnline (TFS)][75], [Waffle][47], [Wordpress][56], [Workfront][87], [Worksection][9], [Wrike][45], [Wunderlist][26], [Xero][21], [YouTrack][19], [Zendesk][22], [Zoho Books][59], [Zube][79] account and start your Toggl timer there.
 
 _See this article for reference where the start timer link is located in all the tools: [Where can I find the Button?][100]_
 
@@ -256,4 +259,7 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [104]: https://nozbe.com/
 [105]: https://www.dokuwiki.org/
 [106]: http://osticket.com/
-[107]: https://onshape.com/
+[107]: https://www.codebasehq.com/
+[108]: https://rally1.rallydev.com/
+[109]: https://www.spidergap.com/
+[110]: https://onshape.com/

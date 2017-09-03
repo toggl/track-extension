@@ -28,6 +28,7 @@ var PopUp = {
   mousedownTrigger: null,
   projectBlurTrigger: null,
   editFormAdded: false,
+  durationChanged: false,
   $billable: null,
   $header: document.querySelector(".header"),
   $menuView: document.querySelector("#menu"),
@@ -124,11 +125,22 @@ var PopUp = {
     }
 
     var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start)),
-      description = TogglButton.$curEntry.description || "(no description)";
+      description = TogglButton.$curEntry.description || "(no description)",
+      durationField = document.querySelector("#toggl-button-duration");
 
     PopUp.$togglButton.textContent = duration;
+
+    // Update edit form duration field
+    if (durationField !== document.activeElement && PopUp.durationChanged === false) {
+      durationField.value = duration;
+    } else {
+      PopUp.durationChanged = true;
+    }
+
     if (startTimer) {
-      PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      if (!PopUp.$timer) {
+        PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      }
       description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
@@ -317,9 +329,11 @@ var PopUp = {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
       wid = TogglButton.$curEntry.wid,
-      togglButtonDescription = document.querySelector("#toggl-button-description");
+      togglButtonDescription = document.querySelector("#toggl-button-description"),
+      togglButtonDuration = document.querySelector("#toggl-button-duration");
 
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
+    togglButtonDuration.value = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start));
 
     PopUp.$projectAutocomplete.setup(pid, tid);
     PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
@@ -331,6 +345,8 @@ var PopUp = {
     togglButtonDescription.focus();
     togglButtonDescription.setSelectionRange(0, 0);
     togglButtonDescription.scrollLeft = 0;
+
+    PopUp.durationChanged = false;
   },
 
   updateBillable: function (pid, no_overwrite) {
@@ -363,6 +379,28 @@ var PopUp = {
     }
   },
 
+  // Duration changed let's calculate new start
+  getStart: function () {
+    var arr = document.querySelector("#toggl-button-duration").value.split(":"),
+      duration,
+      now,
+      start;
+
+    if (!PopUp.isNumber(arr.join(""))) {
+      return false;
+    }
+
+    duration = 1000 * (arr[2] || 0) + 60000 * arr[1] + 3600000 * arr[0];
+
+    now = new Date();
+    start = new Date(now.getTime() - duration);
+    return start.toISOString();
+  },
+
+  isNumber: function (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  },
+
   toggleBillable: function (visible) {
     var tabIndex = visible ? "103" : "-1";
     PopUp.$billable.setAttribute("tabindex", tabIndex);
@@ -387,7 +425,12 @@ var PopUp = {
         respond: true,
         billable: billable,
         service: "dropdown"
-      };
+      },
+      start = PopUp.getStart();
+
+    if (start) {
+      request.start = start;
+    }
 
     PopUp.sendMessage(request);
     PopUp.updateMenuTimer(request);

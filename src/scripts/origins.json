@@ -80,6 +80,10 @@
     "url": "*://app.codeable.io/*",
     "name": "Codeable"
   },
+  "codebasehq.com": {
+    "url": "*://*.codebasehq.com/*",
+    "name": "Codebase"
+  },
   "desk.com": {
     "url": "*://*.desk.com/web/agent/*",
     "name": "Desk.com"
@@ -339,6 +343,10 @@
     "name": "Proworkflow",
     "clone": "true"
   },
+  "rally1.rallydev.com": {
+    "url": "*://rally1.rallydev.com/*",
+    "name": "RallyDev"
+  },
   "redbooth.com": {
     "url": "*://*.redbooth.com/*",
     "name": "Redbooth"
@@ -379,6 +387,10 @@
   "sourcelair.com": {
     "url": "*://www.sourcelair.com/*",
     "name": "Sourcelair"
+  },
+  "spidergap.com": {
+    "url": "*://*.spidergap.com/*",
+    "name": "Spidergap"
   },
   "sprint.ly": {
     "url": "*://sprint.ly/*",

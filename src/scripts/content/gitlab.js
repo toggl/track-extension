@@ -7,7 +7,7 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
   var link, description,
     numElem = $(".identifier"),
     titleElem = $(".title", elem),
-    projectElem = $("h1 .project-item-select-holder");
+    projectElem = $(".title .project-item-select-holder");
 
   description = titleElem.textContent.trim();
 
@@ -28,7 +28,7 @@ togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)'
   var link, description,
     numElem = $(".identifier"),
     titleElem = $(".title", elem),
-    projectElem = $("h1 .project-item-select-holder");
+    projectElem = $(".title .project-item-select-holder");
 
   description = titleElem.textContent.trim();
   if (numElem !== null) {

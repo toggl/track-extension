@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.6.0",
+      "short-version": "160",
+      "date": "September 14th 2017",
+      "rows": [
+        "Fixed interval leak in the extension popup",
+        "Added support for RallyDev",
+        "Added support for Spidergap",
+        "Fix button not appearing in Gitlab"
+      ]
+    },
+    {
       "version": "1.5.0",
       "short-version": "150",
       "date": "August 22nd 2017",

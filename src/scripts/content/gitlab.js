@@ -5,14 +5,13 @@
 
 togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
-    numElem = $(".identifier"),
+    numElem = $(".breadcrumbs-list li:last-child .breadcrumbs-sub-title"),
     titleElem = $(".title", elem),
-    projectElem = $(".title .project-item-select-holder");
-
+    projectElem = $(".breadcrumbs-list li:nth-child(2) .breadcrumb-item-text");
   description = titleElem.textContent.trim();
 
   if (numElem !== null) {
-    description = numElem.textContent.split(" ").pop().trim() + " " + description;
+    description = numElem.textContent.trim() + " " + description;
   }
 
   link = togglbutton.createTimerLink({
@@ -26,13 +25,13 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
 
 togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
-    numElem = $(".identifier"),
+    numElem = $(".breadcrumbs-list li:last-child .breadcrumbs-sub-title"),
     titleElem = $(".title", elem),
-    projectElem = $(".title .project-item-select-holder");
+    projectElem = $(".breadcrumbs-list li:nth-child(2) .breadcrumb-item-text");
 
   description = titleElem.textContent.trim();
   if (numElem !== null) {
-    description = "MR" + numElem.textContent.split(" ").pop().trim().replace("!", "") + "::" + description;
+    description = "MR" + numElem.textContent.trim().replace("!", "") + "::" + description;
   }
 
   link = togglbutton.createTimerLink({

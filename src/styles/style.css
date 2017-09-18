@@ -1287,6 +1287,11 @@ a.toggl-button.workfront.min {
   margin: 5px 0 0 60px;
 }
 
+/********* Pagerduty *********/
+.toggl-button.pagerduty {
+  margin-left: 9px;
+}
+
 /********* ROLLBAR *********/
 .toggl-button.rollbar {
   margin-left: 30px;

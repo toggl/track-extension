@@ -127,6 +127,9 @@ var Db = {
    * @returns {number} The default project for the given scope
    */
   getDefaultProject: function (scope) {
+    if (!TogglButton.$user) {
+      return 0;
+    }
     var userId = TogglButton.$user.id,
       defaultProjects = JSON.parse(this.get(userId + "-defaultProjects")),
       defaultProject = parseInt(this.get(userId + "-defaultProject") || '0', 10);
@@ -137,6 +140,9 @@ var Db = {
   },
 
   resetDefaultProjects: function () {
+    if (!TogglButton.$user) {
+      return;
+    }
     this.set(TogglButton.$user.id + "-defaultProjects", null);
   },
 

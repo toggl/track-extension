@@ -286,6 +286,10 @@
     "name": "osTicket",
     "file": "osticket.js"
   },
+  "pagerduty.com": {
+    "url": "*://*.pagerduty.com/*",
+    "name": "PagerDuty"
+  },
   "phacility.com": {
     "url": "*://*.phacility.com/*",
     "name": "Phabricator"

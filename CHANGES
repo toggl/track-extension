@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.6.0",
+      "rows": [
+        "Fixed interval leak in the extension popup",
+        "Added support for RallyDev",
+        "Added support for Spidergap",
+        "Fix button not appearing in Gitlab"
+      ]
+    },
+    {
       "version": "1.5.0",
       "rows": [
         "Added keyboard command to start/stop the timer",

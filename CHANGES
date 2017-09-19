@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "1.7.0",
+      "rows": [
+        "Added support for Pagerduty",
+        "Added support for Rollbar",
+        "Fix button not appearing in Visual Studio Online",
+        "Fix button not appearing in Zube",
+        "Fix button not appearing in Gitlab again"
+      ]
+    },
+    {
       "version": "1.6.0",
       "rows": [
         "Fixed interval leak in the extension popup",

@@ -958,6 +958,12 @@ only screen and (min-resolution: 192dpi) {
   position: static;
 }
 
+/********* VISUAL-STUDIO *********/
+.toggl-button.visual-studio-online {
+  font-size: 12px;
+  margin: 3px 0 0 20px;
+}
+
 /********* DRAFTIN *********/
 .toggl-button.draftin {
   margin-right: 15px;
@@ -1106,26 +1112,10 @@ table.work-package-table .toggl-button.openproject {
   top: 10px;
 }
 
-
 /********* ZUBE *********/
-.toggl-button.zube {
-  float: left;
-  margin-top: 3px;
-  margin-left: 3px;
-}
-
-.toggl-button.zube.min {
-  margin-right: 5px;
-  margin-top: -2px;
-  margin-left: 0;
-}
-
-#card-modal-view .modal-header .zube {
-  margin-top: 3px;
-}
-
-#tickets-show-main-container .toggl-button.zube {
-  float:none;
+#card-primary-attributes-container .toggl-button.zube {
+  margin-left: 30px;
+  vertical-align: middle;
 }
 
 /********* HABITICA *********/
@@ -1299,4 +1289,10 @@ a.toggl-button.workfront.min {
 /********* Pagerduty *********/
 .toggl-button.pagerduty {
   margin-left: 9px;
+}
+
+/********* ROLLBAR *********/
+.toggl-button.rollbar {
+  margin-left: 30px;
+  vertical-align: middle;
 }

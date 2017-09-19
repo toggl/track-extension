@@ -1,13 +1,14 @@
 /*jslint indent: 2, plusplus: true */
 /*global $: false, document: false, togglbutton: false, createTag:false, window: false, MutationObserver: false */
-
 'use strict';
 
-togglbutton.render('.witform-layout-content-container:not(.toggl)', {observe: true}, function (elem) {
+// Individual Work Item & Backlog page
+togglbutton.render('.witform-layout-content-container:not(.toggl)', {observe: true}, function () {
   var link,
-    description = $('.work-item-form-title input', elem).value,
-    project = $('.work-item-form-areaIteration input', elem).value,
-    container = $('.work-item-form-header-controls-container', elem);
+    description = $('.work-item-form-title input').value,
+    project = $('.menu-item.l1-navigation-text.drop-visible .text').textContent.trim(),
+    container = $('.work-item-form-header-controls-container'),
+    vs_activeClassContent = $('.hub-list .menu-item.currently-selected').textContent.trim();
 
   link = togglbutton.createTimerLink({
     className: 'visual-studio-online',
@@ -15,5 +16,7 @@ togglbutton.render('.witform-layout-content-container:not(.toggl)', {observe: tr
     projectName: project
   });
 
-  container.appendChild(link);
+  if (vs_activeClassContent === "Work Items*" || vs_activeClassContent === "Backlogs") {
+    container.appendChild(link);
+  }
 });

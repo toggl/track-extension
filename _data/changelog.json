@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "1.7.0",
+      "short-version": "170",
+      "date": "September 19th 2017",
+      "rows": [
+        "Added support for Pagerduty",
+        "Added support for Rollbar",
+        "Fix button not appearing in Visual Studio Online",
+        "Fix button not appearing in Zube",
+        "Fix button not appearing in Gitlab again"
+      ]
+    },
+    {
       "version": "1.6.0",
       "short-version": "160",
       "date": "September 14th 2017",

@@ -68,6 +68,10 @@
     "url": "*://*.capsulecrm.com/*",
     "name": "CapsuleCRM"
   },
+  "clickup.com": {
+    "url": "*://*.clickup.com/*",
+    "name": "ClickUp"
+  },
   "cloudes.me": {
     "url": "*://*.cloudes.me/*",
     "name": "Cloudes.me"

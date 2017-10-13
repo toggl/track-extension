@@ -5,7 +5,7 @@
 
 togglbutton.render('.detailViewWithActivityFeedBase .dialog > .header > .flex-auto:not(.toggl)', {observe: true}, function (elem) {
 
-  var link, descFunc, projectFunc,
+  var link, descFunc,
     container = $('.justify-center > .relative', elem),
     description = $('.truncate.flex-auto.line-height-3', elem);
 

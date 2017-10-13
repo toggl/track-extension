@@ -314,6 +314,10 @@
     "url": "*://*.producteev.com/*",
     "name": "Producteev"
   },
+  "protonmail.com": {
+    "url": "*://*.protonmail.com/*",
+    "name": "Protonmail"
+  },
   "proworkflow.net": {
     "url": "*://*.proworkflow.net/*",
     "name": "Proworkflow"

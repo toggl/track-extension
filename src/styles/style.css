@@ -1296,3 +1296,15 @@ a.toggl-button.workfront.min {
   margin-left: 30px;
   vertical-align: middle;
 }
+
+/********* PROTONMAIL *********/
+.toggl-button.protonmail {
+  margin-left: 10px;
+  font-size: 13px;
+  text-decoration: none;
+  color: rgb(85, 85, 85);
+}
+
+.toggl-button.protonmail:hover {
+  text-decoration: underline;
+}

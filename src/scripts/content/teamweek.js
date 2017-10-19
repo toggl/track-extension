@@ -3,24 +3,21 @@
 
 'use strict';
 
-togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (element) {
-  var link,
-    titleElement = $('[data-hook=input-name]', element),
-    projectNameElement = element,
-    container = $('[data-hook=row-actions]', element);
+togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, element => {
+  const titleElement = $('[data-hook=input-name]', element);
+  const projectNameElement = element;
+  const container = $('[data-hook=row-actions]', element);
 
   if (titleElement === null || container === null) {
     return;
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'teamweek-new',
     buttonType: 'minimal',
-    description: function () {
-      return titleElement.value;
-    },
-    projectName: function () {
-      var projectSelectedElem = $('[data-hook=input-project]', projectNameElement);
+    description: () => titleElement.value,
+    projectName: () => {
+      const projectSelectedElem = $('[name=project_name]', projectNameElement);
       return projectSelectedElem.value || null;
     }
   });

@@ -12,10 +12,12 @@ togglbutton.render('#partial-discussion-sidebar', {observe: true}, function (ele
   // Check for existing tag, create a new one if one doesn't exist or is not the first one
   // We want button to be the first one because it looks different from the other sidebar items
   // and looks very weird between them.
-  if (existingTag && existingTag.parentNode.firstChild.classList.contains('toggl')) {
-    return
-  } else if(existingTag) {
-    existingTag.parentNode.removeChild(existingTag)
+
+  if (existingTag) {
+    if (existingTag.parentNode.firstChild.classList.contains('toggl')) {
+      return;
+    }
+    existingTag.parentNode.removeChild(existingTag);
   }
 
   description = titleElem.textContent;
@@ -34,4 +36,4 @@ togglbutton.render('#partial-discussion-sidebar', {observe: true}, function (ele
 
   div.appendChild(link);
   elem.prepend(div);
-}, '#partial-discussion-sidebar:not(.toggl), .discussion-sidebar-item:not(.toggl');
+});

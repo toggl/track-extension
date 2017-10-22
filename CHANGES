@@ -1,6 +1,119 @@
 {
   "versions": [
     {
+      "version": "1.7.0",
+      "rows": [
+        "Added support for Pagerduty",
+        "Added support for Rollbar",
+        "Fix button not appearing in Visual Studio Online",
+        "Fix button not appearing in Zube",
+        "Fix button not appearing in Gitlab again"
+      ]
+    },
+    {
+      "version": "1.6.0",
+      "rows": [
+        "Fixed interval leak in the extension popup",
+        "Added support for RallyDev",
+        "Added support for Spidergap",
+        "Fix button not appearing in Gitlab"
+      ]
+    },
+    {
+      "version": "1.5.0",
+      "rows": [
+        "Added keyboard command to start/stop the timer",
+        "Added duration field to extension popup edit view",
+        "Added support for Codebase",
+        "Fixed button in toodledo",
+        "Fixed some button issues in Asana"
+      ]
+    },
+    {
+      "version": "1.4.0",
+      "rows": [
+        "Added signup button to login screen",
+        "Fixed global default project not being applied",
+        "Added support for osTicket",
+        "Added support for DokuWiki"
+      ]
+    },
+    {
+      "version": "1.3.0",
+      "rows": [
+        "Fixed button placement in Feedly",
+        "Fixed Youtrack on custom domains",
+        "Added tasks & goals support to Google Calendar",
+        "Fixed button in Backlog",
+        "Added option to remember last selected project per service/URL"
+      ]
+    },
+    {
+      "version": "1.2.0",
+      "rows": [
+        "Fixed button in Toodledo",
+        "Fixed button in OpenProject 7.0",
+        "Fixed button in Youtrack",
+        "Improved dropdown size calculations",
+        "Added support for Khan Academy",
+        "Added support for Husky Marketing Planner",
+        "Added support for Nozbe"
+      ]
+    },
+    {
+      "version": "1.1.6",
+      "rows": [
+        "Fixed issue where the extension would sometimes try to interact with a non-website tab",
+        "Fixed issue where logging out sometimes broke the button",
+        "Added support for subprojects in Todoist.",
+        "Fixed pomodoro progress not updating right after clicking Continue"
+      ]
+    },
+    {
+      "version": "1.1.5",
+      "rows": [
+        "Fixed button missing on Remember The Milk",
+        "Fixed github button disappearing when interacting with the sidebar",
+        "Added namespace to CSS classes to avoid conflicts",
+        "Fixed getting the correct project name from Bitbucket",
+        "Added whitespace trimming from pull request description in Bitbucket",
+        "Added ProcessWire integration",
+        "Fixed dropdown height calculations when near the bottom edge of the window"
+      ]
+    },
+    {
+      "version": "1.1.4",
+      "rows": [
+        "Fixed domain matching problem that broke the button in various services"
+      ]
+    },
+    {
+      "version": "1.1.3",
+      "rows": [
+        "Fixed Salesforce on custom domains",
+        "Fixed Button showing in Salesforce & Salesforce Lightning",
+        "Fixed Button showing ando other issues in Asana",
+        "Fixed Button showing in Zube.io",
+        "Fixed Button showing in Remember The Milk"
+      ]
+    },
+    {
+      "version": "1.1.2",
+      "rows": [
+        "Added support for backlog.jp",
+        "Tags are now filtered by the active workspace",
+        "Fixed issues with the button not appearing in Github"
+      ]
+    },
+    {
+      "version": "1.1.1",
+      "rows": [
+        "Added support for Intercom",
+        "Moved button in github to sidebar",
+        "Fixed issues with the button not appearing in Trello"
+      ]
+    },
+    {
       "version": "1.1.0",
       "rows": [
         "Added support for Feedly",

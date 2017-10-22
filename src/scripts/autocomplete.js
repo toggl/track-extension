@@ -1,6 +1,8 @@
-/*jslint indent: 2, unparam: true, plusplus: true*/
-/*global document: false */
+/*jslint indent: 2, unparam: true, plusplus: true */
+/*global document: false, window: false, setTimeout: false */
 "use strict";
+
+var noop = function () { return undefined; };
 
 var inheritsFrom = function (child, parent) {
   child.prototype = Object.create(parent.prototype);
@@ -32,11 +34,11 @@ AutoComplete.prototype.addEvents = function () {
     setTimeout(function () {that.filter.focus(); }, 50);
   });
 
-  that.filter.addEventListener('focus', function (e) {
-    that.filter.parentNode.classList.add("open");
-    that.listItems = that.el.querySelectorAll(that.item);
-    that.updateHeight();
-  });
+  window.addEventListener('focus', function (e) {
+    if (e.target === that.filter) {
+      that.openDropdown();
+    }
+  }, true);
 
   that.filter.addEventListener('keydown', function (e) {
     if (e.code === "Tab" || e.code === "Enter") {
@@ -56,6 +58,7 @@ AutoComplete.prototype.addEvents = function () {
 
   that.filterClear.addEventListener('click', function (e) {
     that.closeDropdown();
+    e.preventDefault();
   });
 };
 
@@ -74,6 +77,12 @@ AutoComplete.prototype.clearFilters = function () {
   }
 };
 
+AutoComplete.prototype.openDropdown = function () {
+  this.filter.parentNode.classList.add("open");
+  this.listItems = this.el.querySelectorAll(this.item);
+  this.updateHeight();
+};
+
 AutoComplete.prototype.closeDropdown = function (t) {
   var that = t || this;
   that.filter.value = "";
@@ -90,8 +99,11 @@ AutoComplete.prototype.updateHeight = function () {
     listStyle = "max-height:auto;",
     calc;
 
-  if (elRect.bottom + 25 >= bodyRect.bottom) {
-    calc = ((elRect.bottom - elRect.top) - (elRect.bottom - bodyRect.bottom + 10));
+  if (bodyRect.bottom > 0 && elRect.bottom + 25 >= bodyRect.bottom) {
+    calc = window.scrollY + bodyRect.bottom - elRect.top - 10;
+    if (calc < 55) {
+      calc = 55;
+    }
     style = "max-height: " + calc + "px;";
     listStyle = "max-height: " + (calc - 25) + "px;";
   }
@@ -107,6 +119,7 @@ AutoComplete.prototype.updateHeight = function () {
 
 var ProjectAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
+  this.onChangeHandler = noop;
 };
 
 inheritsFrom(ProjectAutoComplete, AutoComplete);
@@ -177,6 +190,7 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
     if (elem.classList.contains("task-item")) {
       this.selectTask(elem);
     }
+    this.onChangeHandler(this.getSelected());
     return;
   }
 
@@ -202,6 +216,7 @@ ProjectAutoComplete.prototype.selectProject = function (elem, silent, removeTask
   }
 
   this.elem.updateBillable(parseInt(val, 10));
+  this.onChangeHandler(this.getSelected());
   return false;
 };
 
@@ -372,17 +387,26 @@ ProjectAutoComplete.prototype.filterSelection = function () {
   this.updateHeight();
 };
 
+ProjectAutoComplete.prototype.onChange = function (callback) {
+  this.onChangeHandler = callback;
+};
+
+ProjectAutoComplete.prototype.removeChangeHandler = function () {
+  this.onChangeHandler = noop;
+};
 
 //* Tag autocomplete *//
 
 var TagAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
+  this.wid = null;
 };
 
 inheritsFrom(TagAutoComplete, AutoComplete);
 
-TagAutoComplete.prototype.setup = function (selected) {
+TagAutoComplete.prototype.setup = function (selected, wid) {
   this.setSelected(selected);
+  this.setWorkspaceId(wid);
 };
 
 TagAutoComplete.prototype.addEvents = function () {
@@ -430,6 +454,25 @@ TagAutoComplete.prototype.setSelected = function (tags) {
   }
 
   this.updatePlaceholder(tags);
+};
+
+TagAutoComplete.prototype.setWorkspaceId = function (wid) {
+  this.wid = wid;
+  var listItems = this.el.querySelectorAll(this.item),
+    stringWid = wid.toString(),
+    tag,
+    key;
+
+  for (key in listItems) {
+    if (listItems.hasOwnProperty(key)) {
+      tag = listItems[key];
+      if ((tag.dataset.wid === stringWid) || (stringWid === 'nowid')) {
+        tag.classList.remove('workspace-filter');
+      } else {
+        tag.classList.add('workspace-filter');
+      }
+    }
+  }
 };
 
 TagAutoComplete.prototype.clearSelectedTags = function (tags) {

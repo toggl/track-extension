@@ -115,11 +115,16 @@ var togglbutton = {
           togglbutton.duration_format = response.user.duration_format;
           if (opts.observe) {
             var observer = new MutationObserver(function (mutations) {
-              // If mutationSelector is defined render the start timer link only when this element is changed
-              if (!!mutationSelector
-                  && !mutations[0].target.matches(mutationSelector)) {
+              // If mutationSelector is defined, render the start timer link only when an element
+              // matching the selector changes.
+              // Multiple selectors can be used by comma separating them.
+              var matches = mutations.filter(function (mutation) {
+                return mutation.target.matches(mutationSelector);
+              });
+              if (!!mutationSelector && !matches.length) {
                 return;
               }
+
               togglbutton.renderTo(selector, renderer);
             });
             observer.observe(document, {childList: true, subtree: true});
@@ -204,7 +209,7 @@ var togglbutton = {
 
     togglbutton.toggleBillable(premium);
 
-    if (!no_overwrite && project.billable) {
+    if (!no_overwrite && (pid !== 0 && project.billable)) {
       togglbutton.$billable.classList.toggle("tb-checked", true);
     }
   },
@@ -248,7 +253,7 @@ var togglbutton = {
       togglButtonDescription.value = response.entry.description || "";
 
       projectAutocomplete.setup(pid, tid);
-      tagAutocomplete.setup(response.entry.tags);
+      tagAutocomplete.setup(response.entry.tags, response.entry.wid);
       togglbutton.setupBillable(!!response.entry.billable, pid);
 
       editForm.style.left = position.left + "px";
@@ -276,7 +281,7 @@ var togglbutton = {
     };
 
     handler = function (e) {
-      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
+      if (!/toggl-button/.test(e.target.className) && !/toggl-button/.test(e.target.parentElement.className)) {
         closeForm();
         this.removeEventListener("click", handler);
       }
@@ -305,6 +310,7 @@ var togglbutton = {
     setCursorAtBeginning(togglButtonDescription);
     projectAutocomplete.setup(pid, tid);
     tagAutocomplete.setSelected(response.entry.tags);
+    tagAutocomplete.setWorkspaceId(response.entry.wid);
 
     togglbutton.setupBillable(!!response.entry.billable, pid);
 
@@ -367,6 +373,13 @@ var togglbutton = {
         e.stopPropagation();
         e.preventDefault();
       }
+    });
+
+    projectAutocomplete.onChange(function (selected) {
+      var project = togglbutton.findProjectByPid(selected.pid),
+        wid = project ? project.wid : response.entry.wid;
+
+      tagAutocomplete.setWorkspaceId(wid);
     });
 
     document.addEventListener("click", handler);
@@ -435,7 +448,8 @@ var togglbutton = {
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
           createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName,
-          service: togglbutton.serviceName
+          service: togglbutton.serviceName,
+          url: window.location.href
         };
       }
       togglbutton.element = e.target;

@@ -145,6 +145,10 @@ only screen and (min-resolution: 192dpi) {
   font-size: 14px;
 }
 
+#toggl-button-edit-form #toggl-button-duration {
+  display: none;
+}
+
 #toggl-button-edit-form #toggl-button-description img {
   display: none !important;
 }
@@ -464,6 +468,11 @@ only screen and (min-resolution: 192dpi) {
   visibility: visible !important;
 }
 
+/********* BASECAMP 3 *********/
+.toggl-button.basecamp3 {
+  margin-left: 0.25em;
+}
+
 /********* TEAMWEEK *********/
 .toggl-button.teamweek-new {
   color: rgba(47,47,47,0.8);
@@ -732,7 +741,7 @@ only screen and (min-resolution: 192dpi) {
 
 /********* TOODLEDO *********/
 .toggl-button.toodledo {
-  margin-top: -3px;
+  top: 3px;
   position: relative;
   margin-left: 5px;
 }
@@ -871,7 +880,7 @@ only screen and (min-resolution: 192dpi) {
 }
 
 .bubblecontent .toggl-button.google-calendar {
-  margin: 0;
+  margin-left: -4px;
 }
 
 /********* DOBAMBAM *********/
@@ -946,13 +955,18 @@ only screen and (min-resolution: 192dpi) {
   font-weight: normal;
 }
 
-.toggl-button.salesforce-lightning {
-  position: absolute;
-  top: 35px;
-  left: 10px;
+.toggl-button.salesforce-lightning.min {
+  margin-top: 5px;
+  background-size: 16px 16px;
 }
 #toggl-button-edit-form .toggl-button.salesforce-lightning {
   position: static;
+}
+
+/********* VISUAL-STUDIO *********/
+.toggl-button.visual-studio-online {
+  font-size: 12px;
+  margin: 3px 0 0 20px;
 }
 
 /********* DRAFTIN *********/
@@ -1089,29 +1103,24 @@ only screen and (min-resolution: 192dpi) {
 }
 
 /********* OPENPROJECT *********/
-.subject-header .toggl-button.openproject {
-  float: left;
+.work-packages--show-view .toggl-button.openproject {
+  margin-bottom: 1rem;
+}
+
+table.work-package-table .wp-table--cell-td.id {
+  position: relative;
+}
+
+table.work-package-table .toggl-button.openproject {
+  position: absolute;
+  right: 2px;
+  top: 10px;
 }
 
 /********* ZUBE *********/
-.toggl-button.zube {
-  float: left;
-  margin-top: 3px;
-  margin-left: 3px;
-}
-
-.toggl-button.zube.min {
-  margin-right: 5px;
-  margin-top: -2px;
-  margin-left: 0;
-}
-
-#card-modal-view .modal-header .zube {
-  margin-top: 3px;
-}
-
-#tickets-show-main-container .toggl-button.zube {
-  float:none;
+#card-primary-attributes-container .toggl-button.zube {
+  margin-left: 30px;
+  vertical-align: middle;
 }
 
 /********* HABITICA *********/
@@ -1202,4 +1211,93 @@ a.toggl-button.workfront.min {
 
 .toggl-button.intercom:hover {
   color: #546e7a;
+}
+
+/********* PROCESSWIRE *********/
+.toggl-button.processwire {
+  opacity: .3;
+}
+
+.toggl-button.processwire:hover {
+  opacity: .65;
+}
+.toggl-button.processwire.active  {
+  opacity: 1;
+}
+
+.PageListItem .toggl-button.processwire {
+  position: absolute;
+  left: 0;
+  top: .4em;
+  background-size: 1.2em !important;
+  background-position: center !important;
+}
+
+.PageListItem {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+.ProcessPageEdit h1 .toggl-button.processwire {
+  margin-left: 1em;
+}
+
+/********* KHAN ACADEMY *********/
+.toggl-button.khanacademy {
+  position: absolute;
+  right: 5px;
+  bottom: 20px
+}
+#toggl-button-edit-form .toggl-button.khanacademy {
+  position: static;
+}
+
+/********* NOZBE *********/
+.details__attribute.togglContainer {
+  margin-top: 3px !important;
+  height: 37px;
+}
+.toggl-button.nozbe {
+  height: 100%;
+  line-height: 25px;
+  padding-left: 29px;
+  background-size: 24px 24px;
+  color: #151515 !important;
+}
+
+/********* RallyDev *********/
+.timer__container.togglContainer {
+  display: inline;
+  margin-left: 20px;
+}
+.toggl-button.rallydev {
+  height: 100%;
+  line-height: 25px;
+  padding-left: 29px;
+  background-size: 24px 24px;
+  color: #151515 !important;
+}
+
+/********* CODEBASE *********/
+.merge-request-summary__title .toggl-button {
+  margin-left: 20px;
+}
+.sidebar__module .toggl-button {
+  margin-bottom: 5px;
+}
+
+/********* SPIDERGAP *********/
+.nav-tabs .toggl-button {
+  margin: 5px 0 0 60px;
+}
+
+/********* Pagerduty *********/
+.toggl-button.pagerduty {
+  margin-left: 9px;
+}
+
+/********* ROLLBAR *********/
+.toggl-button.rollbar {
+  margin-left: 30px;
+  vertical-align: middle;
 }

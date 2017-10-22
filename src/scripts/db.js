@@ -22,8 +22,9 @@ var Db = {
     "pomodoroInterval": 25,
     "stopAtDayEnd": false,
     "dayEndTime": "17:00",
-    "defaultProject": "0",
-    "projects": ""
+    "defaultProject": 0,
+    "projects": "",
+    "rememberProjectPer": "false"
   },
 
   // core settings: key, default value
@@ -42,9 +43,9 @@ var Db = {
     }
 
     if (!TogglOrigins[origin]) {
-      // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
+      // Handle cases where subdomain is used (like web.any.do (or sub1.sub2.any.do), we remove web from the beginning)
       origin = origin.split(".");
-      origin.shift();
+      while (origin.length > 0 && !TogglOrigins[origin.join('.')]) { origin.shift(); }
       origin = origin.join(".");
       if (!TogglOrigins[origin]) {
         return null;
@@ -102,10 +103,53 @@ var Db = {
     return null;
   },
 
+
+  /**
+   * Sets the default project for a given scope
+   * @param {number} pid The project id
+   * @param {string=} scope The scope to remember that project.
+   * If null, then set global default
+   */
+  setDefaultProject: function (pid, scope) {
+    var userId = TogglButton.$user.id,
+      defaultProjects = JSON.parse(this.get(userId + "-defaultProjects")) || {};
+    if (!scope) {
+      return this.set(userId + "-defaultProject", pid);
+    }
+    defaultProjects[scope] = pid;
+    this.set(userId + "-defaultProjects", JSON.stringify(defaultProjects));
+  },
+
+
+  /**
+   * Gets the default project for a given scope
+   * @param {string=} scope If null, then get global default
+   * @returns {number} The default project for the given scope
+   */
+  getDefaultProject: function (scope) {
+    if (!TogglButton.$user) {
+      return 0;
+    }
+    var userId = TogglButton.$user.id,
+      defaultProjects = JSON.parse(this.get(userId + "-defaultProjects")),
+      defaultProject = parseInt(this.get(userId + "-defaultProject") || '0', 10);
+    if (!scope || !defaultProjects) {
+      return defaultProject;
+    }
+    return defaultProjects[scope] || defaultProject;
+  },
+
+  resetDefaultProjects: function () {
+    if (!TogglButton.$user) {
+      return;
+    }
+    this.set(TogglButton.$user.id + "-defaultProjects", null);
+  },
+
   get: function (setting) {
     var value = localStorage.getItem(setting);
     if (!!value) {
-      if (value === "false" || value === "true") {
+      if (value === "false" || value === "true") {
         value = JSON.parse(value);
       }
     }
@@ -188,6 +232,9 @@ var Db = {
         Db.updateSetting("dayEndTime", request.state);
       } else if (request.type === 'change-default-project') {
         Db.updateSetting(chrome.extension.getBackgroundPage().TogglButton.$user.id + "-defaultProject", request.state);
+      } else if (request.type === 'change-remember-project-per') {
+        Db.updateSetting("rememberProjectPer", request.state);
+        Db.resetDefaultProjects();
       } else if (request.type === 'update-dont-show-permissions' || request.type === 'update-selected-settings-tab') {
         Db.updateSetting(request.type.substr(7), request.state);
       }

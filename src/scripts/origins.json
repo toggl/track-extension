@@ -34,6 +34,10 @@
     "url": "*://*.axosoft.com/*",
     "name": "Axosoft"
   },
+  "backlog.jp": {
+    "url": "*://*.backlog.jp/*",
+    "name": "Backlog"
+  },
   "basecamp.com": {
     "url": "*://*.basecamp.com/*",
     "name": "Basecamp"
@@ -76,6 +80,10 @@
     "url": "*://app.codeable.io/*",
     "name": "Codeable"
   },
+  "codebasehq.com": {
+    "url": "*://*.codebasehq.com/*",
+    "name": "Codebase"
+  },
   "desk.com": {
     "url": "*://*.desk.com/web/agent/*",
     "name": "Desk.com"
@@ -96,6 +104,11 @@
     "url": "*://*.doitim.com/*",
     "name": "Doit",
     "clone": "true"
+  },
+  "dokuwiki.org": {
+    "url": "*://*.dokuwiki.org/*",
+    "name": "DokuWiki",
+    "file": "dokuwiki.js"
   },
   "draftin.com": {
     "url": "*://*.draftin.com/*",
@@ -173,6 +186,10 @@
     "url": "*://keep.google.com/*",
     "name": "Google Keep"
   },
+  "khanacademy.org": {
+    "url": "*://www.khanacademy.org/*",
+    "name": "KhanAcademy"
+  },
   "mail.google.com": {
     "url": "*://mail.google.com/*",
     "name": "Google Mail"
@@ -188,6 +205,11 @@
   "helpscout.net": {
     "url": "*://secure.helpscout.net/*",
     "name": "Helpscout"
+  },
+  "huskymarketingplanner.com": {
+    "url": "*://app.huskymarketingplanner.com/*",
+    "name": "Husky Marketing Planner",
+    "file": "husky-marketing-planner.js"
   },
   "intercom.io": {
     "url": "*://*.intercom.io/*",
@@ -231,12 +253,16 @@
   },
   "myjetbrains.com": {
     "url": "*://*.myjetbrains.com/*",
-    "name": "Myjetbrains",
+    "name": "YouTrack",
     "file": "youtrack.js"
   },
   "newsletter2go.com": {
     "url": "*://*.newsletter2go.com/*",
     "name": "Newsletter2go"
+  },
+  "nozbe.com": {
+    "url": "*://app.nozbe.com/*",
+    "name": "Nozbe"
   },
   "ongemini.com": {
     "url": "*://*.ongemini.com/*",
@@ -255,6 +281,15 @@
     "name": "OnlyOffice",
     "clone": "true"
   },
+  "osticket.com": {
+    "url": "*://*.supportsystem.com/*",
+    "name": "osTicket",
+    "file": "osticket.js"
+  },
+  "pagerduty.com": {
+    "url": "*://*.pagerduty.com/*",
+    "name": "PagerDuty"
+  },
   "phacility.com": {
     "url": "*://*.phacility.com/*",
     "name": "Phabricator"
@@ -270,6 +305,10 @@
   "podio.com": {
     "url": "*://*.podio.com/*",
     "name": "Podio"
+  },
+  "processwire": {
+    "url": "",
+    "name": "ProcessWire"
   },
   "producteev.com": {
     "url": "*://*.producteev.com/*",
@@ -304,6 +343,10 @@
     "name": "Proworkflow",
     "clone": "true"
   },
+  "rally1.rallydev.com": {
+    "url": "*://rally1.rallydev.com/*",
+    "name": "RallyDev"
+  },
   "redbooth.com": {
     "url": "*://*.redbooth.com/*",
     "name": "Redbooth"
@@ -320,12 +363,16 @@
     "url": "*://*.rindle.com/*",
     "name": "Rindle"
   },
+  "rollbar.com": {
+    "url": "*://*.rollbar.com/*",
+    "name": "Rollbar"
+  },
   "salesforce.com": {
-    "url": "*://*.salesforce.com/*",
+    "url": "*://*.salesforce.com/*,*://*.my.salesforce.com/*",
     "name": "Salesforce"
   },
   "force.com": {
-    "url": "*://*.force.com/*",
+    "url": "*://*.force.com/*,*://*.lightning.force.com/*",
     "name": "Salesforce Lightning",
     "file": "salesforce.js"
   },
@@ -344,6 +391,10 @@
   "sourcelair.com": {
     "url": "*://www.sourcelair.com/*",
     "name": "Sourcelair"
+  },
+  "spidergap.com": {
+    "url": "*://*.spidergap.com/*",
+    "name": "Spidergap"
   },
   "sprint.ly": {
     "url": "*://sprint.ly/*",

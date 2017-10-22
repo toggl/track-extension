@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global navigator: false, alert: false, document: false, window: false, TogglOrigins: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global navigator: false, alert: false, document: false, window: false, setInterval: false, clearInterval: false, Audio: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
@@ -57,7 +57,9 @@ var Settings = {
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function () {
-    var volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10), a;
+    var volume = parseInt((Db.get("pomodoroSoundVolume") * 100), 10),
+      rememberProjectPer = Db.get("rememberProjectPer"),
+      a;
 
     try {
       if (!TogglButton) {
@@ -81,6 +83,11 @@ var Settings = {
       Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
       Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
       Settings.toggleState(Settings.$pomodoroStopTimeTracking, Db.get("pomodoroStopTimeTrackingWhenTimerEnds"));
+      Array.apply(null, Settings.$rememberProjectPer.options).forEach(function (option) {
+        if (option.value === rememberProjectPer) {
+          option.setAttribute("selected", "selected");
+        }
+      });
 
       document.querySelector("#pomodoro-interval").value = Db.get("pomodoroInterval");
 
@@ -100,7 +107,7 @@ var Settings = {
   fillDefaultProject: function () {
     var key, project, clientName, projects, clients, defProject, html, dom;
     if (Db.get("projects") !== '' && !!TogglButton.$user) {
-      defProject = Db.get(TogglButton.$user.id + "-defaultProject");
+      defProject = Db.getDefaultProject();
       projects = JSON.parse(Db.get("projects"));
       clients = JSON.parse(Db.get("clients"));
 
@@ -541,6 +548,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
     Settings.$tabs = document.querySelector(".tabs");
     Settings.$defaultProjectContainer = document.querySelector("#default-project-container");
+    Settings.$rememberProjectPer = document.querySelector("#remember-project-per");
 
     // Show permissions page with notice
     if (!!parseInt(Db.get("show-permissions-info"), 10) && !Db.get("dont-show-permissions")) {
@@ -627,6 +635,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     Settings.$stopAtDayEnd.addEventListener('click', function (e) {
       Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
+    });
+
+
+    Settings.$rememberProjectPer.addEventListener('change', function (e) {
+      var rememberPer = Settings.$rememberProjectPer.options[Settings.$rememberProjectPer.selectedIndex].value;
+      if (rememberPer === "false") {
+        rememberPer = false;
+      }
+      Settings.saveSetting(rememberPer, "change-remember-project-per");
     });
 
     document.querySelector(".tab-links").addEventListener('click', function (e) {

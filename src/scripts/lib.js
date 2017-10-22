@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global window: false, navigator: false, chrome: false, localStorage:false, Bugsnag: false */
+/*global console: false, window: false, navigator: false, chrome: false, localStorage:false, Bugsnag: false */
 "use strict";
 
 var report,

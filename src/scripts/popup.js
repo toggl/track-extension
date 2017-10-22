@@ -1,5 +1,6 @@
 /*jslint indent: 2, unparam: true, plusplus: true*/
-/*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+/*global AutoComplete: false, ProjectAutoComplete: false, TagAutoComplete: false, navigator: false, document: false, window: false, setInterval: false, clearInterval: false, setTimeout: false, XMLHttpRequest: false, chrome: false, btoa: false, localStorage:false */
+
 "use strict";
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
@@ -27,6 +28,7 @@ var PopUp = {
   mousedownTrigger: null,
   projectBlurTrigger: null,
   editFormAdded: false,
+  durationChanged: false,
   $billable: null,
   $header: document.querySelector(".header"),
   $menuView: document.querySelector("#menu"),
@@ -123,11 +125,22 @@ var PopUp = {
     }
 
     var duration = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start)),
-      description = TogglButton.$curEntry.description || "(no description)";
+      description = TogglButton.$curEntry.description || "(no description)",
+      durationField = document.querySelector("#toggl-button-duration");
 
     PopUp.$togglButton.textContent = duration;
+
+    // Update edit form duration field
+    if (durationField !== document.activeElement && PopUp.durationChanged === false) {
+      durationField.value = duration;
+    } else {
+      PopUp.durationChanged = true;
+    }
+
     if (startTimer) {
-      PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      if (!PopUp.$timer) {
+        PopUp.$timer = setInterval(function () { PopUp.showCurrentDuration(); }, 1000);
+      }
       description += PopUp.$projectAutocomplete.setProjectBullet(TogglButton.$curEntry.pid, TogglButton.$curEntry.tid, PopUp.$projectBullet);
       PopUp.$editButton.textContent = description;
       PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
@@ -199,7 +212,7 @@ var PopUp = {
           pname = p.name;
           pstyle = "background-color: " + p.hex_color + ";";
           p = document.createElement("div");
-          p.className = "tb-project-bullet project-color";
+          p.className = "tb-project-bullet tb-project-color";
           p.setAttribute("style", pstyle);
         } else {
           p = false;
@@ -315,12 +328,15 @@ var PopUp = {
   updateEditForm: function (view) {
     var pid = (!!TogglButton.$curEntry.pid) ? TogglButton.$curEntry.pid : 0,
       tid = (!!TogglButton.$curEntry.tid) ? TogglButton.$curEntry.tid : 0,
-      togglButtonDescription = document.querySelector("#toggl-button-description");
+      wid = TogglButton.$curEntry.wid,
+      togglButtonDescription = document.querySelector("#toggl-button-description"),
+      togglButtonDuration = document.querySelector("#toggl-button-duration");
 
     togglButtonDescription.value = (!!TogglButton.$curEntry.description) ? TogglButton.$curEntry.description : "";
+    togglButtonDuration.value = PopUp.msToTime(new Date() - new Date(TogglButton.$curEntry.start));
 
     PopUp.$projectAutocomplete.setup(pid, tid);
-    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags);
+    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
 
     PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
     PopUp.switchView(view);
@@ -329,6 +345,8 @@ var PopUp = {
     togglButtonDescription.focus();
     togglButtonDescription.setSelectionRange(0, 0);
     togglButtonDescription.scrollLeft = 0;
+
+    PopUp.durationChanged = false;
   },
 
   updateBillable: function (pid, no_overwrite) {
@@ -356,9 +374,31 @@ var PopUp = {
 
     PopUp.toggleBillable(premium);
 
-    if (!no_overwrite && project.billable) {
+    if (!no_overwrite && (pid !== 0 && project.billable)) {
       PopUp.$billable.classList.toggle("tb-checked", true);
     }
+  },
+
+  // Duration changed let's calculate new start
+  getStart: function () {
+    var arr = document.querySelector("#toggl-button-duration").value.split(":"),
+      duration,
+      now,
+      start;
+
+    if (!PopUp.isNumber(arr.join(""))) {
+      return false;
+    }
+
+    duration = 1000 * (arr[2] || 0) + 60000 * arr[1] + 3600000 * arr[0];
+
+    now = new Date();
+    start = new Date(now.getTime() - duration);
+    return start.toISOString();
+  },
+
+  isNumber: function (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
   },
 
   toggleBillable: function (visible) {
@@ -385,7 +425,12 @@ var PopUp = {
         respond: true,
         billable: billable,
         service: "dropdown"
-      };
+      },
+      start = PopUp.getStart();
+
+    if (start) {
+      request.start = start;
+    }
 
     PopUp.sendMessage(request);
     PopUp.updateMenuTimer(request);
@@ -411,6 +456,13 @@ var PopUp = {
     document.querySelector("#entry-form form").addEventListener('submit', function (e) {
       PopUp.submitForm(this);
       e.preventDefault();
+    });
+
+    PopUp.$projectAutocomplete.onChange(function (selected) {
+      var project = TogglButton.findProjectByPid(selected.pid),
+        wid = project ? project.wid : TogglButton.$curEntry.wid;
+
+      PopUp.$tagAutocomplete.setWorkspaceId(wid);
     });
 
     PopUp.$billable.addEventListener('click', function () {

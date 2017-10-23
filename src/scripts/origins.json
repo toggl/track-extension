@@ -233,6 +233,10 @@
     "url": "*://app.liquidplanner.com/*",
     "name": "Liquidplanner"
   },
+  "linuxacademy.com": {
+    "url": "*://*.linuxacademy.com/*",
+    "name": "LinuxAcademy"
+  },
   "mantishub.com": {
     "url": "*://*.mantishub.com/*",
     "name": "Mantishub"

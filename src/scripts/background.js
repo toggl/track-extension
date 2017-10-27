@@ -44,7 +44,7 @@ var TogglButton = {
   queue: [],
   $editForm: '<div id="toggl-button-edit-form">' +
       '<form autocomplete="off">' +
-      '<a class="toggl-button {service} active" href="#">Stop timer</a>' +
+      '<a class="toggl-button {service} active" href="javascript:void(0)">Stop timer</a>' +
       '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row" id="toggl-button-duration-row">' +
         '<input name="toggl-button-duration" tabindex="100" type="time" step="1" id="toggl-button-duration" class="toggl-button-input" value="" placeholder="00:00" autocomplete="off">' +
@@ -54,14 +54,14 @@ var TogglButton = {
       '</div>' +
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-project-filter" tabindex="102" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
-        '<a href="#clear" class="filter-clear">&times;</a>' +
+        '<a href="javascript:void(0)" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="tb-project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
         '<div id="project-autocomplete">{projects}</div>' +
       '</div>' +
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-tag-filter" tabindex="103" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
-        '<a href="#add" class="add-new-tag">+ Add</a>' +
-        '<a href="#clear" class="filter-clear">&times;</a>' +
+        '<a href="javascript:void(0)" class="add-new-tag">+ Add</a>' +
+        '<a href="javascript:void(0)" class="filter-clear">&times;</a>' +
         '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
         '<div id="tag-autocomplete">' +
         '<div class="tag-clear">Clear selected tags</div>' +

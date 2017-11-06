@@ -1303,6 +1303,8 @@ a.toggl-button.workfront.min {
   font-size: 13px;
   text-decoration: none;
   color: rgb(85, 85, 85);
+  position: relative;
+  top: -3px;
 }
 
 .toggl-button.protonmail:hover {

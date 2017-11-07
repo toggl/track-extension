@@ -1301,3 +1301,17 @@ a.toggl-button.workfront.min {
 .toggl-button.airtable {
   margin-left: 30px;
 }
+
+/********* PROTONMAIL *********/
+.toggl-button.protonmail {
+  margin-left: 10px;
+  font-size: 13px;
+  text-decoration: none;
+  color: rgb(85, 85, 85);
+  position: relative;
+  top: -3px;
+}
+
+.toggl-button.protonmail:hover {
+  text-decoration: underline;
+}

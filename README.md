@@ -4,6 +4,7 @@ Add Toggl one-click time tracking to popular web tools.
 
 ## Compatible services
   - [AgenoCRM][81]
+  - [Airtable][114]
   - [Any.do][23]
   - [Asana][5]
   - [Assembla][46]
@@ -269,3 +270,4 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [111]: https://rollbar.com/
 [112]: https://clickup.com/
 [113]: https://protonmail.com/
+[114]: https://airtable.com

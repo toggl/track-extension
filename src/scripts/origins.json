@@ -4,6 +4,10 @@
     "name": "AgenoCRM",
     "file": "minicrm.js"
   },
+  "airtable.com": {
+    "url": "*://airtable.com/*",
+    "name": "Airtable"
+  },
   "any.do": {
     "url": "*://web.any.do/*",
     "name": "Anydo"

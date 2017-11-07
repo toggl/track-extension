@@ -1297,6 +1297,11 @@ a.toggl-button.workfront.min {
   vertical-align: middle;
 }
 
+/********* AIRTABLE ********/
+.toggl-button.airtable {
+  margin-left: 30px;
+}
+
 /********* PROTONMAIL *********/
 .toggl-button.protonmail {
   margin-left: 10px;

@@ -388,6 +388,10 @@
     "name": "Salesforce Lightning",
     "file": "salesforce.js"
   },
+  "sentry.io": {
+    "url": "*://*.sentry.io/*",
+    "name": "Sentry"
+  },
   "sifterapp.com": {
     "url": "*://*.sifterapp.com/*",
     "name": "Sifterapp"

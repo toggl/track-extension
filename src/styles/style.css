@@ -1315,3 +1315,8 @@ a.toggl-button.workfront.min {
 .toggl-button.protonmail:hover {
   text-decoration: underline;
 }
+
+/********* SENTRY *********/
+.toggl-button.sentry {
+  margin: 0 auto 20px 10px;
+}

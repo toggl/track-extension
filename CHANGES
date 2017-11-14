@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.8.0",
+      "rows": [
+        "Possibly fixed button in older gitlab versions",
+        "Added support for ClickUp",
+        "Added support for Protonmail",
+        "Added support for Airtable",
+        "Added support for Onshape"
+        "Fixed button not appearing in Teamweek",
+        "In Youtrack now uses the task id on the agile board as well",
+        "Fixed auto-assigning project in Gitlab if using nested projects"
+      ]
+    },
+    {
       "version": "1.7.0",
       "rows": [
         "Added support for Pagerduty",

@@ -17,6 +17,7 @@
 
 #toggl-button-edit-form form {
   text-align: left !important;
+  letter-spacing: 0;
 }
 
 #toggl-button-edit-form a {

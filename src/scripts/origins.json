@@ -4,6 +4,10 @@
     "name": "AgenoCRM",
     "file": "minicrm.js"
   },
+  "airtable.com": {
+    "url": "*://airtable.com/*",
+    "name": "Airtable"
+  },
   "any.do": {
     "url": "*://web.any.do/*",
     "name": "Anydo"
@@ -67,6 +71,10 @@
   "capsulecrm.com": {
     "url": "*://*.capsulecrm.com/*",
     "name": "CapsuleCRM"
+  },
+  "clickup.com": {
+    "url": "*://*.clickup.com/*",
+    "name": "ClickUp"
   },
   "cloudes.me": {
     "url": "*://*.cloudes.me/*",
@@ -313,6 +321,10 @@
   "producteev.com": {
     "url": "*://*.producteev.com/*",
     "name": "Producteev"
+  },
+  "protonmail.com": {
+    "url": "*://*.protonmail.com/*",
+    "name": "Protonmail"
   },
   "proworkflow.net": {
     "url": "*://*.proworkflow.net/*",

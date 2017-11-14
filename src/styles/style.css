@@ -471,8 +471,7 @@ only screen and (min-resolution: 192dpi) {
 /********* TEAMWEEK *********/
 .toggl-button.teamweek-new {
   color: rgba(47,47,47,0.8);
-  margin: 11px;
-  margin-right: -1px;
+  margin: 8px 0px 5px 4px;
 }
 
 #toggl-button-edit-form .toggl-button.teamweek-new {

@@ -3,23 +3,21 @@
 
 'use strict';
 
-togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, element => {
-  const titleElement = $('[data-hook=input-name]', element);
-  const projectNameElement = element;
-  const container = $('[data-hook=row-actions]', element);
+togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (element) {
+  var titleElement = $('[data-hook=input-name]', element),
+    projectElement = $('[name=project_name]', element),
+    container = $('[data-hook=row-actions]', element),
+    link;
 
   if (titleElement === null || container === null) {
     return;
   }
 
-  const link = togglbutton.createTimerLink({
+  link = togglbutton.createTimerLink({
     className: 'teamweek-new',
     buttonType: 'minimal',
-    description: () => titleElement.value,
-    projectName: () => {
-      const projectSelectedElem = $('[name=project_name]', projectNameElement);
-      return projectSelectedElem.value || null;
-    }
+    description: titleElement.value,
+    projectName: projectElement.value || null
   });
 
   container.appendChild(link);

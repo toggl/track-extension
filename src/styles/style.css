@@ -1160,6 +1160,11 @@ a.toggl-button.workfront.min {
   margin-top: 4px;
 }
 
+/********* ONSHAPE *********/
+.toggl-button.onshape {
+    margin: 0 auto;
+}
+
 /********* MEISTERTASK *********/
 .toggl-button.meistertask {
   margin: 9px;

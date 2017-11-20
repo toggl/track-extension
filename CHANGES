@@ -7,7 +7,7 @@
         "Added support for ClickUp",
         "Added support for Protonmail",
         "Added support for Airtable",
-        "Added support for Onshape"
+        "Added support for Onshape",
         "Fixed button not appearing in Teamweek",
         "In Youtrack now uses the task id on the agile board as well",
         "Fixed auto-assigning project in Gitlab if using nested projects"

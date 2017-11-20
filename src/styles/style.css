@@ -871,7 +871,12 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.google-calendar {
   margin-left: 30px;
   margin-bottom: 10px;
-  margin-top: -2px;;
+  margin-top: -2px;
+}
+
+.toggl-button.google-calendar-modern {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .bubblecontent .toggl-button.google-calendar {

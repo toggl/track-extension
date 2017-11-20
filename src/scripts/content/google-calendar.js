@@ -58,3 +58,28 @@ var observer = new MutationObserver(function (mutations) {
 });
 
 observer.observe($('body'), { childList: true, subtree: true });
+
+//Google Calendar Modern
+
+function insertButtonModern(bubblecontent, description) {
+  var link = togglbutton.createTimerLink({
+    className: 'google-calendar-modern',
+    description: description
+  });
+  bubblecontent.appendChild(link);
+}
+
+// Popup view Google Calendar Modern
+togglbutton.render('div[data-chips-dialog="true"]', {observe: true}, function (elem) {
+  if ($('.toggl-button', elem)) {
+    return;
+  }
+  var title = $('span[role="heading"]', elem), target = elem, description;
+  if (title) {
+    description = title.textContent;
+    target = title.parentElement.previousSibling;
+  }
+  if (description) {
+    insertButtonModern(target, description);
+  }
+});

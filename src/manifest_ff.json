@@ -11,13 +11,7 @@
   "manifest_version": 2,
   "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
-    "scripts": [
-      "scripts/vendor/bugsnag-3.min.js",
-      "scripts/lib.js",
-      "scripts/db.js",
-      "scripts/ga.js",
-      "scripts/background.js"
-    ]
+    "scripts": ["background.bundle.js"]
   },
   "browser_action": {
     "browser_style": false,

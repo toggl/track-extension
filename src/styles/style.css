@@ -1298,7 +1298,7 @@ a.toggl-button.workfront.min {
 
 /********* Pagerduty *********/
 .toggl-button.pagerduty {
-  margin-left: 9px;
+  font-weight: normal;
 }
 
 /********* ROLLBAR *********/

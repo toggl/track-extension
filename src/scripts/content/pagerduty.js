@@ -3,10 +3,10 @@
 
 'use strict';
 
-togglbutton.render('.pd-incident-actions:not(.toggl)', {observe: true}, function () {
+togglbutton.render('.pd-overview__title:not(.toggl)', {observe: true}, function () {
   /*jslint browser:true */
   var link, description,
-    projectElem = $('.pd-service-name__name a');
+    projectElem = $('.pd-service-name');
 
   description = document.title.replace(/\[#(\d*)\]([\w\W]*) - PagerDuty/g, 'Pagerduty $1:$2');
 
@@ -16,5 +16,5 @@ togglbutton.render('.pd-incident-actions:not(.toggl)', {observe: true}, function
     projectName: projectElem && projectElem.textContent
   });
 
-  $('.pd-incident-actions').appendChild(link);
+  $('.pd-overview__title').appendChild(link);
 });

@@ -28,18 +28,18 @@ togglbutton.render('.list li:not(.toggl)', {observe: true}, function (elem) {
 
 
 // List items in new UI
-togglbutton.render('.task-item:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.general-task-item:not(.toggl)', {observe: true}, function (elem) {
   var link,
-    taskElement = $('.task-item-title', elem),
+    taskElement = $('.general-task-item-title', elem),
     description = function () {
-      var desc = $('.task-item-title-text', elem);
+      var desc = $('.general-task-item-title-text', elem);
       if (!!desc) {
         return desc.textContent.trim();
       }
       return "";
     },
     projectName = function () {
-      var label = $('span.task-item-category', elem);
+      var label = $('.general-task-item-category', elem);
       if (!!label) {
         return label.textContent;
       }

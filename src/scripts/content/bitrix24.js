@@ -3,10 +3,10 @@
 
 'use strict';
 
-togglbutton.render('#task-view-buttons.start:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.task-view-buttonset:not(.toggl)', {observe: true}, function (elem) {
 
   var link, descFunc,
-    description = $('.task-detail-header-title'),
+    description = $('#pagetitle'),
     project = $('.task-group-field-label').textContent;
 
   descFunc = function () {

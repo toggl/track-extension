@@ -1408,6 +1408,7 @@ var TogglButton = {
       todaySum = 0,
       weekSum = 0,
       m = now.getMonth() + 1,
+      d = now.getDate(),
       getWeekStart,
       weekStart;
 
@@ -1418,8 +1419,10 @@ var TogglButton = {
     if (m < 10) {
       m = "0" + m;
     }
-    today = now.getFullYear() + "-" + m + "-" + now.getDate();
-    today = "2017-08-25";
+    if (d < 10) {
+      d = "0" + d;
+    }
+    today = now.getFullYear() + "-" + m + "-" + d;
 
     getWeekStart = function (d) {
       var startDay = TogglButton.$user.beginning_of_week,

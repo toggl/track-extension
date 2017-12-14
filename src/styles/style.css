@@ -17,6 +17,7 @@
 
 #toggl-button-edit-form form {
   text-align: left !important;
+  letter-spacing: 0;
 }
 
 #toggl-button-edit-form a {
@@ -471,8 +472,7 @@ only screen and (min-resolution: 192dpi) {
 /********* TEAMWEEK *********/
 .toggl-button.teamweek-new {
   color: rgba(47,47,47,0.8);
-  margin: 11px;
-  margin-right: -1px;
+  margin: 8px 0px 5px 4px;
 }
 
 #toggl-button-edit-form .toggl-button.teamweek-new {
@@ -871,7 +871,12 @@ only screen and (min-resolution: 192dpi) {
 .toggl-button.google-calendar {
   margin-left: 30px;
   margin-bottom: 10px;
-  margin-top: -2px;;
+  margin-top: -2px;
+}
+
+.toggl-button.google-calendar-modern {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .bubblecontent .toggl-button.google-calendar {
@@ -1158,6 +1163,11 @@ a.toggl-button.workfront.min {
 /********* ONLYOFFICE *********/
 .toggl-button.onlyoffice {
   margin-top: 4px;
+}
+
+/********* ONSHAPE *********/
+.toggl-button.onshape {
+    margin: 10px;
 }
 
 /********* MEISTERTASK *********/

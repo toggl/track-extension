@@ -289,6 +289,10 @@
     "name": "OnlyOffice",
     "clone": "true"
   },
+  "onshape.com": {
+    "url": "*://*.onshape.com/*",
+    "name": "Onshape"
+  },
   "osticket.com": {
     "url": "*://*.supportsystem.com/*",
     "name": "osTicket",

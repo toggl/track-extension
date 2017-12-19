@@ -469,6 +469,11 @@ only screen and (min-resolution: 192dpi) {
   visibility: visible !important;
 }
 
+/********* BASECAMP 3 *********/
+.toggl-button.basecamp3 {
+  margin-left: 0.25em;
+}
+
 /********* TEAMWEEK *********/
 .toggl-button.teamweek-new {
   color: rgba(47,47,47,0.8);

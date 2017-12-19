@@ -72,7 +72,7 @@ togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}
     return;
   }
 
-  parent = $('.todo_assignee', elem);
+  parent = $('.todo__assignee', elem);
 
   if (!parent) {
     return;

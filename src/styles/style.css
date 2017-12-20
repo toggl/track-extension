@@ -469,6 +469,29 @@ only screen and (min-resolution: 192dpi) {
   visibility: visible !important;
 }
 
+/********* BASECAMP 3 *********/
+.todo .toggl-button.basecamp3 {
+  transition: opacity 150ms ease;
+  display: inline;
+  position: absolute;
+  opacity: 0;
+  margin-top: 2px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.todo__unassigned-unscheduled + .toggl-button.basecamp3 {
+  margin-left: 90px;
+}
+
+.todo:not(.selected):hover .toggl-button.basecamp3 {
+  opacity: 1;
+}
+
+.card-grid .toggl-button.basecamp3 {
+  opacity: 0 !important;
+}
+
 /********* TEAMWEEK *********/
 .toggl-button.teamweek-new {
   color: rgba(47,47,47,0.8);

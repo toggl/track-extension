@@ -104,12 +104,10 @@ body,
 
 .footer {
   padding: 10px 15px;
-  min-width: 800px;
   background-color: #f5f5f5;
   border-top: 1px solid #e5e5e5;
   font-size: 12px;
   color: #8A8888;
-  float: left;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -120,7 +118,6 @@ body,
   float: right;
   margin: 0;
   padding: 0;
-  margin-right: 10px;
 }
 
 #version a {

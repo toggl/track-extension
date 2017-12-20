@@ -475,11 +475,21 @@ only screen and (min-resolution: 192dpi) {
   display: inline;
   position: absolute;
   opacity: 0;
-  margin-left: 140px;
+  margin-top: 2px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.todo__unassigned-unscheduled + .toggl-button.basecamp3 {
+  margin-left: 90px;
 }
 
 .todo:not(.selected):hover .toggl-button.basecamp3 {
   opacity: 1;
+}
+
+.card-grid .toggl-button.basecamp3 {
+  opacity: 0 !important;
 }
 
 /********* TEAMWEEK *********/

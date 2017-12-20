@@ -147,6 +147,7 @@ header {
   right: 0;
   background: #ffffff;
   z-index: 100;
+  box-shadow: inset 0px -1px 1px -1px #bbb;
 }
 
 header ul {
@@ -170,8 +171,9 @@ header .active, header li:hover {
 .container .tabs {
   position: absolute;
   bottom: 42px;
-  top: 35px;
+  top: 0;
   left: 0px;
+  padding-top: 15px;
   width: 2600px;
   overflow: hidden;
   transition:left 300ms ease-in-out;
@@ -191,7 +193,7 @@ header .active, header li:hover {
 
 .container .tab {
   float: left;
-  height: 323px;
+  height: 343px;
   overflow-x: hidden;
   overflow-y: auto;
   width: 800px;

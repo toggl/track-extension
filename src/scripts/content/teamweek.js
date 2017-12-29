@@ -4,10 +4,10 @@
 'use strict';
 
 togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (element) {
-  var link,
-    titleElement = $('[data-hook=input-name]', element),
-    projectNameElement = element,
-    container = $('[data-hook=row-actions]', element);
+  var titleElement = $('[data-hook=input-name]', element),
+    projectElement = $('[name=project_name]', element),
+    container = $('[data-hook=row-actions]', element),
+    link;
 
   if (titleElement === null || container === null) {
     return;
@@ -16,13 +16,8 @@ togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function
   link = togglbutton.createTimerLink({
     className: 'teamweek-new',
     buttonType: 'minimal',
-    description: function () {
-      return titleElement.value;
-    },
-    projectName: function () {
-      var projectSelectedElem = $('[data-hook=input-project]', projectNameElement);
-      return projectSelectedElem.value || null;
-    }
+    description: titleElement.value,
+    projectName: projectElement.value || null
   });
 
   container.appendChild(link);

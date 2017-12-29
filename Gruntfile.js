@@ -16,7 +16,8 @@ module.exports = function( grunt ) {
     jslint: {
       app: {
         src: [
-          '<%= config.app %>/scripts/**/*.js'
+          '<%= config.app %>/scripts/**/*.js',
+          '!<%= config.app %>/scripts/vendor/*.js'
         ]
       }
     },

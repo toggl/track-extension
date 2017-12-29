@@ -1,17 +1,18 @@
 {
-  "name": "Ebiquity Toggl Button",
-  "short_name": "Ebiquity Toggl Button",
-  "version": "0.8.2",
+  "name": "Toggl Button: Productivity & Time Tracker",
+  "short_name": "Toggl Button",
+  "version": "1.8.0",
   "manifest_version": 2,
-  "description": "Add Official Toggl Online Timer to Service Desk",
+  "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
     "scripts": [
-      "scripts/vendor/bugsnag-2.min.js",
+      "scripts/vendor/bugsnag-3.min.js",
+      "scripts/lib.js",
       "scripts/db.js",
+      "scripts/ga.js",
       "scripts/background.js"
     ]
   },
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action": {
     "default_icon": {
       "19": "images/inactive-19.png",
@@ -19,6 +20,14 @@
     },
     "default_popup": "html/popup.html",
     "default_title": "Ebiquity Toggl Time Tracker"
+  },
+  "commands": {
+    "quick-start-stop-entry": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E"
+      },
+      "description": "Quick start/stop current entry"
+    }
   },
   "icons": {
     "16": "images/icon-16.png",
@@ -31,10 +40,15 @@
     "chrome_style": true
   },
   "permissions": [
+    "*://*.toggl.com/*",
+    "*://toggl.com/*",
+    "webRequest",
+    "webRequestBlocking",
     "alarms",
     "contextMenus",
     "notifications",
     "idle",
+<<<<<<< HEAD
     "*://*.toggl.com/*",
     "*://toggl.com/*",
     "*://*.teamweek.com/*",
@@ -398,5 +412,11 @@
       "matches": ["*://servicedesk.ebiquity.com/*"],
       "js": ["scripts/content/managedengine.js"]
     }
+=======
+    "tabs"
+  ],
+  "optional_permissions": [
+    "*://*/"
+>>>>>>> upstream/master
   ]
 }

@@ -13,8 +13,8 @@ togglbutton.render('.taskItem-titleWrapper:not(.toggl)', {observe: true}, functi
   link = togglbutton.createTimerLink({
     className: 'wunderlist',
     buttonType: 'minimal',
-    description: titleElem.innerText,
-    projectName: projectTitleElem.innerText
+    description: titleElem.textContent,
+    projectName: projectTitleElem.textContent
   });
 
   container.appendChild(link);
@@ -36,8 +36,8 @@ togglbutton.render('.subtask:not(.toggl)', {observe: true}, function (elem) {
   link = togglbutton.createTimerLink({
     className: 'wunderlist',
     buttonType: 'minimal',
-    description: titleElem.innerText + ' - ' + taskElem.innerText,
-    projectName: projectTitleElem.innerText
+    description: titleElem.textContent + ' - ' + taskElem.textContent,
+    projectName: projectTitleElem.textContent
   });
 
   container.appendChild(link);

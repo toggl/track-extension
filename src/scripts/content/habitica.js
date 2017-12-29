@@ -7,11 +7,11 @@
   togglbutton.render('li.task.daily:not(.toggl), li.task.habit:not(.toggl), li.task.todo:not(.toggl)',
                      {observe: true}, function (elem) {
       var link,
-        text = $('.task-text>markdown', elem).innerText.trim(),
+        text = $('.task-text>markdown', elem).textContent.trim(),
         container = $('.task-meta-controls', elem);
 
       link = togglbutton.createTimerLink({
-        className: 'habitrpg',
+        className: 'habitica',
         description: text,
         buttonType: 'minimal'
       });

@@ -3,18 +3,43 @@
 
 'use strict';
 
-togglbutton.render('.issue .detail-page-description .title:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
-    titleElem = $(".issue .detail-page-description .title"),
-    projectElem = $('.title').firstChild;
-  description = titleElem.textContent;
-  description = description.trim();
+    numElem = $(".identifier") || $(".breadcrumbs-list li:last-child .breadcrumbs-sub-title"),
+    titleElem = $(".title", elem),
+    projectElem = $(".title .project-item-select-holder") || $(".breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text");
+  description = titleElem.textContent.trim();
+  if (numElem !== null) {
+    description = numElem.textContent.split(" ").pop().trim() + " " + description;
+  }
 
   link = togglbutton.createTimerLink({
     className: 'gitlab',
     description: description,
-    projectName: projectElem.textContent.split(' / ').pop()
+    projectName: projectElem.textContent
   });
 
-  $('.issue .detail-page-description h2.title').appendChild(link);
+  $(".detail-page-header").appendChild(link);
 });
+
+togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
+  var link, description,
+    numElem = $(".identifier") || $(".breadcrumbs-list li:last-child .breadcrumbs-sub-title"),
+    titleElem = $(".title", elem),
+    projectElem = $(".title .project-item-select-holder") || $(".breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text");
+
+  description = titleElem.textContent.trim();
+
+  if (numElem !== null) {
+    description = "MR" + numElem.textContent.split(" ").pop().trim().replace("!", "") + "::" + description;
+  }
+
+  link = togglbutton.createTimerLink({
+    className: 'gitlab',
+    description: description,
+    projectName: projectElem.textContent
+  });
+
+  $(".detail-page-header").appendChild(link);
+});
+

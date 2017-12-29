@@ -4,7 +4,8 @@
 
 togglbutton.render('input[name=id]', {}, function (elem) {
   var link,
-    description = elem.value;
+    description = elem.value,
+    targetElement;
 
   link = togglbutton.createTimerLink({
     className: 'bugzilla',
@@ -12,7 +13,9 @@ togglbutton.render('input[name=id]', {}, function (elem) {
     projectName: 'Bugs'
   });
 
-  if ($('#summary_alias_container') !== undefined) {
-    $('#summary_alias_container').appendChild(link);
+  targetElement = $('#summary_alias_container') || $('#summary_container');
+
+  if (targetElement !== null) {
+    targetElement.appendChild(link);
   }
 });

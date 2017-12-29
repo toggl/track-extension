@@ -19,7 +19,7 @@
       "38": "images/inactive-38.png"
     },
     "default_popup": "html/popup.html",
-    "default_title": "Ebiquity Toggl Time Tracker"
+    "default_title": "Toggl Time Tracker"
   },
   "commands": {
     "quick-start-stop-entry": {

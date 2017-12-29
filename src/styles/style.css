@@ -997,8 +997,8 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
-/********* ManagedEngine *********/
-.toggl-button.managedengine {
+/********* ManageEngine *********/
+.toggl-button.manageengine {
   float: right;
   margin: 6px;
 }

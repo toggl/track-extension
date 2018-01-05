@@ -1148,7 +1148,7 @@ table.work-package-table .toggl-button.openproject {
 
 /********* HABITICA *********/
 .toggl-button.habitica {
-  margin-bottom: -4px !important;
+  transform: scale(0.85);
 }
 
 /********* SHERPADESK *********/

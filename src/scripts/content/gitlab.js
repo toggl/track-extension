@@ -7,7 +7,8 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
   var link, description,
     numElem = $(".identifier") || $(".breadcrumbs-list li:last-child .breadcrumbs-sub-title"),
     titleElem = $(".title", elem),
-    projectElem = $(".title .project-item-select-holder") || $(".breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text");
+    projectElem = $(".title .project-item-select-holder") || $(".breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text"),
+    actionsElem = $(".detail-page-header-actions");
   description = titleElem.textContent.trim();
   if (numElem !== null) {
     description = numElem.textContent.split(" ").pop().trim() + " " + description;
@@ -19,15 +20,15 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
     projectName: projectElem.textContent
   });
 
-  var actionsElem = $(".detail-page-header-actions")
-  actionsElem.parentElement.insertBefore(link, actionsElem)
+  actionsElem.parentElement.insertBefore(link, actionsElem);
 });
 
 togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
     numElem = $(".identifier") || $(".breadcrumbs-list li:last-child .breadcrumbs-sub-title"),
     titleElem = $(".title", elem),
-    projectElem = $(".title .project-item-select-holder") || $(".breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text");
+    projectElem = $(".title .project-item-select-holder") || $(".breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text"),
+    actionsElem = $(".detail-page-header-actions");
 
   description = titleElem.textContent.trim();
 
@@ -41,7 +42,6 @@ togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)'
     projectName: projectElem.textContent
   });
 
-  var actionsElem = $(".detail-page-header-actions")
-  actionsElem.parentElement.insertBefore(link, actionsElem)
+  actionsElem.parentElement.insertBefore(link, actionsElem);
 });
 

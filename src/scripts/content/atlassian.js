@@ -4,9 +4,9 @@
 'use strict';
 
 // Jira
-togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true}, function (elem) {
-  var rootElem = $('#ghx-detail-view')
+togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true}, function () {
   var link, description,
+    rootElem = $('#ghx-detail-view'),
     container = createTag('div', 'jira-ghx-toggl-button'),
     titleElem = $('[spacing] h1', rootElem),
     numElem = $('[spacing] a', rootElem),
@@ -30,7 +30,7 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
 
 // Jira
 togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, function (elem) {
-  var link, description, ul, li,
+  var link, description,
     numElem = $('#key-val', elem),
     titleElem = $('#summary-val', elem) || "",
     projectElem = $('.bgdPDV');

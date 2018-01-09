@@ -1,6 +1,20 @@
 {
   "versions": [
     {
+      "version": "1.9.0",
+      "short-version": "190",
+      "date": "January 9th 2018",
+      "rows": [
+        "Added support for Sentry.io",
+        "Fixed button not appearing in Basecamp 3",
+        "Fixed button not appearing in new Google Calendar UI",
+        "Fixed button not appearing in Habitica",
+        "Fixed button not appearing in Remember the Milk",
+        "Fixed button not appearing in JIRA Boards",
+        "Fixed misplaced button in Gitlab"
+      ]
+    },
+    {
       "version": "1.8.0",
       "short-version": "180",
       "date": "November 14th 2017",

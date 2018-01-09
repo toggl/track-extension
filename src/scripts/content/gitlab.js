@@ -19,7 +19,8 @@ togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {obser
     projectName: projectElem.textContent
   });
 
-  $(".detail-page-header").appendChild(link);
+  var actionsElem = $(".detail-page-header-actions")
+  actionsElem.parentElement.insertBefore(link, actionsElem)
 });
 
 togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
@@ -40,6 +41,7 @@ togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)'
     projectName: projectElem.textContent
   });
 
-  $(".detail-page-header").appendChild(link);
+  var actionsElem = $(".detail-page-header-actions")
+  actionsElem.parentElement.insertBefore(link, actionsElem)
 });
 

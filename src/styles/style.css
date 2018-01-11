@@ -395,14 +395,22 @@ only screen and (min-resolution: 192dpi) {
 
 /********* GITLAB *********/
 .toggl-button.gitlab {
-  font-size: 75%;
-  margin-left: 8px;
-  padding-left: 21px;
+  margin-top: 7px;
+}
+
+@media (max-width: 991px) {
+  .toggl-button.gitlab {
+    margin-right: 8px;
+  }
 }
 
 /********* JIRA *********/
 .toggl-button.jira {
   margin-top:.2em;
+  margin-left: 10px;
+  cursor: pointer !important;
+  color: #42526e !important;
+  box-shadow: none;
 }
 
 /********* UNFUDDLE *********/
@@ -1154,7 +1162,7 @@ table.work-package-table .toggl-button.openproject {
 
 /********* HABITICA *********/
 .toggl-button.habitica {
-  margin-bottom: -4px !important;
+  transform: scale(0.85);
 }
 
 /********* SHERPADESK *********/

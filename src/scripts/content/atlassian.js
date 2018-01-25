@@ -4,13 +4,12 @@
 'use strict';
 
 // Jira
-togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true}, function () {
+togglbutton.render('#ghx-detail-issue:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
-    rootElem = $('#ghx-detail-view'),
-    container = createTag('div', 'jira-ghx-toggl-button'),
-    titleElem = $('[spacing] h1', rootElem),
-    numElem = $('[spacing] a', rootElem),
-    projectElem = $('.bgdPDV');
+    container = createTag('div', 'ghx-toggl-button'),
+    titleElem = $('[data-field-id="summary"]', elem),
+    numElem = $('.ghx-fieldname-issuekey a'),
+    projectElem = $('.ghx-project', elem);
 
   description = titleElem.textContent;
   if (numElem !== null) {
@@ -20,12 +19,11 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
   link = togglbutton.createTimerLink({
     className: 'jira',
     description: description,
-    buttonType: 'minimal',
     projectName: projectElem && projectElem.textContent
   });
 
   container.appendChild(link);
-  numElem.parentNode.appendChild(container);
+  $('#ghx-detail-head').appendChild(container);
 });
 
 // Jira
@@ -33,7 +31,7 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
   var link, description,
     numElem = $('#key-val', elem),
     titleElem = $('#summary-val', elem) || "",
-    projectElem = $('.bgdPDV');
+    projectElem = $('#project-name-val', elem);
 
   if (!!titleElem) {
     description = titleElem.textContent;
@@ -52,7 +50,11 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
     projectName: projectElem && projectElem.textContent
   });
 
-  $('.issue-link').parentElement.appendChild(link);
+  ul = createTag('ul', 'toolbar-group');
+  li = createTag('li', 'toolbar-item');
+  li.appendChild(link);
+  ul.appendChild(li);
+  $('.toolbar-split-left').appendChild(ul);
 });
 
 

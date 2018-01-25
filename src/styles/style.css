@@ -1361,3 +1361,15 @@ a.toggl-button.workfront.min {
 .toggl-button.sentry {
   margin: 0 auto 20px 10px;
 }
+
+/********* TURTLE *********/
+.toggl-button.toggl-start-btn {
+  margin: 10px 0;
+  transition: opacity 900ms ease;
+  opacity: 0.5;
+}
+.toggl-button.toggl-start-btn:hover {
+  margin: 10px 0;
+  transition: opacity 300ms ease;
+  opacity: 1;
+}

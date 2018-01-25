@@ -113,6 +113,7 @@ Add Toggl one-click time tracking to popular web tools.
   - [Zendesk][22]
   - [Zoho Books][59]
   - [Zube][79]
+  - [Turtle][117]
 
 ## Installing from the Web Store/Addons page
 
@@ -275,3 +276,4 @@ Don't know how to start? Just check out the [user requested services][98] that h
 [114]: https://airtable.com
 [115]: https://onshape.com/
 [116]: https://sentry.io/
+[117]: https://turtle.ai/

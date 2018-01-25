@@ -564,5 +564,9 @@
   "teamleader.eu": {
     "url": "*://app.teamleader.eu/*",
     "name": "Teamleader"
+  },
+  "turtle.ai": {
+    "url": "*://*.turtle.ai/*",
+    "name": "Turtle"
   }
 }

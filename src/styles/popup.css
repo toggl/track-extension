@@ -632,6 +632,15 @@ hr {
   left: -8px;
 }
 
+#toggl-button-edit-form form:invalid #toggl-button-update {
+  background-color: #cccccc;
+  cursor: default;
+}
+
+#toggl-button-edit-form input:invalid {
+  color: #ff3333;
+}
+
 #toggl-button-edit-form #toggl-button-hide{
   float: right;
   background: transparent;

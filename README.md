@@ -74,6 +74,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Phacility](http://phacility.com/)
 - [Pivotal](https://www.pivotaltracker.com/)
 - [Planbox](http://www.planbox.com/)
+- [Planfix](https://planfix.ru/)
 - [Podio](https://podio.com/)
 - [ProcessWire](http://processwire.com/)
 - [Producteev](https://www.producteev.com/)

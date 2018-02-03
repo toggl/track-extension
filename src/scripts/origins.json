@@ -314,6 +314,10 @@
     "url": "*://*.planbox.com/*",
     "name": "Planbox"
   },
+  "planfix.ru": {
+    "url": "*://*.planfix.ru/*",
+    "name": "Planfix"
+  },
   "podio.com": {
     "url": "*://*.podio.com/*",
     "name": "Podio"

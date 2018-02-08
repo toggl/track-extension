@@ -76,6 +76,7 @@ var PopUp = {
           PopUp.switchView(PopUp.$menuView);
         }
         PopUp.renderEntriesList();
+        PopUp.renderSummary();
       } else {
         localStorage.setItem('latestStoppedEntry', '');
         PopUp.switchView(PopUp.$loginView);
@@ -157,6 +158,13 @@ var PopUp = {
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
 
     PopUp.setTagIcon(data.tags);
+  },
+
+  renderSummary: function () {
+    var sums = TogglButton.calculateSums();
+
+    document.querySelector(".summary .s-today > span").innerHTML = sums.today;
+    document.querySelector(".summary .s-week > span").innerHTML = sums.week;
   },
 
   renderEntriesList: function () {

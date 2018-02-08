@@ -3,7 +3,7 @@
 
 'use strict';
 
-// Jira
+// Jira board sidebar
 togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true}, function () {
   var link, description,
     rootElem = $('#ghx-detail-view'),
@@ -28,7 +28,32 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
   numElem.parentNode.appendChild(container);
 });
 
-// Jira
+// Jira sprint modal
+togglbutton.render('#ghx-issue-fragment [spacing] a img:not(.toggl)', {observe: true}, function () {
+  var link, description,
+    rootElem = $('#ghx-issue-fragment'),
+    container = createTag('div', 'jira-ghx-toggl-button'),
+    titleElem = $('[spacing] h1', rootElem),
+    numElem = $('[spacing] a', rootElem),
+    projectElem = $('.bgdPDV');
+
+  description = titleElem.textContent;
+  if (numElem !== null) {
+    description = numElem.textContent + " " + description;
+  }
+
+  link = togglbutton.createTimerLink({
+    className: 'jira',
+    description: description,
+    buttonType: 'minimal',
+    projectName: projectElem && projectElem.textContent
+  });
+
+  container.appendChild(link);
+  numElem.parentNode.appendChild(container);
+});
+
+// Jira issue page
 togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, function (elem) {
   var link, description,
     numElem = $('#key-val', elem),

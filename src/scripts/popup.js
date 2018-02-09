@@ -422,7 +422,7 @@ var PopUp = {
 
   submitForm: function (that) {
     if (!this.isformValid()) {
-      return
+      return;
     }
     var selected = PopUp.$projectAutocomplete.getSelected(),
       billable = !!document.querySelector(".tb-billable.tb-checked:not(.no-billable)"),
@@ -448,8 +448,8 @@ var PopUp = {
     PopUp.switchView(PopUp.$menuView);
   },
 
-  isformValid: function() {
-    return !!document.querySelector('#toggl-button-edit-form form:valid')
+  isformValid: function () {
+    return !!document.querySelector('#toggl-button-edit-form form:valid');
   },
 
   addEditEvents: function () {

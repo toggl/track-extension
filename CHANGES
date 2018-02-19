@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.10.1",
+      "rows": [
+        "Fix bug breaking extension when calculating day/week totals"
+      ]
+    },
+    {
       "version": "1.10.0",
       "rows": [
         "Add button to JIRA sprint modal",

@@ -1410,7 +1410,8 @@ var TogglButton = {
       m = now.getMonth() + 1,
       d = now.getDate(),
       getWeekStart,
-      weekStart;
+      weekStart,
+      timeEntries = (TogglButton.$user.time_entries || []);
 
     now.setHours(0);
     now.setMinutes(0);
@@ -1434,7 +1435,7 @@ var TogglButton = {
 
     weekStart = getWeekStart(now);
 
-    TogglButton.$user.time_entries.forEach(function (entry) {
+    timeEntries.forEach(function (entry) {
       // Calc today total
       if (entry.start.split("T")[0] === today) {
         if (entry.duration < 0) {

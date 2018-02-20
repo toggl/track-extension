@@ -34,7 +34,6 @@
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
-  "options_page": "html/settings.html",
   "options_ui": {
     "page": "html/settings.html",
     "chrome_style": true

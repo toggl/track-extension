@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "1.10.2",
+      "short-version": "1_10_2",
+      "date": "February 20th 2018",
+      "rows": [
+        "Minor refactoring to comply with Mozilla Add-ons policy"
+      ]
+    },
+    {
       "version": "1.10.1",
       "short-version": "1_10_1",
       "date": "February 19th 2018",

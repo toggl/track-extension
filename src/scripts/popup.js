@@ -163,8 +163,8 @@ var PopUp = {
   renderSummary: function () {
     var sums = TogglButton.calculateSums();
 
-    document.querySelector(".summary .s-today > span").innerHTML = sums.today;
-    document.querySelector(".summary .s-week > span").innerHTML = sums.week;
+    document.querySelector(".summary .s-today > span").textContent = sums.today;
+    document.querySelector(".summary .s-week > span").textContent = sums.week;
   },
 
   renderEntriesList: function () {

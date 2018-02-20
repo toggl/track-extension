@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.10.2",
+      "rows": [
+        "Minor refactoring to comply with Mozilla Add-ons policy"
+      ]
+    },
+    {
       "version": "1.10.1",
       "rows": [
         "Fix bug breaking extension when calculating day/week totals"

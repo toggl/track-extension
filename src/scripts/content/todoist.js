@@ -4,7 +4,7 @@
 'use strict';
 
 function getProjectNameFromLabel(elem) {
-  var projectLabel = '', projectLabelEle = $('.pname', elem.parentNode.parentNode);
+  var projectLabel = '', projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
   if (projectLabelEle) {
     projectLabel = projectLabelEle.textContent.trim();
   }

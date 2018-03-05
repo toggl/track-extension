@@ -566,7 +566,7 @@
     "name": "Teamleader"
   },
   "manageengine.com": {
-    "url": "*://*manageengine.com/*",
+    "url": "*://*.manageengine.com/*",
     "name": "ManageEngine"
   }
 }

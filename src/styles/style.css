@@ -1008,7 +1008,7 @@ only screen and (min-resolution: 192dpi) {
 /********* ManageEngine *********/
 .toggl-button.manageengine {
   float: right;
-  margin: 6px;
+  margin: 0 6px 0 6px;
 }
 
 /********* PHABRICATOR *********/

@@ -28,14 +28,18 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
   numElem.parentNode.appendChild(container);
 });
 
-// Jira 2017 sprint modal
-togglbutton.render('#ghx-issue-fragment [spacing] a img:not(.toggl)', {observe: true}, function () {
+
+// Jira 2018 sprint modal
+// Using the h1 as selector to make sure that it will only try to render the button
+// after Jira has fully rendered the modal content
+togglbutton.render('div[role="dialog"] h1:not(.toggl)', {observe: true}, function (titleElem) {
+  // need to all the way up until we find the modal wrapper
+  var rootElem = titleElem.offsetParent.offsetParent.offsetParent.offsetParent
+
   var link, description,
-    rootElem = $('#ghx-issue-fragment'),
-    container = createTag('div', 'jira-ghx-toggl-button'),
-    titleElem = $('[spacing] h1', rootElem),
-    numElem = $('[spacing] a', rootElem),
-    projectElem = $('.bgdPDV');
+      container = createTag('div', 'jira-ghx-toggl-button'),
+      numElem = $('[spacing] a', rootElem),
+      projectElem = $('.bgdPDV');
 
   description = titleElem.textContent;
   if (numElem !== null) {

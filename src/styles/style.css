@@ -386,6 +386,12 @@ only screen and (min-resolution: 192dpi) {
 .SingleTaskPaneToolbar .toggl-button.asana-board {
   margin-left: 8px;
 }
+.BoardCardWithCustomProperties--hover .toggl-button {
+  opacity: 1;
+}
+.BoardCardWithCustomProperties-assigneeAndDueDate .toggl-button {
+  margin-left: 10px;
+}
 
 /********* PODIO *********/
 .toggl-button.podio {

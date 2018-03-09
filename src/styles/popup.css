@@ -754,10 +754,12 @@ hr {
 
 .summary .s-today {
   float: left;
+  text-align: left;
 }
 
 .summary .s-week {
   float: right;
+  text-align: right;
 }
 
 /** Time Entries list **/

@@ -666,6 +666,9 @@ hr {
 .ff #toggl-button-edit-form #toggl-button-duration {
   padding: 0;
 }
+.ff .summary {
+  font-size: 13px;
+}
 
 /** FIREFOX END **/
 

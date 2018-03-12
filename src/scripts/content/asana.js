@@ -41,7 +41,7 @@ togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe
   };
 
   projectFunc = function () {
-    return (project && project.textContent) || ($('.ancestor-projects', elem) && $('.ancestor-projects', elem).textContent) || "";
+    return (project && project.textContent) || ($('.TaskAncestry-ancestorProjects', elem) && $('.TaskAncestry-ancestorProjects', elem).textContent) || "";
   };
 
   link = togglbutton.createTimerLink({

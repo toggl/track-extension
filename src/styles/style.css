@@ -407,6 +407,10 @@ only screen and (min-resolution: 192dpi) {
 /********* JIRA *********/
 .toggl-button.jira {
   margin-top:.2em;
+}
+
+.toggl-button.jira2017 {
+  margin-top:.2em;
   margin-left: 10px;
   cursor: pointer !important;
   color: #42526e !important;
@@ -1003,6 +1007,12 @@ only screen and (min-resolution: 192dpi) {
 /********* DRAFTIN *********/
 .toggl-button.draftin {
   margin-right: 15px;
+}
+
+/********* ManageEngine *********/
+.toggl-button.manageengine {
+  float: right;
+  margin: 0 6px 0 6px;
 }
 
 /********* PHABRICATOR *********/

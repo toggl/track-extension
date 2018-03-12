@@ -568,5 +568,9 @@
   "teamleader.eu": {
     "url": "*://app.teamleader.eu/*",
     "name": "Teamleader"
+  },
+  "manageengine.com": {
+    "url": "*://*.manageengine.com/*",
+    "name": "ManageEngine"
   }
 }

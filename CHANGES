@@ -1,6 +1,28 @@
 {
   "versions": [
     {
+      "version": "1.10.2",
+      "rows": [
+        "Minor refactoring to comply with Mozilla Add-ons policy"
+      ]
+    },
+    {
+      "version": "1.10.1",
+      "rows": [
+        "Fix bug breaking extension when calculating day/week totals"
+      ]
+    },
+    {
+      "version": "1.10.0",
+      "rows": [
+        "Add button to JIRA sprint modal",
+        "Restore old JIRA integration",
+        "Add day/week total duration text to popup",
+        "Improve settings dialog layout",
+        "Fix bug starting timer as 12:00:00 am"
+      ]
+    },
+    {
       "version": "1.9.0",
       "rows": [
         "Added support for Sentry.io",

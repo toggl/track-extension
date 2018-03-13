@@ -33,13 +33,13 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
 // Using the h1 as selector to make sure that it will only try to render the button
 // after Jira has fully rendered the modal content
 togglbutton.render('div[role="dialog"] h1:not(.toggl)', {observe: true}, function (titleElem) {
-  // need to all the way up until we find the modal wrapper
-  var rootElem = titleElem.offsetParent.offsetParent.offsetParent.offsetParent
+  // need to go all the way up until we find the modal wrapper (for the rootElem)
 
   var link, description,
-      container = createTag('div', 'jira-ghx-toggl-button'),
-      numElem = $('[spacing] a', rootElem),
-      projectElem = $('.bgdPDV');
+    rootElem = titleElem.offsetParent.offsetParent.offsetParent.offsetParent,
+    container = createTag('div', 'jira-ghx-toggl-button'),
+    numElem = $('[spacing] a', rootElem),
+    projectElem = $('.bgdPDV');
 
   description = titleElem.textContent;
   if (numElem !== null) {

@@ -49,7 +49,6 @@ togglbutton.render('div[role="dialog"] h1:not(.toggl)', {observe: true}, functio
   link = togglbutton.createTimerLink({
     className: 'jira2017',
     description: description,
-    buttonType: 'minimal',
     projectName: projectElem && projectElem.textContent
   });
 

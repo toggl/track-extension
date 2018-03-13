@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.10.3",
+      "rows": [
+        "Add ManageEngine support",
+        "Fix Asana project autoselect",
+        "Fix button not appearing on Jira board modal",
+        "Small visual fixes for Firefox"
+      ]
+    },
+    {
       "version": "1.10.2",
       "rows": [
         "Minor refactoring to comply with Mozilla Add-ons policy"

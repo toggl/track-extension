@@ -1407,8 +1407,6 @@ var TogglButton = {
       today,
       todaySum = 0,
       weekSum = 0,
-      m = now.getMonth() + 1,
-      d = now.getDate(),
       getWeekStart,
       weekStart,
       timeEntries = (TogglButton.$user.time_entries || []);
@@ -1417,13 +1415,9 @@ var TogglButton = {
     now.setMinutes(0);
     now.setSeconds(0);
 
-    if (m < 10) {
-      m = "0" + m;
-    }
-    if (d < 10) {
-      d = "0" + d;
-    }
-    today = now.getFullYear() + "-" + m + "-" + d;
+    // Get today's date at midnight for the local timezone
+    today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     getWeekStart = function (d) {
       var startDay = TogglButton.$user.beginning_of_week,
@@ -1437,7 +1431,7 @@ var TogglButton = {
 
     timeEntries.forEach(function (entry) {
       // Calc today total
-      if (entry.start.split("T")[0] === today) {
+      if (new Date(entry.start).getTime() > today.getTime()) {
         if (entry.duration < 0) {
           todaySum += ((new Date() - new Date(entry.start)) / 1000);
         } else {

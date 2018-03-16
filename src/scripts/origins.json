@@ -428,6 +428,10 @@
     "url": "*://*.targetprocess.com/*",
     "name": "Targetprocess"
   },
+  "tasks.office.com": {
+    "url": "*://tasks.office.com/*",
+    "name": "Microsoft Planner"  
+  },
   "teamweek.com": {
     "url": "*://*.teamweek.com/*",
     "name": "Teamweek"

@@ -1428,7 +1428,7 @@ var TogglButton = {
     getWeekStart = function (d) {
       var startDay = TogglButton.$user.beginning_of_week,
         day = d.getDay(),
-        diff = d.getDate() - day + (day === 0 ? startDay - 7 : startDay);
+        diff = d.getDate() - day + (startDay > day ? startDay - 7 : startDay);
 
       return new Date(d.setDate(diff));
     };

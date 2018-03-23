@@ -131,7 +131,9 @@ var ProjectAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
   this.onChangeHandler = noop;
   this.selectedItem = -1;
+  this.selectedTask = -1;
   this.visibleItems = [];
+  this.visibleTasks = [];
 };
 
 inheritsFrom(ProjectAutoComplete, AutoComplete);
@@ -143,7 +145,9 @@ ProjectAutoComplete.prototype.setup = function (selected, tid) {
 };
 
 ProjectAutoComplete.prototype.addEvents = function () {
-  var that = this;
+  var that = this,
+    item;
+
   this.super.addEvents.call(this);
 
   that.el.addEventListener('click', function (e) {
@@ -158,6 +162,13 @@ ProjectAutoComplete.prototype.addEvents = function () {
     } else if (e.keyCode === 40) {
       // ArrowDown
       that.selectNext();
+    } else if (e.keyCode === 37 || e.keyCode === 39) {
+      // Arrow Left/Right (toggle task list)
+      item = that.visibleItems[that.selectedItem];
+      if (!!item.querySelector(".task-count")) {
+        that.clearSelectedTask();
+        that.toggleTaskList(item.querySelector(".task-count"));
+      }
     }
   });
 };
@@ -169,10 +180,29 @@ ProjectAutoComplete.prototype.clearSelectedItem = function () {
   }
 };
 
+ProjectAutoComplete.prototype.clearSelectedTask = function () {
+  var current = this.el.querySelector(".task-item.selected-item");
+  if (!!current) {
+    current.classList.remove("selected-item");
+  }
+};
+
 ProjectAutoComplete.prototype.selectPrevious = function () {
   if (this.selectedItem === -1) {
     return;
   }
+  // handle being inside task list
+  if (this.selectedTask !== -1
+      && this.visibleItems[this.selectedItem].classList.contains("tasklist-opened")) {
+    this.clearSelectedTask();
+    if (this.selectedTask > 0) {
+      this.selectedTask--;
+      this.visibleTasks[this.selectedTask].classList.add("selected-item");
+      this.scrollUpToView(this.el, this.visibleTasks[this.selectedTask]);
+      return;
+    }
+  }
+
   this.clearSelectedItem();
   if (this.selectedItem > 0) {
     this.selectedItem--;
@@ -184,12 +214,41 @@ ProjectAutoComplete.prototype.selectPrevious = function () {
   if (this.selectedItem === this.visibleItems.length - 1) {
     this.visibleItems[this.selectedItem].scrollIntoView(false);
   }
-  if (this.el.scrollTop > this.visibleItems[this.selectedItem].offsetTop) {
-    this.visibleItems[this.selectedItem].scrollIntoView();
+  this.scrollUpToView(this.el, this.visibleItems[this.selectedItem]);
+
+  // If we are entering item with open tasklist
+  if (this.visibleItems[this.selectedItem].classList.contains("tasklist-opened")) {
+    if (this.visibleTasks.length === 0) {
+      this.visibleTasks = this.visibleItems[this.selectedItem].querySelectorAll("li.task-item");
+    }
+    this.selectedTask = this.visibleTasks.length - 1;
+    this.visibleTasks[this.selectedTask].classList.add("selected-item");
+    this.scrollUpToView(this.el, this.visibleTasks[this.selectedTask]);
   }
 };
 
 ProjectAutoComplete.prototype.selectNext = function () {
+  // Check if we need to go into tasks-list
+  if (this.selectedItem !== -1 && this.visibleItems[this.selectedItem].classList.contains("tasklist-opened")) {
+    if (this.visibleTasks.length === 0) {
+      this.selectedTask = 0;
+      this.visibleTasks = this.visibleItems[this.selectedItem].querySelectorAll("li.task-item");
+      this.visibleTasks[this.selectedTask].classList.add("selected-item");
+      this.scrollDownToView(this.el, this.visibleTasks[this.selectedTask]);
+      return;
+    }
+
+    this.clearSelectedTask();
+    if (this.selectedTask < this.visibleTasks.length - 1) {
+      this.selectedTask++;
+      this.visibleTasks[this.selectedTask].classList.add("selected-item");
+      this.scrollDownToView(this.el, this.visibleTasks[this.selectedTask]);
+      return;
+    }
+  }
+  this.selectedTask = -1;
+  this.visibleTasks = [];
+
   this.clearSelectedItem();
   if (this.selectedItem < this.visibleItems.length - 1) {
     this.selectedItem++;
@@ -201,14 +260,26 @@ ProjectAutoComplete.prototype.selectNext = function () {
   if (this.selectedItem === 0) {
     this.visibleItems[this.selectedItem].scrollIntoView();
   }
-  if (this.el.scrollTop + this.el.offsetHeight <
-      this.visibleItems[this.selectedItem].offsetTop + this.visibleItems[this.selectedItem].offsetHeight) {
-    this.visibleItems[this.selectedItem].scrollIntoView(false);
+  this.scrollDownToView(this.el, this.visibleItems[this.selectedItem]);
+};
+
+ProjectAutoComplete.prototype.scrollDownToView = function (view, item) {
+  if (view.scrollTop + view.offsetHeight <
+      item.offsetTop + item.offsetHeight) {
+    item.scrollIntoView(false);
+  }
+};
+
+ProjectAutoComplete.prototype.scrollUpToView = function (view, item) {
+  if (view.scrollTop > item.offsetTop) {
+    item.scrollIntoView();
   }
 };
 
 ProjectAutoComplete.prototype.saveSelected = function () {
-  if (!!this.visibleItems[this.selectedItem]) {
+  if (!!this.visibleTasks[this.selectedTask]) {
+    this.selectTask(this.visibleTasks[this.selectedTask]);
+  } else if (!!this.visibleItems[this.selectedItem]) {
     this.selectProject(this.visibleItems[this.selectedItem]);
   }
   this.closeDropdown();

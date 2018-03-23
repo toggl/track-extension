@@ -41,7 +41,16 @@ AutoComplete.prototype.addEvents = function () {
   }, true);
 
   that.filter.addEventListener('keydown', function (e) {
-    if (e.code === "Tab" || e.code === "Enter") {
+    if (e.code === "Tab") {
+      that.closeDropdown();
+    }
+    if (e.code === "Enter") {
+      if (that.filter.parentNode.classList.contains("open")
+          && !!that.saveSelected) {
+        that.saveSelected();
+        e.stopPropagation();
+        e.preventDefault();
+      }
       that.closeDropdown();
     }
     if (e.code === "Escape" &&
@@ -80,6 +89,7 @@ AutoComplete.prototype.clearFilters = function () {
 AutoComplete.prototype.openDropdown = function () {
   this.filter.parentNode.classList.add("open");
   this.listItems = this.el.querySelectorAll(this.item);
+  this.visibleItems = this.el.querySelectorAll("." + this.type + "-row");
   this.updateHeight();
 };
 
@@ -120,6 +130,8 @@ AutoComplete.prototype.updateHeight = function () {
 var ProjectAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
   this.onChangeHandler = noop;
+  this.selectedItem = -1;
+  this.visibleItems = [];
 };
 
 inheritsFrom(ProjectAutoComplete, AutoComplete);
@@ -138,6 +150,68 @@ ProjectAutoComplete.prototype.addEvents = function () {
     e.stopPropagation();
     that.selectProject(e.target);
   });
+
+  that.filter.addEventListener('keydown', function (e) {
+    if (e.keyCode === 38) {
+      // ArrowUp
+      that.selectPrevious();
+    } else if (e.keyCode === 40) {
+      // ArrowDown
+      that.selectNext();
+    }
+  });
+};
+
+ProjectAutoComplete.prototype.clearSelectedItem = function () {
+  var current = this.el.querySelector(".selected-item");
+  if (!!current) {
+    current.classList.remove("selected-item");
+  }
+};
+
+ProjectAutoComplete.prototype.selectPrevious = function () {
+  if (this.selectedItem === -1) {
+    return;
+  }
+  this.clearSelectedItem();
+  if (this.selectedItem > 0) {
+    this.selectedItem--;
+  } else {
+    this.selectedItem = this.visibleItems.length - 1;
+  }
+  this.visibleItems[this.selectedItem].classList.add("selected-item");
+  // detect if we need to scroll
+  if (this.selectedItem === this.visibleItems.length - 1) {
+    this.visibleItems[this.selectedItem].scrollIntoView(false);
+  }
+  if (this.el.scrollTop > this.visibleItems[this.selectedItem].offsetTop) {
+    this.visibleItems[this.selectedItem].scrollIntoView();
+  }
+};
+
+ProjectAutoComplete.prototype.selectNext = function () {
+  this.clearSelectedItem();
+  if (this.selectedItem < this.visibleItems.length - 1) {
+    this.selectedItem++;
+  } else {
+    this.selectedItem = 0;
+  }
+  this.visibleItems[this.selectedItem].classList.add("selected-item");
+  // detect if we need to scroll
+  if (this.selectedItem === 0) {
+    this.visibleItems[this.selectedItem].scrollIntoView();
+  }
+  if (this.el.scrollTop + this.el.offsetHeight <
+      this.visibleItems[this.selectedItem].offsetTop + this.visibleItems[this.selectedItem].offsetHeight) {
+    this.visibleItems[this.selectedItem].scrollIntoView(false);
+  }
+};
+
+ProjectAutoComplete.prototype.saveSelected = function () {
+  if (!!this.visibleItems[this.selectedItem]) {
+    this.selectProject(this.visibleItems[this.selectedItem]);
+  }
+  this.closeDropdown();
 };
 
 ProjectAutoComplete.prototype.setSelected = function (ids, tid) {
@@ -330,6 +404,7 @@ ProjectAutoComplete.prototype.filterSelection = function () {
     this.clearFilters();
     return;
   }
+  this.visibleItems = [this.el.querySelector("p." + this.type + "-row")];
   this.lastFilter = val;
   this.exactMatch = false;
   for (key in this.listItems) {
@@ -340,6 +415,7 @@ ProjectAutoComplete.prototype.filterSelection = function () {
         if (text === val) {
           this.exactMatch = val;
         }
+        this.visibleItems.push(row);
         row.classList.add("filter");
 
         if (row.classList.contains("project-row")) {
@@ -385,6 +461,12 @@ ProjectAutoComplete.prototype.filterSelection = function () {
     }
   }
   this.updateHeight();
+};
+
+ProjectAutoComplete.prototype.closeDropdown = function () {
+  this.super.closeDropdown(this, this);
+  this.clearSelectedItem();
+  this.selectedItem = -1;
 };
 
 ProjectAutoComplete.prototype.onChange = function (callback) {

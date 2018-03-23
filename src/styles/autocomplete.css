@@ -48,6 +48,8 @@
 }
 
 #project-autocomplete li:not(.ws-row):not(.client-row):hover,
+#project-autocomplete li.selected-item:not(.ws-row):not(.client-row),
+#project-autocomplete p.project-row.selected-item,
 #project-autocomplete p:hover {
   cursor: pointer;
   border-radius: 100px;

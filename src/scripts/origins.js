@@ -389,6 +389,10 @@ export default {
     url: '*://*.redbooth.com/*',
     name: 'Redbooth'
   },
+  'rbcommons.com': {
+    url: '*://*.rbcommons.com/*',
+    name: 'Reviewboard'
+  },
   'redmine.org': {
     url: '*://*.redmine.org/*',
     name: 'Redmine'

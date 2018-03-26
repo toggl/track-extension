@@ -571,6 +571,12 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   padding-left: 21px;
 }
 
+/********* REVIEWBOARD *********/
+.toggl-button.reviewboard {
+  margin-top: 4px;
+  margin-left: 6px;
+}
+
 /********* SIFTER *********/
 .toggl-button.sifterapp {
   float: right;

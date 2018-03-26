@@ -86,6 +86,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Redbooth](https://redbooth.com/)
 - [Redmine](http://www.redmine.org/)
 - [Remember The Milk](https://www.rememberthemilk.com/)
+- [Reviewboard](https://www.reviewboard.com/)
 - [Rindle](https://rindle.com/)
 - [Rollbar](https://rollbar.com/)
 - [Salesforce](http://www.salesforce.com/)

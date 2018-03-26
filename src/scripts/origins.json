@@ -503,6 +503,10 @@
     "url": "*://*.unfuddle.com/*",
     "name": "Unfuddle"
   },
+  "v1host.com": {
+    "url": "*://*.v1host.com/*",
+    "name": "VersionOne"
+  },
   "visualstudio.com": {
     "url": "*://*.visualstudio.com/*",
     "name": "VisualStudio"

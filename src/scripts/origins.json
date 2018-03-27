@@ -458,6 +458,11 @@
     "url": "*://ticktick.com/*,*://*.ticktick.com/*",
     "name": "TickTick"
   },
+  "todo.microsoft.com": {
+    "url": "*://*.todo.microsoft.com/*",
+    "name": "Microsoft To-Do",
+    "file": "microsoft-to-do.js"
+  },
   "todoist.com": {
     "url": "*://*.todoist.com/app*",
     "name": "Todoist"

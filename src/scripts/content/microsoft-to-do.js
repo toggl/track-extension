@@ -14,7 +14,7 @@ togglbutton.render('.taskItem-body:not(.toggl)', { observe: true }, function(ele
       activeList = $('ul.lists .listItem.active'),
       activeListTitle = $('.listItem-title', activeList);
 
-  var projectTitle = 'empty';
+  var projectTitle = '';
   projectTitle = projectTitleElem ? projectTitleElem.textContent : activeListTitle ? activeListTitle.textContent : '';
 
   link = togglbutton.createTimerLink({

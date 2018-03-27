@@ -315,6 +315,11 @@ var TogglButton = {
         entry = null;
       }
       TogglButton.updateTriggers(entry);
+    } else if (data.action === "delete") {
+      if (TogglButton.$curEntry !== null && TogglButton.$curEntry.id === entry.id) {
+        TogglButton.$latestStoppedEntry = entry;
+        TogglButton.updateTriggers(null);
+      }
     }
   },
 

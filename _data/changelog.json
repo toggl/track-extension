@@ -1,6 +1,31 @@
 {
   "versions": [
     {
+      "version": "1.10.4",
+      "short-version": "1_10_4",
+      "date": "April 2nd 2018",
+      "rows": [
+        "Fix Asana board view integration",
+        "Fix calculation bugs for the time tracked today/this week",
+        "Fix sync issue with entry being deleted",
+        "Add Microsoft Planner Integration",
+        "Add VersionOne Integration",
+        "Contrast improvement on the time entry edit form",
+        "Include Visual Studio's work item id in the time entry description"
+      ]
+    },
+    {
+      "version": "1.10.3",
+      "short-version": "1_10_3",
+      "date": "March 13th 2018",
+      "rows": [
+        "Add ManageEngine support",
+        "Fix Asana project autoselect",
+        "Fix button not appearing on Jira board modal",
+        "Small visual fixes for Firefox"
+      ]
+    },
+    {
       "version": "1.10.2",
       "short-version": "1_10_2",
       "date": "February 20th 2018",

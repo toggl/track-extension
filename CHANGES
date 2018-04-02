@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "1.10.4",
+      "rows": [
+        "Fix Asana board view integration",
+        "Fix calculation bugs for the time tracked today/this week",
+        "Fix sync issue with entry being deleted",
+        "Add Microsoft Planner Integration",
+        "Add VersionOne Integration",
+        "Contrast improvement on the time entry edit form",
+        "Include Visual Studio's work item id in the time entry description"
+      ]
+    },
+    {
       "version": "1.10.3",
       "rows": [
         "Add ManageEngine support",

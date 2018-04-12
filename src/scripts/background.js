@@ -75,6 +75,7 @@ var TogglButton = {
       '<input type="submit" class="hidden">' +
       '</from>' +
     '</div>',
+  tictacSound: null,
 
   fetchUser: function (token) {
     TogglButton.ajax('/me?with_related_data=true', {
@@ -505,6 +506,9 @@ var TogglButton = {
       TogglButton.pomodoroAlarm = setTimeout(TogglButton.pomodoroAlarmStop, interval);
       TogglButton.pomodoroProgressTimer = setInterval(updateProgress, pomodoroInterval / steps);
       updateProgress();
+      if (Db.get("pomodoroSoundEnabled")) {
+        TogglButton.startTicTacSound();
+      }
     }
   },
 
@@ -692,6 +696,10 @@ var TogglButton = {
         );
       }
     });
+
+    if (Db.get("pomodoroModeEnabled")) {
+      TogglButton.stopTicTacSound();
+    }
   },
 
   pomodoroStopTimeTracking: function () {
@@ -757,6 +765,7 @@ var TogglButton = {
       stopSound.src = Db.get("pomodoroSoundFile");
       stopSound.volume = Db.get("pomodoroSoundVolume");
       stopSound.play();
+      TogglButton.stopTicTacSound();
     }
 
     return true;
@@ -1660,6 +1669,23 @@ var TogglButton = {
         }
       });
     }
+  },
+
+  startTicTacSound: function () {
+    if (!Db.get('pomodoroTictacSoundEnabled')) { return; }
+
+    if (!TogglButton.tictacSound) {
+      TogglButton.tictacSound = new Audio();
+      TogglButton.tictacSound.src = Db.get('pomodoroTictacSoundFile');
+      TogglButton.tictacSound.volume = Db.get('pomodoroSoundVolume');
+      TogglButton.tictacSound.loop = true;
+    }
+    TogglButton.tictacSound.play();
+  },
+
+  stopTicTacSound: function () {
+    if (!TogglButton.tictacSound) { return; }
+    TogglButton.tictacSound.pause();
   }
 
 };

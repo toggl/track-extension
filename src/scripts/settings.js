@@ -41,6 +41,7 @@ var Settings = {
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
+  $pomodoroTictacSound: null,
   lastFilter: null,
   $permissionFilter: document.querySelector("#permission-filter"),
   $permissionFilterClear: document.querySelector("#filter-clear"),
@@ -82,6 +83,7 @@ var Settings = {
       Settings.toggleState(Settings.$idleDetection, Db.get("idleDetectionEnabled"));
       Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
       Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
+      Settings.toggleState(Settings.$pomodoroTictacSound, Db.get("pomodoroTictacSoundEnabled"));
       Settings.toggleState(Settings.$pomodoroStopTimeTracking, Db.get("pomodoroStopTimeTrackingWhenTimerEnds"));
       Array.apply(null, Settings.$rememberProjectPer.options).forEach(function (option) {
         if (option.value === rememberProjectPer) {
@@ -544,6 +546,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     Settings.$idleDetection = document.querySelector("#idle-detection");
     Settings.$pomodoroMode = document.querySelector("#pomodoro-mode");
     Settings.$pomodoroSound = document.querySelector("#enable-sound-signal");
+    Settings.$pomodoroTictacSound = document.querySelector("#enable-tictac-sound-signal");
     Settings.$pomodoroStopTimeTracking = document.querySelector("#pomodoro-stop-time");
     Settings.$stopAtDayEnd = document.querySelector("#stop-at-day-end");
     Settings.$tabs = document.querySelector(".tabs");
@@ -628,6 +631,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
     });
     Settings.$pomodoroSound.addEventListener('click', function (e) {
       Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroSoundEnabled") !== "true"), "toggle-pomodoro-sound");
+    });
+    Settings.$pomodoroTictacSound.addEventListener('click', function (e) {
+      Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroTictacSoundEnabled") !== "true"), "toggle-pomodoro-tictac-sound");
     });
     Settings.$pomodoroStopTimeTracking.addEventListener('click', function (e) {
       Settings.toggleSetting(e.target, (localStorage.getItem("pomodoroStopTimeTrackingWhenTimerEnds") !== "true"), "toggle-pomodoro-stop-time");

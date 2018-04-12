@@ -16,7 +16,9 @@ var Db = {
     "idleDetectionEnabled": false,
     "pomodoroModeEnabled": false,
     "pomodoroSoundFile": "sounds/time_is_up_1.mp3",
+    "pomodoroTictacSoundFile": "sounds/tictac.wav",
     "pomodoroSoundEnabled": true,
+    "pomodoroTictacSoundEnabled": false,
     "pomodoroSoundVolume": 1,
     "pomodoroStopTimeTrackingWhenTimerEnds": true,
     "pomodoroInterval": 25,
@@ -213,6 +215,8 @@ var Db = {
         Db.set("pomodoroModeEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-sound') {
         Db.set("pomodoroSoundEnabled", request.state);
+      } else if (request.type === 'toggle-pomodoro-tictac-sound') {
+        Db.set("pomodoroTictacSoundEnabled", request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
         Db.updateSetting("pomodoroInterval", request.state);
       } else if (request.type === 'toggle-pomodoro-stop-time') {

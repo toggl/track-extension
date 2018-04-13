@@ -76,6 +76,7 @@ var PopUp = {
           PopUp.switchView(PopUp.$menuView);
         }
         PopUp.renderEntriesList();
+        PopUp.renderSummary();
       } else {
         localStorage.setItem('latestStoppedEntry', '');
         PopUp.switchView(PopUp.$loginView);
@@ -157,6 +158,13 @@ var PopUp = {
     PopUp.$editButton.setAttribute('title', 'Click to edit "' + description + '"');
 
     PopUp.setTagIcon(data.tags);
+  },
+
+  renderSummary: function () {
+    var sums = TogglButton.calculateSums();
+
+    document.querySelector(".summary .s-today > span").textContent = sums.today;
+    document.querySelector(".summary .s-week > span").textContent = sums.week;
   },
 
   renderEntriesList: function () {
@@ -413,6 +421,9 @@ var PopUp = {
   },
 
   submitForm: function (that) {
+    if (!this.isformValid()) {
+      return;
+    }
     var selected = PopUp.$projectAutocomplete.getSelected(),
       billable = !!document.querySelector(".tb-billable.tb-checked:not(.no-billable)"),
       request = {
@@ -435,6 +446,10 @@ var PopUp = {
     PopUp.sendMessage(request);
     PopUp.updateMenuTimer(request);
     PopUp.switchView(PopUp.$menuView);
+  },
+
+  isformValid: function () {
+    return !!document.querySelector('#toggl-button-edit-form form:valid');
   },
 
   addEditEvents: function () {

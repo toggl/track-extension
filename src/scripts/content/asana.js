@@ -41,7 +41,7 @@ togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe
   };
 
   projectFunc = function () {
-    return (project && project.textContent) || ($('.ancestor-projects', elem) && $('.ancestor-projects', elem).textContent) || "";
+    return (project && project.textContent) || ($('.TaskAncestry-ancestorProjects', elem) && $('.TaskAncestry-ancestorProjects', elem).textContent) || "";
   };
 
   link = togglbutton.createTimerLink({
@@ -54,13 +54,13 @@ togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe
 });
 
 // Board view
-togglbutton.render('.BoardCard.BoardColumnCardsContainer-item:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.BoardColumnCardsContainer-item:not(.toggl)', {observe: true}, function (elem) {
   if (!!$('.toggl-button', elem)) {
     return;
   }
   var link,
-    container = $('.BoardCardMetadata-left', elem),
-    description = $('.BoardCard-name', elem).textContent,
+    container = $('.BoardCardWithCustomProperties-assigneeAndDueDate', elem),
+    description = $('.BoardCardWithCustomProperties-name', elem).textContent,
     project = $('.SidebarItemRow.is-selected').textContent;
 
   link = togglbutton.createTimerLink({

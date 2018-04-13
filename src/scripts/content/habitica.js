@@ -4,11 +4,11 @@
 (function () {
   'use strict';
 
-  togglbutton.render('li.task.daily:not(.toggl), li.task.habit:not(.toggl), li.task.todo:not(.toggl)',
+  togglbutton.render('.daily .tasks-list .task:not(.toggl), .habit .tasks-list .task:not(.toggl), .todo .tasks-list .task:not(.toggl)',
                      {observe: true}, function (elem) {
       var link,
-        text = $('.task-text>markdown', elem).textContent.trim(),
-        container = $('.task-meta-controls', elem);
+        text = $('.task-title', elem).textContent.trim(),
+        container = $('.icons-right', elem);
 
       link = togglbutton.createTimerLink({
         className: 'habitica',
@@ -16,6 +16,6 @@
         buttonType: 'minimal'
       });
 
-      container.appendChild(link);
+      container.prepend(link);
     });
 }());

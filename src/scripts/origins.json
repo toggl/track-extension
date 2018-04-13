@@ -289,6 +289,10 @@
     "name": "OnlyOffice",
     "clone": "true"
   },
+  "onshape.com": {
+    "url": "*://*.onshape.com/*",
+    "name": "Onshape"
+  },
   "osticket.com": {
     "url": "*://*.supportsystem.com/*",
     "name": "osTicket",
@@ -388,6 +392,10 @@
     "name": "Salesforce Lightning",
     "file": "salesforce.js"
   },
+  "sentry.io": {
+    "url": "*://*.sentry.io/*",
+    "name": "Sentry"
+  },
   "sifterapp.com": {
     "url": "*://*.sifterapp.com/*",
     "name": "Sifterapp"
@@ -419,6 +427,10 @@
   "targetprocess.com": {
     "url": "*://*.targetprocess.com/*",
     "name": "Targetprocess"
+  },
+  "tasks.office.com": {
+    "url": "*://tasks.office.com/*",
+    "name": "Microsoft Planner"  
   },
   "teamweek.com": {
     "url": "*://*.teamweek.com/*",
@@ -491,6 +503,10 @@
     "url": "*://*.unfuddle.com/*",
     "name": "Unfuddle"
   },
+  "v1host.com": {
+    "url": "*://*.v1host.com/*",
+    "name": "VersionOne"
+  },
   "visualstudio.com": {
     "url": "*://*.visualstudio.com/*",
     "name": "VisualStudio"
@@ -556,5 +572,9 @@
   "teamleader.eu": {
     "url": "*://app.teamleader.eu/*",
     "name": "Teamleader"
+  },
+  "manageengine.com": {
+    "url": "*://*.manageengine.com/*",
+    "name": "ManageEngine"
   }
 }

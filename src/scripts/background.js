@@ -1459,7 +1459,12 @@ var TogglButton = {
   },
 
   contextMenuClick: function (info, tab) {
-    TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": (info.selectionText || tab.title)}, null);
+    console.log(info);
+    if(String(info.menuItemId).indexOf("toggl-")>=0){
+      TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": info.selectionText, "pid": Number(String(info.menuItemId).split("toggl-")[1]) }, null);
+    } else {
+      TogglButton.createTimeEntry({"type": "timeEntry", "service": "contextMenu", "description": (info.selectionText || tab.title) }, null);
+    }
   },
 
   newMessage: function (request, sender, sendResponse) {
@@ -1623,7 +1628,31 @@ var TogglButton = {
   toggleRightClickButton: function (show) {
     if (show) {
       chrome.contextMenus.create({"title": "Start timer", "contexts": ["page"], "onclick": TogglButton.contextMenuClick});
-      chrome.contextMenus.create({"title": "Start timer with description '%s'", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
+      chrome.contextMenus.create({"title": "Start timer with description '%s'", "id": "TogglContextParent", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
+      // sub contexts for projects
+      var clients = JSON.parse(Db.get("clients"));
+      clients[0] = {
+        "name": "No Client",
+        "projects": []
+      };
+      var projects = JSON.parse(Db.get("projects"));
+      for(var c in clients){
+        clients[c].projects = [];
+        for(var p in projects){
+          if(projects[p].cid == clients[c].id){
+            clients[c].projects.push(projects[p]);
+            console.log(projects[p]);
+          }
+        }
+      };
+      chrome.contextMenus.create({"title": "Start Timer", "parentId": "TogglContextParent", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
+      for(var client in clients){
+        chrome.contextMenus.create({"type": "separator", "parentId": "TogglContextParent", "contexts": ["selection"]});
+        for(var project in clients[client].projects){
+          chrome.contextMenus.create({"title": clients[client].projects[project].name + " - " + clients[client].name, "id": "toggl-"+clients[client].projects[project].id, "parentId": "TogglContextParent", "contexts": ["selection"], "onclick": TogglButton.contextMenuClick});
+        }
+      }
+      
     } else {
       chrome.contextMenus.removeAll();
     }

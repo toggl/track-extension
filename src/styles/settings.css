@@ -6,7 +6,8 @@ body {
   display: none;
 }
 
-input[type="number"], input[type="time"]{
+input[type="number"],
+input[type="time"] {
   height: 22px;
   line-height: 22px !important;
   vertical-align: middle;
@@ -36,34 +37,36 @@ body,
   width: 800px;
   margin: 20px 15px 0px;
   padding: 0;
-  color: #505050!important;
+  color: #505050 !important;
   float: left;
   overflow: hidden;
 }
 
-.list {
+.list,
+.section {
   width: 800px;
   padding: 0;
   list-style: none;
   float: left;
-  overflow-y: auto;
-  margin-bottom: 40px;
+  margin: 1em 0;
+  position: relative;
 }
 
 .list li {
   min-height: 40px;
+  position: relative;
 }
 
-.list li #nag-nanny:checked ~ div {
+.list li #nag-nanny:checked~div {
   height: 110px
 }
 
-.list li #pomodoro-mode:checked ~ div {
-  height: 200px;
+.list li #pomodoro-mode:checked~div {
+  height: 260px;
 }
 
-.list li #stop-at-day-end:checked ~ div{
-  height:70px;
+.list li #stop-at-day-end:checked~div {
+  height: 70px;
 }
 
 .list li label {
@@ -73,17 +76,17 @@ body,
   vertical-align: middle;
 }
 
-.list li input[type="checkbox"]{
+.list li input[type="checkbox"] {
   height: 1.3em;
   width: 1.3em;
   margin: 0px 0.4em 0.3em 0px;
 }
 
-.subsettings-details  {
+.subsettings-details {
   overflow: hidden;
   height: 0px;
   margin-left: 10px;
-  transition:height 300ms ease-in-out;
+  transition: height 300ms ease-in-out;
 }
 
 .subsettings-details p {
@@ -121,7 +124,7 @@ body,
 }
 
 #version a {
-  color: #8A8888!important;
+  color: #8A8888 !important;
   text-decoration: none;
   line-height: 21px;
 }
@@ -129,15 +132,18 @@ body,
 .description {
   border-left: 2px solid #dfdfdf;
   color: rgb(119, 119, 119);
-  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
   display: block;
   visibility: hidden;
   padding: 5px;
   width: 50%;
-  margin: 0 20px!important;
+  margin: 0 20px !important;
 }
 
-.list li:hover .description {
+.list li:hover .description,
+.section:hover .description {
   visibility: visible;
 }
 
@@ -163,9 +169,10 @@ header .tab-link {
   padding: 10px 20px;
 }
 
-header .active, header li:hover {
+header .active,
+header li:hover {
   border-bottom: 1px solid red;
-  background: #F1F0F0!important;
+  background: #F1F0F0 !important;
 }
 
 .container .tabs {
@@ -176,14 +183,14 @@ header .active, header li:hover {
   padding-top: 15px;
   width: 2600px;
   overflow: hidden;
-  transition:left 300ms ease-in-out;
+  transition: left 300ms ease-in-out;
 }
 
 .container .tabs[data-tab="2"] {
   left: -830px;
 }
 
-.container .tabs:not([data-tab="1"]) .tab-1{
+.container .tabs:not([data-tab="1"]) .tab-1 {
   overflow: hidden;
 }
 
@@ -224,7 +231,9 @@ header .active, header li:hover {
   clear: both;
 }
 
-#origins-container, #perm-container, #custom-perm-container {
+#origins-container,
+#perm-container,
+#custom-perm-container {
   display: inline;
 }
 
@@ -284,14 +293,6 @@ header .active, header li:hover {
   border-bottom: none;
 }
 
-.section {
-  float: left;
-}
-
-.section:hover .description {
-  visibility: visible;
-}
-
 #permissions-list li div {
   height: 23px;
   line-height: 23px;
@@ -335,7 +336,7 @@ header .active, header li:hover {
   border-radius: 20px;
 }
 
-.filtered ~#filter-clear {
+.filtered~#filter-clear {
   display: block;
 }
 
@@ -400,56 +401,56 @@ header .active, header li:hover {
   box-shadow: 1px 1px 10px #CACACA;
 }
 
-.guide > div {
+.guide>div {
   display: none;
 }
 
 /* Pomodoro tab */
 
-#sound-volume {
-  width: 80px;
-  margin-left: 20px;
-  position: relative;
-  top: 4px;
+p[class^=pomodoro-][class$=-sound-volume] > * {
+  display: inline-block;
+  vertical-align: middle;
 }
 
-#volume-label {
+input[type=range][id$=-volume] {
+  width: 80px;
+  margin-left: 20px;
+}
+
+span.volume-label {
   display: inline-block;
   margin-left: 8px;
   height: 16px;
   width: 40px;
   text-align: right;
   margin-right: 5px;
+  padding: 0;
 }
 
-#sound-test {
-  position: relative;
-  right: -28px;
-}
-
-.pomodoro-sound {
+div[class^=pomodoro-] {
   clear: both;
 }
 
-.pomodoro-sound-volume {
+p[class^=pomodoro-][class$=-sound-volume] {
   overflow: hidden;
   height: 0px;
-  transition:height 300ms ease-in-out;
+  transition: height 300ms ease-in-out;
 }
 
-#enable-sound-signal:checked ~.pomodoro-sound-volume {
+#enable-sound-signal:checked~.pomodoro-sound-volume {
   height: 36px;
 }
 
 .ff .tab-3 .section:first-of-type {
-  display: none!important;
+  display: none !important;
 }
 
 .ff .tab {
   height: 100%;
 }
 
-.ff .footer, .ff .header {
+.ff .footer,
+.ff .header {
   background: transparent;
 }
 
@@ -463,7 +464,8 @@ header .active, header li:hover {
   max-width: 45%;
 }
 
-.ff header, .ff header .tab-link {
+.ff header,
+.ff header .tab-link {
   background: transparent;
 }
 

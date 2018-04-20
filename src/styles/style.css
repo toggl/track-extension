@@ -380,10 +380,10 @@ only screen and (min-resolution: 192dpi) {
   opacity: 0;
 }
 .BoardCard--hover .toggl-button.asana-board,
-.SingleTaskPaneToolbar .toggl-button.asana-board {
+.SingleTaskPaneToolbarEasyCompletion .toggl-button.asana-board {
   opacity: 1;
 }
-.SingleTaskPaneToolbar .toggl-button.asana-board {
+.SingleTaskPaneToolbarEasyCompletion .toggl-button.asana-board {
   margin-left: 8px;
 }
 .BoardCardWithCustomProperties--hover .toggl-button {

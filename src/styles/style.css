@@ -1024,7 +1024,14 @@ only screen and (min-resolution: 192dpi) {
 /********* PHABRICATOR *********/
 .toggl-button.phabricator {
   margin-left: 5px;
+}
+
+.phui-oi-name > .toggl-button.phabricator {
   position: absolute;
+}
+
+li > .toggl-button.phabricator {
+  position: relative;
 }
 
 /********* MANTISHUB *********/

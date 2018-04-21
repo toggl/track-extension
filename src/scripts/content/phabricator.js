@@ -21,6 +21,8 @@ togglbutton.render('#phabricator-standard-page-body .phui-workpanel-view .phui-o
 // Task detail view
 togglbutton.render('#phabricator-standard-page-body:not(.toggl)', {observe: true}, function (elem) {
   var link,
+    wrap = document.createElement('li', 'phabricator-action-view'),
+    container = $('.phabricator-action-list-view', elem),
     desc = elem.querySelector(".phui-two-column-header .phui-header-view .phui-header-header"),
     number = $('.phabricator-last-crumb .phui-crumb-name') || "",
     projectName = $('.phabricator-handle-tag-list-item > a');
@@ -37,5 +39,6 @@ togglbutton.render('#phabricator-standard-page-body:not(.toggl)', {observe: true
     projectName: projectName
   });
 
-  desc.appendChild(link);
+  wrap.appendChild(link);
+  container.prepend(wrap);
 });

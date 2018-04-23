@@ -29,11 +29,11 @@ togglbutton.render('.details-pane-body:not(.toggl)', {observe: true}, function (
 });
 
 // New UI
-togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('#right_pane__contents .SingleTaskPane-body:not(.toggl)', {observe: true}, function (elem) {
 
   var link, descFunc, projectFunc,
-    container = $('.SingleTaskTitleRow', elem),
-    description = $('.SingleTaskTitleRow .simpleTextarea', elem),
+    container = $('.TaskPaneAssigneeDueDateRowStructure', elem),
+    description = $('.SingleTaskPane-titleRow .simpleTextarea', elem),
     project = $('.TaskProjectPill-projectName div', elem);
 
   descFunc = function () {
@@ -50,7 +50,7 @@ togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe
     projectName: projectFunc
   });
 
-  container.after(link);
+  container.appendChild(link);
 });
 
 // Board view
@@ -74,13 +74,13 @@ togglbutton.render('.BoardColumnCardsContainer-item:not(.toggl)', {observe: true
 });
 
 // Board task detail view
-togglbutton.render('.SingleTaskTitleRow:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.SingleTaskPane-titleRow:not(.toggl)', {observe: true}, function (elem) {
   if (!!$('.toggl-button', elem)) {
     return;
   }
   var link,
-    container = $('.SingleTaskPaneToolbar', elem.parentNode),
-    description = $('.SingleTaskTitleRow textarea', elem.parentNode).textContent,
+    container = $('.SingleTaskPaneToolbarEasyCompletion', elem.parentNode),
+    description = $('.SingleTaskPane-titleRow .simpleTextarea', elem.parentNode).textContent,
     projectElement = $('.SingleTaskPane-projects .TaskProjectPill-projectName', elem.parentNode);
 
   link = togglbutton.createTimerLink({

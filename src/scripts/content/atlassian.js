@@ -33,23 +33,24 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
 // Using the h1 as selector to make sure that it will only try to render the button
 // after Jira has fully rendered the modal content
 togglbutton.render('div[role="dialog"] .ffQQbf:not(.toggl)', {observe: true}, function (needle) {
-  const root = needle.closest('div[role="dialog"]')
-  const id = root.querySelector('a:first-child')
-  const description = root.querySelector('h1:first-child')
-  const project = document.querySelector('.bgdPDV')
-  const container = createTag('div', 'jira-ghx-toggl-button')
+  var root = needle.closest('div[role="dialog"]'),
+    id = $('a:first-child', root),
+    description = $('h1:first-child', root),
+    project = $('.bgdPDV'),
+    container = createTag('div', 'jira-ghx-toggl-button'),
+    link;
 
   if (id !== null && description !== null && project !== null) {
-    const link = togglbutton.createTimerLink({
+    link = togglbutton.createTimerLink({
       className: 'jira2017',
-      description: `${id.textContent} ${description.textContent}`,
+      description: id.textContent + ' ' + description.textContent,
       projectName: project && project.textContent
-    })
+    });
 
-    container.appendChild(link)
-    id.parentNode.appendChild(container)
+    container.appendChild(link);
+    id.parentNode.appendChild(container);
   }
-})
+});
 
 // Jira 2017 issue page
 togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, function (elem) {

@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.10.5",
+      "short-version": "1_10_5",
+      "date": "April 26th 2018",
+      "rows": [
+        "Fix Asana integration again",
+        "Fix Jira integration again"
+      ]
+    },
+    {
       "version": "1.10.4",
       "short-version": "1_10_4",
       "date": "April 2nd 2018",

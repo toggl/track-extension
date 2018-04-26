@@ -1,6 +1,13 @@
 {
   "versions": [
     {
+      "version": "1.10.5",
+      "rows": [
+        "Fix Asana integration again",
+        "Fix Jira integration again"
+      ]
+    },
+    {
       "version": "1.10.4",
       "rows": [
         "Fix Asana board view integration",

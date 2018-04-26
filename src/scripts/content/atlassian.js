@@ -32,29 +32,24 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
 // Jira 2018 sprint modal
 // Using the h1 as selector to make sure that it will only try to render the button
 // after Jira has fully rendered the modal content
-togglbutton.render('div[role="dialog"] h1:not(.toggl)', {observe: true}, function (titleElem) {
-  // need to go all the way up until we find the modal wrapper (for the rootElem)
+togglbutton.render('div[role="dialog"] .ffQQbf:not(.toggl)', {observe: true}, function (needle) {
+  const root = needle.closest('div[role="dialog"]')
+  const id = root.querySelector('a:first-child')
+  const description = root.querySelector('h1:first-child')
+  const project = document.querySelector('.bgdPDV')
+  const container = createTag('div', 'jira-ghx-toggl-button')
 
-  var link, description,
-    rootElem = titleElem.offsetParent.offsetParent.offsetParent.offsetParent,
-    container = createTag('div', 'jira-ghx-toggl-button'),
-    numElem = $('[spacing] a', rootElem),
-    projectElem = $('.bgdPDV');
+  if (id !== null && description !== null && project !== null) {
+    const link = togglbutton.createTimerLink({
+      className: 'jira2017',
+      description: `${id.textContent} ${description.textContent}`,
+      projectName: project && project.textContent
+    })
 
-  description = titleElem.textContent;
-  if (numElem !== null) {
-    description = numElem.textContent + " " + description;
+    container.appendChild(link)
+    id.parentNode.appendChild(container)
   }
-
-  link = togglbutton.createTimerLink({
-    className: 'jira2017',
-    description: description,
-    projectName: projectElem && projectElem.textContent
-  });
-
-  container.appendChild(link);
-  numElem.parentNode.appendChild(container);
-});
+})
 
 // Jira 2017 issue page
 togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, function (elem) {

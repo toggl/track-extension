@@ -576,5 +576,9 @@
   "manageengine.com": {
     "url": "*://*.manageengine.com/*",
     "name": "ManageEngine"
+  },
+  "service-now.com": {
+    "url": "*://*.service-now.com/*",
+    "name": "service-now"
   }
 }

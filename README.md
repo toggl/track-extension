@@ -128,12 +128,25 @@ https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
 
 ## Installing from Source
 
-Works for Chrome only:
+First clone the repository: `git clone git://github.com/toggl/toggl-button`
 
-1.  Clone the repository: `git clone git://github.com/toggl/toggl-button`
-2.  Navigate to `chrome://extensions/` and enable "Developer Mode".
-3.  Choose "Load unpacked extension..."
-4.  Open the src directory in the toggl-button directory you just cloned and follow the prompts to install.
+Then depending on your browser, continue with the following steps.
+
+On Chrome:
+
+1.  Navigate to `chrome://extensions/` and enable "Developer Mode".
+2.  Choose "Load unpacked extension..."
+3.  Open the src directory in the toggl-button directory you just cloned and follow the prompts to install.
+
+On Firefox:
+
+1. Rename the `manifest.json` file to `manifest_chrome.json`
+2. Rename the `manifest_ff.json` file to `manifest.json` (note: switch them around again if you want to use Chrome)
+3. Navigate to `about:debugging`
+4. Choose `Load Temporary Add-on`
+5. Open the src directory and select the `manifest.json` file
+
+Note that in Firefox the add-on needs to be manually loaded again when the browser restarts.
 
 ## Changelog
 

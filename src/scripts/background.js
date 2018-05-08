@@ -1683,6 +1683,7 @@ var TogglButton = {
       });
     }
     if (!TogglButton.tictacSound.playing()) {
+      TogglButton.tictacSound.volume(Db.get('pomodoroSoundVolume'));
       TogglButton.tictacSound.play();
     }
   },

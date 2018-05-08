@@ -13,6 +13,7 @@
   "background": {
     "scripts": [
       "scripts/vendor/bugsnag-3.min.js",
+      "scripts/vendor/howler/howler.min.js",
       "scripts/lib.js",
       "scripts/db.js",
       "scripts/ga.js",

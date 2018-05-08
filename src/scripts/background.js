@@ -1675,12 +1675,16 @@ var TogglButton = {
     if (!Db.get('pomodoroTictacSoundEnabled')) { return; }
 
     if (!TogglButton.tictacSound) {
-      TogglButton.tictacSound = new Audio();
-      TogglButton.tictacSound.src = Db.get('pomodoroTictacSoundFile');
-      TogglButton.tictacSound.volume = Db.get('pomodoroSoundVolume');
-      TogglButton.tictacSound.loop = true;
+      TogglButton.tictacSound = new Howl({
+        src: [Db.get('pomodoroTictacSoundFile')],
+        autoplay: false,
+        volume: Db.get('pomodoroSoundVolume'),
+        loop: true
+      });
     }
-    TogglButton.tictacSound.play();
+    if (!TogglButton.tictacSound.playing()) {
+      TogglButton.tictacSound.play();
+    }
   },
 
   stopTicTacSound: function () {

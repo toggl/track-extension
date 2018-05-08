@@ -1,6 +1,14 @@
 # Sound licenses
 
-## TICTAC.WAV
+## tictac.wav
+
+Derivative sound, the original sound is a work of KevanGC, and it was copied from here:
+
+http://soundbible.com/1580-Ticking-Clock.html
+
+The original sound is in the Public Domain
+
+## tictac2.wav
 
 Taken from: https://github.com/tomighty/tomighty/tree/master/tomighty-swing/src/main/sounds
 

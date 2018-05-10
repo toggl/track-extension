@@ -98,6 +98,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Teamleader](http://www.teamleader.eu/)
 - [TeamWeek](https://teamweek.com/)
 - [Teamwork](https://www.teamwork.com/)
+- [Teamwork Desk](https://www.teamwork.com/desk)
 - [TestRail](https://testrail.com)
 - [TickTick](https://ticktick.com/)
 - [Todoist](https://todoist.com/)

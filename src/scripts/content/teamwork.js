@@ -133,3 +133,25 @@ togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-heade
     return;
   });
 });
+
+
+// Teamwork Desk
+togglbutton.render('section.inbox--body header.ticket--header:not(.toggl)', {observe: true}, function (elem) {
+  // ticket view
+  var link, descFunc,
+    container = $('.title-label', elem),
+    id = $('.id-hold', elem).textContent,
+    description = $('a', elem).textContent;
+
+  descFunc = function () {
+    return id.trim() + " " + description.trim();
+  };
+
+  link = togglbutton.createTimerLink({
+    className: 'teamwork',
+    buttonType: 'minimal',
+    description: descFunc
+  });
+
+  container.appendChild(link);
+});

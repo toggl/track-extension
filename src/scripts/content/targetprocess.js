@@ -6,19 +6,27 @@
 togglbutton.render('div.general-info:not(.toggl)', {observe: true}, function (elem) {
   var link,
     titleElement = $('.i-role-title', elem),
-    entityIdName = $('.entity-id a', elem).textContent + ' ' + titleElement.textContent,
+    entityIdElement = $('.entity-id a', elem),
     projectFunc = function () {
       var projectItem =  $('.tau-linkentity');
       return projectItem ? projectItem.textContent : "";
     };
 
-  link = togglbutton.createTimerLink({
-    className:   'targetprocess',
-    description: entityIdName,
-    projectName: projectFunc
-  });
+	// if element id not found with old tp version, try without the a cause it's just a span in new TP
+	if (!entityIdElement) {
+	  entityIdElement = $('.entity-id', elem);
+	}
 
-  titleElement.parentElement.appendChild(link);
+	// if element id found continue
+	if (entityIdElement) {
+		var entityIdName = entityIdElement.textContent + ' ' + titleElement.textContent;
+	  link = togglbutton.createTimerLink({
+		  className:   'targetprocess',
+		  description: entityIdName,
+		  projectName: projectFunc
+	  });
+	  titleElement.parentElement.appendChild(link);
+	}
 });
 
 // entity's task buttons
@@ -47,20 +55,30 @@ togglbutton.render('.tau-list__table__row:not(.toggl)', {observe: true}, functio
 togglbutton.render('.tau-list-line:not(.toggl)', {observe: true}, function (elem) {
   var link,
     buttonPlaceholder,
-    taskId      = '#' + $('.tau-list-general_entity_id-cell', elem).textContent.trim(),
-    taskTitle   = $('.tau-list-entity_name_1line-cell', elem).textContent.trim(),
+	  taskIdElement = $('.tau-list-general_entity_id-cell', elem),
+	  taskTitleElement = $('.tau-list-entity_name_1line-cell', elem),
     projectFunc = function () {
       var projectItem =  $('.tau-list-project_abbr-unit', elem);
       return projectItem ? projectItem.title : "";
     };
 
-  link = togglbutton.createTimerLink({
-    className:   'targetprocess',
-    description: taskId + ' ' + taskTitle,
-    projectName: projectFunc,
-    buttonType:  'minimal'
-  });
+	// if element id found continue
+	if (taskIdElement) {
+		var taskId = '#' + $('.tau-list-general_entity_id-cell', elem).textContent.trim();
+		var taskTitle = '';
 
-  buttonPlaceholder = $('.tau-board-unit_type_entity-name', elem);
-  buttonPlaceholder.insertBefore(link, buttonPlaceholder.firstChild);
+		if (taskTitleElement) {
+			taskTitle = ' ' + $('.tau-list-entity_name_1line-cell', elem).textContent.trim();
+		}
+
+	  link = togglbutton.createTimerLink({
+      className:   'targetprocess',
+      description: taskId + taskTitle,
+      projectName: projectFunc,
+      buttonType:  'minimal'
+	  });
+
+	  buttonPlaceholder = $('.tau-board-unit_type_entity-name', elem);
+	  buttonPlaceholder.insertBefore(link, buttonPlaceholder.firstChild);
+	}
 });

@@ -64,24 +64,14 @@ togglbutton.render('.items_wrapper .item > .content:not(.toggl)', {observe: true
 
 // Basecamp 3
 togglbutton.render('.todos li.todo:not(.toggl):not(.completed)', {observe: true}, function (elem) {
-  var link, project, parent,
-    projectItem,
-    description = $('.checkbox__content', elem);
+  var link, project,
+    description,
+    parent = $('.checkbox__content', elem);
 
-  if (!description) {
-    return;
-  }
 
-  parent = $('.todo_assignee', elem);
-
-  if (!parent) {
-    return;
-  }
-
-  description = description.childNodes[1].textContent;
-  project = $('.checkbox__content', elem).parentNode.parentNode.parentNode.parentNode.parentNode;
-  projectItem = $('.todolist__permalink', project);
-  project = projectItem ? projectItem.textContent : "";
+  description = parent.childNodes[1].textContent.trim();
+  project = $('#a-breadcrumb-menu-button');
+  project = project ? project.textContent : "";
 
   link = togglbutton.createTimerLink({
     className: 'basecamp3',

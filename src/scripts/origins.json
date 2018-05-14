@@ -241,6 +241,10 @@
     "url": "*://*.kanbanery.com/*",
     "name": "Kanbanery"
   },
+  "kanboard.net": {
+    "url": "",
+    "name": "Kanboard"
+  },
   "liquidplanner.com": {
     "url": "*://app.liquidplanner.com/*",
     "name": "Liquidplanner"
@@ -396,6 +400,10 @@
     "name": "Salesforce Lightning",
     "file": "salesforce.js"
   },
+  "sentry.io": {
+    "url": "*://*.sentry.io/*",
+    "name": "Sentry"
+  },
   "sifterapp.com": {
     "url": "*://*.sifterapp.com/*",
     "name": "Sifterapp"
@@ -428,6 +436,10 @@
     "url": "*://*.targetprocess.com/*",
     "name": "Targetprocess"
   },
+  "tasks.office.com": {
+    "url": "*://tasks.office.com/*",
+    "name": "Microsoft Planner"  
+  },
   "teamweek.com": {
     "url": "*://*.teamweek.com/*",
     "name": "Teamweek"
@@ -453,6 +465,11 @@
   "ticktick.com": {
     "url": "*://ticktick.com/*,*://*.ticktick.com/*",
     "name": "TickTick"
+  },
+  "todo.microsoft.com": {
+    "url": "*://*.todo.microsoft.com/*",
+    "name": "Microsoft To-Do",
+    "file": "microsoft-to-do.js"
   },
   "todoist.com": {
     "url": "*://*.todoist.com/app*",
@@ -498,6 +515,10 @@
   "unfuddle.com": {
     "url": "*://*.unfuddle.com/*",
     "name": "Unfuddle"
+  },
+  "v1host.com": {
+    "url": "*://*.v1host.com/*",
+    "name": "VersionOne"
   },
   "visualstudio.com": {
     "url": "*://*.visualstudio.com/*",
@@ -564,5 +585,9 @@
   "teamleader.eu": {
     "url": "*://app.teamleader.eu/*",
     "name": "Teamleader"
+  },
+  "manageengine.com": {
+    "url": "*://*.manageengine.com/*",
+    "name": "ManageEngine"
   }
 }

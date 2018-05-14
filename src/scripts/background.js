@@ -1,5 +1,5 @@
 /*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global debug: true, console: false, report: true, escapeHtml: true, GA: false, window: false, setTimeout: false, clearTimeout: false, setInterval: false, clearInterval: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
+/*global secToHHMM: true, debug: true, console: false, report: true, escapeHtml: true, GA: false, window: false, setTimeout: false, clearTimeout: false, setInterval: false, clearInterval: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var openWindowsCount = 0,
@@ -47,7 +47,7 @@ var TogglButton = {
       '<a class="toggl-button {service} active" href="javascript:void(0)">Stop timer</a>' +
       '<a id="toggl-button-hide">&times;</a>' +
       '<div class="toggl-button-row" id="toggl-button-duration-row">' +
-        '<input name="toggl-button-duration" tabindex="100" type="time" step="1" id="toggl-button-duration" class="toggl-button-input" value="" placeholder="00:00" autocomplete="off">' +
+        '<input name="toggl-button-duration" tabindex="100" type="text" pattern="[\\d]{2}:[\\d]{2}:[\\d]{2}" title="Please write the duration in the \'hh:mm:ss\' format." id="toggl-button-duration" class="toggl-button-input" value="" placeholder="00:00" autocomplete="off">' +
       '</div>' +
       '<div class="toggl-button-row">' +
         '<input name="toggl-button-description" tabindex="101" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
@@ -315,6 +315,11 @@ var TogglButton = {
         entry = null;
       }
       TogglButton.updateTriggers(entry);
+    } else if (data.action === "delete") {
+      if (TogglButton.$curEntry !== null && TogglButton.$curEntry.id === entry.id) {
+        TogglButton.$latestStoppedEntry = entry;
+        TogglButton.updateTriggers(null);
+      }
     }
   },
 
@@ -1400,6 +1405,57 @@ var TogglButton = {
     if (!!popup && popup.length && !!popup[0].PopUp) {
       popup[0].PopUp.showPage();
     }
+  },
+
+  calculateSums: function () {
+    var now = new Date(),
+      today,
+      todaySum = 0,
+      weekSum = 0,
+      getWeekStart,
+      weekStart,
+      timeEntries = (TogglButton.$user.time_entries || []);
+
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+
+    // Get today's date at midnight for the local timezone
+    today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    getWeekStart = function (d) {
+      var startDay = TogglButton.$user.beginning_of_week,
+        day = d.getDay(),
+        diff = d.getDate() - day + (startDay > day ? startDay - 7 : startDay);
+
+      return new Date(d.setDate(diff));
+    };
+
+    weekStart = getWeekStart(now);
+
+    timeEntries.forEach(function (entry) {
+      // Calc today total
+      if (new Date(entry.start).getTime() > today.getTime()) {
+        if (entry.duration < 0) {
+          todaySum += ((new Date() - new Date(entry.start)) / 1000);
+        } else {
+          todaySum += entry.duration;
+        }
+      }
+
+      // Calc week total
+      if (new Date(entry.start).getTime() > weekStart.getTime()) {
+        if (entry.duration < 0) {
+          weekSum += ((new Date() - new Date(entry.start)) / 1000);
+        } else {
+          weekSum += entry.duration;
+        }
+      }
+
+    });
+
+    return {today: secToHHMM(todaySum), week: secToHHMM(weekSum)};
   },
 
   contextMenuClick: function (info, tab) {

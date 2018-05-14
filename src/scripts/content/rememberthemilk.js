@@ -2,14 +2,14 @@
 /*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render("div[class^='b-db-'][role='listbox'] [role='option']:not(.toggl)", {observe: true}, function (elem) {
+togglbutton.render("div[role='listbox'] [role='option']:not(.toggl)", {observe: true}, function (elem) {
   var getDescription,
     getProject,
     createTogglButton;
 
   // Get task's description.
   getDescription = function () {
-    return elem.querySelector("div[class^='b-db-'][role='listbox'] [role='option'] span[style*='user-select: text']")
+    return elem.querySelector("div[role='listbox'] [role='option'] span[style*='user-select: text']")
       .textContent.trim();
   };
 
@@ -33,6 +33,6 @@ togglbutton.render("div[class^='b-db-'][role='listbox'] [role='option']:not(.tog
   };
 
   // Inject toggl button to each task.
-  elem.querySelector("div[class^='b-db-'][role='listbox'] [role='option'] span[style*='user-select: text']")
+  elem.querySelector("div[role='listbox'] [role='option'] span[style*='user-select: text']")
     .parentElement.appendChild(createTogglButton());
 });

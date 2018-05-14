@@ -11,7 +11,7 @@
 }
 
 #toggl-button-edit-form input {
-  bckground-image: none !important;
+  background-image: none !important;
   background-color: #ffffff !important;
 }
 
@@ -380,11 +380,19 @@ only screen and (min-resolution: 192dpi) {
   opacity: 0;
 }
 .BoardCard--hover .toggl-button.asana-board,
-.SingleTaskPaneToolbar .toggl-button.asana-board {
+.SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
+.SingleTaskPaneToolbarEasyCompletion .toggl-button.asana-board { /* new ui v2 */
   opacity: 1;
 }
-.SingleTaskPaneToolbar .toggl-button.asana-board {
+SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
+.SingleTaskPaneToolbarEasyCompletion .toggl-button.asana-board { /* new ui v2 */
   margin-left: 8px;
+}
+.BoardCardWithCustomProperties--hover .toggl-button {
+  opacity: 1;
+}
+.BoardCardWithCustomProperties-assigneeAndDueDate .toggl-button {
+  margin-left: 10px;
 }
 
 /********* PODIO *********/
@@ -395,14 +403,26 @@ only screen and (min-resolution: 192dpi) {
 
 /********* GITLAB *********/
 .toggl-button.gitlab {
-  font-size: 75%;
-  margin-left: 8px;
-  padding-left: 21px;
+  margin-top: 7px;
+}
+
+@media (max-width: 991px) {
+  .toggl-button.gitlab {
+    margin-right: 8px;
+  }
 }
 
 /********* JIRA *********/
 .toggl-button.jira {
   margin-top:.2em;
+}
+
+.toggl-button.jira2017 {
+  margin-top:.2em;
+  margin-left: 10px;
+  cursor: pointer !important;
+  color: #42526e !important;
+  box-shadow: none;
 }
 
 /********* UNFUDDLE *********/
@@ -467,6 +487,29 @@ only screen and (min-resolution: 192dpi) {
 .active_selection .toggl-button.basecamphq,
 .toggl-button.basecamphq[data-behavior="selectable_target"] {
   visibility: visible !important;
+}
+
+/********* BASECAMP 3 *********/
+.todo .toggl-button.basecamp3 {
+  transition: opacity 150ms ease;
+  display: inline;
+  position: absolute;
+  opacity: 0;
+  margin-top: 2px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.todo__unassigned-unscheduled + .toggl-button.basecamp3 {
+  margin-left: 90px;
+}
+
+.todo:not(.selected):hover .toggl-button.basecamp3 {
+  opacity: 1;
+}
+
+.card-grid .toggl-button.basecamp3 {
+  opacity: 0 !important;
 }
 
 /********* TEAMWEEK *********/
@@ -974,6 +1017,12 @@ only screen and (min-resolution: 192dpi) {
   margin-right: 15px;
 }
 
+/********* ManageEngine *********/
+.toggl-button.manageengine {
+  float: right;
+  margin: 0 6px 0 6px;
+}
+
 /********* PHABRICATOR *********/
 .toggl-button.phabricator {
   margin-left: 5px;
@@ -1125,7 +1174,7 @@ table.work-package-table .toggl-button.openproject {
 
 /********* HABITICA *********/
 .toggl-button.habitica {
-  margin-bottom: -4px !important;
+  transform: scale(0.85);
 }
 
 /********* SHERPADESK *********/
@@ -1324,4 +1373,9 @@ a.toggl-button.workfront.min {
 
 .toggl-button.protonmail:hover {
   text-decoration: underline;
+}
+
+/********* SENTRY *********/
+.toggl-button.sentry {
+  margin: 0 auto 20px 10px;
 }

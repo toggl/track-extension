@@ -210,6 +210,10 @@
     "url": "*://habitica.com/*",
     "name": "Habitica"
   },
+  "heflo.com": {
+    "url": "*://app.heflo.com/*",
+    "name": "HEFLO"
+  },
   "helpscout.net": {
     "url": "*://secure.helpscout.net/*",
     "name": "Helpscout"

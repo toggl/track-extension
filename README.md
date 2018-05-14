@@ -50,6 +50,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Google Keep](https://keep.google.com/)
 - [GQueues](https://www.gqueues.com/)
 - [Habitica](https://habitica.com)
+- [HEFLO](https://app.heflo.com/)
 - [Help Scout](http://www.helpscout.net/)
 - [Husky](https://www.huskymarketingplanner.com/)
 - [Intercom](https://www.intercom.com/)

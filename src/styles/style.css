@@ -1375,6 +1375,37 @@ a.toggl-button.workfront.min {
   text-decoration: underline;
 }
 
+/********* HEFLO *********/
+@media (max-width: 767px) {
+  .toggl-button.heflo {
+    float: left;
+    position: absolute;
+  }
+}
+.toggl-button.heflo {
+  order: -1;
+  position: relative;
+  right: auto;
+  margin-top: 5px;
+  margin-left: 10px;
+  color: white;
+}
+
+li .toggl-button.heflo {
+  position: relative;
+  line-height: 20px !important;
+  margin: 0;
+  padding-left: 23px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 20px 0;
+}
+
+.toggl-container {
+  padding-left: 5px;
+  height: 60px;
+}
+
 /********* SENTRY *********/
 .toggl-button.sentry {
   margin: 0 auto 20px 10px;

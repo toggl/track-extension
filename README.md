@@ -3,7 +3,6 @@
 Add Toggl one-click time tracking to popular web tools.
 
 ## Compatible services
-
 - [AgenoCRM](https://agenocrm.com/)
 - [Airtable](https://airtable.com)
 - [Any.do](http://www.any.do/)
@@ -56,6 +55,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Intercom](https://www.intercom.com/)
 - [Jira](https://www.atlassian.com/software/jira)
 - [Kanbanery](https://www.kanbanery.com/)
+- [Kanboard](https://kanboard.org/)
 - [KhanAcademy](https://www.khanacademy.org/)
 - [LiquidPlanner](https://www.liquidplanner.com/)
 - [ManageEngine](https://www.manageengine.com/)

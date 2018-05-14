@@ -237,6 +237,10 @@
     "url": "*://*.kanbanery.com/*",
     "name": "Kanbanery"
   },
+  "kanboard.net": {
+    "url": "",
+    "name": "Kanboard"
+  },
   "liquidplanner.com": {
     "url": "*://app.liquidplanner.com/*",
     "name": "Liquidplanner"

@@ -121,6 +121,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [YouTrack](http://www.jetbrains.com/youtrack/)
 - [Zendesk](https://www.zendesk.com/)
 - [Zube](https://zube.io/)
+- [VivifyScrum](https://www.vivifyscrum.com/)
 
 ## Installing from the Web Store/Addons page
 

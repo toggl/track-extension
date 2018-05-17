@@ -597,5 +597,10 @@
   "manageengine.com": {
     "url": "*://*.manageengine.com/*",
     "name": "ManageEngine"
+  },
+  "vivifyscrum.com": {
+    "url": "*://app.vivifyscrum.com/*",
+    "name": "VivifyScrum",
+    "clone": "true"
   }
 }

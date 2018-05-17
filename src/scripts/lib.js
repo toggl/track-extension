@@ -56,7 +56,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
       }
     });
 
-    if (!isTogglButton && uaIndex !== -1) {
+    if (isTogglButton && uaIndex !== -1) {
       headers[uaIndex].value = "TogglButton/" + chrome.runtime.getManifest().version;
     }
     return {requestHeaders: headers};

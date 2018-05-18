@@ -50,6 +50,6 @@ togglbutton.render('.subtasks-table tbody tr:not(.toggl)', {observe: true}, func
 togglbutton.render('.ui-tooltip tbody tr + tr:not(.toggl)', {observe: true}, function (elem) {
   var span = document.createElement('span');
   span.setAttribute("style", "padding-left: 10px");
-  $('.subtask-title', elem).after(span)
+  $('.subtask-title', elem).after(span);
   addTimerLink(elem, '.subtask-title a', '.subtask-title + span');
 });

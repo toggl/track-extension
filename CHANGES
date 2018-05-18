@@ -1,6 +1,20 @@
 {
   "versions": [
     {
+      "version": "1.10.6",
+      "rows": [
+        "Add keyboard support for project autocomplete",
+        "Add support for Teamwork Desk",
+        "Add support for Kanboard",
+        "Add support for HEFLO",
+        "Add Microsoft Todo integration",
+        "Fix Targetprocess integration",
+        "Fix CapsuleCRM integration",
+        "Fix project autoselect on Todoist",
+        "Fix user-agent request header"
+      ]
+    },
+    {
       "version": "1.10.5",
       "rows": [
         "Fix Asana integration again",

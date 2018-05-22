@@ -92,6 +92,9 @@ var PopUp = {
       if (!response) {
         return;
       }
+      if (request.type === 'list-continue' && !request.data && !response.success) {
+        return PopUp.switchView(PopUp.$revokedWorkspaceView)
+      }
       if (!!response.success) {
         if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);

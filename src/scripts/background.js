@@ -125,6 +125,10 @@ var TogglButton = {
               });
             }
 
+            if (TogglButton.hasWorkspaceBeenRevoked(resp.data.workspaces)) {
+              TogglButton.showRevokedWSView();
+            }
+
             TogglButton.updateTriggers(entry);
             Db.set('projects', JSON.stringify(projectMap));
             Db.set('clients', JSON.stringify(clientMap));
@@ -1407,6 +1411,14 @@ var TogglButton = {
     }
   },
 
+  showRevokedWSView: function () {
+    const popup = chrome.extension.getViews({"type": "popup"});
+    if (!!popup && popup.length && !!popup[0].PopUp) {
+      const PopUp = popup[0].PopUp;
+      PopUp.switchView(PopUp.$revokedWorkspaceView);
+    }
+  },
+
   calculateSums: function () {
     var now = new Date(),
       today,
@@ -1660,6 +1672,15 @@ var TogglButton = {
         }
       });
     }
+  },
+
+  hasWorkspaceBeenRevoked: function (workspaces) {
+    if (!TogglButton.$user) {
+      return false;
+    }
+    const currentWorkspaces = TogglButton.$user.workspaces.length;
+    const isRevoked = workspaces && workspaces.length < currentWorkspaces;
+    return isRevoked;
   }
 
 };

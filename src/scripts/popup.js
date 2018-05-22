@@ -34,6 +34,7 @@ var PopUp = {
   $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  $revokedWorkspaceView: document.querySelector('#revoked-workspace'),
   $entries: document.querySelector(".entries-list"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {

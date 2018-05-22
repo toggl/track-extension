@@ -240,6 +240,7 @@ only screen and (min-resolution: 2dppx) {
 
 .header[data-view="menu"] ~ .views #menu,
 .header[data-view="login-form"] ~ .views #login-form,
+.header[data-view="revoked-workspace"] ~ .views #revoked-workspace,
 .header[data-view="entry-form"] ~ .views #entry-form {
   display: block!important;
 }
@@ -846,4 +847,23 @@ hr {
 
 #menu .entries-list ul li:hover .te-icons {
   background-color: #e6e6e6;
+}
+
+/** Revoked Workspace **/
+#revoked-workspace > div {
+  color: #a3a3a3;
+  font-weight: 200;
+  margin-bottom: 12px;
+}
+
+#revoked-workspace form > p {
+  display: flex;
+}
+
+#revoked-workspace input {
+  flex: 1;
+}
+
+#revoked-workspace .login-btn {
+  width: 100%;
 }

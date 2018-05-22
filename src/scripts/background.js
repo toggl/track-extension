@@ -1532,6 +1532,8 @@ var TogglButton = {
         }
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();
+      } else if (request.type === 'create-workspace') {
+        TogglButton.createWorkspace(request, sendResponse);
       }
 
     } catch (e) {
@@ -1681,6 +1683,23 @@ var TogglButton = {
     const currentWorkspaces = TogglButton.$user.workspaces.length;
     const isRevoked = workspaces && workspaces.length < currentWorkspaces;
     return isRevoked;
+  },
+
+  createWorkspace: function (request, sendResponse) {
+    const { workspace } = request;
+    const payload = { name: workspace, "only_admins_see_team_dashboard": false, "ical_url": "" };
+
+    TogglButton.ajax('', {
+      method: 'POST',
+      baseUrl: TogglButton.$ApiV9Url,
+      payload,
+      onLoad: (xhr) => {
+        sendResponse({ type: 'create-workspace', success: xhr.status === 200 });
+      },
+      onError: (xhr) => {
+        sendResponse({ type: 'create-workspace', success: false });
+      }
+    });
   }
 
 };

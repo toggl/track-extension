@@ -93,9 +93,12 @@ var PopUp = {
         return;
       }
       if (request.type === 'list-continue' && !request.data && !response.success) {
-        return PopUp.switchView(PopUp.$revokedWorkspaceView)
+        return PopUp.switchView(PopUp.$revokedWorkspaceView);
       }
       if (!!response.success) {
+        if (request.type === 'create-workspace') {
+          return PopUp.switchView(PopUp.$menuView);
+        }
         if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);
         } else if (response.type === "Update") {
@@ -574,6 +577,16 @@ document.addEventListener('DOMContentLoaded', function () {
         respond: true,
         username: document.querySelector("#login_email").value,
         password: document.querySelector("#login_password").value
+      };
+      PopUp.sendMessage(request);
+    });
+
+    document.querySelector("#workspace").addEventListener('submit', function (event) {
+      event.preventDefault();
+      const request = {
+        type: "create-workspace",
+        respond: true,
+        workspace: document.querySelector('#workspace_name').value,
       };
       PopUp.sendMessage(request);
     });

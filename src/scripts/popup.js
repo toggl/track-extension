@@ -583,10 +583,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector("#workspace").addEventListener('submit', function (event) {
       event.preventDefault();
+      const workspace = document.querySelector('#workspace_name').value;
+      if (!workspace) {
+        return PopUp.showError('Enter a workspace name');
+      }
       const request = {
         type: "create-workspace",
         respond: true,
-        workspace: document.querySelector('#workspace_name').value,
+        workspace,
       };
       PopUp.sendMessage(request);
     });

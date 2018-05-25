@@ -24,7 +24,8 @@ var Db = {
     "dayEndTime": "17:00",
     "defaultProject": 0,
     "projects": "",
-    "rememberProjectPer": "false"
+    "rememberProjectPer": "false",
+    "disableKeyboardShortcuts": "false"
   },
 
   // core settings: key, default value
@@ -237,6 +238,8 @@ var Db = {
         Db.resetDefaultProjects();
       } else if (request.type === 'update-dont-show-permissions' || request.type === 'update-selected-settings-tab') {
         Db.updateSetting(request.type.substr(7), request.state);
+      } else if (request.type === 'toggle-disable-keyboard-shortcuts') {
+        Db.updateSetting("disableKeyboardShortcuts", request.state);
       }
     } catch (e) {
       Bugsnag.notifyException(e);

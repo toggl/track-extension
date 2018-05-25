@@ -83,6 +83,7 @@ var Settings = {
       Settings.toggleState(Settings.$pomodoroMode, Db.get("pomodoroModeEnabled"));
       Settings.toggleState(Settings.$pomodoroSound, Db.get("pomodoroSoundEnabled"));
       Settings.toggleState(Settings.$pomodoroStopTimeTracking, Db.get("pomodoroStopTimeTrackingWhenTimerEnds"));
+      Settings.toggleState(Settings.$disableKeyboardShortcuts, Db.get("disableKeyboardShortcuts"));
       Array.apply(null, Settings.$rememberProjectPer.options).forEach(function (option) {
         if (option.value === rememberProjectPer) {
           option.setAttribute("selected", "selected");
@@ -549,6 +550,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     Settings.$tabs = document.querySelector(".tabs");
     Settings.$defaultProjectContainer = document.querySelector("#default-project-container");
     Settings.$rememberProjectPer = document.querySelector("#remember-project-per");
+    Settings.$disableKeyboardShortcuts = document.querySelector("#disable-keyboard-shortcut");
 
     // Show permissions page with notice
     if (!!parseInt(Db.get("show-permissions-info"), 10) && !Db.get("dont-show-permissions")) {
@@ -635,6 +637,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     Settings.$stopAtDayEnd.addEventListener('click', function (e) {
       Settings.toggleSetting(e.target, (localStorage.getItem("stopAtDayEnd") !== "true"), "toggle-stop-at-day-end");
+    });
+    Settings.$disableKeyboardShortcuts.addEventListener('click', function (e) {
+      Settings.toggleSetting(e.target, (localStorage.getItem("disableKeyboardShortcuts") !== "true"), "toggle-disable-keyboard-shortcuts");
     });
 
 

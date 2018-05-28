@@ -1714,3 +1714,12 @@ chrome.commands.onCommand.addListener(function (command) {
     }
   }
 });
+
+if (!FF) {
+  chrome.runtime.onMessageExternal.addListener(function handleVersionMessage (request, sender, sendResponse) {
+    if (request && request.message && request.message === 'version') {
+      sendResponse({ version: chrome.runtime.getManifest().version });
+    }
+    return true;
+  });
+}

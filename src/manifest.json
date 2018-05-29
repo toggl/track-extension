@@ -51,5 +51,11 @@
   ],
   "optional_permissions": [
     "*://*/"
-  ]
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.toggl.com/*",
+      "*://toggl.com/*"
+    ]
+  }
 }

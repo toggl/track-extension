@@ -1704,16 +1704,18 @@ if (!FF) {
   });
 }
 
-chrome.commands.onCommand.addListener(function (command) {
-  var entry = TogglButton.$latestStoppedEntry || {"type": "timeEntry", "service": "keyboard"};
-  if (command === "quick-start-stop-entry") {
-    if (TogglButton.$curEntry !== null) {
-      TogglButton.stopTimeEntry(TogglButton.$curEntry);
-    } else {
-      TogglButton.createTimeEntry(entry, null);
+if (chrome.commands) {
+  chrome.commands.onCommand.addListener(function (command) {
+    var entry = TogglButton.$latestStoppedEntry || {"type": "timeEntry", "service": "keyboard"};
+    if (command === "quick-start-stop-entry") {
+      if (TogglButton.$curEntry !== null) {
+        TogglButton.stopTimeEntry(TogglButton.$curEntry);
+      } else {
+        TogglButton.createTimeEntry(entry, null);
+      }
     }
-  }
-});
+  });
+}
 
 if (!FF) {
   chrome.runtime.onMessageExternal.addListener(function handleVersionMessage (request, sender, sendResponse) {

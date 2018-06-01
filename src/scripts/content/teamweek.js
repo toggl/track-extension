@@ -3,7 +3,7 @@
 
 'use strict';
 
-togglbutton.render('.timeline-task-popup:not(.toggl)', {observe: true}, function (element) {
+togglbutton.render('.timeline-form:not(.toggl)', {observe: true}, function (element) {
   var titleElement = $('[data-hook=input-name]', element),
     projectElement = $('[name=project_name]', element),
     container = $('[data-hook=row-actions]', element),

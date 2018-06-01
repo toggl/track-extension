@@ -850,6 +850,10 @@ hr {
 }
 
 /** Revoked Workspace **/
+#revoked-workspace {
+  min-height: 146px;
+}
+
 #revoked-workspace > div {
   color: #a3a3a3;
   font-weight: 200;

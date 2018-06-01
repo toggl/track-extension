@@ -283,6 +283,7 @@ var PopUp = {
 
     elem = document.createElement("p");
     elem.textContent = "Recent entries";
+    elem.addEventListener('click', e => e.stopPropagation());
     html.appendChild(elem);
 
     html.appendChild(ul);

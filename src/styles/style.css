@@ -1410,3 +1410,9 @@ li .toggl-button.heflo {
 .toggl-button.sentry {
   margin: 0 auto 20px 10px;
 }
+
+/********* WORKAST *********/
+.toggl-button.workast {
+  position: relative;
+  left: -5px;
+}   

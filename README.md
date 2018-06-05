@@ -130,7 +130,7 @@ https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
 
 ## Installing from Source
 
-First clone the repository: `git clone git://github.com/toggl/toggl-button`
+First clone the repository: `git clone git@github.com:toggl/toggl-button.git`
 
 Then depending on your browser, continue with the following steps.
 

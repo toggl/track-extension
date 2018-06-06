@@ -16,6 +16,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Bitrix24](https://www.bitrix24.com/)
 - [Books](https://books.zoho.com/)
 - [Breeze](http://www.breeze.pm/)
+- [Bugherd](https://www.bugherd.com/)
 - [Bugzilla](https://bugzilla.mozilla.org/)
 - [CapsuleCRM](http://www.capsulecrm.com/)
 - [ClickUp](https://clickup.com/)

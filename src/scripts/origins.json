@@ -64,6 +64,10 @@
     "url": "*://app.breeze.pm/*",
     "name": "Breeze"
   },
+  "www.bugherd.com": {
+    "url": "*://www.bugherd.com/*",
+    "name": "BugHerd"
+  },
   "bugzilla.mozilla.org": {
     "url": "*://bugzilla.mozilla.org/*",
     "name": "Bugzilla"
@@ -438,7 +442,7 @@
   },
   "tasks.office.com": {
     "url": "*://tasks.office.com/*",
-    "name": "Microsoft Planner"  
+    "name": "Microsoft Planner"
   },
   "teamweek.com": {
     "url": "*://*.teamweek.com/*",

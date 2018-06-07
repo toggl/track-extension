@@ -125,6 +125,10 @@ var TogglButton = {
               });
             }
 
+            if (TogglButton.hasWorkspaceBeenRevoked(resp.data.workspaces)) {
+              TogglButton.showRevokedWSView();
+            }
+
             TogglButton.updateTriggers(entry);
             Db.set('projects', JSON.stringify(projectMap));
             Db.set('clients', JSON.stringify(clientMap));
@@ -1407,6 +1411,14 @@ var TogglButton = {
     }
   },
 
+  showRevokedWSView: function () {
+    const popup = chrome.extension.getViews({"type": "popup"});
+    if (!!popup && popup.length && !!popup[0].PopUp) {
+      const PopUp = popup[0].PopUp;
+      PopUp.switchView(PopUp.$revokedWorkspaceView);
+    }
+  },
+
   calculateSums: function () {
     var now = new Date(),
       today,
@@ -1520,6 +1532,8 @@ var TogglButton = {
         }
       } else if (request.type === 'options') {
         chrome.runtime.openOptionsPage();
+      } else if (request.type === 'create-workspace') {
+        TogglButton.createWorkspace(request, sendResponse);
       }
 
     } catch (e) {
@@ -1660,6 +1674,27 @@ var TogglButton = {
         }
       });
     }
+  },
+
+  hasWorkspaceBeenRevoked: function (workspaces) {
+    return workspaces.length === 0;
+  },
+
+  createWorkspace: function (request, sendResponse) {
+    const { workspace } = request;
+    const payload = { name: workspace, "only_admins_see_team_dashboard": false, "ical_url": "" };
+
+    TogglButton.ajax('', {
+      method: 'POST',
+      baseUrl: TogglButton.$ApiV9Url,
+      payload,
+      onLoad: (xhr) => {
+        sendResponse({ type: 'create-workspace', success: xhr.status === 200 });
+      },
+      onError: (xhr) => {
+        sendResponse({ type: 'create-workspace', success: false });
+      }
+    });
   }
 
 };

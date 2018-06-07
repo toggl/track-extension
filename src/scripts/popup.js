@@ -34,6 +34,7 @@ var PopUp = {
   $menuView: document.querySelector("#menu"),
   $editView: document.querySelector("#entry-form"),
   $loginView: document.querySelector("#login-form"),
+  $revokedWorkspaceView: document.querySelector('#revoked-workspace'),
   $entries: document.querySelector(".entries-list"),
   defaultErrorMessage: "Error connecting to server",
   showPage: function () {
@@ -91,7 +92,13 @@ var PopUp = {
       if (!response) {
         return;
       }
+      if (request.type === 'list-continue' && !request.data && !response.success) {
+        return PopUp.switchView(PopUp.$revokedWorkspaceView);
+      }
       if (!!response.success) {
+        if (request.type === 'create-workspace') {
+          return PopUp.switchView(PopUp.$menuView);
+        }
         if (!!response.type && response.type === "New Entry" && Db.get("showPostPopup")) {
           PopUp.updateEditForm(PopUp.$editView);
         } else if (response.type === "Update") {
@@ -571,6 +578,20 @@ document.addEventListener('DOMContentLoaded', function () {
         respond: true,
         username: document.querySelector("#login_email").value,
         password: document.querySelector("#login_password").value
+      };
+      PopUp.sendMessage(request);
+    });
+
+    document.querySelector("#workspace").addEventListener('submit', function (event) {
+      event.preventDefault();
+      const workspace = document.querySelector('#workspace_name').value;
+      if (!workspace) {
+        return PopUp.showError('Enter a workspace name');
+      }
+      const request = {
+        type: "create-workspace",
+        respond: true,
+        workspace,
       };
       PopUp.sendMessage(request);
     });

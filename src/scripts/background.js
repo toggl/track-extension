@@ -1677,14 +1677,7 @@ var TogglButton = {
   },
 
   hasWorkspaceBeenRevoked: function (workspaces) {
-    if (!TogglButton.$user) {
-      return false;
-    }
-    const oldWorkspaces = TogglButton.$user.workspaces.map(ws => ws.id);
-    const newWorkspaces = (workspaces || []).map(ws => ws.id);
-    const isNotIn = arr => e => !arr.includes(e);
-    const isRevoked = oldWorkspaces.some(isNotIn(newWorkspaces));
-    return isRevoked;
+    return workspaces.length === 0;
   },
 
   createWorkspace: function (request, sendResponse) {

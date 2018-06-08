@@ -9,7 +9,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
     isTKO = false,
     className = 'huh',
     container = $('.taskIcons', elem),
-    project = $("#projectName > span").textContent;
+    project = $(".w-header-titles__project-name a").textContent;
 
   if (container === null) {
     // check if TKO container is there
@@ -86,7 +86,7 @@ togglbutton.render('div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
 // Tasks Detail View Page
 togglbutton.render('div#Task div.titleHolder ul.options:not(.toggl), .view-header ul.task-details-options:not(.toggl)', {observe: true}, function (elem) {
   var link, liTag, desc,
-    project = $("#projectName > span").textContent;
+    project = $(".w-header-titles__project-name a").textContent;
 
   liTag = document.createElement("li");
   liTag.classList.add("toggl-li");

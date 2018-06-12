@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "1.10.7",
+      "rows": [
+        "Add Bitbucket Server support",
+        "Fix Teamweek integration",
+        "Fix automatic project selection in JIRA Server",
+        "Trim description in Confluence",
+        "Handle users without workspaces",
+        "Make 'Recent entries' non clickable",
+        "Notify Toggl Webapp that Toggl Button is installed"
+      ]
+    },
+    {
       "version": "1.10.6",
       "rows": [
         "Add keyboard support for project autocomplete",

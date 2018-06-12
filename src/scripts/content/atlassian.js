@@ -60,7 +60,7 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
     projectElem = $('.bgdPDV');
 
   if (!!titleElem) {
-    description = titleElem.textContent;
+    description = titleElem.textContent.trim();
   }
 
   if (numElem !== null) {
@@ -70,10 +70,15 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
     description = numElem.textContent + description;
   }
 
+  // JIRA server support
+  if (projectElem === null) {
+    projectElem = $('#project-name-val');
+  }
+
   link = togglbutton.createTimerLink({
     className: 'jira2017',
     description: description,
-    projectName: projectElem && projectElem.textContent
+    projectName: projectElem && projectElem.textContent.trim()
   });
 
   $('.issue-link').parentElement.appendChild(link);
@@ -138,7 +143,7 @@ togglbutton.render('#title-heading:not(.toggl)', {observe: true}, function (elem
   var link, description,
     titleElem = $('[id="title-text"]', elem);
 
-  description = titleElem.textContent;
+  description = titleElem.textContent.trim();
 
   link = togglbutton.createTimerLink({
     className: 'confluence',

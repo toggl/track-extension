@@ -36,6 +36,10 @@ togglbutton.render('#right_pane__contents .SingleTaskPane:not(.toggl)', {observe
     description = $('.SingleTaskTitleRow .simpleTextarea', elem),
     project = $('.TaskProjectPill-projectName div', elem);
 
+  if (!container) {
+    return;
+  }
+
   descFunc = function () {
     return !!description ? description.value : "";
   };

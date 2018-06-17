@@ -723,10 +723,10 @@ var TogglButton = {
       title: "Toggl Button - Pomodoro Timer",
       message: "Time is up! Take a break",
       priority: 2,
-      requireInteraction: true
     };
 
     if (!FF) {
+      options.requireInteraction = true
       options.buttons = [
         { title: topButtonTitle},
         { title: bottomButtonTitle}

@@ -12,22 +12,24 @@ function toProperCase(input) {
 togglbutton.render('a.task-list__item:not(.toggl)', {observe: true}, function (elem) {
   var link,
     title = $('.item__title',elem).textContent.trim(),
-    titleContainer = $('.layout-column',elem);
+    titleContainer = $('.layout-column',elem),
+    subProjectContainer = $('.task-list__title',elem.closest('.task-list__container')).getElementsByTagName("span")[0],
+    taskUndone = $('.task--undone',elem);
 
-  if (!titleContainer) {
+  if (!titleContainer || !taskUndone) {
     return;
   }
 
   // If the current list header is "Open tasks" get the project from the dashboard (current space) title
-  var subProject = $('.task-list__title .ng-binding',elem.closest('.task-list__container')).textContent.trim(),
-    project = (subProject === 'Open tasks' ? $('.dashboard__title').textContent : subProject);
+  var subProject = (!subProjectContainer) ? null : subProjectContainer.textContent,
+    project = (subProject === 'Open tasks' || subProject === null) ? $('.dashboard__title').textContent : subProject;
 
   var tagFunc = function () {
     var tags = [];
     var isDetailedView = (elem.getElementsByClassName('item__meta--minimize').length > 0);
     if (isDetailedView) {
-      var elements = (elem.nextElementSibling.getElementsByClassName('item-name'));
-      for(var i=0;typeof(elements[i])!='undefined';tags.push(elements[i++].textContent));
+      var elements = (elem.nextElementSibling.getElementsByClassName('tag-item'));
+      for(var i=0;typeof(elements[i])!='undefined';tags.push(elements[i++].querySelector('.item-name').textContent));
     } else {
       var elements = (elem.getElementsByClassName('item__meta--tag'));
       for(var i=0;typeof(elements[i])!='undefined';tags.push(elements[i++].getAttribute('aria-label')));

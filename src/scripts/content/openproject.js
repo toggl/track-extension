@@ -32,5 +32,5 @@ togglbutton.render('.work-packages--show-view:not(.toggl)', {observe: true}, fun
     projectName: projectName
   });
 
-  container.insertBefore(link, container.firstChild);
+  container.appendChild(link);
 });

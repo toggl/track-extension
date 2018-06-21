@@ -13,7 +13,7 @@ togglbutton.render('a.task-list__item:not(.toggl)', {observe: true}, function (e
   var link,
     title = $('.item__title',elem).textContent.trim(),
     titleContainer = $('.layout-column',elem),
-    subProjectContainer = $('.task-list__title',elem.closest('.task-list__container')).getElementsByTagName("span")[0],
+    subProjectContainer = $('.task-list__title',elem.closest('.task-list__container')).firstElementChild,
     taskUndone = $('.task--undone',elem);
 
   if (!titleContainer || !taskUndone) {

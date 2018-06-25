@@ -536,6 +536,10 @@
     "url": "*://wordpress.com/*",
     "name": "Wordpress"
   },
+  "workast.io": {
+    "url": "*://*.workast.io/*",
+    "name": "Workast"
+  },
   "my.workfront.com": {
     "url": "*://*.my.workfront.com/*",
     "name": "Workfront"

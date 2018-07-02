@@ -81,7 +81,10 @@ togglbutton.render('.issue-header-content:not(.toggl)', {observe: true}, functio
     projectName: projectElem && projectElem.textContent.trim()
   });
 
-  $('.issue-link').parentElement.appendChild(link);
+  link.style.marginLeft = '8px';
+
+  var issueLinkContainer = $('.issue-link').parentElement || $('.aui-nav li').lastElementChild;
+  issueLinkContainer && issueLinkContainer.appendChild(link);
 });
 
 // Jira pre-2017

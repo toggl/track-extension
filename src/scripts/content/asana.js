@@ -128,7 +128,7 @@ togglbutton.render('.SingleTaskPane-titleRow:not(.toggl)', {observe: true}, func
     return;
   }
   var link,
-    container = $('.SingleTaskPaneToolbarEasyCompletion', elem.parentNode),
+    container = $('.SingleTaskPaneToolbar'),
     description = $('.SingleTaskPane-titleRow .simpleTextarea', elem.parentNode).textContent,
     projectElement = $('.SingleTaskPane-projects .TaskProjectPill-projectName', elem.parentNode);
 
@@ -139,6 +139,11 @@ togglbutton.render('.SingleTaskPane-titleRow:not(.toggl)', {observe: true}, func
     buttonType: 'minimal'
   });
 
-  container.appendChild(link);
+  link.style.marginRight = '5px';
+
+  if (container) {
+    var closeButton = container.lastElementChild;
+    container.insertBefore(link, closeButton);
+  }
 });
 

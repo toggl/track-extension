@@ -310,6 +310,16 @@
     "name": "osTicket",
     "file": "osticket.js"
   },
+  "outlook.office.com": {
+    "url": "*://outlook.office.com/*",
+    "name": "Outlook",
+    "file": "outlook.js"
+  },
+  "outlook.live.com": {
+    "url": "*://outlook.live.com/*",
+    "name": "Outlook",
+    "clone": true
+  },
   "pagerduty.com": {
     "url": "*://*.pagerduty.com/*",
     "name": "PagerDuty"

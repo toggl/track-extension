@@ -597,5 +597,9 @@
   "manageengine.com": {
     "url": "*://*.manageengine.com/*",
     "name": "ManageEngine"
+  },
+  "quire.io": {
+    "url": "*://quire.io/*",
+    "name": "Quire"
   }
 }

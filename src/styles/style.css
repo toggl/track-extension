@@ -1501,3 +1501,17 @@ label > .toggl-button.outlook {
   position: relative;
   top: 1px;
 }
+
+/********* QUIRE *********/
+.task-tree .toggl-button.quire {
+  visibility: hidden;
+  position: absolute;
+  top: 9px;
+  left: -15px;
+}
+.tree-list:empty+.tree-row .toggl-button.quire {
+  visibility: hidden;
+}
+.task-tree .inspected>.tree-row .toggl-button.quire, .no-touch .task-tree .tree-row:hover .toggl-button.quire {
+  visibility: visible;
+}

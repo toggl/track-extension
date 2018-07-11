@@ -82,6 +82,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [ProcessWire](http://processwire.com/)
 - [Producteev](https://www.producteev.com/)
 - [ProtonMail](https://protonmail.com/)
+- [Quire](https://quire.io/)
 - [RallyDev](https://rally1.rallydev.com/)
 - [Redbooth](https://redbooth.com/)
 - [Redmine](http://www.redmine.org/)

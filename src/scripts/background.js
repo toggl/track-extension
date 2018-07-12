@@ -138,6 +138,10 @@ var TogglButton = {
             TogglButton.$user.clientNameMap = clientNameMap;
             TogglButton.$user.tagMap = tagMap;
             TogglButton.$user.projectTaskList = projectTaskList;
+            if (!TogglButton.$user.default_wid) {
+              const defaultWS = TogglButton.$user.workspaces[0];
+              TogglButton.$user.default_wid = defaultWS.id;
+            }
             localStorage.setItem('userToken', resp.data.api_token);
             if (TogglButton.$sendResponse !== null) {
               TogglButton.$sendResponse({success: (xhr.status === 200)});

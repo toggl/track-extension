@@ -42,6 +42,10 @@
     "url": "*://*.backlog.jp/*",
     "name": "Backlog"
   },
+  "backlogtool.com": {
+    "url": "*://*.backlogtool.com/*",
+    "name": "Backlog"
+  },
   "basecamp.com": {
     "url": "*://*.basecamp.com/*",
     "name": "Basecamp"

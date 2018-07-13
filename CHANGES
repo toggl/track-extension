@@ -1,6 +1,21 @@
 {
   "versions": [
     {
+      "version": "1.10.8",
+      "rows": [
+        "Fix issue where no default workspace was present",
+        "Update Slack integration",
+        "Fix JIRA integration",
+        "Fix Trello integration",
+        "Fix integration with teamwork project ui",
+        "Added Workast integration",
+        "Fix Visual Studio Integration",
+        "Update OpenProject integration to support version 7.4.6",
+        "Fix Asana integration",
+        "Add support for Bugherd"
+      ]
+    },
+    {
       "version": "1.10.7",
       "rows": [
         "Add Bitbucket Server support",

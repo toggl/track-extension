@@ -1142,6 +1142,16 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-left: -5px;
 }
 
+/********* PLANFIX *********/
+.b-toggl-btn.planfix {
+  display: flex;
+  align-items: center;
+}
+.toggl-button.planfix {
+  height: 20px;
+  margin-right: 5px;
+}
+
 /********* EPROJECT *********/
 .toggl-timer {
   margin-left: 5px !important;

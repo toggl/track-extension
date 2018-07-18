@@ -4,7 +4,7 @@
 'use strict';
 
 togglbutton.render('#task-detail-view:not(.toggl)', {observe: true}, function (elem) {
-  var text = $('#tasktitle', elem).textContent,
+  var text = $('.task-title', elem).textContent,
     project = $('#project-setting input', elem).getAttribute('value'),
 
     link = togglbutton.createTimerLink({

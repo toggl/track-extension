@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.10.9",
+      "rows": [
+        "Fix TickTick integration #1044"
+      ]
+    },
+    {
       "version": "1.10.8",
       "rows": [
         "Fix issue where no default workspace was present",

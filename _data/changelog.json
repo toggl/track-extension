@@ -1,6 +1,33 @@
 {
   "versions": [
     {
+      "version": "1.10.8",
+      "rows": [
+        "Fix issue where no default workspace was present",
+        "Update Slack integration",
+        "Fix JIRA integration",
+        "Fix Trello integration",
+        "Fix integration with teamwork project ui",
+        "Added Workast integration",
+        "Fix Visual Studio Integration",
+        "Update OpenProject integration to support version 7.4.6",
+        "Fix Asana integration",
+        "Add support for Bugherd"
+      ]
+    },
+    {
+      "version": "1.10.7",
+      "rows": [
+        "Add Bitbucket Server support",
+        "Fix Teamweek integration",
+        "Fix automatic project selection in JIRA Server",
+        "Trim description in Confluence",
+        "Handle users without workspaces",
+        "Make 'Recent entries' non clickable",
+        "Notify Toggl Webapp that Toggl Button is installed"
+      ]
+    },
+    {
       "version": "1.10.6",
       "short-version": "1_10_6",
       "date": "May 18th 2018",

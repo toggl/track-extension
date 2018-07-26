@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render('.modal-content .card_container:not(.toggl)', {observe: true}, function (elem) {

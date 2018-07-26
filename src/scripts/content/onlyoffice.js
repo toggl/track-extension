@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 /* For main task (not a subtask) */
 togglbutton.render('.commonInfoTaskDescription:not(.toggl)', {observe: true}, function () {
   'use strict';

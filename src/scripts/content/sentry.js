@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render('.group-detail:not(.toggl)', {observe: true}, function () {

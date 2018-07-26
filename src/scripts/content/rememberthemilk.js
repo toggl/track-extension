@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render("div[role='listbox'] [role='option']:not(.toggl)", {observe: true}, function (elem) {

@@ -1,5 +1,3 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render('body.controller-issues.action-show h2:not(.toggl)', {}, function (elem) {

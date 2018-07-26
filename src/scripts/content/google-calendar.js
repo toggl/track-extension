@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, MutationObserver: false, HTMLIFrameElement: false*/
 'use strict';
 
 function insertButton(bubblecontent, description) {
@@ -22,7 +20,7 @@ togglbutton.render('.ep:not(.toggl)', {observe: true}, function (elem) {
 
 // Popup view
 togglbutton.render('.bubblecontent:not(.toggl)', {observe: true}, function (elem) {
-  // Goal view  
+  // Goal view
   var description, goal = $('.title-text', elem), event = $('#mtb', elem);
   if (goal) {
     description = goal.textContent;

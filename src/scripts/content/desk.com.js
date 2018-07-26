@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, location: false, togglbutton: false*/
-
 'use strict';
 
 togglbutton.render('.case .content-top-toolbar .controls ul:not(.toggl)', { observe: true }, function (elem) {

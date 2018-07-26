@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false, Promise: false*/
-
 'use strict';
 
 // Tasks listing page in project

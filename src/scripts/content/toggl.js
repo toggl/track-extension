@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global document: false, $: false, localStorage: false, chrome:false*/
-
 'use strict';
 
 var userData, offlineUser;

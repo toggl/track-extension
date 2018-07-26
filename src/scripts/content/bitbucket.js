@@ -1,5 +1,3 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {

@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
 
 togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem) {
@@ -31,20 +28,6 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
   container.appendChild(link);
   descriptionElem.parentNode.insertBefore(container, descriptionElem);
 
-  // Add Tracked time text
-  /*
-  duration = togglbutton.calculateTrackedTime(titleElem.textContent);
-  h3 = document.createElement("h3");
-  h3.textContent = "Time tracked";
-
-  p = document.createElement("p");
-  p.setAttribute("title", "Time tracked with Toggl: " + duration);
-  p.textContent = duration;
-
-  trackedContainer.appendChild(h3);
-  trackedContainer.appendChild(p);
-  trackedElem.parentNode.insertBefore(trackedContainer, trackedElem);
-  */
 }, ".window-wrapper");
 
 /* Checklist buttons */

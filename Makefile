@@ -1,10 +1,4 @@
-default: lint
-
-lint: node_modules/.bin/jslint
-	@$< src/scripts/*.js src/scripts/content/*.js
-
-node_modules/.bin/jslint:
-	npm install
+default: dist
 
 dist: clean
 	@if [ ! -d "out" ]; then mkdir -p out; fi

@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
 
 togglbutton.render('#issueArea:not(.toggl)', {observe: true}, function (elem) {
@@ -30,4 +27,3 @@ togglbutton.render('#issueArea:not(.toggl)', {observe: true}, function (elem) {
   descriptionElem.parentNode.appendChild(container, descriptionElem);
 
 });
-

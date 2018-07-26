@@ -1,6 +1,3 @@
-/*jslint indent: 2 plusplus: true*/
-/*global $: false, togglbutton: false*/
-
 'use strict';
 
 function getProjectNameFromLabel(elem) {

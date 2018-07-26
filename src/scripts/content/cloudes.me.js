@@ -1,7 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag: false*/
-/*Created by hamdikavak on 2/13/16.*/
-
 'use strict';
 
 togglbutton.render('#left-panel:not(.toggl)', {}, function () {

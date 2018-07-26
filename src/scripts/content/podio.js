@@ -1,6 +1,3 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, createTag: false, togglbutton: false*/
-
 'use strict';
 
 togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) {

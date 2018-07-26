@@ -1,6 +1,3 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
 togglbutton.render('.issue-details .detail-page-description:not(.toggl)', {observe: true}, function (elem) {
@@ -44,4 +41,3 @@ togglbutton.render('.merge-request-details .detail-page-description:not(.toggl)'
 
   actionsElem.parentElement.insertBefore(link, actionsElem);
 });
-

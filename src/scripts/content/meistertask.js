@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render('.js-box-wrapper:not(.toggl)', {observe: true}, function (elem) {
@@ -39,5 +37,3 @@ togglbutton.render('.js-box-wrapper:not(.toggl)', {observe: true}, function (ele
 
   togglButtonElement.parentNode.insertBefore(link, togglButtonElement);
 });
-
-

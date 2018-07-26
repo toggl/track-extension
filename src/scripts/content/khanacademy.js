@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render('#tutorial-content [data-reactid="6"]:not(.toggl)', {}, function (elem) {

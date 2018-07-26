@@ -1,5 +1,3 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false, createTag: false*/
 'use strict';
 
 togglbutton.render('#ticketDetailsContainer:not(.toggl)', {observe: true}, function (elem) {

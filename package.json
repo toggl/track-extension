@@ -3,8 +3,5 @@
   "version": "1.2.0",
   "description": "Add Toggl one-click time tracking to popular web tools.",
   "license": "BSD-3-Clause",
-  "private": true,
-  "devDependencies": {
-    "jslint": "~0.5.2"
-  }
+  "private": true
 }

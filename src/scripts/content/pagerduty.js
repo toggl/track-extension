@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, togglbutton: false, createTag: false*/
-
 'use strict';
 
 togglbutton.render('.pd-incident-actions:not(.toggl)', {observe: true}, function () {

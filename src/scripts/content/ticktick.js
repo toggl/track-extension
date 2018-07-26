@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
 togglbutton.render('#task-detail-view:not(.toggl)', {observe: true}, function (elem) {

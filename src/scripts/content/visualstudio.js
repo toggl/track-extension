@@ -1,5 +1,3 @@
-/*jslint indent: 2, plusplus: true */
-/*global $: false, document: false, togglbutton: false, createTag:false, window: false, MutationObserver: false */
 'use strict';
 
 // Individual Work Item & Backlog page

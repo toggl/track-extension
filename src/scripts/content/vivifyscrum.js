@@ -1,4 +1,3 @@
-
 'use strict';
 
 togglbutton.render('.vs-c-modal--task:not(.toggl)', {observe: true}, function (elem) {

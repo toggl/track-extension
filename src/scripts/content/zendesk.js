@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, location: false, togglbutton: false*/
-
 'use strict';
 
 togglbutton.render('.pane_header:not(.toggl)', {observe: true}, function (elem) {

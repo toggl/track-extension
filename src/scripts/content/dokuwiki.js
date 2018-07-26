@@ -1,7 +1,5 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
+
 togglbutton.render('#dokuwiki__content', {observe: false}, function (elem) {
   var link, description,
     numElem = $(".pageId span"),

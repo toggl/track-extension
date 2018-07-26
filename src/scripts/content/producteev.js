@@ -1,7 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-/*Created by lancelothk on 2/16/14.*/
-
 "use strict";
 
 togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem) {

@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, togglbutton: false, createTag:false, document: false*/
-
 'use strict';
 
 // Meeting details

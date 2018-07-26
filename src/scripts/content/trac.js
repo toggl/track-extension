@@ -1,6 +1,3 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
 togglbutton.render('#main > #content.ticket:not(.toggl)', {observe: true}, function (elem) {
@@ -8,7 +5,7 @@ togglbutton.render('#main > #content.ticket:not(.toggl)', {observe: true}, funct
     link,
     tracTicketId = (
       $('#main > #content.ticket > #ticket > h2 > .trac-id') || // Trac v1.x
-      $('#main > #content.ticket > h1#trac-ticket-title > a') // Trac v0.x 
+      $('#main > #content.ticket > h1#trac-ticket-title > a') // Trac v0.x
     ).textContent,
     tracTicketDescription = $('#main > #content.ticket > #ticket .summary', elem).textContent,
     tracProjectName = (

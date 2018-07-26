@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, window: false*/
 'use strict';
 
 /*workitems / tasks view */

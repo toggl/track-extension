@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, togglbutton: false, createTag: false*/
-
 'use strict';
 
 // Jira 2017 board sidebar

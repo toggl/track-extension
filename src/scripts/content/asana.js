@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
 // Older UI
@@ -146,4 +143,3 @@ togglbutton.render('.SingleTaskPane-titleRow:not(.toggl)', {observe: true}, func
     container.insertBefore(link, closeButton);
   }
 });
-

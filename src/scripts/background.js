@@ -1,5 +1,3 @@
-/*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global secToHHMM: true, debug: true, console: false, report: true, escapeHtml: true, GA: false, window: false, setTimeout: false, clearTimeout: false, setInterval: false, clearInterval: false, Db: false, XMLHttpRequest: false, Image: false, WebSocket: false, navigator: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var openWindowsCount = 0,

@@ -1,5 +1,3 @@
-/*jslint indent: 2, regexp: true*/
-/*global $: false, document: false, togglbutton: false, window: false*/
 'use strict';
 
 // Single task/issue/project in main view

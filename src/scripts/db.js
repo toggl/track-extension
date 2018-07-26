@@ -1,5 +1,3 @@
-/*jslint indent: 2, unparam: true, plusplus: true, nomen: true */
-/*global navigator: false, window: false, TogglOrigins: false, TogglButton: false, XMLHttpRequest: false, WebSocket: false, chrome: false, btoa: false, localStorage:false, document: false, Audio: false, Bugsnag: false */
 "use strict";
 
 var Db = {

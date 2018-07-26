@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, togglbutton: false, createTag:false, document: false*/
-
 'use strict';
 
 togglbutton.render('.dialog:not(.toggl)', {observe: true}, function (elem) {
@@ -44,4 +41,3 @@ togglbutton.render('.subtasks-list li .container:not(.toggl)', {observe: true}, 
   wrap.appendChild(link);
   elem.insertBefore(wrap, $('.controls', elem));
 });
-

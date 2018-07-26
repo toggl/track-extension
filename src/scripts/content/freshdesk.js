@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
 
 togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
@@ -24,17 +21,4 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
 
   container.appendChild(link);
   buttonsElem.appendChild(container, buttonsElem);
-/*
-  duration = togglbutton.calculateTrackedTime(description);
-  h3 = document.createElement("h3");
-  h3.textContent = "Time tracked";
-
-  p = document.createElement("p");
-  p.setAttribute("title", "Time tracked with Toggl: " + duration);
-  p.textContent = duration;
-
-  trackedContainer.appendChild(h3);
-  trackedContainer.appendChild(p);
-  trackedElem.parentNode.insertBefore(trackedContainer, trackedElem.nextSibling);
-*/
 });

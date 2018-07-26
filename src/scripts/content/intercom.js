@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 togglbutton.render('span.ember-view:first-child .conversation__text:not(.toggl)', {observe: true}, function (elem) {

@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
 
 togglbutton.render('section.case:not(.toggl)', {observe: true}, function (elem) {

@@ -1,5 +1,3 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 /* the first selector is required for youtrack-5 and the second for youtrack-6 */

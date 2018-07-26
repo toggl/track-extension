@@ -10,10 +10,6 @@ clean:
 	@if [ -f "ch_toggl-button.zip" ]; then rm ch_toggl-button.zip; fi
 	@if [ -f "ff_toggl-button.zip" ]; then rm ff_toggl-button.zip; fi
 
-authors:
-	#git log --format='%aN <%aE>' | awk '{arr[$0]++} END{for (i in arr){print arr[i], i;}}' | sort -rn | cut -d\  -f2- > AUTHORS
-	@echo "Seems to not work for some reason. Copy manually the command from Makefile"
-
 ff-dist: clean
 	@if [ ! -d "out" ]; then mkdir -p out; fi
 	@cp src/manifest_ff.json src/manifest.json

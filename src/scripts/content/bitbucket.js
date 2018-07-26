@@ -1,14 +1,15 @@
 'use strict';
 
-togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
-  var link, description,
+togglbutton.render('#issue-header:not(.toggl)', {}, function(elem) {
+  var link,
+    description,
     numElem = $('.issue-id'),
     titleElem = $('#issue-title'),
     projectElem = $('.entity-name');
 
   description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.textContent.trim() + " " + description;
+    description = numElem.textContent.trim() + ' ' + description;
   }
 
   link = togglbutton.createTimerLink({
@@ -20,8 +21,9 @@ togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
   $('#issue-header').appendChild(link);
 });
 
-togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
-  var link, description,
+togglbutton.render('#pull-request-header:not(.toggl)', {}, function(elem) {
+  var link,
+    description,
     numElem = $('.pull-request-self-link'),
     titleElem = $('.pull-request-title'),
     projectElem = $('.entity-name'),
@@ -30,11 +32,11 @@ togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
   if (titleElem !== null) {
     description = titleElem.textContent.trim();
     if (numElem !== null) {
-      description = numElem.textContent.trim() + " " + description;
+      description = numElem.textContent.trim() + ' ' + description;
     }
   } else {
     // Bitbucket Server support as at version v5.9.0
-    description = $('.pr-title-jira-issues-trigger').closest("h2").textContent;
+    description = $('.pr-title-jira-issues-trigger').closest('h2').textContent;
     parentToAppendTo = '.pull-request-metadata';
   }
 

@@ -3,7 +3,8 @@
   "short_name": "Toggl Button",
   "version": "1.10.9",
   "manifest_version": 2,
-  "description": "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
+  "description":
+    "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
     "scripts": [
       "scripts/vendor/bugsnag-3.min.js",
@@ -49,13 +50,8 @@
     "idle",
     "tabs"
   ],
-  "optional_permissions": [
-    "*://*/"
-  ],
+  "optional_permissions": ["*://*/"],
   "externally_connectable": {
-    "matches": [
-      "*://*.toggl.com/*",
-      "*://toggl.com/*"
-    ]
+    "matches": ["*://*.toggl.com/*", "*://toggl.com/*"]
   }
 }

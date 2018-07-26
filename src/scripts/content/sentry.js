@@ -1,6 +1,6 @@
 'use strict';
 
-togglbutton.render('.group-detail:not(.toggl)', {observe: true}, function () {
+togglbutton.render('.group-detail:not(.toggl)', { observe: true }, function() {
   var link,
     description,
     errType = $('h3 > span > span').textContent.trim(),

@@ -1,11 +1,12 @@
 'use strict';
 
-togglbutton.render('#navbar:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc,
-    description = $(".navbar-tree-name", elem),
+togglbutton.render('#navbar:not(.toggl)', { observe: true }, function(elem) {
+  var link,
+    descFunc,
+    description = $('.navbar-tree-name', elem),
     project = '';
 
-  descFunc = function () {
+  descFunc = function() {
     return description.textContent.trim();
   };
 
@@ -13,10 +14,10 @@ togglbutton.render('#navbar:not(.toggl)', {observe: true}, function (elem) {
     className: 'gingko-toggl-btn',
     description: descFunc,
     projectName: project,
-    buttonType: "minimal"
+    buttonType: 'minimal'
   });
 
-  link.style.margin = "9px";
+  link.style.margin = '9px';
 
   $('.right-block').appendChild(link);
 });

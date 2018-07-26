@@ -1,10 +1,12 @@
 'use strict';
 
-togglbutton.render('.editor__header:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.editor__header:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link,
     tabs = $('.editor__switch-mode', elem),
-    description = function () {
-      return document.querySelector(".editor-title__input").value;
+    description = function() {
+      return document.querySelector('.editor-title__input').value;
     };
 
   if (!!$('.toggl-button')) {

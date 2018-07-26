@@ -1,9 +1,12 @@
 'use strict';
 
-togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.item-topbar:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var delay = 1000; //1 second
-  setTimeout(function () {
-    var link, wrapper,
+  setTimeout(function() {
+    var link,
+      wrapper,
       description = $('.item-title', elem),
       container = $('.breadcrumb', elem);
 
@@ -22,9 +25,11 @@ togglbutton.render('.item-topbar:not(.toggl)', {observe: true}, function (elem) 
   }, delay);
 });
 
-
-togglbutton.render('.task-detail:not(.toggl)', {observe: true}, function (elem) {
-  var link, wrapper,
+togglbutton.render('.task-detail:not(.toggl)', { observe: true }, function(
+  elem
+) {
+  var link,
+    wrapper,
     description = $('.task-link', elem.parentNode),
     container = $('.edit-task-reference-wrapper', elem);
 
@@ -42,9 +47,11 @@ togglbutton.render('.task-detail:not(.toggl)', {observe: true}, function (elem) 
   container.parentNode.insertBefore(wrapper, container.nextSibling);
 });
 
-
-togglbutton.render('.task-header:not(.toggl)', {observe: true}, function (elem) {
-  var link, wrapper,
+togglbutton.render('.task-header:not(.toggl)', { observe: true }, function(
+  elem
+) {
+  var link,
+    wrapper,
     container = $('.action-bar ul', elem),
     description = $('.header-title', elem);
 
@@ -57,7 +64,7 @@ togglbutton.render('.task-header:not(.toggl)', {observe: true}, function (elem) 
     description: description.textContent
   });
 
-  wrapper = createTag("li", "float-left");
+  wrapper = createTag('li', 'float-left');
   wrapper.appendChild(link);
   container.appendChild(wrapper);
 });

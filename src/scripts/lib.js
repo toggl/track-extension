@@ -1,30 +1,33 @@
-"use strict";
+'use strict';
 
 var report,
   debug = false,
   entityMap = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
     '"': '&quot;',
     "'": '&#39;',
-    "/": '&#x2F;'
+    '/': '&#x2F;'
   },
-  escapeHtml = function (string) {
-    return String(string).replace(/[&<>"'\/]/g, function (s) {
+  escapeHtml = function(string) {
+    return String(string).replace(/[&<>"'\/]/g, function(s) {
       return entityMap[s];
     });
   },
   secToHHMM;
 
-Bugsnag.apiKey = "7419717b29de539ab0fbe35dcd7ca19d";
+Bugsnag.apiKey = '7419717b29de539ab0fbe35dcd7ca19d';
 Bugsnag.appVersion = chrome.runtime.getManifest().version;
 
-Bugsnag.beforeNotify = function (error, metaData) {
-  error.stacktrace = error.stacktrace.replace(/chrome-extension:/g, "chromeextension:");
+Bugsnag.beforeNotify = function(error, metaData) {
+  error.stacktrace = error.stacktrace.replace(
+    /chrome-extension:/g,
+    'chromeextension:'
+  );
 };
 
-report = function (e) {
+report = function(e) {
   if (debug) {
     console.log(e);
   } else {
@@ -32,20 +35,20 @@ report = function (e) {
   }
 };
 
-secToHHMM = function (sum) {
+secToHHMM = function(sum) {
   var hours = Math.floor(sum / 3600),
     minutes = Math.floor((sum % 3600) / 60);
 
-  return hours + "h " + minutes + "m";
+  return hours + 'h ' + minutes + 'm';
 };
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
-  function (info) {
+  function(info) {
     var headers = info.requestHeaders,
       isTogglButton = false,
       uaIndex = -1;
 
-    headers.forEach(function (header, i) {
+    headers.forEach(function(header, i) {
       if (header.name.toLowerCase() === 'user-agent') {
         uaIndex = i;
       }
@@ -55,13 +58,14 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     });
 
     if (isTogglButton && uaIndex !== -1) {
-      headers[uaIndex].value = "TogglButton/" + chrome.runtime.getManifest().version;
+      headers[uaIndex].value =
+        'TogglButton/' + chrome.runtime.getManifest().version;
     }
-    return {requestHeaders: headers};
+    return { requestHeaders: headers };
   },
   {
-    urls: [ "https://www.toggl.com/*", "https://toggl.com/*" ],
-    types: ["xmlhttprequest"]
+    urls: ['https://www.toggl.com/*', 'https://toggl.com/*'],
+    types: ['xmlhttprequest']
   },
-  ["blocking", "requestHeaders"]
+  ['blocking', 'requestHeaders']
 );

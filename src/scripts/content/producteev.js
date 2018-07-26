@@ -1,7 +1,10 @@
-"use strict";
+'use strict';
 
-togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem) {
-  var link, newDiv,
+togglbutton.render('.td-attributes:not(.toggl)', { observe: true }, function(
+  elem
+) {
+  var link,
+    newDiv,
     taskActive = $('.task.active'),
     titleElem = $('.title > span', taskActive),
     projectElem = $('.project-value', taskActive);

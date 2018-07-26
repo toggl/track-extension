@@ -1,13 +1,16 @@
 'use strict';
 
-togglbutton.render('.js-box-wrapper:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.js-box-wrapper:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link, description, togglButtonElement, project, tagFunc;
 
   togglButtonElement = $('.js-task-header>div>row>cell:nth-child(5)', elem);
-  description = $('.js-box-wrapper .container-name .js-task-name>div', elem).textContent;
+  description = $('.js-box-wrapper .container-name .js-task-name>div', elem)
+    .textContent;
   project = $('.js-project-name').textContent;
 
-  tagFunc = function () {
+  tagFunc = function() {
     var index,
       tags = [],
       tagList = $('.js-box-wrapper .ui-tag', elem),

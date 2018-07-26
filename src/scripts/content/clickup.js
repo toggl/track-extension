@@ -1,7 +1,8 @@
 'use strict';
 
-togglbutton.render('#timeTrackingItem:not(.toggl)', {observe: true}, function (elem) {
-
+togglbutton.render('#timeTrackingItem:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link,
     description = $('.task-name', elem).textContent,
     project = $('.space-name', elem).textContent;

@@ -1,38 +1,38 @@
-"use strict";
+'use strict';
 
 var Db = {
-  originsKey: "TogglButton-origins",
+  originsKey: 'TogglButton-origins',
   // settings: key, default value
   settings: {
-    "startAutomatically": false,
-    "stopAutomatically": false,
-    "showRightClickButton": true,
-    "showPostPopup": true,
-    "nannyCheckEnabled": true,
-    "nannyInterval": 3600000,
-    "nannyFromTo": "09:00-17:00",
-    "idleDetectionEnabled": false,
-    "pomodoroModeEnabled": false,
-    "pomodoroSoundFile": "sounds/time_is_up_1.mp3",
-    "pomodoroSoundEnabled": true,
-    "pomodoroSoundVolume": 1,
-    "pomodoroStopTimeTrackingWhenTimerEnds": true,
-    "pomodoroInterval": 25,
-    "stopAtDayEnd": false,
-    "dayEndTime": "17:00",
-    "defaultProject": 0,
-    "projects": "",
-    "rememberProjectPer": "false"
+    startAutomatically: false,
+    stopAutomatically: false,
+    showRightClickButton: true,
+    showPostPopup: true,
+    nannyCheckEnabled: true,
+    nannyInterval: 3600000,
+    nannyFromTo: '09:00-17:00',
+    idleDetectionEnabled: false,
+    pomodoroModeEnabled: false,
+    pomodoroSoundFile: 'sounds/time_is_up_1.mp3',
+    pomodoroSoundEnabled: true,
+    pomodoroSoundVolume: 1,
+    pomodoroStopTimeTrackingWhenTimerEnds: true,
+    pomodoroInterval: 25,
+    stopAtDayEnd: false,
+    dayEndTime: '17:00',
+    defaultProject: 0,
+    projects: '',
+    rememberProjectPer: 'false'
   },
 
   // core settings: key, default value
   core: {
-    "dont-show-permissions": false,
-    "show-permissions-info": 0,
-    "selected-settings-tab": 1
+    'dont-show-permissions': false,
+    'show-permissions-info': 0,
+    'selected-settings-tab': 1
   },
 
-  getOriginFileName: function (domain) {
+  getOriginFileName: function(domain) {
     var origin = Db.getOrigin(domain),
       item;
 
@@ -42,9 +42,11 @@ var Db = {
 
     if (!TogglOrigins[origin]) {
       // Handle cases where subdomain is used (like web.any.do (or sub1.sub2.any.do), we remove web from the beginning)
-      origin = origin.split(".");
-      while (origin.length > 0 && !TogglOrigins[origin.join('.')]) { origin.shift(); }
-      origin = origin.join(".");
+      origin = origin.split('.');
+      while (origin.length > 0 && !TogglOrigins[origin.join('.')]) {
+        origin.shift();
+      }
+      origin = origin.join('.');
       if (!TogglOrigins[origin]) {
         return null;
       }
@@ -56,10 +58,10 @@ var Db = {
       return item.file;
     }
 
-    return item.name.toLowerCase().replace(" ", "-") + ".js";
+    return item.name.toLowerCase().replace(' ', '-') + '.js';
   },
 
-  getOrigin: function (origin) {
+  getOrigin: function(origin) {
     var origins = localStorage.getItem(Db.originsKey),
       obj;
     if (!!origins) {
@@ -69,7 +71,7 @@ var Db = {
     return null;
   },
 
-  setOrigin: function (newOrigin, baseOrigin) {
+  setOrigin: function(newOrigin, baseOrigin) {
     var origins = localStorage.getItem(Db.originsKey),
       obj = {};
 
@@ -80,7 +82,7 @@ var Db = {
     localStorage.setItem(Db.originsKey, JSON.stringify(obj));
   },
 
-  removeOrigin: function (origin) {
+  removeOrigin: function(origin) {
     var origins = localStorage.getItem(Db.originsKey),
       obj;
 
@@ -91,7 +93,7 @@ var Db = {
     }
   },
 
-  getAllOrigins: function () {
+  getAllOrigins: function() {
     var origins = localStorage.getItem(Db.originsKey),
       obj;
     if (!!origins) {
@@ -101,67 +103,68 @@ var Db = {
     return null;
   },
 
-
   /**
    * Sets the default project for a given scope
    * @param {number} pid The project id
    * @param {string=} scope The scope to remember that project.
    * If null, then set global default
    */
-  setDefaultProject: function (pid, scope) {
+  setDefaultProject: function(pid, scope) {
     var userId = TogglButton.$user.id,
-      defaultProjects = JSON.parse(this.get(userId + "-defaultProjects")) || {};
+      defaultProjects = JSON.parse(this.get(userId + '-defaultProjects')) || {};
     if (!scope) {
-      return this.set(userId + "-defaultProject", pid);
+      return this.set(userId + '-defaultProject', pid);
     }
     defaultProjects[scope] = pid;
-    this.set(userId + "-defaultProjects", JSON.stringify(defaultProjects));
+    this.set(userId + '-defaultProjects', JSON.stringify(defaultProjects));
   },
-
 
   /**
    * Gets the default project for a given scope
    * @param {string=} scope If null, then get global default
    * @returns {number} The default project for the given scope
    */
-  getDefaultProject: function (scope) {
+  getDefaultProject: function(scope) {
     if (!TogglButton.$user) {
       return 0;
     }
     var userId = TogglButton.$user.id,
-      defaultProjects = JSON.parse(this.get(userId + "-defaultProjects")),
-      defaultProject = parseInt(this.get(userId + "-defaultProject") || '0', 10);
+      defaultProjects = JSON.parse(this.get(userId + '-defaultProjects')),
+      defaultProject = parseInt(
+        this.get(userId + '-defaultProject') || '0',
+        10
+      );
     if (!scope || !defaultProjects) {
       return defaultProject;
     }
     return defaultProjects[scope] || defaultProject;
   },
 
-  resetDefaultProjects: function () {
+  resetDefaultProjects: function() {
     if (!TogglButton.$user) {
       return;
     }
-    this.set(TogglButton.$user.id + "-defaultProjects", null);
+    this.set(TogglButton.$user.id + '-defaultProjects', null);
   },
 
-  get: function (setting) {
+  get: function(setting) {
     var value = localStorage.getItem(setting);
     if (!!value) {
-      if (value === "false" || value === "true") {
+      if (value === 'false' || value === 'true') {
         value = JSON.parse(value);
       }
     }
     return value;
   },
 
-  set: function (setting, value) {
+  set: function(setting, value) {
     localStorage.setItem(setting, value);
   },
 
-  load: function (setting, defaultValue) {
+  load: function(setting, defaultValue) {
     var value = localStorage.getItem(setting);
     if (!!value) {
-      if (typeof defaultValue === "boolean") {
+      if (typeof defaultValue === 'boolean') {
         value = JSON.parse(value);
       }
     } else {
@@ -171,7 +174,7 @@ var Db = {
     return value;
   },
 
-  loadAll: function () {
+  loadAll: function() {
     var k;
     for (k in Db.settings) {
       if (Db.settings.hasOwnProperty(k)) {
@@ -186,7 +189,7 @@ var Db = {
     }
   },
 
-  updateSetting: function (key, state, callback, condition) {
+  updateSetting: function(key, state, callback, condition) {
     var c = condition !== null ? condition : state;
     Db.set(key, state);
 
@@ -195,45 +198,70 @@ var Db = {
     }
   },
 
-  newMessage: function (request, sender, sendResponse) {
+  newMessage: function(request, sender, sendResponse) {
     try {
       if (request.type === 'toggle-popup') {
-        Db.set("showPostPopup", request.state);
+        Db.set('showPostPopup', request.state);
       } else if (request.type === 'toggle-nanny') {
-        Db.updateSetting("nannyCheckEnabled", request.state, TogglButton.triggerNotification);
+        Db.updateSetting(
+          'nannyCheckEnabled',
+          request.state,
+          TogglButton.triggerNotification
+        );
       } else if (request.type === 'toggle-nanny-from-to') {
-        Db.updateSetting("nannyFromTo", request.state, TogglButton.triggerNotification, Db.get("nannyCheckEnabled"));
+        Db.updateSetting(
+          'nannyFromTo',
+          request.state,
+          TogglButton.triggerNotification,
+          Db.get('nannyCheckEnabled')
+        );
       } else if (request.type === 'toggle-nanny-interval') {
-        Db.updateSetting("nannyInterval", Math.max(request.state, 1000), TogglButton.triggerNotification, Db.get("nannyCheckEnabled"));
+        Db.updateSetting(
+          'nannyInterval',
+          Math.max(request.state, 1000),
+          TogglButton.triggerNotification,
+          Db.get('nannyCheckEnabled')
+        );
       } else if (request.type === 'toggle-idle') {
-        Db.updateSetting("idleDetectionEnabled", request.state, TogglButton.startCheckingUserState);
+        Db.updateSetting(
+          'idleDetectionEnabled',
+          request.state,
+          TogglButton.startCheckingUserState
+        );
       } else if (request.type === 'toggle-pomodoro') {
-        Db.set("pomodoroModeEnabled", request.state);
+        Db.set('pomodoroModeEnabled', request.state);
       } else if (request.type === 'toggle-pomodoro-sound') {
-        Db.set("pomodoroSoundEnabled", request.state);
+        Db.set('pomodoroSoundEnabled', request.state);
       } else if (request.type === 'toggle-pomodoro-interval') {
-        Db.updateSetting("pomodoroInterval", request.state);
+        Db.updateSetting('pomodoroInterval', request.state);
       } else if (request.type === 'toggle-pomodoro-stop-time') {
-        Db.set("pomodoroStopTimeTrackingWhenTimerEnds", request.state);
+        Db.set('pomodoroStopTimeTrackingWhenTimerEnds', request.state);
       } else if (request.type === 'update-pomodoro-sound-volume') {
-        Db.set("pomodoroSoundVolume", request.state);
+        Db.set('pomodoroSoundVolume', request.state);
       } else if (request.type === 'toggle-right-click-button') {
-        Db.updateSetting("showRightClickButton", request.state);
+        Db.updateSetting('showRightClickButton', request.state);
       } else if (request.type === 'toggle-start-automatically') {
-        Db.updateSetting("startAutomatically", request.state);
+        Db.updateSetting('startAutomatically', request.state);
       } else if (request.type === 'toggle-stop-automatically') {
-        Db.updateSetting("stopAutomatically", request.state);
+        Db.updateSetting('stopAutomatically', request.state);
       } else if (request.type === 'toggle-stop-at-day-end') {
-        Db.updateSetting("stopAtDayEnd", request.state);
+        Db.updateSetting('stopAtDayEnd', request.state);
         TogglButton.startCheckingDayEnd(request.state);
       } else if (request.type === 'toggle-day-end-time') {
-        Db.updateSetting("dayEndTime", request.state);
+        Db.updateSetting('dayEndTime', request.state);
       } else if (request.type === 'change-default-project') {
-        Db.updateSetting(chrome.extension.getBackgroundPage().TogglButton.$user.id + "-defaultProject", request.state);
+        Db.updateSetting(
+          chrome.extension.getBackgroundPage().TogglButton.$user.id +
+            '-defaultProject',
+          request.state
+        );
       } else if (request.type === 'change-remember-project-per') {
-        Db.updateSetting("rememberProjectPer", request.state);
+        Db.updateSetting('rememberProjectPer', request.state);
         Db.resetDefaultProjects();
-      } else if (request.type === 'update-dont-show-permissions' || request.type === 'update-selected-settings-tab') {
+      } else if (
+        request.type === 'update-dont-show-permissions' ||
+        request.type === 'update-selected-settings-tab'
+      ) {
         Db.updateSetting(request.type.substr(7), request.state);
       }
     } catch (e) {

@@ -1,9 +1,11 @@
 'use strict';
 
-togglbutton.render('.wspace-task-view:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.wspace-task-view:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link,
     container = $('.wrike-panel-header-toolbar', elem),
-    titleElem = function () {
+    titleElem = function() {
       return $('title').textContent.replace(' - Wrike', '');
     };
 

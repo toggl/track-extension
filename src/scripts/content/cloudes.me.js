@@ -1,9 +1,10 @@
 'use strict';
 
-togglbutton.render('#left-panel:not(.toggl)', {}, function () {
-  var link, wrap = createTag('div'),
+togglbutton.render('#left-panel:not(.toggl)', {}, function() {
+  var link,
+    wrap = createTag('div'),
     prevElem = $('#left-panel .ui-grid-a'),
-    cloudesDescription = function () {
+    cloudesDescription = function() {
       return $('title').textContent;
     };
 

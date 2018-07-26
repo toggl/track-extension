@@ -1,6 +1,6 @@
 'use strict';
 
-togglbutton.render('input[name=id]', {}, function (elem) {
+togglbutton.render('input[name=id]', {}, function(elem) {
   var link,
     description = elem.value,
     targetElement;

@@ -1,7 +1,8 @@
 'use strict';
 
-togglbutton.render('.task-list-item', {}, function (elem) {
-  var link, description = elem.textContent;
+togglbutton.render('.task-list-item', {}, function(elem) {
+  var link,
+    description = elem.textContent;
 
   link = togglbutton.createTimerLink({
     className: 'esa',

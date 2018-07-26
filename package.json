@@ -3,5 +3,11 @@
   "version": "1.2.0",
   "description": "Add Toggl one-click time tracking to popular web tools.",
   "license": "BSD-3-Clause",
-  "private": true
+  "private": true,
+  "prettier": {
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "prettier": "1.13.7"
+  }
 }

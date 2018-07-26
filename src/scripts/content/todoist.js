@@ -1,7 +1,8 @@
 'use strict';
 
 function getProjectNameFromLabel(elem) {
-  var projectLabel = '', projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
+  var projectLabel = '',
+    projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
   if (projectLabelEle) {
     projectLabel = projectLabelEle.textContent.trim();
   }
@@ -43,7 +44,11 @@ function projectWasJustCreated(projectId) {
 }
 
 function getSidebarCurrentEle(elem) {
-  var editorInstance, projectId, sidebarRoot, sidebarColorEle, sidebarCurrentEle;
+  var editorInstance,
+    projectId,
+    sidebarRoot,
+    sidebarColorEle,
+    sidebarCurrentEle;
   editorInstance = elem.closest('.project_editor_instance');
   if (editorInstance) {
     projectId = editorInstance.getAttribute('data-project-id');
@@ -76,41 +81,51 @@ function getProjectNames(elem) {
   return projectNames;
 }
 
-togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, container = $('.text', elem);
+togglbutton.render(
+  '.task_item .content:not(.toggl)',
+  { observe: true },
+  function(elem) {
+    var link,
+      descFunc,
+      container = $('.text', elem);
 
-  descFunc = function () {
-    var clone = container.cloneNode(true),
-      i = 0,
-      child = null;
+    descFunc = function() {
+      var clone = container.cloneNode(true),
+        i = 0,
+        child = null;
 
-    while (clone.children.length > i) {
-      child = clone.children[i];
-      if (child.tagName === "B"
-          || child.tagName === "I"
-          || child.tagName === "STRONG"
-          || child.tagName === "EM") {
-        i++;
-      } else if (child.tagName === "A") {
-        if (child.classList.contains("ex_link")
-            || child.getAttribute("href").indexOf("mailto:") === 0) {
+      while (clone.children.length > i) {
+        child = clone.children[i];
+        if (
+          child.tagName === 'B' ||
+          child.tagName === 'I' ||
+          child.tagName === 'STRONG' ||
+          child.tagName === 'EM'
+        ) {
           i++;
+        } else if (child.tagName === 'A') {
+          if (
+            child.classList.contains('ex_link') ||
+            child.getAttribute('href').indexOf('mailto:') === 0
+          ) {
+            i++;
+          } else {
+            child.remove();
+          }
         } else {
           child.remove();
         }
-      } else {
-        child.remove();
       }
-    }
 
-    return clone.textContent.trim();
-  };
+      return clone.textContent.trim();
+    };
 
-  link = togglbutton.createTimerLink({
-    className: 'todoist',
-    description: descFunc(),
-    projectName: getProjectNames(elem)
-  });
+    link = togglbutton.createTimerLink({
+      className: 'todoist',
+      description: descFunc(),
+      projectName: getProjectNames(elem)
+    });
 
-  container.insertBefore(link, container.lastChild);
-});
+    container.insertBefore(link, container.lastChild);
+  }
+);

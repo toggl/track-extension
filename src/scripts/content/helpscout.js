@@ -1,9 +1,12 @@
 'use strict';
 
-togglbutton.render('.convo-actions:not(.toggl)', {observe: true}, function () {
-
+togglbutton.render('.convo-actions:not(.toggl)', { observe: true }, function() {
   var link,
-    description = '#' + $('#tkHeader strong').textContent + ' ' + $('#subjectLine').textContent;
+    description =
+      '#' +
+      $('#tkHeader strong').textContent +
+      ' ' +
+      $('#subjectLine').textContent;
 
   link = togglbutton.createTimerLink({
     className: 'helpscout',

@@ -1,7 +1,7 @@
 'use strict';
 
-togglbutton.render('._nav:not(.toggl)', {observe: true}, function () {
-  var getDescription = function () {
+togglbutton.render('._nav:not(.toggl)', { observe: true }, function() {
+  var getDescription = function() {
       return document.title;
     },
     link = togglbutton.createTimerLink({

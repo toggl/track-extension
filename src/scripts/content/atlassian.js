@@ -28,6 +28,33 @@ togglbutton.render('#ghx-detail-view [spacing] h1:not(.toggl)', {observe: true},
   numElem.parentNode.appendChild(container);
 });
 
+// Jira 2018-06 new sprint modal
+// Using the h1 as selector to make sure that it will only try to render the button
+// after Jira has fully rendered the modal content
+togglbutton.render('div[role="dialog"].sc-ckVGcZ h1:not(.toggl)', {observe: true}, function (needle) {
+  var root = needle.closest('div[role="dialog"]'),
+    id = $('a:first-child', root),
+    description = $('h1:first-child', root),
+    project = $('.sc-kMoxaV'),
+    container = createTag('div', 'jira-ghx-toggl-button'),
+    link;
+
+  if (project === null) {
+    project = $('.sc-iyvyFf:first-child');
+  }
+
+  if (id !== null && description !== null && project !== null) {
+    link = togglbutton.createTimerLink({
+      className: 'jira2017',
+      description: id.textContent + ' ' + description.textContent,
+      projectName: project && project.textContent
+    });
+
+    container.appendChild(link);
+    id.parentNode.appendChild(container);
+  }
+});
+
 
 // Jira 2018 sprint modal
 // Using the h1 as selector to make sure that it will only try to render the button

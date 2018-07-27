@@ -1439,3 +1439,19 @@ li .toggl-button.heflo {
   position: relative;
   left: -5px;
 }
+
+/********* OUTLOOK *********/
+._ck_k .toggl-button.outlook {
+  vertical-align: middle;
+  position: relative;
+  top: 1px;
+}
+label > .toggl-button.outlook {
+  margin-left: 10px;
+}
+._ck_i .toggl-button.outlook {
+  color: inherit;
+  vertical-align: middle;
+  position: relative;
+  top: 1px;
+}

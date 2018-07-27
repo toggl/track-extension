@@ -1033,7 +1033,14 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 /********* PHABRICATOR *********/
 .toggl-button.phabricator {
   margin-left: 5px;
+}
+
+.phui-oi-name > .toggl-button.phabricator {
   position: absolute;
+}
+
+li > .toggl-button.phabricator {
+  position: relative;
 }
 
 /********* MANTISHUB *********/

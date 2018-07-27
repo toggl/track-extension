@@ -358,6 +358,13 @@ only screen and (min-resolution: 192dpi) {
 }
 
 /********* YOUTRACK *********/
+
+.yt-agile-card__header .toggl-button.youtrack {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  float: none;
+}
 .toggl-button.youtrack {
   float: right;
 }

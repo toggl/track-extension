@@ -4,8 +4,23 @@
   "description": "Add Toggl one-click time tracking to popular web tools.",
   "license": "BSD-3-Clause",
   "private": true,
+  "scripts": {
+    "xo": "xo"
+  },
   "prettier": {
     "singleQuote": true
+  },
+  "xo": {
+    "envs": [
+      "browser",
+      "commonjs",
+      "es6",
+      "webextensions"
+    ],
+    "ignores": [
+      "src/**"
+    ],
+    "prettier": true
   },
   "devDependencies": {
     "prettier": "1.13.7"

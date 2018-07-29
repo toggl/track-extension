@@ -2,6 +2,5 @@
 !.editorconfig
 !.gitignore
 
+dist/
 node_modules/
-ch_toggl-button.zip
-ff_toggl-button.zip

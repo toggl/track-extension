@@ -1,12 +1,11 @@
-'use strict';
+import './lib/bugsnag';
+import TogglOrigins from './origins';
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
-  GA = chrome.extension.getBackgroundPage().GA,
-  Db = chrome.extension.getBackgroundPage().Db,
+  ga = chrome.extension.getBackgroundPage().ga,
+  db = chrome.extension.getBackgroundPage().db,
   FF = navigator.userAgent.indexOf('Chrome') === -1,
   w = window.innerWidth,
-  timer,
-  TogglOrigins = chrome.extension.getBackgroundPage().TogglOrigins,
   replaceContent = function(parentSelector, html) {
     var container = document.querySelector(parentSelector);
     while (container.firstChild) {
@@ -55,8 +54,8 @@ var Settings = {
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
   showPage: function() {
-    var volume = parseInt(Db.get('pomodoroSoundVolume') * 100, 10),
-      rememberProjectPer = Db.get('rememberProjectPer'),
+    var volume = parseInt(db.get('pomodoroSoundVolume') * 100, 10),
+      rememberProjectPer = db.get('rememberProjectPer'),
       a;
 
     try {
@@ -66,42 +65,42 @@ var Settings = {
       a = document.createElement('a');
       a.title = 'Changelog';
       a.setAttribute('href', 'http://toggl.github.io/toggl-button');
-      a.textContent = '(' + chrome.runtime.getManifest().version + ')';
+      a.textContent = `(${process.env.VERSION})`;
       document.querySelector('#version').appendChild(a);
       Settings.setFromTo();
       document.querySelector('#nag-nanny-interval').value =
-        Db.get('nannyInterval') / 60000;
+        db.get('nannyInterval') / 60000;
       Settings.$pomodoroVolume.value = volume;
       Settings.$pomodoroVolumeLabel.textContent = volume + '%';
       Settings.toggleState(
         Settings.$showRightClickButton,
-        Db.get('showRightClickButton')
+        db.get('showRightClickButton')
       );
       Settings.toggleState(
         Settings.$startAutomatically,
-        Db.get('startAutomatically')
+        db.get('startAutomatically')
       );
       Settings.toggleState(
         Settings.$stopAutomatically,
-        Db.get('stopAutomatically')
+        db.get('stopAutomatically')
       );
-      Settings.toggleState(Settings.$postPopup, Db.get('showPostPopup'));
-      Settings.toggleState(Settings.$nanny, Db.get('nannyCheckEnabled'));
+      Settings.toggleState(Settings.$postPopup, db.get('showPostPopup'));
+      Settings.toggleState(Settings.$nanny, db.get('nannyCheckEnabled'));
       Settings.toggleState(
         Settings.$idleDetection,
-        Db.get('idleDetectionEnabled')
+        db.get('idleDetectionEnabled')
       );
       Settings.toggleState(
         Settings.$pomodoroMode,
-        Db.get('pomodoroModeEnabled')
+        db.get('pomodoroModeEnabled')
       );
       Settings.toggleState(
         Settings.$pomodoroSound,
-        Db.get('pomodoroSoundEnabled')
+        db.get('pomodoroSoundEnabled')
       );
       Settings.toggleState(
         Settings.$pomodoroStopTimeTracking,
-        Db.get('pomodoroStopTimeTrackingWhenTimerEnds')
+        db.get('pomodoroStopTimeTrackingWhenTimerEnds')
       );
       Array.apply(null, Settings.$rememberProjectPer.options).forEach(function(
         option
@@ -111,16 +110,16 @@ var Settings = {
         }
       });
 
-      document.querySelector('#pomodoro-interval').value = Db.get(
+      document.querySelector('#pomodoro-interval').value = db.get(
         'pomodoroInterval'
       );
 
-      Settings.toggleState(Settings.$stopAtDayEnd, Db.get('stopAtDayEnd'));
-      document.querySelector('#day-end-time').value = Db.get('dayEndTime');
+      Settings.toggleState(Settings.$stopAtDayEnd, db.get('stopAtDayEnd'));
+      document.querySelector('#day-end-time').value = db.get('dayEndTime');
 
       Settings.fillDefaultProject();
 
-      GA.reportSettings();
+      ga.reportSettings();
 
       Settings.loadSitesIntoList();
     } catch (e) {
@@ -133,10 +132,10 @@ var Settings = {
   },
   fillDefaultProject: function() {
     var key, project, clientName, projects, clients, defProject, html, dom;
-    if (Db.get('projects') !== '' && !!TogglButton.$user) {
-      defProject = Db.getDefaultProject();
-      projects = JSON.parse(Db.get('projects'));
-      clients = JSON.parse(Db.get('clients'));
+    if (db.get('projects') !== '' && !!TogglButton.$user) {
+      defProject = db.getDefaultProject();
+      projects = JSON.parse(db.get('projects'));
+      clients = JSON.parse(db.get('clients'));
 
       html = document.createElement('select');
       html.id = 'default-project';
@@ -199,7 +198,7 @@ var Settings = {
     return { origins: urls };
   },
   setFromTo: function() {
-    var fromTo = Db.get('nannyFromTo').split('-');
+    var fromTo = db.get('nannyFromTo').split('-');
     document.querySelector('#nag-nanny-from').value = fromTo[0];
     document.querySelector('#nag-nanny-to').value = fromTo[1];
   },
@@ -246,7 +245,7 @@ var Settings = {
       custom_html.id = 'custom-permissions-list';
       custom_html.className = 'origin-list';
 
-      customs = Db.getAllOrigins();
+      customs = db.getAllOrigins();
       for (k in customs) {
         if (customs.hasOwnProperty(k) && !!TogglOrigins[customs[k]]) {
           li = document.createElement('li');
@@ -435,13 +434,13 @@ var Settings = {
         domain = '*://' + Settings.$newPermission.value + '/';
         permission = { origins: [domain] };
         if (FF) {
-          Db.setOrigin(Settings.$newPermission.value, o.value);
+          db.setOrigin(Settings.$newPermission.value, o.value);
           Settings.$newPermission.value = '';
           Settings.loadSitesIntoList();
         } else {
           chrome.permissions.request(permission, function(result) {
             if (result) {
-              Db.setOrigin(Settings.$newPermission.value, o.value);
+              db.setOrigin(Settings.$newPermission.value, o.value);
               Settings.$newPermission.value = '';
             }
             Settings.loadSitesIntoList();
@@ -467,7 +466,7 @@ var Settings = {
           permission = { origins: [domain] };
 
           if (FF) {
-            Db.removeOrigin(custom);
+            db.removeOrigin(custom);
             parent.remove();
           } else {
             chrome.permissions.contains(permission, function(allowed) {
@@ -475,7 +474,7 @@ var Settings = {
                 chrome.permissions.remove(permission, function(result) {
                   if (result) {
                     removed = true;
-                    Db.removeOrigin(custom);
+                    db.removeOrigin(custom);
                     parent.remove();
                   } else {
                     alert('Fail');
@@ -487,7 +486,7 @@ var Settings = {
             });
 
             if (!removed) {
-              Db.removeOrigin(custom);
+              db.removeOrigin(custom);
               parent.remove();
             }
           }
@@ -566,7 +565,7 @@ var Settings = {
           var origins = [],
             i,
             key,
-            customOrigins = Db.getAllOrigins(),
+            customOrigins = db.getAllOrigins(),
             skip = false;
 
           try {
@@ -636,29 +635,29 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     // Show permissions page with notice
     if (
-      !!parseInt(Db.get('show-permissions-info'), 10) &&
-      !Db.get('dont-show-permissions')
+      !!parseInt(db.get('show-permissions-info'), 10) &&
+      !db.get('dont-show-permissions')
     ) {
       document.querySelector('.guide-container').style.display = 'block';
       document.querySelector(
-        ".guide > div[data-id='" + Db.get('show-permissions-info') + "']"
+        ".guide > div[data-id='" + db.get('show-permissions-info') + "']"
       ).style.display =
         'block';
       document
         .querySelector('.guide button')
-        .setAttribute('data-id', Db.get('show-permissions-info'));
-      Db.set('show-permissions-info', 0);
+        .setAttribute('data-id', db.get('show-permissions-info'));
+      db.set('show-permissions-info', 0);
     }
 
     // Set selected tab
-    Settings.$tabs.setAttribute('data-tab', Db.get('selected-settings-tab'));
+    Settings.$tabs.setAttribute('data-tab', db.get('selected-settings-tab'));
     if (FF) {
       setTabPosFF(Settings.$tabs);
     }
     document.querySelector('header .active').classList.remove('active');
     document
       .querySelector(
-        "header [data-tab='" + Db.get('selected-settings-tab') + "']"
+        "header [data-tab='" + db.get('selected-settings-tab') + "']"
       )
       .classList.add('active');
     document.querySelector('body').style.display = 'block';
@@ -822,7 +821,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       .querySelector('#sound-test')
       .addEventListener('click', function(e) {
         var sound = new Audio();
-        sound.src = '../' + Db.get('pomodoroSoundFile');
+        sound.src = '../' + db.get('pomodoroSoundFile');
         sound.volume = Settings.$pomodoroVolume.value / 100;
         sound.play();
       });
@@ -910,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
         var disableChecked = document.querySelector(
           '#disable-permission-notice'
         ).checked;
-        Db.set('dont-show-permissions', disableChecked);
+        db.set('dont-show-permissions', disableChecked);
         document.querySelector('.guide-container').style.display = 'none';
         document.querySelector(
           ".guide > div[data-id='" + e.target.getAttribute('data-id') + "']"
@@ -930,17 +929,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       Settings.$tabs.style.width = (w + 20) * 3 + 'px';
     }
 
-    if (!TogglOrigins) {
-      timer = setInterval(function() {
-        if (!TogglOrigins) {
-          TogglOrigins = chrome.extension.getBackgroundPage().TogglOrigins;
-        } else {
-          clearInterval(timer);
-          timer = null;
-          Settings.loadSitesIntoList();
-        }
-      }, 250);
-    }
+    Settings.loadSitesIntoList();
   } catch (err) {
     chrome.runtime.sendMessage({
       type: 'error',

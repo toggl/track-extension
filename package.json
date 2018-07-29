@@ -8,7 +8,17 @@
     "node": ">=8.11.3"
   },
   "scripts": {
+    "start": "webpack-cli --mode development --watch",
+    "build": "webpack-cli --mode production --env.production",
     "xo": "xo"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
   },
   "browserslist": [
     "last 2 Chrome versions",
@@ -16,7 +26,9 @@
     "Firefox ESR"
   ],
   "prettier": {
-    "singleQuote": true
+    "bracketSpacing": true,
+    "singleQuote": true,
+    "useTabs": false
   },
   "xo": {
     "envs": [
@@ -31,7 +43,21 @@
     "prettier": true
   },
   "devDependencies": {
+    "@babel/core": "7.0.0-beta.54",
+    "@babel/plugin-proposal-class-properties": "7.0.0-rc.1",
+    "@babel/preset-env": "7.0.0-beta.54",
+    "babel-loader": "8.0.0-beta.4",
+    "clean-webpack-plugin": "0.1.19",
+    "compression-webpack-plugin": "1.1.11",
+    "copy-webpack-plugin": "4.5.2",
+    "filemanager-webpack-plugin": "2.0.1",
     "prettier": "1.13.7",
+    "webpack": "4.16.3",
+    "webpack-cli": "3.1.0",
+    "webpack-log": "1.2.0",
     "xo": "0.21.1"
+  },
+  "dependencies": {
+    "bugsnag-js": "4.7.2"
   }
 }

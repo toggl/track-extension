@@ -1,10 +1,4 @@
 {
-  "applications": {
-    "gecko": {
-      "id": "toggl-button@toggl.com",
-      "strict_min_version": "50.0"
-    }
-  },
   "name": "Toggl Button: Productivity & Time Tracker",
   "short_name": "Toggl Button",
   "version": "1.10.9",
@@ -13,15 +7,10 @@
     "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",
   "background": {
     "scripts": [
-      "scripts/vendor/bugsnag-3.min.js",
-      "scripts/lib.js",
-      "scripts/db.js",
-      "scripts/ga.js",
       "scripts/background.js"
     ]
   },
   "browser_action": {
-    "browser_style": false,
     "default_icon": {
       "19": "images/inactive-19.png",
       "38": "images/inactive-38.png"
@@ -29,13 +18,22 @@
     "default_popup": "html/popup.html",
     "default_title": "Toggl Time Tracker"
   },
+  "commands": {
+    "quick-start-stop-entry": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E"
+      },
+      "description": "Quick start/stop current entry"
+    }
+  },
   "icons": {
     "16": "images/icon-16.png",
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
   "options_ui": {
-    "page": "html/settings.html"
+    "page": "html/settings.html",
+    "chrome_style": true
   },
   "permissions": [
     "*://*.toggl.com/*",
@@ -46,7 +44,12 @@
     "contextMenus",
     "notifications",
     "idle",
-    "tabs",
-    "*://*/"
-  ]
+    "tabs"
+  ],
+  "optional_permissions": ["*://*/"],
+  "externally_connectable": {
+    "matches": ["*://*.toggl.com/*", "*://toggl.com/*"]
+  },
+  "content_security_policy":
+    "script-src 'self' 'unsafe-eval'; object-src 'self';"
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 var noop = function() {
   return undefined;
 };
@@ -138,7 +136,7 @@ AutoComplete.prototype.updateHeight = function() {
 
 //* Project autocomplete *//
 
-var ProjectAutoComplete = function(el, item, elem) {
+export var ProjectAutoComplete = function(el, item, elem) {
   AutoComplete.call(this, el, item, elem);
   this.onChangeHandler = noop;
   this.selectedItem = -1;
@@ -592,7 +590,7 @@ ProjectAutoComplete.prototype.removeChangeHandler = function() {
 
 //* Tag autocomplete *//
 
-var TagAutoComplete = function(el, item, elem) {
+export var TagAutoComplete = function(el, item, elem) {
   AutoComplete.call(this, el, item, elem);
   this.wid = null;
 };

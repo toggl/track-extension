@@ -1,14 +1,14 @@
-'use strict';
+import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 
 var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
-  Db = chrome.extension.getBackgroundPage().Db,
+  db = chrome.extension.getBackgroundPage().db,
   FF = navigator.userAgent.indexOf('Chrome') === -1;
 
 if (FF) {
   document.querySelector('body').classList.add('ff');
 }
 
-var PopUp = {
+window.PopUp = {
   $postStartText: ' post-start popup',
   $popUpButton: null,
   $togglButton: document.querySelector('.stop-button'),
@@ -101,6 +101,7 @@ var PopUp = {
       if (!response) {
         return;
       }
+
       if (
         request.type === 'list-continue' &&
         !request.data &&
@@ -108,7 +109,8 @@ var PopUp = {
       ) {
         return PopUp.switchView(PopUp.$revokedWorkspaceView);
       }
-      if (!!response.success) {
+
+      if (response.success) {
         if (request.type === 'create-workspace') {
           return PopUp.switchView(PopUp.$menuView);
         }

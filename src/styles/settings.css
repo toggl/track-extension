@@ -55,11 +55,11 @@ body,
 }
 
 .list li #nag-nanny:checked ~ div {
-  height: 110px
+  height: 160px
 }
 
 .list li #pomodoro-mode:checked ~ div {
-  height: 200px;
+  height: 220px;
 }
 
 .list li #stop-at-day-end:checked ~ div{
@@ -424,7 +424,8 @@ header .active, header li:hover {
 
 #sound-test {
   position: relative;
-  right: -28px;
+  right: -112px;
+  width: 80px;
 }
 
 .pomodoro-sound {
@@ -438,7 +439,7 @@ header .active, header li:hover {
 }
 
 #enable-sound-signal:checked ~.pomodoro-sound-volume {
-  height: 36px;
+  height: 64px;
 }
 
 .ff .tab-3 .section:first-of-type {

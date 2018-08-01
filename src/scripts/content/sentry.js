@@ -7,7 +7,7 @@ togglbutton.render('.group-detail:not(.toggl)', {observe: true}, function () {
     description,
     errType = $('h3 > span > span').textContent.trim(),
     detail = $('.message').textContent.trim(),
-    project = $('.project-name').textContent.trim();
+    project = $('.project-select').textContent.trim();
 
   description = errType + ': ' + detail;
 

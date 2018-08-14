@@ -1,10 +1,10 @@
 'use strict';
 
 togglbutton.render(
-  'body.controller-issues.action-show h2:not(.toggl)',
+  'body.controller-issues.action-show #content h2:not(.toggl)',
   {},
   function (elem) {
-    const numElem = $('h2');
+    const numElem = $('#content h2');
     const titleElem = $('.subject h3') || '';
     const projectElem = $('h1');
     let description;
@@ -30,6 +30,6 @@ togglbutton.render(
       projectName: projectElem && projectElem.textContent
     });
 
-    $('h2').appendChild(link);
+    $('#content h2').appendChild(link);
   }
 );

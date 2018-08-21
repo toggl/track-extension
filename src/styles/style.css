@@ -1119,7 +1119,7 @@ li > .toggl-button.phabricator {
 }
 /********* KEEP *********/
 .toggl-button.keep {
-  margin-bottom: 7px;
+  margin-top: 6px;
 }
 
 .notes-container .CmABtb.RNfche .toggl-button.keep {

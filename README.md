@@ -159,19 +159,19 @@ List of all the changes and added features can be found at http://toggl.github.i
 
 ## Using the Button
 1. Log in to your [Toggl] account from the extension popup.
-2. Navigate to your [service](#compatible-services) and start your Toggl timer there
+2. Navigate to your [service](#compatible-services) and start your Toggl timer there.
 
 _See this article for reference where the start timer link is located in all the tools: [Where can I find the Button?]_
 
 Or start entry from the extension icon menu.
 
-3. To edit the running time entry
-  - Edit entry details from the post start popup that is shown right after you click the "Start timer" button
-  - Edit entry details from the extension icon menu by clicking the running time entry name
+3. To edit the running time entry:
+  - Edit entry details from the post start popup that is shown right after you click the "Start timer" button.
+  - Edit entry details from the extension icon menu by clicking the running time entry name.
 
 4. To stop the current running timer:
-  - Press the button again
-  - Stop the entry from the extension icon menu
+  - Press the button again.
+  - Stop the entry from the extension icon menu.
   - Start another time entry inside your account.
 
 ## Custom domains

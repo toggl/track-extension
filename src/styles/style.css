@@ -432,6 +432,12 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   box-shadow: none;
 }
 
+.toggl-button.jira2018 {
+  margin-top: .5em;
+  margin-left: 0;
+  cursor: pointer;
+}
+
 /********* UNFUDDLE *********/
 .toggl-button.unfuddle {
   margin-left: 4px;

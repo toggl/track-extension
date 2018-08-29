@@ -79,6 +79,5 @@ togglbutton.render('.kr-view.react-dialog-box > .kr-view:not(.toggl)', { observe
   });
 
   togglButtonElement = $('div.react-modals-enable-events > div > div > div:nth-child(1) > div > div > div > div:nth-child(1) > div > div:nth-child(2)', elem);
-
   togglButtonElement.parentNode.insertBefore(link, togglButtonElement);
 });

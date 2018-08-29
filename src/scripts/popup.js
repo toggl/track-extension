@@ -677,14 +677,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
     PopUp.$entries.addEventListener('click', function(e) {
+      const id = e.target.closest('[data-id]').getAttribute('data-id');
+      const timeEntry = TogglButton.$user.time_entries[id]
+
       var request = {
         type: 'list-continue',
         respond: true,
         service: 'dropdown-list',
-        data:
-          TogglButton.$user.time_entries[
-            e.target.parentNode.getAttribute('data-id')
-          ]
+        data: timeEntry
       };
 
       PopUp.sendMessage(request);

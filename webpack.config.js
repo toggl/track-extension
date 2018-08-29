@@ -80,11 +80,13 @@ module.exports = config(({ development, production, version }) => ({
       }),
       {
         from: 'chrome-manifest.json',
-        to: 'chrome/manifest.json'
+        to: 'chrome/manifest.json',
+        transform: addVersion
       },
       {
         from: 'firefox-manifest.json',
-        to: 'firefox/manifest.json'
+        to: 'firefox/manifest.json',
+        transform: addVersion
       }
     ]),
     production &&
@@ -137,4 +139,17 @@ function stringifyValues(obj) {
       o[k] = v;
       return o;
     }, {});
+}
+
+function addVersion(content) {
+  return Buffer.from(
+    JSON.stringify(
+      {
+        version: pkg.version,
+        ...JSON.parse(content.toString())
+      },
+      undefined,
+      2
+    )
+  );
 }

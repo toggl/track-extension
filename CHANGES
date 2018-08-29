@@ -1,6 +1,23 @@
 {
   "versions": [
     {
+      "version": "1.11.0",
+      "rows": [
+        "Fix continuing time entries in list #1111",
+        "Fix API URL #1108",
+        "Update Help Scout integration #1094",
+        "Fix pomodoro view in Firefox #1074",
+        "Package updated to use webpack; please see README for development changes #1090",
+        "Add Office.com calendar Integration #1073",
+        "Update Phabricator integration #1022",
+        "Update YouTrack agile view #924",
+        "Fix Airtable integration #1013",
+        "Update JIRA support for the Kanaban Board #1067",
+        "Update MeisterTask integration #1072",
+        "Add VivifyScrum integration"
+      ]
+    },
+    {
       "version": "1.10.9",
       "rows": [
         "Fix TickTick integration #1044"

@@ -1,9 +1,6 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('.task:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.task:not(.toggl)', { observe: true }, function(elem) {
   var link,
     projectElem = $('#client_name b'),
     taskElem = $('.task h1');

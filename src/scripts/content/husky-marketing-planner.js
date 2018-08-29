@@ -1,8 +1,8 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.toggl-target:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.toggl-target:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link,
     description = elem.getAttribute('data-descr'),
     project = elem.getAttribute('data-proj');

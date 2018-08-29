@@ -1,24 +1,23 @@
-/*jslint indent: 2 */
-/*global $: false, togglbutton: false, createTag:false, document: false*/
-
 'use strict';
 
 // Meeting details
-togglbutton.render('.popupPanel:not(.toggl)', { observe: true }, function (elem) {
+togglbutton.render('.popupPanel:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link,
     container = $('._ch_q1 ._ch_f1', elem).parentElement,
     title = $('._ch_q1 ._ch_g1', elem);
 
   link = togglbutton.createTimerLink({
     className: 'outlook',
-    description: title.textContent,
+    description: title.textContent
   });
 
   container.appendChild(link);
 });
 
 // Meeting peek popup
-togglbutton.render('.peekPopup:not(.toggl)', { observe: true }, function (elem) {
+togglbutton.render('.peekPopup:not(.toggl)', { observe: true }, function(elem) {
   var link,
     otherPeopleContainer = $('._cmm_a1', elem),
     myContainer = $('._ck_i', elem),
@@ -31,13 +30,13 @@ togglbutton.render('.peekPopup:not(.toggl)', { observe: true }, function (elem) 
     link = togglbutton.createTimerLink({
       className: 'outlook',
       description: title.textContent,
-      buttonType: 'minimal',
+      buttonType: 'minimal'
     });
   } else if (myContainer) {
     container = myContainer;
     link = togglbutton.createTimerLink({
       className: 'outlook',
-      description: title.textContent,
+      description: title.textContent
     });
   }
 

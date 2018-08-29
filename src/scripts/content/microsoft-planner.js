@@ -1,14 +1,12 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.taskCard:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.taskCard:not(.toggl)', { observe: true }, function(elem) {
   var link,
     description = $('.title', elem).textContent;
 
   function getProject() {
     var plannerTaskboardName = $('.planTaskboardPage .primaryTextSection h1'),
-      planName = $(".planName", elem);
+      planName = $('.planName', elem);
 
     if (plannerTaskboardName) {
       return plannerTaskboardName.textContent;

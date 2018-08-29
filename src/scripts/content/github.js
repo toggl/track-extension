@@ -1,9 +1,11 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#partial-discussion-sidebar', {observe: true}, function (elem) {
-  var div, link, description,
+togglbutton.render('#partial-discussion-sidebar', { observe: true }, function(
+  elem
+) {
+  var div,
+    link,
+    description,
     numElem = $('.gh-header-number'),
     titleElem = $('.js-issue-title'),
     projectElem = $('h1.public strong a, h1.private strong a'),
@@ -22,11 +24,11 @@ togglbutton.render('#partial-discussion-sidebar', {observe: true}, function (ele
 
   description = titleElem.textContent;
   if (numElem !== null) {
-    description = numElem.textContent + " " + description.trim();
+    description = numElem.textContent + ' ' + description.trim();
   }
 
-  div = document.createElement("div");
-  div.classList.add("discussion-sidebar-item", "toggl");
+  div = document.createElement('div');
+  div.classList.add('discussion-sidebar-item', 'toggl');
 
   link = togglbutton.createTimerLink({
     className: 'github',

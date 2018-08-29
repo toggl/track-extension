@@ -1,13 +1,11 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#ide:not(.toggl)', {observe: true}, function () {
+togglbutton.render('#ide:not(.toggl)', { observe: true }, function() {
   var link,
-    projectFunc = function () {
+    projectFunc = function() {
       return $('.project-label .project-name').getAttribute('title');
     },
-    descFunc = function () {
+    descFunc = function() {
       return $('.project-label .after.actionable').textContent;
     },
     inlineCss = 'position: fixed; bottom: 1rem; right: 1rem; z-index: 9999;',

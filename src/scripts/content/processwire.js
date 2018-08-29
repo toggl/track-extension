@@ -1,8 +1,8 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.PageListItem:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.PageListItem:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link,
     description = $('.label_title', elem).textContent;
 
@@ -15,15 +15,19 @@ togglbutton.render('.PageListItem:not(.toggl)', {observe: true}, function (elem)
   elem.appendChild(link);
 });
 
-togglbutton.render('.ProcessPageEdit h1:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    description = elem.textContent;
+togglbutton.render(
+  '.ProcessPageEdit h1:not(.toggl)',
+  { observe: true },
+  function(elem) {
+    var link,
+      description = elem.textContent;
 
-  link = togglbutton.createTimerLink({
-    className: 'processwire',
-    description: description,
-    buttonType: 'minimal'
-  });
+    link = togglbutton.createTimerLink({
+      className: 'processwire',
+      description: description,
+      buttonType: 'minimal'
+    });
 
-  elem.appendChild(link);
-});
+    elem.appendChild(link);
+  }
+);

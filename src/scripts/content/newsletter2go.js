@@ -1,9 +1,8 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#submenu:not(.toggl)', {observe: true}, function () {
-  var link, description,
+togglbutton.render('#submenu:not(.toggl)', { observe: true }, function() {
+  var link,
+    description,
     titleElem = $('#mailing-name'),
     li = document.createElement('li');
 
@@ -11,7 +10,7 @@ togglbutton.render('#submenu:not(.toggl)', {observe: true}, function () {
 
   link = togglbutton.createTimerLink({
     className: 'newsletter2go',
-    description: description,
+    description: description
   });
 
   li.className = 'sm submenu center';

@@ -1,12 +1,12 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
+'use strict';
 
-togglbutton.render('#channel_name:not(.toggl)', {observe: true}, function () {
-  'use strict';
+togglbutton.render('#channel_name:not(.toggl)', { observe: true }, function() {
   var link,
     placeholder = $('.channel_title_info'),
     project = $('#team_name').textContent,
-    description = $("#channel_name").textContent.trim().replace(/^#/, '');
+    description = $('#channel_name')
+      .textContent.trim()
+      .replace(/^#/, '');
 
   link = togglbutton.createTimerLink({
     className: 'slack',
@@ -18,8 +18,9 @@ togglbutton.render('#channel_name:not(.toggl)', {observe: true}, function () {
   placeholder.parentNode.insertBefore(link, placeholder);
 });
 
-togglbutton.render('.c-message--hover:not(.toggl)', {observe: true}, function (elem) {
-  'use strict';
+togglbutton.render('.c-message--hover:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link,
     placeholder = $('.c-message_actions__button--last-child'),
     description = $('.c-message__body', elem).textContent,
@@ -33,8 +34,8 @@ togglbutton.render('.c-message--hover:not(.toggl)', {observe: true}, function (e
     buttonType: 'minimal'
   });
 
-  button.className = "c-button-unstyled c-message_actions__button";
-  button.setAttribute("type", "button");
+  button.className = 'c-button-unstyled c-message_actions__button';
+  button.setAttribute('type', 'button');
   button.appendChild(link);
 
   placeholder.parentNode.insertBefore(button, placeholder);

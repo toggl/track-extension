@@ -1,15 +1,13 @@
-/*jslint indent: 2 */
-/*global $: false, togglbutton: false, createTag:false, document: false*/
-
 'use strict';
 
-togglbutton.render('.dialog:not(.toggl)', {observe: true}, function (elem) {
-  var link, wrap = createTag('div'),
+togglbutton.render('.dialog:not(.toggl)', { observe: true }, function(elem) {
+  var link,
+    wrap = createTag('div'),
     container = $('#top-level-details', elem),
     projectElem = $('.folderSelector', elem),
     titleFunc;
 
-  titleFunc = function () {
+  titleFunc = function() {
     return document.querySelector('#title', elem).textContent;
   };
 
@@ -23,25 +21,28 @@ togglbutton.render('.dialog:not(.toggl)', {observe: true}, function (elem) {
   container.appendChild(wrap);
 });
 
-
 /* Subtasks */
 
-togglbutton.render('.subtasks-list li .container:not(.toggl)', {observe: true}, function (elem) {
-  var link, wrap = createTag('div'),
-    projectElem = $('.folderSelector'),
-    titleFunc;
+togglbutton.render(
+  '.subtasks-list li .container:not(.toggl)',
+  { observe: true },
+  function(elem) {
+    var link,
+      wrap = createTag('div'),
+      projectElem = $('.folderSelector'),
+      titleFunc;
 
-  titleFunc = function () {
-    return $('.title', elem).textContent;
-  };
+    titleFunc = function() {
+      return $('.title', elem).textContent;
+    };
 
-  link = togglbutton.createTimerLink({
-    className: 'anydo',
-    description: titleFunc,
-    projectName: projectElem.textContent
-  });
+    link = togglbutton.createTimerLink({
+      className: 'anydo',
+      description: titleFunc,
+      projectName: projectElem.textContent
+    });
 
-  wrap.appendChild(link);
-  elem.insertBefore(wrap, $('.controls', elem));
-});
-
+    wrap.appendChild(link);
+    elem.insertBefore(wrap, $('.controls', elem));
+  }
+);

@@ -1,9 +1,6 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
+'use strict';
 
-"use strict";
-
-togglbutton.render('form.story:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('form.story:not(.toggl)', { observe: true }, function(elem) {
   var link,
     titleElem = $('textarea', elem),
     id = $('.id.text_value', elem),

@@ -1,11 +1,10 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-/*Created by lancelothk on 2/16/14.*/
+'use strict';
 
-"use strict";
-
-togglbutton.render('.td-attributes:not(.toggl)', {observe: true}, function (elem) {
-  var link, newDiv,
+togglbutton.render('.td-attributes:not(.toggl)', { observe: true }, function(
+  elem
+) {
+  var link,
+    newDiv,
     taskActive = $('.task.active'),
     titleElem = $('.title > span', taskActive),
     projectElem = $('.project-value', taskActive);

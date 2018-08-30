@@ -12,10 +12,10 @@ togglbutton.render('.IZ65Hb-TBnied:not(.toggl)', { observe: true }, function(
   tagFunc = function() {
     var index,
       tags = [],
-      tagItems = $('.IZ65Hb-x00ATb', elem).children;
+      tagItems = $('.IZ65Hb-jfdpUb', elem).children;
 
     for (index in tagItems) {
-      if (tagItems.hasOwnProperty(index)) {
+      if (tagItems.hasOwnProperty(index) && tagItems[index].classList.contains('notranslate')) {
         tags.push(tagItems[index].textContent);
       }
     }

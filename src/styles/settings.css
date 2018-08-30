@@ -143,31 +143,32 @@ body,
 }
 
 header {
-  position: fixed;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  z-index: 100;
   box-shadow: inset 0px -1px 1px -1px #bbb;
+  position: relative;
+  z-index: 1;
 }
 
 header ul {
+  display: flex;
+  flex-direction: row;
   list-style: none;
+  height: 35px;
   padding: 0;
   margin: 0;
 }
 
 header .tab-link {
-  background: #fdfdfd;
-  cursor: pointer;
   float: left;
+  box-sizing: border-box;
+  background: #fdfdfd;
+  border-bottom: 1px solid #eee;
   padding: 10px 20px;
+  cursor: pointer;
 }
 
 header .active,
 header li:hover {
   border-bottom: 1px solid red;
-  background: #f1f0f0 !important;
 }
 
 .container .tabs {
@@ -209,6 +210,7 @@ header li:hover {
 
 .container .tab-2 {
   padding-left: 45px;
+  background: #f1f0f0;
 }
 
 /* Permissions tab */

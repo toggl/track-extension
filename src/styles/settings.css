@@ -52,6 +52,7 @@ body,
 }
 
 .list li {
+  position: relative;
   min-height: 40px;
 }
 
@@ -128,13 +129,15 @@ body,
 }
 
 .description {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
   border-left: 2px solid #dfdfdf;
   color: rgb(119, 119, 119);
-  float: right;
-  display: block;
   visibility: hidden;
   padding: 5px;
-  width: 50%;
+  width: 40%;
   margin: 0 20px !important;
 }
 

@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "1.11.1",
+      "rows": [
+        "Fix process is undefined in content script #1113",
+        "Fix Sentry support #1092",
+        "Fix Google Keep support #1082",
+        "Fix Intercom support #1015",
+        "Fix MeisterTask support #1093"
+      ]
+    },
+    {
       "version": "1.11.0",
       "rows": [
         "Fix continuing time entries in list #1111",

@@ -789,21 +789,28 @@ document.addEventListener('DOMContentLoaded', function(e) {
       Settings.saveSetting(rememberPer, 'change-remember-project-per');
     });
 
-    document.querySelector('.tab-links').addEventListener('click', function(e) {
-      document.querySelector('header .active').classList.remove('active');
-      e.target.classList.add('active');
-      Settings.$tabs.setAttribute(
-        'data-tab',
-        e.target.getAttribute('data-tab')
-      );
-      Settings.saveSetting(
-        e.target.getAttribute('data-tab'),
-        'update-selected-settings-tab'
-      );
-      if (FF) {
-        setTabPosFF(Settings.$tabs);
-      }
-    });
+    document.querySelectorAll('.tab-links .tab-link').forEach(tab =>
+      tab.addEventListener('click', function(e) {
+        const active = document.querySelector('header .active');
+
+        if (active) {
+          active.classList.remove('active');
+        }
+
+        e.target.classList.add('active');
+        Settings.$tabs.setAttribute(
+          'data-tab',
+          e.target.getAttribute('data-tab')
+        );
+        Settings.saveSetting(
+          e.target.getAttribute('data-tab'),
+          'update-selected-settings-tab'
+        );
+        if (FF) {
+          setTabPosFF(Settings.$tabs);
+        }
+      })
+    );
 
     Settings.$pomodoroVolume.addEventListener('input', function(e) {
       Settings.$pomodoroVolumeLabel.textContent = e.target.value + '%';

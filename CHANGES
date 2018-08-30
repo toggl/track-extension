@@ -2,6 +2,7 @@
   "versions": [
     {
       "version": "1.11.1",
+      "rows": [
         "Fix process is undefined in content script #1113",
         "Fix Sentry support #1092",
         "Fix Google Keep support #1082",

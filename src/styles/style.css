@@ -1464,6 +1464,11 @@ li .toggl-button.heflo {
   left: -5px;
 }
 
+/********* OPSGENIE *********/
+.page-alert.page-ops #toggl-button-edit-form input[type=text] {
+  min-height: 0;
+}
+
 /********* OUTLOOK *********/
 ._ck_k .toggl-button.outlook {
   vertical-align: middle;

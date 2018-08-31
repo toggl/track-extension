@@ -72,6 +72,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [ONLYOFFICE](https://www.onlyoffice.com/)
 - [Onshape](https://onshape.com/)
 - [OpenProject](https://openproject.com/)
+- [OpsGenie](https://opsgenie.com/)
 - [osTicket](http://osticket.com/)
 - [Overvio](https://overv.io/)
 - [PagerDuty](https://www.pagerduty.com/)

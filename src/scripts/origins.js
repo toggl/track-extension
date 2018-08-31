@@ -305,6 +305,10 @@ export default {
     url: '*://*.onshape.com/*',
     name: 'Onshape'
   },
+  'opsgenie.com': {
+    url: '*://*.opsgenie.com/*',
+    name: 'OpsGenie'
+  },
   'osticket.com': {
     url: '*://*.supportsystem.com/*',
     name: 'osTicket',

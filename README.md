@@ -137,6 +137,7 @@ https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
 
 - Clone the repository `git clone git@github.com:toggl/toggl-button.git`
 - Install Node.js and NPM https://nodejs.org/en/
+- Run `npm install`
 - Run `npm start`
 
 Then depending on your browser, continue with the following steps.

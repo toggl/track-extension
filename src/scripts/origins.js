@@ -344,6 +344,10 @@ export default {
     url: '',
     name: 'ProcessWire'
   },
+  'produck.io': {
+    'url': '*://*.produck.io/*',
+    'name': 'Produck'
+  },
   'producteev.com': {
     url: '*://*.producteev.com/*',
     name: 'Producteev'

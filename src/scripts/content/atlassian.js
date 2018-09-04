@@ -66,7 +66,6 @@ togglbutton.render(
   'div.sc-sdtwF:not(.toggl)',
   { observe: true },
   function(needle) {
-    console.log('testing');
     var id = $('.sc-hUfwpO > span > span:last-child', needle),
       description = $('.sc-ipqSdY h1:first-child'),
       container = createTag('div', 'jira-ghx-toggl-button'),

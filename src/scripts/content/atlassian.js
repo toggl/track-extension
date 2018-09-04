@@ -61,6 +61,29 @@ togglbutton.render(
   }
 );
 
+// Jira 2018-09 new issue view
+togglbutton.render(
+  'div.sc-sdtwF:not(.toggl)',
+  { observe: true },
+  function(needle) {
+    console.log('testing');
+    var id = $('.sc-hUfwpO > span > span:last-child', needle),
+      description = $('.sc-ipqSdY h1:first-child'),
+      container = createTag('div', 'jira-ghx-toggl-button'),
+      link; 
+
+    if (id !== null && description !== null) {
+      link = togglbutton.createTimerLink({
+        className: 'jira201809',
+        description: id.textContent + ' ' + description.textContent
+      });
+
+      container.appendChild(link);
+      $('.sc-jMMfwr').appendChild(container);
+    }
+  }
+);
+
 // Jira 2018-08 sprint modal
 // Using the h1 as selector to make sure that it will only try to render the button
 // after Jira has fully rendered the modal content

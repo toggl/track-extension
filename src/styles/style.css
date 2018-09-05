@@ -1423,6 +1423,20 @@ label > .toggl-button.outlook {
   pointer-events: all;
 }
 
+/********* KANTREE **********/
+.kt-card-toggl-btn {
+  min-height: 34px;
+}
+
+.kt-checklist-item-toggl-btn {
+  background-color: #f5f5f5;
+  border: 0;
+  float: right;
+  font-size: 0;
+  display: inline-block;
+  margin: 0 10px;
+}
+
 /********* Corgee *********/
 .toggl-button.corgee {
   position: relative;

@@ -1326,6 +1326,7 @@ label > .toggl-button.outlook {
   top: 1px;
 }
 
+<<<<<<< c239e82af3e55ee98cc50a9bbf53aafb0310f7f5
 /********* NOTION *********/
 #notion-app .toggl-button.notion {
   cursor: pointer;
@@ -1421,4 +1422,18 @@ label > .toggl-button.outlook {
 .taskItem-body:hover .toggl-button.microsoft-todo {
   visibility: visible;
   pointer-events: all;
+=======
++/********* KANTREE **********/
+.kt-card-toggl-btn {
+  min-height: 34px;
+}
+
+.kt-checklist-item-toggl-btn {
+    background-color: #f5f5f5;
+    border: 0;
+    float: right;
+    font-size: 0;
+    display: inline-block;
+    margin: 0 10px;
+>>>>>>> Add Kantree integration
 }

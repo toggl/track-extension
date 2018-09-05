@@ -263,9 +263,15 @@ export default {
     url: '',
     name: 'Kanboard'
   },
+<<<<<<< c239e82af3e55ee98cc50a9bbf53aafb0310f7f5
   'kanban.ist': {
     url: '*://*.kanban.ist/*',
     name: 'Kanbanist'
+=======
+  'kantree.io': {
+    url: '*://*.kantree.io/*',
+    name: 'Kantree'
+>>>>>>> Add Kantree integration
   },
   'liquidplanner.com': {
     url: '*://app.liquidplanner.com/*',

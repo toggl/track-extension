@@ -62,6 +62,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Kanbanery](https://www.kanbanery.com/)
 - [Kanbanist](https://kanban.ist/)
 - [Kanboard](https://kanboard.org/)
+- [Kantree](https://kantree.io/)
 - [KhanAcademy](https://www.khanacademy.org/)
 - [LiquidPlanner](https://www.liquidplanner.com/)
 - [ManageEngine](https://www.manageengine.com/)

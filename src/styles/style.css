@@ -1197,6 +1197,10 @@ li > .toggl-button.phabricator {
   font-size: 13px !important;
 }
 
+.toggl-button.evernote-2018 {
+  margin: 0 5px 0 10px;
+}
+
 /********* OPENPROJECT *********/
 .work-packages--show-view .toggl-button.openproject {
   margin-bottom: 0.4rem;

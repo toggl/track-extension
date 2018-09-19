@@ -34,7 +34,7 @@ togglbutton.render(
 // Using the h1 as selector to make sure that it will only try to render the button
 // after Jira has fully rendered the modal content
 togglbutton.render(
-  'div[role="dialog"] h1:not(.toggl)',
+  'div[role="dialog"]:not(.toggl) h1:not(.toggl)',
   { observe: true },
   function(needle) {
     var root = needle.closest('div[role="dialog"]'),
@@ -52,7 +52,8 @@ togglbutton.render(
       });
 
       container.appendChild(link);
-      id.parentNode.appendChild(container);
+      id.parentNode.parentNode.parentNode.appendChild(container);
+      root.classList.add('toggl');
     }
   }
 );

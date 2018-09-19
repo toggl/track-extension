@@ -1,3 +1,4 @@
+//pagerduty
 #toggl-button-edit-form div,
 #toggl-button-edit-form span,
 #toggl-button-edit-form img,
@@ -1399,6 +1400,11 @@ a.toggl-button.workfront.min {
 /********* Pagerduty *********/
 .toggl-button.pagerduty {
   margin-left: 9px;
+}
+
+.toggle-button.pagerduty-09-2018 {
+  margin-left: 1rem;
+  align-self: center;
 }
 
 /********* ROLLBAR *********/

@@ -34,7 +34,7 @@ togglbutton.render(
       description = document.title.replace(
         /\[#(\d*)\]([\w\W]*) - PagerDuty/g,
         'Pagerduty $1:$2'
-      );
+      ),
       projectElem = $('.pd-service-name__name a');
 
     if(description) {
@@ -45,7 +45,7 @@ togglbutton.render(
       });
 
       $('.pd-action-bar__left-items').appendChild(link);
-      mod.classList.add('toggl');
+      //mod.classList.add('toggl');
     }
   }
 );

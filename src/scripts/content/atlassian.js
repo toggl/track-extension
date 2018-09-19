@@ -46,7 +46,7 @@ togglbutton.render(
 
     if (id !== null && description !== null) {
       link = togglbutton.createTimerLink({
-        className: 'jira2018',
+        className: 'jira-2018-09',
         description: id.textContent + ' ' + description.textContent,
         projectName: project && project.textContent
       });

@@ -538,6 +538,10 @@ export default {
     url: '*://*.visualstudio.com/*',
     name: 'VisualStudio'
   },
+  'azure.com': {
+    url: '*://*.azure.com/*',
+    name: 'VisualStudio'
+  },
   'waffle.io': {
     url: '*://waffle.io/*',
     name: 'Waffle'

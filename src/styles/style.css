@@ -202,6 +202,7 @@
   padding: 0 10px !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  color: #000000;
 }
 
 #toggl-button-project-filter,

@@ -191,6 +191,7 @@ span.item-name {
   float: left;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: #000000;
 }
 
 span.item-name.has-tasks {

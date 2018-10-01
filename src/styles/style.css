@@ -202,7 +202,6 @@
   padding: 0 10px !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  color: #000000;
 }
 
 #toggl-button-project-filter,
@@ -379,6 +378,8 @@
 }
 .toggl-button.youtrack {
   float: right;
+  margin-right:25px;
+  margin-top: 3px;
 }
 
 /********* ASANA *********/
@@ -1144,7 +1145,7 @@ li > .toggl-button.phabricator {
 }
 /********* KEEP *********/
 .toggl-button.keep {
-  margin-top: 6px;
+  margin-bottom: 7px;
 }
 
 .notes-container .CmABtb.RNfche .toggl-button.keep {
@@ -1196,10 +1197,6 @@ li > .toggl-button.phabricator {
 .toggl-button.evernote {
   font-family: gotham, helvetica, arial, sans-serif !important;
   font-size: 13px !important;
-}
-
-.toggl-button.evernote-2018 {
-  margin: 0 5px 0 10px;
 }
 
 /********* OPENPROJECT *********/
@@ -1310,7 +1307,7 @@ a.toggl-button.workfront.min {
   color: #a7bfcb;
   float: right;
   font-weight: 700;
-  margin-top: 6px;
+  margin-top: 9px;
   margin-right: 5px;
   text-decoration: none;
 }

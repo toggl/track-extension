@@ -1,6 +1,6 @@
 'use strict';
 
-/* the first selector is required for youtrack-5 and the second for youtrack-6 */
+/* the first selector is required for youtrack-5 and the second for youtrack-6 agile, the third for youtrack-6 */
 togglbutton.render(
   '.fsi-toolbar-content:not(.toggl), .toolbar_fsi:not(.toggl)',
   { observe: true },
@@ -27,7 +27,7 @@ togglbutton.render(
   }
 );
 
-// Agile board
+// youtrack-6 Agile board
 togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function(
   elem
 ) {
@@ -52,4 +52,31 @@ togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function(
   });
 
   container.appendChild(link);
+});
+
+// youtrack-6
+togglbutton.render('.global_issue-full-view:not(.toggl)', { observe: true }, function(
+    elem
+) {
+    var link,
+        container = $('.yt-issue-body > div', elem),
+        projectName = $('.yt-issue-id').textContent.split('-'),
+        description = function() {
+            var text = $('.yt-issue-body__summary', elem).textContent,
+                id = $('.yt-issue-id', elem).textContent;
+            return (id ? id + ' ' : '') + (text ? text.trim() : '');
+        };
+
+    if (projectName.length > 1) {
+        projectName.pop();
+    }
+
+    link = togglbutton.createTimerLink({
+        className: 'youtrack',
+        buttonType: 'minimal',
+        description: description,
+        projectName: projectName.join('')
+    });
+
+    container.prepend(link);
 });

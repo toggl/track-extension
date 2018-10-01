@@ -5,7 +5,7 @@ togglbutton.render(
   { observe: true },
   function() {
     const descriptionEl = $('.item-detail-page-header__item-title')
-    const projectEl = $('.nav .dropdown-menu .active')
+    const projectEl = $('#navbar-content > ul > li > a')
     const description = ((descriptionEl && descriptionEl.textContent) || '').trim()
     const projectName = ((projectEl && projectEl.textContent) || '').trim()
     const link = togglbutton.createTimerLink({

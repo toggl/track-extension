@@ -59,7 +59,9 @@ togglbutton.render('.global_issue-full-view:not(.toggl)', { observe: true }, fun
     elem
 ) {
     var link,
+        linkPinned,
         container = $('.yt-issue-body > div', elem),
+        containerPinned = $('.yt-sticky__pinned-only', elem),
         projectName = $('.yt-issue-id').textContent.split('-'),
         description = function() {
             var text = $('.yt-issue-body__summary', elem).textContent,
@@ -77,6 +79,14 @@ togglbutton.render('.global_issue-full-view:not(.toggl)', { observe: true }, fun
         description: description,
         projectName: projectName.join('')
     });
+    linkPinned = togglbutton.createTimerLink({
+        className: 'youtrack',
+        buttonType: 'minimal',
+        description: description,
+        projectName: projectName.join('')
+    });
 
     container.prepend(link);
+
+    containerPinned.prepend(linkPinned);
 });

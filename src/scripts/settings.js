@@ -18,6 +18,8 @@ if (FF) {
   document.body.classList.add('ff');
 }
 
+document.querySelector('#version').textContent = `(${process.env.VERSION})`;
+
 var Settings = {
   eventsSet: false,
   $startAutomatically: null,
@@ -43,18 +45,12 @@ var Settings = {
   $pomodoroVolumeLabel: null,
   showPage: function() {
     var volume = parseInt(db.get('pomodoroSoundVolume') * 100, 10),
-      rememberProjectPer = db.get('rememberProjectPer'),
-      a;
+      rememberProjectPer = db.get('rememberProjectPer');
 
     try {
       if (!TogglButton) {
         TogglButton = chrome.extension.getBackgroundPage().TogglButton;
       }
-      a = document.createElement('a');
-      a.title = 'Changelog';
-      a.setAttribute('href', 'http://toggl.github.io/toggl-button');
-      a.textContent = `(${process.env.VERSION})`;
-      document.querySelector('#version').appendChild(a);
       Settings.setFromTo();
       document.querySelector('#nag-nanny-interval').value =
         db.get('nannyInterval') / 60000;

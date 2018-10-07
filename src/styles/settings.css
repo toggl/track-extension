@@ -102,30 +102,6 @@ input[type='number'] {
   padding-top: 10px;
 }
 
-.footer {
-  padding: 10px 15px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #e5e5e5;
-  font-size: 12px;
-  color: #8a8888;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.changelog {
-  float: right;
-  margin: 0;
-  padding: 0;
-}
-
-#version a {
-  color: #8a8888 !important;
-  text-decoration: none;
-  line-height: 21px;
-}
-
 .description {
   position: absolute;
   display: block;
@@ -401,4 +377,16 @@ header li:hover {
 
 #enable-sound-signal:checked ~ .pomodoro-sound-volume {
   height: 64px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 42px;
+  padding: 0 15px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e5e5e5;
+  color: #8a8888;
+  font-size: 12px;
 }

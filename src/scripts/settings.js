@@ -5,7 +5,6 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
   ga = chrome.extension.getBackgroundPage().ga,
   db = chrome.extension.getBackgroundPage().db,
   FF = navigator.userAgent.indexOf('Chrome') === -1,
-  w = window.innerWidth,
   replaceContent = function(parentSelector, html) {
     var container = document.querySelector(parentSelector);
     while (container.firstChild) {
@@ -13,20 +12,10 @@ var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
     }
 
     container.appendChild(html);
-  },
-  setTabPosFF = function(elem) {
-    var left = '0';
-
-    if (elem.getAttribute('data-tab') === '2') {
-      left = '-' + (w + 15) + 'px';
-    } else if (elem.getAttribute('data-tab') === '3') {
-      left = '-' + 2 * (w + 15) + 'px';
-    }
-    elem.style.left = left;
   };
 
 if (FF) {
-  document.querySelector('html').classList.add('ff');
+  document.body.classList.add('ff');
 }
 
 var Settings = {
@@ -48,7 +37,6 @@ var Settings = {
   origins: [],
   $pomodoroStopTimeTracking: null,
   $stopAtDayEnd: null,
-  $tabs: null,
   $defaultProject: null,
   $defaultProjectContainer: null,
   $pomodoroVolume: null,
@@ -625,7 +613,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
       '#pomodoro-stop-time'
     );
     Settings.$stopAtDayEnd = document.querySelector('#stop-at-day-end');
-    Settings.$tabs = document.querySelector('.tabs');
     Settings.$defaultProjectContainer = document.querySelector(
       '#default-project-container'
     );
@@ -649,17 +636,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
       db.set('show-permissions-info', 0);
     }
 
-    // Set selected tab
-    Settings.$tabs.setAttribute('data-tab', db.get('selected-settings-tab'));
-    if (FF) {
-      setTabPosFF(Settings.$tabs);
-    }
-    document.querySelector('header .active').classList.remove('active');
-    document
-      .querySelector(
-        "header [data-tab='" + db.get('selected-settings-tab') + "']"
-      )
-      .classList.add('active');
+    // Change active tab.
+    const activeTab = Number.parseInt(db.get('settings-active-tab'), 10);
+    changeActiveTab(activeTab);
     document.querySelector('body').style.display = 'block';
 
     Settings.showPage();
@@ -791,24 +770,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document.querySelectorAll('.tab-links .tab-link').forEach(tab =>
       tab.addEventListener('click', function(e) {
-        const active = document.querySelector('header .active');
+        const target = e.target;
+        const index = [...e.target.parentElement.children].indexOf(e.target);
 
-        if (active) {
-          active.classList.remove('active');
-        }
-
-        e.target.classList.add('active');
-        Settings.$tabs.setAttribute(
-          'data-tab',
-          e.target.getAttribute('data-tab')
-        );
-        Settings.saveSetting(
-          e.target.getAttribute('data-tab'),
-          'update-selected-settings-tab'
-        );
-        if (FF) {
-          setTabPosFF(Settings.$tabs);
-        }
+        Settings.saveSetting(index, 'update-settings-active-tab');
+        changeActiveTab(index);
       })
     );
 
@@ -924,18 +890,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
           'none';
       });
 
-    if (FF) {
-      window.onresize = function(event) {
-        w = window.innerWidth;
-        document.querySelector('.tab-1').style.width = w + 'px';
-        document.querySelector('.tab-2').style.width = w + 'px';
-        document.querySelector('.tab-3').style.width = w + 'px';
-        Settings.$tabs.style.width = (w + 20) * 3 + 'px';
-        setTabPosFF(Settings.$tabs);
-      };
-      Settings.$tabs.style.width = (w + 20) * 3 + 'px';
-    }
-
     Settings.loadSitesIntoList();
   } catch (err) {
     chrome.runtime.sendMessage({
@@ -945,3 +899,12 @@ document.addEventListener('DOMContentLoaded', function(e) {
     });
   }
 });
+
+function changeActiveTab(index) {
+  document.querySelectorAll('.active').forEach(e => {
+    e.classList.remove('active');
+  });
+
+  document.querySelector('.tabs').children[index].classList.add('active');
+  document.querySelector('.tab-links').children[index].classList.add('active');
+}

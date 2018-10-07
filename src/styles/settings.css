@@ -1,9 +1,8 @@
+html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  display: none;
 }
 
 input[type='number'],
@@ -22,33 +21,42 @@ input[type='number'] {
   width: 50px;
 }
 
-html,
-body,
-.container {
-  height: 400px;
-  width: 800px;
-  max-height: 400px;
-  max-width: 800px;
-}
-
 .container {
   position: relative;
-  height: 400px;
   width: 800px;
-  margin: 20px 15px 0px;
-  padding: 0;
-  color: #505050 !important;
-  float: left;
+  background-color: #fff;
+  color: #505050;
+}
+
+.ff .container {
+  width: 100vw;
+}
+
+.tabs {
+  display: flex;
   overflow: hidden;
+  height: 350px;
+  width: 100vw;
+  transition: order 300ms ease-in-out;
+  align-items: stretch;
+}
+
+.tab {
+  display: none;
+  flex: 1 0 100vw;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.tab.active {
+  display: block;
 }
 
 .list {
-  width: 800px;
   padding: 0;
+  margin: 0;
   list-style: none;
-  float: left;
-  overflow-y: auto;
-  margin-bottom: 40px;
 }
 
 .list li {
@@ -57,7 +65,7 @@ body,
 }
 
 .list li #nag-nanny:checked ~ div {
-  height: 160px;
+  height: auto;
 }
 
 .list li #pomodoro-mode:checked ~ div {
@@ -84,18 +92,8 @@ body,
 .subsettings-details {
   overflow: hidden;
   height: 0px;
-  margin-left: 10px;
+  margin-left: 25px;
   transition: height 300ms ease-in-out;
-}
-
-.subsettings-details p {
-  float: left;
-  padding-right: 30px;
-}
-
-.subsettings-details p:last-child {
-  float: none;
-  clear: both;
 }
 
 .subsettings-details span {
@@ -174,56 +172,10 @@ header li:hover {
   border-bottom: 1px solid red;
 }
 
-.container .tabs {
-  position: absolute;
-  bottom: 42px;
-  top: 0;
-  left: 0px;
-  padding-top: 15px;
-  width: 2600px;
-  overflow: hidden;
-  transition: left 300ms ease-in-out;
-}
-
-.container .tabs[data-tab='2'] {
-  left: -830px;
-}
-
-.container .tabs:not([data-tab='1']) .tab-1 {
-  overflow: hidden;
-}
-
-.container .tabs[data-tab='3'] {
-  left: -1660px;
-}
-
-.container .tab {
-  float: left;
-  height: 343px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 800px;
-  padding-left: 30px;
-}
-
-.container .tab-1 {
-  width: 785px;
-  padding-left: 0;
-}
-
-.container .tab-2 {
-  padding-left: 45px;
-  background: #f1f0f0;
-}
-
 /* Permissions tab */
 
 .tab-3 .description {
   width: 40%;
-}
-
-.container .tab-3 {
-  width: 785px;
 }
 
 .container .tab-3 h2 {
@@ -449,41 +401,4 @@ header li:hover {
 
 #enable-sound-signal:checked ~ .pomodoro-sound-volume {
   height: 64px;
-}
-
-.ff .tab-3 .section:first-of-type {
-  display: none !important;
-}
-
-.ff .tab {
-  height: 100%;
-}
-
-.ff .footer,
-.ff .header {
-  background: transparent;
-}
-
-.ff .list {
-  width: auto;
-  padding-right: 15px;
-  font-size: 12px;
-}
-
-.ff .subsettings-details {
-  max-width: 45%;
-}
-
-.ff header,
-.ff header .tab-link {
-  background: transparent;
-}
-
-.ff .container .tabs {
-  width: 2800px;
-}
-
-.ff .tab-3 .section h2 {
-  font-size: 15px;
-  font-weight: 400;
 }

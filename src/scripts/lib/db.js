@@ -31,7 +31,7 @@ export default class Db {
   core = {
     'dont-show-permissions': false,
     'show-permissions-info': 0,
-    'selected-settings-tab': 1
+    'settings-active-tab': 0
   };
 
   newMessage = (request, sender, sendResponse) => {

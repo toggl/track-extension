@@ -6,9 +6,9 @@
   </head>
   <header>
     <ul class="tab-links">
-      <li class="tab-link active" data-tab="1">General</li>
-      <li class="tab-link" data-tab="2">Pomodoro Timer</li>
-      <li class="tab-link" data-tab="3">Permissions</li>
+      <li class="tab-link">General</li>
+      <li class="tab-link">Pomodoro Timer</li>
+      <li class="tab-link">Permissions</li>
     </ul>
   </header>
   <body>
@@ -51,7 +51,7 @@
           <button>Close</button>
         </div>
       </div>
-      <div class="tabs" data-tab="1">
+      <div class="tabs">
         <div class="tab tab-1">
           <ul class="list">
             <li>
@@ -98,8 +98,7 @@
                 <p>
                   <label for="nag-nanny-from">From:</label>
                   <input type="time" id="nag-nanny-from">
-                </p>
-                <p>
+                  &nbsp;&nbsp;
                   <label for="nag-nanny-to">To:</label>
                   <input type="time" id="nag-nanny-to">
                 </p>
@@ -190,8 +189,12 @@
       </div>
     </div>
     <div class="footer">
-      Version <span id="version"></span>
-      <p class="changelog">Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a></p>
+      <div>
+        Version <span id="version"></span>
+      </div>
+      <div>
+        Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a>
+      </div>
     </div>
     <script src="../scripts/settings.js"></script>
   </body>

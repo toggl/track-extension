@@ -31,24 +31,23 @@ togglbutton.render(
 );
 
 // Jira 2018-06 new sprint modal
-// Using the h1 as selector to make sure that it will only try to render the button
-// after Jira has fully rendered the modal content
+// Classes are random keep changing so we need to rely on other attributes
 togglbutton.render(
-  'div[role="dialog"].sc-ckVGcZ h1:not(.toggl)',
+  'div[role="dialog"] h1 + button[aria-label="Edit Summary"]',
   { observe: true },
   function(needle) {
     var root = needle.closest('div[role="dialog"]'),
-      id = $('a:first-child', root),
+      id = $('div:last-child > a[spacing="none"][href^="/browse/"]:last-child', root),
       description = $('h1:first-child', root),
-      project = $('.sc-kMoxaV'),
+      project = $('a[spacing="none"][href*="/projects/"]'),
       container = createTag('div', 'jira-ghx-toggl-button'),
       link;
 
     if (project === null) {
-      project = $('.sc-iyvyFf:first-child');
+      project = $('div[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(1) > div:first-child');
     }
 
-    if (id !== null && description !== null && project !== null) {
+    if (id !== null && description !== null) {
       link = togglbutton.createTimerLink({
         className: 'jira2017',
         description: id.textContent + ' ' + description.textContent,

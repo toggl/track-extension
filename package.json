@@ -51,6 +51,7 @@
     "compression-webpack-plugin": "1.1.11",
     "copy-webpack-plugin": "4.5.2",
     "filemanager-webpack-plugin": "2.0.1",
+    "nanoid": "1.2.6",
     "prettier": "1.13.7",
     "webpack": "4.16.3",
     "webpack-cli": "3.1.0",

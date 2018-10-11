@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.11.2",
+      "rows": [
+        "Improve settings view for Chrome #1142",
+        "Fix Rollbar integration #1137",
+        "Fix Todoist dark mode integration #1134",
+        "Add support for new Evernote.com layout"
+      ]
+    },
+    {
       "version": "1.11.1",
       "rows": [
         "Fix process is undefined in content script #1113",

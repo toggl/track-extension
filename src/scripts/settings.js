@@ -159,6 +159,18 @@ var Settings = {
           Settings.$defaultProject.options[
             Settings.$defaultProject.selectedIndex
           ].value;
+
+        var rememberPer =
+          Settings.$rememberProjectPer.options[
+            Settings.$rememberProjectPer.selectedIndex
+          ].value;
+
+        db.setDefaultProject(
+          defaultProject,
+          rememberPer === 'service'
+            ? TogglButton.$curService
+            : TogglButton.$curURL
+        );
         Settings.saveSetting(defaultProject, 'change-default-project');
       });
     }

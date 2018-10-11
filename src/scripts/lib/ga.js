@@ -1,3 +1,4 @@
+import nanoid from 'nanoid';
 import { report } from './utils';
 
 const GA_KEY = 'GA:clientID';
@@ -13,7 +14,7 @@ export default class Ga {
 
   load() {
     if (!this.clientId) {
-      this.clientId = generateGUID();
+      this.clientId = nanoid();
       localStorage.setItem(GA_KEY, this.clientId);
     }
   }
@@ -115,26 +116,4 @@ export default class Ga {
       this.report('default-project', 'settings/default-project');
     }
   }
-}
-
-function generateGUID() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return (
-    s4() +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    s4() +
-    s4()
-  );
 }

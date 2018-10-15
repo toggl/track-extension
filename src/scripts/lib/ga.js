@@ -61,7 +61,10 @@ export default class Ga {
       'settings/show-right-click-button-' + this.db.get('showRightClickButton')
     );
     this.report('popup', 'settings/popup-' + this.db.get('showPostPopup'));
-    this.report('reminder', 'settings/reminder-' + this.db.get('nannyCheckEnabled'));
+    this.report(
+      'reminder',
+      'settings/reminder-' + this.db.get('nannyCheckEnabled')
+    );
     this.report(
       'reminder-minutes',
       'settings/reminder-minutes-' + this.db.get('nannyInterval')

@@ -17,7 +17,8 @@
       "@babel/preset-env"
     ],
     "plugins": [
-      "@babel/plugin-proposal-class-properties"
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-optional-chaining"
     ]
   },
   "browserslist": [
@@ -43,10 +44,11 @@
     "prettier": true
   },
   "devDependencies": {
-    "@babel/core": "7.0.0-beta.54",
-    "@babel/plugin-proposal-class-properties": "7.0.0-rc.1",
-    "@babel/preset-env": "7.0.0-beta.54",
-    "babel-loader": "8.0.0-beta.4",
+    "@babel/core": "7.1.2",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-optional-chaining": "7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "babel-loader": "8.0.4",
     "clean-webpack-plugin": "0.1.19",
     "compression-webpack-plugin": "1.1.11",
     "copy-webpack-plugin": "4.5.2",

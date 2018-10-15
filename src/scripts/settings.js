@@ -43,6 +43,8 @@ var Settings = {
   $defaultProjectContainer: null,
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
+  $sendUsageStatistics: null,
+  $sendErrorReports: null,
   showPage: function() {
     var volume = parseInt(db.get('pomodoroSoundVolume') * 100, 10),
       rememberProjectPer = db.get('rememberProjectPer');
@@ -85,6 +87,14 @@ var Settings = {
       Settings.toggleState(
         Settings.$pomodoroStopTimeTracking,
         db.get('pomodoroStopTimeTrackingWhenTimerEnds')
+      );
+      Settings.toggleState(
+        Settings.$sendUsageStatistics,
+        db.get('sendUsageStatistics')
+      );
+      Settings.toggleState(
+        Settings.$sendErrorReports,
+        db.get('sendErrorReports')
       );
       Array.apply(null, Settings.$rememberProjectPer.options).forEach(function(
         option
@@ -627,6 +637,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
     Settings.$rememberProjectPer = document.querySelector(
       '#remember-project-per'
     );
+    Settings.$sendUsageStatistics = document.querySelector(
+      '#send-usage-statistics'
+    );
+    Settings.$sendErrorReports = document.querySelector('#send-error-reports');
 
     // Show permissions page with notice
     if (
@@ -897,6 +911,22 @@ document.addEventListener('DOMContentLoaded', function(e) {
         ).style.display =
           'none';
       });
+
+    Settings.$sendUsageStatistics.addEventListener('click', function(e) {
+      Settings.toggleSetting(
+        e.target,
+        localStorage.getItem('sendUsageStatistics') !== 'true',
+        'update-send-usage-statistics'
+      );
+    });
+
+    Settings.$sendErrorReports.addEventListener('click', function(e) {
+      Settings.toggleSetting(
+        e.target,
+        localStorage.getItem('sendErrorReports') !== 'true',
+        'update-send-error-reports'
+      );
+    });
 
     Settings.loadSitesIntoList();
   } catch (err) {

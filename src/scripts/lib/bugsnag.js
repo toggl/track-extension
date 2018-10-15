@@ -7,7 +7,12 @@ const client = bugsnag({
   notifyReleaseStages: ['production', 'development'],
   autoBreadcrumbs: false,
   autoCaptureSessions: false,
-  collectUserIp: false
+  collectUserIp: false,
+  beforeSend: function (report) {
+    if (localStorage.getItem('sendErrorReports') !== 'true') {
+      report.ignore()
+    }
+  }
 });
 
 client.beforeNotify = function(error, metaData) {

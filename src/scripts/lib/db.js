@@ -101,6 +101,14 @@ export default class Db {
         request.type === 'update-selected-settings-tab'
       ) {
         this.updateSetting(request.type.substr(7), request.state);
+      } else if (
+        request.type === 'update-send-usage-statistics'
+      ) {
+        this.updateSetting('sendUsageStatistics', request.state)
+      } else if (
+        request.type === 'update-send-error-reports'
+      ) {
+        this.updateSetting('sendErrorReports', request.state)
       }
     } catch (e) {
       bugsnagClient.notify(e);

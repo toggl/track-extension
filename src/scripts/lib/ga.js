@@ -20,6 +20,8 @@ export default class Ga {
   }
 
   report(event, service) {
+    if (!db.get('sendUsageStatistics')) return;
+
     var request = new XMLHttpRequest(),
       message =
         'v=1&tid=' +

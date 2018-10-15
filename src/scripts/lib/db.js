@@ -32,7 +32,8 @@ export default class Db {
     'dont-show-permissions': false,
     'show-permissions-info': 0,
     'selected-settings-tab': 1,
-    sendErrorReports: true
+    sendErrorReports: true,
+    sendUsageStatistics: true
   };
 
   newMessage = (request, sender, sendResponse) => {

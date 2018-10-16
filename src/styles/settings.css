@@ -311,6 +311,11 @@ header li:hover {
 
 .guide-container {
   display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .guide-back {
@@ -333,7 +338,7 @@ header li:hover {
   padding: 15px;
   line-height: 20px;
   z-index: 999;
-  margin: 20px auto;
+  margin: 0 auto;
   box-shadow: 1px 1px 10px #cacaca;
 }
 

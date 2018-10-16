@@ -645,7 +645,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     }
 
     // Change active tab.
-    const activeTab = Number.parseInt(db.get('settings-active-tab'), 10);
+    const activeTab = Number.parseInt(db.get('settings-active-tab'), 10) || 0;
     changeActiveTab(activeTab);
     document.querySelector('body').style.display = 'block';
 
@@ -778,7 +778,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document.querySelectorAll('.tab-links .tab-link').forEach(tab =>
       tab.addEventListener('click', function(e) {
-        const target = e.target;
         const index = [...e.target.parentElement.children].indexOf(e.target);
 
         Settings.saveSetting(index, 'update-settings-active-tab');

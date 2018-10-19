@@ -371,6 +371,11 @@ window.togglbutton = {
       return false;
     });
 
+    /* prevent certain host webapps from processing key commands */
+    $('form', editForm).addEventListener('keydown', function(e) {
+      e.stopPropagation();
+    });
+
     togglbutton.$billable.addEventListener('click', function() {
       this.classList.toggle('tb-checked');
     });

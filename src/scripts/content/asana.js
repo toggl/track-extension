@@ -104,7 +104,6 @@ togglbutton.render(
       description: descFunc,
       projectName: projectFunc
     });
-
     container.appendChild(link);
   }
 );
@@ -171,10 +170,13 @@ togglbutton.render(
     }
     var link,
       container = $('.SingleTaskPaneToolbar'),
-      description = $(
-        '.SingleTaskPane-titleRow .simpleTextarea',
-        elem.parentNode
-      ).textContent,
+      description =
+        $('.TopbarPageHeaderStructure-title span').textContent.replace('My Tasks in ', '') + ': ' +
+        $(
+          '.SingleTaskPane-titleRow .simpleTextarea',
+          elem.parentNode
+        ).textContent +
+        ' [' + $('.TaskProjectPill-projectName').textContent + ']',
       projectElement = $(
         '.SingleTaskPane-projects .TaskProjectPill-projectName',
         elem.parentNode

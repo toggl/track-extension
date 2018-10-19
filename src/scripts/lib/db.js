@@ -31,6 +31,7 @@ export default class Db {
   core = {
     'dont-show-permissions': false,
     'show-permissions-info': 0,
+    'settings-active-tab': 0,
     'selected-settings-tab': 1,
     sendErrorReports: true,
     sendUsageStatistics: true

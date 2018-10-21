@@ -377,8 +377,12 @@
   right: 3px;
   float: none;
 }
-.toggl-button.youtrack {
+.toggl-button.youtrack,
+.toggl-button.youtrack-new {
   float: right;
+}
+.toggl-button.youtrack-new {
+  margin-right: 30px;
 }
 
 /********* ASANA *********/

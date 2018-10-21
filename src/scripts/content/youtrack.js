@@ -27,7 +27,25 @@ togglbutton.render(
   }
 );
 
-// youtrack-6 Agile board
+/* new view for single issues — obligatory since YouTrack 2018.3 */
+togglbutton.render(
+  '.yt-issue-body:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    var link,
+      issueId = $('.js-issue-id').textContent;
+
+    link = togglbutton.createTimerLink({
+      className: 'youtrack-new',
+      description: issueId + ' ' + $('h1').textContent.trim(),
+      projectName: issueId.split('-')[0]
+    });
+
+    elem.insertBefore(link, $('.yt-issue-view__star'));
+  }
+);
+
+// Agile board
 togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function(
   elem
 ) {

@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       !!parseInt(db.get('show-permissions-info'), 10) &&
       !db.get('dont-show-permissions')
     ) {
-      document.querySelector('.guide-container').style.display = 'block';
+      document.querySelector('.guide-container').style.display = 'flex';
       document.querySelector(
         ".guide > div[data-id='" + db.get('show-permissions-info') + "']"
       ).style.display =

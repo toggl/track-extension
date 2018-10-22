@@ -644,7 +644,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     // Show permissions page with notice
     if (
-      !!parseInt(db.get('show-permissions-info'), 10) &&
       !db.get('dont-show-permissions')
     ) {
       document.querySelector('.guide-container').style.display = 'block';

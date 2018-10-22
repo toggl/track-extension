@@ -1888,8 +1888,8 @@ window.TogglButton = {
   checkPermissions: function(show) {
     if (!db.get('dont-show-permissions') && !FF) {
       chrome.permissions.getAll(function(results) {
-        if (!!show || results.origins.length === 2) {
-          show = show || 2;
+        if (show != null || results.origins.length === 2) {
+          show = show != null ? show : 2;
           db.set('settings-active-tab', 2);
           db.set('show-permissions-info', show);
           chrome.runtime.openOptionsPage();
@@ -1993,13 +1993,13 @@ if (!FF) {
   // Check whether new version is installed
   chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === 'install') {
-      TogglButton.checkPermissions(1);
+      TogglButton.checkPermissions(0);
     } else if (details.reason === 'update') {
       if (
         details.previousVersion[0] === '0' &&
         process.env.VERSION[0] === '1'
       ) {
-        TogglButton.checkPermissions(2);
+        TogglButton.checkPermissions(1);
       }
     }
   });

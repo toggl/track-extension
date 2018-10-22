@@ -32,7 +32,6 @@ export default class Db {
     'dont-show-permissions': false,
     'show-permissions-info': 0,
     'settings-active-tab': 0,
-    'selected-settings-tab': 1,
     sendErrorReports: true,
     sendUsageStatistics: true
   };
@@ -99,7 +98,7 @@ export default class Db {
         this.resetDefaultProjects();
       } else if (
         request.type === 'update-dont-show-permissions' ||
-        request.type === 'update-selected-settings-tab'
+        request.type === 'update-settings-active-tab'
       ) {
         this.updateSetting(request.type.substr(7), request.state);
       } else if (

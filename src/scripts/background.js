@@ -1889,8 +1889,8 @@ window.TogglButton = {
     if (!db.get('dont-show-permissions') && !FF) {
       chrome.permissions.getAll(function(results) {
         if (!!show || results.origins.length === 2) {
-          show = show || 3;
-          db.set('selected-settings-tab', 3);
+          show = show || 2;
+          db.set('settings-active-tab', 2);
           db.set('show-permissions-info', show);
           chrome.runtime.openOptionsPage();
         }

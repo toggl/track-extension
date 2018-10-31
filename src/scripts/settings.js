@@ -240,8 +240,12 @@ var Settings = {
       disabled,
       checked,
       customs,
-      tmpkey,
-      keyc;
+      tmpkey;
+
+    if (FF) {
+      // Permissions settings are not available on Firefox at this time.
+      return;
+    }
 
     try {
       // Load Custom Permissions list
@@ -277,26 +281,91 @@ var Settings = {
 
       replaceContent('#custom-perm-container', custom_html);
 
-      if (FF) {
+      // Load permissions list
+      chrome.permissions.getAll(function(results) {
+        var key;
+
         try {
           Settings.origins = [];
+          origins = results.origins;
+          for (i = 0; i < origins.length; i++) {
+            name = url = origins[i]
+              .replace('*://*.', '')
+              .replace('*://', '')
+              .replace('/*', '');
+            if (url.split('.').length > 2) {
+              name = url.substr(url.indexOf('.') + 1);
+            }
+            Settings.origins[name] = {
+              id: i,
+              origin: origins[i],
+              url: url,
+              name: name
+            };
+          }
+
+          // list of enabled/disabled origins
+          html_list = document.createElement('ul');
+          html_list.id = 'permissions-list';
+          html_list.className = 'origin-list';
+
           // custom permission integration select
           html = document.createElement('select');
           html.id = 'origins';
-          for (keyc in TogglOrigins) {
-            if (TogglOrigins.hasOwnProperty(keyc)) {
+
+          for (key in TogglOrigins) {
+            if (TogglOrigins.hasOwnProperty(key)) {
+              disabled = '';
+              checked = 'checked';
+
+              if (!Settings.origins[key]) {
+                // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
+                tmpkey = key.split('.');
+                tmpkey.shift();
+                tmpkey = tmpkey.join('.');
+                if (!Settings.origins[tmpkey]) {
+                  disabled = 'disabled';
+                  checked = '';
+                }
+              }
+
               // Don't display all different urls for 1 service
-              if (!TogglOrigins[keyc].clone) {
+              if (!TogglOrigins[key].clone) {
                 option = document.createElement('option');
                 option.id = 'origin';
-                option.value = keyc;
+                option.value = key;
                 option.setAttribute('data-id', i);
-                option.textContent = TogglOrigins[keyc].name;
+                option.textContent = TogglOrigins[key].name;
 
                 html.appendChild(option);
               }
+
+              // Don't show toggl.com as it's not optional
+              if (key.indexOf('toggl') === -1 && !!TogglOrigins[key].url) {
+                li = document.createElement('li');
+                li.id = key;
+                li.className = disabled;
+
+                input = document.createElement('input');
+                input.className = 'toggle';
+                input.setAttribute('type', 'checkbox');
+                input.setAttribute('data-host', TogglOrigins[key].url);
+                if (!!checked) {
+                  input.setAttribute('checked', 'checked');
+                }
+
+                dom = document.createElement('div');
+                dom.textContent = key;
+
+                li.appendChild(input);
+                li.appendChild(dom);
+
+                html_list.appendChild(li);
+              }
             }
           }
+
+          replaceContent('#perm-container', html_list);
           replaceContent('#origins-container', html);
 
           Settings.enablePermissionEvents();
@@ -307,104 +376,7 @@ var Settings = {
             category: 'Settings'
           });
         }
-      } else {
-        // Load permissions list
-        chrome.permissions.getAll(function(results) {
-          var key;
-
-          try {
-            Settings.origins = [];
-            origins = results.origins;
-            for (i = 0; i < origins.length; i++) {
-              name = url = origins[i]
-                .replace('*://*.', '')
-                .replace('*://', '')
-                .replace('/*', '');
-              if (url.split('.').length > 2) {
-                name = url.substr(url.indexOf('.') + 1);
-              }
-              Settings.origins[name] = {
-                id: i,
-                origin: origins[i],
-                url: url,
-                name: name
-              };
-            }
-
-            // list of enabled/disabled origins
-            html_list = document.createElement('ul');
-            html_list.id = 'permissions-list';
-            html_list.className = 'origin-list';
-
-            // custom permission integration select
-            html = document.createElement('select');
-            html.id = 'origins';
-
-            for (key in TogglOrigins) {
-              if (TogglOrigins.hasOwnProperty(key)) {
-                disabled = '';
-                checked = 'checked';
-
-                if (!Settings.origins[key]) {
-                  // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
-                  tmpkey = key.split('.');
-                  tmpkey.shift();
-                  tmpkey = tmpkey.join('.');
-                  if (!Settings.origins[tmpkey]) {
-                    disabled = 'disabled';
-                    checked = '';
-                  }
-                }
-
-                // Don't display all different urls for 1 service
-                if (!TogglOrigins[key].clone) {
-                  option = document.createElement('option');
-                  option.id = 'origin';
-                  option.value = key;
-                  option.setAttribute('data-id', i);
-                  option.textContent = TogglOrigins[key].name;
-
-                  html.appendChild(option);
-                }
-
-                // Don't show toggl.com as it's not optional
-                if (key.indexOf('toggl') === -1 && !!TogglOrigins[key].url) {
-                  li = document.createElement('li');
-                  li.id = key;
-                  li.className = disabled;
-
-                  input = document.createElement('input');
-                  input.className = 'toggle';
-                  input.setAttribute('type', 'checkbox');
-                  input.setAttribute('data-host', TogglOrigins[key].url);
-                  if (!!checked) {
-                    input.setAttribute('checked', 'checked');
-                  }
-
-                  dom = document.createElement('div');
-                  dom.textContent = key;
-
-                  li.appendChild(input);
-                  li.appendChild(dom);
-
-                  html_list.appendChild(li);
-                }
-              }
-            }
-
-            replaceContent('#perm-container', html_list);
-            replaceContent('#origins-container', html);
-
-            Settings.enablePermissionEvents();
-          } catch (e) {
-            chrome.runtime.sendMessage({
-              type: 'error',
-              stack: e.stack,
-              category: 'Settings'
-            });
-          }
-        });
-      }
+      });
     } catch (e) {
       chrome.runtime.sendMessage({
         type: 'error',
@@ -415,6 +387,10 @@ var Settings = {
   },
 
   enablePermissionEvents: function() {
+    if (FF) {
+      // Permissions settings are not available on Firefox at this time.
+      return;
+    }
     if (Settings.eventsSet) {
       return;
     }
@@ -439,11 +415,7 @@ var Settings = {
         Settings.$newPermission.value = text;
         domain = '*://' + Settings.$newPermission.value + '/';
         permission = { origins: [domain] };
-        if (FF) {
-          db.setOrigin(Settings.$newPermission.value, o.value);
-          Settings.$newPermission.value = '';
-          Settings.loadSitesIntoList();
-        } else {
+        if (!FF) {
           chrome.permissions.request(permission, function(result) {
             if (result) {
               db.setOrigin(Settings.$newPermission.value, o.value);
@@ -471,10 +443,7 @@ var Settings = {
           domain = '*://' + custom + '/';
           permission = { origins: [domain] };
 
-          if (FF) {
-            db.removeOrigin(custom);
-            parent.remove();
-          } else {
+          if (!FF) {
             chrome.permissions.contains(permission, function(allowed) {
               if (allowed) {
                 chrome.permissions.remove(permission, function(result) {
@@ -499,11 +468,6 @@ var Settings = {
         }
         return false;
       });
-
-    if (FF) {
-      Settings.eventsSet = true;
-      return;
-    }
 
     Settings.$permissionsList = document.querySelector('#permissions-list');
 
@@ -542,8 +506,8 @@ var Settings = {
             } else {
               alert(
                 'No "' +
-                  Settings.origins[target.getAttribute('data-id')] +
-                  '" host permission found.'
+                Settings.origins[target.getAttribute('data-id')] +
+                '" host permission found.'
               );
             }
           });
@@ -642,9 +606,20 @@ document.addEventListener('DOMContentLoaded', function(e) {
     );
     Settings.$sendErrorReports = document.querySelector('#send-error-reports');
 
+    // Permissions tab is unavailable in Firefox at this time. #1060 / #1172
+    if (FF) {
+      document
+        .querySelector('.tab-3')
+        .style.display = 'none'
+      document
+        .querySelector('.tab-link:nth-child(3)')
+        .style.display = 'none'
+    }
+
     // Show permissions page with notice
+    // Permissions tab is hidden in Firefox at this time, so the notice isn't shown either.
     if (
-      !db.get('dont-show-permissions')
+      !db.get('dont-show-permissions') && !FF
     ) {
       document.querySelector('.guide-container').style.display = 'flex';
       document.querySelector(
@@ -658,7 +633,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
     }
 
     // Change active tab.
-    const activeTab = Number.parseInt(db.get('settings-active-tab'), 10);
+    let activeTab = Number.parseInt(db.get('settings-active-tab'), 10);
+    if (FF && activeTab > 2) {
+      // Safeguard for Firefox after the Permissions tab has been hidden.
+      activeTab = 0;
+    }
     changeActiveTab(activeTab);
     document.querySelector('body').style.display = 'block';
 
@@ -765,7 +744,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('pomodoroStopTimeTrackingWhenTimerEnds') !==
-          'true',
+        'true',
         'toggle-pomodoro-stop-time'
       );
     });

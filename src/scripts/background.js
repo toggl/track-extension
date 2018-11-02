@@ -885,6 +885,10 @@ window.TogglButton = {
       entry.start = timeEntry.start;
     }
 
+    if (timeEntry.duration) {
+        entry.duration = timeEntry.duration;
+    }
+
     TogglButton.ajax(
       `/time_entries/${TogglButton.$curEntry.id}`,
       {

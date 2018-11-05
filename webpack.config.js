@@ -2,7 +2,7 @@ const path = require('path');
 const CleanPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
-const { DefinePlugin } = require('webpack');
+const { EnvironmentPlugin } = require('webpack');
 const log = require('webpack-log')({ name: 'wds' });
 const pkg = require('./package.json');
 
@@ -47,14 +47,12 @@ module.exports = config(({ development, production, version }) => ({
     ]
   },
   plugins: [
-    new DefinePlugin({
-      'process.env': stringifyValues({
-        API_URL: 'https://toggl.com/api',
-        BUGSNAG_API_KEY: '7419717b29de539ab0fbe35dcd7ca19d',
-        DEBUG: development,
-        GA_TRACKING_ID: 'UA-3215787-22',
-        VERSION: version
-      })
+    new EnvironmentPlugin({
+      API_URL: 'https://toggl.com/api',
+      BUGSNAG_API_KEY: '7419717b29de539ab0fbe35dcd7ca19d',
+      DEBUG: development,
+      GA_TRACKING_ID: 'UA-3215787-22',
+      VERSION: version
     }),
     new CleanPlugin([path.resolve(__dirname, 'dist')]),
     new CopyPlugin([
@@ -81,12 +79,12 @@ module.exports = config(({ development, production, version }) => ({
       {
         from: 'chrome-manifest.json',
         to: 'chrome/manifest.json',
-        transform: addVersion
+        transform: transformManifest('chrome')
       },
       {
         from: 'firefox-manifest.json',
         to: 'firefox/manifest.json',
-        transform: addVersion
+        transform: transformManifest('firefox')
       }
     ]),
     production &&
@@ -132,24 +130,25 @@ function copy(o) {
   ];
 }
 
-function stringifyValues(obj) {
-  return Object.entries(obj)
-    .map(([k, v]) => [k, JSON.stringify(v)])
-    .reduce((o, [k, v]) => {
-      o[k] = v;
-      return o;
-    }, {});
-}
+function transformManifest(browser) {
+  return function(content) {
+    const manifest = JSON.parse(content.toString());
 
-function addVersion(content) {
-  return Buffer.from(
-    JSON.stringify(
-      {
-        version: pkg.version,
-        ...JSON.parse(content.toString())
-      },
-      undefined,
-      2
-    )
-  );
+    if (process.env.TOGGL_API_HOST) {
+      manifest.permissions = [
+        ...manifest.permissions,
+        process.env.TOGGL_API_HOST
+      ];
+      if (browser === 'chrome') {
+        manifest.externally_connectable.matches = [
+          ...manifest.externally_connectable.matches,
+          process.env.TOGGL_API_HOST
+        ];
+      }
+    }
+
+    manifest.version = pkg.version;
+
+    return Buffer.from(JSON.stringify(manifest, undefined, 2));
+  };
 }

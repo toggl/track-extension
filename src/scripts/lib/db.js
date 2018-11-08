@@ -44,20 +44,20 @@ export default class Db {
         this.updateSetting(
           'nannyCheckEnabled',
           request.state,
-          this.togglButton.triggerNotification
+          this.togglButton.setNannyTimer
         );
       } else if (request.type === 'toggle-nanny-from-to') {
         this.updateSetting(
           'nannyFromTo',
           request.state,
-          this.togglButton.triggerNotification,
+          this.togglButton.setNannyTimer,
           this.get('nannyCheckEnabled')
         );
       } else if (request.type === 'toggle-nanny-interval') {
         this.updateSetting(
           'nannyInterval',
           Math.max(request.state, 1000),
-          this.togglButton.triggerNotification,
+          this.togglButton.setNannyTimer,
           this.get('nannyCheckEnabled')
         );
       } else if (request.type === 'toggle-idle') {

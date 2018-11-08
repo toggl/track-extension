@@ -721,7 +721,7 @@ window.TogglButton = {
                 })
               );
             }
-            TogglButton.triggerNotification();
+            TogglButton.setNannyTimer();
             ga.reportEvent(timeEntry.type, timeEntry.service);
             if (cb) {
               cb();
@@ -772,7 +772,7 @@ window.TogglButton = {
                 })
               );
             }
-            TogglButton.triggerNotification();
+            TogglButton.setNannyTimer();
             ga.reportEvent(timeEntry.type, timeEntry.service);
             if (cb) {
               cb();
@@ -1372,7 +1372,7 @@ window.TogglButton = {
       if (!FF) {
         options.buttons = [{ title: 'Start timer' }, { title: secondTitle }];
       } else {
-        options.message += '. Click to start timer.';
+        options.message += ' Click to start timer.';
       }
 
       chrome.notifications.create('remind-to-track-time', options, function() {
@@ -1526,7 +1526,7 @@ window.TogglButton = {
       eventType = 'pomodoro';
     }
     if (!FF) {
-      TogglButton.processNotificationEvent(notificationId);
+      TogglButton.onNotificationClicked(notificationId);
     }
     ga.reportEvent(eventType, buttonName);
   },
@@ -1553,7 +1553,7 @@ window.TogglButton = {
     return now > start && now <= end;
   },
 
-  triggerNotification: function() {
+  setNannyTimer: function() {
     if (TogglButton.$nannyTimer === null && TogglButton.$curEntry === null) {
       TogglButton.hideNotification('remind-to-track-time');
       TogglButton.$nannyTimer = setTimeout(
@@ -1563,12 +1563,25 @@ window.TogglButton = {
     }
   },
 
-  processNotificationEvent: function(notificationId) {
+  // Triggered when user clicks a notification (but not on a button in the notification)
+  // N.B. Buttons do not exist in Firefox, so we trigger notificationBtnClick from here in Firefox.
+  onNotificationClicked: function(notificationId) {
     if (FF) {
       TogglButton.notificationBtnClick(notificationId, 0);
     }
     if (notificationId === 'remind-to-track-time') {
-      TogglButton.triggerNotification();
+      TogglButton.setNannyTimer();
+    } else {
+      TogglButton.hideNotification(notificationId);
+    }
+  },
+
+  // Triggered when a notification is closed, either by the OS or the user dismissing it
+  // N.B. User cannot dismiss it themselves in Firefox.
+  // N.B. A notification "expiring" does not trigger this.
+  onNotificationClosed: function (notificationId) {
+    if (notificationId === 'remind-to-track-time') {
+      TogglButton.setNannyTimer();
     } else {
       TogglButton.hideNotification(notificationId);
     }
@@ -1680,7 +1693,7 @@ window.TogglButton = {
           version: TogglButton.$fullVersion,
           defaults: { project: db.getDefaultProject() }
         });
-        TogglButton.triggerNotification();
+        TogglButton.setNannyTimer();
       } else if (request.type === 'login') {
         TogglButton.loginUser(request, sendResponse);
       } else if (request.type === 'logout') {
@@ -1961,16 +1974,14 @@ window.ga = new Ga(db);
 TogglButton.queue.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(db.get('showRightClickButton'));
 TogglButton.fetchUser();
-TogglButton.triggerNotification();
+TogglButton.setNannyTimer();
 TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(db.get('stopAtDayEnd'));
 chrome.runtime.onMessage.addListener(TogglButton.newMessage);
-chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
-chrome.notifications.onClicked.addListener(
-  TogglButton.processNotificationEvent
-);
+chrome.notifications.onClosed.addListener(TogglButton.onNotificationClosed);
+chrome.notifications.onClicked.addListener(TogglButton.onNotificationClicked);
 if (!FF) {
   // not supported in FF
   chrome.notifications.onButtonClicked.addListener(

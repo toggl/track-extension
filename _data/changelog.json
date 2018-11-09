@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.13.0",
+      "rows": [
+        "Add Reviewboard Integration #997",
+        "Fix timer starting automatically when reminder notification is closed #1180",
+        "Hide permissions tab in Firefox #1172",
+        "Fix wrong durations for entries that were manually edited and stopped #1174"
+      ]
+    },
+    {
       "version": "1.12.0",
       "rows": [
         "Add a settings tab for configuring telemetry settings #1150",

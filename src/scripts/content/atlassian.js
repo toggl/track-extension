@@ -76,7 +76,7 @@ togglbutton.render(
 
     if (id !== null && description !== null && project !== null) {
       link = togglbutton.createTimerLink({
-        className: 'jira2018',
+        className: 'jira2018-modal',
         description: id.textContent + ' ' + description.textContent,
         projectName: project && project.textContent,
         buttonType: 'minimal'
@@ -112,6 +112,67 @@ togglbutton.render(
       container.appendChild(link);
       id.parentNode.appendChild(container);
     }
+  }
+);
+
+// Jira 2018-11 issue page. Uses functions for timer values due to SPA on issue-lists.
+togglbutton.render(
+  '#jira-frontend:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    var link,
+      issueNumberElement,
+      container,
+      titleElement,
+      projectElement;
+
+    // The main "issue link" at the top of the issue.
+    // Extra target and role selectors are to avoid picking up wrong links on issue-list-pages.
+    issueNumberElement = $('a[href^="/browse/"][target=_blank]:not([role=list-item])', elem);
+    container = issueNumberElement.parentElement.parentElement.parentElement;
+
+    function getDescription () {
+      var description = '';
+
+      // Title/summary of the issue - we use the hidden "edit" button that's there for a11y
+      // in order to avoid picking up actual page title in the case of issue-list-pages.
+      titleElement = $('h1 ~ button[aria-label]', elem).previousSibling;
+
+      if (issueNumberElement) {
+        description += issueNumberElement.textContent.trim();
+      }
+
+      if (titleElement) {
+        if (description) description += ' ';
+        description += titleElement.textContent.trim();
+      }
+
+      return description
+    }
+
+    function getProject () {
+      var project = '';
+
+      // Best effort to find the "Project switcher" found in the sidebar of most pages, and extract
+      // the project name from that. Historically project has not always been picked up reliably in Jira.
+      projectElement = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div');
+      // Attempt to find the project name in page subtitle in case the sidebar is hidden
+      if (!projectElement) $('a[href^="/browse/"][target=_self]')
+
+      if (projectElement) {
+        project = projectElement.textContent.trim();
+      }
+
+      return project
+    }
+
+    link = togglbutton.createTimerLink({
+      className: 'jira2018',
+      description: getDescription,
+      projectName: getProject
+    });
+
+    container.appendChild(link);
   }
 );
 

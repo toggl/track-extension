@@ -1498,3 +1498,9 @@ label > .toggl-button.outlook {
   position: relative;
   top: 1px;
 }
+
+/********* ESPOCRM *********/
+.toggl-button.espocrm {
+    margin-top: 3px;
+    margin-left: 10px;
+}

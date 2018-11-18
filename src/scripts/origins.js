@@ -138,6 +138,10 @@ export default {
     url: '*://*.esa.io/*',
     name: 'Esa.io'
   },
+  EspoCRM: {
+    url: '',
+    name: 'espocrm'
+  },
   eventum: {
     url: '',
     name: 'Eventum'

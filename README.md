@@ -35,6 +35,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Drupal](https://www.drupal.org)
 - [e(Project)](https://eproject.me/)
 - [Esa](https://esa.io)
+- [EspoCRM](https://www.espocrm.com/)
 - [Eventum](https://launchpad.net/eventum)
 - [Evernote](https://www.evernote.com/)
 - [Exana](https://exana.io/)

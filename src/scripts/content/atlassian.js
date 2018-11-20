@@ -198,6 +198,9 @@ togglbutton.render(
       description = numElem.textContent + description;
     }
 
+    if (projectElem === null) {
+      projectElem = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div');
+    }
     // JIRA server support
     if (projectElem === null) {
       projectElem = $('#project-name-val');

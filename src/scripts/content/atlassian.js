@@ -30,87 +30,34 @@ togglbutton.render(
   }
 );
 
-// Jira 2018-06 new sprint modal
-// Classes are random keep changing so we need to rely on other attributes
+// Jira 2018-X Sprint Modal
+// We select dialog content in order to wait for the SPA to render.
+// N.B. this can bring its own issues (see comment about infinite re-renders).
+// The h1 element gets replaced and no longer has .toggl class, so we have to be careful.
 togglbutton.render(
-  'div[role="dialog"] h1 + button[aria-label="Edit Summary"]',
+  'div[role="dialog"] h1:not(.toggl)',
   { observe: true },
   function(needle) {
     var root = needle.closest('div[role="dialog"]'),
       id = $('div:last-child > a[spacing="none"][href^="/browse/"]:last-child', root),
       description = $('h1:first-child', root),
-      project = $('a[spacing="none"][href*="/projects/"]'),
-      container = createTag('div', 'jira-ghx-toggl-button'),
+      project = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div'),
       link;
 
     if (project === null) {
-      project = $('div[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(1) > div:first-child');
+      project = $('a[href^="/browse/"][target=_self]');
     }
 
     if (id !== null && description !== null) {
       link = togglbutton.createTimerLink({
-        className: 'jira2017',
+        className: 'jira2018',
         description: id.textContent + ' ' + description.textContent,
         projectName: project && project.textContent
       });
 
-      container.appendChild(link);
-      id.parentNode.appendChild(container);
-    }
-  }
-);
-
-// Jira 2018-08 sprint modal
-// Using the h1 as selector to make sure that it will only try to render the button
-// after Jira has fully rendered the modal content
-togglbutton.render(
-  'div[role="dialog"].sc-krDsej h1:not(.toggl)',
-  { observe: true },
-  function(needle) {
-    var root = needle.closest('div[role="dialog"]'),
-      id = $('a:first-child', root),
-      description = $('h1:first-child', root),
-      project = $('.sc-cremA'),
-      container = createTag('div', 'jira-ghx-toggl-button'),
-      link;
-
-    if (id !== null && description !== null && project !== null) {
-      link = togglbutton.createTimerLink({
-        className: 'jira2018-modal',
-        description: id.textContent + ' ' + description.textContent,
-        projectName: project && project.textContent,
-        buttonType: 'minimal'
-      });
-
-      container.appendChild(link);
-      $('.sc-iBmynh', root).appendChild(container);
-    }
-  }
-);
-
-// Jira 2018 sprint modal
-// Using the h1 as selector to make sure that it will only try to render the button
-// after Jira has fully rendered the modal content
-togglbutton.render(
-  'div[role="dialog"] .ffQQbf:not(.toggl)',
-  { observe: true },
-  function(needle) {
-    var root = needle.closest('div[role="dialog"]'),
-      id = $('a:first-child', root),
-      description = $('h1:first-child', root),
-      project = $('.bgdPDV'),
-      container = createTag('div', 'jira-ghx-toggl-button'),
-      link;
-
-    if (id !== null && description !== null && project !== null) {
-      link = togglbutton.createTimerLink({
-        className: 'jira2017',
-        description: id.textContent + ' ' + description.textContent,
-        projectName: project && project.textContent
-      });
-
-      container.appendChild(link);
-      id.parentNode.appendChild(container);
+      // Link is not placed in exactly the same element as a regular issue page,
+      // else we encounter infinite re-renders when the SPA updates the DOM.
+      id.parentNode.appendChild(link);
     }
   }
 );
@@ -157,7 +104,7 @@ togglbutton.render(
       // the project name from that. Historically project has not always been picked up reliably in Jira.
       projectElement = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div');
       // Attempt to find the project name in page subtitle in case the sidebar is hidden
-      if (!projectElement) $('a[href^="/browse/"][target=_self]')
+      if (!projectElement) projectElement = $('a[href^="/browse/"][target=_self]')
 
       if (projectElement) {
         project = projectElement.textContent.trim();

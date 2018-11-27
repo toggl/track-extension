@@ -175,14 +175,14 @@
             <p class="description">Enable tools you want to use with Toggl Button. You can enable all by clicking "Enable all" button in the top.</p>
           </div>
 
-          </br>
-
           <div class="section">
             <h2>Custom Domain Url Permissions</h2>
-            <input type="text" id="new-permission" placeholder="custom domain url"/>
-            <div id="origins-container"></div>
+            <input type="text" id="new-permission" placeholder="Custom domain url"/>
             <p class="description">Define custom domains here. Just type in the domain name without http(s) in format "toggl.com" and select the integration from dropdown. Ports are currently not supported.</p>
-            <button id="add-permission">Add</button>
+            <div class="button-container">
+                <div id="origins-container"></div>
+                <button id="add-permission">Add</button>
+            </div>
             <div class="permissions-toolbar" data-id="custom">
             </div>
             <div id="custom-perm-container"></div>

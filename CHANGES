@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "1.14.0",
+      "rows": [
+        "Add permissions to Firefox addon #1191",
+        "Fix Jira integrations #1193",
+        "Fix Backlog integration #1194"
+      ]
+    },
+    {
       "version": "1.13.0",
       "rows": [
         "Add Reviewboard Integration #997",

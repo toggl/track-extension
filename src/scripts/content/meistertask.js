@@ -1,5 +1,9 @@
 'use strict';
 
+
+/** MeisterTask 1.0 **/
+
+
 togglbutton.render('.js-box-wrapper:not(.toggl)', { observe: true }, function(
   elem
 ) {
@@ -41,44 +45,48 @@ togglbutton.render('.js-box-wrapper:not(.toggl)', { observe: true }, function(
   togglButtonElement.parentNode.insertBefore(link, togglButtonElement);
 });
 
-// MeisterTask 2.0 (2018)
-// since they removed all descriptive classes selectors looks awful
-togglbutton.render('.kr-view.react-dialog-box > .kr-view:not(.toggl)', { observe: true }, function (elem) {
-  var link, description, project, tagFunc, togglButtonElement;
 
-  description = $('div.react-modals-enable-events > div > div > div:nth-child(1) > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div > div', elem).textContent;
-  project = $('div.react-modals-enable-events > div > div > div:nth-child(1) > div > div > div > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(1) > a', elem).textContent;
+/** MeisterTask 2.0 **/
 
-  tagFunc = function () {
-    var index,
-      tags = [],
-      tagList = $('div.react-modals-enable-events > div > div > div:nth-child(1) > div > div > div > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(2)', elem),
-      tagItems;
 
-    if (!tagList) {
-      return [];
-    }
+const getTogglForm = function() {
+  return document.querySelector('#toggl-button-edit-form');
+};
 
-    tagItems = tagList.children;
+const getButtonContainer = function() {
+  return document.querySelector('#mt-toggl-task-button');
+};
 
-    for (index in tagItems) {
-      if (tagItems.hasOwnProperty(index)) {
-        tags.push(tagItems[index].textContent);
-      }
-    }
+const getDataContainer = function() {
+  return document.querySelector('#mt-toggl-data');
+};
 
-    return tags;
-  }
+const getApplicationData = function($dataElement) {
+  const dataAttr = $dataElement.getAttribute('data-toggl-json');
+  const data = JSON.parse(dataAttr);
+  return data;
+};
 
-  link = togglbutton.createTimerLink({
+const createTogglButton = function({ taskName, projectName, tagNames }) {
+  return togglbutton.createTimerLink({
     className: 'meistertask',
-    description: description,
-    projectName: project,
-    tags: tagFunc,
-    buttonType: 'minimal'
+    buttonType: 'minimal',
+    description: taskName || '',
+    projectName: projectName || '',
+    tags: tagNames || [],
   });
+};
 
-  togglButtonElement = $('div.react-modals-enable-events > div > div > div:nth-child(1) > div > div > div > div:nth-child(1) > div > div:nth-child(2)', elem);
+const emptyElement = function($btnContainer) {
+  while ($btnContainer.hasChildNodes()) {
+    $btnContainer.removeChild($btnContainer.lastChild);
+  }
+};
 
-  togglButtonElement.parentNode.insertBefore(link, togglButtonElement);
+togglbutton.render('#mt-toggl-task-button:not(.toggl)', { observe: true }, function($btnContainer) {
+  const $dataElement = getDataContainer();
+  const data = getApplicationData($dataElement);
+  const $btn = createTogglButton(data);
+  emptyElement($btnContainer);
+  $btnContainer.appendChild($btn);
 });

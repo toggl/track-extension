@@ -1,7 +1,7 @@
 'use strict';
 
 togglbutton.render(
-  '.notion-page-controls + .notion-selectable > [contenteditable="true"][placeholder="Untitled"]:not(.toggl)',
+  '.notion-overlay-container .notion-peek-renderer .notion-page-controls + .notion-selectable > [contenteditable="true"][placeholder="Untitled"]:not(.toggl)',
   { observe: true },
   function(elem) {
     var link,
@@ -11,7 +11,7 @@ togglbutton.render(
       projectElem = $(
         '.notion-sidebar-container > * > * > * > * > * > * > * > * + * > * > *'
       ),
-      togglButtonLoc = $('[rel="noopener noreferrer nofollow"] + * + *');
+      togglButtonLoc = $('.notion-overlay-container .notion-peek-renderer [rel="noopener noreferrer nofollow"] + * + *');
 
     if (!descriptionElem || !togglButtonLoc) {
       return;

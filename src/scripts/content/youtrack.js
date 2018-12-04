@@ -46,6 +46,7 @@ togglbutton.render(
 );
 
 // Agile board
+// youtrack-6 Agile board
 togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function(
   elem
 ) {

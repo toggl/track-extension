@@ -11,7 +11,9 @@ togglbutton.render(
       projectElem = $(
         '.notion-sidebar-container > * > * > * > * > * > * > * > * + * > * > *'
       ),
-      togglButtonLoc = $('.notion-overlay-container .notion-peek-renderer [rel="noopener noreferrer nofollow"] + * + *');
+      togglButtonLoc = $(
+        '.notion-overlay-container .notion-peek-renderer [rel="noopener noreferrer nofollow"] + [style*="flex-grow: 1"] + *'
+      );
 
     if (!descriptionElem || !togglButtonLoc) {
       return;

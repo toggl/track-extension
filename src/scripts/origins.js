@@ -381,6 +381,10 @@ export default {
     name: 'Proworkflow',
     clone: 'true'
   },
+  'quire.io': {
+    url: '*://quire.io/*',
+    name: 'Quire'
+  },
   'rally1.rallydev.com': {
     url: '*://rally1.rallydev.com/*',
     name: 'RallyDev'

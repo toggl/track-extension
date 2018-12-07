@@ -1,13 +1,29 @@
 # Contributing to Toggl Button
 
-Glad to hear you're interested in contributing to the Toggl Button project.
+Thanks for your interest in contributing to Toggl Button!
 
-Here are a few word to make tha process as fast as possible.
-
-* Always run `make lint` and fix reported issues before submitting a pull request.
+Please take a read through these guidelines to make the process as smooth as possible.
 
 ## Adding new integrations
 
-* Please use `git squash` and merge all your commits into one commit. This keeps the git log compact and clear.
-* Add description about the position of the button. In what part of the page the button is visible
-* Add sceenshot of the working integration.
+For adding a simple integration, the [bitrix24](https://github.com/toggl/toggl-button/blob/master/src/scripts/content/bitrix24.js) integration is a good option for inspiration.
+
+All integrations have some maintenance cost - any time the UI is changed, Toggl Button might break. Help future maintainers by trying to be sensibly "future-proof" with your CSS selectors, following the code style you observe elsewhere and avoiding neat code tricks that others might not understand.
+
+All integrations should be tested across both Chrome and Firefox.
+
+Please consider the following:
+
+* Include screenshot(s) of the working integration in your pull request.
+* Include a description of how to find the page or screen the button is visible on.
+* Only change or add one integration in each pull request.
+* Please try to lint your changes with these commands:
+  * `npm run xo -- src/scripts/path/to/your/file.js` to see any problems.
+  * `npm run xo -- src/scripts/path/to/your/file.js --fix` to automatically fix problems.
+* When you're done, squash all of your commits into one commit. This keeps the git log compact and clear.
+
+## Making changes to the core extension code
+
+Please consider future maintainers and the "generic" nature of the extension in mind when writing new features. All changes should be tested across both Chrome and Firefox.
+
+There are a lot of moving parts and different settings in the extension, please do your best to account for them and test that you don't introduce any regressions.

@@ -1,14 +1,12 @@
 'use strict';
 
 togglbutton.render(
-  '.notion-peek-renderer:not(.toggl)',
+  '.notion-overlay-container .notion-peek-renderer .notion-page-controls + .notion-selectable > [contenteditable="true"][placeholder="Untitled"]:not(.toggl)',
   { observe: true },
   function(elem) {
     var link,
       container = createTag('div', 'button-link notion-tb-wrapper'),
-      descriptionElem = $(
-        '.notion-overlay-container .notion-peek-renderer .notion-page-controls + .notion-selectable > [contenteditable="true"][placeholder="Untitled"]:not(.toggl)'
-      ),
+      descriptionElem = elem,
       projectElem = $(
         '.notion-sidebar-container > * > * > * > * > * > * > * > * + * > * > *'
       ),

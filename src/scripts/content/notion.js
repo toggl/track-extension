@@ -22,8 +22,6 @@ togglbutton.render(
       buttonType: 'minimal'
     });
 
-    link.style.cursor = 'pointer';
-
     container.appendChild(link);
     togglButtonLoc.parentNode.insertBefore(container, togglButtonLoc);
   }

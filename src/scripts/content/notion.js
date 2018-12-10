@@ -1,7 +1,7 @@
 'use strict';
 
 togglbutton.render(
-  '.notion-overlay-container .notion-peek-renderer .notion-page-controls + .notion-selectable > [contenteditable="true"][placeholder="Untitled"]:not(.toggl)',
+  '.notion-peek-renderer:not(.toggl)',
   { observe: true },
   function(elem) {
     var link,

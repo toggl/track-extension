@@ -6,7 +6,9 @@ togglbutton.render(
   function(elem) {
     var link,
       container = createTag('div', 'button-link notion-tb-wrapper'),
-      descriptionElem = elem,
+      descriptionElem = $(
+        '.notion-overlay-container .notion-peek-renderer .notion-page-controls + .notion-selectable > [contenteditable="true"][placeholder="Untitled"]:not(.toggl)'
+      ),
       projectElem = $(
         '.notion-sidebar-container > * > * > * > * > * > * > * > * + * > * > *'
       ),

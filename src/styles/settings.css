@@ -236,7 +236,7 @@ header li:hover {
 }
 
 #permissions-list.filtered li.filter {
-  display: block;
+  display: flex;
 }
 
 #permissions-list li.disabled {

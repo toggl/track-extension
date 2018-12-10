@@ -14,10 +14,6 @@ togglbutton.render(
         '.notion-overlay-container .notion-peek-renderer [rel="noopener noreferrer nofollow"] + [style*="flex-grow: 1"] + *'
       );
 
-    if (!descriptionElem || !togglButtonLoc) {
-      return;
-    }
-
     link = togglbutton.createTimerLink({
       className: 'notion',
       description: descriptionElem.textContent.trim(),

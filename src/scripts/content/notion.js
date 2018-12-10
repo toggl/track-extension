@@ -18,7 +18,8 @@ togglbutton.render(
       className: 'notion',
       description: descriptionElem.textContent.trim(),
       projectName: projectElem && projectElem.textContent,
-      calculateTotal: true
+      calculateTotal: true,
+      buttonType: 'minimal'
     });
 
     link.style.cursor = 'pointer';

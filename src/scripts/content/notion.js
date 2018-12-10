@@ -6,7 +6,6 @@ togglbutton.render(
   function(elem) {
     var link,
       container = createTag('div', 'button-link notion-tb-wrapper'),
-      descFunc,
       descriptionElem = elem,
       projectElem = $(
         '.notion-sidebar-container > * > * > * > * > * > * > * > * + * > * > *'
@@ -19,13 +18,9 @@ togglbutton.render(
       return;
     }
 
-    descFunc = function() {
-      return descriptionElem.textContent;
-    };
-
     link = togglbutton.createTimerLink({
       className: 'notion',
-      description: descFunc,
+      description: descriptionElem.textContent.trim(),
       projectName: projectElem && projectElem.textContent,
       calculateTotal: true
     });

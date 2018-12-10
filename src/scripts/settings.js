@@ -28,7 +28,6 @@ var Settings = {
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
-  lastFilter: null,
   $permissionFilter: document.querySelector('#permission-filter'),
   $permissionFilterClear: document.querySelector('#filter-clear'),
   $permissionsList: document.querySelector('#permissions-list'),
@@ -622,22 +621,15 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     Settings.showPage();
 
-    Settings.$permissionFilter.addEventListener('keyup', function(e) {
-      var key,
-        val = Settings.$permissionFilter.value;
-      if (val === Settings.lastFilter) {
-        return;
-      }
-
-      if (val.length === 1) {
+    let filterTimerId = null
+    function updateFilteredList (val) {
+      if (val.length > 0) {
         Settings.$permissionsList.classList.add('filtered');
         Settings.$permissionFilterClear.style.display = 'block';
-      }
-      if (val.length === 0) {
+      } else {
         Settings.$permissionsList.classList.remove('filtered');
         Settings.$permissionFilterClear.style.display = 'none';
       }
-      Settings.lastFilter = val;
 
       const permissionItems = document.querySelectorAll('#permissions-list li');
       permissionItems.forEach((item) => {
@@ -647,6 +639,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
           item.classList.remove('filter');
         }
       });
+    }
+    Settings.$permissionFilter.addEventListener('keyup', function(e) {
+      const val = Settings.$permissionFilter.value;
+      if (filterTimerId) {
+        clearTimeout(filterTimerId)
+      }
+      filterTimerId = setTimeout(() => updateFilteredList(val), 250)
     });
 
     Settings.$permissionFilterClear.addEventListener('click', function(e) {

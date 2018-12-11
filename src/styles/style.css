@@ -1168,7 +1168,7 @@ li > .toggl-button.phabricator {
   background-position-x: 8px !important;
 }
 
-.toggl-button.slack-message {
+.c-message_actions__button .toggl-button.slack-message {
   background-color: #fff !important;
   background-size: 16px !important;
   padding-left: 1px;

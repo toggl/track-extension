@@ -22,7 +22,7 @@ togglbutton.render('.c-message--hover:not(.toggl)', { observe: true }, function(
   elem
 ) {
   var link,
-    placeholder = $('.c-message_actions__button--last-child'),
+    placeholder = $('.c-message_actions__button:last-child'),
     description = $('.c-message__body', elem).textContent,
     project = $('#team_name').textContent,
     button = document.createElement('button');

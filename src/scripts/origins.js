@@ -280,6 +280,11 @@ export default {
     url: '*://*.newsletter2go.com/*',
     name: 'Newsletter2go'
   },
+  'notion.so': {
+    url: '*://*.notion.so/*',
+    name: 'Notion by Matt',
+    file: 'notion.js'
+  },
   'nozbe.com': {
     url: '*://app.nozbe.com/*',
     name: 'Nozbe'

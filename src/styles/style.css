@@ -1518,3 +1518,10 @@ label > .toggl-button.outlook {
   position: relative;
   top: 1px;
 }
+
+/********* NOTION *********/
+.toggl-button.notion {
+  cursor: pointer;
+  margin-right: 13px;
+  margin-top: 6px;
+}

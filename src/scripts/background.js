@@ -1731,19 +1731,20 @@ window.TogglButton = {
         error.stack = request.stack;
         error.message = request.stack.split('\n')[0];
 
+        // Attempt to extract integration name from content filename
+        errorSource = request.stack.split('content/')[1];
+        if (!!errorSource) {
+          errorSource = errorSource.split('.js')[0];
+        } else {
+          errorSource = 'Unknown';
+        }
+
         if (process.env.DEBUG) {
           console.log(error);
           console.log(request.category + ' Script Error [' + errorSource + ']');
         } else {
           if (request.category === 'Content') {
-            errorSource = request.stack.split('content/')[1];
-            if (!!errorSource) {
-              errorSource = errorSource.split('.js')[0];
-            } else {
-              errorSource = 'Unknown';
-            }
-
-            error.name = 'Content Error';
+            error.name = `Content Error [${errorSource}]`;
             bugsnagClient.notify(error);
           } else {
             report(error);

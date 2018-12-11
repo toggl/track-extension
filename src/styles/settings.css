@@ -236,7 +236,7 @@ header li:hover {
 }
 
 #permissions-list.filtered li.filter {
-  display: block;
+  display: flex;
 }
 
 #permissions-list li.disabled {
@@ -262,6 +262,7 @@ header li:hover {
 
 #filter-clear {
   display: none;
+  float: left;
   width: 18px;
   height: 18px;
   line-height: 14px;

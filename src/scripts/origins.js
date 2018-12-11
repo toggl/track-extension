@@ -9,7 +9,7 @@ export default {
     name: 'Airtable'
   },
   'any.do': {
-    url: '*://web.any.do/*',
+    url: '*://*.any.do/*',
     name: 'Anydo'
   },
   'asana.com': {

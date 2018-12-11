@@ -1,84 +1,21 @@
 'use strict';
 
-function getProjectNameFromLabel(elem) {
-  var projectLabel = '',
-    projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
-  if (projectLabelEle) {
-    projectLabel = projectLabelEle.textContent.trim();
+function getProjectName(item) {
+  var projectItems = item.parentNode.getElementsByClassName('project_item__name');
+  
+  if (projectItems.length > 0) {
+    return projectItems[0].textContent;
   }
-  return projectLabel;
+
+  return item.closest('.list_editor').querySelector('a.project_link span').textContent;
 }
 
-var levelPattern = /(?:^|\s)indent_([0-9]*?)(?:\s|$)/;
-function getParentEle(sidebarCurrentEle) {
-  var curLevel, parentClass, parentCandidate;
-  curLevel = sidebarCurrentEle.className.match(levelPattern)[1];
-  parentClass = 'indent_' + (curLevel - 1);
-
-  parentCandidate = sidebarCurrentEle;
-  while (parentCandidate.previousElementSibling) {
-    parentCandidate = parentCandidate.previousElementSibling;
-    if (parentCandidate.classList.contains(parentClass)) {
-      break;
-    }
-  }
-  return parentCandidate;
-}
-
-function isTopLevelProject(sidebarCurrentEle) {
-  return sidebarCurrentEle.classList.contains('indent_1');
-}
-
-function getProjectNameHierarchy(sidebarCurrentEle) {
-  var parentProjectEle, projectName;
-  projectName = $('.name', sidebarCurrentEle).firstChild.textContent.trim();
-  if (isTopLevelProject(sidebarCurrentEle)) {
-    return [projectName];
-  }
-  parentProjectEle = getParentEle(sidebarCurrentEle);
-  return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
-}
-
-function projectWasJustCreated(projectId) {
-  return projectId.startsWith('_');
-}
-
-function getSidebarCurrentEle(elem) {
-  var editorInstance,
-    projectId,
-    sidebarRoot,
-    sidebarColorEle,
-    sidebarCurrentEle;
-  editorInstance = elem.closest('.project_editor_instance');
-  if (editorInstance) {
-    projectId = editorInstance.getAttribute('data-project-id');
-    sidebarRoot = $('#project_list');
-    if (projectWasJustCreated(projectId)) {
-      sidebarCurrentEle = $('.current', sidebarRoot);
-    } else {
-      sidebarColorEle = $('#project_color_' + projectId, sidebarRoot);
-      if (sidebarColorEle) {
-        sidebarCurrentEle = sidebarColorEle.closest('.menu_clickable');
-      }
-    }
-  }
-  return sidebarCurrentEle;
-}
-
-function getProjectNames(elem) {
-  var projectNames, viewingInbox, sidebarCurrentEle;
-  viewingInbox = $('#filter_inbox.current, #filter_team_inbox.current');
-  if (viewingInbox) {
-    projectNames = ['Inbox'];
-  } else {
-    sidebarCurrentEle = getSidebarCurrentEle(elem);
-    if (sidebarCurrentEle) {
-      projectNames = getProjectNameHierarchy(sidebarCurrentEle);
-    } else {
-      projectNames = [getProjectNameFromLabel(elem)];
-    }
-  }
-  return projectNames;
+function getTags(item) {
+  var tags = item.querySelectorAll('.labels_holder a:not(.label_sep)')
+  
+  return Array.from(tags).map(function(tag) {
+    return tag.textContent;
+  });
 }
 
 togglbutton.render(
@@ -123,7 +60,8 @@ togglbutton.render(
     link = togglbutton.createTimerLink({
       className: 'todoist',
       description: descFunc(),
-      projectName: getProjectNames(elem)
+      projectName: getProjectName(elem),
+      tags: getTags(elem)
     });
 
     container.insertBefore(link, container.lastChild);

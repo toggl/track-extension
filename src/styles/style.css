@@ -641,6 +641,23 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-left: 10px;
 }
 
+.toggl-button.anydo--2018 {
+  margin: 3px 25px;
+  position: absolute;
+  right: 0;
+}
+
+.TaskItem .toggl-button.anydo--2018__taskItem {
+  visibility: hidden;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+*:hover > .toggl-button.anydo--2018, *:hover > .toggl-button.anydo--2018__taskItem {
+  visibility: visible;
+}
+
 /********* WUNDERLIST *********/
 .toggl-button.wunderlist {
   text-decoration: none;
@@ -1291,11 +1308,6 @@ a.toggl-button.workfront.min {
 /********* ONSHAPE *********/
 .toggl-button.onshape {
   margin: 10px;
-}
-
-/********* MEISTERTASK *********/
-.toggl-button.meistertask {
-  margin: 9px;
 }
 
 /********* OVERV.IO *********/

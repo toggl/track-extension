@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.15.1",
+      "rows": [
+        "Update Any.do integration for new UI #1166",
+        "Fix broken Settings page layout",
+        "Fix page shortcuts being triggered when typing inside Toggl popup #913",
+        "Improve error reporting"
+      ]
+    },
+    {
       "version": "1.15.0",
       "rows": [
         "Add support for MeisterTask 2.0 #1201",

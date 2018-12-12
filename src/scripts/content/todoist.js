@@ -2,17 +2,19 @@
 
 function getProjectName(item) {
   var projectItems = item.parentNode.getElementsByClassName('project_item__name');
-  
+
   if (projectItems.length > 0) {
     return projectItems[0].textContent;
   }
 
-  return item.closest('.list_editor').querySelector('a.project_link span').textContent;
+  const closestEditor = item.closest('.list_editor')
+
+  return closestEditor ? closestEditor.querySelector('a.project_link span').textContent : '';
 }
 
 function getTags(item) {
   var tags = item.querySelectorAll('.labels_holder a:not(.label_sep)')
-  
+
   return Array.from(tags).map(function(tag) {
     return tag.textContent;
   });

@@ -436,6 +436,7 @@ window.TogglButton = {
       defaultProject = db.getDefaultProject(),
       rememberProjectPer = db.get('rememberProjectPer'),
       entry;
+    const enableAutoTagging = db.get('enableAutoTagging');
     TogglButton.$curService = (timeEntry || {}).service;
     TogglButton.$curURL = (timeEntry || {}).url;
 
@@ -463,7 +464,7 @@ window.TogglButton = {
       pid: timeEntry.pid || timeEntry.projectId || null,
       tid: timeEntry.tid || null,
       wid: timeEntry.wid || TogglButton.$user.default_wid,
-      tags: timeEntry.tags || null,
+      tags: enableAutoTagging ? (timeEntry.tags || null) : null,
       billable: timeEntry.billable || false,
       created_with: timeEntry.createdWith || TogglButton.$fullVersion
     };

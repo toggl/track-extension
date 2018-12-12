@@ -42,6 +42,7 @@ var Settings = {
   $pomodoroVolumeLabel: null,
   $sendUsageStatistics: null,
   $sendErrorReports: null,
+  $enableAutoTagging: null,
   showPage: function() {
     var volume = parseInt(db.get('pomodoroSoundVolume') * 100, 10),
       rememberProjectPer = db.get('rememberProjectPer');
@@ -59,6 +60,10 @@ var Settings = {
         Settings.$showRightClickButton,
         db.get('showRightClickButton')
       );
+      Settings.toggleState(
+        Settings.$enableAutoTagging,
+        db.get('enableAutoTagging')
+      )
       Settings.toggleState(
         Settings.$startAutomatically,
         db.get('startAutomatically')
@@ -598,6 +603,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       '#send-usage-statistics'
     );
     Settings.$sendErrorReports = document.querySelector('#send-error-reports');
+    Settings.$enableAutoTagging = document.querySelector('#enable-auto-tagging');
 
     // Show permissions page with notice
     if (
@@ -662,6 +668,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
       );
       TogglButton.toggleRightClickButton(
         localStorage.getItem('showRightClickButton') !== 'true'
+      );
+    });
+    Settings.$enableAutoTagging.addEventListener('click', function (e) {
+      Settings.toggleSetting(
+        e.target,
+        localStorage.getItem('enableAutoTagging') !== 'true',
+        'update-enable-auto-tagging'
       );
     });
     Settings.$startAutomatically.addEventListener('click', function(e) {

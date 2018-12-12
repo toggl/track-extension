@@ -24,7 +24,8 @@ export default class Db {
     dayEndTime: '17:00',
     defaultProject: 0,
     projects: '',
-    rememberProjectPer: 'false'
+    rememberProjectPer: 'false',
+    enableAutoTagging: false
   };
 
   // core settings: key, default value
@@ -109,6 +110,10 @@ export default class Db {
         request.type === 'update-send-error-reports'
       ) {
         this.updateSetting('sendErrorReports', request.state)
+      } else if (
+        request.type === 'update-enable-auto-tagging'
+      ) {
+        this.updateSetting('enableAutoTagging', request.state)
       }
     } catch (e) {
       bugsnagClient.notify(e);

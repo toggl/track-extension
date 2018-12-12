@@ -4,16 +4,15 @@
 togglbutton.render(
   '.task_item .content:not(.toggl)',
   { observe: true },
-  function (elem) {
-    var link,
-      descFunc,
-      container = $('.text', elem);
+  elem => {
+    const container = $('.text', elem);
 
-    descFunc = function () {
-      var clone = container.cloneNode(true),
-        i = 0,
-        child = null;
+    const descriptionSelector = () => {
+      const clone = container.cloneNode(true);
+      let i = 0;
+      let child = null;
 
+      // Clean up UI elements that appear in the same node as the description
       while (clone.children.length > i) {
         child = clone.children[i];
         if (
@@ -40,26 +39,24 @@ togglbutton.render(
       return clone.textContent.trim();
     };
 
-    link = togglbutton.createTimerLink({
+    const tagsSelector = () => {
+      const tags = elem.querySelectorAll('.labels_holder a:not(.label_sep)');
+
+      return [...tags].map(tag => {
+        return tag.textContent;
+      });
+    }
+
+    const link = togglbutton.createTimerLink({
       className: 'todoist',
-      description: descFunc(),
+      description: descriptionSelector,
       projectName: getProjectNames(elem),
-      tags: getTags(elem)
+      tags: tagsSelector
     });
 
     container.insertBefore(link, container.lastChild);
   }
 );
-
-
-function getTags(container) {
-  var tags = container.querySelectorAll('.labels_holder a:not(.label_sep)')
-
-  return Array.from(tags).map(function (tag) {
-    return tag.textContent;
-  });
-}
-
 
 /*
 Projects may have a hierarchy in Todoist.
@@ -75,21 +72,20 @@ E.g.
 */
 
 function getProjectNameFromLabel(elem) {
-  var projectLabel = '',
-    projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
+  let projectLabel = '';
+  const projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
   if (projectLabelEle) {
     projectLabel = projectLabelEle.textContent.trim();
   }
   return projectLabel;
 }
 
-var levelPattern = /(?:^|\s)indent_([0-9]*?)(?:\s|$)/;
 function getParentEle(sidebarCurrentEle) {
-  var curLevel, parentClass, parentCandidate;
-  curLevel = sidebarCurrentEle.className.match(levelPattern)[1];
-  parentClass = 'indent_' + (curLevel - 1);
+  const levelPattern = /(?:^|\s)indent_(\d*?)(?:\s|$)/;
+  const curLevel = sidebarCurrentEle.className.match(levelPattern)[1];
+  const parentClass = 'indent_' + (curLevel - 1);
+  let parentCandidate = sidebarCurrentEle;
 
-  parentCandidate = sidebarCurrentEle;
   while (parentCandidate.previousElementSibling) {
     parentCandidate = parentCandidate.previousElementSibling;
     if (parentCandidate.classList.contains(parentClass)) {
@@ -104,12 +100,16 @@ function isTopLevelProject(sidebarCurrentEle) {
 }
 
 function getProjectNameHierarchy(sidebarCurrentEle) {
-  var parentProjectEle, projectName;
-  projectName = $('.name', sidebarCurrentEle).firstChild.textContent.trim();
+  const projectName = $(
+    '.name',
+    sidebarCurrentEle
+  ).firstChild.textContent.trim();
+
   if (isTopLevelProject(sidebarCurrentEle)) {
     return [projectName];
   }
-  parentProjectEle = getParentEle(sidebarCurrentEle);
+
+  const parentProjectEle = getParentEle(sidebarCurrentEle);
   return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
 }
 
@@ -118,12 +118,13 @@ function projectWasJustCreated(projectId) {
 }
 
 function getSidebarCurrentEle(elem) {
-  var editorInstance,
-    projectId,
-    sidebarRoot,
-    sidebarColorEle,
-    sidebarCurrentEle;
-  editorInstance = elem.closest('.project_editor_instance');
+  let projectId;
+  let sidebarRoot;
+  let sidebarColorEle;
+  let sidebarCurrentEle;
+
+  const editorInstance = elem.closest('.project_editor_instance');
+
   if (editorInstance) {
     projectId = editorInstance.getAttribute('data-project-id');
     sidebarRoot = $('#project_list');
@@ -140,17 +141,24 @@ function getSidebarCurrentEle(elem) {
 }
 
 function getProjectNames(elem) {
-  var projectNames, viewingInbox, sidebarCurrentEle;
-  viewingInbox = $('#filter_inbox.current, #filter_team_inbox.current');
-  if (viewingInbox) {
-    projectNames = ['Inbox'];
-  } else {
-    sidebarCurrentEle = getSidebarCurrentEle(elem);
-    if (sidebarCurrentEle) {
-      projectNames = getProjectNameHierarchy(sidebarCurrentEle);
+  // return a function for timer link to use, in order for projects to be retrieved
+  // at the moment the button is clicked (rather than only on load)
+  return () => {
+    let projectNames;
+    let sidebarCurrentEle;
+
+    const isViewingInbox = $('#filter_inbox.current, #filter_team_inbox.current');
+
+    if (isViewingInbox) {
+      projectNames = ['Inbox'];
     } else {
-      projectNames = [getProjectNameFromLabel(elem)];
+      sidebarCurrentEle = getSidebarCurrentEle(elem);
+      if (sidebarCurrentEle) {
+        projectNames = getProjectNameHierarchy(sidebarCurrentEle);
+      } else {
+        projectNames = [getProjectNameFromLabel(elem)];
+      }
     }
+    return projectNames;
   }
-  return projectNames;
 }

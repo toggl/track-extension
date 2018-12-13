@@ -45,7 +45,7 @@ togglbutton.render(
       return [...tags].map(tag => {
         return tag.textContent;
       });
-    }
+    };
 
     const link = togglbutton.createTimerLink({
       className: 'todoist',
@@ -141,13 +141,15 @@ function getSidebarCurrentEle(elem) {
 }
 
 function getProjectNames(elem) {
-  // return a function for timer link to use, in order for projects to be retrieved
+  // Return a function for timer link to use, in order for projects to be retrieved
   // at the moment the button is clicked (rather than only on load)
   return () => {
     let projectNames;
     let sidebarCurrentEle;
 
-    const isViewingInbox = $('#filter_inbox.current, #filter_team_inbox.current');
+    const isViewingInbox = $(
+      '#filter_inbox.current, #filter_team_inbox.current'
+    );
 
     if (isViewingInbox) {
       projectNames = ['Inbox'];
@@ -160,5 +162,5 @@ function getProjectNames(elem) {
       }
     }
     return projectNames;
-  }
+  };
 }

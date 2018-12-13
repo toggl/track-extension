@@ -1120,9 +1120,12 @@ li > .toggl-button.phabricator {
   margin-top: 3px;
 }
 .toggl-button.freshdesk__mint {
-  margin-top: 14px;
-  margin-left: 5px;
+  margin: 0;
+  position: relative;
+  top: 6px;
+  left: 5px;
 }
+
 /********* CLOUDES.ME *********/
 .boxedDotted .toggl-button.cloudes {
   margin-left: 7px;

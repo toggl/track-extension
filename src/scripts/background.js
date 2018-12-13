@@ -1859,6 +1859,11 @@ window.TogglButton = {
   },
 
   toggleRightClickButton: function(show) {
+    if (!chrome.contextMenus) {
+      // Feature check for unsupported browsers
+      return;
+    }
+
     if (show) {
       chrome.contextMenus.create({
         title: 'Start timer',

@@ -1,27 +1,35 @@
 'use strict';
+/* global togglbutton, $ */
 
 togglbutton.render(
-  '#task-view-buttons.start:not(.toggl)',
+  '.task-detail .task-view-buttonset:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      descFunc,
-      description = $('.task-detail-header-title'),
-      project = $('.task-group-field-label').textContent;
-
-    descFunc = function() {
-      if (!!description) {
-        return description.textContent;
-      }
-      return null;
-    };
-
-    link = togglbutton.createTimerLink({
+  $container => {
+    const link = togglbutton.createTimerLink({
       className: 'bitrix24',
-      description: descFunc,
-      projectName: project
+      description: descriptionSelector,
+      projectName: projectSelector,
+      tags: tagsSelector
     });
 
-    elem.appendChild(link);
+    $container.appendChild(link);
   }
 );
+
+function descriptionSelector() {
+  const $description = $('#pagetitle');
+  return $description.textContent.trim();
+}
+
+function projectSelector() {
+  // Avoid invisible field - the project can be removed, but the project name still lingers invisibly in the UI.
+  const $project = $(
+    '.task-group-field:not(.invisible) .task-group-field-label'
+  );
+  return $project ? $project.textContent.trim() : '';
+}
+
+function tagsSelector() {
+  const $tags = $('#task-tags-line');
+  return $tags.textContent.split(',').map(tag => tag.trim());
+}

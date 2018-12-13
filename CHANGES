@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.16.0",
+      "rows": [
+        "Add support for Notion.so (Task items)",
+        "Add a setting to enable/disable automatic tagging",
+        "Fix Bitrix24 integration",
+        "Fix Slack integration for chat messages",
+        "Fix Todoist project selection #1223",
+        "Updated contribution guidelines and wiki",
+      ]
+    },
+    {
       "version": "1.15.1",
       "rows": [
         "Update Any.do integration for new UI #1166",

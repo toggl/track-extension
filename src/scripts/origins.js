@@ -9,7 +9,7 @@ export default {
     name: 'Airtable'
   },
   'any.do': {
-    url: '*://web.any.do/*',
+    url: '*://*.any.do/*',
     name: 'Anydo'
   },
   'asana.com': {
@@ -280,6 +280,11 @@ export default {
     url: '*://*.newsletter2go.com/*',
     name: 'Newsletter2go'
   },
+  'notion.so': {
+    url: '*://*.notion.so/*',
+    name: 'Notion by Matt',
+    file: 'notion.js'
+  },
   'nozbe.com': {
     url: '*://app.nozbe.com/*',
     name: 'Nozbe'
@@ -392,6 +397,10 @@ export default {
   'redbooth.com': {
     url: '*://*.redbooth.com/*',
     name: 'Redbooth'
+  },
+  'rbcommons.com': {
+    url: '*://*.rbcommons.com/*',
+    name: 'Reviewboard'
   },
   'redmine.org': {
     url: '*://*.redmine.org/*',
@@ -540,6 +549,10 @@ export default {
   },
   'visualstudio.com': {
     url: '*://*.visualstudio.com/*',
+    name: 'VisualStudio'
+  },
+  'azure.com': {
+    url: '*://*.azure.com/*',
     name: 'VisualStudio'
   },
   'waffle.io': {

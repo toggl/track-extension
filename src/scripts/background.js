@@ -436,6 +436,7 @@ window.TogglButton = {
       defaultProject = db.getDefaultProject(),
       rememberProjectPer = db.get('rememberProjectPer'),
       entry;
+    const enableAutoTagging = db.get('enableAutoTagging');
     TogglButton.$curService = (timeEntry || {}).service;
     TogglButton.$curURL = (timeEntry || {}).url;
 
@@ -463,7 +464,7 @@ window.TogglButton = {
       pid: timeEntry.pid || timeEntry.projectId || null,
       tid: timeEntry.tid || null,
       wid: timeEntry.wid || TogglButton.$user.default_wid,
-      tags: timeEntry.tags || null,
+      tags: enableAutoTagging ? (timeEntry.tags || null) : null,
       billable: timeEntry.billable || false,
       created_with: timeEntry.createdWith || TogglButton.$fullVersion
     };
@@ -721,7 +722,7 @@ window.TogglButton = {
                 })
               );
             }
-            TogglButton.triggerNotification();
+            TogglButton.setNannyTimer();
             ga.reportEvent(timeEntry.type, timeEntry.service);
             if (cb) {
               cb();
@@ -772,7 +773,7 @@ window.TogglButton = {
                 })
               );
             }
-            TogglButton.triggerNotification();
+            TogglButton.setNannyTimer();
             ga.reportEvent(timeEntry.type, timeEntry.service);
             if (cb) {
               cb();
@@ -883,6 +884,10 @@ window.TogglButton = {
 
     if (timeEntry.start) {
       entry.start = timeEntry.start;
+    }
+
+    if (timeEntry.duration) {
+        entry.duration = timeEntry.duration;
     }
 
     TogglButton.ajax(
@@ -1368,7 +1373,7 @@ window.TogglButton = {
       if (!FF) {
         options.buttons = [{ title: 'Start timer' }, { title: secondTitle }];
       } else {
-        options.message += '. Click to start timer.';
+        options.message += ' Click to start timer.';
       }
 
       chrome.notifications.create('remind-to-track-time', options, function() {
@@ -1522,7 +1527,7 @@ window.TogglButton = {
       eventType = 'pomodoro';
     }
     if (!FF) {
-      TogglButton.processNotificationEvent(notificationId);
+      TogglButton.onNotificationClicked(notificationId);
     }
     ga.reportEvent(eventType, buttonName);
   },
@@ -1549,7 +1554,7 @@ window.TogglButton = {
     return now > start && now <= end;
   },
 
-  triggerNotification: function() {
+  setNannyTimer: function() {
     if (TogglButton.$nannyTimer === null && TogglButton.$curEntry === null) {
       TogglButton.hideNotification('remind-to-track-time');
       TogglButton.$nannyTimer = setTimeout(
@@ -1559,12 +1564,25 @@ window.TogglButton = {
     }
   },
 
-  processNotificationEvent: function(notificationId) {
+  // Triggered when user clicks a notification (but not on a button in the notification)
+  // N.B. Buttons do not exist in Firefox, so we trigger notificationBtnClick from here in Firefox.
+  onNotificationClicked: function(notificationId) {
     if (FF) {
       TogglButton.notificationBtnClick(notificationId, 0);
     }
     if (notificationId === 'remind-to-track-time') {
-      TogglButton.triggerNotification();
+      TogglButton.setNannyTimer();
+    } else {
+      TogglButton.hideNotification(notificationId);
+    }
+  },
+
+  // Triggered when a notification is closed, either by the OS or the user dismissing it
+  // N.B. User cannot dismiss it themselves in Firefox.
+  // N.B. A notification "expiring" does not trigger this.
+  onNotificationClosed: function (notificationId) {
+    if (notificationId === 'remind-to-track-time') {
+      TogglButton.setNannyTimer();
     } else {
       TogglButton.hideNotification(notificationId);
     }
@@ -1676,7 +1694,7 @@ window.TogglButton = {
           version: TogglButton.$fullVersion,
           defaults: { project: db.getDefaultProject() }
         });
-        TogglButton.triggerNotification();
+        TogglButton.setNannyTimer();
       } else if (request.type === 'login') {
         TogglButton.loginUser(request, sendResponse);
       } else if (request.type === 'logout') {
@@ -1714,19 +1732,20 @@ window.TogglButton = {
         error.stack = request.stack;
         error.message = request.stack.split('\n')[0];
 
+        // Attempt to extract integration name from content filename
+        errorSource = request.stack.split('content/')[1];
+        if (!!errorSource) {
+          errorSource = errorSource.split('.js')[0];
+        } else {
+          errorSource = 'Unknown';
+        }
+
         if (process.env.DEBUG) {
           console.log(error);
           console.log(request.category + ' Script Error [' + errorSource + ']');
         } else {
           if (request.category === 'Content') {
-            errorSource = request.stack.split('content/')[1];
-            if (!!errorSource) {
-              errorSource = errorSource.split('.js')[0];
-            } else {
-              errorSource = 'Unknown';
-            }
-
-            error.name = 'Content Error';
+            error.name = `Content Error [${errorSource}]`;
             bugsnagClient.notify(error);
           } else {
             report(error);
@@ -1888,9 +1907,9 @@ window.TogglButton = {
   checkPermissions: function(show) {
     if (!db.get('dont-show-permissions') && !FF) {
       chrome.permissions.getAll(function(results) {
-        if (!!show || results.origins.length === 2) {
-          show = show || 3;
-          db.set('selected-settings-tab', 3);
+        if (show != null || results.origins.length === 2) {
+          show = show != null ? show : 2;
+          db.set('settings-active-tab', 2);
           db.set('show-permissions-info', show);
           chrome.runtime.openOptionsPage();
         }
@@ -1957,16 +1976,14 @@ window.ga = new Ga(db);
 TogglButton.queue.push(TogglButton.startAutomatically);
 TogglButton.toggleRightClickButton(db.get('showRightClickButton'));
 TogglButton.fetchUser();
-TogglButton.triggerNotification();
+TogglButton.setNannyTimer();
 TogglButton.startCheckingUserState();
 chrome.tabs.onUpdated.addListener(TogglButton.tabUpdated);
 chrome.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 TogglButton.startCheckingDayEnd(db.get('stopAtDayEnd'));
 chrome.runtime.onMessage.addListener(TogglButton.newMessage);
-chrome.notifications.onClosed.addListener(TogglButton.processNotificationEvent);
-chrome.notifications.onClicked.addListener(
-  TogglButton.processNotificationEvent
-);
+chrome.notifications.onClosed.addListener(TogglButton.onNotificationClosed);
+chrome.notifications.onClicked.addListener(TogglButton.onNotificationClicked);
 if (!FF) {
   // not supported in FF
   chrome.notifications.onButtonClicked.addListener(
@@ -1993,13 +2010,13 @@ if (!FF) {
   // Check whether new version is installed
   chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === 'install') {
-      TogglButton.checkPermissions(1);
+      TogglButton.checkPermissions(0);
     } else if (details.reason === 'update') {
       if (
         details.previousVersion[0] === '0' &&
         process.env.VERSION[0] === '1'
       ) {
-        TogglButton.checkPermissions(2);
+        TogglButton.checkPermissions(1);
       }
     }
   });

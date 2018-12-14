@@ -1,3 +1,4 @@
+import nanoid from 'nanoid';
 import { report } from './utils';
 
 const GA_KEY = 'GA:clientID';
@@ -13,12 +14,14 @@ export default class Ga {
 
   load() {
     if (!this.clientId) {
-      this.clientId = generateGUID();
+      this.clientId = nanoid();
       localStorage.setItem(GA_KEY, this.clientId);
     }
   }
 
   report(event, service) {
+    if (!db.get('sendUsageStatistics')) return;
+
     var request = new XMLHttpRequest(),
       message =
         'v=1&tid=' +
@@ -60,7 +63,10 @@ export default class Ga {
       'settings/show-right-click-button-' + this.db.get('showRightClickButton')
     );
     this.report('popup', 'settings/popup-' + this.db.get('showPostPopup'));
-    this.report('reminder', 'settings/reminder-' + this.db.get('nannyCheckEnabled'));
+    this.report(
+      'reminder',
+      'settings/reminder-' + this.db.get('nannyCheckEnabled')
+    );
     this.report(
       'reminder-minutes',
       'settings/reminder-minutes-' + this.db.get('nannyInterval')
@@ -115,26 +121,4 @@ export default class Ga {
       this.report('default-project', 'settings/default-project');
     }
   }
-}
-
-function generateGUID() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return (
-    s4() +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    '-' +
-    s4() +
-    s4() +
-    s4()
-  );
 }

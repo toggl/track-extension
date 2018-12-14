@@ -87,6 +87,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Redbooth](https://redbooth.com/)
 - [Redmine](http://www.redmine.org/)
 - [Remember The Milk](https://www.rememberthemilk.com/)
+- [Reviewboard](https://www.reviewboard.com/)
 - [Rindle](https://rindle.com/)
 - [Rollbar](https://rollbar.com/)
 - [Salesforce](http://www.salesforce.com/)
@@ -138,29 +139,33 @@ https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
 
 - Clone the repository `git clone git@github.com:toggl/toggl-button.git`
 - Install Node.js and NPM https://nodejs.org/en/
+- Run `npm install`
 - Run `npm start`
 
 Then depending on your browser, continue with the following steps.
 
-On Chrome:
+#### On Chrome:
 
 1.  Navigate to `chrome://extensions/` and enable "Developer Mode".
 2.  Choose "Load unpacked extension..."
-3.  Open the `dist/chrome/` directory
+3.  Select the `dist/chrome/` directory
 
-On Firefox:
+#### On Firefox:
 
 1. Navigate to `about:debugging`
 2. Choose `Load Temporary Add-on`
 3. Select the `dist/firefox/manifest.json` file
 
-Note that in Firefox the add-on needs to be manually loaded again when the browser restarts.
+**Note** that in Firefox the add-on needs to be manually loaded again when the browser restarts.
+
+If you want to inspect the distribution version, run `npm run build`. A zipped distribution can then be found in `dist/`.
 
 ## Changelog
 
 List of all the changes and added features can be found at http://toggl.github.io/toggl-button.
 
 ## Using the Button
+
 1. Log in to your [Toggl] account from the extension popup.
 2. Navigate to your [service](#compatible-services) and start your Toggl timer there.
 

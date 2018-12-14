@@ -24,14 +24,17 @@ export default class Db {
     dayEndTime: '17:00',
     defaultProject: 0,
     projects: '',
-    rememberProjectPer: 'false'
+    rememberProjectPer: 'false',
+    enableAutoTagging: false
   };
 
   // core settings: key, default value
   core = {
     'dont-show-permissions': false,
     'show-permissions-info': 0,
-    'selected-settings-tab': 1
+    'settings-active-tab': 0,
+    sendErrorReports: true,
+    sendUsageStatistics: true
   };
 
   newMessage = (request, sender, sendResponse) => {
@@ -42,20 +45,20 @@ export default class Db {
         this.updateSetting(
           'nannyCheckEnabled',
           request.state,
-          this.togglButton.triggerNotification
+          this.togglButton.setNannyTimer
         );
       } else if (request.type === 'toggle-nanny-from-to') {
         this.updateSetting(
           'nannyFromTo',
           request.state,
-          this.togglButton.triggerNotification,
+          this.togglButton.setNannyTimer,
           this.get('nannyCheckEnabled')
         );
       } else if (request.type === 'toggle-nanny-interval') {
         this.updateSetting(
           'nannyInterval',
           Math.max(request.state, 1000),
-          this.togglButton.triggerNotification,
+          this.togglButton.setNannyTimer,
           this.get('nannyCheckEnabled')
         );
       } else if (request.type === 'toggle-idle') {
@@ -96,9 +99,21 @@ export default class Db {
         this.resetDefaultProjects();
       } else if (
         request.type === 'update-dont-show-permissions' ||
-        request.type === 'update-selected-settings-tab'
+        request.type === 'update-settings-active-tab'
       ) {
         this.updateSetting(request.type.substr(7), request.state);
+      } else if (
+        request.type === 'update-send-usage-statistics'
+      ) {
+        this.updateSetting('sendUsageStatistics', request.state)
+      } else if (
+        request.type === 'update-send-error-reports'
+      ) {
+        this.updateSetting('sendErrorReports', request.state)
+      } else if (
+        request.type === 'update-enable-auto-tagging'
+      ) {
+        this.updateSetting('enableAutoTagging', request.state)
       }
     } catch (e) {
       bugsnagClient.notify(e);

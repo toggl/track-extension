@@ -451,8 +451,7 @@ window.PopUp = {
   getStart: function() {
     var arr = document.querySelector('#toggl-button-duration').value.split(':'),
       duration,
-      now,
-      start;
+      now;
 
     if (!PopUp.isNumber(arr.join(''))) {
       return false;
@@ -461,8 +460,7 @@ window.PopUp = {
     duration = 1000 * (arr[2] || 0) + 60000 * arr[1] + 3600000 * arr[0];
 
     now = new Date();
-    start = new Date(now.getTime() - duration);
-    return start.toISOString();
+    return new Date(now.getTime() - duration);
   },
 
   isNumber: function(n) {
@@ -502,7 +500,8 @@ window.PopUp = {
       start = PopUp.getStart();
 
     if (start) {
-      request.start = start;
+      request.start = start.toISOString();
+      request.duration = -1 * Math.floor(start.getTime() / 1000);
     }
 
     PopUp.sendMessage(request);

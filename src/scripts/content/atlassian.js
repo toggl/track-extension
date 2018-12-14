@@ -30,89 +30,96 @@ togglbutton.render(
   }
 );
 
-// Jira 2018-06 new sprint modal
-// Using the h1 as selector to make sure that it will only try to render the button
-// after Jira has fully rendered the modal content
+// Jira 2018-X Sprint Modal
+// We select dialog content in order to wait for the SPA to render.
+// N.B. this can bring its own issues (see comment about infinite re-renders).
+// The h1 element gets replaced and no longer has .toggl class, so we have to be careful.
 togglbutton.render(
-  'div[role="dialog"].sc-ckVGcZ h1:not(.toggl)',
+  'div[role="dialog"] h1:not(.toggl)',
   { observe: true },
   function(needle) {
     var root = needle.closest('div[role="dialog"]'),
-      id = $('a:first-child', root),
+      id = $('div:last-child > a[spacing="none"][href^="/browse/"]:last-child', root),
       description = $('h1:first-child', root),
-      project = $('.sc-kMoxaV'),
-      container = createTag('div', 'jira-ghx-toggl-button'),
+      project = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div'),
       link;
 
     if (project === null) {
-      project = $('.sc-iyvyFf:first-child');
+      project = $('a[href^="/browse/"][target=_self]');
     }
 
-    if (id !== null && description !== null && project !== null) {
-      link = togglbutton.createTimerLink({
-        className: 'jira2017',
-        description: id.textContent + ' ' + description.textContent,
-        projectName: project && project.textContent
-      });
-
-      container.appendChild(link);
-      id.parentNode.appendChild(container);
-    }
-  }
-);
-
-// Jira 2018-08 sprint modal
-// Using the h1 as selector to make sure that it will only try to render the button
-// after Jira has fully rendered the modal content
-togglbutton.render(
-  'div[role="dialog"].sc-krDsej h1:not(.toggl)',
-  { observe: true },
-  function(needle) {
-    var root = needle.closest('div[role="dialog"]'),
-      id = $('a:first-child', root),
-      description = $('h1:first-child', root),
-      project = $('.sc-cremA'),
-      container = createTag('div', 'jira-ghx-toggl-button'),
-      link;
-
-    if (id !== null && description !== null && project !== null) {
+    if (id !== null && description !== null) {
       link = togglbutton.createTimerLink({
         className: 'jira2018',
         description: id.textContent + ' ' + description.textContent,
-        projectName: project && project.textContent,
-        buttonType: 'minimal'
+        projectName: project && project.textContent
       });
 
-      container.appendChild(link);
-      $('.sc-iBmynh', root).appendChild(container);
+      // Link is not placed in exactly the same element as a regular issue page,
+      // else we encounter infinite re-renders when the SPA updates the DOM.
+      id.parentNode.appendChild(link);
     }
   }
 );
 
-// Jira 2018 sprint modal
-// Using the h1 as selector to make sure that it will only try to render the button
-// after Jira has fully rendered the modal content
+// Jira 2018-11 issue page. Uses functions for timer values due to SPA on issue-lists.
 togglbutton.render(
-  'div[role="dialog"] .ffQQbf:not(.toggl)',
+  '#jira-frontend:not(.toggl)',
   { observe: true },
-  function(needle) {
-    var root = needle.closest('div[role="dialog"]'),
-      id = $('a:first-child', root),
-      description = $('h1:first-child', root),
-      project = $('.bgdPDV'),
-      container = createTag('div', 'jira-ghx-toggl-button'),
-      link;
+  function (elem) {
+    var link,
+      issueNumberElement,
+      container,
+      titleElement,
+      projectElement;
 
-    if (id !== null && description !== null && project !== null) {
-      link = togglbutton.createTimerLink({
-        className: 'jira2017',
-        description: id.textContent + ' ' + description.textContent,
-        projectName: project && project.textContent
-      });
+    // The main "issue link" at the top of the issue.
+    // Extra target and role selectors are to avoid picking up wrong links on issue-list-pages.
+    issueNumberElement = $('a[href^="/browse/"][target=_blank]:not([role=list-item])', elem);
+    container = issueNumberElement.parentElement.parentElement.parentElement;
 
-      container.appendChild(link);
-      id.parentNode.appendChild(container);
+    function getDescription () {
+      var description = '';
+
+      // Title/summary of the issue - we use the hidden "edit" button that's there for a11y
+      // in order to avoid picking up actual page title in the case of issue-list-pages.
+      titleElement = $('h1 ~ button[aria-label]', elem).previousSibling;
+
+      if (issueNumberElement) {
+        description += issueNumberElement.textContent.trim();
+      }
+
+      if (titleElement) {
+        if (description) description += ' ';
+        description += titleElement.textContent.trim();
+      }
+
+      return description
     }
+
+    function getProject () {
+      var project = '';
+
+      // Best effort to find the "Project switcher" found in the sidebar of most pages, and extract
+      // the project name from that. Historically project has not always been picked up reliably in Jira.
+      projectElement = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div');
+      // Attempt to find the project name in page subtitle in case the sidebar is hidden
+      if (!projectElement) projectElement = $('a[href^="/browse/"][target=_self]')
+
+      if (projectElement) {
+        project = projectElement.textContent.trim();
+      }
+
+      return project
+    }
+
+    link = togglbutton.createTimerLink({
+      className: 'jira2018',
+      description: getDescription,
+      projectName: getProject
+    });
+
+    container.appendChild(link);
   }
 );
 
@@ -138,6 +145,9 @@ togglbutton.render(
       description = numElem.textContent + description;
     }
 
+    if (projectElem === null) {
+      projectElem = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div');
+    }
     // JIRA server support
     if (projectElem === null) {
       projectElem = $('#project-name-val');

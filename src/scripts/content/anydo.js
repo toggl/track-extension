@@ -1,48 +1,44 @@
 'use strict';
+/* global togglbutton, $ */
 
-togglbutton.render('.dialog:not(.toggl)', { observe: true }, function(elem) {
-  var link,
-    wrap = createTag('div'),
-    container = $('#top-level-details', elem),
-    projectElem = $('.folderSelector', elem),
-    titleFunc;
+// any.do Q4 2018: task card
+togglbutton.render('.CardScrollView:not(.toggl)', { observe: true }, elem => {
+  const descriptionElem = $('textarea', elem);
 
-  titleFunc = function() {
-    return document.querySelector('#title', elem).textContent;
-  };
+  // Since task popup has same selector as overview
+  // do nothing when description is not present
+  if (!descriptionElem) {
+    return;
+  }
 
-  link = togglbutton.createTimerLink({
-    className: 'anydo',
-    description: titleFunc,
-    projectName: projectElem.textContent
+  const projectElem = $('.TasksToolBarCategoryTitle');
+
+  const link = togglbutton.createTimerLink({
+    buttonType: 'minimal',
+    className: 'anydo--2018',
+    description: descriptionElem.value,
+    projectName: projectElem ? projectElem.textContent : ''
   });
 
-  wrap.appendChild(link);
-  container.appendChild(wrap);
+  descriptionElem.before(link);
 });
 
-/* Subtasks */
-
+// Any.do Q4 2018: tasks lists
 togglbutton.render(
-  '.subtasks-list li .container:not(.toggl)',
+  '.TaskListRow[draggable=true]:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      wrap = createTag('div'),
-      projectElem = $('.folderSelector'),
-      titleFunc;
+  elem => {
+    const descriptionElem = $('input', elem);
+    const projectElem = $('.TasksToolBarCategoryTitle');
 
-    titleFunc = function() {
-      return $('.title', elem).textContent;
-    };
-
-    link = togglbutton.createTimerLink({
-      className: 'anydo',
-      description: titleFunc,
-      projectName: projectElem.textContent
+    const link = togglbutton.createTimerLink({
+      buttonType: 'minimal',
+      className: 'anydo--2018__taskItem',
+      description: descriptionElem ? descriptionElem.value : '',
+      projectName: projectElem ? projectElem.textContent : ''
     });
 
-    wrap.appendChild(link);
-    elem.insertBefore(wrap, $('.controls', elem));
+    const container = $('.TaskItem', elem);
+    container.appendChild(link);
   }
 );

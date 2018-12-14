@@ -6,9 +6,10 @@
   </head>
   <header>
     <ul class="tab-links">
-      <li class="tab-link active" data-tab="1">General</li>
-      <li class="tab-link" data-tab="2">Pomodoro Timer</li>
-      <li class="tab-link" data-tab="3">Permissions</li>
+      <li class="tab-link">General</li>
+      <li class="tab-link">Pomodoro Timer</li>
+      <li class="tab-link">Permissions</li>
+      <li class="tab-link">Telemetry</li>
     </ul>
   </header>
   <body>
@@ -18,17 +19,18 @@
         </div>
         <div class="guide">
 
-          <div data-id="1">
+          <div data-id="0">
             <b>Welcome to Toggl Button!</b></br>
             <p><i>This Permissions settings tab allows to enable/disable integrations and define custom domains.</i>
             </p>
             <p>
               You can enable all integrations you want to use with the Toggl Button by clicking the "Enable all" button under "Url Permissions". Also you can pick the tools you want by ticking the checkboxes.
             </p>
-            <p>You can also define custom domains in the "Custom Domain Url Permissions" section of the page. Just type in the domain address, select the tool you are running on it and press "Add"</p>
+            <p>You can also define custom domains in the "Custom Domain Url Permissions" section of the page. Just type in the domain address, select the tool you are running on it and press "Add".</p>
+            <p>The telemetry settings tab allows you to control sending usage metrics and error reports to help make Toggl Button better.</p>
           </div>
 
-          <div data-id="2">
+          <div data-id="1">
             <b>Welcome to Toggl Button!</b></br>
             <p><i>The Permissions tab allows you to enable/disable integrations and define custom domains.</i></p>
             <p>
@@ -37,7 +39,7 @@
             <p>You can also define custom domains in the "Custom Domain Url Permissions" section of the page. Just type in the domain address, select the tool you are running on that domain and press "Add"</p>
           </div>
 
-          <div data-id="3">
+          <div data-id="2">
             <b>Enable integrations!</b><br>
             <p>Hey Toggler! We have a ton of integrations that make your time tracking life easier, faster &amp; way more convenient.</p>
             <p>To use them, check off any integrations you'd like to enable under "URL Permissions" -- or click enable all.</p>
@@ -51,7 +53,7 @@
           <button>Close</button>
         </div>
       </div>
-      <div class="tabs" data-tab="1">
+      <div class="tabs">
         <div class="tab tab-1">
           <ul class="list">
             <li>
@@ -68,6 +70,11 @@
                 <option value="url">URL</option>
               </select>
               <div class="description">This will remember the last project used on each service/url separately. Overrides default project.</div>
+            </li>
+            <li>
+              <input type="checkbox" id="enable-auto-tagging">
+              <label for="enable-auto-tagging">Enable automatic tagging</label>
+              <div class="description">If a service supports tags or labels, this setting will automatically add them to the timer and create them in Toggl. Not available in all services.</div>
             </li>
             <li>
               <input type="checkbox" id="show_right_click_button">
@@ -98,8 +105,7 @@
                 <p>
                   <label for="nag-nanny-from">From:</label>
                   <input type="time" id="nag-nanny-from">
-                </p>
-                <p>
+                  &nbsp;&nbsp;
                   <label for="nag-nanny-to">To:</label>
                   <input type="time" id="nag-nanny-to">
                 </p>
@@ -174,24 +180,42 @@
             <p class="description">Enable tools you want to use with Toggl Button. You can enable all by clicking "Enable all" button in the top.</p>
           </div>
 
-          </br>
-
           <div class="section">
             <h2>Custom Domain Url Permissions</h2>
-            <input type="text" id="new-permission" placeholder="custom domain url"/>
-            <div id="origins-container"></div>
+            <input type="text" id="new-permission" placeholder="Custom domain url"/>
             <p class="description">Define custom domains here. Just type in the domain name without http(s) in format "toggl.com" and select the integration from dropdown. Ports are currently not supported.</p>
-            <button id="add-permission">Add</button>
+            <div class="button-container">
+                <div id="origins-container"></div>
+                <button id="add-permission">Add</button>
+            </div>
             <div class="permissions-toolbar" data-id="custom">
             </div>
             <div id="custom-perm-container"></div>
           </div>
         </div>
+        <div class="tab tab-4">
+          <ul class="list">
+            <li>
+              <input type="checkbox" id="send-usage-statistics">
+              <label for="send-usage-statistics">Send usage statistics</label>
+              <div class="description">Help us understand how Toggl Button is used by sending usage statistics.</div>
+            </li>
+            <li>
+              <input type="checkbox" id="send-error-reports">
+              <label for="send-error-reports">Send error reports</label>
+              <div class="description">Submit error reports to help us fix issues with Toggl Button.</div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="footer">
-      Version <span id="version"></span>
-      <p class="changelog">Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a></p>
+      <div>
+        Version <span id="version"></span>
+      </div>
+      <div>
+        Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a>
+      </div>
     </div>
     <script src="../scripts/settings.js"></script>
   </body>

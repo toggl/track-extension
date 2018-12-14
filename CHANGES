@@ -1,6 +1,68 @@
 {
   "versions": [
     {
+      "version": "1.16.0",
+      "rows": [
+        "Add support for Notion.so (Task items)",
+        "Add a setting to enable/disable automatic tagging",
+        "Fix Bitrix24 integration",
+        "Fix Slack integration for chat messages",
+        "Fix Todoist project selection #1223",
+        "Updated contribution guidelines and wiki",
+      ]
+    },
+    {
+      "version": "1.15.1",
+      "rows": [
+        "Update Any.do integration for new UI #1166",
+        "Fix broken Settings page layout",
+        "Fix page shortcuts being triggered when typing inside Toggl popup #913",
+        "Improve error reporting",
+      ]
+    },
+    {
+      "version": "1.15.0",
+      "rows": [
+        "Add support for MeisterTask 2.0 #1201",
+        "Add support for tags in Todoist #1197",
+        "Trim description text in Podio #1205"
+      ]
+    },
+    {
+      "version": "1.14.0",
+      "rows": [
+        "Add permissions to Firefox addon #1191",
+        "Fix Jira integrations #1193",
+        "Fix Backlog integration #1194"
+      ]
+    },
+    {
+      "version": "1.13.0",
+      "rows": [
+        "Add Reviewboard Integration #997",
+        "Fix timer starting automatically when reminder notification is closed #1180",
+        "Hide permissions tab in Firefox #1172",
+        "Fix wrong durations for entries that were manually edited and stopped #1174"
+      ]
+    },
+    {
+      "version": "1.12.0",
+      "rows": [
+        "Add a settings tab for configuring telemetry settings #1150",
+        "Fix settings dialog pushing content #1153",
+        "Fix setting default project #1119"
+      ]
+    },
+    {
+      "version": "1.11.2",
+      "rows": [
+        "Improve settings view for Chrome #1142",
+        "Fix Rollbar integration #1137",
+        "Fix Todoist dark mode integration #1134",
+        "Add support for new Evernote.com layout"
+      ]
+    },
+    {
       "version": "1.11.1",
       "rows": [
         "Fix process is undefined in content script #1113",

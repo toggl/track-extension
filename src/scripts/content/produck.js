@@ -3,31 +3,34 @@
 'use strict';
 
 // Issue details view
-togglbutton.render('[data-toggl-issue] [data-toggl-sidebar]', {observe: true}, function (elem) {
-  var li, link, description,
-    alias = $('[data-toggl-issue] [data-toggl-alias]').getAttribute('data-toggl-alias'),
-    title = ($('[data-toggl-issue] [data-toggl-title]') && $('[data-toggl-issue] [data-toggl-title]').getAttribute('data-toggl-title')) || 'No Title',
-    project = $('[data-toggl-issue] [data-toggl-project]') && $('[data-toggl-issue] [data-toggl-project]').getAttribute('data-toggl-project'),
-    existingButton = $('.toggl-item', elem);
+togglbutton.render('[data-toggl-issue] [data-toggl-sidebar]:not(.toggl)', {observe: true}, function (elem) {
+  var li, link, getDescription, getProjectName, getAlias, getTitle;
 
-  description = alias + " - " + title;
+  getAlias = function() {
+    var aliasSelector = $('[data-toggl-issue] [data-toggl-alias]');
+    if(!aliasSelector) return 'No Alias';
+    return aliasSelector.getAttribute('data-toggl-alias');
+  }
 
-  if (!existingButton) {
-    link = togglbutton.createTimerLink({className: 'produck', description: description, projectName: project});
+  getTitle = function() {
+    var titleSelector = $('[data-toggl-issue] [data-toggl-title]');
+    if(!titleSelector) return 'No Title';
+    return titleSelector.getAttribute('data-toggl-title') || 'No Title';
+  }
+
+  getDescription = function() {
+    return getAlias() + " - " + getTitle();
+  }
+
+  getProjectName = function() {
+    var projectSelector = $('[data-toggl-issue] [data-toggl-project]');
+    if(!projectSelector) return null;
+    return projectSelector.getAttribute('data-toggl-project');
+  }
+
+    link = togglbutton.createTimerLink({className: 'produck', description: getDescription, projectName: getProjectName});
     li = document.createElement("li");
     li.classList.add("toggl-item");
     li.appendChild(link);
     elem.prepend(li);
-    return;
-  }
-
-  // we need to update the description and the project each time the issue gets modified
-  if (togglbutton.currentDescription === description && togglbutton.currentProject === project) return;
-
-  togglbutton.currentDescription = description;
-  togglbutton.currentProject = project;
-  togglbutton.links[0].params.description = description;
-  togglbutton.links[0].params.projectName = project;
-  togglbutton.links[0].link.title = description + (project ? ' - ' + project : '');
-
 });

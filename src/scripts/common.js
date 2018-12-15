@@ -489,6 +489,7 @@ window.togglbutton = {
           description: invokeIfFunction(params.description),
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
+          taskName: invokeIfFunction(params.taskName),
           createdWith: togglbutton.fullVersion + '-' + togglbutton.serviceName,
           service: togglbutton.serviceName,
           url: window.location.href

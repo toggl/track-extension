@@ -90,6 +90,7 @@ window.TogglButton = {
       onLoad: function(xhr) {
         var resp,
           projectMap = {},
+          taskMap = {},
           clientMap = {},
           clientNameMap = {},
           tagMap = {},
@@ -131,6 +132,9 @@ window.TogglButton = {
                 }
                 projectTaskList[pid].push(task);
               });
+              resp.data.tasks.forEach(function(task) {
+                taskMap[task.name + task.id] = task;
+              });
             }
             if (resp.data.time_entries) {
               resp.data.time_entries.some(function(time_entry) {
@@ -151,6 +155,7 @@ window.TogglButton = {
             db.set('clients', JSON.stringify(clientMap));
             TogglButton.$user = resp.data;
             TogglButton.$user.projectMap = projectMap;
+            TogglButton.$user.taskMap = taskMap;
             TogglButton.$user.clientMap = clientMap;
             TogglButton.$user.clientNameMap = clientNameMap;
             TogglButton.$user.tagMap = tagMap;
@@ -416,6 +421,27 @@ window.TogglButton = {
     return result;
   },
 
+  findTaskByName: function(nameOrNames) {
+    var key,
+      name,
+      names = [].concat(nameOrNames),
+      result,
+      i;
+
+    for (i = 0; i < names.length; i++) {
+      name = names[i];
+      for (key in TogglButton.$user.taskMap) {
+        if (
+          TogglButton.$user.taskMap.hasOwnProperty(key) &&
+          TogglButton.$user.taskMap[key].name === name
+        ) {
+          return TogglButton.$user.taskMap[key];
+        }
+      }
+    }
+    return result;
+  },
+
   findProjectByPid: function(pid) {
     var key;
     for (key in TogglButton.$user.projectMap) {
@@ -431,6 +457,7 @@ window.TogglButton = {
 
   createTimeEntry: function(timeEntry, sendResponse) {
     var project,
+      task,
       start = new Date(),
       error = '',
       defaultProject = db.getDefaultProject(),
@@ -474,6 +501,11 @@ window.TogglButton = {
       entry.pid = (project && project.id) || null;
       entry.billable = project && project.billable;
       entry.wid = (project && project.wid) || entry.wid;
+    }
+
+    if (timeEntry.taskName !== null && !entry.tid) {
+      task = TogglButton.findTaskByName(timeEntry.taskName);
+      entry.tid = (task && task.id) || null;
     }
 
     // set Default project if needed

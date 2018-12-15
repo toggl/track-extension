@@ -149,8 +149,18 @@ window.togglbutton = {
     for (i = 0, len = elems.length; i < len; i += 1) {
       elems[i].classList.add('toggl');
     }
-    for (i = 0, len = elems.length; i < len; i += 1) {
-      renderer(elems[i]);
+
+    // Catch content errors here as well as render() in case of async rendering (MutationObserver)
+    try {
+      for (i = 0, len = elems.length; i < len; i += 1) {
+        renderer(elems[i]);
+      }
+    } catch (e) {
+      chrome.runtime.sendMessage({
+        type: 'error',
+        stack: e.stack,
+        category: 'Content'
+      });
     }
   },
 
@@ -369,6 +379,11 @@ window.togglbutton = {
       );
       closeForm();
       return false;
+    });
+
+    /* prevent certain host webapps from processing key commands */
+    $('form', editForm).addEventListener('keydown', function(e) {
+      e.stopPropagation();
     });
 
     togglbutton.$billable.addEventListener('click', function() {

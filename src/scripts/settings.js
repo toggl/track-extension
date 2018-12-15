@@ -21,7 +21,6 @@ if (FF) {
 document.querySelector('#version').textContent = `(${process.env.VERSION})`;
 
 var Settings = {
-  eventsSet: false,
   $startAutomatically: null,
   $stopAutomatically: null,
   $showRightClickButton: null,
@@ -29,10 +28,8 @@ var Settings = {
   $nanny: null,
   $pomodoroMode: null,
   $pomodoroSound: null,
-  lastFilter: null,
   $permissionFilter: document.querySelector('#permission-filter'),
   $permissionFilterClear: document.querySelector('#filter-clear'),
-  permissionItems: [],
   $permissionsList: document.querySelector('#permissions-list'),
   $newPermission: document.querySelector('#new-permission'),
   $originsSelect: document.querySelector('#origins'),
@@ -45,6 +42,7 @@ var Settings = {
   $pomodoroVolumeLabel: null,
   $sendUsageStatistics: null,
   $sendErrorReports: null,
+  $enableAutoTagging: null,
   showPage: function() {
     var volume = parseInt(db.get('pomodoroSoundVolume') * 100, 10),
       rememberProjectPer = db.get('rememberProjectPer');
@@ -62,6 +60,10 @@ var Settings = {
         Settings.$showRightClickButton,
         db.get('showRightClickButton')
       );
+      Settings.toggleState(
+        Settings.$enableAutoTagging,
+        db.get('enableAutoTagging')
+      )
       Settings.toggleState(
         Settings.$startAutomatically,
         db.get('startAutomatically')
@@ -242,11 +244,6 @@ var Settings = {
       customs,
       tmpkey;
 
-    if (FF) {
-      // Permissions settings are not available on Firefox at this time.
-      return;
-    }
-
     try {
       // Load Custom Permissions list
 
@@ -386,192 +383,193 @@ var Settings = {
     }
   },
 
+  addCustomOrigin: function (e) {
+    var text = Settings.$newPermission.value,
+      domain,
+      permission,
+      o = Settings.$originsSelect;
+
+    if (text.indexOf(':') !== -1) {
+      text = text.split(':')[0];
+    }
+    if (text.indexOf('//') !== -1) {
+      text = text.split('//')[1];
+    }
+
+    Settings.$newPermission.value = text;
+    domain = '*://' + Settings.$newPermission.value + '/';
+    permission = { origins: [domain] };
+
+    chrome.permissions.request(permission, function (result) {
+      if (result) {
+        db.setOrigin(Settings.$newPermission.value, o.value);
+        Settings.$newPermission.value = '';
+      }
+      Settings.loadSitesIntoList();
+      if (result) {
+        document.location.hash = domain;
+      }
+    });
+  },
+
+  removeCustomOrigin: function (e) {
+    var custom,
+      domain,
+      permission,
+      parent,
+      removed = false;
+
+    if (e.target.className === 'remove-custom') {
+      parent = e.target.parentNode;
+      custom = parent.querySelector('strong').textContent;
+      domain = '*://' + custom + '/';
+      permission = { origins: [domain] };
+
+      chrome.permissions.contains(permission, function (allowed) {
+        if (allowed) {
+          chrome.permissions.remove(permission, function (result) {
+            if (result) {
+              removed = true;
+              db.removeOrigin(custom);
+              parent.remove();
+            } else {
+              alert('Fail');
+            }
+          });
+        } else {
+          alert('No "' + custom + '" host permission found.');
+        }
+      });
+
+      if (!removed) {
+        db.removeOrigin(custom);
+        parent.remove();
+      }
+    }
+    return false;
+  },
+
+  toggleOrigin: function (e) {
+    var permission,
+      target = e.target;
+
+    if (e.target.tagName !== 'INPUT') {
+      target = e.target.querySelector('input');
+      target.checked = !target.checked;
+    }
+
+    permission = { origins: target.getAttribute('data-host').split(',') };
+
+    if (target.checked) {
+      chrome.permissions.request(permission, function (result) {
+        if (result) {
+          target.parentNode.classList.remove('disabled');
+        } else {
+          target.checked = false;
+        }
+      });
+    } else {
+      chrome.permissions.contains(permission, function (allowed) {
+        if (allowed) {
+          chrome.permissions.remove(permission, function (result) {
+            if (result) {
+              target.parentNode.classList.add('disabled');
+            } else {
+              target.checked = true;
+            }
+          });
+        } else {
+          alert(
+            'No "' +
+            Settings.origins[target.getAttribute('data-id')] +
+            '" host permission found.'
+          );
+        }
+      });
+    }
+  },
+
+  enableAllOrigins: function (e) {
+    chrome.permissions.request(Settings.getAllPermissions(), function (result) {
+      if (result) {
+        Settings.loadSitesIntoList();
+      }
+    });
+  },
+
+  disableAllOrigins: function (e) {
+    chrome.permissions.getAll(function (result) {
+      var origins = [],
+        i,
+        key,
+        customOrigins = db.getAllOrigins(),
+        skip = false;
+
+      try {
+        for (i = 0; i < result.origins.length; i++) {
+          for (key in customOrigins) {
+            if (customOrigins.hasOwnProperty(key) && !skip) {
+              if (result.origins[i].indexOf(key) !== -1) {
+                skip = true;
+              }
+            }
+          }
+
+          if (
+            result.origins[i].indexOf('toggl') === -1 &&
+            result.origins[i] !== '*://*/*' &&
+            !skip
+          ) {
+            origins.push(result.origins[i]);
+          }
+          skip = false;
+        }
+      } catch (e) {
+        console.error(e)
+        chrome.runtime.sendMessage({
+          type: 'error',
+          stack: e.stack,
+          category: 'Settings'
+        });
+      }
+
+      chrome.permissions.remove({ origins: origins }, function (result, b) {
+        if (result) {
+          Settings.loadSitesIntoList();
+        }
+      });
+    });
+  },
+
   enablePermissionEvents: function() {
-    if (FF) {
-      // Permissions settings are not available on Firefox at this time.
-      return;
-    }
-    if (Settings.eventsSet) {
-      return;
-    }
     Settings.$originsSelect = document.querySelector('#origins');
 
     // Add custom permission (custom domain)
-    document
-      .querySelector('#add-permission')
-      .addEventListener('click', function(e) {
-        var text = Settings.$newPermission.value,
-          domain,
-          permission,
-          o = Settings.$originsSelect;
+    var $addCustomOrigin = document.querySelector('#add-permission');
+    $addCustomOrigin.removeEventListener('click', Settings.addCustomOrigin);
+    $addCustomOrigin.addEventListener('click', Settings.addCustomOrigin);
 
-        if (text.indexOf(':') !== -1) {
-          text = text.split(':')[0];
-        }
-        if (text.indexOf('//') !== -1) {
-          text = text.split('//')[1];
-        }
-
-        Settings.$newPermission.value = text;
-        domain = '*://' + Settings.$newPermission.value + '/';
-        permission = { origins: [domain] };
-        if (!FF) {
-          chrome.permissions.request(permission, function(result) {
-            if (result) {
-              db.setOrigin(Settings.$newPermission.value, o.value);
-              Settings.$newPermission.value = '';
-            }
-            Settings.loadSitesIntoList();
-            if (result) {
-              document.location.hash = domain;
-            }
-          });
-        }
-      });
     // Remove item from custom domain list
-    document
-      .querySelector('#custom-perm-container')
-      .addEventListener('click', function(e) {
-        var custom,
-          domain,
-          permission,
-          parent,
-          removed = false;
-        if (e.target.className === 'remove-custom') {
-          parent = e.target.parentNode;
-          custom = parent.querySelector('strong').textContent;
-          domain = '*://' + custom + '/';
-          permission = { origins: [domain] };
-
-          if (!FF) {
-            chrome.permissions.contains(permission, function(allowed) {
-              if (allowed) {
-                chrome.permissions.remove(permission, function(result) {
-                  if (result) {
-                    removed = true;
-                    db.removeOrigin(custom);
-                    parent.remove();
-                  } else {
-                    alert('Fail');
-                  }
-                });
-              } else {
-                alert('No "' + custom + '" host permission found.');
-              }
-            });
-
-            if (!removed) {
-              db.removeOrigin(custom);
-              parent.remove();
-            }
-          }
-        }
-        return false;
-      });
+    var $removeCustomOrigin = document.querySelector('#custom-perm-container');
+    $removeCustomOrigin.removeEventListener('click', Settings.removeCustomOrigin);
+    $removeCustomOrigin.addEventListener('click', Settings.removeCustomOrigin);
 
     Settings.$permissionsList = document.querySelector('#permissions-list');
 
     // Enable/Disable origin permissions
-    document
-      .querySelector('#permissions-list')
-      .addEventListener('click', function(e) {
-        var permission,
-          target = e.target;
-
-        if (e.target.tagName !== 'INPUT') {
-          target = e.target.querySelector('input');
-          target.checked = !target.checked;
-        }
-
-        permission = { origins: target.getAttribute('data-host').split(',') };
-
-        if (target.checked) {
-          chrome.permissions.request(permission, function(result) {
-            if (result) {
-              target.parentNode.classList.remove('disabled');
-            } else {
-              target.checked = false;
-            }
-          });
-        } else {
-          chrome.permissions.contains(permission, function(allowed) {
-            if (allowed) {
-              chrome.permissions.remove(permission, function(result) {
-                if (result) {
-                  target.parentNode.classList.add('disabled');
-                } else {
-                  target.checked = true;
-                }
-              });
-            } else {
-              alert(
-                'No "' +
-                Settings.origins[target.getAttribute('data-id')] +
-                '" host permission found.'
-              );
-            }
-          });
-        }
-      });
+    var $originList = document.querySelector('#permissions-list');
+    $originList.removeEventListener('click', Settings.toggleOrigin);
+    $originList.addEventListener('click', Settings.toggleOrigin);
 
     // Enable all predefined origins
-    document
-      .querySelector('.enable-all')
-      .addEventListener('click', function(e) {
-        chrome.permissions.request(Settings.getAllPermissions(), function(
-          result
-        ) {
-          if (result) {
-            Settings.loadSitesIntoList();
-          }
-        });
-      });
+    var $enableAllOrigins = document.querySelector('.enable-all');
+    $enableAllOrigins.addEventListener('click', Settings.enableAllOrigins);
+    $enableAllOrigins.addEventListener('click', Settings.enableAllOrigins);
 
     // Disable all predefined origins
-    document
-      .querySelector('.disable-all')
-      .addEventListener('click', function(e) {
-        chrome.permissions.getAll(function(result) {
-          var origins = [],
-            i,
-            key,
-            customOrigins = db.getAllOrigins(),
-            skip = false;
-
-          try {
-            for (i = 0; i < result.origins.length; i++) {
-              for (key in customOrigins) {
-                if (customOrigins.hasOwnProperty(key) && !skip) {
-                  if (result.origins[i].indexOf(key) !== -1) {
-                    skip = true;
-                  }
-                }
-              }
-
-              if (
-                result.origins[i].indexOf('toggl') === -1 &&
-                result.origins[i] !== '*://*/*' &&
-                !skip
-              ) {
-                origins.push(result.origins[i]);
-              }
-              skip = false;
-            }
-          } catch (e) {
-            chrome.runtime.sendMessage({
-              type: 'error',
-              stack: e.stack,
-              category: 'Settings'
-            });
-          }
-
-          chrome.permissions.remove({ origins: origins }, function(result) {
-            if (result) {
-              Settings.loadSitesIntoList();
-            }
-          });
-        });
-      });
+    var $disableAllOrigins = document.querySelector('.disable-all');
+    $disableAllOrigins.removeEventListener('click', Settings.disableAllOrigins);
+    $disableAllOrigins.addEventListener('click', Settings.disableAllOrigins);
   }
 };
 
@@ -605,21 +603,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
       '#send-usage-statistics'
     );
     Settings.$sendErrorReports = document.querySelector('#send-error-reports');
-
-    // Permissions tab is unavailable in Firefox at this time. #1060 / #1172
-    if (FF) {
-      document
-        .querySelector('.tab-3')
-        .style.display = 'none'
-      document
-        .querySelector('.tab-link:nth-child(3)')
-        .style.display = 'none'
-    }
+    Settings.$enableAutoTagging = document.querySelector('#enable-auto-tagging');
 
     // Show permissions page with notice
-    // Permissions tab is hidden in Firefox at this time, so the notice isn't shown either.
     if (
-      !db.get('dont-show-permissions') && !FF
+      !db.get('dont-show-permissions')
     ) {
       document.querySelector('.guide-container').style.display = 'flex';
       document.querySelector(
@@ -634,45 +622,36 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     // Change active tab.
     let activeTab = Number.parseInt(db.get('settings-active-tab'), 10);
-    if (FF && activeTab > 2) {
-      // Safeguard for Firefox after the Permissions tab has been hidden.
-      activeTab = 0;
-    }
     changeActiveTab(activeTab);
     document.querySelector('body').style.display = 'block';
 
     Settings.showPage();
 
-    Settings.$permissionFilter.addEventListener('focus', function(e) {
-      Settings.permissionItems = document.querySelectorAll(
-        '#permissions-list li'
-      );
-    });
-    Settings.$permissionFilter.addEventListener('keyup', function(e) {
-      var key,
-        val = Settings.$permissionFilter.value;
-      if (val === Settings.lastFilter) {
-        return;
-      }
-
-      if (val.length === 1) {
+    let filterTimerId = null
+    function updateFilteredList (val) {
+      if (val.length > 0) {
         Settings.$permissionsList.classList.add('filtered');
         Settings.$permissionFilterClear.style.display = 'block';
-      }
-      if (val.length === 0) {
+      } else {
         Settings.$permissionsList.classList.remove('filtered');
         Settings.$permissionFilterClear.style.display = 'none';
       }
-      Settings.lastFilter = val;
-      for (key in Settings.permissionItems) {
-        if (Settings.permissionItems.hasOwnProperty(key)) {
-          if (Settings.permissionItems[key].id.indexOf(val) !== -1) {
-            Settings.permissionItems[key].classList.add('filter');
-          } else if (!!Settings.permissionItems[key].classList) {
-            Settings.permissionItems[key].classList.remove('filter');
-          }
+
+      const permissionItems = document.querySelectorAll('#permissions-list li');
+      permissionItems.forEach((item) => {
+        if (item.id.indexOf(val) !== -1) {
+          item.classList.add('filter');
+        } else if (!!item.classList) {
+          item.classList.remove('filter');
         }
+      });
+    }
+    Settings.$permissionFilter.addEventListener('keyup', function(e) {
+      const val = Settings.$permissionFilter.value;
+      if (filterTimerId) {
+        clearTimeout(filterTimerId)
       }
+      filterTimerId = setTimeout(() => updateFilteredList(val), 250)
     });
 
     Settings.$permissionFilterClear.addEventListener('click', function(e) {
@@ -689,6 +668,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
       );
       TogglButton.toggleRightClickButton(
         localStorage.getItem('showRightClickButton') !== 'true'
+      );
+    });
+    Settings.$enableAutoTagging.addEventListener('click', function (e) {
+      Settings.toggleSetting(
+        e.target,
+        localStorage.getItem('enableAutoTagging') !== 'true',
+        'update-enable-auto-tagging'
       );
     });
     Settings.$startAutomatically.addEventListener('click', function(e) {

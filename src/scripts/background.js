@@ -436,6 +436,7 @@ window.TogglButton = {
       defaultProject = db.getDefaultProject(),
       rememberProjectPer = db.get('rememberProjectPer'),
       entry;
+    const enableAutoTagging = db.get('enableAutoTagging');
     TogglButton.$curService = (timeEntry || {}).service;
     TogglButton.$curURL = (timeEntry || {}).url;
 
@@ -463,7 +464,7 @@ window.TogglButton = {
       pid: timeEntry.pid || timeEntry.projectId || null,
       tid: timeEntry.tid || null,
       wid: timeEntry.wid || TogglButton.$user.default_wid,
-      tags: timeEntry.tags || null,
+      tags: enableAutoTagging ? (timeEntry.tags || null) : null,
       billable: timeEntry.billable || false,
       created_with: timeEntry.createdWith || TogglButton.$fullVersion
     };
@@ -1731,19 +1732,20 @@ window.TogglButton = {
         error.stack = request.stack;
         error.message = request.stack.split('\n')[0];
 
+        // Attempt to extract integration name from content filename
+        errorSource = request.stack.split('content/')[1];
+        if (!!errorSource) {
+          errorSource = errorSource.split('.js')[0];
+        } else {
+          errorSource = 'Unknown';
+        }
+
         if (process.env.DEBUG) {
           console.log(error);
           console.log(request.category + ' Script Error [' + errorSource + ']');
         } else {
           if (request.category === 'Content') {
-            errorSource = request.stack.split('content/')[1];
-            if (!!errorSource) {
-              errorSource = errorSource.split('.js')[0];
-            } else {
-              errorSource = 'Unknown';
-            }
-
-            error.name = 'Content Error';
+            error.name = `Content Error [${errorSource}]`;
             bugsnagClient.notify(error);
           } else {
             report(error);

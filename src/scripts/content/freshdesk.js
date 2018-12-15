@@ -22,17 +22,19 @@ togglbutton.render('#Pagearea:not(.toggl)', { observe: true }, function(elem) {
 });
 
 // Freshdesk mint (late 2018)
-togglbutton.render('.page-actions__right:not(.toggl)', { observe: true }, elem => {
+togglbutton.render('.page-actions__left:not(.toggl)', { observe: true }, elem => {
   const descriptionElem = $('.description-subject');
 
   // if there's no description element it's overview page, don't show
   if (!descriptionElem) { return }
 
-  const description = descriptionElem ? descriptionElem.textContent.trim() : '';
+  const descriptionSelector = () => {
+    return $('.description-subject').textContent.trim()
+  }
 
   const link = togglbutton.createTimerLink({
     className: 'freshdesk__mint',
-    description,
+    description: descriptionSelector,
     buttonType: 'minimal',
     tags: () => {
       const tagList = $('.list-items');
@@ -45,5 +47,5 @@ togglbutton.render('.page-actions__right:not(.toggl)', { observe: true }, elem =
     }
   })
 
-  elem.parentNode.prepend(link);
+  elem.appendChild(link);
 });

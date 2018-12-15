@@ -451,6 +451,14 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 .toggl-button.jira2018 {
+  margin-left: 8px;
+  margin-top: 0;
+  position: relative; /* margin interferes with Jira layout, using relative pos instead */
+  top: 2px;
+  cursor: pointer;
+}
+
+.toggl-button.jira2018-modal {
   margin-top: .5em;
   margin-left: 0;
   cursor: pointer;
@@ -631,6 +639,23 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 .toggl-button.anydo {
   color: #099acb;
   margin-left: 10px;
+}
+
+.toggl-button.anydo--2018 {
+  margin: 3px 25px;
+  position: absolute;
+  right: 0;
+}
+
+.TaskItem .toggl-button.anydo--2018__taskItem {
+  visibility: hidden;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+*:hover > .toggl-button.anydo--2018, *:hover > .toggl-button.anydo--2018__taskItem {
+  visibility: visible;
 }
 
 /********* WUNDERLIST *********/
@@ -1095,9 +1120,12 @@ li > .toggl-button.phabricator {
   margin-top: 3px;
 }
 .toggl-button.freshdesk__mint {
-  margin-top: 14px;
-  margin-left: 5px;
+  margin: 0;
+  position: relative;
+  top: 6px;
+  left: 5px;
 }
+
 /********* CLOUDES.ME *********/
 .boxedDotted .toggl-button.cloudes {
   margin-left: 7px;
@@ -1143,7 +1171,7 @@ li > .toggl-button.phabricator {
   background-position-x: 8px !important;
 }
 
-.toggl-button.slack-message {
+.c-message_actions__button .toggl-button.slack-message {
   background-color: #fff !important;
   background-size: 16px !important;
   padding-left: 1px;
@@ -1283,11 +1311,6 @@ a.toggl-button.workfront.min {
 /********* ONSHAPE *********/
 .toggl-button.onshape {
   margin: 10px;
-}
-
-/********* MEISTERTASK *********/
-.toggl-button.meistertask {
-  margin: 9px;
 }
 
 /********* OVERV.IO *********/
@@ -1497,4 +1520,11 @@ label > .toggl-button.outlook {
   vertical-align: middle;
   position: relative;
   top: 1px;
+}
+
+/********* NOTION *********/
+.toggl-button.notion {
+  cursor: pointer;
+  margin-right: 13px;
+  margin-top: 6px;
 }

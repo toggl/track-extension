@@ -9,7 +9,7 @@ export default {
     name: 'Airtable'
   },
   'any.do': {
-    url: '*://web.any.do/*',
+    url: '*://*.any.do/*',
     name: 'Anydo'
   },
   'asana.com': {
@@ -279,6 +279,11 @@ export default {
   'newsletter2go.com': {
     url: '*://*.newsletter2go.com/*',
     name: 'Newsletter2go'
+  },
+  'notion.so': {
+    url: '*://*.notion.so/*',
+    name: 'Notion by Matt',
+    file: 'notion.js'
   },
   'nozbe.com': {
     url: '*://app.nozbe.com/*',

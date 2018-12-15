@@ -24,12 +24,9 @@ input[type='number'] {
 .container {
   position: relative;
   width: 800px;
+  max-width: 800px;
   background-color: #fff;
   color: #505050;
-}
-
-.ff .container {
-  width: 100vw;
 }
 
 .tabs {
@@ -39,6 +36,7 @@ input[type='number'] {
   width: 100vw;
   transition: order 300ms ease-in-out;
   align-items: stretch;
+  background-color: inherit;
 }
 
 .tab {
@@ -135,7 +133,6 @@ header ul {
 }
 
 header .tab-link {
-  float: left;
   box-sizing: border-box;
   background: #fdfdfd;
   border-bottom: 1px solid #eee;
@@ -159,12 +156,35 @@ header li:hover {
   clear: both;
 }
 
-#origins-container,
-#perm-container,
-#custom-perm-container {
+#origins-container {
   display: inline;
 }
 
+.permissions-toolbar {
+  width: 375px;
+}
+
+#permission-filter {
+  width: 210px;
+  padding-right: 20px;
+}
+
+.button-container {
+    display: block;
+    margin-top: 10px;
+}
+
+.section {
+  width: 400px;
+}
+
+.section:hover .description {
+  visibility: visible;
+}
+
+/*
+ * For styling permissions and custom permissions lists
+*/
 .origin-list {
   border: 1px solid #cccaca;
   list-style: none;
@@ -173,7 +193,6 @@ header li:hover {
   padding: 5px;
   overflow: auto;
   width: 375px;
-  float: left;
   font-size: 12px;
 }
 
@@ -190,22 +209,34 @@ header li:hover {
   background: #f5f5f5;
 }
 
-.permissions-toolbar {
-  width: 375px;
+.origin-list li:last-child {
+  border-bottom: none;
 }
 
+/*
+ * Custom permissions list
+*/
 #custom-permissions-list li {
   line-height: 23px;
   vertical-align: middle;
   padding-left: 5px;
 }
 
+/*
+ * Permissions list
+*/
+#permissions-list li {
+  display: flex;
+  align-items: center;
+}
+
+
 #permissions-list.filtered li {
   display: none;
 }
 
 #permissions-list.filtered li.filter {
-  display: block;
+  display: flex;
 }
 
 #permissions-list li.disabled {
@@ -217,40 +248,21 @@ header li:hover {
   outline: 2px solid blue;
 }
 
-.origin-list li:last-child {
-  border-bottom: none;
-}
-
-.section {
-  float: left;
-}
-
-.section:hover .description {
-  visibility: visible;
-}
 
 #permissions-list li div {
   height: 23px;
   line-height: 23px;
   vertical-align: middle;
-  float: left;
 }
 
 #permissions-list li input {
-  float: left;
   margin-right: 10px;
   margin-left: 5px;
-  margin-top: 5px;
-}
-
-#permission-filter {
-  width: 210px;
-  float: left;
-  padding-right: 20px;
 }
 
 #filter-clear {
   display: none;
+  float: left;
   width: 18px;
   height: 18px;
   line-height: 14px;
@@ -261,7 +273,6 @@ header li:hover {
   font-weight: bold;
   margin-left: -21px;
   position: relative;
-  float: left;
   text-align: center;
   margin-top: 3px;
 }
@@ -276,10 +287,6 @@ header li:hover {
   display: block;
 }
 
-.button-container {
-  float: right;
-}
-
 #default-project-container {
   display: inline;
 }
@@ -291,7 +298,6 @@ header li:hover {
 
 .remove-custom {
   display: block;
-  float: left;
   text-align: center;
   text-align: left;
   text-decoration: none;

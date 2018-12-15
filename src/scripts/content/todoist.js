@@ -51,7 +51,8 @@ togglbutton.render(
       className: 'todoist',
       description: descriptionSelector,
       projectName: getProjectNames(elem),
-      tags: tagsSelector
+      tags: tagsSelector,
+      taskName: descriptionSelector
     });
 
     container.insertBefore(link, container.lastChild);

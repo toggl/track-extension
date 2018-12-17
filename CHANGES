@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.16.1",
+      "rows": [
+        "Fix multiple buttons appearing in FreshDesk Mint"
+      ]
+    },
+    {
       "version": "1.16.0",
       "rows": [
         "Add support for Notion.so (Task items)",

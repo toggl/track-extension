@@ -561,6 +561,17 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   position: static;
 }
 
+/********* Produck *********/
+.toggl-button.produck {
+  padding-left: 25px;
+  color: #a9b0c4;
+  font-size: 13px;
+}
+.toggl-button.produck:hover {
+  color: #2693ff;
+  text-decoration: none;
+}
+
 /********* PRODUCTEEV *********/
 .toggl-button.producteev {
   margin-left: 12px;

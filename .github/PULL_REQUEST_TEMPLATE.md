@@ -2,7 +2,7 @@ Please remember the [Contributing Guidelines](https://github.com/toggl/toggl-but
 
 ## :star2: What does this PR do?
 
-<!-- Concise description of what this PR is achieves, including any context. -->
+<!-- Concise description of what this PR achieves, including any context. -->
 
 ## :bug: Recommendations for testing
 

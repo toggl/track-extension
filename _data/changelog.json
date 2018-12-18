@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.17.0",
+      "rows": [
+        "Add Produck integration"
+      ]
+    },
+    {
       "version": "1.16.1",
       "rows": [
         "Fix multiple buttons appearing in FreshDesk Mint"

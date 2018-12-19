@@ -1,6 +1,13 @@
 {
   "versions": [
     {
+      "version": "1.17.1",
+      "rows": [
+        "Google Calendar - Support new UI",
+        "Freshdesk Mint - Include task number"
+      ]
+    }
+    {
       "version": "1.17.0",
       "rows": [
         "Add Produck integration"

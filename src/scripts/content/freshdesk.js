@@ -29,7 +29,9 @@ togglbutton.render('.page-actions__left:not(.toggl)', { observe: true }, elem =>
   if (!descriptionElem) { return }
 
   const descriptionSelector = () => {
-    return $('.description-subject').textContent.trim()
+    const ticketNumber = $('.breadcrumb__item.active').textContent.trim();
+    const subject = $('.description-subject').textContent.trim();
+    return `${ticketNumber} ${subject}`;
   }
 
   const link = togglbutton.createTimerLink({

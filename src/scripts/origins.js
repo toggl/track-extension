@@ -126,6 +126,10 @@ export default {
     url: '*://*.draftin.com/*',
     name: 'Draftin'
   },
+  'paper.dropbox.com': {
+    url: '*://paper.dropbox.com/*',
+    name: 'Dropbox Paper'
+  },
   'drupal.org': {
     url: '*://*.drupal.org/*',
     name: 'Drupal'

@@ -1564,3 +1564,14 @@ label > .toggl-button.outlook {
   filter: grayscale(0%);
   opacity: 1;
 }
+
+/****** DROPBOX PAPER ******/
+.toggl.dropbox-paper-wrapper {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+}
+
+.toggl-button.dropbox-paper {
+  vertical-align: middle;
+}

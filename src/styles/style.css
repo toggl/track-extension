@@ -1535,7 +1535,7 @@ label > .toggl-button.outlook {
 }
 
 /********* NOTION *********/
-.toggl-button.notion {
+#notion-app .toggl-button.notion {
   cursor: pointer;
   margin-right: 13px;
   margin-top: 6px;

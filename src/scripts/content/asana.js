@@ -171,10 +171,12 @@ togglbutton.render(
     }
     var link,
       container = $('.SingleTaskPaneToolbar'),
-      description = $(
-        '.SingleTaskPane-titleRow .simpleTextarea',
-        elem.parentNode
-      ).textContent,
+      description = function() {
+        return $(
+          '.SingleTaskPane-titleRow .simpleTextarea',
+          elem.parentNode
+        ).textContent;
+      },
       projectElement = $(
         '.SingleTaskPane-projects .TaskProjectPill-projectName',
         elem.parentNode

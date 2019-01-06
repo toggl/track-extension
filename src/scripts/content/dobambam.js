@@ -1,8 +1,8 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.taskScroll:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.taskScroll:not(.toggl)', { observe: true }, function(
+  elem
+) {
   var link, description, project;
 
   description = $('.jQ_taskTitleEl a', elem);
@@ -20,5 +20,4 @@ togglbutton.render('.taskScroll:not(.toggl)', {observe: true}, function (elem) {
   if ($('section.jQ_taskHeader')) {
     $('section.jQ_taskHeader').appendChild(link);
   }
-
 });

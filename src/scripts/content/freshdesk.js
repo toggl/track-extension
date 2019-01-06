@@ -1,16 +1,11 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
 
-togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('li', 'ticket-btns'),
-    //duration,
+togglbutton.render('#Pagearea:not(.toggl)', { observe: true }, function(elem) {
+  var link,
+    container = createTag('li', 'ticket-btns'),
     description,
     titleElem = $('h2.subject', elem),
     idElem = $('#ticket-display-id'),
-    //trackedContainer = createTag('div', 'open-box toggl-time-tracked'),
-    //trackedElem = $('.open-box'),
     projectElem = $('.logo_text'),
     buttonsElem = $('.ticket-actions > ul');
 
@@ -24,17 +19,35 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
 
   container.appendChild(link);
   buttonsElem.appendChild(container, buttonsElem);
-/*
-  duration = togglbutton.calculateTrackedTime(description);
-  h3 = document.createElement("h3");
-  h3.textContent = "Time tracked";
+});
 
-  p = document.createElement("p");
-  p.setAttribute("title", "Time tracked with Toggl: " + duration);
-  p.textContent = duration;
+// Freshdesk mint (late 2018)
+togglbutton.render('.page-actions__left:not(.toggl)', { observe: true }, elem => {
+  const descriptionElem = $('.description-subject');
 
-  trackedContainer.appendChild(h3);
-  trackedContainer.appendChild(p);
-  trackedElem.parentNode.insertBefore(trackedContainer, trackedElem.nextSibling);
-*/
+  // if there's no description element it's overview page, don't show
+  if (!descriptionElem) { return }
+
+  const descriptionSelector = () => {
+    const ticketNumber = $('.breadcrumb__item.active').textContent.trim();
+    const subject = $('.description-subject').textContent.trim();
+    return `${ticketNumber} ${subject}`;
+  }
+
+  const link = togglbutton.createTimerLink({
+    className: 'freshdesk__mint',
+    description: descriptionSelector,
+    buttonType: 'minimal',
+    tags: () => {
+      const tagList = $('.list-items');
+
+      if (!tagList ||
+        !tagList.children ||
+        !tagList.children.length) { return []; }
+
+      return [...tagList.children].map(child => child.textContent);
+    }
+  })
+
+  elem.appendChild(link);
 });

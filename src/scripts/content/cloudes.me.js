@@ -1,13 +1,10 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag: false*/
-/*Created by hamdikavak on 2/13/16.*/
-
 'use strict';
 
-togglbutton.render('#left-panel:not(.toggl)', {}, function () {
-  var link, wrap = createTag('div'),
+togglbutton.render('#left-panel:not(.toggl)', {}, function() {
+  var link,
+    wrap = createTag('div'),
     prevElem = $('#left-panel .ui-grid-a'),
-    cloudesDescription = function () {
+    cloudesDescription = function() {
       return $('title').textContent;
     };
 

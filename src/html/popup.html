@@ -12,7 +12,7 @@
       <li class="cog" title="Open Settings"></li>
       <li class="sync" title="Sync..."></li>
       <li class="logout" title="Log out"></li>
-      <li class="signup" title="Create account"><a href="https://toggl.com/signup" target="_blank">Create account</a></li>
+      <li class="signup" title="Create account"><a href="https://toggl.com/signup?utm_source=toggl-button&utm_medium=referral" target="_blank">Create account</a></li>
     </ul>
     <div class="error"></div>
     <div class="views">
@@ -25,6 +25,10 @@
           <div class="billable-icon" title="billable"></div>
           <div class="stop-button">Stop</div>
           <div class="resume-button" data-event="resume">Continue latest</div>
+        </li>
+        <li class="summary">
+          <div class="s-today">Today: <span>0h 00min</span></div>
+          <div class="s-week">This Week: <span>0h 00m</span></div>
         </li>
         <li class="entries-list"></li>
       </ul>
@@ -45,11 +49,22 @@
         </form>
       </div>
 
+      <div id="revoked-workspace" class="view">
+        <div>You no longer have access to your last workspace. Create a new one to continue using Toggl Button</div>
+        <form accept-charset="UTF-8" id="workspace">
+          <p class="form-row">
+            <input name="workspace_name" type="text" id="workspace_name" class="text-input" value="" placeholder="Workspace name">
+          </p>
+          <p class="form-submit-row">
+            <input type="submit" value="Create Workspace" class="login-btn">
+          </p>
+        </form>
+      </div>
+
       <div id="entry-form" class="view">
       </div>
 
     </div>
-    <script src="../scripts/autocomplete.js"></script>
     <script src="../scripts/popup.js"></script>
   </body>
 </html>

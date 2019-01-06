@@ -7,7 +7,7 @@
   outline: 1px solid #f5f5f5;
   z-index: 6;
   display: none;
-  padding: 0 3px!important;
+  padding: 0 3px !important;
   border-radius: 3px;
   background-color: #ffffff;
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
@@ -30,7 +30,8 @@
   line-height: 16px;
 }
 
-#project-autocomplete li, #project-autocomplete p {
+#project-autocomplete li,
+#project-autocomplete p {
   line-height: 22px;
   height: 22px;
   vertical-align: middle;
@@ -48,6 +49,8 @@
 }
 
 #project-autocomplete li:not(.ws-row):not(.client-row):hover,
+#project-autocomplete li.selected-item:not(.ws-row):not(.client-row),
+#project-autocomplete p.project-row.selected-item,
 #project-autocomplete p:hover {
   cursor: pointer;
   border-radius: 100px;
@@ -82,7 +85,7 @@
 }
 
 #project-autocomplete .ws-row.hide {
-  display: none!important;
+  display: none !important;
 }
 
 #project-autocomplete .project-row {
@@ -90,15 +93,18 @@
   overflow: hidden;
 }
 
-#project-autocomplete .project-row[data-pid="0"] {
+#project-autocomplete .project-row[data-pid='0'] {
   color: #a3a3a3;
 }
 
-#project-autocomplete .client-list:not([data-cid="0"]) .project-row .tb-project-bullet {
+#project-autocomplete
+  .client-list:not([data-cid='0'])
+  .project-row
+  .tb-project-bullet {
   left: 22px;
 }
 
-#project-autocomplete .client-list:not([data-cid="0"]) {
+#project-autocomplete .client-list:not([data-cid='0']) {
   padding-left: 10px;
 }
 
@@ -145,9 +151,10 @@
   display: none !important;
 }
 
-.client-list.filter .client-row, .ws-list.filter .ws-row,
+.client-list.filter .client-row,
+.ws-list.filter .ws-row,
 .client-list.filter-match li {
-  display: block!important;
+  display: block !important;
 }
 
 a.filter-clear {
@@ -156,7 +163,7 @@ a.filter-clear {
   height: 18px;
   line-height: 14px;
   vertical-align: middle;
-  text-decoration: none!important;
+  text-decoration: none !important;
   color: #6b6969;
   font-size: 16px;
   font-weight: bold;
@@ -169,7 +176,7 @@ a.filter-clear {
 
 a.filter-clear:hover {
   color: #ffffff;
-  background-color: #6b6969!important;
+  background-color: #6b6969 !important;
   border-radius: 20px;
 }
 
@@ -184,17 +191,18 @@ span.item-name {
   float: left;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: #000000;
 }
 
-span.item-name.has-tasks  {
+span.item-name.has-tasks {
   max-width: 110px;
 }
 
-.toggl-integration span.item-name{
+.toggl-integration span.item-name {
   max-width: 175px;
 }
 
-.toggl-integration span.item-name.has-tasks  {
+.toggl-integration span.item-name.has-tasks {
   max-width: 120px;
 }
 
@@ -211,7 +219,9 @@ span.item-name.has-tasks  {
 }
 
 /* Project colors */
-.tb-project-color { display: block; }
+.tb-project-color {
+  display: block;
+}
 
 #toggl-button-project-placeholder .tb-project-bullet {
   margin-top: 16px;
@@ -259,7 +269,7 @@ span.item-name.has-tasks  {
   font-weight: 300;
   line-height: 1.5;
   color: #a3a3a3;
-  padding:0 5px;
+  padding: 0 5px;
   margin-top: 5px;
   max-width: 175px;
   text-overflow: ellipsis;
@@ -292,7 +302,7 @@ span.item-name.has-tasks  {
 }
 
 .tag-clear:hover {
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .add-new-tag {
@@ -305,7 +315,7 @@ span.item-name.has-tasks  {
   font-weight: 300;
   line-height: 1.5;
   color: #a3a3a3;
-  padding:0 5px;
+  padding: 0 5px;
   margin-top: 5px;
   background-color: rgba(75, 200, 0, 0.12);
   color: #4bc800;
@@ -330,7 +340,7 @@ span.item-name.has-tasks  {
 
 .open.add-allowed #toggl-button-project-filter,
 .open.add-allowed #toggl-button-tag-filter {
-  padding-right: 80px!important;
+  padding-right: 80px !important;
 }
 
 #project-autocomplete .task-count {
@@ -348,7 +358,7 @@ span.item-name.has-tasks  {
 }
 
 #project-autocomplete .task-count:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 #project-autocomplete ul.task-list {
@@ -364,8 +374,8 @@ span.item-name.has-tasks  {
 }
 
 #project-autocomplete .tasklist-opened {
-  height: auto!important;
-  border-radius: 0!important;
+  height: auto !important;
+  border-radius: 0 !important;
 }
 
 #project-autocomplete .tasklist-opened ul.task-list {
@@ -391,5 +401,5 @@ span.item-name.has-tasks  {
 }
 
 .filtered .tasklist-opened li.task-item.filter {
-  display: block!important;
+  display: block !important;
 }

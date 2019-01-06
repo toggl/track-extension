@@ -1,14 +1,66 @@
 {
   "name": "toggl-button",
-  "version": "1.2.0",
+  "version": "1.17.1",
   "description": "Add Toggl one-click time tracking to popular web tools.",
   "license": "BSD-3-Clause",
   "private": true,
+  "engines": {
+    "node": ">=8.11.3"
+  },
+  "scripts": {
+    "start": "webpack-cli --mode development --watch",
+    "build": "webpack-cli --mode production --env.production",
+    "xo": "xo"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-optional-chaining"
+    ]
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "Firefox ESR"
+  ],
+  "prettier": {
+    "bracketSpacing": true,
+    "singleQuote": true,
+    "useTabs": false
+  },
+  "xo": {
+    "envs": [
+      "browser",
+      "commonjs",
+      "es6",
+      "webextensions"
+    ],
+    "ignores": [
+      "src/**"
+    ],
+    "prettier": true
+  },
   "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-crx": "~0.3.3",
-    "grunt-jslint": "~1.1.8",
-    "grunt-contrib-compress": "~0.7.0",
-    "jslint": "~0.5.2"
+    "@babel/core": "7.1.2",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-optional-chaining": "7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "babel-loader": "8.0.4",
+    "clean-webpack-plugin": "0.1.19",
+    "compression-webpack-plugin": "1.1.11",
+    "copy-webpack-plugin": "4.5.2",
+    "filemanager-webpack-plugin": "2.0.1",
+    "nanoid": "1.2.6",
+    "prettier": "1.13.7",
+    "webpack": "4.16.3",
+    "webpack-cli": "3.1.0",
+    "webpack-log": "1.2.0",
+    "xo": "0.21.1"
+  },
+  "dependencies": {
+    "bugsnag-js": "4.7.2"
   }
 }

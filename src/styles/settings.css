@@ -1,12 +1,12 @@
+html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  display: none;
 }
 
-input[type="number"], input[type="time"]{
+input[type='number'],
+input[type='time'] {
   height: 22px;
   line-height: 22px !important;
   vertical-align: middle;
@@ -17,44 +17,61 @@ input[type="number"], input[type="time"]{
   border-radius: 2px;
 }
 
-input[type="number"] {
+input[type='number'] {
   width: 50px;
 }
 
 .container {
+  position: relative;
   width: 800px;
-  margin: 20px 15px 0px;
-  padding: 0;
-  color: #505050!important;
-  float: left;
-  min-height: 380px;
-  max-height: 400px;
+  max-width: 800px;
+  background-color: #fff;
+  color: #505050;
+}
+
+.tabs {
+  display: flex;
   overflow: hidden;
+  height: 350px;
+  width: 100vw;
+  transition: order 300ms ease-in-out;
+  align-items: stretch;
+  background-color: inherit;
+}
+
+.tab {
+  display: none;
+  flex: 1 0 100vw;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.tab.active {
+  display: block;
 }
 
 .list {
-  width: 800px;
   padding: 0;
+  margin: 0;
   list-style: none;
-  float: left;
-  overflow-y: auto;
-  margin-bottom: 40px;
 }
 
 .list li {
+  position: relative;
   min-height: 40px;
 }
 
 .list li #nag-nanny:checked ~ div {
-  height: 110px
+  height: auto;
 }
 
 .list li #pomodoro-mode:checked ~ div {
-  height: 200px;
+  height: 220px;
 }
 
-.list li #stop-at-day-end:checked ~ div{
-  height:70px;
+.list li #stop-at-day-end:checked ~ div {
+  height: 70px;
 }
 
 .list li label {
@@ -64,27 +81,17 @@ input[type="number"] {
   vertical-align: middle;
 }
 
-.list li input[type="checkbox"]{
+.list li input[type='checkbox'] {
   height: 1.3em;
   width: 1.3em;
   margin: 0px 0.4em 0.3em 0px;
 }
 
-.subsettings-details  {
+.subsettings-details {
   overflow: hidden;
   height: 0px;
-  margin-left: 10px;
-  transition:height 300ms ease-in-out;
-}
-
-.subsettings-details p {
-  float: left;
-  padding-right: 30px;
-}
-
-.subsettings-details p:last-child {
-  float: none;
-  clear: both;
+  margin-left: 25px;
+  transition: height 300ms ease-in-out;
 }
 
 .subsettings-details span {
@@ -93,42 +100,17 @@ input[type="number"] {
   padding-top: 10px;
 }
 
-.footer {
-  padding: 10px 15px;
-  min-width: 800px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #e5e5e5;
-  font-size: 12px;
-  color: #8A8888;
-  float: left;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.changelog {
-  float: right;
-  margin: 0;
-  padding: 0;
-  margin-right: 10px;
-}
-
-#version a {
-  color: #8A8888!important;
-  text-decoration: none;
-  line-height: 21px;
-}
-
 .description {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
   border-left: 2px solid #dfdfdf;
   color: rgb(119, 119, 119);
-  float: right;
-  display: block;
   visibility: hidden;
   padding: 5px;
-  width: 50%;
-  margin: 0!important;
+  width: 40%;
+  margin: 0 20px !important;
 }
 
 .list li:hover .description {
@@ -136,59 +118,31 @@ input[type="number"] {
 }
 
 header {
-  position: fixed;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  z-index: 100;
+  box-shadow: inset 0px -1px 1px -1px #bbb;
+  position: relative;
+  z-index: 1;
 }
 
 header ul {
+  display: flex;
+  flex-direction: row;
   list-style: none;
+  height: 35px;
   padding: 0;
   margin: 0;
 }
 
 header .tab-link {
+  box-sizing: border-box;
   background: #fdfdfd;
-  cursor: pointer;
-  float: left;
+  border-bottom: 1px solid #eee;
   padding: 10px 20px;
+  cursor: pointer;
 }
 
-header .active, header li:hover {
+header .active,
+header li:hover {
   border-bottom: 1px solid red;
-  background: #F1F0F0!important;
-}
-
-.container .tabs {
-  position: absolute;
-  bottom: 42px;
-  top: 35px;
-  left: 0px;
-  width: 2600px;
-  overflow: hidden;
-  transition:left 300ms ease-in-out;
-}
-
-.container .tabs[data-tab="2"] {
-  left: -830px;
-}
-
-.container .tabs:not([data-tab="1"]) .tab-1{
-  overflow: hidden;
-}
-
-.container .tabs[data-tab="3"] {
-  left: -1660px;
-}
-
-.container .tab {
-  float: left;
-  height: 323px;
-  overflow-y: auto;
-  width: 815px;
-  padding-left: 15px;
 }
 
 /* Permissions tab */
@@ -197,29 +151,48 @@ header .active, header li:hover {
   width: 40%;
 }
 
-.container .tab-3 {
-  padding-right: 15px;
-  width: 800px;
-}
-
 .container .tab-3 h2 {
   margin-bottom: 15px;
   clear: both;
 }
 
-#origins-container, #perm-container, #custom-perm-container {
+#origins-container {
   display: inline;
 }
 
+.permissions-toolbar {
+  width: 375px;
+}
+
+#permission-filter {
+  width: 210px;
+  padding-right: 20px;
+}
+
+.button-container {
+    display: block;
+    margin-top: 10px;
+}
+
+.section {
+  width: 400px;
+}
+
+.section:hover .description {
+  visibility: visible;
+}
+
+/*
+ * For styling permissions and custom permissions lists
+*/
 .origin-list {
-  border: 1px solid #CCCACA;
+  border: 1px solid #cccaca;
   list-style: none;
   max-height: 290px;
   border-radius: 3px;
   padding: 5px;
   overflow: auto;
   width: 375px;
-  float: left;
   font-size: 12px;
 }
 
@@ -229,74 +202,67 @@ header .active, header li:hover {
 
 .origin-list li {
   height: 23px;
-  border-bottom: 1px solid #E8E8E8;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .origin-list li:hover {
   background: #f5f5f5;
 }
 
-.permissions-toolbar {
-  width: 375px;
+.origin-list li:last-child {
+  border-bottom: none;
 }
 
+/*
+ * Custom permissions list
+*/
 #custom-permissions-list li {
   line-height: 23px;
   vertical-align: middle;
   padding-left: 5px;
 }
 
+/*
+ * Permissions list
+*/
+#permissions-list li {
+  display: flex;
+  align-items: center;
+}
+
+
 #permissions-list.filtered li {
   display: none;
 }
 
 #permissions-list.filtered li.filter {
-  display: block;
+  display: flex;
 }
 
 #permissions-list li.disabled {
-  opacity: .5;
-  background-color: #ECECEC;
+  opacity: 0.5;
+  background-color: #ececec;
 }
 
 #permissions-list li.custom {
   outline: 2px solid blue;
 }
 
-.origin-list li:last-child {
-  border-bottom: none;
-}
-
-.section {
-  float: left;
-}
-
-.section:hover .description {
-  visibility: visible;
-}
 
 #permissions-list li div {
   height: 23px;
   line-height: 23px;
   vertical-align: middle;
-  float: left;
 }
 
 #permissions-list li input {
-  float: left;
   margin-right: 10px;
   margin-left: 5px;
-  margin-top: 5px;
-}
-
-#permission-filter {
-  width: 210px;
-  float: left;
-  padding-right: 20px;
 }
 
 #filter-clear {
   display: none;
+  float: left;
   width: 18px;
   height: 18px;
   line-height: 14px;
@@ -307,7 +273,6 @@ header .active, header li:hover {
   font-weight: bold;
   margin-left: -21px;
   position: relative;
-  float: left;
   text-align: center;
   margin-top: 3px;
 }
@@ -318,12 +283,8 @@ header .active, header li:hover {
   border-radius: 20px;
 }
 
-.filtered ~#filter-clear {
+.filtered ~ #filter-clear {
   display: block;
-}
-
-.button-container {
-  float: right;
 }
 
 #default-project-container {
@@ -337,11 +298,10 @@ header .active, header li:hover {
 
 .remove-custom {
   display: block;
-  float: left;
   text-align: center;
   text-align: left;
   text-decoration: none;
-  color: #EF2D2D;
+  color: #ef2d2d;
   font-size: 9px;
   cursor: pointer;
   margin-right: 5px;
@@ -352,11 +312,18 @@ header .active, header li:hover {
 
 .remove-custom:hover {
   color: #ffffff;
-  background-color: #EF2D2D;
+  background-color: #ef2d2d;
 }
 
 .guide-container {
   display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .guide-back {
@@ -372,15 +339,13 @@ header .active, header li:hover {
 
 .guide {
   width: 400px;
-  position: relative;
   background: #ffffff;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   padding: 15px;
   line-height: 20px;
   z-index: 999;
-  margin: 20px auto;
-  box-shadow: 1px 1px 10px #CACACA;
+  box-shadow: 1px 1px 10px #cacaca;
 }
 
 .guide > div {
@@ -407,7 +372,8 @@ header .active, header li:hover {
 
 #sound-test {
   position: relative;
-  right: -28px;
+  right: -112px;
+  width: 80px;
 }
 
 .pomodoro-sound {
@@ -417,44 +383,21 @@ header .active, header li:hover {
 .pomodoro-sound-volume {
   overflow: hidden;
   height: 0px;
-  transition:height 300ms ease-in-out;
+  transition: height 300ms ease-in-out;
 }
 
-#enable-sound-signal:checked ~.pomodoro-sound-volume {
-  height: 36px;
+#enable-sound-signal:checked ~ .pomodoro-sound-volume {
+  height: 64px;
 }
 
-.ff .tab-3 .section:first-of-type {
-  display: none!important;
-}
-
-.ff .tab {
-  height: 100%;
-}
-
-.ff .footer, .ff .header {
-  background: transparent;
-}
-
-.ff .list {
-  width: auto;
-  padding-right: 15px;
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 42px;
+  padding: 0 15px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e5e5e5;
+  color: #8a8888;
   font-size: 12px;
-}
-
-.ff .subsettings-details {
-  max-width: 45%;
-}
-
-.ff header, .ff header .tab-link {
-  background: transparent;
-}
-
-.ff .container .tabs {
-  width: 2800px;
-}
-
-.ff .tab-3 .section h2 {
-  font-size: 15px;
-  font-weight: 400;
 }

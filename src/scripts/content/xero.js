@@ -1,9 +1,6 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, createTag: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('#frmMain', {}, function (elem) {
+togglbutton.render('#frmMain', {}, function(elem) {
   var link, liTag;
 
   link = togglbutton.createTimerLink({
@@ -12,7 +9,7 @@ togglbutton.render('#frmMain', {}, function (elem) {
     description: $('#frmMain h1').textContent.trim()
   });
 
-  liTag = createTag("li", "xn-h-menu");
+  liTag = createTag('li', 'xn-h-menu');
   liTag.appendChild(link);
   $('.xn-h-header-tabs ul').appendChild(liTag);
 });

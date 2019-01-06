@@ -1,26 +1,35 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
+/* global togglbutton, $ */
 
-togglbutton.render('#task-view-buttons.start:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render(
+  '.task-detail .task-view-buttonset:not(.toggl)',
+  { observe: true },
+  $container => {
+    const link = togglbutton.createTimerLink({
+      className: 'bitrix24',
+      description: descriptionSelector,
+      projectName: projectSelector,
+      tags: tagsSelector
+    });
 
-  var link, descFunc,
-    description = $('.task-detail-header-title'),
-    project = $('.task-group-field-label').textContent;
+    $container.appendChild(link);
+  }
+);
 
-  descFunc = function () {
-    if (!!description) {
-      return description.textContent;
-    }
-    return null;
-  };
+function descriptionSelector() {
+  const $description = $('#pagetitle');
+  return $description.textContent.trim();
+}
 
-  link = togglbutton.createTimerLink({
-    className: 'bitrix24',
-    description: descFunc,
-    projectName: project
-  });
+function projectSelector() {
+  // Avoid invisible field - the project can be removed, but the project name still lingers invisibly in the UI.
+  const $project = $(
+    '.task-group-field:not(.invisible) .task-group-field-label'
+  );
+  return $project ? $project.textContent.trim() : '';
+}
 
-  elem.appendChild(link);
-});
+function tagsSelector() {
+  const $tags = $('#task-tags-line');
+  return $tags.textContent.split(',').map(tag => tag.trim());
+}

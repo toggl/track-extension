@@ -1,19 +1,23 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('.convo-toolbar:not(.toggl)', {observe: true}, function () {
-
+togglbutton.render('.convo-actions:not(.toggl)', { observe: true }, function() {
   var link,
-    description = '#' + $('#tkHeader strong').textContent + ' ' + $('#subjectLine').textContent;
+    description =
+      '#' +
+      $('#tkHeader strong').textContent +
+      ' ' +
+      $('#subjectLine').textContent;
 
   link = togglbutton.createTimerLink({
     className: 'helpscout',
-    description: description
+    description: description,
+    buttonType: 'minimal'
   });
 
   link.setAttribute('style', 'margin-top: 10px');
 
-  $('.convo-toolbar').appendChild(link);
+  var listItem = document.createElement('li');
+  listItem.appendChild(link);
+
+  $('.convo-actions').appendChild(listItem);
 });

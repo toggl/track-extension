@@ -1,6 +1,3 @@
-/*jslint indent: 2 */
-/*global document: false, $: false, localStorage: false, chrome:false*/
-
 'use strict';
 
 var userData, offlineUser;
@@ -16,19 +13,23 @@ if (offlineUser) {
   }
 }
 
-(function () {
-  var version, source, s;
-  version = chrome.runtime.getManifest().version;
-  source = 'window.TogglButton = { version: "' + version + '" }';
+(function() {
+  var source, s;
+  const version = chrome.runtime.getManifest().version;
+  source = `window.TogglButton = { version: "${version}" }`;
   s = document.createElement('script');
   s.textContent = source;
   document.body.appendChild(s);
-}());
+})();
 
-document.addEventListener('webkitvisibilitychange', function () {
+document.addEventListener('webkitvisibilitychange', function() {
   if (!document.webkitHidden) {
-    chrome.extension.sendMessage({type: "sync"}, function () {return; });
+    chrome.extension.sendMessage({ type: 'sync' }, function() {
+      return;
+    });
   }
 });
 
-chrome.extension.sendMessage({type: "sync"}, function () {return; });
+chrome.extension.sendMessage({ type: 'sync' }, function() {
+  return;
+});

@@ -1,22 +1,52 @@
-/*jslint indent: 2, plusplus: true */
-/*global $: false, document: false, togglbutton: false, createTag:false, window: false, MutationObserver: false */
+/*
+ * 2018-09
+ * Warning, Visual Studio Team Services changed layout slightly (at least in HTML structure)
+ * Some additional mumbo jumbo for detection is required
+ * See more below
+*/
 'use strict';
 
-// Individual Work Item & Backlog page
-togglbutton.render('.witform-layout-content-container:not(.toggl)', {observe: true}, function () {
-  var link,
-    description = $('.work-item-form-title input').value,
-    project = $('.menu-item.l1-navigation-text.drop-visible .text').textContent.trim(),
-    container = $('.work-item-form-header-controls-container'),
-    vs_activeClassContent = $('.hub-list .menu-item.currently-selected').textContent.trim();
+// We need to find proper project element, which differs between old and new layout
+function projectSelector () {
+  var oldLayoutProjectElement = $('.tfs-selector span');
+  var newLayoutProjectElement = $('.fontWeightHeavy.flex-grow.commandbar-item-text');
+  var projectElement = oldLayoutProjectElement || newLayoutProjectElement;
 
-  link = togglbutton.createTimerLink({
-    className: 'visual-studio-online',
-    description: description,
-    projectName: project
-  });
+  return projectElement ? projectElement.textContent : ''
+}
 
-  if (vs_activeClassContent === "Work Items*" || vs_activeClassContent === "Backlogs") {
-    container.appendChild(link);
+function descriptionSelector () {
+  var formIdElem = $('.work-item-form-id span');
+  var formTitleElem = $('.work-item-form-title input');
+
+  return (formIdElem ? formIdElem.innerText : '') +
+    ' ' +
+    (formTitleElem ? formTitleElem.value : '');
+}
+
+togglbutton.render(
+  '.witform-layout-content-container:not(.toggl)',
+  { observe: true },
+  function() {
+    var link,
+      container = $('.work-item-form-header-controls-container'),
+      vs_activeClassElem = $(
+        '.commandbar.header-bottom > .commandbar-item > .displayed'
+      );
+
+    link = togglbutton.createTimerLink({
+      className: 'visual-studio-online',
+      description: descriptionSelector,
+      projectName: projectSelector
+    });
+
+    // For new layout vs_activeClassElem is not longer required, we can skip it
+    if (
+      !vs_activeClassElem ||
+      vs_activeClassElem.textContent === 'Work Items' ||
+      vs_activeClassElem.textContent === 'Backlogs'
+    ) {
+      container.appendChild(link);
+    }
   }
-});
+);

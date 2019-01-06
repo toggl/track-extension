@@ -1,9 +1,7 @@
-.DS_Store
-dist
-node_modules
-tmp
-*.pem
-ch_toggl-button.zip
-ff_toggl-button.zip
-toggl-button.sublime-project
-toggl-button.sublime-workspace
+.*
+!.editorconfig
+!.gitignore
+!.travis.yml
+
+dist/
+node_modules/

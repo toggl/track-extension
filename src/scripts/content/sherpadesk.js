@@ -1,8 +1,6 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#ctl00_ctl00_PageBody_tktHeader', {}, function () {
+togglbutton.render('#ctl00_ctl00_PageBody_tktHeader', {}, function() {
   var link,
     returnPos,
     description = '',

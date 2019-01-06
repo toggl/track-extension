@@ -1,24 +1,25 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
+'use strict';
 
-"use strict";
+togglbutton.render(
+  'div.importances:not(.toggl)',
+  { observe: true },
+  function() {
+    var link,
+      description = $('#story_name p').textContent,
+      projectName = $('.project .name').textContent,
+      div = document.createElement('div'),
+      importanceDiv = $('div.importances'),
+      collectorDiv = importanceDiv.parentNode;
 
-togglbutton.render('div.importances:not(.toggl)', {observe: true}, function () {
-  var link,
-    description = $("#story_name p").textContent,
-    projectName = $(".project .name").textContent,
-    div = document.createElement("div"),
-    importanceDiv = $("div.importances"),
-    collectorDiv = importanceDiv.parentNode;
+    div.className = 'fl';
 
-  div.className = "fl";
+    link = togglbutton.createTimerLink({
+      className: 'planbox',
+      description: description,
+      projectName: projectName
+    });
 
-  link = togglbutton.createTimerLink({
-    className: "planbox",
-    description: description,
-    projectName: projectName
-  });
-
-  div.appendChild(link);
-  collectorDiv.insertBefore(div, importanceDiv.nextSibling);
-});
+    div.appendChild(link);
+    collectorDiv.insertBefore(div, importanceDiv.nextSibling);
+  }
+);

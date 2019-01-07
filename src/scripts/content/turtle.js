@@ -3,17 +3,43 @@
 
 'use strict';
 
-togglbutton.render('.card-list-wrapper a.card', { observe: true }, (elem) => {
+const join = (elements) => {
+  return Array.from(elements).map(item => item.textContent).join('')
+};
+
+const getDescription = (element) => {
+  const currentTitleNodes = element
+    .querySelectorAll('.title-text');
+
+  if (!element.closest('.card-node').parentElement.closest('.card-node')) {
+    return join(currentTitleNodes);
+  }
+
+  const sectionTitleNodes = element
+    .closest('.card-node')
+    .parentElement
+    .closest('.card-node')
+    .querySelector('a:first-child .wrap-with-text')
+    .querySelectorAll('.title-text');
+
+  return `${join(sectionTitleNodes)} - ${join(currentTitleNodes)}`;
+};
+
+const getProject = (element) => {
+  return document.querySelector('.project-selector-caret').textContent;
+};
+
+togglbutton.render('.card-list-wrapper a.card', { observe: true }, (element) => {
   const btnClass = 'turtle-toggl-start-btn';
-  let link = elem.querySelector('.' + btnClass);
+  let link = element.querySelector(`.${btnClass}`);
 
   if (link) {
     link.innerText = '';
     return;
   }
 
-  const description = Array.from(elem.querySelectorAll('.title-text')).map(item => item.textContent).join('');
-  const project = document.querySelector('.project-selector-caret').textContent;
+  const description = getDescription(element);
+  const project = getProject(element);
 
   link = togglbutton.createTimerLink({
     className: btnClass,
@@ -28,5 +54,5 @@ togglbutton.render('.card-list-wrapper a.card', { observe: true }, (elem) => {
     event.stopImmediatePropagation();
   });
 
-  elem.insertBefore(link, elem.querySelector('.card-text-section'));
+  element.insertBefore(link, element.querySelector('.card-text-section'));
 });

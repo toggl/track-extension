@@ -997,6 +997,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-top: 10px;
   margin-right: 5px;
   color: #5f6368;
+  z-index: 0;
 }
 
 .bubblecontent .toggl-button.google-calendar {

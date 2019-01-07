@@ -3,7 +3,7 @@
 
 'use strict';
 
-togglbutton.render('a.card', {observe: true}, function (elem) {
+togglbutton.render('.card-list-wrapper a.card', { observe: true }, (elem) => {
   const btnClass = 'turtle-toggl-start-btn';
   let link = elem.querySelector('.' + btnClass);
 

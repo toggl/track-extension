@@ -22,7 +22,7 @@ const getDescription = (element) => {
     .querySelector('a:first-child .wrap-with-text')
     .querySelectorAll('.title-text');
 
-  return `${join(sectionTitleNodes)} - ${join(currentTitleNodes)}`;
+  return `${join(sectionTitleNodes)} – ${join(currentTitleNodes)}`;
 };
 
 const getProject = (element) => {

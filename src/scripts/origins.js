@@ -598,7 +598,7 @@ export default {
     name: 'Wunderlist'
   },
   'xero.com': {
-    url: '*://go.xero.com/*',
+    url: '*://*.xero.com/*',
     name: 'Xero'
   },
   'zendesk.com': {

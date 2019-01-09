@@ -45,6 +45,8 @@
 
 .toggl-button {
   display: inline-block !important;
+  user-select: none;
+  -moz-user-select: none;
   line-height: 20px;
   height: 20px;
   padding-left: 23px;

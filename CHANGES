@@ -1,12 +1,22 @@
 {
   "versions": [
     {
+      "version": "1.18.0",
+      "rows": [
+        "GitHub - Add support for Project board",
+        "Xero - Integration updated",
+        "Google Calendar - Support special events that have graphics",
+        "Asana - Fix for newly created tasks",
+        "'Start timer' text in the page will no longer be picked up when highlighting text"
+      ]
+    },
+    {
       "version": "1.17.1",
       "rows": [
         "Google Calendar - Support new UI",
         "Freshdesk Mint - Include task number"
       ]
-    }
+    },
     {
       "version": "1.17.0",
       "rows": [

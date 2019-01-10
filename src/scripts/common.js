@@ -446,8 +446,8 @@ window.togglbutton = {
 
     function activate() {
       var currentLink = link;
-      if (document.querySelector('.toggl-button.active')) {
-        link = document.querySelector('.toggl-button.active');
+      if (document.querySelector('.toggl-button.active:not(.toggl-button-edit-form-button)')) {
+        link = document.querySelector('.toggl-button.active:not(.toggl-button-edit-form-button)');
         deactivate();
         link = currentLink;
       }

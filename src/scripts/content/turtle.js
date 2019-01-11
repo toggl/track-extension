@@ -29,7 +29,7 @@ const getProject = (element) => {
   return document.querySelector('.project-selector-caret').textContent;
 };
 
-togglbutton.render('.card-list-wrapper a.card', { observe: true }, (element) => {
+togglbutton.render('.card-list-wrapper .card-node:not(.toggl)', { observe: true }, (element) => {
   const btnClass = 'turtle-toggl-start-btn';
 
   const description = getDescription(element);

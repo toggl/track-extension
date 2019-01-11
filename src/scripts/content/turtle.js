@@ -35,6 +35,9 @@ togglbutton.render('.card-list-wrapper .card-node:not(.toggl)', { observe: true 
   const description = getDescription(element);
   const project = getProject(element);
 
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('turtle-toggl-wrapper');
+
   const link = togglbutton.createTimerLink({
     className: btnClass,
     description: description,
@@ -47,5 +50,6 @@ togglbutton.render('.card-list-wrapper .card-node:not(.toggl)', { observe: true 
     event.stopImmediatePropagation();
   });
 
-  element.querySelector('a.card').insertBefore(link, element.querySelector('.card-text-section'));
+  wrapper.appendChild(link);
+  element.querySelector('.inline-actions').insertBefore(wrapper, element.querySelector('.more-actions-btn'));
 });

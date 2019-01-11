@@ -47,5 +47,5 @@ togglbutton.render('.card-list-wrapper a.card', { observe: true }, (element) => 
     event.stopImmediatePropagation();
   });
 
-  element.insertBefore(link, element.querySelector('.card-text-section'));
+  element.querySelector('a.card').insertBefore(link, element.querySelector('.card-text-section'));
 });

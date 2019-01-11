@@ -31,12 +31,6 @@ const getProject = (element) => {
 
 togglbutton.render('.card-list-wrapper a.card', { observe: true }, (element) => {
   const btnClass = 'turtle-toggl-start-btn';
-  let link = element.querySelector(`.${btnClass}`);
-
-  if (link) {
-    link.innerText = '';
-    return;
-  }
 
   const description = getDescription(element);
   const project = getProject(element);

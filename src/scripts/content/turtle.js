@@ -25,7 +25,7 @@ const getDescription = (element) => {
   return `${join(sectionTitleNodes)} – ${join(currentTitleNodes)}`;
 };
 
-const getProject = (element) => {
+const getProject = () => {
   return document.querySelector('.project-selector-caret').textContent;
 };
 
@@ -33,7 +33,7 @@ togglbutton.render('.card-list-wrapper .card-node:not(.toggl)', { observe: true 
   const btnClass = 'turtle-toggl-start-btn';
 
   const description = getDescription(element);
-  const project = getProject(element);
+  const project = getProject();
 
   const wrapper = document.createElement('div');
   wrapper.classList.add('turtle-toggl-wrapper');

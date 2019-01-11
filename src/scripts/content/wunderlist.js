@@ -9,12 +9,15 @@ togglbutton.render(
       listElem = $('.lists-scroll'),
       titleElem = $('.taskItem-titleWrapper-title', elem),
       projectElem = $('.active', listElem),
-      projectTitleElem = $('.title', projectElem);
+      projectTitleElem = $('.title', projectElem),
+      description = function() {
+        return titleElem.textContent;
+      };
 
     link = togglbutton.createTimerLink({
       className: 'wunderlist',
       buttonType: 'minimal',
-      description: titleElem.textContent,
+      description: description,
       projectName: projectTitleElem.textContent
     });
 
@@ -29,15 +32,18 @@ togglbutton.render('.subtask:not(.toggl)', { observe: true }, function(elem) {
     container = createTag('span', 'detailItem-toggl small'),
     listElem = $('.lists-scroll'),
     chkBxElem = $('.checkBox', elem),
-    titleElem = $('.title-container'),
+    titleElem = $('.title-container .display-view'),
     projectElem = $('.active', listElem),
     projectTitleElem = $('.title', projectElem),
-    taskElem = $('.display-view', elem);
+    taskElem = $('.display-view', elem),
+    description = function() {
+      return titleElem.textContent + ' - ' + taskElem.textContent
+    };
 
   link = togglbutton.createTimerLink({
     className: 'wunderlist',
     buttonType: 'minimal',
-    description: titleElem.textContent + ' - ' + taskElem.textContent,
+    description: description,
     projectName: projectTitleElem.textContent
   });
 

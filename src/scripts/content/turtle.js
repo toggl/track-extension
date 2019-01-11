@@ -44,7 +44,8 @@ togglbutton.render('.card-list-wrapper a.card', { observe: true }, (element) => 
   link = togglbutton.createTimerLink({
     className: btnClass,
     description: description,
-    projectName: project
+    projectName: project,
+    buttonType: 'minimal'
   });
 
   link.innerText = '';

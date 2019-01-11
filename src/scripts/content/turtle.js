@@ -48,7 +48,6 @@ togglbutton.render('.card-list-wrapper a.card', { observe: true }, (element) => 
     buttonType: 'minimal'
   });
 
-  link.innerText = '';
 
   link.addEventListener('mousedown', event => {
     event.preventDefault();

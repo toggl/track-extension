@@ -126,7 +126,8 @@ Add Toggl one-click time tracking to popular web tools.
 - [Zendesk](https://www.zendesk.com/)
 - [Zube](https://zube.io/)
 - [VivifyScrum](https://www.vivifyscrum.com/)
-
+- [Turtle](https://turtle.ai/)
+  
 ## Installing from the Web Store/Addons page
 
 __Chrome__

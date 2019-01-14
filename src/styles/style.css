@@ -1543,3 +1543,24 @@ label > .toggl-button.outlook {
   margin-right: 13px;
   margin-top: 6px;
 }
+
+/********* TURTLE *********/
+.turtle-toggl-wrapper {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  margin-bottom: -6px;
+}
+.toggl-button.turtle-toggl-start-btn {
+  position: absolute;
+  margin: 0;
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+.toggl-button.turtle-toggl-start-btn:hover,
+.toggl-button.turtle-toggl-start-btn.active {
+  filter: grayscale(0%);
+  opacity: 1;
+}

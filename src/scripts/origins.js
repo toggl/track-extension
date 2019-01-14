@@ -539,6 +539,10 @@ export default {
     url: '*://*.trello.com/*',
     name: 'Trello'
   },
+  'turtle.ai': {
+    url: '*://*.turtle.ai/*',
+    name: 'Turtle'
+  },
   'unfuddle.com': {
     url: '*://*.unfuddle.com/*',
     name: 'Unfuddle'

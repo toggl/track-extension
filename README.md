@@ -111,6 +111,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Toodledo](https://www.toodledo.com/)
 - [Trac](http://trac.edgewall.org/)
 - [Trello](https://trello.com/)
+- [Turtle](https://turtle.ai/)
 - [Unfuddle](http://unfuddle.com/)
 - [Visual Studio Online](http://www.visualstudio.com/)
 - [VersionOne](https://versionone.com/)
@@ -126,7 +127,6 @@ Add Toggl one-click time tracking to popular web tools.
 - [Zendesk](https://www.zendesk.com/)
 - [Zube](https://zube.io/)
 - [VivifyScrum](https://www.vivifyscrum.com/)
-- [Turtle](https://turtle.ai/)
   
 ## Installing from the Web Store/Addons page
 

@@ -51,7 +51,7 @@ window.TogglButton = {
   $editForm:
     '<div id="toggl-button-edit-form">' +
     '<form autocomplete="off">' +
-    '<a class="toggl-button {service} active" href="javascript:void(0)">Stop timer</a>' +
+    '<a class="toggl-button toggl-button-edit-form-button {service} active" href="javascript:void(0)">Stop timer</a>' +
     '<a id="toggl-button-hide">&times;</a>' +
     '<div class="toggl-button-row" id="toggl-button-duration-row">' +
     '<input name="toggl-button-duration" tabindex="100" type="text" pattern="[\\d]{2}:[\\d]{2}:[\\d]{2}" title="Please write the duration in the \'hh:mm:ss\' format." id="toggl-button-duration" class="toggl-button-input" value="" placeholder="00:00" autocomplete="off">' +

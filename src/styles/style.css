@@ -45,6 +45,8 @@
 
 .toggl-button {
   display: inline-block !important;
+  user-select: none;
+  -moz-user-select: none;
   line-height: 20px;
   height: 20px;
   padding-left: 23px;
@@ -997,6 +999,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-top: 10px;
   margin-right: 5px;
   color: #5f6368;
+  z-index: 0;
 }
 
 .bubblecontent .toggl-button.google-calendar {
@@ -1535,7 +1538,7 @@ label > .toggl-button.outlook {
 }
 
 /********* NOTION *********/
-.toggl-button.notion {
+#notion-app .toggl-button.notion {
   cursor: pointer;
   margin-right: 13px;
   margin-top: 6px;

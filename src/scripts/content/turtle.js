@@ -29,9 +29,7 @@ const getProject = () => {
   return document.querySelector('.project-selector-caret').textContent;
 };
 
-togglbutton.render('.card-list-wrapper .card-node:not(.toggl)', { observe: true }, (element) => {
-  const btnClass = 'turtle-toggl-start-btn';
-
+togglbutton.render('.card-list-wrapper .card-node:not([data-toggl])', { observe: true }, (element) => {
   const description = getDescription(element);
   const project = getProject();
 
@@ -39,7 +37,7 @@ togglbutton.render('.card-list-wrapper .card-node:not(.toggl)', { observe: true 
   wrapper.classList.add('turtle-toggl-wrapper');
 
   const link = togglbutton.createTimerLink({
-    className: btnClass,
+    className: 'turtle-toggl-start-btn',
     description: description,
     projectName: project,
     buttonType: 'minimal'
@@ -51,5 +49,6 @@ togglbutton.render('.card-list-wrapper .card-node:not(.toggl)', { observe: true 
   });
 
   wrapper.appendChild(link);
+  element.setAttribute('data-toggl', true);
   element.querySelector('.inline-actions').insertBefore(wrapper, element.querySelector('.more-actions-btn'));
 });

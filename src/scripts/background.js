@@ -430,13 +430,15 @@ window.TogglButton = {
   },
 
   createTimeEntry: function(timeEntry, sendResponse) {
-    var project,
-      start = new Date(),
-      error = '',
-      defaultProject = db.getDefaultProject(),
-      rememberProjectPer = db.get('rememberProjectPer'),
-      entry;
+    const type = timeEntry.type;
+    const start = new Date();
+    const defaultProject = db.getDefaultProject();
+    const rememberProjectPer = db.get('rememberProjectPer');
     const enableAutoTagging = db.get('enableAutoTagging');
+    let entry;
+    let error = '';
+    let project;
+
     TogglButton.$curService = (timeEntry || {}).service;
     TogglButton.$curURL = (timeEntry || {}).url;
 
@@ -456,6 +458,8 @@ window.TogglButton = {
       return;
     }
 
+    const shouldIncludeTags = (enableAutoTagging || type === 'list-continue' || type === 'resume')
+
     entry = {
       start: start.toISOString(),
       stop: null,
@@ -464,7 +468,7 @@ window.TogglButton = {
       pid: timeEntry.pid || timeEntry.projectId || null,
       tid: timeEntry.tid || null,
       wid: timeEntry.wid || TogglButton.$user.default_wid,
-      tags: enableAutoTagging ? (timeEntry.tags || null) : null,
+      tags: shouldIncludeTags ? (timeEntry.tags || null) : null,
       billable: timeEntry.billable || false,
       created_with: timeEntry.createdWith || TogglButton.$fullVersion
     };
@@ -1705,11 +1709,11 @@ window.TogglButton = {
         TogglButton.createTimeEntry(request, sendResponse);
         TogglButton.hideNotification('remind-to-track-time');
       } else if (request.type === 'list-continue') {
-        TogglButton.createTimeEntry(request.data, sendResponse);
+        TogglButton.createTimeEntry({...request.data, type: request.type}, sendResponse);
         TogglButton.hideNotification('remind-to-track-time');
       } else if (request.type === 'resume') {
         TogglButton.createTimeEntry(
-          TogglButton.$latestStoppedEntry,
+          { ...TogglButton.$latestStoppedEntry, type: 'resume' },
           sendResponse
         );
         TogglButton.hideNotification('remind-to-track-time');

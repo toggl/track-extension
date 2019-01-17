@@ -631,6 +631,10 @@ TagAutoComplete.prototype.addEvents = function() {
   });
 
   this.filter.addEventListener('keydown', function (e) {
+    if (e.code === 'Tab') {
+      that.closeDropdown();
+    }
+
     if (e.keyCode === 13) {
       e.preventDefault();
       that.addNew()

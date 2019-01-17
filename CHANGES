@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.19.0",
+      "rows": [
+        "Add Turtle.ai integration",
+        "Wunderlist - better handling of new task names",
+        "Ticktick - better handling of new task names",
+        "Fix for continued time entries missing their tags"
+      ]
+    },
+    {
       "version": "1.18.0",
       "rows": [
         "GitHub - Add support for Project board",

@@ -792,6 +792,10 @@ TagAutoComplete.prototype.addNew = function(text) {
     list = this.el.querySelector('.' + this.type + '-list'),
     item = document.createElement('li');
 
+  if (!val) {
+    return
+  }
+
   item.className = this.type + '-item selected-' + this.type;
   item.setAttribute('title', val);
   item.textContent = val;

@@ -20,14 +20,19 @@ togglbutton.render('#channel_name:not(.toggl)', { observe: true }, () => {
 
 togglbutton.render('.c-message--hover:not(.toggl)', { observe: true }, elem => {
   const placeholder = $('.c-message_actions__button:last-child');
-  const description = $('.c-message__body', elem).textContent.trim();
-  const projectName = $('#team_name').textContent.trim();
-  const button = document.createElement('button');
+  const description = $('.c-message__body', elem);
+  const projectName = $('#team_name');
 
+  if (!description) {
+    // Non-text message, don't insert button.
+    return;
+  }
+
+  const button = document.createElement('button');
   const link = togglbutton.createTimerLink({
     className: 'slack-message',
-    projectName,
-    description,
+    projectName: projectName.textContent.trim(),
+    description: description.textContent.trim(),
     buttonType: 'minimal'
   });
 

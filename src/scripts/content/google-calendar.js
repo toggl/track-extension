@@ -12,6 +12,10 @@ togglbutton.render('div[data-chips-dialog="true"]', { observe: true }, elem => {
   // Grab the "toolbar" by finding "Close" button, which is _always_ present.
   // Note: do not use the aria-label values, it will break with i18n.
   const target = $('[aria-label]:last-child', elem).parentElement.nextSibling;
+  if (!target || target.tagName.toLowerCase() !== 'div') {
+    // Looks like the "create event" dialog, don't attempt to insert a button.
+    return;
+  }
 
   const getDescription = () => {
     const title = $('span[role="heading"]', elem);

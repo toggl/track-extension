@@ -432,7 +432,7 @@ window.TogglButton = {
   createTimeEntry: function(timeEntry, sendResponse) {
     const type = timeEntry.type;
     const start = new Date();
-    const defaultProject = db.getDefaultProject();
+    let defaultProject = db.getDefaultProject();
     const rememberProjectPer = db.get('rememberProjectPer');
     const enableAutoTagging = db.get('enableAutoTagging');
     let entry;

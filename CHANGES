@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.19.1",
+      "rows": [
+        "Fix a bug affecting all Firefox integrations"
+      ]
+    },
+    {
       "version": "1.19.0",
       "rows": [
         "Add Turtle.ai integration",

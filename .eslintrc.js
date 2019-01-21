@@ -48,7 +48,10 @@ module.exports = {
       files: ['src/scripts/popup.js'],
       globals: {
         PopUp: false,
-        Db: false
+        Db: false,
+        chrome: false,
+        ga: false,
+        createTag: false
       }
     },
     {

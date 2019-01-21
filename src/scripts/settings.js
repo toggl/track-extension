@@ -1,18 +1,22 @@
 import './lib/bugsnag';
 import TogglOrigins from './origins';
 
-var TogglButton = chrome.extension.getBackgroundPage().TogglButton,
-  ga = chrome.extension.getBackgroundPage().ga,
-  db = chrome.extension.getBackgroundPage().db,
-  FF = navigator.userAgent.indexOf('Chrome') === -1,
-  replaceContent = function(parentSelector, html) {
-    var container = document.querySelector(parentSelector);
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
-    }
+let TogglButton = chrome.extension.getBackgroundPage().TogglButton;
 
-    container.appendChild(html);
-  };
+const ga = chrome.extension.getBackgroundPage().ga;
+
+const db = chrome.extension.getBackgroundPage().db;
+
+const FF = navigator.userAgent.indexOf('Chrome') === -1;
+
+const replaceContent = function (parentSelector, html) {
+  const container = document.querySelector(parentSelector);
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+
+  container.appendChild(html);
+};
 
 if (FF) {
   document.body.classList.add('ff');
@@ -20,7 +24,7 @@ if (FF) {
 
 document.querySelector('#version').textContent = `(${process.env.VERSION})`;
 
-var Settings = {
+const Settings = {
   $startAutomatically: null,
   $stopAutomatically: null,
   $showRightClickButton: null,
@@ -43,9 +47,10 @@ var Settings = {
   $sendUsageStatistics: null,
   $sendErrorReports: null,
   $enableAutoTagging: null,
-  showPage: function() {
-    var volume = parseInt(db.get('pomodoroSoundVolume') * 100, 10),
-      rememberProjectPer = db.get('rememberProjectPer');
+  showPage: function () {
+    const volume = parseInt(db.get('pomodoroSoundVolume') * 100, 10);
+
+    const rememberProjectPer = db.get('rememberProjectPer');
 
     try {
       if (!TogglButton) {
@@ -63,7 +68,7 @@ var Settings = {
       Settings.toggleState(
         Settings.$enableAutoTagging,
         db.get('enableAutoTagging')
-      )
+      );
       Settings.toggleState(
         Settings.$startAutomatically,
         db.get('startAutomatically')
@@ -98,7 +103,7 @@ var Settings = {
         Settings.$sendErrorReports,
         db.get('sendErrorReports')
       );
-      Array.apply(null, Settings.$rememberProjectPer.options).forEach(function(
+      Array.apply(null, Settings.$rememberProjectPer.options).forEach(function (
         option
       ) {
         if (option.value === rememberProjectPer) {
@@ -126,8 +131,8 @@ var Settings = {
       });
     }
   },
-  fillDefaultProject: function() {
-    var key, project, clientName, projects, clients, defProject, html, dom;
+  fillDefaultProject: function () {
+    let key; let project; let clientName; let projects; let clients; let defProject; let html; let dom;
     if (db.get('projects') !== '' && !!TogglButton.$user) {
       defProject = db.getDefaultProject();
       projects = JSON.parse(db.get('projects'));
@@ -166,16 +171,12 @@ var Settings = {
 
       Settings.$defaultProject = document.querySelector('#default-project');
 
-      Settings.$defaultProject.addEventListener('change', function(e) {
-        var defaultProject =
-          Settings.$defaultProject.options[
-            Settings.$defaultProject.selectedIndex
-          ].value;
+      Settings.$defaultProject.addEventListener('change', function (e) {
+        const defaultProject =
+          Settings.$defaultProject.options[Settings.$defaultProject.selectedIndex].value;
 
-        var rememberPer =
-          Settings.$rememberProjectPer.options[
-            Settings.$rememberProjectPer.selectedIndex
-          ].value;
+        const rememberPer =
+          Settings.$rememberProjectPer.options[Settings.$rememberProjectPer.selectedIndex].value;
 
         db.setDefaultProject(
           defaultProject,
@@ -187,11 +188,14 @@ var Settings = {
       });
     }
   },
-  getAllPermissions: function() {
-    var items = document.querySelectorAll('#permissions-list li input'),
-      urls = [],
-      i,
-      current;
+  getAllPermissions: function () {
+    const items = document.querySelectorAll('#permissions-list li input');
+
+    let urls = [];
+
+    let i;
+
+    let current;
 
     for (i = 0; i < items.length; i++) {
       current = items[i].getAttribute('data-host');
@@ -205,16 +209,16 @@ var Settings = {
     }
     return { origins: urls };
   },
-  setFromTo: function() {
-    var fromTo = db.get('nannyFromTo').split('-');
+  setFromTo: function () {
+    const fromTo = db.get('nannyFromTo').split('-');
     document.querySelector('#nag-nanny-from').value = fromTo[0];
     document.querySelector('#nag-nanny-to').value = fromTo[1];
   },
-  toggleState: function(elem, state) {
+  toggleState: function (elem, state) {
     elem.checked = state;
   },
-  toggleSetting: function(elem, state, type) {
-    var request = {
+  toggleSetting: function (elem, state, type) {
+    const request = {
       type: type,
       state: state
     };
@@ -223,34 +227,34 @@ var Settings = {
     }
     chrome.runtime.sendMessage(request);
   },
-  saveSetting: function(value, type) {
+  saveSetting: function (value, type) {
     Settings.toggleSetting(null, value, type);
   },
-  loadSitesIntoList: function() {
-    var html,
-      html_list,
-      custom_html,
-      option,
-      li,
-      input,
-      dom,
-      url,
-      name,
-      i,
-      k,
-      origins,
-      disabled,
-      checked,
-      customs,
-      tmpkey;
+  loadSitesIntoList: function () {
+    let html;
+    let htmlList;
+    let customHtml;
+    let option;
+    let li;
+    let input;
+    let dom;
+    let url;
+    let name;
+    let i;
+    let k;
+    let origins;
+    let disabled;
+    let checked;
+    let customs;
+    let tmpkey;
 
     try {
       // Load Custom Permissions list
 
       // Defined custom domain list
-      custom_html = document.createElement('ul');
-      custom_html.id = 'custom-permissions-list';
-      custom_html.className = 'origin-list';
+      customHtml = document.createElement('ul');
+      customHtml.id = 'custom-permissions-list';
+      customHtml.className = 'origin-list';
 
       customs = db.getAllOrigins();
       for (k in customs) {
@@ -272,15 +276,15 @@ var Settings = {
           dom.textContent = TogglOrigins[customs[k]].name;
           li.appendChild(dom);
 
-          custom_html.appendChild(li);
+          customHtml.appendChild(li);
         }
       }
 
-      replaceContent('#custom-perm-container', custom_html);
+      replaceContent('#custom-perm-container', customHtml);
 
       // Load permissions list
-      chrome.permissions.getAll(function(results) {
-        var key;
+      chrome.permissions.getAll(function (results) {
+        let key;
 
         try {
           Settings.origins = [];
@@ -302,9 +306,9 @@ var Settings = {
           }
 
           // list of enabled/disabled origins
-          html_list = document.createElement('ul');
-          html_list.id = 'permissions-list';
-          html_list.className = 'origin-list';
+          htmlList = document.createElement('ul');
+          htmlList.id = 'permissions-list';
+          htmlList.className = 'origin-list';
 
           // custom permission integration select
           html = document.createElement('select');
@@ -347,7 +351,7 @@ var Settings = {
                 input.className = 'toggle';
                 input.setAttribute('type', 'checkbox');
                 input.setAttribute('data-host', TogglOrigins[key].url);
-                if (!!checked) {
+                if (checked) {
                   input.setAttribute('checked', 'checked');
                 }
 
@@ -357,12 +361,12 @@ var Settings = {
                 li.appendChild(input);
                 li.appendChild(dom);
 
-                html_list.appendChild(li);
+                htmlList.appendChild(li);
               }
             }
           }
 
-          replaceContent('#perm-container', html_list);
+          replaceContent('#perm-container', htmlList);
           replaceContent('#origins-container', html);
 
           Settings.enablePermissionEvents();
@@ -384,10 +388,8 @@ var Settings = {
   },
 
   addCustomOrigin: function (e) {
-    var text = Settings.$newPermission.value,
-      domain,
-      permission,
-      o = Settings.$originsSelect;
+    let text = Settings.$newPermission.value;
+    const o = Settings.$originsSelect;
 
     if (text.indexOf(':') !== -1) {
       text = text.split(':')[0];
@@ -397,8 +399,8 @@ var Settings = {
     }
 
     Settings.$newPermission.value = text;
-    domain = '*://' + Settings.$newPermission.value + '/';
-    permission = { origins: [domain] };
+    const domain = '*://' + Settings.$newPermission.value + '/';
+    const permission = { origins: [domain] };
 
     chrome.permissions.request(permission, function (result) {
       if (result) {
@@ -413,11 +415,11 @@ var Settings = {
   },
 
   removeCustomOrigin: function (e) {
-    var custom,
-      domain,
-      permission,
-      parent,
-      removed = false;
+    let custom;
+    let domain;
+    let permission;
+    let parent;
+    let removed = false;
 
     if (e.target.className === 'remove-custom') {
       parent = e.target.parentNode;
@@ -450,15 +452,14 @@ var Settings = {
   },
 
   toggleOrigin: function (e) {
-    var permission,
-      target = e.target;
+    let target = e.target;
 
     if (e.target.tagName !== 'INPUT') {
       target = e.target.querySelector('input');
       target.checked = !target.checked;
     }
 
-    permission = { origins: target.getAttribute('data-host').split(',') };
+    const permission = { origins: target.getAttribute('data-host').split(',') };
 
     if (target.checked) {
       chrome.permissions.request(permission, function (result) {
@@ -499,11 +500,11 @@ var Settings = {
 
   disableAllOrigins: function (e) {
     chrome.permissions.getAll(function (result) {
-      var origins = [],
-        i,
-        key,
-        customOrigins = db.getAllOrigins(),
-        skip = false;
+      const origins = [];
+      let i;
+      let key;
+      const customOrigins = db.getAllOrigins();
+      let skip = false;
 
       try {
         for (i = 0; i < result.origins.length; i++) {
@@ -525,7 +526,7 @@ var Settings = {
           skip = false;
         }
       } catch (e) {
-        console.error(e)
+        console.error(e);
         chrome.runtime.sendMessage({
           type: 'error',
           stack: e.stack,
@@ -541,39 +542,39 @@ var Settings = {
     });
   },
 
-  enablePermissionEvents: function() {
+  enablePermissionEvents: function () {
     Settings.$originsSelect = document.querySelector('#origins');
 
     // Add custom permission (custom domain)
-    var $addCustomOrigin = document.querySelector('#add-permission');
+    const $addCustomOrigin = document.querySelector('#add-permission');
     $addCustomOrigin.removeEventListener('click', Settings.addCustomOrigin);
     $addCustomOrigin.addEventListener('click', Settings.addCustomOrigin);
 
     // Remove item from custom domain list
-    var $removeCustomOrigin = document.querySelector('#custom-perm-container');
+    const $removeCustomOrigin = document.querySelector('#custom-perm-container');
     $removeCustomOrigin.removeEventListener('click', Settings.removeCustomOrigin);
     $removeCustomOrigin.addEventListener('click', Settings.removeCustomOrigin);
 
     Settings.$permissionsList = document.querySelector('#permissions-list');
 
     // Enable/Disable origin permissions
-    var $originList = document.querySelector('#permissions-list');
+    const $originList = document.querySelector('#permissions-list');
     $originList.removeEventListener('click', Settings.toggleOrigin);
     $originList.addEventListener('click', Settings.toggleOrigin);
 
     // Enable all predefined origins
-    var $enableAllOrigins = document.querySelector('.enable-all');
+    const $enableAllOrigins = document.querySelector('.enable-all');
     $enableAllOrigins.addEventListener('click', Settings.enableAllOrigins);
     $enableAllOrigins.addEventListener('click', Settings.enableAllOrigins);
 
     // Disable all predefined origins
-    var $disableAllOrigins = document.querySelector('.disable-all');
+    const $disableAllOrigins = document.querySelector('.disable-all');
     $disableAllOrigins.removeEventListener('click', Settings.disableAllOrigins);
     $disableAllOrigins.addEventListener('click', Settings.disableAllOrigins);
   }
 };
 
-document.addEventListener('DOMContentLoaded', function(e) {
+document.addEventListener('DOMContentLoaded', function (e) {
   try {
     Settings.$pomodoroVolume = document.querySelector('#sound-volume');
     Settings.$pomodoroVolumeLabel = document.querySelector('#volume-label');
@@ -621,14 +622,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
     }
 
     // Change active tab.
-    let activeTab = Number.parseInt(db.get('settings-active-tab'), 10);
+    const activeTab = Number.parseInt(db.get('settings-active-tab'), 10);
     changeActiveTab(activeTab);
     document.querySelector('body').style.display = 'block';
 
     Settings.showPage();
 
-    let filterTimerId = null
-    function updateFilteredList (val) {
+    let filterTimerId = null;
+    const updateFilteredList = function (val) {
       if (val.length > 0) {
         Settings.$permissionsList.classList.add('filtered');
         Settings.$permissionFilterClear.style.display = 'block';
@@ -641,26 +642,26 @@ document.addEventListener('DOMContentLoaded', function(e) {
       permissionItems.forEach((item) => {
         if (item.id.indexOf(val) !== -1) {
           item.classList.add('filter');
-        } else if (!!item.classList) {
+        } else if (item.classList) {
           item.classList.remove('filter');
         }
       });
-    }
-    Settings.$permissionFilter.addEventListener('keyup', function(e) {
+    };
+    Settings.$permissionFilter.addEventListener('keyup', function (e) {
       const val = Settings.$permissionFilter.value;
       if (filterTimerId) {
-        clearTimeout(filterTimerId)
+        clearTimeout(filterTimerId);
       }
-      filterTimerId = setTimeout(() => updateFilteredList(val), 250)
+      filterTimerId = setTimeout(() => updateFilteredList(val), 250);
     });
 
-    Settings.$permissionFilterClear.addEventListener('click', function(e) {
+    Settings.$permissionFilterClear.addEventListener('click', function (e) {
       Settings.$permissionFilterClear.style.display = 'none';
       Settings.$permissionFilter.value = '';
       Settings.$permissionsList.classList.remove('filtered');
     });
 
-    Settings.$showRightClickButton.addEventListener('click', function(e) {
+    Settings.$showRightClickButton.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('showRightClickButton') !== 'true',
@@ -677,56 +678,56 @@ document.addEventListener('DOMContentLoaded', function(e) {
         'update-enable-auto-tagging'
       );
     });
-    Settings.$startAutomatically.addEventListener('click', function(e) {
+    Settings.$startAutomatically.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('startAutomatically') !== 'true',
         'toggle-start-automatically'
       );
     });
-    Settings.$stopAutomatically.addEventListener('click', function(e) {
+    Settings.$stopAutomatically.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('stopAutomatically') !== 'true',
         'toggle-stop-automatically'
       );
     });
-    Settings.$postPopup.addEventListener('click', function(e) {
+    Settings.$postPopup.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('showPostPopup') !== 'true',
         'toggle-popup'
       );
     });
-    Settings.$nanny.addEventListener('click', function(e) {
+    Settings.$nanny.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('nannyCheckEnabled') !== 'true',
         'toggle-nanny'
       );
     });
-    Settings.$idleDetection.addEventListener('click', function(e) {
+    Settings.$idleDetection.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('idleDetectionEnabled') !== 'true',
         'toggle-idle'
       );
     });
-    Settings.$pomodoroMode.addEventListener('click', function(e) {
+    Settings.$pomodoroMode.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('pomodoroModeEnabled') !== 'true',
         'toggle-pomodoro'
       );
     });
-    Settings.$pomodoroSound.addEventListener('click', function(e) {
+    Settings.$pomodoroSound.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('pomodoroSoundEnabled') !== 'true',
         'toggle-pomodoro-sound'
       );
     });
-    Settings.$pomodoroStopTimeTracking.addEventListener('click', function(e) {
+    Settings.$pomodoroStopTimeTracking.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('pomodoroStopTimeTrackingWhenTimerEnds') !==
@@ -735,7 +736,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       );
     });
 
-    Settings.$stopAtDayEnd.addEventListener('click', function(e) {
+    Settings.$stopAtDayEnd.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('stopAtDayEnd') !== 'true',
@@ -743,11 +744,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
       );
     });
 
-    Settings.$rememberProjectPer.addEventListener('change', function(e) {
-      var rememberPer =
-        Settings.$rememberProjectPer.options[
-          Settings.$rememberProjectPer.selectedIndex
-        ].value;
+    Settings.$rememberProjectPer.addEventListener('change', function (e) {
+      let rememberPer =
+        Settings.$rememberProjectPer.options[Settings.$rememberProjectPer.selectedIndex].value;
       if (rememberPer === 'false') {
         rememberPer = false;
       }
@@ -755,8 +754,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     });
 
     document.querySelectorAll('.tab-links .tab-link').forEach(tab =>
-      tab.addEventListener('click', function(e) {
-        const target = e.target;
+      tab.addEventListener('click', function (e) {
         const index = [...e.target.parentElement.children].indexOf(e.target);
 
         Settings.saveSetting(index, 'update-settings-active-tab');
@@ -764,11 +762,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
       })
     );
 
-    Settings.$pomodoroVolume.addEventListener('input', function(e) {
+    Settings.$pomodoroVolume.addEventListener('input', function (e) {
       Settings.$pomodoroVolumeLabel.textContent = e.target.value + '%';
     });
 
-    Settings.$pomodoroVolume.addEventListener('change', function(e) {
+    Settings.$pomodoroVolume.addEventListener('change', function (e) {
       Settings.saveSetting(
         e.target.value / 100,
         'update-pomodoro-sound-volume'
@@ -778,8 +776,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document
       .querySelector('#sound-test')
-      .addEventListener('click', function(e) {
-        var sound = new Audio();
+      .addEventListener('click', function (e) {
+        const sound = new Audio();
         sound.src = '../' + db.get('pomodoroSoundFile');
         sound.volume = Settings.$pomodoroVolume.value / 100;
         sound.play();
@@ -787,7 +785,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document
       .querySelector('#nag-nanny-from')
-      .addEventListener('blur', function(e) {
+      .addEventListener('blur', function (e) {
         if (e.target.value.length === 0) {
           Settings.setFromTo();
           return;
@@ -798,12 +796,12 @@ document.addEventListener('DOMContentLoaded', function(e) {
       });
     document
       .querySelector('#nag-nanny-to')
-      .addEventListener('blur', function(e) {
+      .addEventListener('blur', function (e) {
         if (e.target.value.length === 0) {
           Settings.setFromTo();
           return;
         }
-        var fromTo =
+        const fromTo =
           document.querySelector('#nag-nanny-from').value +
           '-' +
           e.target.value;
@@ -811,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       });
     document
       .querySelector('#nag-nanny-interval')
-      .addEventListener('blur', function(e) {
+      .addEventListener('blur', function (e) {
         if (e.target.value < 1) {
           e.target.value = 1;
           return;
@@ -824,7 +822,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document
       .querySelector('#pomodoro-interval')
-      .addEventListener('blur', function(e) {
+      .addEventListener('blur', function (e) {
         if (e.target.value < 1) {
           e.target.value = 1;
           return;
@@ -837,7 +835,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document
       .querySelector('#day-end-time')
-      .addEventListener('blur', function(e) {
+      .addEventListener('blur', function (e) {
         if (e.target.value < 1) {
           e.target.value = 1;
           return;
@@ -850,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document.querySelector('.container').addEventListener(
       'transitionend',
-      function(e) {
+      function (e) {
         if (
           e.propertyName === 'height' &&
           e.target.className === 'subsettings-details' &&
@@ -864,8 +862,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     document
       .querySelector('.guide button')
-      .addEventListener('click', function(e) {
-        var disableChecked = document.querySelector(
+      .addEventListener('click', function (e) {
+        const disableChecked = document.querySelector(
           '#disable-permission-notice'
         ).checked;
         db.set('dont-show-permissions', disableChecked);
@@ -876,7 +874,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
           'none';
       });
 
-    Settings.$sendUsageStatistics.addEventListener('click', function(e) {
+    Settings.$sendUsageStatistics.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('sendUsageStatistics') !== 'true',
@@ -884,7 +882,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
       );
     });
 
-    Settings.$sendErrorReports.addEventListener('click', function(e) {
+    Settings.$sendErrorReports.addEventListener('click', function (e) {
       Settings.toggleSetting(
         e.target,
         localStorage.getItem('sendErrorReports') !== 'true',
@@ -902,7 +900,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 
-function changeActiveTab(index) {
+function changeActiveTab (index) {
   document.querySelectorAll('.active').forEach(e => {
     e.classList.remove('active');
   });

@@ -50,8 +50,20 @@ module.exports = {
         PopUp: false,
         Db: false,
         chrome: false,
-        ga: false,
+        ga: false
+      }
+    },
+    {
+      files: ['src/scripts/content.js'],
+      globals: {
         createTag: false
+      }
+    },
+    {
+      files: ['src/scripts/popup.js'],
+      globals: {
+        PopUp: false,
+        Db: false
       }
     },
     {
@@ -59,6 +71,7 @@ module.exports = {
       globals: {
         togglbutton: false
       }
-    }
+    },
+
   ]
 };

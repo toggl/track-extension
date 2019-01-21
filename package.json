@@ -10,7 +10,9 @@
   "scripts": {
     "start": "webpack-cli --mode development --watch",
     "build": "webpack-cli --mode production --env.production",
-    "xo": "xo"
+    "lint:staged": "lint-staged",
+    "lint": "eslint src/scripts/**/*.js",
+    "lint:ci": "eslint -- `git diff --diff-filter=ACMTUXB --name-only $TRAVIS_COMMIT_RANGE -- '*.js' | tr '\n' ' '`"
   },
   "babel": {
     "presets": [
@@ -26,22 +28,16 @@
     "last 2 Firefox versions",
     "Firefox ESR"
   ],
-  "prettier": {
-    "bracketSpacing": true,
-    "singleQuote": true,
-    "useTabs": false
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
-  "xo": {
-    "envs": [
-      "browser",
-      "commonjs",
-      "es6",
-      "webextensions"
-    ],
-    "ignores": [
-      "src/**"
-    ],
-    "prettier": true
+  "lint-staged": {
+    "src/scripts/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
@@ -52,13 +48,19 @@
     "clean-webpack-plugin": "0.1.19",
     "compression-webpack-plugin": "1.1.11",
     "copy-webpack-plugin": "4.5.2",
+    "eslint": "^5.12.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "filemanager-webpack-plugin": "2.0.1",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.0",
     "nanoid": "1.2.6",
-    "prettier": "1.13.7",
     "webpack": "4.16.3",
     "webpack-cli": "3.1.0",
-    "webpack-log": "1.2.0",
-    "xo": "0.21.1"
+    "webpack-log": "1.2.0"
   },
   "dependencies": {
     "bugsnag-js": "4.7.2"

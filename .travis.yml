@@ -3,7 +3,7 @@ node_js:
   - 8.11.3
 
 before_script:
-  - npm run xo
+  - npm run lint:ci
 
 script:
   - npm run build

@@ -1686,8 +1686,9 @@ window.TogglButton = {
     );
   },
 
-  newMessage: function(request, sender, sendResponse) {
-    var error, errorSource;
+  newMessage: function (request, sender, sendResponse) {
+    let error;
+    let errorSource;
     try {
       if (request.type === 'activate') {
         TogglButton.checkDailyUpdate();

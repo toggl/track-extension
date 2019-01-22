@@ -604,18 +604,58 @@ TagAutoComplete.prototype.setup = function(selected, wid) {
 
 TagAutoComplete.prototype.addEvents = function() {
   var that = this;
-  this.super.addEvents.call(this);
+
+  that.placeholderItem.addEventListener('click', function(e) {
+    setTimeout(function() {
+      that.filter.focus();
+    }, 50);
+  });
+
+  window.addEventListener(
+    'focus',
+    function(e) {
+      if (e.target === that.filter) {
+        that.openDropdown();
+      }
+    },
+    true
+  );
 
   this.el.addEventListener('click', function(e) {
     e.stopPropagation();
     that.selectTag(e);
   });
 
+  this.filter.addEventListener('keyup', function(e) {
+    that.filterSelection();
+  });
+
+  this.filter.addEventListener('keydown', function (e) {
+    if (e.code === 'Tab') {
+      that.closeDropdown();
+    }
+
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      that.addNew()
+    }
+
+    if (e.keyCode === 27) {
+      e.preventDefault();
+      that.closeDropdown();
+    }
+  })
+
+  this.filterClear.addEventListener('click', function(e) {
+    that.closeDropdown();
+    e.preventDefault();
+  });
+
   this.clearSelected.addEventListener('click', function(e) {
     that.clearSelectedTags();
   });
 
-  that.addLink.addEventListener('click', function(e) {
+  this.addLink.addEventListener('click', function(e) {
     that.addNew();
   });
 };
@@ -751,6 +791,10 @@ TagAutoComplete.prototype.addNew = function(text) {
   var val = text || this.filter.value,
     list = this.el.querySelector('.' + this.type + '-list'),
     item = document.createElement('li');
+
+  if (!val) {
+    return
+  }
 
   item.className = this.type + '-item selected-' + this.type;
   item.setAttribute('title', val);

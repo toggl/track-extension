@@ -1,6 +1,13 @@
 {
   "versions": [
     {
+      "version": "1.20.0",
+      "rows": [
+        "Add Dropbox Paper integration",
+        "Improve tag selection with keyboard"
+      ]
+    },
+    {
       "version": "1.19.1",
       "rows": [
         "Fix a bug affecting all Firefox integrations"

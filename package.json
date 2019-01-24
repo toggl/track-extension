@@ -10,8 +10,8 @@
   "scripts": {
     "start": "webpack-cli --mode development --watch",
     "build": "webpack-cli --mode production --env.production",
+    "lint": "eslint",
     "lint:staged": "lint-staged",
-    "lint": "eslint src/scripts/**/*.js",
     "lint:ci": "eslint -- `git diff --diff-filter=ACMTUXB --name-only $TRAVIS_COMMIT_RANGE -- '*.js' | tr '\n' ' '`"
   },
   "babel": {

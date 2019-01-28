@@ -1080,12 +1080,19 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   font-weight: normal;
 }
 
-.toggl-button.salesforce-lightning.min {
+.toggl-button.salesforce-lightning {
   margin-top: 5px;
-  background-size: 16px 16px;
 }
-#toggl-button-edit-form .toggl-button.salesforce-lightning {
-  position: static;
+
+.slds-split-view__list-item .salesforce-lightning-list {
+  position: absolute;
+  right: .5rem;
+  visibility: hidden;
+}
+.slds-split-view__list-item:hover .salesforce-lightning-list {
+  background-color: white !important;
+  visibility: visible;
+  z-index: 1;
 }
 
 /********* VISUAL-STUDIO *********/

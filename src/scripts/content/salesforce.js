@@ -78,29 +78,40 @@ togglbutton.render('#bodyCell:not(.toggl)', { observe: true }, function(elem) {
   parent.appendChild(link);
 });
 
-// Lightning
+// Lightning Task Detail view
 togglbutton.render(
-  '.runtime_sales_activitiesTaskCommon.runtime_sales_activitiesTaskRow:not(.toggl)',
+  '.runtime_sales_activitiesTaskCommon:not(.toggl)',
   { observe: true },
   function(elem) {
-    var link, descFunc, projectFunc;
-
-    descFunc = function() {
-      return $('.subject .uiOutputText', elem).textContent;
+    const getDescription = () => {
+      return $('.subject .uiOutputText', elem).textContent.trim()
     };
 
-    projectFunc = function() {
-      return $('.runtime_sales_activitiesTaskContentFields ul').lastChild
-        .textContent;
-    };
-
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'salesforce-lightning',
-      description: descFunc,
-      projectName: projectFunc,
+      description: getDescription,
       buttonType: 'minimal'
     });
 
     $('.left', elem).appendChild(link);
+  }
+);
+
+// Lightning Task List view/sidebar
+togglbutton.render(
+  '.slds-split-view__list-item:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const getDescription = () => {
+      return $('.uiOutputText', elem).textContent.trim();
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'salesforce-lightning-list',
+      description: getDescription,
+      buttonType: 'minimal'
+    });
+
+    $('.uiOutputText', elem).parentElement.parentElement.appendChild(link);
   }
 );

@@ -4,22 +4,19 @@
 togglbutton.render(
   '.bMyTask .list tr.dataRow:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      descFunc,
-      projectFunc,
-      container = elem.querySelectorAll(
-        '.bMyTask .list tr.dataRow .dataCell a'
-      )[0];
+  function (elem) {
+    const container = elem.querySelectorAll(
+      '.bMyTask .list tr.dataRow .dataCell a'
+    )[0];
     if (container === null) {
       return;
     }
 
-    descFunc = function() {
+    const descFunc = () => {
       return container.textContent;
     };
 
-    projectFunc = function() {
+    const projectFunc = () => {
       return (
         ($('.accountBlock .mruText') &&
           $('.accountBlock .mruText').textContent) ||
@@ -27,7 +24,7 @@ togglbutton.render(
       );
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'salesforce',
       buttonType: 'minimal',
       description: descFunc,
@@ -39,29 +36,25 @@ togglbutton.render(
 );
 
 // Detail view
-togglbutton.render('#bodyCell:not(.toggl)', { observe: true }, function(elem) {
-  var link,
-    descFunc,
-    projectFunc,
-    parent,
-    container = $('.content', elem);
+togglbutton.render('#bodyCell:not(.toggl)', { observe: true }, function (elem) {
+  const container = $('.content', elem);
 
   if (container === null) {
     return;
   }
 
-  parent = $('.pageType', container);
+  const parent = $('.pageType', container);
 
   if (!parent) {
     return;
   }
 
-  descFunc = function() {
-    var desc = $('.pageDescription', container);
+  const descFunc = () => {
+    const desc = $('.pageDescription', container);
     return desc ? desc.textContent.trim() : '';
   };
 
-  projectFunc = function() {
+  const projectFunc = () => {
     return (
       ($('.accountBlock .mruText') &&
         $('.accountBlock .mruText').textContent) ||
@@ -69,7 +62,7 @@ togglbutton.render('#bodyCell:not(.toggl)', { observe: true }, function(elem) {
     );
   };
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'salesforce',
     description: descFunc,
     projectName: projectFunc
@@ -82,9 +75,9 @@ togglbutton.render('#bodyCell:not(.toggl)', { observe: true }, function(elem) {
 togglbutton.render(
   '.runtime_sales_activitiesTaskCommon:not(.toggl)',
   { observe: true },
-  function(elem) {
+  function (elem) {
     const getDescription = () => {
-      return $('.subject .uiOutputText', elem).textContent.trim()
+      return $('.subject .uiOutputText', elem).textContent.trim();
     };
 
     const link = togglbutton.createTimerLink({

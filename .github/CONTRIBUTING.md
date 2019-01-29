@@ -18,7 +18,7 @@ Please consider the following:
 * Include a description of how to find the page or screen the button is visible on.
 * Only change or add one integration in each pull request.
 * Your code changes will be linted by [eslint](https://eslint.org/) when you attempt to commit. Please fix any errors raised.
-  * You may run `npm run lint path/to/your/file/here.js` to lint a file manually. Add `--fix` option to automatically fix most issues.
+  * You may run `npm run lint path/to/your/file/here.js` to lint a file manually. Add `-- --fix` to the command to automatically fix most issues.
 * When you're done, squash all of your commits into one commit. This keeps the git log compact and clear.
 
 ## Making changes to the core extension code

@@ -128,7 +128,6 @@ window.togglbutton = {
               if (!!mutationSelector && !matches.length) {
                 return;
               }
-
               togglbutton.renderTo(selector, renderer);
             });
             observer.observe(document, { childList: true, subtree: true });
@@ -263,6 +262,7 @@ window.togglbutton = {
   },
 
   addEditForm: function (response) {
+    console.log('add edit form');
     togglbutton.hasTasks = response.hasTasks;
     if (response === null || !response.showPostPopup) {
       return;
@@ -434,15 +434,17 @@ window.togglbutton = {
 
   createTimerLink: function (params) {
     let link = createLink('toggl-button');
-    togglbutton.currentDescription = invokeIfFunction(params.description);
-    togglbutton.currentProject = params.projectName;
-    link.title =
-      invokeIfFunction(togglbutton.currentDescription) +
-      (invokeIfFunction(togglbutton.currentProject)
-        ? ' - ' + invokeIfFunction(togglbutton.currentProject)
-        : '');
-    if (params.calculateTotal) {
-      togglbutton.mainDescription = invokeIfFunction(params.description);
+    if (!params.isListItem) {
+      togglbutton.currentDescription = invokeIfFunction(params.description);
+      togglbutton.currentProject = params.projectName;
+      link.title =
+        invokeIfFunction(togglbutton.currentDescription) +
+        (invokeIfFunction(togglbutton.currentProject)
+          ? ' - ' + invokeIfFunction(togglbutton.currentProject)
+          : '');
+      if (params.calculateTotal) {
+        togglbutton.mainDescription = invokeIfFunction(params.description);
+      }
     }
 
     function deactivate () {
@@ -504,6 +506,7 @@ window.togglbutton = {
         };
       }
       togglbutton.element = e.target;
+      console.log('target', e.target);
       chrome.runtime.sendMessage(opts, togglbutton.addEditForm);
 
       return false;

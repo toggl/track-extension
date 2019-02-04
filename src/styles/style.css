@@ -1068,28 +1068,23 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* SALESFORCE *********/
-.toggl-button.salesforce {
-  padding-right: 5px;
-  margin-bottom: -6px;
+.toggl-button:not(.toggl-button-edit-form-button).salesforce {
+  margin-top: 0;
+  position: relative;
+  top: 2px;
+  left: 5px;
+}
+.custom-truncate .toggl-button.salesforce {
+  /* avoid button image being truncated */
+  padding-left: 25px;
 }
 
-.toggl-button.salesforce:not(.minimal) {
-  margin-left: 5px;
-  font-size: 12px;
-  text-decoration: none;
-  font-weight: normal;
-}
-
-.toggl-button.salesforce-lightning {
-  margin-top: 5px;
-}
-
-.slds-split-view__list-item .salesforce-lightning-list {
+.slds-split-view__list-item .salesforce-list {
   position: absolute;
   right: .5rem;
   visibility: hidden;
 }
-.slds-split-view__list-item:hover .salesforce-lightning-list {
+.slds-split-view__list-item:hover .salesforce-list {
   background-color: white !important;
   visibility: visible;
   z-index: 1;

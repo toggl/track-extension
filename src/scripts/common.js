@@ -125,6 +125,7 @@ window.togglbutton = {
               const matches = mutations.filter(function (mutation) {
                 return mutation.target.matches(mutationSelector);
               });
+              // console.log(mutations.map(m => m.target))
               if (!!mutationSelector && !matches.length) {
                 return;
               }

@@ -2,11 +2,17 @@
 /* global togglbutton, $ */
 
 togglbutton.render(
-  '.task_item .content:not(.toggl)',
+  '.drag_and_drop_handler',
   { observe: true },
   elem => {
-    console.log('Render is running');
-    const container = $('.text', elem);
+    console.log('Render is running', elem);
+    const taskItem = elem.parentElement;
+
+    if (taskItem.dataset.toggl) {
+      return;
+    }
+    const content = $('.content', taskItem);
+    const container = $('.text', content);
 
     const descriptionSelector = () => {
       const clone = container.cloneNode(true);
@@ -56,8 +62,9 @@ togglbutton.render(
       isListItem: true
     });
 
+    taskItem.dataset.toggl = true;
     container.insertBefore(link, container.lastChild);
-  }
+  }, '.task_item'
 );
 
 /*

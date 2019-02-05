@@ -55,7 +55,8 @@ function insertTogglButton (event) {
       tags: tagsSelector
     });
 
-    container.insertBefore(link, container.lastChild);
+    const button = container.insertBefore(link, container.lastChild);
+    target.addEventListener('mouseleave', () => button.remove(), { once: true });
   }
 }
 

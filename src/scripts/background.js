@@ -85,6 +85,7 @@ window.TogglButton = {
     '</div>',
 
   fetchUser: function (token) {
+    bugsnagClient.leaveBreadcrumb('Fetching user with related data');
     TogglButton.ajax('/me?with_related_data=true', {
       token: token,
       baseUrl: TogglButton.$ApiV8Url,
@@ -173,6 +174,12 @@ window.TogglButton = {
             TogglButton.setCanSeeBillable();
             ga.reportOs();
           } else {
+            bugsnagClient.notify(new Error(`Fetch user failed ${xhr.status}`), {
+              metaData: {
+                status: xhr.status,
+                responseText: xhr.responseText
+              }
+            });
             TogglButton.setBrowserActionBadge();
           }
         } catch (e) {
@@ -984,6 +991,12 @@ window.TogglButton = {
           if (xhr.status === 403) {
             error = 'Wrong Email or Password!';
           }
+          bugsnagClient.notify(new Error(`Login failed (${xhr.status})`), {
+            metaData: {
+              status: xhr.status,
+              responseText: xhr.responseText
+            }
+          });
           sendResponse({ success: false, error: error });
         }
       },

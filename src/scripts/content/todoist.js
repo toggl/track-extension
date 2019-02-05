@@ -1,12 +1,16 @@
 'use strict';
 /* global togglbutton, $ */
 
-togglbutton.render(
-  '.task_item .content:not(.toggl)',
-  { observe: true },
-  elem => {
-    const container = $('.text', elem);
+const EDITOR_ID = 'editor';
+const TASK_ELEMENT = '.content';
+const TOGGL_BUTTON = '.toggl-button';
 
+function insertTogglButton (event) {
+  const { target } = event;
+  const shouldInsert = target.matches(TASK_ELEMENT) && !target.querySelector(TOGGL_BUTTON);
+
+  if (shouldInsert) {
+    const container = target.querySelector('.text');
     const descriptionSelector = () => {
       const clone = container.cloneNode(true);
       let i = 0;
@@ -40,23 +44,20 @@ togglbutton.render(
     };
 
     const tagsSelector = () => {
-      const tags = elem.querySelectorAll('.labels_holder a:not(.label_sep)');
-
-      return [...tags].map(tag => {
-        return tag.textContent;
-      });
+      const tags = target.querySelectorAll('.labels_holder a:not(.label_sep)');
+      return [...tags].map(tag => tag.textContent);
     };
 
     const link = togglbutton.createTimerLink({
       className: 'todoist',
       description: descriptionSelector,
-      projectName: getProjectNames(elem),
+      projectName: getProjectNames(target),
       tags: tagsSelector
     });
 
     container.insertBefore(link, container.lastChild);
   }
-);
+}
 
 /*
 Projects may have a hierarchy in Todoist.
@@ -71,7 +72,7 @@ E.g.
 - Toggl Button will first check if MyFeatureProject exists, and if it doesn't, try to use the next parent etc.
 */
 
-function getProjectNameFromLabel(elem) {
+function getProjectNameFromLabel (elem) {
   let projectLabel = '';
   const projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
   if (projectLabelEle) {
@@ -80,7 +81,7 @@ function getProjectNameFromLabel(elem) {
   return projectLabel;
 }
 
-function getParentEle(sidebarCurrentEle) {
+function getParentEle (sidebarCurrentEle) {
   const levelPattern = /(?:^|\s)indent_(\d*?)(?:\s|$)/;
   const curLevel = sidebarCurrentEle.className.match(levelPattern)[1];
   const parentClass = 'indent_' + (curLevel - 1);
@@ -95,11 +96,11 @@ function getParentEle(sidebarCurrentEle) {
   return parentCandidate;
 }
 
-function isTopLevelProject(sidebarCurrentEle) {
+function isTopLevelProject (sidebarCurrentEle) {
   return sidebarCurrentEle.classList.contains('indent_1');
 }
 
-function getProjectNameHierarchy(sidebarCurrentEle) {
+function getProjectNameHierarchy (sidebarCurrentEle) {
   const projectName = $(
     '.name',
     sidebarCurrentEle
@@ -113,11 +114,11 @@ function getProjectNameHierarchy(sidebarCurrentEle) {
   return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
 }
 
-function projectWasJustCreated(projectId) {
+function projectWasJustCreated (projectId) {
   return projectId.startsWith('_');
 }
 
-function getSidebarCurrentEle(elem) {
+function getSidebarCurrentEle (elem) {
   let projectId;
   let sidebarRoot;
   let sidebarColorEle;
@@ -140,7 +141,7 @@ function getSidebarCurrentEle(elem) {
   return sidebarCurrentEle;
 }
 
-function getProjectNames(elem) {
+function getProjectNames (elem) {
   // Return a function for timer link to use, in order for projects to be retrieved
   // at the moment the button is clicked (rather than only on load)
   return () => {
@@ -164,3 +165,12 @@ function getProjectNames(elem) {
     return projectNames;
   };
 }
+
+/**
+ * Performance hack for todoist task item re-renders
+ * https://github.com/toggl/toggl-button/issues/1275
+ */
+(function todoistTaskIntegration () {
+  const editor = document.getElementById(EDITOR_ID);
+  editor.addEventListener('mouseover', insertTogglButton);
+})();

@@ -2,15 +2,16 @@
 /* global togglbutton, $ */
 
 const EDITOR_ID = 'editor';
-const TASK_ELEMENT = '.content';
+const TASK_ELEMENT = '.task_item';
 const TOGGL_BUTTON = '.toggl-button';
 
 function insertTogglButton (event) {
   const { target } = event;
-  const shouldInsert = target.matches(TASK_ELEMENT) && !target.querySelector(TOGGL_BUTTON);
+  const taskItem = target.closest(TASK_ELEMENT);
+  const shouldInsert = taskItem && !taskItem.querySelector(TOGGL_BUTTON);
 
   if (shouldInsert) {
-    const container = target.querySelector('.text');
+    const container = taskItem.querySelector('.text');
     const descriptionSelector = () => {
       const clone = container.cloneNode(true);
       let i = 0;
@@ -44,19 +45,19 @@ function insertTogglButton (event) {
     };
 
     const tagsSelector = () => {
-      const tags = target.querySelectorAll('.labels_holder a:not(.label_sep)');
+      const tags = taskItem.querySelectorAll('.labels_holder a:not(.label_sep)');
       return [...tags].map(tag => tag.textContent);
     };
 
     const link = togglbutton.createTimerLink({
       className: 'todoist',
       description: descriptionSelector,
-      projectName: getProjectNames(target),
+      projectName: getProjectNames(taskItem),
       tags: tagsSelector
     });
 
     const button = container.insertBefore(link, container.lastChild);
-    target.addEventListener('mouseleave', () => button.remove(), { once: true });
+    taskItem.addEventListener('mouseleave', () => button.remove(), { once: true });
   }
 }
 

@@ -53,6 +53,7 @@ function insertTogglButton (event) {
       className: 'todoist',
       description: descriptionSelector,
       projectName: getProjectNames(taskItem),
+      buttonType: 'minimal',
       tags: tagsSelector
     });
 

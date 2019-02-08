@@ -720,6 +720,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   padding-left: 20px;
   background-size: 18px;
   margin-left: 7px;
+  position: relative;
+  top: 4px;
 }
 
 .task_content_item:hover .toggl-button {

@@ -450,28 +450,6 @@ window.togglbutton = {
       togglbutton.mainDescription = description;
     }
 
-    function deactivate () {
-      link.classList.remove('active');
-      link.style.color = '';
-      if (params.buttonType !== 'minimal') {
-        link.textContent = 'Start timer';
-      }
-    }
-
-    function activate () {
-      const currentLink = link;
-      if (document.querySelector('.toggl-button.active:not(.toggl-button-edit-form-button)')) {
-        link = document.querySelector('.toggl-button.active:not(.toggl-button-edit-form-button)');
-        deactivate();
-        link = currentLink;
-      }
-      link.classList.add('active');
-      link.style.color = '#1ab351';
-      if (params.buttonType !== 'minimal') {
-        link.textContent = 'Stop timer';
-      }
-    }
-
     link.classList.add(params.className);
     togglbutton.serviceName = params.className;
 
@@ -488,14 +466,14 @@ window.togglbutton = {
       link = e.target;
 
       if (link.classList.contains('active')) {
-        deactivate();
+        togglbutton.deactivateTimerLink(link);
         opts = {
           type: 'stop',
           respond: true,
           service: togglbutton.serviceName
         };
       } else {
-        activate();
+        togglbutton.activateTimerLink(link);
         opts = {
           type: 'timeEntry',
           respond: true,
@@ -520,51 +498,55 @@ window.togglbutton = {
     return link;
   },
 
-  // Query active timer entry, and set it to active.
+  // Query active timer entry, and set it to active. If a callback is
+  // provided as an argument, it will be invoked before updating the
+  // timer links.
   queryAndUpdateTimerLink: function () {
     chrome.runtime.sendMessage({ type: 'currentEntry' }, function (response) {
       togglbutton.updateTimerLink(response.currentEntry);
     });
   },
 
-  // If "entry" is passed, make button active; otherwise inactive.
+  // Make button corresponding to 'entry' active, if any. ; otherwise inactive.
   updateTimerLink: function (entry) {
-    let linkText = '';
-
-    let color = '';
-
-    let link;
-
-    let i;
-
-    let minimal;
-
-    if (togglbutton.links.length < 1) {
-      return;
-    }
-
-    for (i = 0; i < togglbutton.links.length; i++) {
-      link = togglbutton.links[i].link;
-      minimal = link.classList.contains('min');
-
-      if (
-        !entry ||
-        invokeIfFunction(togglbutton.links[i].params.description) !==
-          entry.description
-      ) {
-        link.classList.remove('active');
-        if (!minimal) {
-          linkText = 'Start timer';
-        }
-      } else {
-        link.classList.add('active');
-        color = '#1ab351';
-        if (!minimal) {
-          linkText = 'Stop timer';
+    if (entry) {
+      for (const current of togglbutton.links) {
+        if (invokeIfFunction(current.params.description) !== entry.description) {
+          togglbutton.deactivateTimerLink(current.link);
+        } else {
+          togglbutton.activateTimerLink(current.link);
+          // Once the active timer is found, no need to continue
+          // scanning.
+          break;
         }
       }
-      link.style.color = color;
-      link.textContent = linkText;
+    } else {
+      togglbutton.deactivateAllTimerLinks();
+    }
+  },
+
+  activateTimerLink: function (link) {
+    togglbutton.deactivateAllTimerLinks();
+    link.classList.add('active');
+    link.style.color = '#1ab351';
+    const minimal = link.classList.contains('min');
+    if (!minimal) {
+      link.textContent = 'Stop timer';
+    }
+  },
+
+  deactivateAllTimerLinks: function () {
+    const allActive = document.querySelectorAll('.toggl-button.active:not(.toggl-button-edit-form-button)');
+    for (const active of allActive) {
+      togglbutton.deactivateTimerLink(active);
+    }
+  },
+
+  deactivateTimerLink: function (link) {
+    link.classList.remove('active');
+    const minimal = link.classList.contains('min');
+    if (!minimal) {
+      link.textContent = 'Start timer';
     }
   },
 

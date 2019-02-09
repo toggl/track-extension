@@ -1737,7 +1737,6 @@ window.TogglButton = {
         }
       } else if (request.type === 'currentEntry') {
         sendResponse({
-          success: TogglButton.$curEntry !== null,
           currentEntry: TogglButton.$curEntry
         });
       } else if (request.type === 'error') {

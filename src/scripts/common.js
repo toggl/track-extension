@@ -433,6 +433,12 @@ window.togglbutton = {
   },
 
   createTimerLink: function (params) {
+    const link = togglbutton.createTimerLinkSkipQuery(params);
+    togglbutton.queryAndUpdateTimerLink();
+    return link;
+  },
+
+  createTimerLinkSkipQuery: function (params) {
     let link = createLink('toggl-button');
 
     const project = invokeIfFunction(params.projectName);
@@ -511,26 +517,14 @@ window.togglbutton = {
     // Add created link to links array
     togglbutton.links.push({ params: params, link: link });
 
-    // new button created - set state
-    chrome.runtime.sendMessage({ type: 'currentEntry' }, function (response) {
-      let currentEntry; let i;
-      if (response.success) {
-        currentEntry = response.currentEntry;
-        for (i = 0; i < togglbutton.links.length; i++) {
-          link = togglbutton.links[i].link;
-          if (
-            invokeIfFunction(togglbutton.links[i].params.description) ===
-            currentEntry.description
-          ) {
-            activate();
-          } else {
-            deactivate();
-          }
-        }
-      }
-    });
-
     return link;
+  },
+
+  // Query active timer entry, and set it to active.
+  queryAndUpdateTimerLink: function () {
+    chrome.runtime.sendMessage({ type: 'currentEntry' }, function (response) {
+      togglbutton.updateTimerLink(response.currentEntry);
+    });
   },
 
   // If "entry" is passed, make button active; otherwise inactive.
@@ -628,7 +622,5 @@ window.togglbutton = {
 chrome.runtime.onMessage.addListener(togglbutton.newMessage);
 window.addEventListener('focus', function (e) {
   // update button state
-  chrome.runtime.sendMessage({ type: 'currentEntry' }, function (response) {
-    togglbutton.updateTimerLink(response.currentEntry);
-  });
+  togglbutton.queryAndUpdateTimerLink();
 });

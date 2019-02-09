@@ -169,6 +169,7 @@ window.togglbutton = {
       for (i = 0, len = elems.length; i < len; i += 1) {
         renderer(elems[i]);
       }
+      togglbutton.queryAndUpdateTimerLink();
     } catch (e) {
       chrome.runtime.sendMessage({
         type: 'error',
@@ -442,12 +443,6 @@ window.togglbutton = {
   },
 
   createTimerLink: function (params) {
-    const link = togglbutton.createTimerLinkSkipQuery(params);
-    togglbutton.queryAndUpdateTimerLink();
-    return link;
-  },
-
-  createTimerLinkSkipQuery: function (params) {
     let link = createLink('toggl-button');
 
     const project = invokeIfFunction(params.projectName);

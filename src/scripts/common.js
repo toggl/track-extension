@@ -123,11 +123,13 @@ window.togglbutton = {
               // If mutationSelector is defined, render the start timer link only when an element
               // matching the selector changes.
               // Multiple selectors can be used by comma separating them.
-              const matches = mutations.filter(function (mutation) {
-                return mutation.target.matches(mutationSelector);
-              });
-              if (!!mutationSelector && !matches.length) {
-                return;
+              if (mutationSelector) {
+                const matches = mutations.filter(function (mutation) {
+                  return mutation.target.matches(mutationSelector);
+                });
+                if (!matches.length) {
+                  return;
+                }
               }
               if (opts.debounceObserve > 0) {
                 if (debouncer) {

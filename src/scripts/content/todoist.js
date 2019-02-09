@@ -1,9 +1,11 @@
 'use strict';
 /* global togglbutton, $ */
 
+const todoistEditor = document.getElementById('editor');
+
 togglbutton.render(
   '.task_item .content:not(.toggl)',
-  { observe: true, debounceObserve: 100 },
+  { observe: true, observeTarget: todoistEditor, debounceObserve: 100 },
   elem => {
     const container = $('.text', elem);
 

@@ -53,6 +53,7 @@ togglbutton.render(
       className: 'todoist',
       description: descriptionSelector,
       projectName: getProjectNames(elem),
+      buttonType: 'minimal',
       tags: tagsSelector
     });
 

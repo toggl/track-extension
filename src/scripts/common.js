@@ -118,6 +118,7 @@ window.togglbutton = {
           togglbutton.fullVersion = response.version;
           togglbutton.duration_format = response.user.duration_format;
           if (opts.observe) {
+            let debouncer = null;
             const observer = new MutationObserver(function (mutations) {
               // If mutationSelector is defined, render the start timer link only when an element
               // matching the selector changes.
@@ -128,8 +129,16 @@ window.togglbutton = {
               if (!!mutationSelector && !matches.length) {
                 return;
               }
-
-              togglbutton.renderTo(selector, renderer);
+              if (opts.debounceObserve > 0) {
+                if (debouncer) {
+                  clearTimeout(debouncer);
+                }
+                debouncer = setTimeout(function () {
+                  togglbutton.renderTo(selector, renderer);
+                }, opts.debounceMilliseconds);
+              } else {
+                togglbutton.renderTo(selector, renderer);
+              }
             });
             observer.observe(document, { childList: true, subtree: true });
           }

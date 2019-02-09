@@ -716,10 +716,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 /********* TODOIST *********/
 .toggl-button.todoist {
-  font-size: 12px;
   padding-left: 20px;
-  background-size: 18px;
-  margin-left: 7px;
+  margin-bottom: -6px;
   visibility: hidden;
 }
 
@@ -727,7 +725,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   visibility: visible;
 }
 
-.task_content_item:hover .toggl-button {
+.task_item:hover .toggl-button.todoist {
   visibility: visible;
 }
 

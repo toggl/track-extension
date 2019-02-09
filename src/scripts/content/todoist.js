@@ -3,7 +3,7 @@
 
 togglbutton.render(
   '.task_item .content:not(.toggl)',
-  { observe: true },
+  { observe: true, debounceObserve: 100 },
   elem => {
     const container = $('.text', elem);
 
@@ -71,7 +71,7 @@ E.g.
 - Toggl Button will first check if MyFeatureProject exists, and if it doesn't, try to use the next parent etc.
 */
 
-function getProjectNameFromLabel(elem) {
+function getProjectNameFromLabel (elem) {
   let projectLabel = '';
   const projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
   if (projectLabelEle) {
@@ -80,7 +80,7 @@ function getProjectNameFromLabel(elem) {
   return projectLabel;
 }
 
-function getParentEle(sidebarCurrentEle) {
+function getParentEle (sidebarCurrentEle) {
   const levelPattern = /(?:^|\s)indent_(\d*?)(?:\s|$)/;
   const curLevel = sidebarCurrentEle.className.match(levelPattern)[1];
   const parentClass = 'indent_' + (curLevel - 1);
@@ -95,11 +95,11 @@ function getParentEle(sidebarCurrentEle) {
   return parentCandidate;
 }
 
-function isTopLevelProject(sidebarCurrentEle) {
+function isTopLevelProject (sidebarCurrentEle) {
   return sidebarCurrentEle.classList.contains('indent_1');
 }
 
-function getProjectNameHierarchy(sidebarCurrentEle) {
+function getProjectNameHierarchy (sidebarCurrentEle) {
   const projectName = $(
     '.name',
     sidebarCurrentEle
@@ -113,11 +113,11 @@ function getProjectNameHierarchy(sidebarCurrentEle) {
   return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
 }
 
-function projectWasJustCreated(projectId) {
+function projectWasJustCreated (projectId) {
   return projectId.startsWith('_');
 }
 
-function getSidebarCurrentEle(elem) {
+function getSidebarCurrentEle (elem) {
   let projectId;
   let sidebarRoot;
   let sidebarColorEle;
@@ -140,7 +140,7 @@ function getSidebarCurrentEle(elem) {
   return sidebarCurrentEle;
 }
 
-function getProjectNames(elem) {
+function getProjectNames (elem) {
   // Return a function for timer link to use, in order for projects to be retrieved
   // at the moment the button is clicked (rather than only on load)
   return () => {

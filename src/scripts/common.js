@@ -434,15 +434,14 @@ window.togglbutton = {
 
   createTimerLink: function (params) {
     let link = createLink('toggl-button');
-    togglbutton.currentDescription = invokeIfFunction(params.description);
-    togglbutton.currentProject = params.projectName;
-    link.title =
-      invokeIfFunction(togglbutton.currentDescription) +
-      (invokeIfFunction(togglbutton.currentProject)
-        ? ' - ' + invokeIfFunction(togglbutton.currentProject)
-        : '');
+
+    const project = invokeIfFunction(params.projectName);
+    const description = invokeIfFunction(params.description);
+    togglbutton.currentProject = project;
+    togglbutton.currentDescription = description;
+    link.title = description + (project ? ' - ' + project : '');
     if (params.calculateTotal) {
-      togglbutton.mainDescription = invokeIfFunction(params.description);
+      togglbutton.mainDescription = description;
     }
 
     function deactivate () {

@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.21.1",
+      "rows": [
+        "Fix Trello project selection",
+      ]
+    },
+    {
       "version": "1.21.0",
       "rows": [
         "Add support for Salesforce Lightning",

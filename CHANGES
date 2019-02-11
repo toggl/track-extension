@@ -1,6 +1,13 @@
 {
   "versions": [
     {
+      "version": "1.21.0",
+      "rows": [
+        "Add support for Salesforce Lightning",
+        "Improve error reporting"
+      ]
+    },
+    {
       "version": "1.20.0",
       "rows": [
         "Add Dropbox Paper integration",

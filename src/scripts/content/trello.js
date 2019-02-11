@@ -1,32 +1,28 @@
 'use strict';
+/* global createTag */
 
 togglbutton.render(
   '.window-header:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      container = createTag('div', 'button-link trello-tb-wrapper'),
-      //duration,
-      descFunc,
-      titleElem = $('.window-title h2', elem),
-      //trackedContainer = createTag('div', 'toggl-tracked'),
-      //trackedElem = $('.other-actions'),
-      projectElem = $('.board-header > a') || $('board-header-btn-name'),
-      descriptionElem = $('.js-move-card');
-
+  (elem) => {
+    const descriptionElem = $('.js-move-card');
     if (!descriptionElem) {
       return;
     }
 
-    descFunc = function() {
-      return titleElem.textContent;
+    const getDescription = () => {
+      return $('.window-title h2', elem).textContent.trim();
     };
 
-    link = togglbutton.createTimerLink({
+    const getProject = () => {
+      return $('.board-header-btn-name').textContent.trim();
+    };
+
+    const container = createTag('div', 'button-link trello-tb-wrapper');
+    const link = togglbutton.createTimerLink({
       className: 'trello',
-      description: descFunc,
-      projectName: projectElem && projectElem.textContent,
-      calculateTotal: true
+      description: getDescription,
+      projectName: getProject
     });
 
     container.appendChild(link);
@@ -39,16 +35,18 @@ togglbutton.render(
 togglbutton.render(
   '.checklist-item-details:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      projectElem = $('.board-header > a'),
-      titleElem = $('.window-title h2'),
-      taskElem = $('.checklist-item-details-text', elem);
+  (elem) => {
+    const titleElem = $('.window-title h2');
+    const taskElem = $('.checklist-item-details-text', elem);
 
-    link = togglbutton.createTimerLink({
+    const getProject = () => {
+      return $('.board-header-btn-name').textContent.trim();
+    };
+
+    const link = togglbutton.createTimerLink({
       className: 'trello',
       buttonType: 'minimal',
-      projectName: projectElem.textContent,
+      projectName: getProject,
       description: titleElem.textContent + ' - ' + taskElem.textContent
     });
 

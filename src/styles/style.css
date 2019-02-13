@@ -1068,6 +1068,18 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* SALESFORCE *********/
+.toggl-button.salesforce-legacy {
+  padding-right: 5px;
+  margin-bottom: -6px;
+}
+
+.toggl-button.salesforce-legacy:not(.minimal) {
+  margin-left: 5px;
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: normal;
+}
+
 .toggl-button:not(.toggl-button-edit-form-button).salesforce {
   margin-top: 0;
   position: relative;

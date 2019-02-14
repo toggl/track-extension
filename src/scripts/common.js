@@ -131,13 +131,13 @@ window.togglbutton = {
                   return;
                 }
               }
-              if (opts.debounceObserve > 0) {
+              if (opts.debounceInterval > 0) {
                 if (debouncer) {
                   clearTimeout(debouncer);
                 }
                 debouncer = setTimeout(function () {
                   togglbutton.renderTo(selector, renderer);
-                }, opts.debounceMilliseconds);
+                }, opts.debounceInterval);
               } else {
                 togglbutton.renderTo(selector, renderer);
               }

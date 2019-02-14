@@ -5,7 +5,7 @@ const todoistEditor = document.getElementById('editor');
 
 togglbutton.render(
   '.task_item .content:not(.toggl)',
-  { observe: true, observeTarget: todoistEditor, debounceObserve: 100 },
+  { observe: true, observeTarget: todoistEditor, debounceInterval: 100 },
   elem => {
     const container = $('.text', elem);
 

@@ -142,7 +142,7 @@ window.togglbutton = {
                 togglbutton.renderTo(selector, renderer);
               }
             });
-            const observeTarget = opts.observeTarget ? opts.observeTarget : document;
+            const observeTarget = opts.observeTarget || document;
             observer.observe(observeTarget, { childList: true, subtree: true });
           }
           togglbutton.renderTo(selector, renderer);

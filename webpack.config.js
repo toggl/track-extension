@@ -1,7 +1,9 @@
 const path = require('path');
+const fs = require('fs');
 const CleanPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
+const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
 const { EnvironmentPlugin } = require('webpack');
 const log = require('webpack-log')({ name: 'wds' });
 const pkg = require('./package.json');
@@ -9,13 +11,14 @@ const getBugsnagKey = require('./utils/get-bugsnag-key');
 
 // Resolve environment settings for webpack.
 const config = f => (
-  { development, production } = {
+  { development, production, release } = {
     development: true
   }
 ) => {
   const env = {
     development: Boolean(development),
     production: Boolean(production),
+    release: Boolean(release),
     version: pkg.version
   };
 
@@ -28,11 +31,13 @@ const config = f => (
 module.exports = config(async ({ development, production, version }) => ({
   target: 'web',
   context: path.resolve(__dirname, 'src'),
+  devtool: 'source-map',
   entry: {
     ...entry('background'),
     ...entry('common'),
     ...entry('popup'),
-    ...entry('settings')
+    ...entry('settings'),
+    ...entryContentScripts()
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -66,10 +71,6 @@ module.exports = config(async ({ development, production, version }) => ({
         to: 'images/'
       }),
       ...copy({
-        from: 'scripts/content/',
-        to: 'scripts/content/'
-      }),
-      ...copy({
         from: 'sounds/',
         to: 'sounds/'
       }),
@@ -88,37 +89,56 @@ module.exports = config(async ({ development, production, version }) => ({
         transform: transformManifest('firefox')
       }
     ]),
-    production &&
-      new FileManagerPlugin({
-        onEnd: [
-          {
-            archive: [
-              {
-                source: 'dist/chrome',
-                destination: `dist/toggl-button-chrome-${version}.zip`
-              },
-              {
-                source: 'dist/firefox',
-                destination: `dist/toggl-button-firefox-${version}.zip`
-              }
-            ]
-          },
-          {
-            delete: ['dist/chrome', 'dist/firefox']
-          }
-        ]
-      })
+    production && release &&
+      new BugsnagSourceMapUploaderPlugin({
+        apiKey: process.env.BUGSNAG_API_KEY,
+        appVersion: version,
+        publicPath: 'togglbutton://',
+        overwrite: true /* Overwrites existing sourcemaps for this version */
+      }),
+    new FileManagerPlugin({
+      onEnd: [
+        {
+          copy: [
+            { source: 'dist/scripts/**/*', destination: 'dist/chrome/scripts' },
+            { source: 'dist/scripts/**/*', destination: 'dist/firefox/scripts' }
+          ]
+        },
+        production && {
+          delete: [
+            'dist/**/*.js.map'
+          ],
+          archive: [
+            {
+              source: 'dist/chrome',
+              destination: `dist/toggl-button-chrome-${version}.zip`
+            },
+            {
+              source: 'dist/firefox',
+              destination: `dist/toggl-button-firefox-${version}.zip`
+            }
+          ]
+        }
+      ]
+    })
   ].filter(Boolean)
 }));
 
 function entry (name) {
   return {
-    [`chrome/scripts/${name}`]: `./scripts/${name}.js`,
-    [`firefox/scripts/${name}`]: `./scripts/${name}.js`
+    [`scripts/${name}`]: `./scripts/${name}.js`
   };
 }
 
-function copy (o) {
+function entryContentScripts () {
+  const contentScriptFiles = fs.readdirSync('./src/scripts/content/');
+  return contentScriptFiles.reduce((entries, file) => {
+    const name = file.replace('.js', '');
+    return Object.assign(entries, entry(`content/${name}`));
+  }, {});
+}
+
+function copy(o) {
   return [
     {
       ...o,

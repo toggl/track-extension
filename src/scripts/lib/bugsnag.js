@@ -25,16 +25,20 @@ function getBugsnagClient () {
     beforeSend: function (report) {
       if (localStorage.getItem('sendErrorReports') !== 'true') {
         report.ignore();
+        return false;
       }
+
+      report.stacktrace = report.stacktrace.map(function (frame) {
+        frame.file = frame.file.replace(/chrome-extension:/g, 'chrome_extension:');
+        // Create consistent file paths for source mapping / error reporting.
+        frame.file = frame.file.replace(
+          /(moz-extension|file):\/\/.*\/scripts\/(.*)/ig,
+          'togglbutton://scripts/$2'
+        );
+        return frame;
+      });
     }
   });
-
-  bugsnagClient.beforeNotify = function (error) {
-    error.stacktrace = error.stacktrace.replace(
-      /chrome-extension:/g,
-      'chromeextension:'
-    );
-  };
 
   return bugsnagClient;
 }

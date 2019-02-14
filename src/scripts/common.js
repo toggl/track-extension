@@ -514,17 +514,10 @@ window.togglbutton = {
 
   // Make button corresponding to 'entry' active, if any. ; otherwise inactive.
   updateTimerLink: function (entry) {
-    if (entry) {
-      for (const current of togglbutton.links) {
-        if (invokeIfFunction(current.params.description) !== entry.description) {
-          togglbutton.deactivateTimerLink(current.link);
-        } else {
-          togglbutton.activateTimerLink(current.link);
-          // Once the active timer is found, no need to continue
-          // scanning.
-          break;
-        }
-      }
+    const current = togglbutton.links.find(
+      button => invokeIfFunction(button.params.description) === entry.description);
+    if (current) {
+      togglbutton.activateTimerLink(current.link);
     } else {
       togglbutton.deactivateAllTimerLinks();
     }

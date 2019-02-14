@@ -505,9 +505,7 @@ window.togglbutton = {
     return link;
   },
 
-  // Query active timer entry, and set it to active. If a callback is
-  // provided as an argument, it will be invoked before updating the
-  // timer links.
+  // Query active timer entry, and set it to active.
   queryAndUpdateTimerLink: function () {
     chrome.runtime.sendMessage({ type: 'currentEntry' }, function (response) {
       togglbutton.updateTimerLink(response.currentEntry);

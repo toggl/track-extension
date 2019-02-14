@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.21.2",
+      "rows": [
+        "Fix support for older Salesforce versions"
+      ]
+    },
+    {
       "version": "1.21.1",
       "rows": [
         "Fix Trello project selection",

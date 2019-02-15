@@ -95,7 +95,6 @@ window.togglbutton = {
   $billable: null,
   isStarted: false,
   element: null,
-  links: [],
   serviceName: '',
   projectBlurTrigger: null,
   taskBlurTrigger: null,
@@ -499,9 +498,6 @@ window.togglbutton = {
       return false;
     });
 
-    // Add created link to links array
-    togglbutton.links.push({ params: params, link: link });
-
     return link;
   },
 
@@ -514,10 +510,16 @@ window.togglbutton = {
 
   // Make button corresponding to 'entry' active, if any. ; otherwise inactive.
   updateTimerLink: function (entry) {
-    const current = togglbutton.links.find(
-      button => invokeIfFunction(button.params.description) === entry.description);
+    if (!entry) {
+      togglbutton.deactivateAllTimerLinks();
+      return;
+    }
+
+    const current = Array.from(document.querySelectorAll('.toggl-button:not(.toggl-button-edit-form-button)'))
+      .find(button => button.title.indexOf(entry.description) !== -1);
+
     if (current) {
-      togglbutton.activateTimerLink(current.link);
+      togglbutton.activateTimerLink(current);
     } else {
       togglbutton.deactivateAllTimerLinks();
     }
@@ -542,6 +544,7 @@ window.togglbutton = {
 
   deactivateTimerLink: function (link) {
     link.classList.remove('active');
+    link.style.color = '';
     const minimal = link.classList.contains('min');
     if (!minimal) {
       link.textContent = 'Start timer';

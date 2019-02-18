@@ -1,6 +1,12 @@
 {
   "versions": [
     {
+      "version": "1.21.3",
+      "rows": [
+        "Freshdesk Mint - Support latest update"
+      ]
+    },
+    {
       "version": "1.21.2",
       "rows": [
         "Fix support for older Salesforce versions"

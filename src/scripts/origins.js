@@ -158,6 +158,10 @@ export default {
     url: '*://*.feedly.com/*',
     name: 'Feedly'
   },
+  'focuster.com': {
+    url: '*://*.focuster.com/*',
+    name: 'Focuster'
+  },
   'fogbugz.com': {
     url: '*://*.fogbugz.com/*',
     name: 'Fogbugz'

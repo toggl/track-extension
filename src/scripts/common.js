@@ -122,6 +122,7 @@ window.togglbutton = {
               // If mutationSelector is defined, render the start timer link only when an element
               // matching the selector changes.
               // Multiple selectors can be used by comma separating them.
+              // mutationSelector = mutationSelector ? `${mutationSelector},*:not(.toggl-button)` : '*:not(.toggl-button)';
               if (mutationSelector) {
                 const matches = mutations.filter(function (mutation) {
                   return mutation.target.matches(mutationSelector);
@@ -526,11 +527,16 @@ window.togglbutton = {
   },
 
   activateTimerLink: function (link) {
+    if (link.classList.contains('active')) {
+      return;
+    }
+
     togglbutton.deactivateAllTimerLinks();
     link.classList.add('active');
     link.style.color = '#1ab351';
-    const minimal = link.classList.contains('min');
-    if (!minimal) {
+
+    const isMinimal = link.classList.contains('min');
+    if (!isMinimal) {
       link.textContent = 'Stop timer';
     }
   },

@@ -6,6 +6,8 @@ const { EnvironmentPlugin } = require('webpack');
 const log = require('webpack-log')({ name: 'wds' });
 const pkg = require('./package.json');
 
+const BUGSNAG_API_KEY = process.env.TOGGL_BUTTON_BUGSNAG_API_KEY;
+
 // Resolve environment settings for webpack.
 const config = f => (
   { development, production } = {
@@ -49,7 +51,7 @@ module.exports = config(({ development, production, version }) => ({
   plugins: [
     new EnvironmentPlugin({
       API_URL: 'https://toggl.com/api',
-      BUGSNAG_API_KEY: '7419717b29de539ab0fbe35dcd7ca19d',
+      BUGSNAG_API_KEY: BUGSNAG_API_KEY,
       DEBUG: development,
       GA_TRACKING_ID: 'UA-3215787-22',
       VERSION: version
@@ -110,14 +112,14 @@ module.exports = config(({ development, production, version }) => ({
   ].filter(Boolean)
 }));
 
-function entry(name) {
+function entry (name) {
   return {
     [`chrome/scripts/${name}`]: `./scripts/${name}.js`,
     [`firefox/scripts/${name}`]: `./scripts/${name}.js`
   };
 }
 
-function copy(o) {
+function copy (o) {
   return [
     {
       ...o,
@@ -130,8 +132,8 @@ function copy(o) {
   ];
 }
 
-function transformManifest(browser) {
-  return function(content) {
+function transformManifest (browser) {
+  return function (content) {
     const manifest = JSON.parse(content.toString());
 
     if (process.env.TOGGL_API_HOST) {

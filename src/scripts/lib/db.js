@@ -1,137 +1,59 @@
-import bugsnagClient from './bugsnag';
 import origins from '../origins';
+const browser = require('webextension-polyfill');
 
-export default class Db {
-  originsKey = 'TogglButton-origins';
+const ORIGINS_KEY = 'TogglButton-origins';
 
-  // settings: key, default value
-  settings = {
-    startAutomatically: false,
-    stopAutomatically: false,
-    showRightClickButton: true,
-    showPostPopup: true,
-    nannyCheckEnabled: true,
-    nannyInterval: 3600000,
-    nannyFromTo: '09:00-17:00',
-    idleDetectionEnabled: false,
-    pomodoroModeEnabled: false,
-    pomodoroSoundFile: 'sounds/time_is_up_1.mp3',
-    pomodoroSoundEnabled: true,
-    pomodoroSoundVolume: 1,
-    pomodoroStopTimeTrackingWhenTimerEnds: true,
-    pomodoroInterval: 25,
-    stopAtDayEnd: false,
-    dayEndTime: '17:00',
-    defaultProject: 0,
-    projects: '',
-    rememberProjectPer: 'false',
-    enableAutoTagging: false
-  };
+// settings: key, default value
+const DEFAULT_SETTINGS = {
+  startAutomatically: false,
+  stopAutomatically: false,
+  showRightClickButton: true,
+  showPostPopup: true,
+  nannyCheckEnabled: true,
+  nannyInterval: 3600000,
+  nannyFromTo: '09:00-17:00',
+  idleDetectionEnabled: false,
+  pomodoroModeEnabled: false,
+  pomodoroSoundFile: 'sounds/time_is_up_1.mp3',
+  pomodoroSoundEnabled: true,
+  pomodoroSoundVolume: 1,
+  pomodoroStopTimeTrackingWhenTimerEnds: true,
+  pomodoroInterval: 25,
+  stopAtDayEnd: false,
+  dayEndTime: '17:00',
+  defaultProject: 0,
+  rememberProjectPer: 'false',
+  enableAutoTagging: false
+};
 
-  // core settings: key, default value
-  core = {
-    'dont-show-permissions': false,
-    'show-permissions-info': 0,
-    'settings-active-tab': 0,
-    sendErrorReports: true,
-    sendUsageStatistics: true
-  };
+// core settings: key, default value
+const CORE_SETTINGS = {
+  'dont-show-permissions': false,
+  'show-permissions-info': 0,
+  'settings-active-tab': 0,
+  sendErrorReports: true,
+  sendUsageStatistics: true
+};
 
-  newMessage = (request, sender, sendResponse) => {
-    try {
-      if (request.type === 'toggle-popup') {
-        this.set('showPostPopup', request.state);
-      } else if (request.type === 'toggle-nanny') {
-        this.updateSetting(
-          'nannyCheckEnabled',
-          request.state,
-          this.togglButton.setNannyTimer
-        );
-      } else if (request.type === 'toggle-nanny-from-to') {
-        this.updateSetting(
-          'nannyFromTo',
-          request.state,
-          this.togglButton.setNannyTimer,
-          this.get('nannyCheckEnabled')
-        );
-      } else if (request.type === 'toggle-nanny-interval') {
-        this.updateSetting(
-          'nannyInterval',
-          Math.max(request.state, 1000),
-          this.togglButton.setNannyTimer,
-          this.get('nannyCheckEnabled')
-        );
-      } else if (request.type === 'toggle-idle') {
-        this.updateSetting(
-          'idleDetectionEnabled',
-          request.state,
-          this.togglButton.startCheckingUserState
-        );
-      } else if (request.type === 'toggle-pomodoro') {
-        this.set('pomodoroModeEnabled', request.state);
-      } else if (request.type === 'toggle-pomodoro-sound') {
-        this.set('pomodoroSoundEnabled', request.state);
-      } else if (request.type === 'toggle-pomodoro-interval') {
-        this.updateSetting('pomodoroInterval', request.state);
-      } else if (request.type === 'toggle-pomodoro-stop-time') {
-        this.set('pomodoroStopTimeTrackingWhenTimerEnds', request.state);
-      } else if (request.type === 'update-pomodoro-sound-volume') {
-        this.set('pomodoroSoundVolume', request.state);
-      } else if (request.type === 'toggle-right-click-button') {
-        this.updateSetting('showRightClickButton', request.state);
-      } else if (request.type === 'toggle-start-automatically') {
-        this.updateSetting('startAutomatically', request.state);
-      } else if (request.type === 'toggle-stop-automatically') {
-        this.updateSetting('stopAutomatically', request.state);
-      } else if (request.type === 'toggle-stop-at-day-end') {
-        this.updateSetting('stopAtDayEnd', request.state);
-        this.togglButton.startCheckingDayEnd(request.state);
-      } else if (request.type === 'toggle-day-end-time') {
-        this.updateSetting('dayEndTime', request.state);
-      } else if (request.type === 'change-default-project') {
-        this.updateSetting(
-          chrome.extension.getBackgroundPage().this.togglButton.$user.id +
-            '-defaultProject',
-          request.state
-        );
-      } else if (request.type === 'change-remember-project-per') {
-        this.updateSetting('rememberProjectPer', request.state);
-        this.resetDefaultProjects();
-      } else if (
-        request.type === 'update-dont-show-permissions' ||
-        request.type === 'update-settings-active-tab'
-      ) {
-        this.updateSetting(request.type.substr(7), request.state);
-      } else if (
-        request.type === 'update-send-usage-statistics'
-      ) {
-        this.updateSetting('sendUsageStatistics', request.state)
-      } else if (
-        request.type === 'update-send-error-reports'
-      ) {
-        this.updateSetting('sendErrorReports', request.state)
-      } else if (
-        request.type === 'update-enable-auto-tagging'
-      ) {
-        this.updateSetting('enableAutoTagging', request.state)
-      }
-    } catch (e) {
-      bugsnagClient.notify(e);
+const transformLegacyValue = (value) => {
+  if (typeof value !== 'undefined') {
+    // Ensure older version's settings still function if they get saved to sync storage.
+    if (value === 'false' || value === 'true') {
+      return JSON.parse(value);
     }
-
-    return true;
-  };
-
-  constructor(togglButton) {
+    return value;
+  } else {
+    return null;
+  }
+};
+export default class Db {
+  constructor (togglButton) {
     this.togglButton = togglButton;
     this.loadAll();
-
-    chrome.runtime.onMessage.addListener(this.newMessage);
   }
 
-  getOriginFileName(domain) {
-    var origin = this.getOrigin(domain),
-      item;
+  async getOriginFileName (domain) {
+    let origin = await this.getOrigin(domain);
 
     if (!origin) {
       origin = domain;
@@ -149,55 +71,38 @@ export default class Db {
       }
     }
 
-    item = origins[origin];
+    const item = origins[origin];
 
-    if (!!item.file) {
+    if (item.file) {
       return item.file;
     }
 
     return item.name.toLowerCase().replace(' ', '-') + '.js';
   }
 
-  getOrigin(origin) {
-    var origins = localStorage.getItem(this.originsKey),
-      obj;
-    if (!!origins) {
-      obj = JSON.parse(origins);
-      return obj[origin];
-    }
-    return null;
+  async getOrigin (origin) {
+    const origins = await this.getAllOrigins();
+    return origins[origin] || null;
   }
 
-  setOrigin(newOrigin, baseOrigin) {
-    var origins = localStorage.getItem(this.originsKey),
-      obj = {};
-
-    if (!!origins) {
-      obj = JSON.parse(origins);
-    }
-    obj[newOrigin] = baseOrigin;
-    localStorage.setItem(this.originsKey, JSON.stringify(obj));
+  async setOrigin (newOrigin, baseOrigin) {
+    const origins = await this.getAllOrigins();
+    origins[newOrigin] = baseOrigin;
+    this.set(ORIGINS_KEY, {
+      ...origins,
+      [newOrigin]: baseOrigin
+    });
   }
 
-  removeOrigin(origin) {
-    var origins = localStorage.getItem(this.originsKey),
-      obj;
-
-    if (!!origins) {
-      obj = JSON.parse(origins);
-      delete obj[origin];
-      localStorage.setItem(this.originsKey, JSON.stringify(obj));
-    }
+  async removeOrigin (origin) {
+    const origins = await this.getAllOrigins();
+    delete origins[origin];
+    this.set(ORIGINS_KEY, origins);
   }
 
-  getAllOrigins() {
-    var origins = localStorage.getItem(this.originsKey),
-      obj;
-    if (!!origins) {
-      obj = JSON.parse(origins);
-      return obj;
-    }
-    return null;
+  async getAllOrigins () {
+    const origins = await this.get(ORIGINS_KEY, {});
+    return origins;
   }
 
   /**
@@ -206,14 +111,16 @@ export default class Db {
    * @param {string=} scope The scope to remember that project.
    * If null, then set global default
    */
-  setDefaultProject(pid, scope) {
-    var userId = this.togglButton.$user.id,
-      defaultProjects = JSON.parse(this.get(userId + '-defaultProjects')) || {};
+  async setDefaultProject (pid, scope) {
+    const userId = this.togglButton.$user.id;
+    let defaultProjects = await this.get(userId + '-defaultProjects', {});
+    if (!defaultProjects) defaultProjects = {}; // Catch pre-storage.sync settings
+
     if (!scope) {
       return this.set(userId + '-defaultProject', pid);
     }
     defaultProjects[scope] = pid;
-    this.set(userId + '-defaultProjects', JSON.stringify(defaultProjects));
+    this.set(userId + '-defaultProjects', defaultProjects);
   }
 
   /**
@@ -221,73 +128,116 @@ export default class Db {
    * @param {string=} scope If null, then get global default
    * @returns {number} The default project for the given scope
    */
-  getDefaultProject(scope) {
+  async getDefaultProject (scope) {
     if (!this.togglButton.$user) {
       return 0;
     }
-    var userId = this.togglButton.$user.id,
-      defaultProjects = JSON.parse(this.get(userId + '-defaultProjects')),
-      defaultProject = parseInt(
-        this.get(userId + '-defaultProject') || '0',
-        10
-      );
+    const userId = this.togglButton.$user.id;
+    let defaultProjects = await this.get(userId + '-defaultProjects');
+    if (!defaultProjects) defaultProjects = {}; // Catch pre-storage.sync settings
+
+    let defaultProject = await this.get(userId + '-defaultProject');
+    defaultProject = parseInt(defaultProject || '0', 10);
+
     if (!scope || !defaultProjects) {
       return defaultProject;
     }
     return defaultProjects[scope] || defaultProject;
   }
 
-  resetDefaultProjects() {
+  resetDefaultProjects () {
     if (!this.togglButton.$user) {
       return;
     }
-    this.set(this.togglButton.$user.id + '-defaultProjects', null);
+    this.set(this.togglButton.$user.id + '-defaultProjects', {});
   }
 
-  get(setting) {
-    var value = localStorage.getItem(setting);
-    if (!!value) {
-      if (value === 'false' || value === 'true') {
-        value = JSON.parse(value);
-      }
-    }
-    return value;
+  get (key, defaultValue) {
+    const hasDefaultValue = typeof defaultValue !== 'undefined';
+    return browser.storage.sync.get(hasDefaultValue ? { [key]: defaultValue } : key)
+      .then((result) => {
+        if (process.env.DEBUG) {
+          console.info(`Retrieved value ${key}: `, result[key]);
+        }
+        return transformLegacyValue(result[key]);
+      });
   }
 
-  set(setting, value) {
-    localStorage.setItem(setting, value);
+  /**
+   * Retrieves multiple settings in one storage call
+   * @param {Object} settings Map of setting keys and default values
+   * @return {Object} Map of retrieved setting values
+   */
+  getMultiple (settings) {
+    return browser.storage.sync.get(settings)
+      .then((result) => {
+        if (process.env.DEBUG) {
+          console.info(`Retrieved values ${Object.keys(settings).join(', ')}: `, Object.values(result).map(JSON.strinfiy).join(', '));
+        }
+        return Object.keys(result).reduce((results, key) => {
+          return Object.assign(results, {
+            [key]: transformLegacyValue(result[key])
+          });
+        }, {});
+      });
   }
 
-  load(setting, defaultValue) {
-    var value = localStorage.getItem(setting);
-    if (!!value) {
-      if (typeof defaultValue === 'boolean') {
-        value = JSON.parse(value);
-      }
+  set (setting, value) {
+    return browser.storage.sync
+      .set({ [setting]: value })
+      .catch((e) => {
+        console.error(`Error attempting to save ${setting};`, e);
+      })
+      .finally(() => {
+        if (process.env.DEBUG) {
+          console.info(`Saved setting ${setting} :`, value);
+        }
+      });
+  }
+
+  getLocalCollection (key) {
+    let collection = localStorage.getItem(key);
+    if (!collection) {
+      collection = {};
     } else {
-      value = defaultValue;
+      collection = JSON.parse(collection);
     }
-    localStorage.setItem(setting, value);
+
+    return collection;
+  }
+
+  async load (setting, defaultValue) {
+    let value = await this.get(setting);
+
+    // Attempt to migrate from old localStorage settings.
+    if (value === null || typeof value === 'undefined') {
+      value = localStorage.getItem(setting);
+      if (value && typeof defaultValue === 'boolean') {
+        value = JSON.parse(value);
+      }
+    }
+
+    value = value || defaultValue;
+    this.set(setting, value);
     return value;
   }
 
-  loadAll() {
-    var k;
-    for (k in this.settings) {
-      if (this.settings.hasOwnProperty(k)) {
-        this.load(k, this.settings[k]);
+  loadAll () {
+    for (const k in DEFAULT_SETTINGS) {
+      if (DEFAULT_SETTINGS.hasOwnProperty(k)) {
+        this.load(k, DEFAULT_SETTINGS[k]);
       }
     }
 
-    for (k in this.core) {
-      if (this.core.hasOwnProperty(k)) {
-        this.load(k, this.core[k]);
+    for (const k in CORE_SETTINGS) {
+      if (CORE_SETTINGS.hasOwnProperty(k)) {
+        this.load(k, CORE_SETTINGS[k]);
       }
     }
   }
 
-  updateSetting(key, state, callback, condition) {
-    var c = condition !== null ? condition : state;
+  updateSetting (key, state, callback, condition) {
+    const c = condition !== null ? condition : state;
     this.set(key, state);
 
     if (c && callback !== null) {

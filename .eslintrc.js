@@ -23,7 +23,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/scripts/*.js'],
+      files: ['src/scripts/**/*.js'],
       globals: {
         db: false,
         togglbutton: false,

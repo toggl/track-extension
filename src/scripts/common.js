@@ -1,4 +1,5 @@
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+const browser = require('webextension-polyfill');
 
 let projectAutocomplete; let tagAutocomplete;
 
@@ -108,53 +109,61 @@ window.togglbutton = {
   fullPageHeight: getFullPageHeight(),
   fullVersion: 'TogglButton',
   render: function (selector, opts, renderer, mutationSelector) {
-    chrome.runtime.sendMessage({ type: 'activate' }, function (response) {
-      if (response.success) {
-        try {
-          togglbutton.user = response.user;
-          togglbutton.entries = response.user.time_entries;
-          togglbutton.projects = response.user.projectMap;
-          togglbutton.fullVersion = response.version;
-          togglbutton.duration_format = response.user.duration_format;
-          if (opts.observe) {
-            let debouncer = null;
-            const observer = new MutationObserver(function (mutations) {
-              // If mutationSelector is defined, render the start timer link only when an element
-              // matching the selector changes.
-              // Multiple selectors can be used by comma separating them.
-              // mutationSelector = mutationSelector ? `${mutationSelector},*:not(.toggl-button)` : '*:not(.toggl-button)';
-              if (mutationSelector) {
-                const matches = mutations.filter(function (mutation) {
-                  return mutation.target.matches(mutationSelector);
-                });
-                if (!matches.length) {
-                  return;
+    browser.runtime.sendMessage({ type: 'activate' })
+      .then(function (response) {
+        if (response.success) {
+          try {
+            togglbutton.user = response.user;
+            togglbutton.entries = response.user.time_entries;
+            togglbutton.projects = response.user.projectMap;
+            togglbutton.fullVersion = response.version;
+            togglbutton.duration_format = response.user.duration_format;
+            if (opts.observe) {
+              let debouncer = null;
+              const observer = new MutationObserver(function (mutations) {
+                // If mutationSelector is defined, render the start timer link only when an element
+                // matching the selector changes.
+                // Multiple selectors can be used by comma separating them.
+                // mutationSelector = mutationSelector ? `${mutationSelector},*:not(.toggl-button)` : '*:not(.toggl-button)';
+                if (mutationSelector) {
+                  const matches = mutations.filter(function (mutation) {
+                    return mutation.target.matches(mutationSelector);
+                  });
+                  if (!matches.length) {
+                    return;
+                  }
                 }
-              }
-              if (opts.debounceInterval > 0) {
-                if (debouncer) {
-                  clearTimeout(debouncer);
-                }
-                debouncer = setTimeout(function () {
+                if (opts.debounceInterval > 0) {
+                  if (debouncer) {
+                    clearTimeout(debouncer);
+                  }
+                  debouncer = setTimeout(function () {
+                    togglbutton.renderTo(selector, renderer);
+                  }, opts.debounceInterval);
+                } else {
                   togglbutton.renderTo(selector, renderer);
-                }, opts.debounceInterval);
-              } else {
-                togglbutton.renderTo(selector, renderer);
-              }
+                }
+              });
+              const observeTarget = opts.observeTarget || document;
+              observer.observe(observeTarget, { childList: true, subtree: true });
+            }
+            togglbutton.renderTo(selector, renderer);
+          } catch (e) {
+            browser.runtime.sendMessage({
+              type: 'error',
+              stack: e.stack,
+              category: 'Content'
             });
-            const observeTarget = opts.observeTarget || document;
-            observer.observe(observeTarget, { childList: true, subtree: true });
           }
-          togglbutton.renderTo(selector, renderer);
-        } catch (e) {
-          chrome.runtime.sendMessage({
-            type: 'error',
-            stack: e.stack,
-            category: 'Content'
-          });
         }
-      }
-    });
+      })
+      .catch((e) => {
+        browser.runtime.sendMessage({
+          type: 'error',
+          stack: e.stack || null,
+          category: 'Content'
+        });
+      });
   },
 
   renderTo: function (selector, renderer) {
@@ -174,7 +183,7 @@ window.togglbutton = {
       }
       togglbutton.queryAndUpdateTimerLink();
     } catch (e) {
-      chrome.runtime.sendMessage({
+      browser.runtime.sendMessage({
         type: 'error',
         stack: e.stack,
         category: 'Content'
@@ -352,7 +361,7 @@ window.togglbutton = {
         billable: billable,
         service: togglbutton.serviceName
       };
-      chrome.runtime.sendMessage(request);
+      browser.runtime.sendMessage(request);
       closeForm();
     };
 
@@ -394,10 +403,10 @@ window.togglbutton = {
       if (!link.classList.contains('min')) {
         link.textContent = 'Start timer';
       }
-      chrome.runtime.sendMessage(
-        { type: 'stop', respond: true },
-        togglbutton.addEditForm
-      );
+      browser.runtime
+        .sendMessage({ type: 'stop', respond: true })
+        .then(togglbutton.addEditForm);
+
       closeForm();
       return false;
     });
@@ -494,7 +503,9 @@ window.togglbutton = {
         };
       }
       togglbutton.element = e.target;
-      chrome.runtime.sendMessage(opts, togglbutton.addEditForm);
+      browser.runtime
+        .sendMessage(opts)
+        .then(togglbutton.addEditForm);
 
       return false;
     });
@@ -504,9 +515,11 @@ window.togglbutton = {
 
   // Query active timer entry, and set it to active.
   queryAndUpdateTimerLink: function () {
-    chrome.runtime.sendMessage({ type: 'currentEntry' }, function (response) {
-      togglbutton.updateTimerLink(response.currentEntry);
-    });
+    // new button created - set state
+    browser.runtime.sendMessage({ type: 'currentEntry' })
+      .then(function (response) {
+        togglbutton.updateTimerLink(response.currentEntry);
+      });
   },
 
   // Make button corresponding to 'entry' active, if any. ; otherwise inactive.
@@ -605,10 +618,11 @@ window.togglbutton = {
         $('#toggl-button-edit-form').remove();
       }
     }
+    return undefined;
   }
 };
 
-chrome.runtime.onMessage.addListener(togglbutton.newMessage);
+browser.runtime.onMessage.addListener(togglbutton.newMessage);
 window.addEventListener('focus', function (e) {
   // update button state
   togglbutton.queryAndUpdateTimerLink();

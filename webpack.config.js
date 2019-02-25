@@ -5,8 +5,7 @@ const FileManagerPlugin = require('filemanager-webpack-plugin');
 const { EnvironmentPlugin } = require('webpack');
 const log = require('webpack-log')({ name: 'wds' });
 const pkg = require('./package.json');
-
-const BUGSNAG_API_KEY = process.env.TOGGL_BUTTON_BUGSNAG_API_KEY;
+const getBugsnagKey = require('./utils/get-bugsnag-key');
 
 // Resolve environment settings for webpack.
 const config = f => (
@@ -26,7 +25,7 @@ const config = f => (
   return f(env);
 };
 
-module.exports = config(({ development, production, version }) => ({
+module.exports = config(async ({ development, production, version }) => ({
   target: 'web',
   context: path.resolve(__dirname, 'src'),
   entry: {
@@ -51,7 +50,7 @@ module.exports = config(({ development, production, version }) => ({
   plugins: [
     new EnvironmentPlugin({
       API_URL: 'https://toggl.com/api',
-      BUGSNAG_API_KEY: BUGSNAG_API_KEY,
+      BUGSNAG_API_KEY: await getBugsnagKey(),
       DEBUG: development,
       GA_TRACKING_ID: 'UA-3215787-22',
       VERSION: version

@@ -28,7 +28,7 @@ const config = f => (
   return f(env);
 };
 
-module.exports = config(async ({ development, production, version }) => ({
+module.exports = config(async ({ development, production, release, version }) => ({
   target: 'web',
   context: path.resolve(__dirname, 'src'),
   devtool: 'source-map',
@@ -138,7 +138,7 @@ function entryContentScripts () {
   }, {});
 }
 
-function copy(o) {
+function copy (o) {
   return [
     {
       ...o,

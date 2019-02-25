@@ -1,6 +1,7 @@
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+const browser = require('webextension-polyfill');
 
-let TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
 
 if (FF) {
@@ -36,7 +37,7 @@ window.PopUp = {
   showPage: function () {
     let p; let dom;
     if (!TogglButton) {
-      TogglButton = chrome.extension.getBackgroundPage().TogglButton;
+      TogglButton = browser.extension.getBackgroundPage().TogglButton;
     }
 
     try {
@@ -87,7 +88,7 @@ window.PopUp = {
         PopUp.switchView(PopUp.$loginView);
       }
     } catch (e) {
-      chrome.runtime.sendMessage({
+      browser.runtime.sendMessage({
         type: 'error',
         stack: e.stack,
         category: 'Popup'
@@ -96,42 +97,40 @@ window.PopUp = {
   },
 
   sendMessage: function (request) {
-    chrome.runtime.sendMessage(request, function (response) {
-      if (!response) {
-        return;
-      }
+    return browser.runtime.sendMessage(request)
+      .then(async function (response) {
+        if (!response) {
+          return;
+        }
 
-      if (
-        request.type === 'list-continue' &&
+        if (
+          request.type === 'list-continue' &&
         !request.data &&
         !response.success
-      ) {
-        return PopUp.switchView(PopUp.$revokedWorkspaceView);
-      }
-
-      if (response.success) {
-        if (request.type === 'create-workspace') {
-          return PopUp.switchView(PopUp.$menuView);
-        }
-        if (
-          !!response.type &&
-          response.type === 'New Entry' &&
-          Db.get('showPostPopup')
         ) {
-          PopUp.updateEditForm(PopUp.$editView);
-        } else if (response.type === 'Update') {
-          TogglButton = chrome.extension.getBackgroundPage().TogglButton;
-        } else {
-          window.location.reload();
+          return PopUp.switchView(PopUp.$revokedWorkspaceView);
         }
-      } else if (
-        request.type === 'login' ||
+
+        if (response.success) {
+          if (request.type === 'create-workspace') {
+            return PopUp.switchView(PopUp.$menuView);
+          }
+          const showPostPopup = await browser.extension.getBackgroundPage().db.get('showPostPopup');
+          if (!!response.type && response.type === 'New Entry' && showPostPopup) {
+            PopUp.updateEditForm(PopUp.$editView);
+          } else if (response.type === 'Update') {
+            TogglButton = browser.extension.getBackgroundPage().TogglButton;
+          } else {
+            window.location.reload();
+          }
+        } else if (
+          request.type === 'login' ||
         (!!response.type &&
           (response.type === 'New Entry' || response.type === 'Update'))
-      ) {
-        PopUp.showError(response.error || PopUp.defaultErrorMessage);
-      }
-    });
+        ) {
+          PopUp.showError(response.error || PopUp.defaultErrorMessage);
+        }
+      });
   },
 
   showError: function (errorMessage) {
@@ -614,7 +613,7 @@ document.addEventListener('DOMContentLoaded', function () {
           respond: false
         };
 
-        chrome.runtime.sendMessage(request);
+        browser.runtime.sendMessage(request);
       });
 
     document
@@ -671,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document
       .querySelector('.header .icon')
       .addEventListener('click', function () {
-        chrome.tabs.create({ url: 'https://toggl.com/app' });
+        browser.tabs.create({ url: 'https://toggl.com/app' });
       });
 
     PopUp.$entries.addEventListener('click', function (e) {
@@ -688,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function () {
       PopUp.sendMessage(request);
     });
   } catch (e) {
-    chrome.runtime.sendMessage({
+    browser.runtime.sendMessage({
       type: 'error',
       stack: e.stack,
       category: 'Popup'

@@ -22,8 +22,9 @@ function getBugsnagClient () {
     autoBreadcrumbs: false,
     autoCaptureSessions: false,
     collectUserIp: false,
-    beforeSend: function (report) {
-      if (localStorage.getItem('sendErrorReports') !== 'true') {
+    beforeSend: async function (report) {
+      const sendErrorReports = await db.get('sendErrorReports', true);
+      if (!sendErrorReports) {
         report.ignore();
         return false;
       }

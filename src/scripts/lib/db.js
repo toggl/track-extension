@@ -35,6 +35,17 @@ const CORE_SETTINGS = {
   sendUsageStatistics: true
 };
 
+const transformLegacyValue = (value) => {
+  if (typeof value !== 'undefined') {
+    // Ensure older version's settings still function if they get saved to sync storage.
+    if (value === 'false' || value === 'true') {
+      return JSON.parse(value);
+    }
+    return value;
+  } else {
+    return null;
+  }
+};
 export default class Db {
   constructor (togglButton) {
     this.togglButton = togglButton;
@@ -141,21 +152,33 @@ export default class Db {
     this.set(this.togglButton.$user.id + '-defaultProjects', {});
   }
 
-  get (setting, defaultValue) {
+  get (key, defaultValue) {
     const hasDefaultValue = typeof defaultValue !== 'undefined';
-    return browser.storage.sync.get(hasDefaultValue ? { [setting]: defaultValue } : setting)
+    return browser.storage.sync.get(hasDefaultValue ? { [key]: defaultValue } : key)
       .then((result) => {
         if (process.env.DEBUG) {
-          console.info(`Retrieved value ${setting}: `, result[setting]);
+          console.info(`Retrieved value ${key}: `, result[key]);
         }
-        let value = result[setting];
-        if (value) {
-          // Ensure older version's settings still function if they get saved to sync storage.
-          if (value === 'false' || value === 'true') {
-            value = JSON.parse(value);
-          }
+        return transformLegacyValue(result[key]);
+      });
+  }
+
+  /**
+   * Retrieves multiple settings in one storage call
+   * @param {Object} settings Map of setting keys and default values
+   * @return {Object} Map of retrieved setting values
+   */
+  getMultiple (settings) {
+    return browser.storage.sync.get(settings)
+      .then((result) => {
+        if (process.env.DEBUG) {
+          console.info(`Retrieved values ${Object.keys(settings).join(', ')}: `, Object.values(result).map(JSON.strinfiy).join(', '));
         }
-        return value || null;
+        return Object.keys(result).reduce((results, key) => {
+          return Object.assign(results, {
+            [key]: transformLegacyValue(result[key])
+          });
+        }, {});
       });
   }
 
@@ -187,7 +210,7 @@ export default class Db {
     let value = await this.get(setting);
 
     // Attempt to migrate from old localStorage settings.
-    if (value === null) {
+    if (value === null || typeof value === 'undefined') {
       value = localStorage.getItem(setting);
       if (value && typeof defaultValue === 'boolean') {
         value = JSON.parse(value);

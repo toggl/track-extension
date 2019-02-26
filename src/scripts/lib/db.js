@@ -102,7 +102,9 @@ export default class Db {
    */
   async setDefaultProject (pid, scope) {
     const userId = this.togglButton.$user.id;
-    const defaultProjects = await this.get(userId + '-defaultProjects', {});
+    let defaultProjects = await this.get(userId + '-defaultProjects', {});
+    if (!defaultProjects) defaultProjects = {}; // Catch pre-storage.sync settings
+
     if (!scope) {
       return this.set(userId + '-defaultProject', pid);
     }
@@ -120,7 +122,9 @@ export default class Db {
       return 0;
     }
     const userId = this.togglButton.$user.id;
-    const defaultProjects = await this.get(userId + '-defaultProjects');
+    let defaultProjects = await this.get(userId + '-defaultProjects');
+    if (!defaultProjects) defaultProjects = {}; // Catch pre-storage.sync settings
+
     let defaultProject = await this.get(userId + '-defaultProject');
     defaultProject = parseInt(defaultProject || '0', 10);
 
@@ -134,7 +138,7 @@ export default class Db {
     if (!this.togglButton.$user) {
       return;
     }
-    this.set(this.togglButton.$user.id + '-defaultProjects', null);
+    this.set(this.togglButton.$user.id + '-defaultProjects', {});
   }
 
   get (setting, defaultValue) {

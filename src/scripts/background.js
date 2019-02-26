@@ -322,7 +322,6 @@ window.TogglButton = {
 
   updateCurrentEntry: async function (data) {
     let entry = data.data;
-    const defaultProject = await db.getDefaultProject();
     const rememberProjectPer = await db.get('rememberProjectPer');
     /**
      * setDefaultProject parameters are (pid, scope). So the logic goes:
@@ -335,13 +334,30 @@ window.TogglButton = {
      * We never use scope=null, so we never touch the global default.
      */
     if (rememberProjectPer) {
-      db.setDefaultProject(
-        entry.pid === defaultProject ? null : entry.pid,
-        rememberProjectPer === 'service'
-          ? TogglButton.$curService
-          : TogglButton.$curURL
-      );
+      const defaultProject = await db.getDefaultProject();
+      const projectIsSameAsGlobalDefault = entry.pid === defaultProject;
+
+      if (projectIsSameAsGlobalDefault) {
+        if (defaultProject !== null) {
+          db.setDefaultProject(
+            null,
+            rememberProjectPer === 'service'
+              ? TogglButton.$curService
+              : TogglButton.$curURL
+          );
+        }
+      } else {
+        if (entry.pid !== defaultProject) {
+          db.setDefaultProject(
+            entry.pid,
+            rememberProjectPer === 'service'
+              ? TogglButton.$curService
+              : TogglButton.$curURL
+          );
+        }
+      }
     }
+
     if (data.action === 'INSERT') {
       TogglButton.updateTriggers(entry);
     } else if (
@@ -439,7 +455,7 @@ window.TogglButton = {
   createTimeEntry: async function (timeEntry) {
     const type = timeEntry.type;
     const start = new Date();
-    let defaultProject = await db.getDefaultProject();
+    let defaultProject;
     const rememberProjectPer = await db.get('rememberProjectPer');
     const enableAutoTagging = await db.get('enableAutoTagging');
     let entry;
@@ -455,6 +471,8 @@ window.TogglButton = {
           ? TogglButton.$curService
           : TogglButton.$curURL
       );
+    } else {
+      defaultProject = await db.getDefaultProject();
     }
 
     if (!timeEntry) {

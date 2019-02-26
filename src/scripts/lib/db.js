@@ -1,3 +1,4 @@
+import bugsnagClient from './bugsnag';
 import origins from '../origins';
 const browser = require('webextension-polyfill');
 
@@ -195,6 +196,19 @@ export default class Db {
       });
   }
 
+  setMultiple (settings) {
+    return browser.storage.sync
+      .set(settings)
+      .catch((e) => {
+        console.error(`Error attempting to save settings:`, settings, e);
+      })
+      .finally(() => {
+        if (process.env.DEBUG) {
+          console.info(`Saved multiple settings :`, settings);
+        }
+      });
+  }
+
   getLocalCollection (key) {
     let collection = localStorage.getItem(key);
     if (!collection) {
@@ -242,6 +256,41 @@ export default class Db {
 
     if (c && callback !== null) {
       callback();
+    }
+  }
+
+  _migrateToStorageSync () {
+    console.info('Migrating settings to v2');
+    bugsnagClient.leaveBreadcrumb('Attempting settings migration to v2');
+
+    try {
+      const allSettings = { ...DEFAULT_SETTINGS, ...CORE_SETTINGS };
+      const oldSettings = Object.keys(allSettings)
+        .reduce((accumulator, key) => {
+          const defaultValue = allSettings[key];
+          let value = localStorage.getItem(key);
+          if (value && typeof defaultValue === 'boolean') {
+            value = JSON.parse(value);
+          }
+          accumulator[key] = value || defaultValue;
+          return accumulator;
+        }, {});
+
+      if (process.env.DEBUG) {
+        console.log('Found old settings: ', oldSettings);
+      }
+
+      this.setMultiple(oldSettings)
+        .then(() => {
+          console.info('Succesully migrated old settings to v2');
+          bugsnagClient.leaveBreadcrumb('Migrated settings to v2');
+        })
+        .catch((e) => {
+          console.error('Failed to migrate settings to v2; ');
+          bugsnagClient.notify(e);
+        });
+    } catch (e) {
+      bugsnagClient.notify(e);
     }
   }
 }

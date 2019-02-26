@@ -2136,21 +2136,19 @@ window.onbeforeunload = function () {
 
 if (!FF) {
   TogglButton.checkPermissions();
-
-  // Check whether new version is installed
-  browser.runtime.onInstalled.addListener(function (details) {
-    if (details.reason === 'install') {
-      TogglButton.checkPermissions(0);
-    } else if (details.reason === 'update') {
-      if (
-        details.previousVersion[0] === '0' &&
-        process.env.VERSION[0] === '1'
-      ) {
-        TogglButton.checkPermissions(1);
-      }
-    }
-  });
 }
+
+// Check whether new version is installed
+browser.runtime.onInstalled.addListener(function (details) {
+  if (details.reason === 'install') {
+    if (!FF) TogglButton.checkPermissions(0);
+  } else if (details.reason === 'update') {
+    if (details.previousVersion[0] === '1' && process.env.VERSION[0] === '2') {
+      // Attempt to migrate legacy localstorage settings to storage.sync settings
+      db._migrateToStorageSync();
+    }
+  }
+});
 
 if (browser.commands) {
   browser.commands.onCommand.addListener(function (command) {

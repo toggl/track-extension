@@ -2136,21 +2136,22 @@ window.onbeforeunload = function () {
 
 if (!FF) {
   TogglButton.checkPermissions();
-
-  // Check whether new version is installed
-  browser.runtime.onInstalled.addListener(function (details) {
-    if (details.reason === 'install') {
-      TogglButton.checkPermissions(0);
-    } else if (details.reason === 'update') {
-      if (
-        details.previousVersion[0] === '0' &&
-        process.env.VERSION[0] === '1'
-      ) {
-        TogglButton.checkPermissions(1);
-      }
-    }
-  });
 }
+
+// Check whether new version is installed
+browser.runtime.onInstalled.addListener(function (details) {
+  if (details.reason === 'install') {
+    if (!FF) TogglButton.checkPermissions(0);
+  } else if (details.reason === 'update') {
+    console.info(`Updated from ${details.previousVersion} to ${process.env.VERSION}.`);
+    const [ prevMajor, prevMinor ] = details.previousVersion.split('.').map(Number);
+    const [ nextMajor, nextMinor ] = process.env.VERSION.split('.').map(Number);
+    if (prevMajor === 1 && prevMinor <= 22 && nextMajor === 1 && nextMinor >= 23) {
+      // Attempt to migrate legacy localstorage settings to storage.sync settings
+      db._migrateToStorageSync();
+    }
+  }
+});
 
 if (browser.commands) {
   browser.commands.onCommand.addListener(function (command) {

@@ -1,17 +1,16 @@
 'use strict';
 
-togglbutton.render('form.story:not(.toggl)', { observe: true }, function(elem) {
-  var link,
-    titleElem = $('textarea', elem),
-    id = $('.id.text_value', elem),
-    container = $('.edit aside', elem),
-    projectName = $('title').textContent;
+togglbutton.render('form.story:not(.toggl)', { observe: true }, function (elem) {
+  const titleElem = $('textarea', elem);
+  const id = $('.id.text_value', elem);
+  const container = $('.edit aside', elem);
+  const projectName = $('title').textContent;
 
   if (titleElem === null || container === null) {
     return;
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'pivotal',
     description: id.value + ' ' + titleElem.value,
     projectName: projectName && projectName.split(' -').shift()

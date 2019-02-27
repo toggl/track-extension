@@ -1,13 +1,13 @@
-var noop = function() {
+const noop = function () {
   return undefined;
 };
 
-var inheritsFrom = function(child, parent) {
+const inheritsFrom = function (child, parent) {
   child.prototype = Object.create(parent.prototype);
   child.prototype.super = parent.prototype;
 };
 
-var AutoComplete = function(el, item, elem) {
+const AutoComplete = function (el, item, elem) {
   this.type = el;
   this.el = document.querySelector('#' + el + '-autocomplete');
   this.filter = document.querySelector('#toggl-button-' + el + '-filter');
@@ -27,18 +27,18 @@ var AutoComplete = function(el, item, elem) {
   this.addEvents();
 };
 
-AutoComplete.prototype.addEvents = function() {
-  var that = this;
+AutoComplete.prototype.addEvents = function () {
+  const that = this;
 
-  that.placeholderItem.addEventListener('click', function(e) {
-    setTimeout(function() {
+  that.placeholderItem.addEventListener('click', function (e) {
+    setTimeout(function () {
       that.filter.focus();
     }, 50);
   });
 
   window.addEventListener(
     'focus',
-    function(e) {
+    function (e) {
       if (e.target === that.filter) {
         that.openDropdown();
       }
@@ -46,7 +46,7 @@ AutoComplete.prototype.addEvents = function() {
     true
   );
 
-  that.filter.addEventListener('keydown', function(e) {
+  that.filter.addEventListener('keydown', function (e) {
     if (e.code === 'Tab') {
       that.closeDropdown();
     }
@@ -71,21 +71,23 @@ AutoComplete.prototype.addEvents = function() {
     }
   });
 
-  that.filter.addEventListener('keyup', function(e) {
+  that.filter.addEventListener('keyup', function (e) {
     that.filterSelection();
   });
 
-  that.filterClear.addEventListener('click', function(e) {
+  that.filterClear.addEventListener('click', function (e) {
     that.closeDropdown();
     e.preventDefault();
   });
 };
 
-AutoComplete.prototype.clearFilters = function() {
+AutoComplete.prototype.clearFilters = function () {
   this.el.classList.remove('filtered');
-  var i,
-    a = this.el.querySelectorAll('.filter'),
-    b = this.el.querySelectorAll('.tasklist-opened');
+  let i;
+
+  const a = this.el.querySelectorAll('.filter');
+
+  const b = this.el.querySelectorAll('.tasklist-opened');
 
   for (i = 0; i < a.length; i++) {
     a[i].classList.remove('filter');
@@ -96,15 +98,15 @@ AutoComplete.prototype.clearFilters = function() {
   }
 };
 
-AutoComplete.prototype.openDropdown = function() {
+AutoComplete.prototype.openDropdown = function () {
   this.filter.parentNode.classList.add('open');
   this.listItems = this.el.querySelectorAll(this.item);
   this.visibleItems = this.el.querySelectorAll('.' + this.type + '-row');
   this.updateHeight();
 };
 
-AutoComplete.prototype.closeDropdown = function(t) {
-  var that = t || this;
+AutoComplete.prototype.closeDropdown = function (t) {
+  const that = t || this;
   that.filter.value = '';
   that.el.classList.remove('filtered');
   that.placeholderItem.parentNode.classList.remove('open');
@@ -112,12 +114,16 @@ AutoComplete.prototype.closeDropdown = function(t) {
   that.clearFilters();
 };
 
-AutoComplete.prototype.updateHeight = function() {
-  var bodyRect = document.body.getBoundingClientRect(),
-    elRect = this.el.getBoundingClientRect(),
-    style = 'max-height:auto;',
-    listStyle = 'max-height:auto;',
-    calc;
+AutoComplete.prototype.updateHeight = function () {
+  const bodyRect = document.body.getBoundingClientRect();
+
+  const elRect = this.el.getBoundingClientRect();
+
+  let style = 'max-height:auto;';
+
+  let listStyle = 'max-height:auto;';
+
+  let calc;
 
   if (bodyRect.bottom > 0 && elRect.bottom + 25 >= bodyRect.bottom) {
     calc = window.scrollY + bodyRect.bottom - elRect.top - 10;
@@ -136,7 +142,7 @@ AutoComplete.prototype.updateHeight = function() {
 
 //* Project autocomplete *//
 
-export var ProjectAutoComplete = function(el, item, elem) {
+export const ProjectAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
   this.onChangeHandler = noop;
   this.selectedItem = -1;
@@ -147,7 +153,7 @@ export var ProjectAutoComplete = function(el, item, elem) {
 
 inheritsFrom(ProjectAutoComplete, AutoComplete);
 
-ProjectAutoComplete.prototype.setup = function(selected, tid) {
+ProjectAutoComplete.prototype.setup = function (selected, tid) {
   this.setSelected(selected, tid);
   this.placeholderDiv.textContent = this.placeholderDiv.title = this.generateLabel(
     null,
@@ -158,18 +164,19 @@ ProjectAutoComplete.prototype.setup = function(selected, tid) {
   this.setProjectBullet(selected, tid);
 };
 
-ProjectAutoComplete.prototype.addEvents = function() {
-  var that = this,
-    item;
+ProjectAutoComplete.prototype.addEvents = function () {
+  const that = this;
+
+  let item;
 
   this.super.addEvents.call(this);
 
-  that.el.addEventListener('click', function(e) {
+  that.el.addEventListener('click', function (e) {
     e.stopPropagation();
     that.selectProject(e.target);
   });
 
-  that.filter.addEventListener('keydown', function(e) {
+  that.filter.addEventListener('keydown', function (e) {
     if (e.keyCode === 38) {
       // ArrowUp
       that.selectPrevious();
@@ -179,7 +186,7 @@ ProjectAutoComplete.prototype.addEvents = function() {
     } else if (e.keyCode === 37 || e.keyCode === 39) {
       // Arrow Left/Right (toggle task list)
       item = that.visibleItems[that.selectedItem];
-      if (!!item.querySelector('.task-count')) {
+      if (item.querySelector('.task-count')) {
         that.clearSelectedTask();
         that.toggleTaskList(item.querySelector('.task-count'));
       }
@@ -187,21 +194,21 @@ ProjectAutoComplete.prototype.addEvents = function() {
   });
 };
 
-ProjectAutoComplete.prototype.clearSelectedItem = function() {
-  var current = this.el.querySelector('.selected-item');
-  if (!!current) {
+ProjectAutoComplete.prototype.clearSelectedItem = function () {
+  const current = this.el.querySelector('.selected-item');
+  if (current) {
     current.classList.remove('selected-item');
   }
 };
 
-ProjectAutoComplete.prototype.clearSelectedTask = function() {
-  var current = this.el.querySelector('.task-item.selected-item');
-  if (!!current) {
+ProjectAutoComplete.prototype.clearSelectedTask = function () {
+  const current = this.el.querySelector('.task-item.selected-item');
+  if (current) {
     current.classList.remove('selected-item');
   }
 };
 
-ProjectAutoComplete.prototype.selectPrevious = function() {
+ProjectAutoComplete.prototype.selectPrevious = function () {
   if (this.selectedItem === -1) {
     return;
   }
@@ -247,7 +254,7 @@ ProjectAutoComplete.prototype.selectPrevious = function() {
   }
 };
 
-ProjectAutoComplete.prototype.selectNext = function() {
+ProjectAutoComplete.prototype.selectNext = function () {
   // Check if we need to go into tasks-list
   if (
     this.selectedItem !== -1 &&
@@ -288,39 +295,40 @@ ProjectAutoComplete.prototype.selectNext = function() {
   this.scrollDownToView(this.el, this.visibleItems[this.selectedItem]);
 };
 
-ProjectAutoComplete.prototype.scrollDownToView = function(view, item) {
+ProjectAutoComplete.prototype.scrollDownToView = function (view, item) {
   if (view.scrollTop + view.offsetHeight < item.offsetTop + item.offsetHeight) {
     item.scrollIntoView(false);
   }
 };
 
-ProjectAutoComplete.prototype.scrollUpToView = function(view, item) {
+ProjectAutoComplete.prototype.scrollUpToView = function (view, item) {
   if (view.scrollTop > item.offsetTop) {
     item.scrollIntoView();
   }
 };
 
-ProjectAutoComplete.prototype.saveSelected = function() {
-  if (!!this.visibleTasks[this.selectedTask]) {
+ProjectAutoComplete.prototype.saveSelected = function () {
+  if (this.visibleTasks[this.selectedTask]) {
     this.selectTask(this.visibleTasks[this.selectedTask]);
-  } else if (!!this.visibleItems[this.selectedItem]) {
+  } else if (this.visibleItems[this.selectedItem]) {
     this.selectProject(this.visibleItems[this.selectedItem]);
   }
   this.closeDropdown();
 };
 
-ProjectAutoComplete.prototype.setSelected = function(ids, tid) {
-  var t = this.el.querySelector("li[data-tid='" + tid + "']");
-  if (!!t) {
+ProjectAutoComplete.prototype.setSelected = function (ids, tid) {
+  const t = this.el.querySelector("li[data-tid='" + tid + "']");
+  if (t) {
     this.selectTask(t, true);
     return;
   }
   this.setSelectedProject(ids);
 };
 
-ProjectAutoComplete.prototype.setSelectedProject = function(ids) {
-  var selected = this.el.querySelectorAll('.selected-' + this.type),
-    i;
+ProjectAutoComplete.prototype.setSelectedProject = function (ids) {
+  const selected = this.el.querySelectorAll('.selected-' + this.type);
+
+  let i;
 
   // Clear previously selected
   if (selected.length >= 1) {
@@ -330,18 +338,18 @@ ProjectAutoComplete.prototype.setSelectedProject = function(ids) {
   }
 
   // Select project
-  if (!!ids) {
+  if (ids) {
     this.el
       .querySelector("li[data-pid='" + ids + "']")
       .classList.add('selected-' + this.type);
   }
 };
 
-ProjectAutoComplete.prototype.selectTask = function(elem, silent) {
+ProjectAutoComplete.prototype.selectTask = function (elem, silent) {
   // Set selected task
-  var currentSelected = this.el.querySelector('.selected-task');
+  const currentSelected = this.el.querySelector('.selected-task');
 
-  if (!!currentSelected) {
+  if (currentSelected) {
     currentSelected.classList.remove('selected-task');
   }
   elem.classList.add('selected-task');
@@ -350,7 +358,7 @@ ProjectAutoComplete.prototype.selectTask = function(elem, silent) {
   this.selectProject(elem.parentNode.parentNode, silent, true);
 };
 
-ProjectAutoComplete.prototype.selectProject = function(
+ProjectAutoComplete.prototype.selectProject = function (
   elem,
   silent,
   removeTask
@@ -373,10 +381,11 @@ ProjectAutoComplete.prototype.selectProject = function(
     this.el.querySelector('.selected-task').classList.remove('selected-task');
   }
 
-  var currentSelected = this.el.querySelector('.selected-' + this.type),
-    val = elem.getAttribute('data-pid');
+  const currentSelected = this.el.querySelector('.selected-' + this.type);
 
-  if (!!currentSelected) {
+  const val = elem.getAttribute('data-pid');
+
+  if (currentSelected) {
     currentSelected.classList.remove('selected-' + this.type);
   }
   elem.classList.add('selected-' + this.type);
@@ -399,9 +408,9 @@ ProjectAutoComplete.prototype.selectProject = function(
   return false;
 };
 
-ProjectAutoComplete.prototype.toggleTaskList = function(elem) {
-  var opened = this.el.querySelector('.tasklist-opened');
-  if (!!opened) {
+ProjectAutoComplete.prototype.toggleTaskList = function (elem) {
+  const opened = this.el.querySelector('.tasklist-opened');
+  if (opened) {
     opened.classList.remove('tasklist-opened');
   }
   if (opened !== elem.parentNode) {
@@ -409,12 +418,16 @@ ProjectAutoComplete.prototype.toggleTaskList = function(elem) {
   }
 };
 
-ProjectAutoComplete.prototype.getSelected = function() {
-  var selected = this.el.querySelector('.selected-' + this.type),
-    task = this.el.querySelector('.selected-task'),
-    pid = !!selected ? parseInt(selected.getAttribute('data-pid'), 10) : 0,
-    tid = !!task ? parseInt(task.getAttribute('data-tid'), 10) : null,
-    name = !!selected ? selected.getAttribute('title') : '';
+ProjectAutoComplete.prototype.getSelected = function () {
+  const selected = this.el.querySelector('.selected-' + this.type);
+
+  const task = this.el.querySelector('.selected-task');
+
+  const pid = selected ? parseInt(selected.getAttribute('data-pid'), 10) : 0;
+
+  const tid = task ? parseInt(task.getAttribute('data-tid'), 10) : null;
+
+  const name = selected ? selected.getAttribute('title') : '';
 
   return {
     el: selected,
@@ -424,9 +437,10 @@ ProjectAutoComplete.prototype.getSelected = function() {
   };
 };
 
-ProjectAutoComplete.prototype.getSelectedProjectByPid = function(pid) {
-  var selected = this.el.querySelector("li[data-pid='" + pid + "']"),
-    name = !!selected ? selected.textContent : '';
+ProjectAutoComplete.prototype.getSelectedProjectByPid = function (pid) {
+  const selected = this.el.querySelector("li[data-pid='" + pid + "']");
+
+  const name = selected ? selected.textContent : '';
 
   return {
     el: selected,
@@ -435,24 +449,27 @@ ProjectAutoComplete.prototype.getSelectedProjectByPid = function(pid) {
   };
 };
 
-ProjectAutoComplete.prototype.setProjectBullet = function(pid, tid, el) {
-  var project,
-    elem = el || this.placeholderItem.querySelector('.tb-project-bullet'),
-    result,
-    task;
+ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
+  let project;
+
+  const elem = el || this.placeholderItem.querySelector('.tb-project-bullet');
+
+  let result;
+
+  let task;
 
   if (!!pid || pid === '0') {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
-    if (!!project) {
+    if (project) {
       elem.className = project.querySelector('.tb-project-bullet').className;
       elem.setAttribute(
         'style',
         project.querySelector('.tb-project-bullet').getAttribute('style')
       );
       result = ' - ' + project.getAttribute('title');
-      if (!!tid) {
+      if (tid) {
         task = project.querySelector("li[data-tid='" + tid + "']");
-        if (!!task) {
+        if (task) {
           result += ' . ' + task.getAttribute('title');
         }
       }
@@ -463,11 +480,14 @@ ProjectAutoComplete.prototype.setProjectBullet = function(pid, tid, el) {
   return '';
 };
 
-ProjectAutoComplete.prototype.generateLabel = function(select, id, type, tid) {
-  var selected = false,
-    client,
-    result = '',
-    task;
+ProjectAutoComplete.prototype.generateLabel = function (select, id, type, tid) {
+  let selected = false;
+
+  let client;
+
+  let result = '';
+
+  let task;
 
   select = this.getSelectedProjectByPid(id);
 
@@ -480,11 +500,11 @@ ProjectAutoComplete.prototype.generateLabel = function(select, id, type, tid) {
     task =
       select.el.querySelector('.selected-task') ||
       select.el.querySelector("li[data-tid='" + tid + "']");
-    if (!!task) {
+    if (task) {
       result += task.getAttribute('title') + ' . ';
     }
     client = select.el.parentNode.querySelector('.client-row');
-    if (!!client) {
+    if (client) {
       result = client.textContent + ' - ';
     }
     result += select.el.getAttribute('title');
@@ -496,11 +516,14 @@ ProjectAutoComplete.prototype.generateLabel = function(select, id, type, tid) {
   return result;
 };
 
-ProjectAutoComplete.prototype.filterSelection = function() {
-  var key,
-    val = this.filter.value.toLowerCase(),
-    row,
-    text;
+ProjectAutoComplete.prototype.filterSelection = function () {
+  let key;
+
+  const val = this.filter.value.toLowerCase();
+
+  let row;
+
+  let text;
 
   this.updateHeight();
   if (val === this.lastFilter) {
@@ -545,7 +568,7 @@ ProjectAutoComplete.prototype.filterSelection = function() {
           row.parentNode.parentNode.classList.add('tasklist-opened');
           row.classList.add('filter');
         }
-      } else if (!!row.classList) {
+      } else if (row.classList) {
         row.classList.remove('filter');
 
         if (row.classList.contains('task-item')) {
@@ -574,46 +597,46 @@ ProjectAutoComplete.prototype.filterSelection = function() {
   this.updateHeight();
 };
 
-ProjectAutoComplete.prototype.closeDropdown = function() {
+ProjectAutoComplete.prototype.closeDropdown = function () {
   this.super.closeDropdown(this, this);
   this.clearSelectedItem();
   this.selectedItem = -1;
 };
 
-ProjectAutoComplete.prototype.onChange = function(callback) {
+ProjectAutoComplete.prototype.onChange = function (callback) {
   this.onChangeHandler = callback;
 };
 
-ProjectAutoComplete.prototype.removeChangeHandler = function() {
+ProjectAutoComplete.prototype.removeChangeHandler = function () {
   this.onChangeHandler = noop;
 };
 
 //* Tag autocomplete *//
 
-export var TagAutoComplete = function(el, item, elem) {
+export const TagAutoComplete = function (el, item, elem) {
   AutoComplete.call(this, el, item, elem);
   this.wid = null;
 };
 
 inheritsFrom(TagAutoComplete, AutoComplete);
 
-TagAutoComplete.prototype.setup = function(selected, wid) {
+TagAutoComplete.prototype.setup = function (selected, wid) {
   this.setSelected(selected);
   this.setWorkspaceId(wid);
 };
 
-TagAutoComplete.prototype.addEvents = function() {
-  var that = this;
+TagAutoComplete.prototype.addEvents = function () {
+  const that = this;
 
-  that.placeholderItem.addEventListener('click', function(e) {
-    setTimeout(function() {
+  that.placeholderItem.addEventListener('click', function (e) {
+    setTimeout(function () {
       that.filter.focus();
     }, 50);
   });
 
   window.addEventListener(
     'focus',
-    function(e) {
+    function (e) {
       if (e.target === that.filter) {
         that.openDropdown();
       }
@@ -621,12 +644,12 @@ TagAutoComplete.prototype.addEvents = function() {
     true
   );
 
-  this.el.addEventListener('click', function(e) {
+  this.el.addEventListener('click', function (e) {
     e.stopPropagation();
     that.selectTag(e);
   });
 
-  this.filter.addEventListener('keyup', function(e) {
+  this.filter.addEventListener('keyup', function (e) {
     that.filterSelection();
   });
 
@@ -637,44 +660,44 @@ TagAutoComplete.prototype.addEvents = function() {
 
     if (e.keyCode === 13) {
       e.preventDefault();
-      that.addNew()
+      that.addNew();
     }
 
     if (e.keyCode === 27) {
       e.preventDefault();
       that.closeDropdown();
     }
-  })
+  });
 
-  this.filterClear.addEventListener('click', function(e) {
+  this.filterClear.addEventListener('click', function (e) {
     that.closeDropdown();
     e.preventDefault();
   });
 
-  this.clearSelected.addEventListener('click', function(e) {
+  this.clearSelected.addEventListener('click', function (e) {
     that.clearSelectedTags();
   });
 
-  this.addLink.addEventListener('click', function(e) {
+  this.addLink.addEventListener('click', function (e) {
     that.addNew();
   });
 };
 
-TagAutoComplete.prototype.closeDropdown = function() {
+TagAutoComplete.prototype.closeDropdown = function () {
   this.super.closeDropdown(this, this);
   this.updatePlaceholder();
 };
 
-TagAutoComplete.prototype.selectTag = function(e) {
+TagAutoComplete.prototype.selectTag = function (e) {
   e.target.classList.toggle('selected-tag');
 };
 
-TagAutoComplete.prototype.setSelected = function(tags) {
-  var i, item;
+TagAutoComplete.prototype.setSelected = function (tags) {
+  let i; let item;
 
   this.clearSelectedTags();
 
-  if (!!tags) {
+  if (tags) {
     for (i = 0; i < tags.length; i += 1) {
       item = this.el.querySelector("li[title='" + tags[i] + "']");
       if (!item) {
@@ -688,12 +711,15 @@ TagAutoComplete.prototype.setSelected = function(tags) {
   this.updatePlaceholder(tags);
 };
 
-TagAutoComplete.prototype.setWorkspaceId = function(wid) {
+TagAutoComplete.prototype.setWorkspaceId = function (wid) {
   this.wid = wid;
-  var listItems = this.el.querySelectorAll(this.item),
-    stringWid = wid.toString(),
-    tag,
-    key;
+  const listItems = this.el.querySelectorAll(this.item);
+
+  const stringWid = wid.toString();
+
+  let tag;
+
+  let key;
 
   for (key in listItems) {
     if (listItems.hasOwnProperty(key)) {
@@ -707,16 +733,17 @@ TagAutoComplete.prototype.setWorkspaceId = function(wid) {
   }
 };
 
-TagAutoComplete.prototype.clearSelectedTags = function(tags) {
-  var current = this.el.querySelectorAll('.tag-list li.selected-tag'),
-    i;
+TagAutoComplete.prototype.clearSelectedTags = function (tags) {
+  const current = this.el.querySelectorAll('.tag-list li.selected-tag');
+
+  let i;
 
   for (i = 0; i < current.length; i += 1) {
     current[i].classList.remove('selected-tag');
   }
 };
 
-TagAutoComplete.prototype.updatePlaceholder = function(tags) {
+TagAutoComplete.prototype.updatePlaceholder = function (tags) {
   if (!tags) {
     tags = this.getSelected();
   }
@@ -729,11 +756,14 @@ TagAutoComplete.prototype.updatePlaceholder = function(tags) {
   this.placeholderDiv.textContent = this.placeholderDiv.title = tags;
 };
 
-TagAutoComplete.prototype.getSelected = function() {
-  var tags = [],
-    tag,
-    i,
-    s = this.el.querySelectorAll('.tag-list .selected-tag');
+TagAutoComplete.prototype.getSelected = function () {
+  const tags = [];
+
+  let tag;
+
+  let i;
+
+  const s = this.el.querySelectorAll('.tag-list .selected-tag');
   for (i = 0; i < s.length; i += 1) {
     tag = s[i].textContent;
     tags.push(tag);
@@ -741,11 +771,14 @@ TagAutoComplete.prototype.getSelected = function() {
   return tags;
 };
 
-TagAutoComplete.prototype.filterSelection = function() {
-  var key,
-    val = this.filter.value.toLowerCase(),
-    row,
-    text;
+TagAutoComplete.prototype.filterSelection = function () {
+  let key;
+
+  const val = this.filter.value.toLowerCase();
+
+  let row;
+
+  let text;
 
   if (val === this.lastFilter) {
     return;
@@ -769,7 +802,7 @@ TagAutoComplete.prototype.filterSelection = function() {
           this.exactMatch = val;
         }
         row.classList.add('filter');
-      } else if (!!row.classList) {
+      } else if (row.classList) {
         row.classList.remove('filter');
       }
     }
@@ -777,9 +810,9 @@ TagAutoComplete.prototype.filterSelection = function() {
   this.updateAddLink();
 };
 
-TagAutoComplete.prototype.updateAddLink = function(e) {
-  if (!!this.addLink) {
-    if (!!this.exactMatch) {
+TagAutoComplete.prototype.updateAddLink = function (e) {
+  if (this.addLink) {
+    if (this.exactMatch) {
       this.placeholderItem.parentNode.classList.remove('add-allowed');
     } else {
       this.placeholderItem.parentNode.classList.add('add-allowed');
@@ -787,13 +820,15 @@ TagAutoComplete.prototype.updateAddLink = function(e) {
   }
 };
 
-TagAutoComplete.prototype.addNew = function(text) {
-  var val = text || this.filter.value,
-    list = this.el.querySelector('.' + this.type + '-list'),
-    item = document.createElement('li');
+TagAutoComplete.prototype.addNew = function (text) {
+  const val = text || this.filter.value;
+
+  const list = this.el.querySelector('.' + this.type + '-list');
+
+  const item = document.createElement('li');
 
   if (!val) {
-    return
+    return;
   }
 
   item.className = this.type + '-item selected-' + this.type;

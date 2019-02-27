@@ -3,29 +3,28 @@
 togglbutton.render(
   'body.controller-issues.action-show h2:not(.toggl)',
   {},
-  function(elem) {
-    var link,
-      description,
-      numElem = $('h2'),
-      titleElem = $('.subject h3') || '',
-      projectElem = $('h1');
+  function (elem) {
+    const numElem = $('h2');
+    const titleElem = $('.subject h3') || '';
+    const projectElem = $('h1');
+    let description;
 
-    if (!!$('.toggl-button')) {
+    if ($('.toggl-button')) {
       return;
     }
 
-    if (!!titleElem) {
+    if (titleElem) {
       description = titleElem.textContent;
     }
 
     if (numElem !== null) {
-      if (!!description) {
+      if (description) {
         description = ' ' + description;
       }
       description = numElem.textContent + description;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'redmine',
       description: description,
       projectName: projectElem && projectElem.textContent

@@ -1,10 +1,9 @@
 'use strict';
 
-togglbutton.render('.container:not(.toggl)', { observe: true }, function(elem) {
-  var link,
-    taskTitleElem = $('#title', elem),
-    pageTitleElem = $('.content_t', elem),
-    description;
+togglbutton.render('.container:not(.toggl)', { observe: true }, function (elem) {
+  const taskTitleElem = $('#title', elem);
+  const pageTitleElem = $('.content_t', elem);
+  let description;
 
   description = '';
 
@@ -19,7 +18,7 @@ togglbutton.render('.container:not(.toggl)', { observe: true }, function(elem) {
     description += taskTitleElem.textContent.trim();
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'teamleader',
     description: description
   });

@@ -3,18 +3,19 @@
 togglbutton.render(
   '.issue-details .detail-page-description:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description,
-      numElem =
+  function (elem) {
+    const numElem =
         $('.identifier') ||
-        $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title'),
-      titleElem = $('.title', elem),
-      projectElem =
+        $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title');
+
+    const titleElem = $('.title', elem);
+
+    const projectElem =
         $('.title .project-item-select-holder') ||
-        $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text'),
-      actionsElem = $('.detail-page-header-actions');
-    description = titleElem.textContent.trim();
+        $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
+
+    const actionsElem = $('.detail-page-header-actions');
+    let description = titleElem.textContent.trim();
     if (numElem !== null) {
       description =
         numElem.textContent
@@ -25,7 +26,7 @@ togglbutton.render(
         description;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
       projectName: projectElem.textContent
@@ -38,19 +39,17 @@ togglbutton.render(
 togglbutton.render(
   '.merge-request-details .detail-page-description:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description,
-      numElem =
+  function (elem) {
+    const numElem =
         $('.identifier') ||
-        $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title'),
-      titleElem = $('.title', elem),
-      projectElem =
+        $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title');
+    const titleElem = $('.title', elem);
+    const projectElem =
         $('.title .project-item-select-holder') ||
-        $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text'),
-      actionsElem = $('.detail-page-header-actions');
+        $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
+    const actionsElem = $('.detail-page-header-actions');
 
-    description = titleElem.textContent.trim();
+    let description = titleElem.textContent.trim();
 
     if (numElem !== null) {
       description =
@@ -64,7 +63,7 @@ togglbutton.render(
         description;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
       projectName: projectElem.textContent

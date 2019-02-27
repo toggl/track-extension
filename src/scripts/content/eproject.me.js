@@ -4,20 +4,19 @@
 togglbutton.render(
   '.single-tasks .right-side:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description,
-      numElem = $('.task-id', elem),
-      titleElem = $('.entry-title', elem),
-      projectElem = $('.project a span.label', elem),
-      project = projectElem.textContent.trim();
+  function (elem) {
+    let description;
+    const numElem = $('.task-id', elem);
+    const titleElem = $('.entry-title', elem);
+    const projectElem = $('.project a span.label', elem);
+    const project = projectElem.textContent.trim();
 
     description = titleElem.textContent.trim();
     if (numElem !== null) {
       description = numElem.textContent + ' ' + description;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'eproject',
       description: description,
       projectName: project
@@ -31,15 +30,13 @@ togglbutton.render(
 togglbutton.render(
   '.post-type-archive-tasks table.tasks-table tr:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      spanTag,
-      projectName,
-      description,
-      className = 'huh',
-      numElem = $('.task-id', elem),
-      container = $('.times', elem),
-      titleElem = $('.entry-title a span', elem);
+  function (elem) {
+    let projectName;
+    let description;
+    const className = 'huh';
+    const numElem = $('.task-id', elem);
+    const container = $('.times', elem);
+    const titleElem = $('.entry-title a span', elem);
 
     if (container === null) {
       return;
@@ -62,7 +59,7 @@ togglbutton.render(
       description = description.trim();
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'eproject',
       description: description,
       projectName: projectName,
@@ -71,11 +68,11 @@ togglbutton.render(
 
     link.classList.add(className);
 
-    link.addEventListener('click', function() {
+    link.addEventListener('click', function () {
       // Run through and hide all others
-      var i,
-        len,
-        elems = document.querySelectorAll('.toggl-button');
+      let i;
+      let len;
+      const elems = document.querySelectorAll('.toggl-button');
       for (i = 0, len = elems.length; i < len; i += 1) {
         elems[i].classList.add('huh');
       }
@@ -87,7 +84,7 @@ togglbutton.render(
       }
     });
 
-    spanTag = document.createElement('span');
+    const spanTag = document.createElement('span');
     spanTag.classList.add('toggl-span');
     link.style.width = 'auto';
     link.style.paddingLeft = '25px';
@@ -101,15 +98,13 @@ togglbutton.render(
 togglbutton.render(
   '.home .table-recent-tasks tr:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      spanTag,
-      projectName,
-      description,
-      className = 'huh',
-      numElem = $('.task-id', elem),
-      container = $('.actions', elem),
-      titleElem = $('.task-title', elem);
+  function (elem) {
+    let projectName;
+    let description;
+    const className = 'huh';
+    const numElem = $('.task-id', elem);
+    const container = $('.actions', elem);
+    const titleElem = $('.task-title', elem);
 
     if (container === null) {
       return;
@@ -132,7 +127,7 @@ togglbutton.render(
       description = description.trim();
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'eproject',
       description: description,
       projectName: projectName,
@@ -141,11 +136,11 @@ togglbutton.render(
 
     link.classList.add(className);
 
-    link.addEventListener('click', function() {
+    link.addEventListener('click', function () {
       // Run through and hide all others
-      var i,
-        len,
-        elems = document.querySelectorAll('.toggl-button');
+      let i;
+      let len;
+      const elems = document.querySelectorAll('.toggl-button');
       for (i = 0, len = elems.length; i < len; i += 1) {
         elems[i].classList.add('huh');
       }
@@ -157,7 +152,7 @@ togglbutton.render(
       }
     });
 
-    spanTag = document.createElement('span');
+    const spanTag = document.createElement('span');
     spanTag.classList.add('toggl-span');
     link.style.width = 'auto';
     link.style.float = 'right';

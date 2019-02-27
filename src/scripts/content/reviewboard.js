@@ -1,15 +1,13 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
+/* jslint indent: 2 */
+/* global $: false, document: false, togglbutton: false */
 'use strict';
 
-togglbutton.render('.review-request:not(.toggl)', {observe: true}, function () {
+togglbutton.render('.review-request:not(.toggl)', { observe: true }, function () {
+  const description = $('#field_summary').textContent;
+  const projectName = $('#field_repository').textContent;
+  const li = document.createElement('li');
 
-  var link,
-    description = $('#field_summary').textContent,
-    projectName = $('#field_repository').textContent,
-    li = document.createElement("li");
-
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'reviewboard',
     description: description,
     projectName: projectName

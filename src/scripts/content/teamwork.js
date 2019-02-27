@@ -4,14 +4,12 @@
 togglbutton.render(
   'div.taskRHS:not(.toggl), div.row-rightElements:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      spanTag,
-      desc,
-      isTKO = false,
-      className = 'huh',
-      container = $('.taskIcons', elem),
-      project = $('.w-header-titles__project-name a').textContent.trim();
+  function (elem) {
+    let desc;
+    let isTKO = false;
+    const className = 'huh';
+    let container = $('.taskIcons', elem);
+    const project = $('.w-header-titles__project-name a').textContent.trim();
 
     if (container === null) {
       // check if TKO container is there
@@ -35,7 +33,7 @@ togglbutton.render(
       desc = $('.taskName', elem).textContent;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'teamwork',
       description: desc,
       projectName: project
@@ -46,11 +44,11 @@ togglbutton.render(
       link.classList.add('option');
     } else {
       link.classList.add(className);
-      link.addEventListener('click', function() {
+      link.addEventListener('click', function () {
         // Run through and hide all others
-        var i,
-          len,
-          elems = document.querySelectorAll('.toggl-button');
+        let i;
+        let len;
+        const elems = document.querySelectorAll('.toggl-button');
         for (i = 0, len = elems.length; i < len; i += 1) {
           elems[i].classList.add('huh');
         }
@@ -63,7 +61,7 @@ togglbutton.render(
       });
     }
 
-    spanTag = document.createElement('span');
+    const spanTag = document.createElement('span');
     spanTag.classList.add('toggl-span');
     link.style.width = 'auto';
     if (isTKO) {
@@ -94,19 +92,17 @@ togglbutton.render(
 togglbutton.render(
   'section.inbox--body header.ticket--header:not(.toggl)',
   { observe: true },
-  function(elem) {
+  function (elem) {
     // ticket view
-    var link,
-      descFunc,
-      container = $('.title-label', elem),
-      id = $('.id-hold', elem).textContent,
-      description = $('a', elem).textContent;
+    const container = $('.title-label', elem);
+    const id = $('.id-hold', elem).textContent;
+    const description = $('a', elem).textContent;
 
-    descFunc = function() {
+    const descFunc = function () {
       return id.trim() + ' ' + description.trim();
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'teamwork',
       buttonType: 'minimal',
       description: descFunc

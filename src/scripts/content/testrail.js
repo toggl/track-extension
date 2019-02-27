@@ -3,13 +3,12 @@
 togglbutton.render(
   '.content-header:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      id = $('div.content-header-id').textContent,
-      title = $('div.content-header-title').textContent.trim(),
-      description = '#' + id + ' ' + title;
+  function () {
+    const id = $('div.content-header-id').textContent;
+    const title = $('div.content-header-title').textContent.trim();
+    const description = '#' + id + ' ' + title;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'testrail',
       description: description
     });

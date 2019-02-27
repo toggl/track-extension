@@ -3,11 +3,9 @@
 togglbutton.render(
   "div[role='listbox'] [role='option']:not(.toggl)",
   { observe: true },
-  function(elem) {
-    var getDescription, getProject, createTogglButton;
-
+  function (elem) {
     // Get task's description.
-    getDescription = function() {
+    const getDescription = function () {
       return elem
         .querySelector(
           "div[role='listbox'] [role='option'] span[style*='user-select: text']"
@@ -16,8 +14,8 @@ togglbutton.render(
     };
 
     // Get project name if in project task view
-    getProject = function() {
-      var p = $('.b-Mj.b-wd .b-f-n');
+    const getProject = function () {
+      const p = $('.b-Mj.b-wd .b-f-n');
       if (!p) {
         return;
       }
@@ -25,7 +23,7 @@ togglbutton.render(
     };
 
     // Create and return toggl button's instance.
-    createTogglButton = function() {
+    const createTogglButton = function () {
       return togglbutton.createTimerLink({
         className: 'rememberthemilk',
         description: getDescription,

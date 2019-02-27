@@ -1,70 +1,63 @@
 'use strict';
 
-togglbutton.render('.item-topbar:not(.toggl)', { observe: true }, function(
+togglbutton.render('.item-topbar:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var delay = 1000; //1 second
-  setTimeout(function() {
-    var link,
-      wrapper,
-      description = $('.item-title', elem),
-      container = $('.breadcrumb', elem);
+  const delay = 1000; // 1 second
+  setTimeout(function () {
+    const description = $('.item-title', elem);
+    const container = $('.breadcrumb', elem);
 
     if (description === null || container === null) {
       return;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'podio',
       description: description.textContent.trim()
     });
 
-    wrapper = createTag('div', 'item-via');
+    const wrapper = createTag('div', 'item-via');
     wrapper.appendChild(link);
     container.parentNode.insertBefore(wrapper, container.nextSibling);
   }, delay);
 });
 
-togglbutton.render('.task-detail:not(.toggl)', { observe: true }, function(
+togglbutton.render('.task-detail:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    wrapper,
-    description = $('.task-link', elem.parentNode),
-    container = $('.edit-task-reference-wrapper', elem);
+  const description = $('.task-link', elem.parentNode);
+  const container = $('.edit-task-reference-wrapper', elem);
 
   if (description === null || container === null) {
     return;
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'podio',
     description: description.textContent.trim()
   });
 
-  wrapper = createTag('div', 'task-via');
+  const wrapper = createTag('div', 'task-via');
   wrapper.appendChild(link);
   container.parentNode.insertBefore(wrapper, container.nextSibling);
 });
 
-togglbutton.render('.task-header:not(.toggl)', { observe: true }, function(
+togglbutton.render('.task-header:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    wrapper,
-    container = $('.action-bar ul', elem),
-    description = $('.header-title', elem);
-
+  const container = $('.action-bar ul', elem);
+  const description = $('.header-title', elem);
   if (description === null || container === null) {
     return;
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'podio',
     description: description.textContent.trim()
   });
 
-  wrapper = createTag('li', 'float-left');
+  const wrapper = createTag('li', 'float-left');
   wrapper.appendChild(link);
   container.appendChild(wrapper);
 });

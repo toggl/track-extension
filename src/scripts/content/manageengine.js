@@ -1,16 +1,15 @@
 'use strict';
 
-//On premise installation
-togglbutton.render('.requestEditbrsty:not(.toggl)', { observe: true }, function(
+// On premise installation
+togglbutton.render('.requestEditbrsty:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    description = $('#requestSubject_ID', elem).textContent,
-    project = 'Tickets to be Allocated',
-    ticketId = $('#requestId', elem).textContent,
-    togglCell = document.createElement('td');
+  const description = $('#requestSubject_ID', elem).textContent;
+  const project = 'Tickets to be Allocated';
+  const ticketId = $('#requestId', elem).textContent;
+  const togglCell = document.createElement('td');
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'manageengine',
     description: ticketId + ' : ' + description,
     projectName: project
@@ -21,19 +20,18 @@ togglbutton.render('.requestEditbrsty:not(.toggl)', { observe: true }, function(
   $('td#startListMenuItems > table > tbody > tr').appendChild(togglCell);
 });
 
-//Cloud version
+// Cloud version
 togglbutton.render(
   '#WorkOrderDetailsTable_CT:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description = $('#details-middle-container h1', elem).textContent,
-      projectElem = $('#projectholder p') || {},
-      project = projectElem.textContent,
-      ticketId = $('#reqid', elem).textContent,
-      togglCell = document.createElement('li');
+  function (elem) {
+    const description = $('#details-middle-container h1', elem).textContent;
+    const projectElem = $('#projectholder p') || {};
+    const project = projectElem.textContent;
+    const ticketId = $('#reqid', elem).textContent;
+    const togglCell = document.createElement('li');
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'manageengine',
       description: ticketId + ': ' + description,
       projectName: project

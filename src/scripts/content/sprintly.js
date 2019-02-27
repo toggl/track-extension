@@ -3,12 +3,9 @@
 togglbutton.render(
   '.modal-content .card_container:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link, description;
-
-    description = $('.card_container .body a.title', elem).textContent.trim();
-
-    link = togglbutton.createTimerLink({
+  function (elem) {
+    const description = $('.card_container .body a.title', elem).textContent.trim();
+    const link = togglbutton.createTimerLink({
       className: 'sprintly',
       description: description
     });

@@ -4,25 +4,23 @@
 togglbutton.render(
   '[id^=taskview_task_]:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      titleElem = $('h3 > span.title.ng-binding', elem),
-      projectElem = $('div > div.item.project.ng-binding', elem),
-      description = !!titleElem ? titleElem.textContent : '',
-      project = !!projectElem ? projectElem.textContent : '',
-      firstOp;
+  function (elem) {
+    const titleElem = $('h3 > span.title.ng-binding', elem);
+    const projectElem = $('div > div.item.project.ng-binding', elem);
+    const description = titleElem ? titleElem.textContent : '';
+    let project = projectElem ? projectElem.textContent : '';
 
     if (project !== '') {
       project = project.substring(1); // remove '#'
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'doit',
       description: description,
       projectName: project
     });
 
-    firstOp = $('li.task-op').children[0];
+    const firstOp = $('li.task-op').children[0];
     $('li.task-op').insertBefore(link, firstOp);
   }
 );
@@ -31,17 +29,16 @@ togglbutton.render(
 togglbutton.render(
   '#taskform > div > div.taskform-main:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      titleElem = $('li.meta.task-title > div > div > div.textarea-tmp', elem),
-      projectElem = $(
-        'li.meta.task-project.smart > div > div > ul > li.token > div',
-        elem
-      ),
-      description = !!titleElem ? titleElem.textContent : '',
-      project = !!projectElem ? projectElem.textContent : '';
+  function (elem) {
+    const titleElem = $('li.meta.task-title > div > div > div.textarea-tmp', elem);
+    const projectElem = $(
+      'li.meta.task-project.smart > div > div > ul > li.token > div',
+      elem
+    );
+    const description = titleElem ? titleElem.textContent : '';
+    const project = projectElem ? projectElem.textContent : '';
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'doit',
       description: description,
       projectName: project
@@ -52,24 +49,23 @@ togglbutton.render(
 );
 
 // Add button to tasks in the list
-togglbutton.render('li.task:not(.toggl)', { observe: true }, function(elem) {
-  var link,
-    titleElem = $('div.title > a.link-title', elem),
-    projectElem = $('div.title > a.project', elem),
-    description = !!titleElem ? titleElem.textContent : '',
-    project,
-    projectHeader = $('#project_info:not(.ng-hide)');
+togglbutton.render('li.task:not(.toggl)', { observe: true }, function (elem) {
+  const titleElem = $('div.title > a.link-title', elem);
+  const projectElem = $('div.title > a.project', elem);
+  const description = titleElem ? titleElem.textContent : '';
+  const projectHeader = $('#project_info:not(.ng-hide)');
+  let project;
 
-  if (!!projectHeader) {
+  if (projectHeader) {
     project = document.querySelector('#project_info span.title').textContent;
   } else {
-    project = !!projectElem ? projectElem.textContent : '';
+    project = projectElem ? projectElem.textContent : '';
     if (project !== '') {
       project = project.substring(1); // remove '#'
     }
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'doit',
     buttonType: 'minimal',
     description: description,

@@ -3,19 +3,18 @@
 togglbutton.render(
   '.modal-header .content:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description =
+  function (elem) {
+    const description =
         $('.modal-header .info .number').textContent +
         ' ' +
-        $('.modal-header .content .title').textContent,
-      projectName = $('.repo-icon')
-        .getAttribute('title')
-        .split('/');
+        $('.modal-header .content .title').textContent;
+    let projectName = $('.repo-icon')
+      .getAttribute('title')
+      .split('/');
 
     projectName = projectName[projectName.length - 1];
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'overv-io',
       description: description,
       projectName: projectName

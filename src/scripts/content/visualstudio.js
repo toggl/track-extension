@@ -8,16 +8,16 @@
 
 // We need to find proper project element, which differs between old and new layout
 function projectSelector () {
-  var oldLayoutProjectElement = $('.tfs-selector span');
-  var newLayoutProjectElement = $('.fontWeightHeavy.flex-grow.commandbar-item-text');
-  var projectElement = oldLayoutProjectElement || newLayoutProjectElement;
+  const oldLayoutProjectElement = $('.tfs-selector span');
+  const newLayoutProjectElement = $('.fontWeightHeavy.flex-grow.commandbar-item-text');
+  const projectElement = oldLayoutProjectElement || newLayoutProjectElement;
 
-  return projectElement ? projectElement.textContent : ''
+  return projectElement ? projectElement.textContent : '';
 }
 
 function descriptionSelector () {
-  var formIdElem = $('.work-item-form-id span');
-  var formTitleElem = $('.work-item-form-title input');
+  const formIdElem = $('.work-item-form-id span');
+  const formTitleElem = $('.work-item-form-title input');
 
   return (formIdElem ? formIdElem.innerText : '') +
     ' ' +
@@ -27,14 +27,14 @@ function descriptionSelector () {
 togglbutton.render(
   '.witform-layout-content-container:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      container = $('.work-item-form-header-controls-container'),
-      vs_activeClassElem = $(
-        '.commandbar.header-bottom > .commandbar-item > .displayed'
-      );
+  function () {
+    const container = $('.work-item-form-header-controls-container');
 
-    link = togglbutton.createTimerLink({
+    const vsActiveClassElem = $(
+      '.commandbar.header-bottom > .commandbar-item > .displayed'
+    );
+
+    const link = togglbutton.createTimerLink({
       className: 'visual-studio-online',
       description: descriptionSelector,
       projectName: projectSelector
@@ -42,9 +42,9 @@ togglbutton.render(
 
     // For new layout vs_activeClassElem is not longer required, we can skip it
     if (
-      !vs_activeClassElem ||
-      vs_activeClassElem.textContent === 'Work Items' ||
-      vs_activeClassElem.textContent === 'Backlogs'
+      !vsActiveClassElem ||
+      vsActiveClassElem.textContent === 'Work Items' ||
+      vsActiveClassElem.textContent === 'Backlogs'
     ) {
       container.appendChild(link);
     }

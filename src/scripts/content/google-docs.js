@@ -1,14 +1,12 @@
 'use strict';
 
-togglbutton.render('#docs-bars:not(.toggl)', {}, function(elem) {
-  var link, titleFunc;
-
-  titleFunc = function() {
-    var title = $('.docs-title-input');
+togglbutton.render('#docs-bars:not(.toggl)', {}, function (elem) {
+  const titleFunc = function () {
+    const title = $('.docs-title-input');
     return title ? title.value : '';
   };
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'google-docs',
     description: titleFunc
   });

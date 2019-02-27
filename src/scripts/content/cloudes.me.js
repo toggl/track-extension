@@ -1,14 +1,13 @@
 'use strict';
 
-togglbutton.render('#left-panel:not(.toggl)', {}, function() {
-  var link,
-    wrap = createTag('div'),
-    prevElem = $('#left-panel .ui-grid-a'),
-    cloudesDescription = function() {
-      return $('title').textContent;
-    };
+togglbutton.render('#left-panel:not(.toggl)', {}, function () {
+  const wrap = createTag('div');
+  const prevElem = $('#left-panel .ui-grid-a');
+  const cloudesDescription = function () {
+    return $('title').textContent;
+  };
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'cloudes',
     description: cloudesDescription
   });

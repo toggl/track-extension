@@ -3,19 +3,20 @@
 togglbutton.render(
   '.inline-asset-detail .asset-summary:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description = $(
-        '.main-panel .asset-heading #asset-title-mount .title',
-        elem
-      ).textContent,
-      project = $(
-        '.main-panel .main-panel-scroller .fields .text .asset-name-link span',
-        elem
-      ).textContent,
-      container = $('.toolbar .utility', elem);
+  function (elem) {
+    const description = $(
+      '.main-panel .asset-heading #asset-title-mount .title',
+      elem
+    ).textContent;
 
-    link = togglbutton.createTimerLink({
+    const project = $(
+      '.main-panel .main-panel-scroller .fields .text .asset-name-link span',
+      elem
+    ).textContent;
+
+    const container = $('.toolbar .utility', elem);
+
+    const link = togglbutton.createTimerLink({
       className: 'versionone',
       description: description,
       projectName: project,

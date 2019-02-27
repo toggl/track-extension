@@ -1,14 +1,11 @@
 'use strict';
 
-togglbutton.render('#submenu:not(.toggl)', { observe: true }, function() {
-  var link,
-    description,
-    titleElem = $('#mailing-name'),
-    li = document.createElement('li');
+togglbutton.render('#submenu:not(.toggl)', { observe: true }, function () {
+  const titleElem = $('#mailing-name');
+  const li = document.createElement('li');
+  const description = titleElem.value;
 
-  description = titleElem.value;
-
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'newsletter2go',
     description: description
   });

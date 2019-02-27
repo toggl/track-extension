@@ -4,19 +4,16 @@
 togglbutton.render(
   '.details-pane-body:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      descFunc,
-      projectFunc,
-      container = $('.sticky-view-placeholder', elem),
-      description = $('#details_property_sheet_title', elem),
-      project = $('#details_pane_project_tokenizer .token_name', elem);
+  function (elem) {
+    const container = $('.sticky-view-placeholder', elem);
+    const description = $('#details_property_sheet_title', elem);
+    const project = $('#details_pane_project_tokenizer .token_name', elem);
 
-    descFunc = function() {
-      return !!description ? description.value : '';
+    const descFunc = function () {
+      return description ? description.value : '';
     };
 
-    projectFunc = function() {
+    const projectFunc = function () {
       return (
         (project && project.textContent) ||
         ($('.ancestor-projects', elem) &&
@@ -25,7 +22,7 @@ togglbutton.render(
       );
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'asana',
       description: descFunc,
       projectName: projectFunc
@@ -39,23 +36,20 @@ togglbutton.render(
 togglbutton.render(
   '#right_pane__contents .SingleTaskPane:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      descFunc,
-      projectFunc,
-      container = $('.SingleTaskTitleRow', elem),
-      description = $('.SingleTaskTitleRow .simpleTextarea', elem),
-      project = $('.TaskProjectPill-projectName div', elem);
+  function (elem) {
+    const container = $('.SingleTaskTitleRow', elem);
+    const description = $('.SingleTaskTitleRow .simpleTextarea', elem);
+    const project = $('.TaskProjectPill-projectName div', elem);
 
     if (!container) {
       return;
     }
 
-    descFunc = function() {
-      return !!description ? description.value : '';
+    const descFunc = function () {
+      return description ? description.value : '';
     };
 
-    projectFunc = function() {
+    const projectFunc = function () {
       return (
         (project && project.textContent) ||
         ($('.TaskAncestry-ancestorProjects', elem) &&
@@ -64,7 +58,7 @@ togglbutton.render(
       );
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'asana-new',
       description: descFunc,
       projectName: projectFunc
@@ -78,19 +72,16 @@ togglbutton.render(
 togglbutton.render(
   '#right_pane__contents .SingleTaskPane-body:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      descFunc,
-      projectFunc,
-      container = $('.TaskPaneAssigneeDueDateRowStructure', elem),
-      description = $('.SingleTaskPane-titleRow .simpleTextarea', elem),
-      project = $('.TaskProjectPill-projectName div', elem);
+  function (elem) {
+    const container = $('.TaskPaneAssigneeDueDateRowStructure', elem);
+    const description = $('.SingleTaskPane-titleRow .simpleTextarea', elem);
+    const project = $('.TaskProjectPill-projectName div', elem);
 
-    descFunc = function() {
-      return !!description ? description.value : '';
+    const descFunc = function () {
+      return description ? description.value : '';
     };
 
-    projectFunc = function() {
+    const projectFunc = function () {
       return (
         (project && project.textContent) ||
         ($('.TaskAncestry-ancestorProjects', elem) &&
@@ -99,7 +90,7 @@ togglbutton.render(
       );
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'asana-new',
       description: descFunc,
       projectName: projectFunc
@@ -113,16 +104,15 @@ togglbutton.render(
 togglbutton.render(
   '.BoardColumnCardsContainer-item:not(.toggl)',
   { observe: true },
-  function(elem) {
-    if (!!$('.toggl-button', elem)) {
+  function (elem) {
+    if ($('.toggl-button', elem)) {
       return;
     }
-    var link,
-      container = $('.BoardCardWithCustomProperties-assigneeAndDueDate', elem),
-      description = $('.BoardCardWithCustomProperties-name', elem).textContent,
-      project = $('.SidebarItemRow.is-selected').textContent;
+    const container = $('.BoardCardWithCustomProperties-assigneeAndDueDate', elem);
+    const description = $('.BoardCardWithCustomProperties-name', elem).textContent;
+    const project = $('.SidebarItemRow.is-selected').textContent;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'asana-board',
       description: description,
       projectName: project,
@@ -137,20 +127,18 @@ togglbutton.render(
 togglbutton.render(
   '.SingleTaskTitleRow:not(.toggl)',
   { observe: true },
-  function(elem) {
-    if (!!$('.toggl-button', elem)) {
+  function (elem) {
+    if ($('.toggl-button', elem)) {
       return;
     }
-    var link,
-      container = $('.SingleTaskPaneToolbar', elem.parentNode),
-      description = $('.SingleTaskTitleRow textarea', elem.parentNode)
-        .textContent,
-      projectElement = $(
-        '.SingleTaskPane-projects .TaskProjectPill-projectName',
-        elem.parentNode
-      );
+    const container = $('.SingleTaskPaneToolbar', elem.parentNode);
+    const description = $('.SingleTaskTitleRow textarea', elem.parentNode).textContent;
+    const projectElement = $(
+      '.SingleTaskPane-projects .TaskProjectPill-projectName',
+      elem.parentNode
+    );
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'asana-board',
       description: description,
       projectName: projectElement ? projectElement.textContent : '',
@@ -165,24 +153,25 @@ togglbutton.render(
 togglbutton.render(
   '.SingleTaskPane-titleRow:not(.toggl)',
   { observe: true },
-  function(elem) {
-    if (!!$('.toggl-button', elem)) {
+  function (elem) {
+    if ($('.toggl-button', elem)) {
       return;
     }
-    var link,
-      container = $('.SingleTaskPaneToolbar'),
-      description = function() {
-        return $(
-          '.SingleTaskPane-titleRow .simpleTextarea',
-          elem.parentNode
-        ).textContent;
-      },
-      projectElement = $(
-        '.SingleTaskPane-projects .TaskProjectPill-projectName',
-        elem.parentNode
-      );
+    const container = $('.SingleTaskPaneToolbar');
 
-    link = togglbutton.createTimerLink({
+    const description = function () {
+      return $(
+        '.SingleTaskPane-titleRow .simpleTextarea',
+        elem.parentNode
+      ).textContent;
+    };
+
+    const projectElement = $(
+      '.SingleTaskPane-projects .TaskProjectPill-projectName',
+      elem.parentNode
+    );
+
+    const link = togglbutton.createTimerLink({
       className: 'asana-board',
       description: description,
       projectName: projectElement ? projectElement.textContent : '',
@@ -192,7 +181,7 @@ togglbutton.render(
     link.style.marginRight = '5px';
 
     if (container) {
-      var closeButton = container.lastElementChild;
+      const closeButton = container.lastElementChild;
       container.insertBefore(link, closeButton);
     }
   }

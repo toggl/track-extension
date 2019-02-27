@@ -1,19 +1,19 @@
 'use strict';
 
-togglbutton.render('.editor__header:not(.toggl)', { observe: true }, function(
+togglbutton.render('.editor__header:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    tabs = $('.editor__switch-mode', elem),
-    description = function() {
-      return document.querySelector('.editor-title__input').value;
-    };
+  const tabs = $('.editor__switch-mode', elem);
 
-  if (!!$('.toggl-button')) {
+  const description = function () {
+    return document.querySelector('.editor-title__input').value;
+  };
+
+  if ($('.toggl-button')) {
     return;
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'wordpress',
     description: description
   });

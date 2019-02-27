@@ -3,12 +3,11 @@
 togglbutton.render(
   '.document-name-container:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description = $('.navbar-document-version', elem).textContent,
-      project = $('.navbar-document-name', elem).textContent;
+  function (elem) {
+    const description = $('.navbar-document-version', elem).textContent;
+    const project = $('.navbar-document-name', elem).textContent;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'onshape',
       description: description,
       projectName: project,

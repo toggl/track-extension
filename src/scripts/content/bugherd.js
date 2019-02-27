@@ -1,33 +1,32 @@
 'use strict';
 
-togglbutton.render('#detailBar > div:not(.toggl)', { observe: true }, function(
+togglbutton.render('#detailBar > div:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    descFunc,
-    projectFunc,
-    container = document.querySelector(
-      '#detailBar > div > div.taskDetails.panelContent.flexHeight.flexScroller > div.taskDetailMain > div.taskDetailMeta'
-    ),
-    description = document.querySelector(
-      '#detailBar > div > div.taskDetails.panelContent.flexHeight.flexScroller > div.taskDetailMain > div.taskDetailMeta > span > span'
-    ),
-    project = document.querySelector('#settingsBar > div.panelHead > div');
+  const container = document.querySelector(
+    '#detailBar > div > div.taskDetails.panelContent.flexHeight.flexScroller > div.taskDetailMain > div.taskDetailMeta'
+  );
 
-  descFunc = function() {
-    return !!description ? 'Task ' + description.textContent : '';
+  const description = document.querySelector(
+    '#detailBar > div > div.taskDetails.panelContent.flexHeight.flexScroller > div.taskDetailMain > div.taskDetailMeta > span > span'
+  );
+
+  const project = document.querySelector('#settingsBar > div.panelHead > div');
+
+  const descFunc = function () {
+    return description ? 'Task ' + description.textContent : '';
   };
 
-  projectFunc = function() {
-    return !!project
+  const projectFunc = function () {
+    return project
       ? project.textContent
-          .trim()
-          .replace('<', '')
-          .trim()
+        .trim()
+        .replace('<', '')
+        .trim()
       : '';
   };
 
-  var link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'bugherd',
     description: descFunc,
     projectName: projectFunc,

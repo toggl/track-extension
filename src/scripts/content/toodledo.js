@@ -3,29 +3,26 @@
 togglbutton.render(
   '.row:not(.toggl), .taskRow:not(.toggl)',
   { observe: true },
-  function(elem) {
+  function (elem) {
     if (elem.querySelectorAll('.toggl-button').length) {
       return;
     }
 
-    var link,
-      newElem,
-      landmarkElem,
-      newLayout = $('.tc_title', elem),
-      taskElem = newLayout || $('.task', elem),
-      folderElem = $('.col1', elem) || $('.taskCell:not(.tc_title)', elem),
-      folderName = folderElem && folderElem.firstChild.textContent;
+    const newLayout = $('.tc_title', elem);
+    const taskElem = newLayout || $('.task', elem);
+    const folderElem = $('.col1', elem) || $('.taskCell:not(.tc_title)', elem);
+    let folderName = folderElem && folderElem.firstChild.textContent;
 
     folderName =
       !folderName || folderName === 'No Folder' ? '' : ' - ' + folderName;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'toodledo',
       buttonType: 'minimal',
       description: taskElem.textContent + folderName
     });
 
-    newElem = document.createElement('div');
+    const newElem = document.createElement('div');
     newElem.appendChild(link);
     newElem.setAttribute(
       'style',
@@ -36,7 +33,7 @@ togglbutton.render(
       link.setAttribute('style', 'top:1px;');
     }
 
-    landmarkElem =
+    const landmarkElem =
       $('.subm', elem) ||
       $('.subp', elem) ||
       $('.ax', elem) ||

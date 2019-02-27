@@ -1,16 +1,15 @@
 'use strict';
 
-togglbutton.render('section.case:not(.toggl)', { observe: true }, function(
+togglbutton.render('section.case:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    container = createTag('div', 'control'),
-    titleElem = $('.top h1', elem),
-    projectElem = $('.top .case-header-info a'),
-    caseNoElem = $('.top .left a.case'),
-    controlsElem = $('nav .controls');
+  const container = createTag('div', 'control');
+  const titleElem = $('.top h1', elem);
+  const projectElem = $('.top .case-header-info a');
+  const caseNoElem = $('.top .left a.case');
+  const controlsElem = $('nav .controls');
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'fogbugz',
     description: '[' + caseNoElem.textContent + '] ' + titleElem.textContent,
     projectName: projectElem.textContent

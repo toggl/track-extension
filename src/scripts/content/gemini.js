@@ -3,19 +3,17 @@
 togglbutton.render(
   '#filter-navigator-container:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      description,
-      numElem = $('.item-title'),
-      titleElem = $('.item-title'),
-      projectElem = $('.project-info a');
+  function () {
+    const numElem = $('.item-title');
+    const titleElem = $('.item-title');
+    const projectElem = $('.project-info a');
 
-    description = titleElem.textContent;
+    let description = titleElem.textContent;
     if (numElem !== null) {
       description = numElem.textContent + ' ' + description;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'gemini',
       description: description,
       projectName: projectElem.textContent

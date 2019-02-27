@@ -1,10 +1,10 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
+/* jslint indent: 2 */
+/* global $: false, document: false, togglbutton: false */
 
 'use strict';
 
 const join = (elements) => {
-  return Array.from(elements).map(item => item.textContent).join('')
+  return Array.from(elements).map(item => item.textContent).join('');
 };
 
 const getDescription = (element) => {
@@ -32,7 +32,6 @@ const getProject = () => {
 togglbutton.render('.card-list-wrapper .card-node:not([data-toggl])', { observe: true }, (element) => {
   const description = getDescription(element);
   const project = getProject();
-
   const wrapper = document.createElement('div');
   wrapper.classList.add('turtle-toggl-wrapper');
 

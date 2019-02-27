@@ -1,14 +1,13 @@
 'use strict';
 
 // Meeting details
-togglbutton.render('.popupPanel:not(.toggl)', { observe: true }, function(
+togglbutton.render('.popupPanel:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    container = $('._ch_q1 ._ch_f1', elem).parentElement,
-    title = $('._ch_q1 ._ch_g1', elem);
+  const container = $('._ch_q1 ._ch_f1', elem).parentElement;
+  const title = $('._ch_q1 ._ch_g1', elem);
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'outlook',
     description: title.textContent
   });
@@ -17,12 +16,12 @@ togglbutton.render('.popupPanel:not(.toggl)', { observe: true }, function(
 });
 
 // Meeting peek popup
-togglbutton.render('.peekPopup:not(.toggl)', { observe: true }, function(elem) {
-  var link,
-    otherPeopleContainer = $('._cmm_a1', elem),
-    myContainer = $('._ck_i', elem),
-    title = $('.ms-font-xl.o365button', elem),
-    container;
+togglbutton.render('.peekPopup:not(.toggl)', { observe: true }, function (elem) {
+  const otherPeopleContainer = $('._cmm_a1', elem);
+  const myContainer = $('._ck_i', elem);
+  const title = $('.ms-font-xl.o365button', elem);
+  let container;
+  let link;
 
   // Other people events
   if (otherPeopleContainer) {

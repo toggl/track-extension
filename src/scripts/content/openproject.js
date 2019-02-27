@@ -4,16 +4,15 @@
 togglbutton.render(
   'table.work-package-table tbody tr td.id:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      container = elem,
-      description = $(
-        'span[data-field-name="subject"]',
-        elem.parentNode
-      ).textContent.trim(),
-      projectName = $('#projects-menu').title.trim();
+  function (elem) {
+    const container = elem;
+    const description = $(
+      'span[data-field-name="subject"]',
+      elem.parentNode
+    ).textContent.trim();
+    const projectName = $('#projects-menu').title.trim();
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'openproject',
       description: description,
       projectName: projectName,
@@ -28,13 +27,12 @@ togglbutton.render(
 togglbutton.render(
   '.work-packages--show-view:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      container = $('.attributes-group--header', elem),
-      description = $('.subject').textContent.trim(),
-      projectName = $('#projects-menu').title.trim();
+  function (elem) {
+    const container = $('.attributes-group--header', elem);
+    const description = $('.subject').textContent.trim();
+    const projectName = $('#projects-menu').title.trim();
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'openproject',
       description: description,
       projectName: projectName

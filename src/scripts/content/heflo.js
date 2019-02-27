@@ -1,23 +1,24 @@
 'use strict';
 
-/*workitems / tasks view */
-togglbutton.render('.edit-container:not(.toggl)', { observe: true }, function(
+/* workitems / tasks view */
+togglbutton.render('.edit-container:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    titleEl = $('.header-title-container', elem),
-    number = $('.token-number', titleEl).textContent,
-    subject = $('.vk-editableText span', titleEl).textContent,
-    descriptionFunc = function() {
-      var task = $('.first-panel .vk-accordion-title', elem),
-        taskText = task ? ' - ' + task.textContent : '',
-        description = number + subject + taskText;
+  const titleEl = $('.header-title-container', elem);
+  const number = $('.token-number', titleEl).textContent;
+  const subject = $('.vk-editableText span', titleEl).textContent;
 
-      return description;
-    },
-    project = $('#miAppsPopover').textContent;
+  const descriptionFunc = function () {
+    const task = $('.first-panel .vk-accordion-title', elem);
+    const taskText = task ? ' - ' + task.textContent : '';
+    const description = number + subject + taskText;
 
-  link = togglbutton.createTimerLink({
+    return description;
+  };
+
+  const project = $('#miAppsPopover').textContent;
+
+  const link = togglbutton.createTimerLink({
     className: 'heflo',
     description: descriptionFunc,
     projectName: project
@@ -26,22 +27,23 @@ togglbutton.render('.edit-container:not(.toggl)', { observe: true }, function(
   $('.header-btn-container', elem).appendChild(link);
 });
 
-/*process editor view */
+/* process editor view */
 togglbutton.render(
   '.vk-mainDiagram:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      liTag = document.createElement('li'),
-      descriptionFunc = function() {
-        return window.document.title;
-      },
-      project = $('#miAppsPopover').textContent,
-      lastEl = $('.navbar-nav');
+  function () {
+    const liTag = document.createElement('li');
+
+    const descriptionFunc = function () {
+      return window.document.title;
+    };
+
+    const project = $('#miAppsPopover').textContent;
+    const lastEl = $('.navbar-nav');
 
     liTag.className = 'navbar-right toggl-container';
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'heflo',
       description: descriptionFunc,
       projectName: project

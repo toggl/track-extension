@@ -3,15 +3,15 @@
 togglbutton.render(
   '#treeitem_panel .details.page:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description = $('#treeitem_panel_name').textContent,
-      projectFunc = function() {
-        var text = $('#treeitem_panel_parent').textContent.split('>');
-        return text[text.length - 1].trim();
-      };
+  function (elem) {
+    const description = $('#treeitem_panel_name').textContent;
 
-    link = togglbutton.createTimerLink({
+    const projectFunc = function () {
+      const text = $('#treeitem_panel_parent').textContent.split('>');
+      return text[text.length - 1].trim();
+    };
+
+    const link = togglbutton.createTimerLink({
       className: 'liquidplanner',
       description: description,
       projectName: projectFunc

@@ -4,12 +4,11 @@
 togglbutton.render(
   '#card-modal-view:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      description = $('#card-title-container .content').textContent.trim(),
-      project = $('.project-name').textContent.trim();
+  function () {
+    const description = $('#card-title-container .content').textContent.trim();
+    const project = $('.project-name').textContent.trim();
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'zube',
       description: description,
       projectName: project
@@ -23,12 +22,10 @@ togglbutton.render(
 togglbutton.render(
   '#tickets-show-options-container:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      div,
-      description = $('.resource-details .title').textContent.trim(),
-      project = $('.project-selector .truncate').textContent.trim(),
-      existingTag = $('.sidebar-item.toggl');
+  function (elem) {
+    const description = $('.resource-details .title').textContent.trim();
+    const project = $('.project-selector .truncate').textContent.trim();
+    const existingTag = $('.sidebar-item.toggl');
 
     if (existingTag) {
       if (existingTag.parentNode.firstChild.classList.contains('toggl')) {
@@ -37,10 +34,10 @@ togglbutton.render(
       existingTag.parentNode.removeChild(existingTag);
     }
 
-    div = document.createElement('div');
+    const div = document.createElement('div');
     div.classList.add('sidebar-item', 'toggl');
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'zube',
       description: description,
       projectName: project
@@ -55,12 +52,10 @@ togglbutton.render(
 togglbutton.render(
   '#epics-show-options-container:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      div,
-      description = $('.resource-details .title').textContent.trim(),
-      project = $('.project-selector .truncate').textContent.trim(),
-      existingTag = $('.sidebar-item.toggl');
+  function (elem) {
+    const description = $('.resource-details .title').textContent.trim();
+    const project = $('.project-selector .truncate').textContent.trim();
+    const existingTag = $('.sidebar-item.toggl');
 
     if (existingTag) {
       if (existingTag.parentNode.firstChild.classList.contains('toggl')) {
@@ -69,10 +64,10 @@ togglbutton.render(
       existingTag.parentNode.removeChild(existingTag);
     }
 
-    div = document.createElement('div');
+    const div = document.createElement('div');
     div.classList.add('sidebar-item', 'toggl');
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'zube',
       description: description,
       projectName: project

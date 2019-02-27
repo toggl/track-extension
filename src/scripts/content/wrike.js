@@ -1,15 +1,15 @@
 'use strict';
 
-togglbutton.render('.wspace-task-view:not(.toggl)', { observe: true }, function(
+togglbutton.render('.wspace-task-view:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    container = $('.wrike-panel-header-toolbar', elem),
-    titleElem = function() {
-      return $('title').textContent.replace(' - Wrike', '');
-    };
+  const container = $('.wrike-panel-header-toolbar', elem);
 
-  link = togglbutton.createTimerLink({
+  const titleElem = function () {
+    return $('title').textContent.replace(' - Wrike', '');
+  };
+
+  const link = togglbutton.createTimerLink({
     className: 'wrike',
     description: titleElem
   });

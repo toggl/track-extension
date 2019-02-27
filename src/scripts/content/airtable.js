@@ -3,19 +3,17 @@
 togglbutton.render(
   '.detailViewWithActivityFeedBase .dialog > .header > .flex-auto:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      descFunc,
-      container = $('.justify-center.relative > .items-center', elem),
-      description = $('.truncate.line-height-3', elem);
+  function (elem) {
+    const container = $('.justify-center.relative > .items-center', elem);
 
-    descFunc = function() {
-      return !!description ? description.innerText : '';
+    const getDescription = () => {
+      const description = $('.truncate.line-height-3', elem);
+      return description ? description.innerText : '';
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'airtable',
-      description: descFunc
+      description: getDescription
     });
 
     container.appendChild(link);

@@ -3,17 +3,16 @@
 togglbutton.render(
   'div.importances:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      description = $('#story_name p').textContent,
-      projectName = $('.project .name').textContent,
-      div = document.createElement('div'),
-      importanceDiv = $('div.importances'),
-      collectorDiv = importanceDiv.parentNode;
+  function () {
+    const description = $('#story_name p').textContent;
+    const projectName = $('.project .name').textContent;
+    const div = document.createElement('div');
+    const importanceDiv = $('div.importances');
+    const collectorDiv = importanceDiv.parentNode;
 
     div.className = 'fl';
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'planbox',
       description: description,
       projectName: projectName

@@ -3,19 +3,18 @@
 togglbutton.render(
   '.item-field-name input:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      titleText,
-      wrapperElem = $('.axo-addEditItem-content'),
-      titleElem = $('#name', wrapperElem),
-      beforeElem =
+  function () {
+    let titleText;
+    const wrapperElem = $('.axo-addEditItem-content');
+    const titleElem = $('#name', wrapperElem);
+    const beforeElem =
         $('.axo-rating', wrapperElem) || $('.item-field-name', wrapperElem);
 
     if (titleElem !== null) {
       titleText = titleElem.value;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'axosoft',
       description: titleText || ''
     });
@@ -27,18 +26,17 @@ togglbutton.render(
 togglbutton.render(
   '.axo-view-item-content .item-field-name:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      titleText,
-      wrapperElem = $('.axo-view-item-content'),
-      titleElem = $('.item-field-name', wrapperElem),
-      beforeElem = $('.axo-rating', wrapperElem) || titleElem;
+  function () {
+    const wrapperElem = $('.axo-view-item-content');
+    const titleElem = $('.item-field-name', wrapperElem);
+    const beforeElem = $('.axo-rating', wrapperElem) || titleElem;
+    let titleText;
 
     if (titleElem !== null) {
       titleText = titleElem.textContent;
     }
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'axosoft',
       description: titleText || ''
     });

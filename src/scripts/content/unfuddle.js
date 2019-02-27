@@ -3,18 +3,17 @@
 togglbutton.render(
   '.ticket-fields-panel:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description,
-      titleElem = $('h1.summary .number', elem),
-      numElem = $('h1.summary .text-field-text', elem),
-      projectName = $(
-        '#account_header .nav:not(.right-actions-top) .dropdown-toggle'
-      ).textContent;
+  function (elem) {
+    const titleElem = $('h1.summary .number', elem);
+    const numElem = $('h1.summary .text-field-text', elem);
 
-    description = titleElem.textContent + ': ' + numElem.textContent;
+    const projectName = $(
+      '#account_header .nav:not(.right-actions-top) .dropdown-toggle'
+    ).textContent;
 
-    link = togglbutton.createTimerLink({
+    const description = titleElem.textContent + ': ' + numElem.textContent;
+
+    const link = togglbutton.createTimerLink({
       className: 'unfuddle',
       description: description,
       projectName: projectName

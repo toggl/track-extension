@@ -1,12 +1,10 @@
 'use strict';
 
-togglbutton.render('#edit_menu_group:not(.toggl)', { observe: true }, function(
+togglbutton.render('#edit_menu_group:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    description = $('title').textContent.trim();
-
-  link = togglbutton.createTimerLink({
+  const description = $('title').textContent.trim();
+  const link = togglbutton.createTimerLink({
     className: 'draftin',
     description: description
   });

@@ -3,12 +3,11 @@
 togglbutton.render(
   '.page-content .widget-toolbox .pull-left:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description = document.querySelector('td.bug-summary').textContent,
-      project = document.querySelector('td.bug-project').textContent;
+  function (elem) {
+    const description = document.querySelector('td.bug-summary').textContent;
+    const project = document.querySelector('td.bug-project').textContent;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'mantishub',
       description: description,
       projectName: project
@@ -22,12 +21,11 @@ togglbutton.render(
 togglbutton.render(
   '#view-issue-details:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description = $('td.bug-summary', elem).textContent,
-      project = $('td.bug-project', elem).textContent;
+  function (elem) {
+    const description = $('td.bug-summary', elem).textContent;
+    const project = $('td.bug-project', elem).textContent;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'mantishub',
       description: description,
       projectName: project

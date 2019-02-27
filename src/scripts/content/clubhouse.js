@@ -1,25 +1,21 @@
 'use strict';
 
-togglbutton.render('.story-state:not(.toggl)', { observe: true }, function(
+togglbutton.render('.story-state:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    wrap = createTag('div'),
-    element = elem,
-    getDescription,
-    getProject;
-
+  const wrap = createTag('div');
+  const element = elem;
   elem = elem.parentNode.parentNode.parentNode;
 
-  getDescription = function() {
+  const getDescription = function () {
     return $('h2.story-name', elem).textContent;
   };
 
-  getProject = function() {
+  const getProject = function () {
     return $('.story-project .value', elem).textContent;
   };
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'clubhouse',
     description: getDescription,
     projectName: getProject

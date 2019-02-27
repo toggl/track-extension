@@ -1,13 +1,12 @@
 'use strict';
 
-togglbutton.render('.entryHeader:not(.toggl)', { observe: true }, function(
+togglbutton.render('.entryHeader:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    textnode = document.createTextNode('\u00A0//\u00A0 '),
-    description = $('.entryTitle', elem).textContent;
+  const textnode = document.createTextNode('\u00A0//\u00A0 ');
+  const description = $('.entryTitle', elem).textContent;
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'feedly',
     description: description
   });

@@ -3,23 +3,20 @@
 togglbutton.render(
   '#ticketDetailsContainer:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      container = createTag('li', 'toggle-container'),
-      descFunc,
-      projectFunc;
+  function (elem) {
+    const container = createTag('li', 'toggle-container');
 
-    descFunc = function() {
+    const descFunc = function () {
       return document
         .querySelector('#copyButton1')
         .getAttribute('data-clipboard-text');
     };
 
-    projectFunc = function() {
+    const projectFunc = function () {
       return $('h1.header-w > span').textContent || '';
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'assembla',
       description: descFunc,
       projectName: projectFunc

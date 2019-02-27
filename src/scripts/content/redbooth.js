@@ -4,13 +4,12 @@
 togglbutton.render(
   '.js-right-pane .tb-element-big:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      container = $('.tb-element-title', elem),
-      projectElem = $('.tb-element-subtitle a', elem),
-      titleElem = $('.js-element-title-inner a', container);
+  function (elem) {
+    const container = $('.tb-element-title', elem);
+    const projectElem = $('.tb-element-subtitle a', elem);
+    const titleElem = $('.js-element-title-inner a', container);
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'redbooth',
       description: titleElem.textContent,
       projectName: projectElem && projectElem.textContent
@@ -24,13 +23,12 @@ togglbutton.render(
 togglbutton.render(
   '.js-modal-dialog-content:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      container = $('.tb-element-title', elem),
-      projectElem = $('.tb-element-subtitle a', elem),
-      titleElem = $('.js-element-title-inner a', container);
+  function (elem) {
+    const container = $('.tb-element-title', elem);
+    const projectElem = $('.tb-element-subtitle a', elem);
+    const titleElem = $('.js-element-title-inner a', container);
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'redbooth',
       description: titleElem.textContent,
       projectName: projectElem && projectElem.textContent

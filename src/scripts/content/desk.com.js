@@ -3,18 +3,14 @@
 togglbutton.render(
   '.case .content-top-toolbar .controls ul:not(.toggl)',
   { observe: true },
-  function(elem) {
-    console.log('boom');
+  function (elem) {
+    const projectName = document.querySelector('title').textContent;
+    const liTag = document.createElement('li');
 
-    var link,
-      titleFunc,
-      description,
-      projectName = document.querySelector('title').textContent,
-      liTag = document.createElement('li');
-
-    titleFunc = function() {
-      var titleElem = document.querySelector('.content h1.title'),
-        ticketNum = location.href.match(/case\/(\d+)/);
+    const titleFunc = function () {
+      const titleElem = document.querySelector('.content h1.title');
+      const ticketNum = location.href.match(/case\/(\d+)/);
+      let description;
 
       if (titleElem !== null) {
         description = titleElem.textContent;
@@ -27,7 +23,7 @@ togglbutton.render(
       return description;
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'desk',
       description: titleFunc,
       projectName: projectName && projectName.split(': ').shift(),

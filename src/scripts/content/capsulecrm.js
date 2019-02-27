@@ -1,19 +1,19 @@
 'use strict';
 
 // List items
-togglbutton.render('.list li:not(.toggl)', { observe: true }, function(elem) {
-  var link,
-    taskElement = $('.task-title', elem),
-    description = $('a', taskElement).textContent.trim(),
-    projectName = function() {
-      var label = $('span.highlight', taskElement);
-      if (!!label) {
-        return label.textContent;
-      }
-      return '';
-    };
+togglbutton.render('.list li:not(.toggl)', { observe: true }, function (elem) {
+  const taskElement = $('.task-title', elem);
+  const description = $('a', taskElement).textContent.trim();
 
-  link = togglbutton.createTimerLink({
+  const projectName = function () {
+    const label = $('span.highlight', taskElement);
+    if (label) {
+      return label.textContent;
+    }
+    return '';
+  };
+
+  const link = togglbutton.createTimerLink({
     className: 'capsule',
     description: description,
     projectName: projectName,
@@ -27,25 +27,26 @@ togglbutton.render('.list li:not(.toggl)', { observe: true }, function(elem) {
 togglbutton.render(
   '.general-task-item:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      taskElement = $('.general-task-item-title', elem),
-      description = function() {
-        var desc = $('.general-task-item-title-text', elem);
-        if (!!desc) {
-          return desc.textContent.trim();
-        }
-        return '';
-      },
-      projectName = function() {
-        var label = $('.general-task-item-category', elem);
-        if (!!label) {
-          return label.textContent;
-        }
-        return '';
-      };
+  function (elem) {
+    const taskElement = $('.general-task-item-title', elem);
 
-    link = togglbutton.createTimerLink({
+    const description = function () {
+      const desc = $('.general-task-item-title-text', elem);
+      if (desc) {
+        return desc.textContent.trim();
+      }
+      return '';
+    };
+
+    const projectName = function () {
+      const label = $('.general-task-item-category', elem);
+      if (label) {
+        return label.textContent;
+      }
+      return '';
+    };
+
+    const link = togglbutton.createTimerLink({
       className: 'capsule',
       description: description,
       projectName: projectName,

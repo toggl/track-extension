@@ -54,12 +54,6 @@ module.exports = {
       }
     },
     {
-      files: ['src/scripts/content.js'],
-      globals: {
-        createTag: false
-      }
-    },
-    {
       files: ['src/scripts/popup.js'],
       globals: {
         PopUp: false,
@@ -69,7 +63,8 @@ module.exports = {
     {
       files: ['src/scripts/content/*.js'],
       globals: {
-        togglbutton: false
+        togglbutton: false,
+        createTag: false
       }
     },
 

@@ -1,18 +1,16 @@
 'use strict';
 
 // Whole note
-togglbutton.render('.IZ65Hb-TBnied:not(.toggl)', { observe: true }, function(
+togglbutton.render('.IZ65Hb-TBnied:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    toolbar = $('.IZ65Hb-INgbqf', elem),
-    description = $('.IZ65Hb-YPqjbf:not(.LwH6nd)', elem).textContent,
-    tagFunc;
+  const toolbar = $('.IZ65Hb-INgbqf', elem);
+  const description = $('.IZ65Hb-YPqjbf:not(.LwH6nd)', elem).textContent;
 
-  tagFunc = function() {
-    var index,
-      tags = [],
-      tagItems = $('.IZ65Hb-jfdpUb', elem).children;
+  const tagFunc = function () {
+    let index;
+    const tags = [];
+    const tagItems = $('.IZ65Hb-jfdpUb', elem).children;
 
     for (index in tagItems) {
       if (tagItems.hasOwnProperty(index) && tagItems[index].classList.contains('notranslate')) {
@@ -22,7 +20,7 @@ togglbutton.render('.IZ65Hb-TBnied:not(.toggl)', { observe: true }, function(
     return tags;
   };
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'keep',
     buttonType: 'minimal',
     description: description,
@@ -35,12 +33,11 @@ togglbutton.render('.IZ65Hb-TBnied:not(.toggl)', { observe: true }, function(
 togglbutton.render(
   '.IZ65Hb-TBnied .gkA7Yd-sKfxWe .CmABtb.RNfche:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      position = $('.IZ65Hb-MPu53c-haAclf', elem),
-      description = elem.textContent;
+  function (elem) {
+    const position = $('.IZ65Hb-MPu53c-haAclf', elem);
+    const description = elem.textContent;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'keep',
       buttonType: 'minimal',
       description: description

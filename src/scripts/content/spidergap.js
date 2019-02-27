@@ -3,12 +3,11 @@
 togglbutton.render(
   '.section-header:not(.toggl)',
   { observe: true },
-  function() {
-    var link,
-      description = $('.section-header h1').textContent.trim(),
-      project = $('#navbar-project-link').textContent.trim();
+  function () {
+    const description = $('.section-header h1').textContent.trim();
+    const project = $('#navbar-project-link').textContent.trim();
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'spidergap',
       description: description,
       projectName: project

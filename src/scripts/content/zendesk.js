@@ -1,17 +1,15 @@
 'use strict';
 
-togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function(
+togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    titleFunc,
-    description,
-    projectName = $('title').textContent,
-    divTag = document.createElement('div');
+  let description;
+  const projectName = $('title').textContent;
+  const divTag = document.createElement('div');
 
-  titleFunc = function() {
-    var titleElem = $('.selected .tab_text .title'),
-      ticketNum = location.href.match(/tickets\/(\d+)/);
+  const titleFunc = function () {
+    const titleElem = $('.selected .tab_text .title');
+    const ticketNum = location.href.match(/tickets\/(\d+)/);
 
     if (titleElem !== null) {
       description = titleElem.textContent.trim();
@@ -23,7 +21,7 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function(
     return description;
   };
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'zendesk',
     description: titleFunc,
     projectName: projectName && projectName.split(' - ').shift()

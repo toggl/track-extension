@@ -1,12 +1,11 @@
 'use strict';
 
-togglbutton.render('.PageListItem:not(.toggl)', { observe: true }, function(
+togglbutton.render('.PageListItem:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    description = $('.label_title', elem).textContent;
+  const description = $('.label_title', elem).textContent;
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'processwire',
     description: description,
     buttonType: 'minimal'
@@ -18,11 +17,10 @@ togglbutton.render('.PageListItem:not(.toggl)', { observe: true }, function(
 togglbutton.render(
   '.ProcessPageEdit h1:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description = elem.textContent;
+  function (elem) {
+    const description = elem.textContent;
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'processwire',
       description: description,
       buttonType: 'minimal'

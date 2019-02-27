@@ -1,40 +1,33 @@
 'use strict';
 
-togglbutton.render('.xrh-header--main:not(.toggl)', {}, function(elem) {
-  var link,
-    liTag,
-    button,
-    div,
-    descriptionNode,
-    container = $('.xrh-addons');
+togglbutton.render('.xrh-header--main:not(.toggl)', {}, function (elem) {
+  const container = $('.xrh-addons');
+  let descriptionNode;
 
-  // Quotes
-  // Sales overview
-  // Purchase Orders
-  // Purchases overview
-  // Expense claims
-  // Products and services
   if ($('#page_title h1')) {
+    // Quotes
+    // Sales overview
+    // Purchase Orders
+    // Purchases overview
+    // Expense claims
+    // Products and services
     descriptionNode = $('#page_title h1');
-  }
-  // Invoices
-  // Bills
-  // Bank account
-  // Manual journals
-  // Pay Run
-  else if ($('#title')) {
+  } else if ($('#title')) {
+    // Invoices
+    // Bills
+    // Bank account
+    // Manual journals
+    // Pay Run
     descriptionNode = $('#title');
-  }
-  // Reports child
-  else if ($('.page-title h1')) {
+  } else if ($('.page-title h1')) {
+    // Reports child
     descriptionNode = $('.page-title h1').cloneNode(true);
     descriptionNode.removeChild($('span', descriptionNode));
-  }
-  // Dashboard
-  // Reports
-  // Advanced accounting
-  // Projects
-  else if ($('header.xui-pageheading')) {
+  } else if ($('header.xui-pageheading')) {
+    // Dashboard
+    // Reports
+    // Advanced accounting
+    // Projects
     descriptionNode = $('.xui-pageheading');
     // Dashboard
     // Reports
@@ -42,39 +35,36 @@ togglbutton.render('.xrh-header--main:not(.toggl)', {}, function(elem) {
     if ($('h1', descriptionNode)) {
       descriptionNode = $('h1', descriptionNode);
     }
-  }
-  // Fixed assets
-  else if ($('.fa-pagetitle')) {
+  } else if ($('.fa-pagetitle')) {
+    // Fixed assets
     descriptionNode = $('.fa-pagetitle');
   }
 
-
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'xero',
     projectName: 'Finance',
     description: descriptionNode ? descriptionNode.textContent.trim() : '',
     buttonType: 'minimal'
   });
 
-
-  div = createTag('div', 'xrh-focusable--child xrh-iconwrapper');
+  const div = createTag('div', 'xrh-focusable--child xrh-iconwrapper');
   div.appendChild(link);
 
-  button = createTag('button', 'xrh-button xrh-addon--iconbutton xrh-header--iconbutton xrh-focusable--parent');
+  const button = createTag('button', 'xrh-button xrh-addon--iconbutton xrh-header--iconbutton xrh-focusable--parent');
   button.type = 'button';
 
-  button.addEventListener('click', function(e) {
+  button.addEventListener('click', function (e) {
     e.stopPropagation();
     link.click();
   });
 
   button.appendChild(div);
 
-  liTag = createTag('li', 'xrh-addon');
+  const liTag = createTag('li', 'xrh-addon');
   liTag.appendChild(button);
 
   if (container) {
-    var userIcon = $('[data-automationid="xrh-addon-user"]', container);
+    const userIcon = $('[data-automationid="xrh-addon-user"]', container);
     container.insertBefore(liTag, userIcon);
   }
 });

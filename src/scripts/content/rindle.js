@@ -3,21 +3,19 @@
 togglbutton.render(
   '.time__tracker .toggl__container:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      descFunc,
-      projectName = $('.navbar-default .dropdown .navbar-brand .ng-scope')
-        .textContent;
+  function (elem) {
+    const projectName = $('.navbar-default .dropdown .navbar-brand .ng-scope')
+      .textContent;
 
-    descFunc = function() {
-      var card = $('.toggl__card-title', elem);
-      if (!!card) {
+    const descFunc = function () {
+      const card = $('.toggl__card-title', elem);
+      if (card) {
         return card.textContent;
       }
       return null;
     };
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'rindle',
       description: descFunc,
       projectName: projectName

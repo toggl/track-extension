@@ -1,18 +1,17 @@
 'use strict';
 
-togglbutton.render('#issue-header:not(.toggl)', {}, function(elem) {
-  var link,
-    description,
-    numElem = $('.issue-id'),
-    titleElem = $('#issue-title'),
-    projectElem = $('.entity-name');
+togglbutton.render('#issue-header:not(.toggl)', {}, function (elem) {
+  let description;
+  const numElem = $('.issue-id');
+  const titleElem = $('#issue-title');
+  const projectElem = $('.entity-name');
 
   description = titleElem.textContent;
   if (numElem !== null) {
     description = numElem.textContent.trim() + ' ' + description;
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'bitbucket',
     description: description,
     projectName: projectElem && projectElem.textContent.trim()
@@ -21,13 +20,12 @@ togglbutton.render('#issue-header:not(.toggl)', {}, function(elem) {
   $('#issue-header').appendChild(link);
 });
 
-togglbutton.render('#pull-request-header:not(.toggl)', {}, function(elem) {
-  var link,
-    description,
-    numElem = $('.pull-request-self-link'),
-    titleElem = $('.pull-request-title'),
-    projectElem = $('.entity-name'),
-    parentToAppendTo = '.pull-request-status';
+togglbutton.render('#pull-request-header:not(.toggl)', {}, function (elem) {
+  let description;
+  const numElem = $('.pull-request-self-link');
+  const titleElem = $('.pull-request-title');
+  const projectElem = $('.entity-name');
+  let parentToAppendTo = '.pull-request-status';
 
   if (titleElem !== null) {
     description = titleElem.textContent.trim();
@@ -40,7 +38,7 @@ togglbutton.render('#pull-request-header:not(.toggl)', {}, function(elem) {
     parentToAppendTo = '.pull-request-metadata';
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'bitbucket',
     description: description,
     projectName: projectElem && projectElem.textContent.trim()

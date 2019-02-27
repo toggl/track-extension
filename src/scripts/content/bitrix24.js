@@ -16,12 +16,12 @@ togglbutton.render(
   }
 );
 
-function descriptionSelector() {
+function descriptionSelector () {
   const $description = $('#pagetitle');
   return $description.textContent.trim();
 }
 
-function projectSelector() {
+function projectSelector () {
   // Avoid invisible field - the project can be removed, but the project name still lingers invisibly in the UI.
   const $project = $(
     '.task-group-field:not(.invisible) .task-group-field-label'
@@ -29,7 +29,7 @@ function projectSelector() {
   return $project ? $project.textContent.trim() : '';
 }
 
-function tagsSelector() {
+function tagsSelector () {
   const $tags = $('#task-tags-line');
   return $tags.textContent.split(',').map(tag => tag.trim());
 }

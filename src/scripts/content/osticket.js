@@ -4,16 +4,14 @@
 togglbutton.render(
   '#ticket_tabs_container #ticket_thread:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      description,
-      titleElem = $('.flush-left a'),
-      projectElem = $('.tixTitle'),
-      ticketNameText = titleElem.textContent.trim(),
-      projectNameText = projectElem.textContent.trim();
+  function (elem) {
+    const titleElem = $('.flush-left a');
+    const projectElem = $('.tixTitle');
+    const ticketNameText = titleElem.textContent.trim();
+    const projectNameText = projectElem.textContent.trim();
 
-    description = ticketNameText + ' [' + projectNameText + ']';
-    link = togglbutton.createTimerLink({
+    const description = ticketNameText + ' [' + projectNameText + ']';
+    const link = togglbutton.createTimerLink({
       className: 'osTicket',
       description: description,
       projectName: projectNameText
@@ -29,16 +27,14 @@ togglbutton.render(
   {
     observe: true
   },
-  function(elem) {
-    var link,
-      description,
-      titleElem = $('.flush-left a'),
-      projectElem = $('.tixTitle'),
-      ticketNameText = titleElem.textContent.trim(),
-      projectNameText = projectElem.textContent.trim();
+  function (elem) {
+    const titleElem = $('.flush-left a');
+    const projectElem = $('.tixTitle');
+    const ticketNameText = titleElem.textContent.trim();
+    const projectNameText = projectElem.textContent.trim();
 
-    description = ticketNameText + ' [' + projectNameText + ']';
-    link = togglbutton.createTimerLink({
+    const description = ticketNameText + ' [' + projectNameText + ']';
+    const link = togglbutton.createTimerLink({
       className: 'osTicket',
       description: description,
       projectName: projectNameText

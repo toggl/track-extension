@@ -2,11 +2,10 @@
 
 console.log('Toggl Button loaded for kanboard.');
 
-function addTimerLink(elem, description, location) {
-  var link,
-    text = $(description, elem).textContent;
+function addTimerLink (elem, description, location) {
+  const text = $(description, elem).textContent;
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'kanboard',
     description: text
   });
@@ -18,7 +17,7 @@ function addTimerLink(elem, description, location) {
 togglbutton.render(
   '.sidebar-content .page-header + .table-list .table-list-row:not(.toggl)',
   { observe: true },
-  function(elem) {
+  function (elem) {
     addTimerLink(elem, '.table-list-title a', '.table-list-title');
   }
 );
@@ -27,7 +26,7 @@ togglbutton.render(
 togglbutton.render(
   '.sidebar-content .page-header + .table-list .table-list-row .task-list-subtask:not(.toggl)',
   { observe: true },
-  function(elem) {
+  function (elem) {
     addTimerLink(elem, '.subtask-title a', '.subtask-time-tracking');
   }
 );
@@ -36,17 +35,17 @@ togglbutton.render(
 togglbutton.render(
   '.page > .table-list > .table-list-row:not(.toggl)',
   { observe: true },
-  function(elem) {
+  function (elem) {
     addTimerLink(elem, '.table-list-title a', '.table-list-title');
   }
 );
 
 // task details page
-togglbutton.render('#task-summary:not(.toggl)', { observe: true }, function(
+togglbutton.render('#task-summary:not(.toggl)', { observe: true }, function (
   elem
 ) {
   if (!$('.buttons-header', elem)) {
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     div.className = 'buttons-header';
     $('.task-summary-container', elem).after(div);
   }
@@ -57,7 +56,7 @@ togglbutton.render('#task-summary:not(.toggl)', { observe: true }, function(
 togglbutton.render(
   '.subtasks-table tbody tr:not(.toggl)',
   { observe: true },
-  function(elem) {
+  function (elem) {
     addTimerLink(elem, '.subtask-title a', '.subtask-time-tracking');
   }
 );
@@ -66,8 +65,8 @@ togglbutton.render(
 togglbutton.render(
   '.ui-tooltip tbody tr + tr:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var span = document.createElement('span');
+  function (elem) {
+    const span = document.createElement('span');
     span.setAttribute('style', 'padding-left: 10px');
     $('.subtask-title', elem).after(span);
     addTimerLink(elem, '.subtask-title a', '.subtask-title + span');

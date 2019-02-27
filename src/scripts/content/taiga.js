@@ -4,13 +4,12 @@
 togglbutton.render(
   '.detail-title-wrapper:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      projectElem = $('.us-detail .project-name'),
-      refElem = $('.detail-number', elem),
-      titleElem = $('.detail-subject', elem);
+  function (elem) {
+    const projectElem = $('.us-detail .project-name');
+    const refElem = $('.detail-number', elem);
+    const titleElem = $('.detail-subject', elem);
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'taiga',
       buttonType: 'minimal',
       projectName: projectElem.textContent,
@@ -22,14 +21,13 @@ togglbutton.render(
 );
 
 /* Epics Dashboard */
-togglbutton.render('.epic-row .name:not(.toggl)', { observe: true }, function(
+togglbutton.render('.epic-row .name:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    titleElem = $('a', elem),
-    projectElem = $('.epics .project-name');
+  const titleElem = $('a', elem);
+  const projectElem = $('.epics .project-name');
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'taiga',
     buttonType: 'minimal',
     description: titleElem.textContent,
@@ -40,15 +38,14 @@ togglbutton.render('.epic-row .name:not(.toggl)', { observe: true }, function(
 });
 
 /* Backlog buttons */
-togglbutton.render('.user-story-name:not(.toggl)', { observe: true }, function(
+togglbutton.render('.user-story-name:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    projectElem = $('.backlog .project-name'),
-    refElem = $('a > span:nth-child(1)', elem),
-    taskElem = $('a > span:nth-child(2)', elem);
+  const projectElem = $('.backlog .project-name');
+  const refElem = $('a > span:nth-child(1)', elem);
+  const taskElem = $('a > span:nth-child(2)', elem);
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'taiga',
     buttonType: 'minimal',
     projectName: projectElem.textContent,
@@ -62,13 +59,12 @@ togglbutton.render('.user-story-name:not(.toggl)', { observe: true }, function(
 togglbutton.render(
   '.kanban .card-title:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      refElem = $('a > span:nth-child(1)', elem),
-      titleElem = $('a > span:nth-child(2)', elem),
-      projectElem = $('.kanban .project-name');
+  function (elem) {
+    const refElem = $('a > span:nth-child(1)', elem);
+    const titleElem = $('a > span:nth-child(2)', elem);
+    const projectElem = $('.kanban .project-name');
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'taiga',
       buttonType: 'minimal',
       description: refElem.textContent + ' ' + titleElem.textContent,
@@ -83,13 +79,12 @@ togglbutton.render(
 togglbutton.render(
   '.taskboard .card-title:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      refElem = $('.card-title > a > span:nth-child(1)', elem),
-      titleElem = $('.card-title > a > span:nth-child(2)', elem),
-      projectElem = $('.taskboard .project-name-short');
+  function (elem) {
+    const refElem = $('.card-title > a > span:nth-child(1)', elem);
+    const titleElem = $('.card-title > a > span:nth-child(2)', elem);
+    const projectElem = $('.taskboard .project-name-short');
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'taiga',
       buttonType: 'minimal',
       description: refElem.textContent.trim() + ' ' + titleElem.textContent,
@@ -104,13 +99,12 @@ togglbutton.render(
 togglbutton.render(
   '.issues-table .row:not(.toggl)',
   { observe: true },
-  function(elem) {
-    var link,
-      projectElem = $('.issues-page .project-name'),
-      refElem = $('a > span:nth-child(1)', elem),
-      taskElem = $('a > span:nth-child(2)', elem);
+  function (elem) {
+    const projectElem = $('.issues-page .project-name');
+    const refElem = $('a > span:nth-child(1)', elem);
+    const taskElem = $('a > span:nth-child(2)', elem);
 
-    link = togglbutton.createTimerLink({
+    const link = togglbutton.createTimerLink({
       className: 'taiga',
       buttonType: 'minimal',
       projectName: projectElem.textContent,

@@ -1,13 +1,12 @@
 'use strict';
 
-togglbutton.render('#timeTrackingItem:not(.toggl)', { observe: true }, function(
+togglbutton.render('#timeTrackingItem:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    description = $('.task-name', elem).textContent,
-    project = $('.space-name', elem).textContent;
+  const description = $('.task-name', elem).textContent;
+  const project = $('.space-name', elem).textContent;
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'clickup',
     description: description,
     projectName: project,

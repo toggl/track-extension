@@ -1,18 +1,16 @@
 'use strict';
 
-togglbutton.render('#issue-title:not(.toggl)', { observe: true }, function(
+togglbutton.render('#issue-title:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  var link,
-    titleElem = $('#issue-title'),
-    description = titleElem.textContent.trim(),
-    projectElem = $('.issue .header .breadcrumb a:last-child'),
-    project;
+  const titleElem = $('#issue-title');
+  let description = titleElem.textContent.trim();
+  const projectElem = $('.issue .header .breadcrumb a:last-child');
 
   description = $('.index').textContent + ' ' + description;
-  project = projectElem.textContent.split(' / ').pop();
+  const project = projectElem.textContent.split(' / ').pop();
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'gogs',
     description: description,
     projectName: project

@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.22.0",
+      "rows": [
+        "Performance improvements for lists of buttons",
+        "Todoist - Performance improvements",
+        "Todoist - Buttons display more consistently on hover",
+        "Freshdesk Mint - Better subject selection in Portal tickets"
+      ]
+    },
+    {
       "version": "1.21.3",
       "rows": [
         "Freshdesk Mint - Support latest update"

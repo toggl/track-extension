@@ -31,8 +31,13 @@ togglbutton.render('.page-actions__left:not(.toggl)', { observe: true }, elem =>
 
   const descriptionSelector = () => {
     const ticketNumber = $('.breadcrumb__item.active').textContent.trim();
-    const subject = $('.ticket-subject-heading').textContent.trim();
-    return `${ticketNumber} ${subject}`;
+    // Remove other buttons/controls from the ticket subject
+    const subjectElement = $('.ticket-subject-heading').cloneNode(true);
+    for (const child of subjectElement.children) {
+      subjectElement.removeChild(child);
+    }
+
+    return `${ticketNumber} ${subjectElement.textContent.trim()}`;
   };
 
   const link = togglbutton.createTimerLink({

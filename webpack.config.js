@@ -91,7 +91,7 @@ module.exports = config(async ({ development, production, release, version }) =>
     ]),
     production && release &&
       new BugsnagSourceMapUploaderPlugin({
-        apiKey: process.env.BUGSNAG_API_KEY,
+        apiKey: await getBugsnagKey(),
         appVersion: version,
         publicPath: 'togglbutton://',
         overwrite: true /* Overwrites existing sourcemaps for this version */

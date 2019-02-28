@@ -32,7 +32,7 @@ function getBugsnagClient () {
         frame.file = frame.file.replace(/chrome-extension:/g, 'chrome_extension:');
         // Create consistent file paths for source mapping / error reporting.
         frame.file = frame.file.replace(
-          /(moz-extension|file):\/\/.*\/scripts\/(.*)/ig,
+          /.*(moz-extension|chrome_extension|chrome-extension|file):\/\/.*\/scripts\/(.*)/ig,
           'togglbutton://scripts/$2'
         );
         return frame;

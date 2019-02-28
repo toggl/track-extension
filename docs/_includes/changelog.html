@@ -1,0 +1,16 @@
+
+{% for item in site.data.changelog.versions %}
+  <div class="version-log">
+    <h3>
+      <a id="{{ item.short-version }}" class="anchor" href="#{{ item.short-version }}" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>{{ item.version }}
+      <span class="date">{{ item.date }}</span>
+    </h3>
+    <ul>
+      {% for row in item.rows %}
+        <li>{{ row }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endfor %}

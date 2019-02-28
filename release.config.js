@@ -17,7 +17,8 @@ module.exports = {
           }
         ]
       }
-    ]
+    ],
+    '@semantic-release/git'
   ],
   'tagFormat': '${version}' // eslint-disable-line no-template-curly-in-string
 };

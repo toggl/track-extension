@@ -26,3 +26,58 @@ Please consider the following:
 Please consider future maintainers and the "generic" nature of the extension in mind when writing new features. All changes should be tested across both Chrome and Firefox.
 
 There are a lot of moving parts and different settings in the extension, please do your best to account for them and test that you don't introduce any regressions.
+
+## Commit Message Guidelines
+
+We use [conventional commit messages](https://www.conventionalcommits.org/en/v1.0.0-beta.3/#summary)
+
+This leads to **more
+readable messages** and we use the git commit messages to **generate the changelog and trigger new releases**.
+
+### Commit Message Format
+Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
+format that includes a **type**, a **scope** and a **subject**:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer]
+```
+
+The **header** is mandatory and the **scope** of the header is optional.
+
+Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
+to read on GitHub as well as in various git tools.
+
+The footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
+
+Samples:
+
+```
+feat: Add some-new integration
+```
+```
+fix(trello):Trello integration
+
+- Update selectors
+
+closes #4
+```
+```
+fix: Github project integration
+```
+
+### Type
+Must be one of the following:
+
+* **build**: Changes that affect the build system or external dependencies (example scopes: webpack, npm)
+* **ci**: Changes to our CI configuration files and scripts
+* **docs**: Documentation only changes
+* **feat**: A new feature/integration
+* **fix**: A bug fix
+* **perf**: A code change that improves performance
+* **refactor**: A code change that neither fixes a bug nor adds a feature
+* **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+* **test**: Adding missing tests or correcting existing tests

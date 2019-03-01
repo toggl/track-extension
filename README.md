@@ -127,7 +127,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Zendesk](https://www.zendesk.com/)
 - [Zube](https://zube.io/)
 - [VivifyScrum](https://www.vivifyscrum.com/)
-  
+
 ## Installing from the Web Store/Addons page
 
 __Chrome__
@@ -189,7 +189,10 @@ If you use a setup, where one of the supported services is on a custom domain yo
 
 ## Contributing
 
-Want to contribute? Great! Just fork the project, make your changes and create a [pull request].
+Want to contribute? Great! Read up on our
+guidelines for [contributing](.github/CONTRIBUTING.md)
+
+Just fork the project, make your changes and create a [pull request].
 
 When adding new integrations please use `git squash` and merge all your commits into one commit. This keeps the git log more compact and clear.
 

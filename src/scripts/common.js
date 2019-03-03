@@ -172,11 +172,16 @@ window.togglbutton = {
     let len;
 
     const elems = document.querySelectorAll(selector);
+    if (!elems.length) {
+      return;
+    }
+
     for (i = 0, len = elems.length; i < len; i += 1) {
       elems[i].classList.add('toggl');
     }
 
-    // Catch content errors here as well as render() in case of async rendering (MutationObserver)
+    // Catch content errors here as well as render() in case of async rendering
+    // (MutationObserver)
     try {
       for (i = 0, len = elems.length; i < len; i += 1) {
         renderer(elems[i]);
@@ -210,7 +215,8 @@ window.togglbutton = {
 
     const description = togglbutton.mainDescription.toLowerCase();
 
-    const projectId = togglbutton.findProjectIdByName(togglbutton.currentProject);
+    const projectId = togglbutton.findProjectIdByName(
+      togglbutton.currentProject);
 
     if (togglbutton.entries) {
       togglbutton.entries.forEach(function (entry) {
@@ -300,7 +306,8 @@ window.togglbutton = {
 
     const elemRect = togglbutton.element.getBoundingClientRect();
     editForm = $('#toggl-button-edit-form');
-    const position = togglbutton.topPosition(elemRect, editFormWidth, editFormHeight);
+    const position = togglbutton.topPosition(
+      elemRect, editFormWidth, editFormHeight);
 
     if (editForm !== null) {
       togglButtonDescription = $('#toggl-button-description');
@@ -529,7 +536,8 @@ window.togglbutton = {
       return;
     }
 
-    const current = Array.from(document.querySelectorAll('.toggl-button:not(.toggl-button-edit-form-button)'))
+    const current = Array.from(document.querySelectorAll(
+      '.toggl-button:not(.toggl-button-edit-form-button)'))
       .find(button => button.title.indexOf(entry.description) !== -1);
 
     if (current) {
@@ -555,7 +563,8 @@ window.togglbutton = {
   },
 
   deactivateAllTimerLinks: function () {
-    const allActive = document.querySelectorAll('.toggl-button.active:not(.toggl-button-edit-form-button)');
+    const allActive = document.querySelectorAll(
+      '.toggl-button.active:not(.toggl-button-edit-form-button)');
     for (const active of allActive) {
       togglbutton.deactivateTimerLink(active);
     }

@@ -121,6 +121,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Waffle](https://waffle.io/)
 - [WordPress](https://wordpress.com)
 - [Workast](https://workast.io)
+- [Workflowy](https://workflowy.com)
 - [Workfront](https://www.workfront.com/)
 - [Worksection](http://worksection.com/)
 - [Wrike](https://www.wrike.com/)

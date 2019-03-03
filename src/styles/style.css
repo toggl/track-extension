@@ -1612,3 +1612,24 @@ label > .toggl-button.outlook {
   background-color: #f5f5f5 !important;
   color: #6a7479;
 }
+
+/****** WORKFLOWY ******/
+.workflowy-toggl-wrapper {
+  display: flex !important;
+}
+
+.toggl-button.workflowy:not(.toggl-button-edit-form-button) {
+  background-position-x: right;
+  background-position-y: center;
+  background-size: 14px 14px;
+  line-height: 24px;
+  height: 24px;
+  font-size: 100%;
+  padding-left: 0;
+  padding-right: 23px;
+  flex-grow: 1;
+  -webkit-box-flex: 1;
+  color: inherit !important;
+  cursor: default !important;
+  text-decoration: none !important;
+}

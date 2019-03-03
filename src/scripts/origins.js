@@ -587,6 +587,10 @@ export default {
     url: '*://*.workast.io/*',
     name: 'Workast'
   },
+  'workflowy.com': {
+    url: '*://workflowy.com/*',
+    name: 'Workflowy'
+  },
   'my.workfront.com': {
     url: '*://*.my.workfront.com/*',
     name: 'Workfront'

@@ -91,6 +91,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Rindle](https://rindle.com/)
 - [Rollbar](https://rollbar.com/)
 - [Salesforce](http://www.salesforce.com/)
+- [Scrapbox](https://scrapbox.io/)
 - [Sentry](https://sentry.io/)
 - [SherpaDesk](http://www.sherpadesk.com/)
 - [Sifter](https://www.sifterapp.com/)

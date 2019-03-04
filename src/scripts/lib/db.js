@@ -259,6 +259,18 @@ export default class Db {
     }
   }
 
+  resetAllSettings () {
+    const allSettings = { ...DEFAULT_SETTINGS, ...CORE_SETTINGS };
+    return this.setMultiple(allSettings)
+      .then(() => {
+        bugsnagClient.leaveBreadcrumb('Completed reset all settings');
+      })
+      .catch((e) => {
+        bugsnagClient.notify(e);
+        alert('Failed to reset settings. Please contact support@toggl.com for assistance or try re-installing the extension.');
+      });
+  }
+
   _migrateToStorageSync () {
     console.info('Migrating settings to v2');
     bugsnagClient.leaveBreadcrumb('Attempting settings migration to v2');

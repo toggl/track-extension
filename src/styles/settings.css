@@ -32,7 +32,7 @@ input[type='number'] {
 .tabs {
   display: flex;
   overflow: hidden;
-  height: 350px;
+  height: calc(100vh - 35px - 42px);
   width: 100vw;
   transition: order 300ms ease-in-out;
   align-items: stretch;

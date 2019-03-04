@@ -1,4 +1,5 @@
 import bugsnag from 'bugsnag-js';
+const browser = require('webextension-polyfill');
 
 function noop (fnName) {
   return function () {
@@ -23,6 +24,7 @@ function getBugsnagClient () {
     autoCaptureSessions: false,
     collectUserIp: false,
     beforeSend: async function (report) {
+      const db = browser.extension.getBackgroundPage().db;
       const sendErrorReports = await db.get('sendErrorReports', true);
       if (!sendErrorReports) {
         report.ignore();

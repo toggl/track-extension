@@ -1035,25 +1035,27 @@ window.TogglButton = {
     });
   },
 
-  logoutUser: function (sendResponse) {
-    TogglButton.ajax('/sessions?created_with=' + TogglButton.$fullVersion, {
-      method: 'DELETE',
-      onLoad: function (xhr) {
-        TogglButton.$user = null;
-        TogglButton.updateTriggers(null);
-        localStorage.removeItem('userToken');
-        sendResponse({ success: xhr.status === 200, xhr: xhr });
-        if (xhr.status === 200) {
-          TogglButton.setBrowserActionBadge();
+  logoutUser: function () {
+    return new Promise((resolve) => {
+      TogglButton.ajax('/sessions?created_with=' + TogglButton.$fullVersion, {
+        method: 'DELETE',
+        onLoad: function (xhr) {
+          TogglButton.$user = null;
+          TogglButton.updateTriggers(null);
+          localStorage.removeItem('userToken');
+          resolve({ success: xhr.status === 200, xhr: xhr });
+          if (xhr.status === 200) {
+            TogglButton.setBrowserActionBadge();
+          }
+          TogglButton.refreshPageLogout();
+        },
+        onError: function (xhr) {
+          resolve({
+            success: false,
+            type: 'logout'
+          });
         }
-        TogglButton.refreshPageLogout();
-      },
-      onError: function (xhr) {
-        sendResponse({
-          success: false,
-          type: 'logout'
-        });
-      }
+      });
     });
   },
 
@@ -1794,7 +1796,9 @@ window.TogglButton = {
           request.type === 'update-enable-auto-tagging'
         ) {
           db.updateSetting('enableAutoTagging', request.state);
-
+        } else if (request.type === 'settings-reset') {
+          TogglButton.logoutUser();
+          resolve();
           // Background messages
         } else if (request.type === 'activate') {
           TogglButton.checkDailyUpdate();
@@ -1814,7 +1818,7 @@ window.TogglButton = {
             })
             .catch(() => resolve(undefined));
         } else if (request.type === 'logout') {
-          TogglButton.logoutUser(sendResponse);
+          TogglButton.logoutUser().then(resolve);
         } else if (request.type === 'sync') {
           TogglButton.fetchUser();
         } else if (request.type === 'timeEntry') {

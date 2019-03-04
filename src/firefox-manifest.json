@@ -30,7 +30,8 @@
     "128": "images/icon-128.png"
   },
   "options_ui": {
-    "page": "html/settings.html"
+    "page": "html/settings.html",
+    "open_in_tab": true
   },
   "permissions": [
     "*://*.toggl.com/*",

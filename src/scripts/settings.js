@@ -1,5 +1,5 @@
-import './lib/bugsnag';
 import TogglOrigins from './origins';
+import bugsnagClient from './lib/bugsnag';
 const browser = require('webextension-polyfill');
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
@@ -45,6 +45,7 @@ const Settings = {
   $sendUsageStatistics: null,
   $sendErrorReports: null,
   $enableAutoTagging: null,
+  $resetAllSettings: null,
   showPage: async function () {
     const pomodoroSoundVolume = await db.get('pomodoroSoundVolume');
     const volume = parseInt(pomodoroSoundVolume * 100, 10);
@@ -474,6 +475,7 @@ const Settings = {
 
     if (e.target.tagName !== 'INPUT') {
       target = e.target.querySelector('input');
+      if (!target) target = e.target.parentElement.querySelector('input');
       target.checked = !target.checked;
     }
 
@@ -622,6 +624,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     );
     Settings.$sendErrorReports = document.querySelector('#send-error-reports');
     Settings.$enableAutoTagging = document.querySelector('#enable-auto-tagging');
+    Settings.$resetAllSettings = document.querySelector('#reset-all-settings');
 
     // Show permissions page with notice
     const dontShowPermissions = await db.get('dont-show-permissions');
@@ -699,7 +702,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       Settings.toggleSetting(e.target, !startAutomatically, 'toggle-start-automatically');
     });
     Settings.$stopAutomatically.addEventListener('click', async function (e) {
-      const stopAutomatically = await db.getItem('stopAutomatically');
+      const stopAutomatically = await db.get('stopAutomatically');
       Settings.toggleSetting(e.target, !stopAutomatically, 'toggle-stop-automatically');
     });
     Settings.$postPopup.addEventListener('click', async function (e) {
@@ -862,6 +865,24 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         ).style.display =
           'none';
       });
+
+    Settings.$resetAllSettings.addEventListener('click', function (e) {
+      bugsnagClient.leaveBreadcrumb('Triggered reset all settings');
+      const isConfirmed = confirm('Are you sure you want to reset your settings?');
+      if (!isConfirmed) {
+        bugsnagClient.leaveBreadcrumb('Cancelled reset all settings');
+        return;
+      }
+
+      bugsnagClient.leaveBreadcrumb('Confirmed reset all settings');
+      db.resetAllSettings()
+        .then(() => {
+          browser.runtime
+            .sendMessage({ type: 'settings-reset' })
+            .then(() => window.location.reload())
+            .catch(() => window.location.reload());
+        });
+    });
 
     Settings.$sendUsageStatistics.addEventListener('click', async function (e) {
       const sendUsageStatistics = await db.get('sendUsageStatistics');

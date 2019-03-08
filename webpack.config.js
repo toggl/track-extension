@@ -7,7 +7,6 @@ const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
 const { EnvironmentPlugin } = require('webpack');
 const log = require('webpack-log')({ name: 'wds' });
 const pkg = require('./package.json');
-const getBugsnagKey = require('./utils/get-bugsnag-key');
 
 // Resolve environment settings for webpack.
 const config = f => (

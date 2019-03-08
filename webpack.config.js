@@ -17,6 +17,7 @@ const config = f => (
 ) => {
   const env = {
     development: Boolean(development),
+    bugsnagApiKey: '7419717b29de539ab0fbe35dcd7ca19d',
     production: Boolean(production),
     release: Boolean(release),
     version: pkg.version
@@ -28,7 +29,7 @@ const config = f => (
   return f(env);
 };
 
-module.exports = config(async ({ development, production, release, version }) => ({
+module.exports = config(async ({ development, bugsnagApiKey, production, release, version }) => ({
   target: 'web',
   context: path.resolve(__dirname, 'src'),
   devtool: 'source-map',
@@ -55,7 +56,7 @@ module.exports = config(async ({ development, production, release, version }) =>
   plugins: [
     new EnvironmentPlugin({
       API_URL: 'https://toggl.com/api',
-      BUGSNAG_API_KEY: await getBugsnagKey(),
+      BUGSNAG_API_KEY: bugsnagApiKey,
       DEBUG: development,
       GA_TRACKING_ID: 'UA-3215787-22',
       VERSION: version
@@ -91,7 +92,7 @@ module.exports = config(async ({ development, production, release, version }) =>
     ]),
     production && release &&
       new BugsnagSourceMapUploaderPlugin({
-        apiKey: await getBugsnagKey(),
+        apiKey: bugsnagApiKey,
         appVersion: version,
         publicPath: 'togglbutton://',
         overwrite: true /* Overwrites existing sourcemaps for this version */

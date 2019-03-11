@@ -1798,7 +1798,7 @@ window.TogglButton = {
           db.updateSetting('enableAutoTagging', request.state);
         } else if (request.type === 'settings-reset') {
           TogglButton.logoutUser();
-
+          resolve();
           // Background messages
         } else if (request.type === 'activate') {
           TogglButton.checkDailyUpdate();

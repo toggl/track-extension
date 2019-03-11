@@ -877,9 +877,9 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       bugsnagClient.leaveBreadcrumb('Confirmed reset all settings');
       db.resetAllSettings()
         .then(() => {
-          // window.location.reload();
           browser.runtime
             .sendMessage({ type: 'settings-reset' })
+            .then(() => window.location.reload())
             .catch(() => window.location.reload());
         });
     });

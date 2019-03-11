@@ -475,6 +475,7 @@ const Settings = {
 
     if (e.target.tagName !== 'INPUT') {
       target = e.target.querySelector('input');
+      if (!target) target = e.target.parentElement.querySelector('input');
       target.checked = !target.checked;
     }
 

@@ -404,7 +404,7 @@ window.togglbutton = {
         link.textContent = 'Start timer';
       }
       browser.runtime
-        .sendMessage({ type: 'stop', respond: true })
+        .sendMessage({ type: 'stop' })
         .then(togglbutton.addEditForm);
 
       closeForm();

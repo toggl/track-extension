@@ -725,97 +725,95 @@ window.TogglButton = {
     TogglButton.updateTriggers(entry);
   },
 
-  stopTimeEntryPomodoro: async function (timeEntry, sendResponse, cb) {
-    const pomodoroInterval = await db.get('pomodoroInterval');
-    const pomodoroDuration = parseInt(pomodoroInterval, 10) * 60;
+  stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {
+    return new Promise(async (resolve) => {
+      const pomodoroInterval = await db.get('pomodoroInterval');
+      const pomodoroDuration = parseInt(pomodoroInterval, 10) * 60;
 
-    if (!TogglButton.$curEntry) {
-      return;
-    }
+      if (!TogglButton.$curEntry) {
+        resolve();
+        return;
+      }
 
-    const entry = {
-      duration: pomodoroDuration
-    };
+      const entry = {
+        duration: pomodoroDuration
+      };
 
-    TogglButton.ajax(
-      `/time_entries/${TogglButton.$curEntry.id}`,
-      {
-        method: 'PUT',
-        payload: entry,
-        baseUrl: TogglButton.$ApiV9Url,
-        onLoad: function (xhr) {
-          if (xhr.status === 200) {
-            TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText);
-            TogglButton.updateEntriesDb();
-            TogglButton.resetPomodoroProgress(null);
-            if (timeEntry.respond) {
-              sendResponse({ success: true, type: 'Stop' });
+      TogglButton.ajax(
+        `/time_entries/${TogglButton.$curEntry.id}`,
+        {
+          method: 'PUT',
+          payload: entry,
+          baseUrl: TogglButton.$ApiV9Url,
+          onLoad: function (xhr) {
+            if (xhr.status === 200) {
+              TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText);
+              TogglButton.updateEntriesDb();
+              TogglButton.resetPomodoroProgress(null);
+              TogglButton.setNannyTimer();
+              ga.reportEvent(timeEntry.type, timeEntry.service);
+              resolve({ success: true, type: 'Stop' });
               browser.tabs.query({ active: true, currentWindow: true })
                 .then(filterTabs(function (tabs) {
                   browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user });
                 }));
             }
-            TogglButton.setNannyTimer();
-            ga.reportEvent(timeEntry.type, timeEntry.service);
-            if (cb) {
-              cb();
-            }
+          },
+          onError: function (xhr) {
+            resolve({
+              success: false,
+              type: 'Update'
+            });
           }
-        },
-        onError: function (xhr) {
-          sendResponse({
-            success: false,
-            type: 'Update'
-          });
         }
-      }
-    );
+      );
+    });
   },
 
   stopTimeEntry: function (timeEntry, sendResponse, cb) {
-    if (!TogglButton.$curEntry) {
-      return;
-    }
-    const stopTime = timeEntry.stopDate || new Date();
-    const startTime = new Date(-TogglButton.$curEntry.duration * 1000);
-    const entry = {
-      stop: stopTime.toISOString(),
-      duration: Math.floor((stopTime - startTime) / 1000)
-    };
+    return new Promise((resolve) => {
+      if (!TogglButton.$curEntry) {
+        resolve();
+        return;
+      }
 
-    TogglButton.ajax(
-      `/time_entries/${TogglButton.$curEntry.id}`,
-      {
-        method: 'PUT',
-        baseUrl: TogglButton.$ApiV9Url,
-        payload: entry,
-        onLoad: function (xhr) {
-          if (xhr.status === 200) {
-            TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText);
-            TogglButton.updateEntriesDb();
-            TogglButton.resetPomodoroProgress(null);
-            if (timeEntry.respond) {
-              sendResponse({ success: true, type: 'Stop' });
+      const stopTime = timeEntry.stopDate || new Date();
+      const startTime = new Date(-TogglButton.$curEntry.duration * 1000);
+      const entry = {
+        stop: stopTime.toISOString(),
+        duration: Math.floor((stopTime - startTime) / 1000)
+      };
+
+      TogglButton.ajax(
+        `/time_entries/${TogglButton.$curEntry.id}`,
+        {
+          method: 'PUT',
+          baseUrl: TogglButton.$ApiV9Url,
+          payload: entry,
+          onLoad: function (xhr) {
+            if (xhr.status === 200) {
+              TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText);
+              TogglButton.updateEntriesDb();
+              TogglButton.resetPomodoroProgress(null);
+              TogglButton.setNannyTimer();
+              ga.reportEvent(timeEntry.type, timeEntry.service);
+
+              resolve({ success: true, type: 'Stop' });
               browser.tabs.query({ active: true, currentWindow: true })
                 .then(filterTabs(function (tabs) {
                   browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user });
                 }));
             }
-            TogglButton.setNannyTimer();
-            ga.reportEvent(timeEntry.type, timeEntry.service);
-            if (cb) {
-              cb();
-            }
+          },
+          onError: function (xhr) {
+            resolve({
+              success: false,
+              type: 'Stop'
+            });
           }
-        },
-        onError: function (xhr) {
-          sendResponse({
-            success: false,
-            type: 'Stop'
-          });
         }
-      }
-    );
+      );
+    });
   },
 
   pomodoroStopTimeTracking: async function () {
@@ -1506,20 +1504,16 @@ window.TogglButton = {
       if (buttonID === 0 || buttonID === 1) {
         buttonName = 'discard';
         // discard idle time
-        TogglButton.stopTimeEntry(
-          {
-            stopDate: TogglButton.$idleNotificationDiscardSince,
-            type: 'idle-detection-notification'
-          },
-          null,
-          function () {
-            // discard idle time and continue
-            if (buttonID === 1) {
-              TogglButton.createTimeEntry(timeEntry);
-              buttonName = 'discard_continue';
-            }
+        TogglButton.stopTimeEntry({
+          stopDate: TogglButton.$idleNotificationDiscardSince,
+          type: 'idle-detection-notification'
+        }).then(() => {
+          // discard idle time and continue
+          if (buttonID === 1) {
+            TogglButton.createTimeEntry(timeEntry);
+            buttonName = 'discard_continue';
           }
-        );
+        });
       }
       eventType = 'idle';
     } else if (notificationId === 'pomodoro-time-is-up') {
@@ -1839,7 +1833,9 @@ window.TogglButton = {
         } else if (request.type === 'update') {
           TogglButton.updateTimeEntry(request, sendResponse);
         } else if (request.type === 'stop') {
-          TogglButton.stopTimeEntry(request, sendResponse);
+          TogglButton
+            .stopTimeEntry(request, sendResponse)
+            .then(resolve);
         } else if (request.type === 'userToken') {
           if (!TogglButton.$user) {
             TogglButton.fetchUser(request.apiToken);

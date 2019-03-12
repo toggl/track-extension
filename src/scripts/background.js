@@ -1822,7 +1822,8 @@ window.TogglButton = {
               resolve(response);
             });
         } else if (request.type === 'list-continue') {
-          TogglButton.createTimeEntry({ ...request.data, type: request.type }, sendResponse);
+          TogglButton.createTimeEntry({ ...request.data, type: request.type })
+            .then(resolve);
           TogglButton.hideNotification('remind-to-track-time');
         } else if (request.type === 'resume') {
           TogglButton.createTimeEntry(

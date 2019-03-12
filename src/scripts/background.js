@@ -231,6 +231,10 @@ window.TogglButton = {
   },
 
   setupSocket: function () {
+    if (TogglButton.$socket && !TogglButton.$retrySocket) {
+      return;
+    }
+
     try {
       TogglButton.$socket = new WebSocket('wss://stream.toggl.com/ws');
     } catch (e) {

@@ -372,7 +372,7 @@ const Settings = {
                 }
 
                 dom = document.createElement('div');
-                dom.textContent = key;
+                dom.textContent = `${TogglOrigins[key].name} - ${key}`;
 
                 li.appendChild(input);
                 li.appendChild(dom);
@@ -663,7 +663,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
 
       const permissionItems = document.querySelectorAll('#permissions-list li');
       permissionItems.forEach((item) => {
-        if (item.id.indexOf(val) !== -1) {
+        if (item.textContent.toLowerCase().indexOf(val) !== -1) {
           item.classList.add('filter');
         } else if (item.classList) {
           item.classList.remove('filter');

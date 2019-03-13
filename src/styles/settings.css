@@ -203,6 +203,7 @@ header li:hover {
 .origin-list li {
   height: 23px;
   border-bottom: 1px solid #e8e8e8;
+  cursor: pointer;
 }
 
 .origin-list li:hover {

@@ -1,3 +1,17 @@
+# [1.23.0](https://github.com/toggl/toggl-button/compare/1.22.2...1.23.0) (2019-03-13)
+
+
+### Bug Fixes
+
+* Ensure only one websocket is created ([e3d1cbe](https://github.com/toggl/toggl-button/commit/e3d1cbe))
+
+
+### Features
+
+* Migrate settings when upgrading to 1.23.x ([7b497da](https://github.com/toggl/toggl-button/commit/7b497da)), closes [#1296](https://github.com/toggl/toggl-button/issues/1296)
+* Use WebExtension synced storage ([f936868](https://github.com/toggl/toggl-button/commit/f936868)), closes [#1292](https://github.com/toggl/toggl-button/issues/1292) [#1296](https://github.com/toggl/toggl-button/issues/1296)
+* **settings:** Add "Reset settings" feature to Settings ([d1fc44f](https://github.com/toggl/toggl-button/commit/d1fc44f)), closes [#1317](https://github.com/toggl/toggl-button/issues/1317)
+
 ## [1.22.2](https://github.com/toggl/toggl-button/compare/1.22.1...1.22.2) (2019-03-11)
 
 

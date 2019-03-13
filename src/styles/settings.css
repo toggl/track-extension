@@ -48,7 +48,13 @@ input[type='number'] {
 }
 
 .tab.active {
-  display: block;
+  display: flex;
+}
+
+@media (max-width: 860px) {
+  .tab.active {
+    display: block;
+  }
 }
 
 .list {
@@ -175,7 +181,7 @@ header li:hover {
 }
 
 .section {
-  width: 400px;
+  flex: 1;
 }
 
 .section:hover .description {

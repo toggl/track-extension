@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/toggl/toggl-button/compare/1.23.0...1.23.1) (2019-03-14)
+
+
+### Bug Fixes
+
+* Timer stops abrupty if stop at end of day is enabled ([bf68ff9](https://github.com/toggl/toggl-button/commit/bf68ff9))
+
 # [1.23.0](https://github.com/toggl/toggl-button/compare/1.22.2...1.23.0) (2019-03-13)
 
 

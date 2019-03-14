@@ -29,7 +29,8 @@ module.exports = {
       {
         'assets': [
           'docs/_includes/changelog.md',
-          'package.json'
+          'package.json',
+          'package-lock.json'
         ]
       }
     ]

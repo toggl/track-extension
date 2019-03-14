@@ -775,30 +775,24 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         sound.play();
       });
 
-    document
-      .querySelector('#nag-nanny-from')
-      .addEventListener('blur', function (e) {
-        if (e.target.value.length === 0) {
-          Settings.setFromTo();
-          return;
-        }
-        Settings.$fromTo =
-          e.target.value + '-' + document.querySelector('#nag-nanny-to').value;
-        Settings.saveSetting();
-      });
-    document
-      .querySelector('#nag-nanny-to')
-      .addEventListener('blur', function (e) {
-        if (e.target.value.length === 0) {
-          Settings.setFromTo();
-          return;
-        }
-        const fromTo =
+    const saveNagNanny = (e) => {
+      if (e.target.value.length === 0) {
+        Settings.setFromTo();
+        return;
+      }
+      const fromTo =
           document.querySelector('#nag-nanny-from').value +
           '-' +
-          e.target.value;
-        Settings.saveSetting(fromTo, 'toggle-nanny-from-to');
-      });
+          document.querySelector('#nag-nanny-to').value;
+      Settings.saveSetting(fromTo, 'toggle-nanny-from-to');
+    };
+
+    document
+      .querySelector('#nag-nanny-from')
+      .addEventListener('blur', saveNagNanny);
+    document
+      .querySelector('#nag-nanny-to')
+      .addEventListener('blur', saveNagNanny);
     document
       .querySelector('#nag-nanny-interval')
       .addEventListener('blur', function (e) {

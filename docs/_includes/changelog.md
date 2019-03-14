@@ -1,3 +1,10 @@
+## [1.23.2](https://github.com/toggl/toggl-button/compare/1.23.1...1.23.2) (2019-03-14)
+
+
+### Bug Fixes
+
+* **settings:** From interval not being saved ([97f569f](https://github.com/toggl/toggl-button/commit/97f569f)), closes [#1339](https://github.com/toggl/toggl-button/issues/1339)
+
 ## [1.23.1](https://github.com/toggl/toggl-button/compare/1.23.0...1.23.1) (2019-03-14)
 
 

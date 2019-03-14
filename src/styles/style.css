@@ -1051,6 +1051,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 .toggl-button.wrike {
   text-decoration: none;
   color: rgb(80, 79, 79);
+  margin: 10px 15px 10px 0;
 }
 
 /********* ASSEMBLA *********/

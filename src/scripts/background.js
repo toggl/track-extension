@@ -1436,11 +1436,12 @@ window.TogglButton = {
 
   checkWorkDayEnd: async function () {
     const stopAtDayEnd = await db.get('stopAtDayEnd');
+    const hasWorkdayEnded = await TogglButton.workdayEnded();
     if (
       TogglButton.$user &&
       stopAtDayEnd &&
       TogglButton.$curEntry &&
-      TogglButton.workdayEnded()
+      hasWorkdayEnded
     ) {
       let title = 'Continue';
       if (TogglButton.$curEntry.description) {

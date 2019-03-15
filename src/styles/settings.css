@@ -2,7 +2,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
 }
 
 input[type='number'],
@@ -34,6 +34,7 @@ input[type='number'] {
   overflow: hidden;
   height: calc(100vh - 35px - 42px);
   width: 100vw;
+
   transition: order 300ms ease-in-out;
   align-items: stretch;
   background-color: inherit;
@@ -41,6 +42,7 @@ input[type='number'] {
 
 .tab {
   display: none;
+  position: relative;
   flex: 1 0 100vw;
   overflow-y: auto;
   padding: 20px;
@@ -57,6 +59,68 @@ input[type='number'] {
   }
 }
 
+.fields {
+  max-width: 800px;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+}
+
+.field:not(:first-of-type) {
+  /* border-top: 1px solid rgba(0, 0, 0, 0.1); */
+}
+
+.field__label {
+  flex: 5;
+}
+
+.field__label > label {
+  font-size: 16px;
+}
+
+.field > *:last-child {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1em;
+}
+
+.field .description {
+  color: rgb(119, 119, 119);
+  padding: 5px;
+  align-self: stretch;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.field.danger-zone {
+  border-top: 1px solid darkgrey;
+}
+
+.field--showDetails .subsettings-details {
+  height: auto;
+}
+
+.field .subsettings-details input {
+  margin: 0 5px !important;
+}
+
+.subsettings-details {
+  overflow: hidden;
+  padding: 10px 0 5px;
+  height: 0px;
+  margin-left: 10px;
+  transition: height 300ms ease-in-out;
+}
+
+.subsettings-details span {
+  display: block;
+}
+
 .list {
   padding: 0;
   margin: 0;
@@ -64,20 +128,7 @@ input[type='number'] {
 }
 
 .list li {
-  position: relative;
   min-height: 40px;
-}
-
-.list li #nag-nanny:checked ~ div {
-  height: auto;
-}
-
-.list li #pomodoro-mode:checked ~ div {
-  height: 220px;
-}
-
-.list li #stop-at-day-end:checked ~ div {
-  height: 70px;
 }
 
 .list li label {
@@ -87,36 +138,24 @@ input[type='number'] {
   vertical-align: middle;
 }
 
-.list li input[type='checkbox'] {
-  height: 1.3em;
-  width: 1.3em;
-  margin: 0px 0.4em 0.3em 0px;
-}
-
-.subsettings-details {
-  overflow: hidden;
-  height: 0px;
-  margin-left: 25px;
-  transition: height 300ms ease-in-out;
-}
-
-.subsettings-details span {
-  display: block;
-  font-size: 14px;
-  padding-top: 10px;
+input[type='checkbox'] {
+  height: 1.5em;
+  width: 1.5em;
 }
 
 .description {
-  position: absolute;
-  display: block;
-  top: 0;
-  right: 0;
-  border-left: 2px solid #dfdfdf;
+  /* position: absolute; */
+  /* display: block; */
+  /* right: 0; */
+  /* border-left: 2px solid #dfdfdf; */
   color: rgb(119, 119, 119);
-  visibility: hidden;
+  /* visibility: hidden; */
   padding: 5px;
-  width: 40%;
-  margin: 0 20px !important;
+  align-self: stretch;
+  /* width: 40%; */
+  /* margin: 0 20px !important; */
+  width: 100%;
+  padding: 5px 0;
 }
 
 .list li:hover .description {
@@ -299,7 +338,6 @@ header li:hover {
 }
 
 #default-project {
-  margin-left: 5px;
   max-width: 280px;
 }
 
@@ -375,12 +413,6 @@ header li:hover {
   width: 40px;
   text-align: right;
   margin-right: 5px;
-}
-
-#sound-test {
-  position: relative;
-  right: -112px;
-  width: 80px;
 }
 
 .pomodoro-sound {

@@ -95,6 +95,8 @@ const Settings = {
       );
       Settings.toggleState(Settings.$postPopup, showPostPopup);
       Settings.toggleState(Settings.$nanny, nannyCheckEnabled);
+      document.querySelector('.field.nag-nanny').classList.toggle('field--showDetails', nannyCheckEnabled);
+
       Settings.toggleState(
         Settings.$idleDetection,
         idleDetectionEnabled
@@ -103,6 +105,7 @@ const Settings = {
         Settings.$pomodoroMode,
         pomodoroModeEnabled
       );
+      document.querySelector('.field.pomodoro-mode').classList.toggle('field--showDetails', pomodoroModeEnabled);
       Settings.toggleState(
         Settings.$pomodoroSound,
         pomodoroSoundEnabled
@@ -131,6 +134,7 @@ const Settings = {
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
+      document.querySelector('.field.stop-at-day-end').classList.toggle('field--showDetails', stopAtDayEnd);
 
       Settings.fillDefaultProject();
 
@@ -712,6 +716,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$nanny.addEventListener('click', async function (e) {
       const nannyCheckEnabled = await db.get('nannyCheckEnabled');
       Settings.toggleSetting(e.target, !nannyCheckEnabled, 'toggle-nanny');
+      document.querySelector('.field.nag-nanny').classList.toggle('field--showDetails', !nannyCheckEnabled);
     });
     Settings.$idleDetection.addEventListener('click', async function (e) {
       const idleDetectionEnabled = await db.get('idleDetectionEnabled');
@@ -720,6 +725,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$pomodoroMode.addEventListener('click', async function (e) {
       const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
       Settings.toggleSetting(e.target, !pomodoroModeEnabled, 'toggle-pomodoro');
+      document.querySelector('.field.pomodoro-mode').classList.toggle('field--showDetails', !pomodoroModeEnabled);
     });
     Settings.$pomodoroSound.addEventListener('click', async function (e) {
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
@@ -733,6 +739,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$stopAtDayEnd.addEventListener('click', async function (e) {
       const stopAtDayEnd = await db.get('stopAtDayEnd');
       Settings.toggleSetting(e.target, !stopAtDayEnd, 'toggle-stop-at-day-end');
+      document.querySelector('.field.stop-at-day-end').classList.toggle('field--showDetails', !stopAtDayEnd);
     });
 
     Settings.$rememberProjectPer.addEventListener('change', function (e) {

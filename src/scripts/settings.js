@@ -20,7 +20,7 @@ if (FF) {
   document.body.classList.add('ff');
 }
 
-document.querySelector('#version').textContent = `(${process.env.VERSION})`;
+document.querySelector('#version').textContent = process.env.VERSION;
 
 const Settings = {
   $startAutomatically: null,
@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     const settingsActiveTab = await db.get('settings-active-tab', 0);
     const activeTab = Number.parseInt(settingsActiveTab, 10);
     changeActiveTab(activeTab);
-    document.querySelector('body').style.display = 'block';
+    document.querySelector('body').style.display = 'flex';
 
     Settings.showPage();
 

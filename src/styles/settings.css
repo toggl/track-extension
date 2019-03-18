@@ -1,5 +1,7 @@
 html {
   --main-bg-color: #ffffff;
+  --tab-background: #fdfdfd;
+  --footer-background: #f5f5f5;
 }
 
 html,
@@ -26,11 +28,17 @@ input[type='number'] {
   width: 50px;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .container {
   position: relative;
   width: 800px;
   max-width: 800px;
-  background-color: #fff;
+  background-color: var(--main-bg-color);
   color: #505050;
 }
 
@@ -38,8 +46,7 @@ input[type='number'] {
   display: flex;
   overflow: hidden;
   height: calc(100vh - 35px - 42px);
-  width: 100vw;
-
+  width: 100%;
   transition: order 300ms ease-in-out;
   align-items: stretch;
   background-color: inherit;
@@ -48,7 +55,7 @@ input[type='number'] {
 .tab {
   display: none;
   position: relative;
-  flex: 1 0 100vw;
+  flex: 1 0 100%;
   overflow-y: auto;
   padding: 20px;
   box-sizing: border-box;
@@ -56,6 +63,7 @@ input[type='number'] {
 
 .tab.active {
   display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 860px) {
@@ -108,6 +116,7 @@ input[type='number'] {
 
 .field--showDetails .subsettings-details {
   height: auto;
+  padding: 10px 0 5px;
 }
 
 .field .subsettings-details input {
@@ -116,7 +125,6 @@ input[type='number'] {
 
 .subsettings-details {
   overflow: hidden;
-  padding: 10px 0 5px;
   height: 0px;
   margin-left: 10px;
   transition: height 300ms ease-in-out;
@@ -168,6 +176,9 @@ input[type='checkbox'] {
 }
 
 header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   box-shadow: inset 0px -1px 1px -1px #bbb;
   position: relative;
   z-index: 1;
@@ -184,7 +195,7 @@ header ul {
 
 header .tab-link {
   box-sizing: border-box;
-  background: #fdfdfd;
+  background: var(--tab-background);
   border-bottom: 1px solid #eee;
   padding: 10px 20px;
   cursor: pointer;
@@ -434,14 +445,24 @@ header li:hover {
   height: 64px;
 }
 
+.danger-zone {
+  max-width: 800px;
+}
+
+.danger-zone hr {
+  margin-top: 18px;
+  margin-bottom: 38px;
+}
+
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 42px;
   padding: 0 15px;
-  background-color: #f5f5f5;
+  background-color: var(--footer-background);
   border-top: 1px solid #e5e5e5;
   color: #8a8888;
   font-size: 12px;
+  min-width: 360px;
 }

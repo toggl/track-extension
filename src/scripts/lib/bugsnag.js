@@ -1,4 +1,4 @@
-import bugsnag from 'bugsnag-js';
+import bugsnag from '@bugsnag/js';
 const browser = require('webextension-polyfill');
 
 function noop (fnName) {

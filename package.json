@@ -75,6 +75,6 @@
     "webpack-log": "1.2.0"
   },
   "dependencies": {
-    "bugsnag-js": "4.7.2"
+    "@bugsnag/js": "^6.0.0"
   }
 }

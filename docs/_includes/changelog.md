@@ -1,3 +1,10 @@
+## [1.23.3](https://github.com/toggl/toggl-button/compare/1.23.2...1.23.3) (2019-03-19)
+
+
+### Bug Fixes
+
+* Upgrade to bugsnag v6 ([429307b](https://github.com/toggl/toggl-button/commit/429307b)), closes [#1350](https://github.com/toggl/toggl-button/issues/1350)
+
 ## [1.23.2](https://github.com/toggl/toggl-button/compare/1.23.1...1.23.2) (2019-03-14)
 
 

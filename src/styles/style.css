@@ -610,12 +610,13 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* GOOGLE DOCS *********/
-.toggl-button.google-docs {
+.toggl-button.google-docs:not(.toggl-button-edit-form-button) {
   background-size: 17px;
   padding-left: 19px;
+  margin-left: 5px;
 }
 
-.toggl-button.google-docs.min {
+.toggl-button.google-docs.min:not(.toggl-button-edit-form-button) {
   margin-bottom: -10px;
   margin-left: 5px;
 }

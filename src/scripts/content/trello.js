@@ -50,14 +50,14 @@ togglbutton.render(
     };
 
     const link = togglbutton.createTimerLink({
-      className: 'trello',
+      className: 'trello-list',
       buttonType: 'minimal',
       projectName: getProject,
       description: titleElem.textContent + ' - ' + taskElem.textContent
     });
 
-    link.classList.add('checklist-item-button');
-    elem.parentNode.appendChild(link);
+    link.classList.add('checklist-item-menu');
+    elem.querySelector('.checklist-item-menu-wrapper').appendChild(link);
   },
   '.checklist-items-list, .window-wrapper'
 );

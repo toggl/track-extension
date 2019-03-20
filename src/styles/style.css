@@ -481,16 +481,18 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   color: #737373;
 }
 
-.checklist-item-button {
+.toggl-button.trello-list:not(.toggl-button-edit-form-button) {
+  visibility: hidden;
+  pointer-events: none;
+}
+.checklist-item-details:hover .toggl-button.trello-list, .toggl-button.trello-list.active:not(.toggl-button-edit-form-button) {
+  visibility: visible;
+  pointer-events: all;
   position: absolute;
-  top: 2px;
-  right: 0;
+  top: 0;
+  right: 32px;
+  background-position: center !important;
 }
-
-.checklist-item-details-text {
-  max-width: 94%;
-}
-
 .trello-tb-wrapper .toggl-button {
   color: #444;
 }

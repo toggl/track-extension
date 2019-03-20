@@ -12,7 +12,7 @@ All integrations have some maintenance cost - any time the UI is changed, Toggl 
 
 All integrations should be tested across both Chrome and Firefox.
 
-Please consider the following:
+Please consider the following with your pull request:
 
 * Include screenshot(s) of the working integration in your pull request.
 * Include a description of how to find the page or screen the button is visible on.
@@ -20,6 +20,33 @@ Please consider the following:
 * Your code changes will be linted by [eslint](https://eslint.org/) when you attempt to commit. Please fix any errors raised.
   * You may run `npm run lint path/to/your/file/here.js` to lint a file manually. Add `-- --fix` to the command to automatically fix most issues.
 * When you're done, squash all of your commits into one commit. This keeps the git log compact and clear.
+
+#### Toggl Button "style guide":
+
+**For integrations that show one button on the page:**
+* Use the default appearance
+
+![](https://user-images.githubusercontent.com/6432028/54681194-ac58da00-4b03-11e9-8e69-8341d4b786b9.png).
+
+* If the button is placed in a tight spot (such as a toolbar), you can use `buttonType: minimal`.
+* It's OK for the "Start/stop timer" text color to be changed to fit the integration.
+* You can place the button inside a UI component if it makes sense. Example: Trello
+
+![](https://user-images.githubusercontent.com/6432028/54681196-af53ca80-4b03-11e9-8510-5af04f714907.png)
+
+**For integrations that show many buttons in a list:**
+* Always use `buttonType: minimal`.
+* The buttons must *only* be shown on **hover** or in context menus.
+* Buttons must use the grey icon. ![]()
+* When a timer is active, the active button must be shown all the time (instead of only on hover).
+* Active buttons must use the red icon. ![]()
+* Please investigate performance. List integrations can have a negative effect.
+
+![](https://user-images.githubusercontent.com/6432028/54681215-b8dd3280-4b03-11e9-8bf9-c75712b655b2.png)
+
+**All buttons:**
+* Make sure we're not leaking styles or breaking the layout of the UI.
+* The text used as timer description should be tailored to the majority of users. E.g. if ticket ID is an important piece of information, it should be included. If it's not important information (e.g. never actually shown in the UI, only in URLs) it should not be included.
 
 ## Making changes to the core extension code
 

@@ -640,10 +640,13 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-top: -5px;
 }
 /********* ZENDESK *********/
-.toggl-button.zendesk {
-  float: right;
-  padding-right: 3em;
-  margin-top: -1.5em;
+.toggl-button.zendesk:not(.toggl-button-edit-form-button) {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0 30px 25px 24px;
+
+  font-weight: initial;
 }
 
 /********* ANYDO *********/

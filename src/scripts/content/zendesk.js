@@ -5,7 +5,6 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
 ) {
   let description;
   const projectName = $('title').textContent;
-  const divTag = document.createElement('div');
 
   const titleFunc = function () {
     const titleElem = $('.selected .tab_text .title');
@@ -27,6 +26,5 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
     projectName: projectName && projectName.split(' - ').shift()
   });
 
-  divTag.appendChild(link);
-  elem.insertBefore(divTag, elem.querySelector('.btn-group'));
+  elem.insertBefore(link, elem.querySelector('.btn-group'));
 });

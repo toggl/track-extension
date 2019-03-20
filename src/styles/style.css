@@ -495,10 +495,6 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   color: #444;
 }
 
-.trello-tb-wrapper:hover .toggl-button {
-  color: #fff;
-}
-
 /********* BASECAMP *********/
 .toggl-button.basecamp {
   font-size: 12px;

@@ -25,6 +25,12 @@ togglbutton.render(
       projectName: getProject
     });
 
+    // Pass through click on Trello button to the timer link
+    container.addEventListener('click', (e) => {
+      e.preventDefault();
+      link.click();
+    });
+
     container.appendChild(link);
     descriptionElem.parentNode.insertBefore(container, descriptionElem);
   },

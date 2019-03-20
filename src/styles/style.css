@@ -893,14 +893,17 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* GOOGLE MAIL *********/
-.toggl-button.google-mail {
+.toggl-button.google-mail:not(.toggl-button-edit-form-button) {
   margin-left: 15px;
-  font-size: 12px;
   text-decoration: none;
+  font-weight: initial;
+  vertical-align: middle;
   color: rgb(102, 102, 102);
 }
-.toggl-button.google-mail:hover {
-  text-decoration: underline;
+.toggl-button.google-mail.toggl-button-edit-form-button {
+  /* resolve leaking service styles */
+  color: rgb(102, 102, 102);
+  text-decoration: none;
 }
 
 /********* TAIGA *********/

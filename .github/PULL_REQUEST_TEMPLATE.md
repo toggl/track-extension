@@ -4,6 +4,8 @@ Please remember the [Contributing Guidelines](https://github.com/toggl/toggl-but
 
 <!-- Concise description of what this PR achieves, including any context. -->
 
+<!-- If you're adding a new integration, please make sure it follows the "style guide" https://github.com/toggl/toggl-button/blob/master/.github/CONTRIBUTING.md -->
+
 ## :bug: Recommendations for testing
 
 All changes should be tested across Chrome and Firefox.

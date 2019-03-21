@@ -1435,6 +1435,10 @@ window.TogglButton = {
   },
 
   checkWorkDayEnd: async function () {
+    if (!TogglButton.$curEntry) {
+      return;
+    }
+
     const stopAtDayEnd = await db.get('stopAtDayEnd');
     const hasWorkdayEnded = await TogglButton.workdayEnded();
     if (
@@ -1469,6 +1473,9 @@ window.TogglButton = {
   },
 
   workdayEnded: async function () {
+    if (!TogglButton.$curEntry) {
+      return false;
+    }
     const startedTime = new Date(TogglButton.$curEntry.start);
     const now = new Date();
     const endTime = new Date();

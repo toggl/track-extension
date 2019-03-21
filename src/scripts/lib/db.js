@@ -222,16 +222,10 @@ export default class Db {
 
   async load (setting, defaultValue) {
     let value = await this.get(setting);
-
-    // Attempt to migrate from old localStorage settings.
-    if (value === null || typeof value === 'undefined') {
-      value = localStorage.getItem(setting);
-      if (value && typeof defaultValue === 'boolean') {
-        value = JSON.parse(value);
-      }
+    if (typeof value === 'undefined') {
+      value = defaultValue;
     }
 
-    value = value || defaultValue;
     this.set(setting, value);
     return value;
   }

@@ -1,7 +1,12 @@
+html {
+  --main-bg-color: #ffffff;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
+  background: var(--main-bg-color);
   /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
 }
 

@@ -1,3 +1,11 @@
+## [1.23.4](https://github.com/toggl/toggl-button/compare/1.23.3...1.23.4) (2019-03-21)
+
+
+### Bug Fixes
+
+* **settings:** Fix some settings being overwritten with default values ([b5c94bf](https://github.com/toggl/toggl-button/commit/b5c94bf)), closes [#1353](https://github.com/toggl/toggl-button/issues/1353)
+* Fix errors on workdayEnd when $curEntry is null ([8951ef4](https://github.com/toggl/toggl-button/commit/8951ef4))
+
 ## [1.23.3](https://github.com/toggl/toggl-button/compare/1.23.2...1.23.3) (2019-03-19)
 
 

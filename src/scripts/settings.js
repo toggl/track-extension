@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     if (
       !dontShowPermissions
     ) {
-      const showPermissionsInfo = await db.get('show-permissions-info', 0);
+      const showPermissionsInfo = await db.get('show-permissions-info');
       document.querySelector('.guide-container').style.display = 'flex';
       document.querySelector(
         ".guide > div[data-id='" + (showPermissionsInfo || 0) + "']"
@@ -644,7 +644,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     }
 
     // Change active tab.
-    const settingsActiveTab = await db.get('settings-active-tab');
+    const settingsActiveTab = await db.get('settings-active-tab', 0);
     const activeTab = Number.parseInt(settingsActiveTab, 10);
     changeActiveTab(activeTab);
     document.querySelector('body').style.display = 'block';

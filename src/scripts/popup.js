@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import TimeEntriesList from './components/TimeEntriesList.jsx';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 const browser = require('webextension-polyfill');
 
@@ -220,18 +224,6 @@ window.PopUp = {
     const html = document.createElement('div');
     const entries = TogglButton.$user.time_entries;
     const listEntries = [];
-    let visibleIcons = '';
-    let joinedTags;
-    let te;
-    let iconDiv;
-    let p;
-    let pname;
-    let pstyle;
-    let elem;
-    let li;
-    let t;
-    let b;
-    let i;
     let count = 0;
 
     if (!entries || entries.length < 1) {
@@ -239,9 +231,8 @@ window.PopUp = {
     }
 
     const checkUnique = function (te, listEntries) {
-      let j;
       if (listEntries.length > 0) {
-        for (j = 0; j < listEntries.length; j++) {
+        for (let j = 0; j < listEntries.length; j++) {
           if (
             listEntries[j].description === te.description &&
             listEntries[j].pid === te.pid
@@ -254,74 +245,19 @@ window.PopUp = {
       return te;
     };
 
-    const ul = document.createElement('ul');
+    const projects = {};
 
-    for (i = entries.length - 1; i >= 0; i--) {
+    for (let i = entries.length - 1; i >= 0; i--) {
       if (count >= 5) {
         break;
       }
-      te = checkUnique(entries[i], listEntries);
+      const te = checkUnique(entries[i], listEntries);
+      const project = TogglButton.findProjectByPid(te.pid);
+      if (project) {
+        projects[project.id] = project;
+      }
+
       if (!!te && te.duration >= 0) {
-        visibleIcons = '';
-        p = TogglButton.findProjectByPid(te.pid);
-        if (p) {
-          pname = p.name;
-          pstyle = 'background-color: ' + p.hex_color + ';';
-          p = document.createElement('div');
-          p.className = 'tb-project-bullet tb-project-color';
-          p.setAttribute('style', pstyle);
-        } else {
-          p = false;
-        }
-
-        t = !!te.tags && te.tags.length;
-        joinedTags = t ? te.tags.join(', ') : '';
-
-        t = t ? 'tag-icon-visible' : '';
-        b = te.billable ? 'billable-icon-visible' : '';
-        visibleIcons = t + ' ' + b;
-
-        li = document.createElement('li');
-        li.setAttribute('data-id', i);
-
-        // Description
-        elem = document.createElement('div');
-        elem.className = 'te-desc';
-        elem.setAttribute('title', te.description);
-        elem.textContent = te.description || '(no description)';
-        li.appendChild(elem);
-
-        // Project bullet and name
-        elem = document.createElement('div');
-        elem.className = 'te-proj';
-        if (p) {
-          elem.appendChild(p);
-          elem.appendChild(document.createTextNode(pname));
-        }
-        li.appendChild(elem);
-
-        // Continue Button
-        elem = document.createElement('div');
-        elem.className = 'te-continue';
-        elem.textContent = 'Continue';
-        li.appendChild(elem);
-
-        // Icons
-        elem = document.createElement('div');
-        elem.className = 'te-icons ' + visibleIcons;
-
-        iconDiv = document.createElement('div');
-        iconDiv.className = 'tag-icon';
-        iconDiv.setAttribute('title', joinedTags);
-        elem.appendChild(iconDiv);
-
-        iconDiv = document.createElement('div');
-        iconDiv.className = 'billable-icon';
-        iconDiv.setAttribute('title', 'billable');
-        elem.appendChild(iconDiv);
-        li.appendChild(elem);
-
-        ul.appendChild(li);
         count++;
       }
     }
@@ -329,19 +265,15 @@ window.PopUp = {
       return;
     }
 
-    elem = document.createElement('p');
-    elem.textContent = 'Recent entries';
-    elem.addEventListener('click', e => e.stopPropagation());
-    html.appendChild(elem);
-
-    html.appendChild(ul);
-
     // Remove old html
     while (PopUp.$entries.firstChild) {
       PopUp.$entries.removeChild(PopUp.$entries.firstChild);
     }
 
+    // Render react tree
+    html.id = 'root-time-entries-list';
     PopUp.$entries.appendChild(html);
+    ReactDOM.render(<TimeEntriesList timeEntries={listEntries} projects={projects} />, document.getElementById('root-time-entries-list'));
   },
 
   setupIcons: function (data) {

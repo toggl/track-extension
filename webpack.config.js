@@ -46,7 +46,7 @@ module.exports = config(async ({ development, bugsnagApiKey, production, release
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader'
       }

@@ -18,11 +18,15 @@
   },
   "babel": {
     "presets": [
-      "@babel/preset-env"
+      "@babel/preset-env",
+      "@babel/preset-react"
     ],
     "plugins": [
       "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-proposal-optional-chaining"
+      "@babel/plugin-proposal-optional-chaining",
+      [
+        "@babel/plugin-transform-react-jsx"
+      ]
     ]
   },
   "browserslist": [
@@ -45,7 +49,9 @@
     "@babel/core": "7.1.2",
     "@babel/plugin-proposal-class-properties": "7.1.0",
     "@babel/plugin-proposal-optional-chaining": "7.0.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "^7.0.0",
     "@semantic-release/changelog": "^3.0.2",
     "@semantic-release/commit-analyzer": "^6.1.0",
     "@semantic-release/git": "^7.0.8",
@@ -58,9 +64,11 @@
     "copy-webpack-plugin": "4.5.2",
     "eslint": "^5.12.1",
     "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-preact": "^1.1.6",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-standard": "^4.0.0",
     "filemanager-webpack-plugin": "^2.0.5",
     "fs-extra": "^7.0.1",
@@ -75,6 +83,8 @@
     "webpack-log": "1.2.0"
   },
   "dependencies": {
-    "@bugsnag/js": "^6.0.0"
+    "@bugsnag/js": "^6.0.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   }
 }

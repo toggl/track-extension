@@ -1,3 +1,10 @@
+## [1.23.5](https://github.com/toggl/toggl-button/compare/1.23.4...1.23.5) (2019-03-22)
+
+
+### Bug Fixes
+
+* **setting:** Ensure default settings are loaded in case of invalid values ([77dbb05](https://github.com/toggl/toggl-button/commit/77dbb05))
+
 ## [1.23.4](https://github.com/toggl/toggl-button/compare/1.23.3...1.23.4) (2019-03-21)
 
 

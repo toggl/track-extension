@@ -24,18 +24,14 @@ const DEFAULT_SETTINGS = {
   dayEndTime: '17:00',
   defaultProject: 0,
   rememberProjectPer: 'false',
-  enableAutoTagging: false
-};
+  enableAutoTagging: false,
 
-// core settings: key, default value
-const CORE_SETTINGS = {
   'dont-show-permissions': false,
   'show-permissions-info': 0,
   'settings-active-tab': 0,
   sendErrorReports: true,
   sendUsageStatistics: true
 };
-
 const transformLegacyValue = (value) => {
   if (typeof value !== 'undefined') {
     // Ensure older version's settings still function if they get saved to sync storage.
@@ -153,14 +149,27 @@ export default class Db {
     this.set(this.togglButton.$user.id + '-defaultProjects', {});
   }
 
-  get (key, defaultValue) {
+  get (key) {
+    const defaultValue = DEFAULT_SETTINGS[key];
     const hasDefaultValue = typeof defaultValue !== 'undefined';
-    return browser.storage.sync.get(hasDefaultValue ? { [key]: defaultValue } : key)
+    const options = hasDefaultValue
+      ? { [key]: defaultValue }
+      : key;
+
+    return browser.storage.sync.get(options)
       .then((result) => {
-        if (process.env.DEBUG) {
-          console.info(`Retrieved value ${key}: `, result[key]);
+        let value = result[key];
+        if (hasDefaultValue && typeof value !== typeof defaultValue) {
+          if (process.env.DEBUG) {
+            console.info(`Retrieved setting [${key}] is incorrect type`, value);
+          }
+          value = defaultValue;
         }
-        return transformLegacyValue(result[key]);
+
+        if (process.env.DEBUG) {
+          console.info(`Retrieved value ${key}: `, value);
+        }
+        return transformLegacyValue(value);
       });
   }
 
@@ -173,7 +182,7 @@ export default class Db {
     return browser.storage.sync.get(settings)
       .then((result) => {
         if (process.env.DEBUG) {
-          console.info(`Retrieved values ${Object.keys(settings).join(', ')}: `, Object.values(result).map(JSON.strinfiy).join(', '));
+          console.info(`Retrieved values ${Object.keys(settings).join(', ')}: `, Object.values(result).map(JSON.stringify).join(', '));
         }
         return Object.keys(result).reduce((results, key) => {
           return Object.assign(results, {
@@ -220,26 +229,20 @@ export default class Db {
     return collection;
   }
 
-  async load (setting, defaultValue) {
-    let value = await this.get(setting);
-    if (typeof value === 'undefined') {
-      value = defaultValue;
-    }
-
-    this.set(setting, value);
-    return value;
+  load (setting, defaultValue) {
+    this.get(setting)
+      .then((value) => {
+        if (typeof value === 'undefined') {
+          value = defaultValue;
+        }
+        this.set(setting, value);
+      });
   }
 
   loadAll () {
     for (const k in DEFAULT_SETTINGS) {
       if (DEFAULT_SETTINGS.hasOwnProperty(k)) {
         this.load(k, DEFAULT_SETTINGS[k]);
-      }
-    }
-
-    for (const k in CORE_SETTINGS) {
-      if (CORE_SETTINGS.hasOwnProperty(k)) {
-        this.load(k, CORE_SETTINGS[k]);
       }
     }
   }
@@ -254,7 +257,7 @@ export default class Db {
   }
 
   resetAllSettings () {
-    const allSettings = { ...DEFAULT_SETTINGS, ...CORE_SETTINGS };
+    const allSettings = { ...DEFAULT_SETTINGS };
     return this.setMultiple(allSettings)
       .then(() => {
         bugsnagClient.leaveBreadcrumb('Completed reset all settings');
@@ -270,7 +273,7 @@ export default class Db {
     bugsnagClient.leaveBreadcrumb('Attempting settings migration to v2');
 
     try {
-      const allSettings = { ...DEFAULT_SETTINGS, ...CORE_SETTINGS };
+      const allSettings = { ...DEFAULT_SETTINGS };
       const oldSettings = Object.keys(allSettings)
         .reduce((accumulator, key) => {
           const defaultValue = allSettings[key];

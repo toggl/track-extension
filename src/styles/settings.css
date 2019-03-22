@@ -1,7 +1,17 @@
 html {
   --main-bg-color: #ffffff;
-  --tab-background: #fdfdfd;
+  --tab-background: #fafbfc;
+  --footer-background: #fafbfc;
+  --text-color: #333333;
+  --light-text: #7b7b7b;
+  --danger: #E20505;
+}
+
+html.dark {
+  --main-bg-color: #222222;
+  --tab-background: #222222;
   --footer-background: #f5f5f5;
+  --text-color: #eeeeee;
 }
 
 html,
@@ -9,6 +19,7 @@ body {
   margin: 0;
   padding: 0;
   background: var(--main-bg-color);
+  color: var(--text-color);
   /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
 }
 
@@ -39,7 +50,6 @@ body {
   width: 800px;
   max-width: 800px;
   background-color: var(--main-bg-color);
-  color: #505050;
 }
 
 .tabs {
@@ -103,7 +113,7 @@ body {
 }
 
 .field .description {
-  color: rgb(119, 119, 119);
+  color: var(--light-text);
   padding: 5px;
   align-self: stretch;
   width: 100%;
@@ -447,6 +457,10 @@ header li:hover {
 
 .danger-zone {
   max-width: 800px;
+}
+
+.danger-zone p {
+  color: var(--danger);
 }
 
 .danger-zone hr {

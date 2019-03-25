@@ -32,6 +32,22 @@ const DEFAULT_SETTINGS = {
   sendErrorReports: true,
   sendUsageStatistics: true
 };
+
+const LOCAL_ONLY = {
+  [ORIGINS_KEY]: true
+};
+
+function isLocalOnly (key) {
+  return LOCAL_ONLY[key] || false;
+}
+
+function getFileName (origin) {
+  if (origin.file) {
+    return origin.file;
+  }
+  return (origin.name || origin).toLowerCase().replace(' ', '-') + '.js';
+}
+
 const transformLegacyValue = (value) => {
   if (typeof value !== 'undefined') {
     // Ensure older version's settings still function if they get saved to sync storage.
@@ -43,6 +59,7 @@ const transformLegacyValue = (value) => {
     return null;
   }
 };
+
 export default class Db {
   constructor (togglButton) {
     this.togglButton = togglButton;
@@ -53,11 +70,15 @@ export default class Db {
     let origin = await this.getOrigin(domain);
     const origins = await this.getAllOrigins();
 
+    if (origin && (origin.name || origin.file)) {
+      return getFileName(origin);
+    }
+
     if (!origin) {
       origin = domain;
     }
 
-    if (!origins[domain]) {
+    if (!origins[origin]) {
       // Handle cases where subdomain is used (like web.any.do (or sub1.sub2.any.do), we remove web from the beginning)
       origin = origin.split('.');
       while (origin.length > 0 && !origins[origin.join('.')]) {
@@ -69,13 +90,7 @@ export default class Db {
       }
     }
 
-    const item = origins[domain];
-
-    if (item.file) {
-      return item.file;
-    }
-
-    return item.name.toLowerCase().replace(' ', '-') + '.js';
+    return getFileName(origins[origin]);
   }
 
   async getOrigin (origin) {
@@ -99,8 +114,11 @@ export default class Db {
   }
 
   async getAllOrigins () {
-    const origins = await this.get(ORIGINS_KEY);
-    return origins || storedOrigins;
+    const customOrigins = await this.get(ORIGINS_KEY);
+    return {
+      ...storedOrigins,
+      ...customOrigins
+    };
   }
 
   /**
@@ -158,6 +176,10 @@ export default class Db {
       ? { [key]: defaultValue }
       : key;
 
+    if (isLocalOnly(key)) {
+      return this.getLocalCollection(key);
+    }
+
     return browser.storage.sync.get(options)
       .then((result) => {
         let value = result[key];
@@ -195,6 +217,11 @@ export default class Db {
   }
 
   set (setting, value) {
+    if (isLocalOnly(setting)) {
+      this.setLocal(setting, value);
+      return;
+    }
+
     return browser.storage.sync
       .set({ [setting]: value })
       .catch((e) => {
@@ -205,6 +232,10 @@ export default class Db {
           console.info(`Saved setting ${setting} :`, value);
         }
       });
+  }
+
+  setLocal (key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
   setMultiple (settings) {

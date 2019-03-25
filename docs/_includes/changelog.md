@@ -1,3 +1,13 @@
+# [1.24.0](https://github.com/toggl/toggl-button/compare/1.23.5...1.24.0) (2019-03-25)
+
+
+### Features
+
+* **settings:** Change permissions tab to 2 column layout ([3b54049](https://github.com/toggl/toggl-button/commit/3b54049))
+* **settings:** New settings layout ([aeef91d](https://github.com/toggl/toggl-button/commit/aeef91d))
+* **settings:** Show and search services by name ([e7db822](https://github.com/toggl/toggl-button/commit/e7db822))
+* Center settings view ([ec4a40f](https://github.com/toggl/toggl-button/commit/ec4a40f))
+
 ## [1.23.5](https://github.com/toggl/toggl-button/compare/1.23.4...1.23.5) (2019-03-22)
 
 

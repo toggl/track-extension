@@ -75,6 +75,7 @@
     "husky": "^1.3.1",
     "lint-staged": "^8.1.0",
     "nanoid": "1.2.6",
+    "react-emotion": "^10.0.0",
     "semantic-release": "^15.13.3",
     "webextension-polyfill": "^0.4.0",
     "webpack": "4.16.3",
@@ -84,6 +85,8 @@
   },
   "dependencies": {
     "@bugsnag/js": "^6.0.0",
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.10",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"

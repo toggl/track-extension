@@ -223,45 +223,25 @@ window.PopUp = {
   renderEntriesList: function () {
     const html = document.createElement('div');
     const entries = TogglButton.$user.time_entries;
-    const listEntries = [];
-    let count = 0;
-
     if (!entries || entries.length < 1) {
       return;
     }
 
-    const checkUnique = function (te, listEntries) {
-      if (listEntries.length > 0) {
-        for (let j = 0; j < listEntries.length; j++) {
-          if (
-            listEntries[j].description === te.description &&
-            listEntries[j].pid === te.pid
-          ) {
-            return false;
-          }
-        }
-      }
-      listEntries.push(te);
-      return te;
-    };
+    const { listEntries, projects } = [...entries].reverse().reduce((sum, entry) => {
+      if (sum.listEntries.length >= 5) return sum;
 
-    const projects = {};
-
-    for (let i = entries.length - 1; i >= 0; i--) {
-      if (count >= 5) {
-        break;
+      const exists = sum.listEntries.some((te) => te.description === entry.description && te.pid === entry.pid);
+      if (!exists) {
+        sum.listEntries.push(entry);
       }
-      const te = checkUnique(entries[i], listEntries);
-      const project = TogglButton.findProjectByPid(te.pid);
+      const project = TogglButton.findProjectByPid(entry.pid);
       if (project) {
-        projects[project.id] = project;
+        sum.projects[project.id] = project;
       }
+      return sum;
+    }, { listEntries: [], projects: {} });
 
-      if (!!te && te.duration >= 0) {
-        count++;
-      }
-    }
-    if (count === 0) {
+    if (!listEntries.length) {
       return;
     }
 

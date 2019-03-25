@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const NO_DESCRIPTION = '(no description)';
 
@@ -15,6 +16,10 @@ export default function TimeEntriesList ({ timeEntries = [], projects = {} }) {
     </div>
   );
 }
+TimeEntriesList.propTypes = {
+  timeEntries: PropTypes.array,
+  projects: PropTypes.object
+};
 
 function TimeEntriesListItem ({ timeEntry, project, ...props }) {
   return (
@@ -32,6 +37,12 @@ function TimeEntriesListItem ({ timeEntry, project, ...props }) {
     </li>
   );
 }
+TimeEntriesListItem.propTypes = {
+  timeEntry: PropTypes.object,
+  project: PropTypes.object,
+
+  dataId: PropTypes.string
+};
 
 function TimeEntryProject ({ project }) {
   return (
@@ -42,6 +53,12 @@ function TimeEntryProject ({ project }) {
     </div>
   );
 }
+TimeEntryProject.propTypes = {
+  project: PropTypes.shape({
+    name: PropTypes.string,
+    hex_color: PropTypes.string
+  })
+};
 
 function ContinueButton () {
   return (
@@ -65,3 +82,9 @@ function TimeEntryIcons ({ timeEntry }) {
     </div>
   );
 }
+TimeEntryIcons.propTypes = {
+  timeEntry: PropTypes.shape({
+    tags: PropTypes.array,
+    billable: PropTypes.bool
+  })
+};

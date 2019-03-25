@@ -1,5 +1,5 @@
 import bugsnagClient from './bugsnag';
-import origins from '../origins';
+import storedOrigins from '../origins';
 const browser = require('webextension-polyfill');
 
 const ORIGINS_KEY = 'TogglButton-origins';
@@ -51,12 +51,13 @@ export default class Db {
 
   async getOriginFileName (domain) {
     let origin = await this.getOrigin(domain);
+    const origins = await this.getAllOrigins();
 
     if (!origin) {
       origin = domain;
     }
 
-    if (!origins[origin]) {
+    if (!origins[domain]) {
       // Handle cases where subdomain is used (like web.any.do (or sub1.sub2.any.do), we remove web from the beginning)
       origin = origin.split('.');
       while (origin.length > 0 && !origins[origin.join('.')]) {
@@ -68,7 +69,7 @@ export default class Db {
       }
     }
 
-    const item = origins[origin];
+    const item = origins[domain];
 
     if (item.file) {
       return item.file;
@@ -98,8 +99,8 @@ export default class Db {
   }
 
   async getAllOrigins () {
-    const origins = await this.get(ORIGINS_KEY, {});
-    return origins;
+    const origins = await this.get(ORIGINS_KEY);
+    return origins || storedOrigins;
   }
 
   /**
@@ -149,8 +150,9 @@ export default class Db {
     this.set(this.togglButton.$user.id + '-defaultProjects', {});
   }
 
-  get (key) {
-    const defaultValue = DEFAULT_SETTINGS[key];
+  // @deprecated defaultVal
+  get (key, defaultVal) {
+    const defaultValue = defaultVal || DEFAULT_SETTINGS[key];
     const hasDefaultValue = typeof defaultValue !== 'undefined';
     const options = hasDefaultValue
       ? { [key]: defaultValue }

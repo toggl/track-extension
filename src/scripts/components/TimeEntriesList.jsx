@@ -10,7 +10,7 @@ export default function TimeEntriesList ({ timeEntries = [], projects = {} }) {
       <ul>
         {timeEntries.map((timeEntry, i) => {
           const project = projects[timeEntry.pid] || null;
-          return <TimeEntriesListItem timeEntry={timeEntry} project={project} dataId={i} />;
+          return <TimeEntriesListItem key={`te-${i}`} timeEntry={timeEntry} project={project} dataId={i} />;
         })}
       </ul>
     </div>

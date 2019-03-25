@@ -1,3 +1,11 @@
+## [1.24.1](https://github.com/toggl/toggl-button/compare/1.24.0...1.24.1) (2019-03-25)
+
+
+### Bug Fixes
+
+* Add support for local only preferences ([f581781](https://github.com/toggl/toggl-button/commit/f581781))
+* Hotfix for origins not begin fetched ([dc04db4](https://github.com/toggl/toggl-button/commit/dc04db4)), closes [#1360](https://github.com/toggl/toggl-button/issues/1360)
+
 # [1.24.0](https://github.com/toggl/toggl-button/compare/1.23.5...1.24.0) (2019-03-25)
 
 

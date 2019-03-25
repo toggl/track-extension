@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
+import BillableIcon from './BillableIcon.jsx';
+import TagsIcon from './TagsIcon.jsx';
 import { ProjectLargeDot } from '../@toggl/ui/icons/index';
 
 const NO_DESCRIPTION = '(no description)';
@@ -93,12 +95,10 @@ function TimeEntryIcons ({ timeEntry }) {
   const isBillable = !!timeEntry.billable;
   const tags = hasTags ? timeEntry.tags.join(', ') : '';
 
-  const iconClasses = `${hasTags && 'tag-icon-visible'} ${isBillable && 'billable-icon-visible'}`
-
   return (
-    <div className={`te-icons ${iconClasses}`}>
-      <div className="tag-icon" title={tags} />
-      <div className="billable-icon" title='billable' />
+    <div className={`te-icons`}>
+      {hasTags && <TagsIcon title={tags} />}
+      <BillableIcon active={isBillable} />
     </div>
   );
 }

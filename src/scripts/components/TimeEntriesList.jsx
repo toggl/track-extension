@@ -10,17 +10,16 @@ import play from './play.svg';
 
 const NO_DESCRIPTION = '(no description)';
 
+const secToDecimalHours = (secs) => (secs / 60 / 60).toFixed(2) + ' h'
+
 export default function TimeEntriesList ({ timeEntries = [], projects = {} }) {
   return (
-    <div>
-      <p>Recent entries</p>
-      <EntryList>
-        {timeEntries.map((timeEntry, i) => {
-          const project = projects[timeEntry.pid] || null;
-          return <TimeEntriesListItem key={`te-${i}`} timeEntry={timeEntry} project={project} dataId={i} />;
-        })}
-      </EntryList>
-    </div>
+    <EntryList>
+      {timeEntries.map((timeEntry, i) => {
+        const project = projects[timeEntry.pid] || null;
+        return <TimeEntriesListItem key={`te-${i}`} timeEntry={timeEntry} project={project} dataId={i} />;
+      })}
+    </EntryList>
   );
 }
 TimeEntriesList.propTypes = {
@@ -28,65 +27,30 @@ TimeEntriesList.propTypes = {
   projects: PropTypes.object
 };
 
-const EntryList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  font-family: Roboto, Helvetica, Arial, sans-serif;
-`;
-const EntryItem = styled.li`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  padding-left: 20px;
-  height: 40px;
-
-  color: ${color.lightGrey};
-  font-size: 14px;
-  box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
-
-  &:hover {
-    background-color: ${color.listItemHover};
-  }
-
-  &:last-child {
-    box-shadow: none;
-  }
-
-  > div {
-    flex: 1;
-  }
-`;
-
-const EntryIcons = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 function TimeEntriesListItem ({ timeEntry, project, ...props }) {
   const description = timeEntry.description || NO_DESCRIPTION;
-
   const hasTags = timeEntry.tags && timeEntry.tags.length;
   const isBillable = !!timeEntry.billable;
   const tags = hasTags ? timeEntry.tags.join(', ') : '';
 
   return (
     <EntryItem data-id={props.dataId}>
-      <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
-
-      <TimeEntryProject timeEntry={timeEntry} project={project} />
-
-      <EntryIcons>
-        {hasTags && <TagsIcon title={tags} />}
-        <BillableIcon active={isBillable} />
+      <EntryItemRow>
+        <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
+        <EntryIcons>
+          <BillableIcon active={isBillable} />
+          {hasTags && <TagsIcon title={tags} />}
+          <TimeEntryDuration duration={timeEntry.duration} />
+        </EntryIcons>
+      </EntryItemRow>
+      <EntryItemRow>
+        <TimeEntryProject timeEntry={timeEntry} project={project} />
         <ContinueButton data-continue-id={timeEntry.id} title='Continue this entry' />
-      </EntryIcons>
+      </EntryItemRow>
     </EntryItem>
   );
 }
+
 TimeEntriesListItem.propTypes = {
   timeEntry: PropTypes.object,
   project: PropTypes.object,
@@ -94,7 +58,21 @@ TimeEntriesListItem.propTypes = {
   dataId: PropTypes.number
 };
 
+function TimeEntryDuration (props) {
+  if (!props.duration || props.duration < 0) return null;
+  return (
+    <div>
+      {secToDecimalHours(props.duration)}
+    </div>
+  );
+}
+TimeEntryDuration.propTypes = {
+  duration: PropTypes.number
+};
+
 const TimeEntryDescription = styled.div`
+  flex: 1;
+
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: text;
@@ -105,7 +83,7 @@ const TimeEntryDescription = styled.div`
 
 function TimeEntryProject ({ project }) {
   return (
-    <div>
+    <div style={{ flex: 1 }}>
       {project &&
         <ProjectLargeDot color={project.hex_color}>
           <span>{project.name}</span>
@@ -123,8 +101,8 @@ TimeEntryProject.propTypes = {
 
 const ContinueButton = styled.div`
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 16px;
+  height: 16px;
   background: url(${play}) no-repeat;
   background-position: 55% 50%;
   background-size: 14px;
@@ -134,5 +112,54 @@ const ContinueButton = styled.div`
 
   &:hover {
     opacity: 1.0;
+  }
+`;
+
+const EntryList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  border-top: 1px rgb(232, 232, 232) solid;
+
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+`;
+const EntryItem = styled.li`
+  display: flex;
+  flex-direction: column;
+
+  // padding-left: 20px;
+  padding: .5rem;
+  height: 50px;
+
+  color: ${color.lightGrey};
+  font-size: 14px;
+  box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
+
+  &:hover {
+    background-color: ${color.listItemHover};
+  }
+
+  &:last-child {
+    box-shadow: none;
+  }
+`;
+
+const EntryItemRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  flex: 1;
+`;
+
+const EntryIcons = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  > * {
+    margin: 0 .25rem;
   }
 `;

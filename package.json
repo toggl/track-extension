@@ -58,6 +58,7 @@
     "@semantic-release/github": "^5.2.10",
     "@semantic-release/npm": "^5.1.4",
     "@semantic-release/release-notes-generator": "^7.1.4",
+    "@types/react": "^16.8.8",
     "babel-loader": "8.0.4",
     "clean-webpack-plugin": "0.1.19",
     "compression-webpack-plugin": "1.1.11",

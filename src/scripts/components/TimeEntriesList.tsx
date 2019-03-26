@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from '@emotion/styled';
 
 import BillableIcon from './BillableIcon.jsx';
@@ -12,7 +11,12 @@ const NO_DESCRIPTION = '(no description)';
 
 const secToDecimalHours = (secs) => (secs / 60 / 60).toFixed(2) + ' h'
 
-export default function TimeEntriesList ({ timeEntries = [], projects = {} }) {
+type TimeEntriesListProps = {
+  timeEntries: Array<TimeEntry>;
+  projects: {[index: string]: Project};
+};
+
+export default function TimeEntriesList ({ timeEntries = [], projects = {} }: TimeEntriesListProps) {
   return (
     <EntryList>
       {timeEntries.map((timeEntry, i) => {
@@ -22,16 +26,18 @@ export default function TimeEntriesList ({ timeEntries = [], projects = {} }) {
     </EntryList>
   );
 }
-TimeEntriesList.propTypes = {
-  timeEntries: PropTypes.array,
-  projects: PropTypes.object
-};
 
-function TimeEntriesListItem ({ timeEntry, project, ...props }) {
+type TimeEntriesListItemProps = {
+  timeEntry: TimeEntry;
+  project: Project;
+  dataId: number;
+};
+function TimeEntriesListItem ({ timeEntry, project, ...props }: TimeEntriesListItemProps) {
   const description = timeEntry.description || NO_DESCRIPTION;
-  const hasTags = timeEntry.tags && timeEntry.tags.length;
   const isBillable = !!timeEntry.billable;
-  const tags = hasTags ? timeEntry.tags.join(', ') : '';
+  const tags = (timeEntry.tags && timeEntry.tags.length > 0)
+    ? timeEntry.tags.join(', ')
+    : '';
 
   return (
     <EntryItem data-id={props.dataId}>
@@ -39,26 +45,19 @@ function TimeEntriesListItem ({ timeEntry, project, ...props }) {
         <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
         <EntryIcons>
           <BillableIcon active={isBillable} />
-          {hasTags && <TagsIcon title={tags} />}
+          {tags && <TagsIcon title={tags} />}
           <TimeEntryDuration duration={timeEntry.duration} />
         </EntryIcons>
       </EntryItemRow>
       <EntryItemRow>
-        <TimeEntryProject timeEntry={timeEntry} project={project} />
+        <TimeEntryProject project={project} />
         <ContinueButton data-continue-id={timeEntry.id} title='Continue this entry' />
       </EntryItemRow>
     </EntryItem>
   );
 }
 
-TimeEntriesListItem.propTypes = {
-  timeEntry: PropTypes.object,
-  project: PropTypes.object,
-
-  dataId: PropTypes.number
-};
-
-function TimeEntryDuration (props) {
+function TimeEntryDuration (props: { duration: number }) {
   if (!props.duration || props.duration < 0) return null;
   return (
     <div>
@@ -66,9 +65,6 @@ function TimeEntryDuration (props) {
     </div>
   );
 }
-TimeEntryDuration.propTypes = {
-  duration: PropTypes.number
-};
 
 const TimeEntryDescription = styled.div`
   flex: 1;
@@ -81,7 +77,7 @@ const TimeEntryDescription = styled.div`
   color: #222;
 `;
 
-function TimeEntryProject ({ project }) {
+function TimeEntryProject ({ project }: { project: Project }) {
   return (
     <div style={{ flex: 1 }}>
       {project &&
@@ -92,12 +88,6 @@ function TimeEntryProject ({ project }) {
     </div>
   );
 }
-TimeEntryProject.propTypes = {
-  project: PropTypes.shape({
-    name: PropTypes.string,
-    hex_color: PropTypes.string
-  })
-};
 
 const ContinueButton = styled.div`
   display: inline-block;

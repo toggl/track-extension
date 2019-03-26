@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import TimeEntriesList from './components/TimeEntriesList.jsx';
+import TimeEntriesList from './components/TimeEntriesList';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 const browser = require('webextension-polyfill');
 

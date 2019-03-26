@@ -5,18 +5,17 @@ import BillableIcon from './BillableIcon.jsx';
 import TagsIcon from './TagsIcon.jsx';
 import { ProjectLargeDot } from '../@toggl/ui/icons/index';
 import * as color from '../@toggl/style/lib/color';
+import { secToDecimalHours } from '../@toggl/time-format-utils';
 import play from './play.svg';
 
 const NO_DESCRIPTION = '(no description)';
 
-const secToDecimalHours = (secs) => (secs / 60 / 60).toFixed(2) + ' h'
-
 type TimeEntriesListProps = {
   timeEntries: Array<TimeEntry>;
-  projects: {[index: string]: Project};
+  projects: IdMap<Project>;
 };
-
-export default function TimeEntriesList ({ timeEntries = [], projects = {} }: TimeEntriesListProps) {
+export default function TimeEntriesList (props: TimeEntriesListProps) {
+  const { timeEntries = [], projects = {} } = props;
   return (
     <EntryList>
       {timeEntries.map((timeEntry, i) => {
@@ -57,12 +56,10 @@ function TimeEntriesListItem ({ timeEntry, project, ...props }: TimeEntriesListI
   );
 }
 
-function TimeEntryDuration (props: { duration: number }) {
-  if (!props.duration || props.duration < 0) return null;
+function TimeEntryDuration ({ duration }: { duration: number }) {
+  if (!duration || duration < 0) return null;
   return (
-    <div>
-      {secToDecimalHours(props.duration)}
-    </div>
+    <div>{secToDecimalHours(duration)}</div>
   );
 }
 

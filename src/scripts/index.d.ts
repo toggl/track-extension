@@ -14,6 +14,9 @@ type Project = {
   name: string;
 };
 
+type IdMap<T> = {
+  [index: string]: T
+}
 declare module "*.svg" {
   const content: any;
   export default content;

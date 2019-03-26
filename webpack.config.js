@@ -43,8 +43,16 @@ module.exports = config(async ({ development, bugsnagApiKey, production, release
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js'
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.jsx']
+  },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader'
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,

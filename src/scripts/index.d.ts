@@ -2,6 +2,9 @@ type TimeEntry = {
   id: number;
   pid: number;
 
+  start: string;
+  stop: string;
+
   description: string;
   duration: number;
   tags: Array<string> | null;

@@ -283,27 +283,12 @@ p.form-row.first {
 }
 
 #menu {
-  background: #fff;
+  background: #fafbfc; /* colors.offWhite */
   list-style: none;
   margin: 0;
-  padding: 6px 0;
+  padding: 0;
   min-width: 100%;
   font-weight: 400;
-}
-#menu > li {
-  white-space: nowrap;
-  list-style: none;
-  height: 29px;
-}
-#menu > li:not(.has-resume):hover {
-  background-color: #e6e6e6;
-  color: #222;
-}
-
-#menu li.has-resume .stop-button:hover,
-#menu li.has-resume .resume-button:hover {
-  background-color: #e6e6e6;
-  color: #222;
 }
 
 #menu li > button {

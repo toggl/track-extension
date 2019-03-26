@@ -1,14 +1,35 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
+import { format } from 'date-fns';
 
 import BillableIcon from './BillableIcon.jsx';
 import TagsIcon from './TagsIcon.jsx';
 import { ProjectLargeDot } from '../@toggl/ui/icons/index';
 import * as color from '../@toggl/style/lib/color';
+import * as text from '../@toggl/style/lib/text';
 import { secToDecimalHours } from '../@toggl/time-format-utils';
 import play from './play.svg';
 
 const NO_DESCRIPTION = '(no description)';
+
+const getTimeEntryDayGroups = (timeEntries: Array<TimeEntry>): {[date: string]: Array<TimeEntry>} => {
+  return [...timeEntries]
+    .sort((a, b) => {
+      // Most recent entries first.
+      if (a.start > b.start) return -1;
+      if (b.start > a.start) return 1;
+      return 0;
+    })
+    .filter((timeEntry) => timeEntry.duration >= 0)
+    .reduce((groups: { [date: string]: Array<TimeEntry> }, entry) => {
+      const date = format(entry.start, 'YYYY-MM-DD');
+      console.log(date);
+      groups[date] = groups[date] || [];
+      groups[date].push(entry);
+
+      return groups;
+    }, {})
+};
 
 type TimeEntriesListProps = {
   timeEntries: Array<TimeEntry>;
@@ -16,11 +37,20 @@ type TimeEntriesListProps = {
 };
 export default function TimeEntriesList (props: TimeEntriesListProps) {
   const { timeEntries = [], projects = {} } = props;
+  const dayGroups = getTimeEntryDayGroups(timeEntries);
+  // let renderedEntriesCount = 0;
+  console.log(dayGroups);
   return (
     <EntryList>
-      {timeEntries.map((timeEntry, i) => {
-        const project = projects[timeEntry.pid] || null;
-        return <TimeEntriesListItem key={`te-${i}`} timeEntry={timeEntry} project={project} dataId={i} />;
+      {Object.keys(dayGroups).map((date) => {
+        const groupEntries = dayGroups[date];
+        return [
+          <EntryHeading>{format(date, 'ddd, D MMM')}</EntryHeading>,
+          ...groupEntries.map((timeEntry, i) => {
+            const project = projects[timeEntry.pid] || null;
+            return <TimeEntriesListItem key={`te-${i}`} timeEntry={timeEntry} project={project} dataId={i} />;
+          })
+        ]
       })}
     </EntryList>
   );
@@ -104,24 +134,25 @@ const ContinueButton = styled.div`
 
 const EntryList = styled.ul`
   list-style: none;
+  white-space: nowrap;
   padding: 0;
   margin: 0;
 
-  border-top: 1px rgb(232, 232, 232) solid;
-
+  background-color: ${color.white};
   font-family: Roboto, Helvetica, Arial, sans-serif;
 `;
+const itemPadding = '.5rem';
+const itemShadow = 'rgb(232, 232, 232) 0px -1px 0px 0px inset';
 const EntryItem = styled.li`
   display: flex;
   flex-direction: column;
 
-  // padding-left: 20px;
-  padding: .5rem;
+  padding: ${itemPadding};
   height: 50px;
 
-  color: ${color.lightGrey};
+  color: ${color.grey};
   font-size: 14px;
-  box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
+  box-shadow: ${itemShadow};
 
   &:hover {
     background-color: ${color.listItemHover};
@@ -130,6 +161,22 @@ const EntryItem = styled.li`
   &:last-child {
     box-shadow: none;
   }
+
+  & ~ EntryHeading {
+    margin-top: 1rem;
+  }
+`;
+
+const EntryHeading = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: ${itemPadding};
+  height: 25px;
+  color: ${color.black};
+  font-weight: ${text.bold};
+  box-shadow: ${itemShadow};
 `;
 
 const EntryItemRow = styled.div`

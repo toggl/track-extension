@@ -586,7 +586,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
     PopUp.$entries.addEventListener('click', function (e) {
-      const id = e.target.closest('[data-id]').getAttribute('data-id');
+      if (!e.target.dataset.continueId) {
+        return;
+      }
+      const id = e.target.dataset.continueId;
       const timeEntry = TogglButton.$user.time_entries[id];
 
       const request = {

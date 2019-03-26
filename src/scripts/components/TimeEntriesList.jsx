@@ -74,8 +74,7 @@ function TimeEntriesListItem ({ timeEntry, project, ...props }) {
       <EntryIcons>
         {hasTags && <TagsIcon title={tags} />}
         <BillableIcon active={isBillable} />
-
-        <ContinueButton />
+        <ContinueButton data-continue-id={timeEntry.id} title='Continue this entry' />
       </EntryIcons>
     </EntryItem>
   );
@@ -84,7 +83,7 @@ TimeEntriesListItem.propTypes = {
   timeEntry: PropTypes.object,
   project: PropTypes.object,
 
-  dataId: PropTypes.string
+  dataId: PropTypes.number
 };
 
 const TimeEntryDescription = styled.div`
@@ -129,22 +128,3 @@ const ContinueButton = styled.div`
     opacity: 1.0;
   }
 `;
-
-function TimeEntryIcons ({ timeEntry }) {
-  const hasTags = timeEntry.tags && timeEntry.tags.length;
-  const isBillable = !!timeEntry.billable;
-  const tags = hasTags ? timeEntry.tags.join(', ') : '';
-
-  return (
-    <div className={`te-icons`}>
-      {hasTags && <TagsIcon title={tags} />}
-      <BillableIcon active={isBillable} />
-    </div>
-  );
-}
-TimeEntryIcons.propTypes = {
-  timeEntry: PropTypes.shape({
-    tags: PropTypes.array,
-    billable: PropTypes.bool
-  })
-};

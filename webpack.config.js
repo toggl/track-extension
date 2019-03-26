@@ -49,6 +49,10 @@ module.exports = config(async ({ development, bugsnagApiKey, production, release
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-url-loader'
       }
     ]
   },

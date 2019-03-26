@@ -5,6 +5,8 @@ import styled from '@emotion/styled';
 import BillableIcon from './BillableIcon.jsx';
 import TagsIcon from './TagsIcon.jsx';
 import { ProjectLargeDot } from '../@toggl/ui/icons/index';
+import * as color from '../@toggl/style/lib/color';
+import play from './play.svg';
 
 const NO_DESCRIPTION = '(no description)';
 
@@ -30,29 +32,51 @@ const EntryList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 `;
 const EntryItem = styled.li`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
-  > * {
+  padding-left: 20px;
+  height: 40px;
+
+  color: ${color.lightGrey};
+  font-size: 14px;
+  box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
+
+  > div {
     flex: 1;
   }
 `;
 
+const EntryIcons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 function TimeEntriesListItem ({ timeEntry, project, ...props }) {
+  const description = timeEntry.description || NO_DESCRIPTION;
+
+  const hasTags = timeEntry.tags && timeEntry.tags.length;
+  const isBillable = !!timeEntry.billable;
+  const tags = hasTags ? timeEntry.tags.join(', ') : '';
+
   return (
     <EntryItem data-id={props.dataId}>
-      <div className="te-desc" title={timeEntry.description}>
-        {timeEntry.description || NO_DESCRIPTION}
-      </div>
+      <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
 
-      {project && <TimeEntryProject timeEntry={timeEntry} project={project} />}
+      <TimeEntryProject timeEntry={timeEntry} project={project} />
 
-      <ContinueButton />
+      <EntryIcons>
+        {hasTags && <TagsIcon title={tags} />}
+        <BillableIcon active={isBillable} />
 
-      <TimeEntryIcons timeEntry={timeEntry} />
-
+        <ContinueButton />
+      </EntryIcons>
     </EntryItem>
   );
 }
@@ -63,11 +87,24 @@ TimeEntriesListItem.propTypes = {
   dataId: PropTypes.string
 };
 
+const TimeEntryDescription = styled.div`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: text;
+  line-height: normal;
+  overflow: hidden;
+  color: #222;
+`;
+
 function TimeEntryProject ({ project }) {
   return (
-    <ProjectLargeDot color={project.hex_color }>
-      <span>{project.name}</span>
-    </ProjectLargeDot>
+    <div>
+      {project &&
+        <ProjectLargeDot color={project.hex_color}>
+          <span>{project.name}</span>
+        </ProjectLargeDot>
+      }
+    </div>
   );
 }
 TimeEntryProject.propTypes = {
@@ -81,13 +118,16 @@ const ContinueButton = styled.div`
   display: inline-block;
   width: 30px;
   height: 30px;
-  cursor: pointer;
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…AgMmwtOS42IDZjLS45LjUtMS43LjEtMS43LTFWMnoiIGZpbGw9IiM2ZjZmNmYiLz48L3N2Zz4=) 55% 50% / 14px no-repeat;
+  background: url(${play}) no-repeat;
   background-position: 55% 50%;
-  border-width: initial;
-  border-style: none;
-  border-color: initial;
-  border-image: initial
+  background-size: 14px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1.0;
+  }
 `;
 
 function TimeEntryIcons ({ timeEntry }) {

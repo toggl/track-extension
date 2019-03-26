@@ -529,16 +529,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
     document
-      .querySelector('.header .logout')
-      .addEventListener('click', function () {
-        const request = {
-          type: 'logout',
-          respond: true
-        };
-        PopUp.sendMessage(request);
-      });
-
-    document
       .querySelector('.header .sync')
       .addEventListener('click', function () {
         const request = {

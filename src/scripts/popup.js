@@ -53,9 +53,7 @@ window.PopUp = {
           PopUp.addEditEvents();
           PopUp.editFormAdded = true;
         }
-        document
-          .querySelector('.header .icon')
-          .setAttribute('title', 'Open toggl.com - ' + TogglButton.$user.email);
+
         PopUp.$timerRow.classList.remove('has-resume');
         if (TogglButton.$curEntry === null) {
           PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
@@ -529,17 +527,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
     document
-      .querySelector('.header .sync')
-      .addEventListener('click', function () {
-        const request = {
-          type: 'sync',
-          respond: false
-        };
-        PopUp.sendMessage(request);
-        window.close();
-      });
-
-    document
       .querySelector('#signin')
       .addEventListener('submit', function (event) {
         event.preventDefault();
@@ -567,12 +554,6 @@ document.addEventListener('DOMContentLoaded', function () {
           workspace
         };
         PopUp.sendMessage(request);
-      });
-
-    document
-      .querySelector('.header .icon')
-      .addEventListener('click', function () {
-        browser.tabs.create({ url: 'https://toggl.com/app' });
       });
 
     PopUp.$entries.addEventListener('click', function (e) {

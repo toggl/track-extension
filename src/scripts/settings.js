@@ -898,7 +898,17 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       browser.runtime
         .sendMessage({ type: 'logout' })
         .then(() => {
-          window.location.reload();
+          window.close();
+        });
+    });
+
+    Settings.$syncData.addEventListener('click', function (e) {
+      e.preventDefault();
+      browser.runtime
+        .sendMessage({ type: 'sync' })
+        .then(() => {
+          // TODO: This promise does not respond.
+          window.close();
         });
     });
 

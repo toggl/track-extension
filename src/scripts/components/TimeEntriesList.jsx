@@ -47,6 +47,14 @@ const EntryItem = styled.li`
   font-size: 14px;
   box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
 
+  &:hover {
+    background-color: ${color.listItemHover};
+  }
+
+  &:last-child {
+    box-shadow: none;
+  }
+
   > div {
     flex: 1;
   }

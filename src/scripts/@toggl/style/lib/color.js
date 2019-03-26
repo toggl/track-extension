@@ -5,5 +5,6 @@ export const greyish = `#a3a3a3`;
 export const greyishDark = '#555';
 export const kermitGreenHover = `#41af00`;
 export const lightGrey = `#cecece`;
+export const listItemHover = `#f4f5f6`;
 export const warmGrey = `#6f6f6f`;
 export const white = `#ffffff`;

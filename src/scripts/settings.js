@@ -46,6 +46,8 @@ const Settings = {
   $sendErrorReports: null,
   $enableAutoTagging: null,
   $resetAllSettings: null,
+  $logOut: document.querySelector('#log-out'),
+  $syncData: document.querySelector('#sync-data'),
   showPage: async function () {
     const pomodoroSoundVolume = await db.get('pomodoroSoundVolume');
     const volume = parseInt(pomodoroSoundVolume * 100, 10);
@@ -889,6 +891,25 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$sendErrorReports.addEventListener('click', async function (e) {
       const sendErrorReports = await db.get('sendErrorReports');
       Settings.toggleSetting(e.target, !sendErrorReports, 'update-send-error-reports');
+    });
+
+    Settings.$logOut.addEventListener('click', function (e) {
+      e.preventDefault();
+      browser.runtime
+        .sendMessage({ type: 'logout' })
+        .then(() => {
+          window.close();
+        });
+    });
+
+    Settings.$syncData.addEventListener('click', function (e) {
+      e.preventDefault();
+      browser.runtime
+        .sendMessage({ type: 'sync' })
+        .then(() => {
+          // TODO: This promise does not respond.
+          window.close();
+        });
     });
 
     Settings.loadSitesIntoList();

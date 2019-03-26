@@ -42,10 +42,10 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
   console.log(dayGroups);
   return (
     <EntryList>
-      {Object.keys(dayGroups).map((date) => {
+      {Object.keys(dayGroups).map((date, i) => {
         const groupEntries = dayGroups[date];
         return [
-          <EntryHeading>{format(date, 'ddd, D MMM')}</EntryHeading>,
+          <EntryHeading key={`tegroup-${i}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
           ...groupEntries.map((timeEntry, i) => {
             const project = projects[timeEntry.pid] || null;
             return <TimeEntriesListItem key={`te-${i}`} timeEntry={timeEntry} project={project} dataId={i} />;

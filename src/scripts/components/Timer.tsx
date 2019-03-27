@@ -1,6 +1,12 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { addSeconds, differenceInSeconds, format } from 'date-fns';
+import {
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+  subHours,
+  subMinutes
+} from 'date-fns';
 
 import start from './icon-start.svg';
 import stop from './icon-stop.svg';
@@ -8,9 +14,12 @@ import stop from './icon-stop.svg';
 const NO_DESCRIPTION = '(no description)';
 
 const formatDuration = (start: string) => {
-  const duration: string | number = differenceInSeconds(new Date().toUTCString(), start);
-  const dummyDate = addSeconds(new Date(Date.UTC(0, 0)).toUTCString(), duration);
-  return format(dummyDate, 'hh:mm:ss');
+  const hours = differenceInHours(Date.now(), start);
+  const minutes = differenceInMinutes(subHours(Date.now(), hours), start);
+  const seconds = differenceInSeconds(subMinutes(Date.now(), minutes), start);
+  const timeValue = (value) => value > 9 ? value : (value > 0 ? '0' + value : '00');
+
+  return `${timeValue(hours)}:${timeValue(minutes)}:${timeValue(seconds)}`;
 }
 
 type TimerProps = {
@@ -29,8 +38,6 @@ function RunningTimer(props: { entry: TimeEntry }) {
     e.preventDefault();
     (window as any).PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
   };
-
-
 
   return (
     <TimerContainer>

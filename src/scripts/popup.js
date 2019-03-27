@@ -11,6 +11,8 @@ const browser = require('webextension-polyfill');
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
 
+const ENTRIES_LIST_LIMIT = 15;
+
 if (FF) {
   document.querySelector('body').classList.add('ff');
 }
@@ -152,7 +154,7 @@ window.PopUp = {
     }
 
     const { listEntries, projects } = [...entries].reverse().reduce((sum, entry) => {
-      if (sum.listEntries.length >= 5) return sum;
+      if (sum.listEntries.length >= ENTRIES_LIST_LIMIT) return sum;
 
       const exists = sum.listEntries.some((te) => te.description === entry.description && te.pid === entry.pid);
       if (!exists) {

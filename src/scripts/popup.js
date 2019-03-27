@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Summary from './components/Summary';
 import TimeEntriesList from './components/TimeEntriesList';
 import Timer from './components/Timer';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+
 const browser = require('webextension-polyfill');
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
@@ -82,6 +84,12 @@ window.PopUp = {
     }
   },
 
+  renderSummary: function () {
+    const rootElement = document.getElementById('root-summary');
+    ReactDOM.unmountComponentAtNode(rootElement);
+    ReactDOM.render(<Summary />, rootElement);
+  },
+
   renderTimer: function () {
     const rootElement = document.getElementById('root-timer');
     ReactDOM.unmountComponentAtNode(rootElement);
@@ -134,13 +142,6 @@ window.PopUp = {
     setTimeout(function () {
       PopUp.$errorLabel.classList.remove('show');
     }, 3000);
-  },
-
-  renderSummary: function () {
-    const sums = TogglButton.calculateSums();
-
-    document.querySelector('.summary .s-today > span').textContent = sums.today;
-    document.querySelector('.summary .s-week > span').textContent = sums.week;
   },
 
   renderEntriesList: function () {

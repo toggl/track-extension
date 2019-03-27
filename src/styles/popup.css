@@ -5,6 +5,7 @@ body {
   background: white;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: white;
+  width: 470px;
 }
 
 .view {
@@ -406,6 +407,12 @@ hr {
   height: 315px;
 }
 
+.views #entry-form {
+  /* Bigger width in the toolbar popup. It'll be changed completely in "Timer popup" issue. */
+  width: 100%;
+  height: 100%;
+}
+
 #toggl-button-edit-form {
   position: absolute;
   width: 260px !important;
@@ -413,6 +420,13 @@ hr {
   padding: 10px !important;
   box-sizing: border-box;
   height: 315px;
+}
+
+.views #toggl-button-edit-form {
+  /* Bigger width in the toolbar popup. It'll be changed completely in "Timer popup" issue. */
+  position: relative;
+  margin: 0 auto;
+  width: auto !important;
 }
 
 #toggl-button-edit-form .toggl-button {

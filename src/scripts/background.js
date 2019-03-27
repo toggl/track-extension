@@ -900,64 +900,75 @@ window.TogglButton = {
     let entry;
     let error = '';
     let project;
-    if (!TogglButton.$curEntry) {
-      return;
-    }
-    entry = {
-      description: timeEntry.description,
-      pid: timeEntry.pid || null,
-      tags: timeEntry.tags,
-      tid: timeEntry.tid || null,
-      billable: timeEntry.billable,
-      wid: TogglButton.$curEntry.wid
-    };
 
-    if (entry.pid) {
-      project = TogglButton.findProjectByPid(parseInt(entry.pid, 10));
-      entry.wid = project && project.wid;
-    }
-
-    if (timeEntry.start) {
-      entry.start = timeEntry.start;
-    }
-
-    if (timeEntry.duration) {
-      entry.duration = timeEntry.duration;
-    }
-
-    TogglButton.ajax(
-      `/time_entries/${TogglButton.$curEntry.id}`,
-      {
-        method: 'PUT',
-        payload: entry,
-        baseUrl: TogglButton.$ApiV9Url,
-        onLoad: function (xhr) {
-          const success = xhr.status === 200;
-          try {
-            if (success) {
-              entry = JSON.parse(xhr.responseText);
-              // Not using TogglButton.updateCurrent as the time is not changed
-              TogglButton.$curEntry = entry;
-              TogglButton.setBrowserAction(entry);
-            } else {
-              error = xhr.responseText;
-            }
-            if (timeEntry.respond) {
-              sendResponse({ success: success, type: 'Update', error: error });
-            }
-            ga.reportEvent(timeEntry.type, timeEntry.service);
-          } catch (e) {
-            report(e);
-          }
-        },
-        onError: function (xhr) {
-          sendResponse({
-            success: false,
-            type: 'Update'
-          });
-        }
+    return new Promise(function (resolve, reject) {
+      if (!TogglButton.$curEntry) {
+        resolve();
+        return;
       }
-    );
+      entry = {
+        description: timeEntry.description,
+        pid: timeEntry.pid || null,
+        tags: timeEntry.tags,
+        tid: timeEntry.tid || null,
+        billable: timeEntry.billable,
+        wid: TogglButton.$curEntry.wid
+      };
+
+      if (entry.pid) {
+        project = TogglButton.findProjectByPid(parseInt(entry.pid, 10));
+        entry.wid = project && project.wid;
+      }
+
+      if (timeEntry.start) {
+        entry.start = timeEntry.start;
+      }
+
+      if (timeEntry.duration) {
+        entry.duration = timeEntry.duration;
+      }
+
+      TogglButton.ajax(
+        `/time_entries/${TogglButton.$curEntry.id}`,
+        {
+          method: 'PUT',
+          payload: entry,
+          baseUrl: TogglButton.$ApiV9Url,
+          onLoad: function (xhr) {
+            const success = xhr.status === 200;
+            try {
+              if (success) {
+                entry = JSON.parse(xhr.responseText);
+                // Not using TogglButton.updateCurrent as the time is not changed
+                TogglButton.$curEntry = entry;
+                TogglButton.setBrowserAction(entry);
+              } else {
+                error = xhr.responseText;
+              }
+              if (timeEntry.respond) {
+                console.log('responding');
+                resolve({ success: success, type: 'Update', error: error });
+              } else {
+                resolve();
+              }
+              ga.reportEvent(timeEntry.type, timeEntry.service);
+            } catch (e) {
+              report(e);
+              resolve({
+                success: false,
+                type: 'Update'
+              });
+            }
+          },
+          onError: function (xhr) {
+            resolve({
+              success: false,
+              type: 'Update'
+            });
+          }
+        }
+      );
+    });
   },
 
   setBrowserActionBadge: function () {
@@ -1720,6 +1731,7 @@ window.TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
+    console.log('b', request);
     return new Promise(async (resolve) => {
       let error;
       let errorSource;
@@ -1844,7 +1856,8 @@ window.TogglButton = {
           );
           TogglButton.hideNotification('remind-to-track-time');
         } else if (request.type === 'update') {
-          TogglButton.updateTimeEntry(request, sendResponse);
+          TogglButton.updateTimeEntry(request, sendResponse)
+            .then(resolve);
         } else if (request.type === 'stop') {
           TogglButton
             .stopTimeEntry(request, sendResponse)

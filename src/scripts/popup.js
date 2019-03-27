@@ -108,7 +108,13 @@ window.PopUp = {
         if (process.env.DEBUG) {
           console.info('Popup:sendMessageResponse', response, request);
         }
+
         if (!response) {
+          // FIXME - All messages need to support WebExtension Promise responses.
+          if (request.type === 'update') {
+            // Current TE update. Working around lack of response ^.
+            PopUp.renderTimer();
+          }
           return;
         }
         console.log(response);
@@ -129,7 +135,11 @@ window.PopUp = {
           if (!!response.type && response.type === 'New Entry' && showPostPopup) {
             PopUp.updateEditForm(PopUp.$editView);
           } else if (response.type === 'Update') {
+            // Extension update
             TogglButton = browser.extension.getBackgroundPage().TogglButton;
+          } else if (response.type === 'update') {
+            // Current TE update
+            PopUp.renderTimer();
           } else if (response.type === 'Stop') {
             PopUp.renderTimer();
             PopUp.renderEntriesList();

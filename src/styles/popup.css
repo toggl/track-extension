@@ -186,13 +186,13 @@ p.form-row.first {
 
 .header .signup {
   display: none;
-  float: right;
   font-size: 14px;
-  padding: 8px 5px 0 0;
 }
 
 .header .signup a {
-  color: #0075ee;
+  display: block;
+  float: right;
+  color: #fff;
 }
 
 .views > div,

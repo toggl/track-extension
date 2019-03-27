@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import TimeEntriesList from './components/TimeEntriesList';
+import Timer from './components/Timer';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 const browser = require('webextension-polyfill');
 
@@ -83,6 +84,8 @@ window.PopUp = {
         if (!PopUp.$header.getAttribute('data-view')) {
           PopUp.switchView(PopUp.$menuView);
         }
+
+        PopUp.renderTimer();
         PopUp.renderEntriesList();
         PopUp.renderSummary();
       } else {
@@ -96,6 +99,11 @@ window.PopUp = {
         category: 'Popup'
       });
     }
+  },
+
+  renderTimer: function () {
+    const entry = TogglButton.$curEntry;
+    ReactDOM.render(<Timer entry={entry} />, document.getElementById('root-timer'));
   },
 
   sendMessage: function (request) {

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import browser from 'webextension-polyfill';
 import { addSeconds, differenceInSeconds, format } from 'date-fns';
 
 import start from './icon-start.svg';
@@ -28,7 +27,7 @@ function RunningTimer(props: { entry: TimeEntry }) {
   const { entry } = props;
   const stopTimer = (e) => {
     e.preventDefault();
-    browser.runtime.sendMessage({ type: 'stop', service: 'dropdown' });
+    (window as any).PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
   };
 
 
@@ -64,7 +63,7 @@ function TimerDuration ({ start }: { start: string }) {
 function TimerForm () {
   const startTimer = (e) => {
     e.preventDefault();
-    browser.runtime.sendMessage({ type: 'timeEntry', service: 'dropdown' });
+    (window as any).PopUp.sendMessage({ type: 'timeEntry', service: 'dropdown', respond: true });
   };
 
   return (

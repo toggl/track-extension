@@ -24,7 +24,6 @@ window.PopUp = {
   $projectBullet: document.querySelector('.timer .tb-project-bullet'),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
-  $timerRow: document.querySelector('.timer'),
   $timer: null,
   $tagsVisible: false,
   mousedownTrigger: null,
@@ -40,7 +39,7 @@ window.PopUp = {
   $entries: document.querySelector('.entries-list'),
   defaultErrorMessage: 'Error connecting to server',
   showPage: function () {
-    let p; let dom;
+    let dom;
     if (!TogglButton) {
       TogglButton = browser.extension.getBackgroundPage().TogglButton;
     }
@@ -55,31 +54,13 @@ window.PopUp = {
           PopUp.editFormAdded = true;
         }
 
-        PopUp.$timerRow.classList.remove('has-resume');
         if (TogglButton.$curEntry === null) {
-          PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
-          PopUp.$togglButton.textContent = 'Start new';
-          PopUp.$togglButton.parentNode.classList.remove('tracking');
-          PopUp.$projectBullet.className = 'tb-project-bullet';
           if (TogglButton.$latestStoppedEntry) {
-            p = TogglButton.findProjectByPid(
-              TogglButton.$latestStoppedEntry.pid
-            );
-            p = p ? ' - ' + p.name : '';
-            PopUp.$resumeButton.title =
-              TogglButton.$latestStoppedEntry.description + p;
-            PopUp.$timerRow.classList.add('has-resume');
             localStorage.setItem(
               'latestStoppedEntry',
               JSON.stringify(TogglButton.$latestStoppedEntry)
             );
-            PopUp.$resumeButton.setAttribute('data-event', 'resume');
           }
-        } else {
-          PopUp.$togglButton.setAttribute('data-event', 'stop');
-          PopUp.$togglButton.textContent = 'Stop';
-          PopUp.$togglButton.parentNode.classList.add('tracking');
-          PopUp.showCurrentDuration(true);
         }
         if (!PopUp.$header.getAttribute('data-view')) {
           PopUp.switchView(PopUp.$menuView);
@@ -102,8 +83,10 @@ window.PopUp = {
   },
 
   renderTimer: function () {
+    const rootElement = document.getElementById('root-timer');
+    ReactDOM.unmountComponentAtNode(rootElement);
     const entry = TogglButton.$curEntry;
-    ReactDOM.render(<Timer entry={entry} />, document.getElementById('root-timer'));
+    ReactDOM.render(<Timer entry={entry} />, rootElement);
   },
 
   sendMessage: function (request) {
@@ -132,6 +115,8 @@ window.PopUp = {
             TogglButton = browser.extension.getBackgroundPage().TogglButton;
           } else {
             window.location.reload();
+            // PopUp.renderTimer();
+            // PopUp.renderEntriesList();
           }
         } else if (
           request.type === 'login' ||
@@ -149,74 +134,6 @@ window.PopUp = {
     setTimeout(function () {
       PopUp.$errorLabel.classList.remove('show');
     }, 3000);
-  },
-
-  showCurrentDuration: function (startTimer) {
-    if (TogglButton.$curEntry === null) {
-      PopUp.$togglButton.setAttribute('data-event', 'timeEntry');
-      PopUp.$togglButton.setAttribute('title', '');
-      PopUp.$togglButton.textContent = 'Start new';
-      PopUp.$togglButton.parentNode.classList.remove('tracking');
-      clearInterval(PopUp.$timer);
-      PopUp.$timer = null;
-      PopUp.$projectBullet.className = 'tb-project-bullet';
-      return;
-    }
-
-    const duration = PopUp.msToTime(
-      new Date() - new Date(TogglButton.$curEntry.start)
-    );
-    let description = TogglButton.$curEntry.description || '(no description)';
-    const durationField = document.querySelector('#toggl-button-duration');
-
-    PopUp.$togglButton.textContent = duration;
-
-    // Update edit form duration field
-    if (
-      durationField !== document.activeElement &&
-      PopUp.durationChanged === false
-    ) {
-      durationField.value = duration;
-    } else {
-      PopUp.durationChanged = true;
-    }
-
-    if (startTimer) {
-      if (!PopUp.$timer) {
-        PopUp.$timer = setInterval(function () {
-          PopUp.showCurrentDuration();
-        }, 1000);
-      }
-      description += PopUp.$projectAutocomplete.setProjectBullet(
-        TogglButton.$curEntry.pid,
-        TogglButton.$curEntry.tid,
-        PopUp.$projectBullet
-      );
-      PopUp.$editButton.textContent = description;
-      PopUp.$editButton.setAttribute(
-        'title',
-        'Click to edit "' + description + '"'
-      );
-
-      PopUp.setupIcons(TogglButton.$curEntry);
-    }
-  },
-
-  updateMenuTimer: function (data) {
-    let description = data.description || '(no description)';
-
-    description += PopUp.$projectAutocomplete.setProjectBullet(
-      data.pid,
-      data.tid,
-      PopUp.$projectBullet
-    );
-    PopUp.$editButton.textContent = description;
-    PopUp.$editButton.setAttribute(
-      'title',
-      'Click to edit "' + description + '"'
-    );
-
-    PopUp.setTagIcon(data.tags);
   },
 
   renderSummary: function () {
@@ -262,21 +179,12 @@ window.PopUp = {
     ReactDOM.render(<TimeEntriesList timeEntries={listEntries} projects={projects} />, document.getElementById('root-time-entries-list'));
   },
 
-  setupIcons: function (data) {
-    PopUp.setTagIcon(data.tags);
-    PopUp.setBillableIcon(!!data.billable);
-  },
-
   setTagIcon: function (tags) {
     const t = !!tags && !!tags.length;
     const joinedTags = t ? tags.join(', ') : '';
 
     PopUp.$timerRow.classList.toggle('tag-icon-visible', t);
     PopUp.$tagIcon.setAttribute('title', joinedTags);
-  },
-
-  setBillableIcon: function (billable) {
-    PopUp.$timerRow.classList.toggle('billable-icon-visible', billable);
   },
 
   switchView: function (view) {
@@ -420,7 +328,7 @@ window.PopUp = {
     }
 
     PopUp.sendMessage(request);
-    PopUp.updateMenuTimer(request);
+    PopUp.renderTimer();
     PopUp.switchView(PopUp.$menuView);
   },
 
@@ -520,7 +428,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       PopUp.sendMessage(request);
     };
-    PopUp.$togglButton.addEventListener('click', onClickSendMessage);
     PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
     document

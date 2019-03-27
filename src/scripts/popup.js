@@ -100,8 +100,14 @@ window.PopUp = {
   },
 
   sendMessage: function (request) {
+    if (process.env.DEBUG) {
+      console.info('Popup:sendMessage', request);
+    }
     return browser.runtime.sendMessage(request)
       .then(async function (response) {
+        if (process.env.DEBUG) {
+          console.info('Popup:sendMessageResponse', response, request);
+        }
         if (!response) {
           return;
         }

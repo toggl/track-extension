@@ -1238,8 +1238,9 @@ li > .toggl-button.phabricator {
 
 /********* WORDPRESS *********/
 .toggl-button.wordpress {
-  float: left;
+  float: right;
   margin-left: 10px;
+  margin-top: 5px;
 }
 
 /********* PLANBOX *********/

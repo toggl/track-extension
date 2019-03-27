@@ -105,6 +105,7 @@ window.PopUp = {
         if (!response) {
           return;
         }
+        console.log(response);
 
         if (
           request.type === 'list-continue' &&
@@ -123,6 +124,10 @@ window.PopUp = {
             PopUp.updateEditForm(PopUp.$editView);
           } else if (response.type === 'Update') {
             TogglButton = browser.extension.getBackgroundPage().TogglButton;
+          } else if (response.type === 'Stop') {
+            PopUp.renderTimer();
+            PopUp.renderEntriesList();
+            PopUp.renderSummary();
           } else {
             window.location.reload();
             // PopUp.renderTimer();

@@ -1,4 +1,5 @@
 export const black = `#000000`;
+export const extraLightGrey = `#f3f3f3`;
 export const green = `#4bc800`;
 export const grey = `#7b7b7b`;
 export const greyish = `#a3a3a3`;

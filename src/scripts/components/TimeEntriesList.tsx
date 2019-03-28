@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { format } from 'date-fns';
+import { format, subSeconds } from 'date-fns';
 
 import BillableIcon from './BillableIcon.jsx';
 import TagsIcon from './TagsIcon.jsx';
@@ -8,7 +8,7 @@ import { ProjectLargeDot } from '../@toggl/ui/icons/index';
 import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
 import { borderRadius } from '../@toggl/style/lib/variables';
-import { secToDecimalHours } from '../@toggl/time-format-utils';
+import { formatDuration } from './Timer';
 import play from './play.svg';
 
 const NO_DESCRIPTION = '(no description)';
@@ -24,7 +24,6 @@ const getTimeEntryDayGroups = (timeEntries: Array<Array<TimeEntry>>): {[date: st
     .filter((timeEntries) => timeEntries.some((te) => te.duration >= 0))
     .reduce((groups: { [date: string]: Array<Array<TimeEntry>> }, entries) => {
       const date = format(entries[0].start, 'YYYY-MM-DD');
-      console.log(date);
       groups[date] = groups[date] || [];
       groups[date].push(entries);
 
@@ -127,8 +126,9 @@ const GroupedEntryCounter = styled.div`
 
 function TimeEntryDuration ({ duration }: { duration: number }) {
   if (!duration || duration < 0) return null;
+  const since = subSeconds(Date.now(),  duration).toUTCString();
   return (
-    <div>{secToDecimalHours(duration)}</div>
+    <div>{formatDuration(since)}</div>
   );
 }
 

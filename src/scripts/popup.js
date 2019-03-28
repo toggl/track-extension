@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Summary from './components/Summary';
 import TimeEntriesList from './components/TimeEntriesList';
-import Timer from './components/Timer';
+import Timer, { formatDuration } from './components/Timer';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 
 const browser = require('webextension-polyfill');
@@ -65,6 +65,8 @@ window.PopUp = {
               JSON.stringify(TogglButton.$latestStoppedEntry)
             );
           }
+        } else {
+          PopUp.showCurrentDuration(true);
         }
         if (!PopUp.$header.getAttribute('data-view')) {
           PopUp.switchView(PopUp.$menuView);
@@ -201,14 +203,6 @@ window.PopUp = {
     ReactDOM.render(<TimeEntriesList timeEntries={listEntries} projects={projects} />, document.getElementById('root-time-entries-list'));
   },
 
-  setTagIcon: function (tags) {
-    const t = !!tags && !!tags.length;
-    const joinedTags = t ? tags.join(', ') : '';
-
-    PopUp.$timerRow.classList.toggle('tag-icon-visible', t);
-    PopUp.$tagIcon.setAttribute('title', joinedTags);
-  },
-
   switchView: function (view) {
     PopUp.$header.setAttribute('data-view', view.id);
   },
@@ -258,6 +252,34 @@ window.PopUp = {
     togglButtonDescription.scrollLeft = 0;
 
     PopUp.durationChanged = false;
+    PopUp.showCurrentDuration(true);
+  },
+
+  showCurrentDuration: function (startTimer) {
+    if (TogglButton.$curEntry === null) {
+      return;
+    }
+
+    const duration = formatDuration(TogglButton.$curEntry.start);
+    const durationField = document.querySelector('#toggl-button-duration');
+
+    // Update edit form duration field
+    if (
+      durationField !== document.activeElement &&
+      PopUp.durationChanged === false
+    ) {
+      durationField.value = duration;
+    } else {
+      PopUp.durationChanged = true;
+    }
+
+    if (startTimer) {
+      if (!PopUp.$timer) {
+        PopUp.$timer = setInterval(function () {
+          PopUp.showCurrentDuration();
+        }, 1000);
+      }
+    }
   },
 
   updateBillable: function (pid, noOverwrite) {

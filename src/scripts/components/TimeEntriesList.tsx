@@ -7,46 +7,50 @@ import TagsIcon from './TagsIcon.jsx';
 import { ProjectLargeDot } from '../@toggl/ui/icons/index';
 import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
+import { borderRadius } from '../@toggl/style/lib/variables';
 import { secToDecimalHours } from '../@toggl/time-format-utils';
 import play from './play.svg';
 
 const NO_DESCRIPTION = '(no description)';
 
-const getTimeEntryDayGroups = (timeEntries: Array<TimeEntry>): {[date: string]: Array<TimeEntry>} => {
+const getTimeEntryDayGroups = (timeEntries: Array<Array<TimeEntry>>): {[date: string]: Array<Array<TimeEntry>>} => {
   return [...timeEntries]
     .sort((a, b) => {
       // Most recent entries first.
-      if (a.start > b.start) return -1;
-      if (b.start > a.start) return 1;
+      if (a[0].start > b[0].start) return -1;
+      if (b[0].start > a[0].start) return 1;
       return 0;
     })
-    .filter((timeEntry) => timeEntry.duration >= 0)
-    .reduce((groups: { [date: string]: Array<TimeEntry> }, entry) => {
-      const date = format(entry.start, 'YYYY-MM-DD');
+    .filter((timeEntries) => timeEntries.some((te) => te.duration >= 0))
+    .reduce((groups: { [date: string]: Array<Array<TimeEntry>> }, entries) => {
+      const date = format(entries[0].start, 'YYYY-MM-DD');
       console.log(date);
       groups[date] = groups[date] || [];
-      groups[date].push(entry);
+      groups[date].push(entries);
 
       return groups;
     }, {})
 };
 
 type TimeEntriesListProps = {
-  timeEntries: Array<TimeEntry>;
+  timeEntries: Array<Array<TimeEntry>>;
   projects: IdMap<Project>;
 };
 export default function TimeEntriesList (props: TimeEntriesListProps) {
   const { timeEntries = [], projects = {} } = props;
   const dayGroups = getTimeEntryDayGroups(timeEntries);
+
   return (
     <EntryList>
       {Object.keys(dayGroups).map((date, groupIndex) => {
         const groupEntries = dayGroups[date];
+        const showHeading = groupIndex > 0;
+
         return [
-          groupIndex > 0 && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
-          ...groupEntries.map((timeEntry, i) => {
-            const project = projects[timeEntry.pid] || null;
-            return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntry={timeEntry} project={project} />;
+          showHeading && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
+          ...groupEntries.map((timeEntries, i) => {
+            const project = projects[timeEntries[0].pid] || null;
+            return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
           })
         ]
       })}
@@ -55,24 +59,33 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
 }
 
 type TimeEntriesListItemProps = {
-  timeEntry: TimeEntry;
+  timeEntries: Array<TimeEntry>;
   project: Project;
 };
-function TimeEntriesListItem ({ timeEntry, project }: TimeEntriesListItemProps) {
+function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps) {
+  const timeEntry = timeEntries[0];
   const description = timeEntry.description || NO_DESCRIPTION;
   const isBillable = !!timeEntry.billable;
   const tags = (timeEntry.tags && timeEntry.tags.length > 0)
     ? timeEntry.tags.join(', ')
     : '';
 
+  const totalDuration = timeEntries.reduce((sum, entry) => {
+    if (entry.duration > 0) sum += entry.duration;
+    return sum;
+  }, 0);
+  const entriesCount = timeEntries.length;
+  const earliestStartTime = format(timeEntries[timeEntries.length - 1].start, 'HH:mm');
+
   return (
     <EntryItem>
       <EntryItemRow>
+        <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
         <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
         <EntryIcons>
           <BillableIcon active={isBillable} />
           {tags && <TagsIcon title={tags} />}
-          <TimeEntryDuration duration={timeEntry.duration} />
+          <TimeEntryDuration duration={totalDuration} />
         </EntryIcons>
       </EntryItemRow>
       <EntryItemRow>
@@ -82,6 +95,33 @@ function TimeEntriesListItem ({ timeEntry, project }: TimeEntriesListItemProps) 
     </EntryItem>
   );
 }
+
+const GroupedEntryCounter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-right: 10px;
+  flex-shrink: 0;
+
+  height: 30px;
+  width: 30px;
+
+  border-radius: ${borderRadius};
+
+  cursor: pointer;
+  transition: background ease-in 0.05s, color ease-in 0.05s;
+
+  border: 1px solid ${color.extraLightGrey};
+  background-color: ${color.white};
+  color: ${color.grey};
+
+  /* Changes from webapp */
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  cursor: default;
+`;
 
 function TimeEntryDuration ({ duration }: { duration: number }) {
   if (!duration || duration < 0) return null;

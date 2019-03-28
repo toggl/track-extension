@@ -80,7 +80,9 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
   return (
     <EntryItem>
       <EntryItemRow>
-        <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
+        {entriesCount > 1 &&
+          <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
+        }
         <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
         <EntryIcons>
           <BillableIcon active={isBillable} />

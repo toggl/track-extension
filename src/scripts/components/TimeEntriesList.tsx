@@ -38,17 +38,15 @@ type TimeEntriesListProps = {
 export default function TimeEntriesList (props: TimeEntriesListProps) {
   const { timeEntries = [], projects = {} } = props;
   const dayGroups = getTimeEntryDayGroups(timeEntries);
-  // let renderedEntriesCount = 0;
-  console.log(dayGroups);
   return (
     <EntryList>
-      {Object.keys(dayGroups).map((date, i) => {
+      {Object.keys(dayGroups).map((date, groupIndex) => {
         const groupEntries = dayGroups[date];
         return [
-          <EntryHeading key={`tegroup-${i}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
+          groupIndex > 0 && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
           ...groupEntries.map((timeEntry, i) => {
             const project = projects[timeEntry.pid] || null;
-            return <TimeEntriesListItem key={`te-${i}`} timeEntry={timeEntry} project={project} dataId={i} />;
+            return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntry={timeEntry} project={project} />;
           })
         ]
       })}
@@ -59,9 +57,8 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
 type TimeEntriesListItemProps = {
   timeEntry: TimeEntry;
   project: Project;
-  dataId: number;
 };
-function TimeEntriesListItem ({ timeEntry, project, ...props }: TimeEntriesListItemProps) {
+function TimeEntriesListItem ({ timeEntry, project }: TimeEntriesListItemProps) {
   const description = timeEntry.description || NO_DESCRIPTION;
   const isBillable = !!timeEntry.billable;
   const tags = (timeEntry.tags && timeEntry.tags.length > 0)
@@ -69,7 +66,7 @@ function TimeEntriesListItem ({ timeEntry, project, ...props }: TimeEntriesListI
     : '';
 
   return (
-    <EntryItem data-id={props.dataId}>
+    <EntryItem>
       <EntryItemRow>
         <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
         <EntryIcons>
@@ -138,7 +135,6 @@ const EntryList = styled.ul`
   padding: 0;
   margin: 0;
 
-  background-color: ${color.white};
   font-family: Roboto, Helvetica, Arial, sans-serif;
 `;
 const itemPadding = '.5rem';
@@ -153,6 +149,7 @@ const EntryItem = styled.li`
   color: ${color.grey};
   font-size: 14px;
   box-shadow: ${itemShadow};
+  background-color: ${color.white};
 
   &:hover {
     background-color: ${color.listItemHover};

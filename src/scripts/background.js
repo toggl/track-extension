@@ -946,7 +946,6 @@ window.TogglButton = {
                 error = xhr.responseText;
               }
               if (timeEntry.respond) {
-                console.log('responding');
                 resolve({ success: success, type: 'Update', error: error });
               } else {
                 resolve();
@@ -1731,7 +1730,6 @@ window.TogglButton = {
   },
 
   newMessage: function (request, sender, sendResponse) {
-    console.log('b', request);
     return new Promise(async (resolve) => {
       let error;
       let errorSource;

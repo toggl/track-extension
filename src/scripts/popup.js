@@ -203,14 +203,6 @@ window.PopUp = {
     ReactDOM.render(<TimeEntriesList timeEntries={listEntries} projects={projects} />, document.getElementById('root-time-entries-list'));
   },
 
-  setTagIcon: function (tags) {
-    const t = !!tags && !!tags.length;
-    const joinedTags = t ? tags.join(', ') : '';
-
-    PopUp.$timerRow.classList.toggle('tag-icon-visible', t);
-    PopUp.$tagIcon.setAttribute('title', joinedTags);
-  },
-
   switchView: function (view) {
     PopUp.$header.setAttribute('data-view', view.id);
   },
@@ -287,8 +279,6 @@ window.PopUp = {
           PopUp.showCurrentDuration();
         }, 1000);
       }
-
-      PopUp.setupIcons(TogglButton.$curEntry);
     }
   },
 

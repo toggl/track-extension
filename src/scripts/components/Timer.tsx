@@ -13,10 +13,14 @@ import stop from './icon-stop.svg';
 
 const NO_DESCRIPTION = '(no description)';
 
-export const formatDuration = (start: string) => {
-  const hours = differenceInHours(Date.now(), start);
-  const minutes = differenceInMinutes(subHours(Date.now(), hours), start);
-  const seconds = differenceInSeconds(subMinutes(Date.now(), minutes), start);
+/**
+ * Returns the elapsed time since `since` as a duration in the format hh:mm:ss.
+ */
+export const formatDuration = (start: string | number, stop?: string | number) => {
+  const now = stop || Date.now();
+  const hours = differenceInHours(now, start);
+  const minutes = differenceInMinutes(subHours(now, hours), start);
+  const seconds = differenceInSeconds(subMinutes(subHours(now, hours), minutes), start);
   const timeValue = (value) => value > 9 ? value : (value > 0 ? '0' + value : '00');
 
   return `${timeValue(hours)}:${timeValue(minutes)}:${timeValue(seconds)}`;

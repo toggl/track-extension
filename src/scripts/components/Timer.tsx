@@ -68,14 +68,18 @@ function TimerDuration ({ start }: { start: string }) {
 }
 
 function TimerForm () {
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const startTimer = (e) => {
     e.preventDefault();
-    (window as any).PopUp.sendMessage({ type: 'timeEntry', service: 'dropdown', respond: true });
+    const description = inputRef && inputRef.current
+      ? inputRef.current.value
+      : '';
+    (window as any).PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true });
   };
 
   return (
     <TimerContainer>
-      <TimerInput placeholder='What are you working on?' />
+      <TimerInput ref={inputRef} placeholder='What are you working on?' />
       <TimerButton isRunning={false} onClick={startTimer} />
     </TimerContainer>
   );

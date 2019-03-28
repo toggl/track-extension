@@ -174,17 +174,33 @@ window.PopUp = {
       return;
     }
 
-    const { listEntries, projects } = [...entries].reverse().reduce((sum, entry) => {
-      if (sum.listEntries.length >= ENTRIES_LIST_LIMIT) return sum;
+    const hasExistingGroup = (entry) => ([te]) => {
+      return te.description === entry.description &&
+        te.pid === entry.pid &&
+        (te.tags || []).join(',') === (entry.tags || []).join(',') &&
+        te.billable === entry.billable;
+    };
 
-      const exists = sum.listEntries.some((te) => te.description === entry.description && te.pid === entry.pid);
-      if (!exists) {
-        sum.listEntries.push(entry);
+    // Transform entries into an ordered list of grouped time entries
+    const { listEntries, projects } = [...entries].reverse().reduce((sum, entry) => {
+      const existingGroupIndex = sum.listEntries.findIndex(hasExistingGroup(entry));
+      if (existingGroupIndex === -1) {
+        // This TE group has not been seen yet.
+        if (sum.listEntries.length >= ENTRIES_LIST_LIMIT) return sum;
+        sum.listEntries.push([entry]);
+      } else {
+        // This TE group already exists.
+        sum.listEntries[existingGroupIndex].push(entry);
+        sum.listEntries[existingGroupIndex].sort((a, b) => {
+          // Most recent entries first.
+          if (a.start > b.start) return -1;
+          if (b.start > a.start) return 1;
+          return 0;
+        });
       }
+
       const project = TogglButton.findProjectByPid(entry.pid);
-      if (project) {
-        sum.projects[project.id] = project;
-      }
+      if (project) sum.projects[project.id] = project;
       return sum;
     }, { listEntries: [], projects: {} });
 

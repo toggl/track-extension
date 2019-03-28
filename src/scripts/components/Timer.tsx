@@ -13,7 +13,7 @@ import stop from './icon-stop.svg';
 
 const NO_DESCRIPTION = '(no description)';
 
-const formatDuration = (start: string) => {
+export const formatDuration = (start: string) => {
   const hours = differenceInHours(Date.now(), start);
   const minutes = differenceInMinutes(subHours(Date.now(), hours), start);
   const seconds = differenceInSeconds(subMinutes(Date.now(), minutes), start);

@@ -9,7 +9,7 @@ import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
 import { borderRadius } from '../@toggl/style/lib/variables';
 import { formatDuration } from './Timer';
-import play from './play.svg';
+import play from '../icons/play.svg';
 
 const NO_DESCRIPTION = '(no description)';
 

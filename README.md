@@ -38,6 +38,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Eventum](https://launchpad.net/eventum)
 - [Evernote](https://www.evernote.com/)
 - [Exana](https://exana.io/)
+- [Favro](https://favro.com/)
 - [Feedly](http://feedly.com/)
 - [Flow](http://getflow.com/)
 - [FogBugz](http://www.fogcreek.com/fogbugz/)

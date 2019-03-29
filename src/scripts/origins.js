@@ -637,5 +637,13 @@ export default {
     url: '*://app.vivifyscrum.com/*',
     name: 'VivifyScrum',
     clone: 'true'
+  },
+  'favro.com': {
+    url: '*://favro.com/*',
+    name: 'Favro'
+  },
+  'www.favro.com': {
+    url: '*://*.favro.com/*',
+    name: 'Favro'
   }
 };

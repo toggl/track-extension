@@ -439,6 +439,10 @@ export default {
     name: 'Salesforce Lightning',
     file: 'salesforce.js'
   },
+  'scrapbox.io': {
+    url: '*://scrapbox.io/*',
+    name: 'Scrapbox'
+  },
   'sentry.io': {
     url: '*://*.sentry.io/*',
     name: 'Sentry'

@@ -1,12 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import styled from '@emotion/styled';
 import * as color from '../@toggl/style/lib/color';
 
-const Wrapper = styled.span`
-  line-height: 0;
-`;
-
-export default function TagsIcon (props) {
+export default function TagsIcon (props: { title: string }) {
   return (
     <Wrapper {...props}>
       <Icon width={17} height={16}>
@@ -19,6 +15,10 @@ export default function TagsIcon (props) {
     </Wrapper>
   );
 }
+
+const Wrapper = styled.span`
+  line-height: 0;
+`;
 
 const Icon = styled.svg`
   &:hover > path {

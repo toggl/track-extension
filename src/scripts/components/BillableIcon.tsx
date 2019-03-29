@@ -1,10 +1,27 @@
-import React from 'react'
+import * as React from 'react'
 import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 
 import * as color from '../@toggl/style/lib/color';
 
-export default function BillableIcon ({ active, theme }) {
+interface Theme {
+  defaultOpacity: number;
+  activeOpacity: number;
+  color: string;
+  hoverColor: string;
+  activeColor: string;
+  activeHoverColor: string;
+}
+
+interface Themes {
+  greyLight: Theme;
+  greenLight: Theme;
+}
+
+export default function BillableIcon ({ active, theme }: {
+  active: boolean,
+  theme: keyof Themes
+}) {
   return (
     <Icon theme={themes[theme]} active={active} width={12} height={18}>
       <path
@@ -23,7 +40,7 @@ BillableIcon.defaultProps = {
   theme: 'greyLight'
 }
 
-const Icon = styled.svg`
+const Icon = styled.svg<{ active: boolean, theme: Theme }>`
   ${({ active, theme }) => css`
     opacity: ${active ? theme.activeOpacity : theme.defaultOpacity};
 

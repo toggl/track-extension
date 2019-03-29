@@ -257,6 +257,10 @@ export default {
     url: '',
     name: 'Kanboard'
   },
+  'kanban.ist': {
+    url: '*://*.kanban.ist/*',
+    name: 'Kanbanist'
+  },
   'liquidplanner.com': {
     url: '*://app.liquidplanner.com/*',
     name: 'Liquidplanner'

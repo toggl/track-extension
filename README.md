@@ -60,6 +60,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Intercom](https://www.intercom.com/)
 - [Jira](https://www.atlassian.com/software/jira)
 - [Kanbanery](https://www.kanbanery.com/)
+- [Kanbanist](https://kanban.ist/)
 - [Kanboard](https://kanboard.org/)
 - [KhanAcademy](https://www.khanacademy.org/)
 - [LiquidPlanner](https://www.liquidplanner.com/)

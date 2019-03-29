@@ -179,7 +179,7 @@ const EntryList = styled.ul`
 
   font-family: Roboto, Helvetica, Arial, sans-serif;
 `;
-const itemPadding = '.5rem';
+const itemPadding = '.5rem .8rem';
 const itemShadow = 'rgb(232, 232, 232) 0px -1px 0px 0px inset';
 const EntryItem = styled.li`
   display: flex;

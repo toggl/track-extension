@@ -1,3 +1,12 @@
+# [1.25.0](https://github.com/toggl/toggl-button/compare/1.24.1...1.25.0) (2019-03-29)
+
+
+### Features
+
+* Add Focuster integration ([2ca6284](https://github.com/toggl/toggl-button/commit/2ca6284))
+* Add Kanbanist integration ([a683b3e](https://github.com/toggl/toggl-button/commit/a683b3e))
+* Add Scrapbox integration ([d7b7c1f](https://github.com/toggl/toggl-button/commit/d7b7c1f))
+
 ## [1.24.1](https://github.com/toggl/toggl-button/compare/1.24.0...1.24.1) (2019-03-25)
 
 

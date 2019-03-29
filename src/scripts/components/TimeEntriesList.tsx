@@ -2,8 +2,8 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { format, subSeconds } from 'date-fns';
 
-import BillableIcon from './BillableIcon.jsx';
-import TagsIcon from './TagsIcon.jsx';
+import BillableIcon from './BillableIcon';
+import TagsIcon from './TagsIcon';
 import { ProjectLargeDot } from '../@toggl/ui/icons/index';
 import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';

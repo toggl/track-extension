@@ -18,9 +18,8 @@ body {
   display: none;
 }
 #login-form {
-  margin-bottom: 30px;
+  margin-bottom: 48px;
   padding-top: 0px;
-  width: 192px;
 }
 
 #login-form .form-submit-row label.left {
@@ -40,6 +39,7 @@ body {
   color: #767676;
 }
 .form-row {
+  display: flex;
   margin: 0 0 15px;
   padding: 0;
 }
@@ -54,11 +54,13 @@ p.form-row.first {
 }
 .text-input {
   background: #f5f5f5;
-  border: 1px solid #e1e1e1;
-  padding: 5px;
-  width: 180px;
-  font-size: 13px;
+  border: 1px solid #f3f3f3;
+  border-radius: 8px;
   outline: none;
+  padding: 0 10px;
+  height: 36px;
+  font-size: 14px;
+  flex: 1;
 }
 #entry_project {
   height: 25px;
@@ -113,17 +115,17 @@ p.form-row.first {
   background-image: linear-gradient(to bottom, #f8f8f8, #e4e4e4);
 }
 .login-btn {
-  font-weight: 200;
+  font-weight: 400;
   font-size: 14px;
   width: 80px;
   height: 34px;
   line-height: 34px;
   vertical-align: middle;
-  text-transform: uppercase;
   color: white;
   display: inline-block;
   background-color: #80d364;
   border: none;
+  border-radius: 8px;
   outline: none;
   cursor: pointer;
   font-family: inherit;

@@ -21,7 +21,7 @@ const SummaryRow = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 30px;
-  padding: 0 .5rem;
+  padding: 0 .8rem;
 
   color: ${color.black};
   font-weight: ${text.bold};

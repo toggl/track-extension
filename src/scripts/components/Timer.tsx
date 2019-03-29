@@ -96,7 +96,7 @@ const TimerContainer = styled.div`
 
   box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
   align-items: center;
-  padding: .5rem;
+  padding: .5rem .8rem;
   box-sizing: border-box;
   background: #fff;
   margin-bottom: 1rem;
@@ -126,7 +126,7 @@ const TimerInput = styled.input`
 `;
 
 const Duration = styled.div`
-  padding: 0 .5rem;
+  padding: 0 .8rem;
 `;
 
 

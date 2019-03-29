@@ -8,8 +8,8 @@ import {
   subMinutes
 } from 'date-fns';
 
-import start from './icon-start.svg';
-import stop from './icon-stop.svg';
+import start from '../icons/start.svg';
+import stop from '../icons/stop.svg';
 
 const NO_DESCRIPTION = '(no description)';
 

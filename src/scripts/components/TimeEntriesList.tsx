@@ -4,10 +4,14 @@ import { format, subSeconds } from 'date-fns';
 
 import BillableIcon from './BillableIcon';
 import TagsIcon from './TagsIcon';
-import { ProjectLargeDot } from '../@toggl/ui/icons/index';
+
+import { ProjectLargeDot } from '../@toggl/ui/icons';
+import { Button } from '../@toggl/ui/buttons';
+
 import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
 import { borderRadius } from '../@toggl/style/lib/variables';
+
 import { formatDuration } from './Timer';
 import play from '../icons/play.svg';
 
@@ -31,8 +35,8 @@ const getTimeEntryDayGroups = (timeEntries: Array<Array<TimeEntry>>): {[date: st
     }, {})
 };
 
-type TimeEntriesListProps = {
-  timeEntries: Array<Array<TimeEntry>>;
+interface TimeEntriesListProps {
+  timeEntries: TimeEntry[][];
   projects: IdMap<Project>;
 };
 export default function TimeEntriesList (props: TimeEntriesListProps) {
@@ -53,6 +57,13 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
           })
         ]
       })}
+      <Footer>
+        <a target="_blank" href="https://toggl.com/app/timer?utm_source=toggl-button&utm_medium=referral">
+          <Button>
+            See more on <strong>toggl.com</strong>
+          </Button>
+        </a>
+      </Footer>
     </EntryList>
   );
 }
@@ -235,4 +246,9 @@ const EntryIcons = styled.div`
   > * {
     margin: 0 .25rem;
   }
+`;
+
+const Footer = styled(EntryHeading)`
+  justify-content: center;
+  padding: 30px 0;
 `;

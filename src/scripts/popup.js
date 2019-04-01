@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { isSameDay } from 'date-fns';
 
 import Summary from './components/Summary';
 import TimeEntriesList from './components/TimeEntriesList';
@@ -144,10 +145,11 @@ window.PopUp = {
             PopUp.renderTimer();
             PopUp.renderEntriesList();
             PopUp.renderSummary();
+          } else if (response.type === 'list-continue') {
+            PopUp.renderTimer();
+            PopUp.renderEntriesList();
           } else {
             window.location.reload();
-            // PopUp.renderTimer();
-            // PopUp.renderEntriesList();
           }
         } else if (
           request.type === 'login' ||
@@ -175,7 +177,8 @@ window.PopUp = {
     }
 
     const hasExistingGroup = (entry) => ([te]) => {
-      return te.description === entry.description &&
+      return isSameDay(te.start, entry.start) &&
+        te.description === entry.description &&
         te.pid === entry.pid &&
         (te.tags || []).join(',') === (entry.tags || []).join(',') &&
         te.billable === entry.billable;
@@ -183,6 +186,11 @@ window.PopUp = {
 
     // Transform entries into an ordered list of grouped time entries
     const { listEntries, projects } = [...entries].reverse().reduce((sum, entry) => {
+      // Exclude running TE.
+      if (entry.duration < 0) {
+        return sum;
+      }
+
       const existingGroupIndex = sum.listEntries.findIndex(hasExistingGroup(entry));
       if (existingGroupIndex === -1) {
         // This TE group has not been seen yet.
@@ -491,6 +499,13 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
     document
+      .querySelector('.header .sync-data')
+      .addEventListener('click', function () {
+        const request = { type: 'sync' };
+        browser.runtime.sendMessage(request);
+      });
+
+    document
       .querySelector('.header .cog')
       .addEventListener('click', function () {
         const request = {
@@ -536,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
       const id = e.target.dataset.continueId;
-      const timeEntry = TogglButton.$user.time_entries[id];
+      const timeEntry = TogglButton.$user.time_entries.find((entry) => entry.id === +id);
 
       const request = {
         type: 'list-continue',

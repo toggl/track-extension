@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { format, subSeconds } from 'date-fns';
+import { format, isSameDay, subSeconds } from 'date-fns';
 
 import BillableIcon from './BillableIcon';
 import TagsIcon from './TagsIcon';
@@ -47,7 +47,7 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
     <EntryList>
       {Object.keys(dayGroups).map((date, groupIndex) => {
         const groupEntries = dayGroups[date];
-        const showHeading = groupIndex > 0;
+        const showHeading = !isSameDay(date, Date.now());
 
         return [
           showHeading && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,

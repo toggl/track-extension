@@ -1,3 +1,7 @@
+interface Window {
+  PopUp: any;
+}
+
 type TimeEntry = {
   id: number;
   pid: number;

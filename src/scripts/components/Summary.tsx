@@ -25,6 +25,7 @@ const SummaryRow = styled.div`
 
   color: ${color.black};
   font-weight: ${text.bold};
+  font-size: 12px;
   margin-bottom: .25rem;
 `;
 

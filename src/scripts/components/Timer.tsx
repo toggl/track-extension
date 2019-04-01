@@ -38,14 +38,18 @@ function Timer (props: TimerProps) {
 
 function RunningTimer(props: { entry: TimeEntry }) {
   const { entry } = props;
+  const editEntry = (e) => {
+    e.preventDefault();
+    window.PopUp.updateEditForm(window.PopUp.$editView);
+  };
   const stopTimer = (e) => {
     e.preventDefault();
-    (window as any).PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
+    window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
   };
 
   return (
     <TimerContainer>
-      <TimerDescription title={entry.description || ''}>
+      <TimerDescription title={`Click to edit ${entry.description || ''}`} onClick={editEntry} running>
         {entry.description || NO_DESCRIPTION}
       </TimerDescription>
       <TimerDuration start={entry.start} />
@@ -78,7 +82,7 @@ function TimerForm () {
     const description = inputRef && inputRef.current
       ? inputRef.current.value
       : '';
-    (window as any).PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true });
+    window.PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true });
   };
 
   return (
@@ -104,12 +108,17 @@ const TimerContainer = styled.div`
 `;
 
 const TimerDescription = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+
   flex: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 
   font-size: 14px;
+  cursor: ${(props: { running?: boolean }) => props.running ? 'pointer' : 'initial'};
 `;
 
 const TimerInput = styled.input`

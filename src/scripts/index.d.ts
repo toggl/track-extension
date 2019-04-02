@@ -2,6 +2,15 @@ interface Window {
   PopUp: any;
 }
 
+interface Process {
+  env: {
+    NODE_ENV?: 'PRODUCTION';
+    DEBUG?: string;
+    BUGSNAG_API_KEY?: string;
+    VERSION: string;
+  }
+}
+
 type TimeEntry = {
   id: number;
   pid: number;
@@ -28,3 +37,5 @@ declare module "*.svg" {
   const content: any;
   export default content;
 }
+
+declare let process: Process;

@@ -1,13 +1,13 @@
 import bugsnagClient from './bugsnag';
 
-export function secToHHMM (sum) {
+export function secToHHMM (sum: number) {
   const hours = Math.floor(sum / 3600);
   const minutes = Math.floor((sum % 3600) / 60);
 
   return hours + 'h ' + minutes + 'm';
 }
 
-export function report (e) {
+export function report (e: Error) {
   if (process.env.DEBUG) {
     console.error(e);
   } else {
@@ -24,7 +24,7 @@ const entityMap = {
   '/': '&#x2F;'
 };
 
-export function escapeHtml (string) {
+export function escapeHtml (string: string) {
   return String(string).replace(/[&<>"'/]/g, function (s) {
     return entityMap[s];
   });

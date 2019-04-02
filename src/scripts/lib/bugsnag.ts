@@ -1,7 +1,7 @@
 import bugsnag from '@bugsnag/js';
-const browser = require('webextension-polyfill');
+import * as browser from 'webextension-polyfill';
 
-function noop (fnName) {
+function noop (fnName: string) {
   return function () {
     console.warn(`In bugsnag.${fnName} BUGSNAG_API_KEY is undefined`);
   };
@@ -28,7 +28,6 @@ function getBugsnagClient () {
       const sendErrorReports = await db.get('sendErrorReports');
       if (!sendErrorReports) {
         report.ignore();
-        return false;
       }
 
       report.stacktrace = report.stacktrace.map(function (frame) {

@@ -52,5 +52,6 @@
     "matches": ["*://*.toggl.com/*", "*://toggl.com/*"]
   },
   "content_security_policy":
-    "script-src 'self' 'unsafe-eval'; object-src 'self';"
+    "script-src 'self' 'unsafe-eval'; object-src 'self';",
+  "web_accessible_resources": ["html/login.html"]
 }

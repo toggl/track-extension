@@ -1,6 +1,6 @@
 /** Project Autocomplete **/
 #project-autocomplete {
-  max-height: 105px;
+  max-height: 50vh;
   overflow: auto;
   position: absolute;
   width: 214px;
@@ -252,7 +252,7 @@ span.item-name.has-tasks {
 }
 
 #tag-autocomplete .tag-list {
-  max-height: 75px;
+  max-height: 50vh;
   overflow: auto;
   padding: 0;
   list-style: none;

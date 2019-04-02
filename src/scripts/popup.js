@@ -503,6 +503,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .addEventListener('click', function () {
         const request = { type: 'sync' };
         browser.runtime.sendMessage(request);
+        browser.extension.getBackgroundPage().ga.report('sync', 'sync-toolbar-popup');
       });
 
     document

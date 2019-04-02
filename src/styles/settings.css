@@ -1,7 +1,5 @@
 html {
   --main-bg-color: #ffffff;
-  --tab-background: #fafbfc;
-  --footer-background: #fafbfc;
   --text-color: #333333;
   --light-text: #7b7b7b;
   --danger: #E20505;
@@ -9,8 +7,6 @@ html {
 
 html.dark {
   --main-bg-color: #222222;
-  --tab-background: #222222;
-  --footer-background: #f5f5f5;
   --text-color: #eeeeee;
 }
 
@@ -56,7 +52,7 @@ body {
 .tabs {
   display: flex;
   overflow: hidden;
-  height: calc(100vh - 35px - 42px);
+  height: calc(100vh - 48px - 42px);
   width: 100%;
   transition: order 300ms ease-in-out;
   align-items: stretch;
@@ -188,17 +184,19 @@ header ul {
   display: flex;
   flex-direction: row;
   list-style: none;
-  height: 35px;
+  height: 48px;
   padding: 0;
   margin: 0;
 }
 
 header .tab-link {
   box-sizing: border-box;
-  background: var(--tab-background);
   border-bottom: 1px solid #eee;
   padding: 10px 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
 }
 
 header .active,
@@ -233,10 +231,6 @@ header li:hover {
 .button-container {
     display: block;
     margin-top: 10px;
-}
-
-.section {
-  flex: 1;
 }
 
 .section:hover .description {
@@ -458,7 +452,6 @@ header li:hover {
   justify-content: space-between;
   height: 42px;
   padding: 0 15px;
-  background-color: var(--footer-background);
   border-top: 1px solid #e5e5e5;
   color: #8a8888;
   font-size: 12px;

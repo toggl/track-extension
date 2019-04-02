@@ -29,3 +29,8 @@ export function escapeHtml (string) {
     return entityMap[s];
   });
 }
+
+export function getUrlParam (location, key) {
+  const url = new URL(location);
+  return url.searchParams.get(key);
+}

@@ -6,11 +6,11 @@
   </head>
   <header>
     <ul class="tab-links">
-      <li class="tab-link active">General</li>
-      <li class="tab-link">Pomodoro Timer</li>
-      <li class="tab-link">Integrations</li>
-      <li class="tab-link">Telemetry</li>
-      <li class="tab-link">My Account</li>
+      <li class="tab-link" data-tab="general">General</li>
+      <li class="tab-link" data-tab="pomodoro">Pomodoro Timer</li>
+      <li class="tab-link" data-tab="integrations">Integrations</li>
+      <li class="tab-link" data-tab="telemetry">Telemetry</li>
+      <li class="tab-link" data-tab="account">My Account</li>
     </ul>
   </header>
   <body>
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="tabs">
-        <div class="tab tab-1 active">
+        <div class="tab" data-tab="general">
           <div class="fields">
             <div class="field">
               <div class="field__label">
@@ -192,7 +192,7 @@
           </div>
 
         </div>
-        <div class="tab tab-2">
+        <div class="tab" data-tab="pomodoro">
           <div class="fields">
             <div class="field pomodoro-mode">
               <div class="field__label">
@@ -230,7 +230,7 @@
 
           </div>
         </div>
-        <div class="tab tab-3">
+        <div class="tab" data-tab="integrations">
           <div class="section">
             <h2>Integrations</h2>
             <p>Enable the tools you want to use with Toggl Button. You can enable everything by clicking the "Enable all" button.</p>
@@ -258,7 +258,7 @@
             <div id="custom-perm-container"></div>
           </div>
         </div>
-        <div class="tab tab-4">
+        <div class="tab" data-tab="telemetry">
           <ul class="list">
             <li>
               <input type="checkbox" id="send-usage-statistics">
@@ -272,7 +272,7 @@
             </li>
           </ul>
         </div>
-        <div class="tab tab-2">
+        <div class="tab" data-tab="account">
           <div class="fields">
             <div class="field">
               <div class="field__label">

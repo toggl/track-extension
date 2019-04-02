@@ -1,11 +1,15 @@
 import TogglOrigins from './origins';
 import bugsnagClient from './lib/bugsnag';
+import { getUrlParam } from './lib/utils';
+
 const browser = require('webextension-polyfill');
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const ga = browser.extension.getBackgroundPage().ga;
 const db = browser.extension.getBackgroundPage().db;
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
+
+const DEFAULT_TAB = 'general';
 
 const replaceContent = function (parentSelector, html) {
   const container = document.querySelector(parentSelector);
@@ -649,6 +653,10 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       db.set('show-permissions-info', 0);
     }
 
+    // Change active tab if present in search param
+    const activeTabParam = getUrlParam(document.location, 'tab');
+    changeActiveTab(activeTabParam || DEFAULT_TAB);
+
     document.querySelector('body').style.display = 'flex';
 
     Settings.showPage();
@@ -749,14 +757,11 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       Settings.saveSetting(rememberPer, 'change-remember-project-per');
     });
 
-    document.querySelectorAll('.tab-links .tab-link').forEach(tab =>
-      tab.addEventListener('click', function (e) {
-        const index = [...e.target.parentElement.children].indexOf(e.target);
-
-        Settings.saveSetting(index, 'update-settings-active-tab');
-        changeActiveTab(index);
-      })
-    );
+    document.querySelector('.tab-links').addEventListener('click', e => {
+      const tabLink = e.target.closest('.tab-link');
+      const selectedTab = tabLink.dataset.tab;
+      changeActiveTab(selectedTab);
+    });
 
     Settings.$pomodoroVolume.addEventListener('input', function (e) {
       Settings.$pomodoroVolumeLabel.textContent = e.target.value + '%';
@@ -922,11 +927,15 @@ document.addEventListener('DOMContentLoaded', async function (e) {
   }
 });
 
-function changeActiveTab (index) {
+function changeActiveTab (name) {
   document.querySelectorAll('.active').forEach(e => {
     e.classList.remove('active');
   });
 
-  document.querySelector('.tabs').children[index].classList.add('active');
-  document.querySelector('.tab-links').children[index].classList.add('active');
+  const tabEls = document.querySelectorAll(`[data-tab="${name}"]`);
+  tabEls.forEach(e => e.classList.add('active'));
+
+  if (tabEls.length === 0) {
+    console.error(new Error(`changeActiveTab: Invalid tab name: ${name}`));
+  }
 }

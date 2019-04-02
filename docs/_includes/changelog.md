@@ -1,3 +1,17 @@
+# [1.26.0](https://github.com/toggl/toggl-button/compare/1.25.0...1.26.0) (2019-04-02)
+
+
+### Features
+
+* Popup timer can be started with a description ([d4d5be6](https://github.com/toggl/toggl-button/commit/d4d5be6))
+* **popup:** Add "open more in toggl" button to the bottom of the entries list ([ea0af03](https://github.com/toggl/toggl-button/commit/ea0af03))
+* **popup:** Add open toggl.com button to the popup header ([34f9447](https://github.com/toggl/toggl-button/commit/34f9447))
+* **popup:** New header and timer bar layout ([8c9a890](https://github.com/toggl/toggl-button/commit/8c9a890))
+* **popup:** New Toolbar Popup layout. ([2599561](https://github.com/toggl/toggl-button/commit/2599561))
+* **popup:** Show entry durations in simple format ([fc9221a](https://github.com/toggl/toggl-button/commit/fc9221a))
+* **popup:** Support display of grouped entries ([434e5c3](https://github.com/toggl/toggl-button/commit/434e5c3))
+* **settings:** Add "My Account" tab to host logout and sync ([5b2ee1a](https://github.com/toggl/toggl-button/commit/5b2ee1a))
+
 # [1.25.0](https://github.com/toggl/toggl-button/compare/1.24.1...1.25.0) (2019-03-29)
 
 

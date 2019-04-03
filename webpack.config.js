@@ -28,13 +28,14 @@ const config = f => (
   return f(env);
 };
 
-module.exports = config(async ({ development, bugsnagApiKey, production, release, version }) => ({
+module.exports = config(({ development, bugsnagApiKey, production, release, version }) => ({
   target: 'web',
   context: path.resolve(__dirname, 'src'),
   devtool: 'source-map',
   entry: {
     ...entry('background'),
     ...entry('common'),
+    ...entry('login', 'tsx'),
     ...entry('popup'),
     ...entry('settings'),
     ...entryContentScripts()
@@ -136,9 +137,9 @@ module.exports = config(async ({ development, bugsnagApiKey, production, release
   ].filter(Boolean)
 }));
 
-function entry (name) {
+function entry (name, ext = 'js') {
   return {
-    [`scripts/${name}`]: `./scripts/${name}.js`
+    [`scripts/${name}`]: `./scripts/${name}.${ext}`
   };
 }
 

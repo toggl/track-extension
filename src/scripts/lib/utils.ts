@@ -30,7 +30,7 @@ export function escapeHtml (string: string) {
   });
 }
 
-export function getUrlParam (location, key) {
+export function getUrlParam (location: string, key: string) {
   const url = new URL(location);
   return url.searchParams.get(key);
 }

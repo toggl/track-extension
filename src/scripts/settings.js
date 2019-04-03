@@ -50,6 +50,7 @@ const Settings = {
   $sendErrorReports: null,
   $enableAutoTagging: null,
   $resetAllSettings: null,
+  $loginInfo: document.querySelector('#login-info'),
   $logOut: document.querySelector('#log-out'),
   $syncData: document.querySelector('#sync-data'),
   showPage: async function () {
@@ -78,6 +79,8 @@ const Settings = {
       const sendErrorReports = await db.get('sendErrorReports');
       const stopAtDayEnd = await db.get('stopAtDayEnd');
       const dayEndTime = await db.get('dayEndTime');
+
+      Settings.$loginInfo.textContent = TogglButton.$user.email;
 
       document.querySelector('#nag-nanny-interval').value = nannyInterval / 60000;
       Settings.$pomodoroVolume.value = volume;

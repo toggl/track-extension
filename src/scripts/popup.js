@@ -4,7 +4,8 @@ import { isSameDay } from 'date-fns';
 
 import Summary from './components/Summary';
 import TimeEntriesList from './components/TimeEntriesList';
-import Timer, { formatDuration } from './components/Timer';
+import Timer from './components/Timer';
+import EditForm from './components/EditForm';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 
 const browser = require('webextension-polyfill');
@@ -44,7 +45,7 @@ window.PopUp = {
   $entries: document.querySelector('.entries-list'),
   defaultErrorMessage: 'Error connecting to server',
   showPage: function () {
-    let dom;
+    // let dom;
     if (!TogglButton) {
       TogglButton = browser.extension.getBackgroundPage().TogglButton;
     }
@@ -52,11 +53,11 @@ window.PopUp = {
     try {
       if (TogglButton.$user !== null) {
         if (!PopUp.editFormAdded) {
-          dom = document.createElement('div');
-          dom.innerHTML = TogglButton.getEditForm();
-          PopUp.$editView.appendChild(dom.firstChild);
-          PopUp.addEditEvents();
-          PopUp.editFormAdded = true;
+          // dom = document.createElement('div');
+          // dom.innerHTML = TogglButton.getEditForm();
+          // PopUp.$editView.appendChild(dom.firstChild);
+          // PopUp.addEditEvents();
+          // PopUp.editFormAdded = true;
         }
 
         if (TogglButton.$curEntry === null) {
@@ -248,62 +249,68 @@ window.PopUp = {
   },
 
   /* Edit form functions */
-  updateEditForm: function (view) {
+  updateEditForm: function () {
     const pid = TogglButton.$curEntry.pid ? TogglButton.$curEntry.pid : 0;
     const tid = TogglButton.$curEntry.tid ? TogglButton.$curEntry.tid : 0;
     const wid = TogglButton.$curEntry.wid;
-    const togglButtonDescription = document.querySelector(
-      '#toggl-button-description'
-    );
-    const togglButtonDuration = document.querySelector('#toggl-button-duration');
-
-    togglButtonDescription.value = TogglButton.$curEntry.description
+    const description = TogglButton.$curEntry.description
       ? TogglButton.$curEntry.description
       : '';
-    togglButtonDuration.value = PopUp.msToTime(
+    const duration = PopUp.msToTime(
       new Date() - new Date(TogglButton.$curEntry.start)
     );
+    const billable = TogglButton.$curEntry.billable;
+    const tags = TogglButton.$curEntry.tags;
 
-    PopUp.$projectAutocomplete.setup(pid, tid);
-    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
+    // PopUp.$projectAutocomplete.setup(pid, tid);
+    // PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
 
-    PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
+    // PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
     PopUp.switchView(PopUp.$editView);
+    ReactDOM.render(<EditForm
+      billable={billable}
+      description={description}
+      duration={duration}
+      projectId={pid}
+      tags={tags}
+      taskId={tid}
+      workspaceId={wid}
+    />, document.getElementById('entry-form'));
 
     // Put focus to the beginning of desctiption field
-    togglButtonDescription.focus();
-    togglButtonDescription.setSelectionRange(0, 0);
-    togglButtonDescription.scrollLeft = 0;
+    // togglButtonDescription.focus();
+    // togglButtonDescription.setSelectionRange(0, 0);
+    // togglButtonDescription.scrollLeft = 0;
 
     PopUp.durationChanged = false;
-    PopUp.showCurrentDuration(true);
+    // PopUp.showCurrentDuration(true);
   },
 
   showCurrentDuration: function (startTimer) {
     if (TogglButton.$curEntry === null) {
-      return;
+
     }
 
-    const duration = formatDuration(TogglButton.$curEntry.start);
-    const durationField = document.querySelector('#toggl-button-duration');
+    // const duration = formatDuration(TogglButton.$curEntry.start);
+    // const durationField = document.querySelector('#toggl-button-duration');
 
     // Update edit form duration field
-    if (
-      durationField !== document.activeElement &&
-      PopUp.durationChanged === false
-    ) {
-      durationField.value = duration;
-    } else {
-      PopUp.durationChanged = true;
-    }
+    // if (
+    //   durationField !== document.activeElement &&
+    //   PopUp.durationChanged === false
+    // ) {
+    //   durationField.value = duration;
+    // } else {
+    //   PopUp.durationChanged = true;
+    // }
 
-    if (startTimer) {
-      if (!PopUp.$timer) {
-        PopUp.$timer = setInterval(function () {
-          PopUp.showCurrentDuration();
-        }, 1000);
-      }
-    }
+    // if (startTimer) {
+    //   if (!PopUp.$timer) {
+    //     PopUp.$timer = setInterval(function () {
+    //       PopUp.showCurrentDuration();
+    //     }, 1000);
+    //   }
+    // }
   },
 
   updateBillable: function (pid, noOverwrite) {

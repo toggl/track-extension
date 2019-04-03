@@ -40,7 +40,7 @@ function RunningTimer(props: { entry: TimeEntry }) {
   const { entry } = props;
   const editEntry = (e) => {
     e.preventDefault();
-    window.PopUp.updateEditForm(window.PopUp.$editView);
+    window.PopUp.updateEditForm();
   };
   const stopTimer = (e) => {
     e.preventDefault();

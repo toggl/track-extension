@@ -131,7 +131,7 @@ window.PopUp = {
           if (!!response.type && response.type === 'New Entry') {
             browser.extension.getBackgroundPage().db.get('showPostPopup')
               .then(showPostPopup => {
-                if (showPostPopup) PopUp.updateEditForm(PopUp.$editView);
+                if (showPostPopup) PopUp.updateEditForm();
               });
           } else if (response.type === 'Update') {
             // Extension update?
@@ -268,7 +268,7 @@ window.PopUp = {
     PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
 
     PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
-    PopUp.switchView(view);
+    PopUp.switchView(PopUp.$editView);
 
     // Put focus to the beginning of desctiption field
     togglButtonDescription.focus();
@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function () {
     PopUp.sendMessage(req);
     PopUp.showPage();
     PopUp.$editButton.addEventListener('click', function () {
-      PopUp.updateEditForm(PopUp.$editView);
+      PopUp.updateEditForm();
     });
     onClickSendMessage = function () {
       const request = {

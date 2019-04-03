@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from '@emotion/core';
 import * as text from '../text';
 import * as color from '../color';
 

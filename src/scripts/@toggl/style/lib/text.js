@@ -10,6 +10,14 @@ export const font = {
 
 export const [light, normal, semibold, bold] = [300, 400, 500, 700];
 
+export const bodyText = css`
+  font-family: ${font.roboto};
+  color: ${color.black};
+  font-size: 14px;
+  line-height: normal;
+  font-weight: ${normal};
+`;
+
 export const [regular] = ['14px'];
 
 export const withDot = css`

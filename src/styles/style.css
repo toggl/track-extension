@@ -1,45 +1,26 @@
-#toggl-button-edit-form div,
-#toggl-button-edit-form span,
-#toggl-button-edit-form img,
-#toggl-button-edit-form strong #toggl-button-edit-form ul,
-#toggl-button-edit-form li,
-#toggl-button-edit-form form,
-#toggl-button-edit-form label,
-#toggl-button-edit-form input {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font-family: Helvetica, arial, nimbussansl, liberationsans, freesans, clean,
-    sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
-  vertical-align: baseline;
+@import './edit-form.css';
+
+#toggl-button-edit-form {
+  position: absolute;
+  width: 360px;
+  max-width: 360px;
+
+  padding: 1rem 1rem 1.5rem !important;
+ -webkit-box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
+  -moz-box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
+  box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
+  -webkit-border-radius: 3px;
+  border-radius: 8px;
+  background-color: #fff;
+  z-index: 999999;
   box-sizing: border-box;
 }
 
-#toggl-button-edit-form input {
-  background-image: none !important;
-  background-color: #ffffff !important;
+#toggl-button-edit-form * {
+  box-sizing: border-box;
 }
 
-#toggl-button-edit-form form {
-  text-align: left !important;
-  letter-spacing: 0;
-}
-
-#toggl-button-edit-form a {
-  background-color: transparent;
-  cursor: pointer;
-  font-family: Tahoma, sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-}
-
-#toggl-button-edit-form select option {
-  color: black !important;
-  background-color: white !important;
-}
-
-#toggl-button-edit-form .hidden {
+.toggl-integration #toggl-button-duration-row {
   display: none;
 }
 
@@ -83,130 +64,6 @@
   }
 }
 
-#toggl-button-edit-form {
-  position: absolute;
-  width: 260px !important;
-  max-width: 240px;
-  padding: 10px !important;
-  -webkit-box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
-  -moz-box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
-  box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #f5f5f5;
-  z-index: 999999;
-  box-sizing: border-box;
-}
-
-#toggl-button-edit-form .toggl-button {
-  margin: 0 !important;
-  border: none !important;
-  visibility: visible !important;
-  float: none !important;
-  opacity: 1 !important;
-}
-
-#toggl-button-edit-form .toggl-button:hover {
-  background-color: transparent;
-}
-
-#toggl-button-edit-form .toggl-button-row {
-  margin: 0;
-  padding: 0;
-  padding-top: 10px;
-}
-
-#toggl-button-edit-form .toggl-button-row label {
-  display: block;
-  font-size: 13px;
-  height: 20px;
-}
-
-#toggl-button-edit-form .toggl-button-input {
-  background: #f5f5f5;
-  border: 1px solid #e1e1e1;
-  font-size: 0.7em;
-  padding: 0 10px;
-  width: 220px;
-}
-
-#toggl-button-edit-form .toggl-button-text {
-  float: left;
-  width: 186px;
-  height: 40px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-#toggl-button-edit-form #toggl-button-project-placeholder,
-#toggl-button-edit-form #toggl-button-tag-placeholder,
-#toggl-button-edit-form #toggl-button-description,
-#toggl-button-edit-form #toggl-button-project,
-#toggl-button-edit-form #toggl-button-project-filter,
-#toggl-button-edit-form #toggl-button-tag-filter {
-  height: 40px !important;
-  line-height: 40px;
-  vertical-align: middle;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  border-radius: 0;
-  background-color: #ffffff;
-  font-size: 14px;
-}
-
-#toggl-button-edit-form #toggl-button-duration {
-  display: none;
-}
-
-#toggl-button-edit-form #toggl-button-description img {
-  display: none !important;
-}
-
-#toggl-button-edit-form #toggl-button-project-placeholder,
-#toggl-button-edit-form #toggl-button-tag-placeholder {
-  color: #8a8989;
-  cursor: pointer;
-}
-
-#toggl-button-edit-form #toggl-button-project-placeholder {
-  position: relative;
-  z-index: 2;
-}
-
-#toggl-button-edit-form #toggl-button-project-placeholder span,
-#toggl-button-edit-form #toggl-button-tag-placeholder span {
-  float: right;
-  color: #abaaaa;
-  cursor: pointer;
-}
-
-#toggl-button-edit-form #toggl-button-project,
-#toggl-button-edit-form #toggl-button-tag {
-  visibility: hidden;
-  position: absolute;
-}
-
-#toggl-button-edit-form #toggl-button-project {
-  visibility: visible !important;
-  z-index: 1;
-  max-width: 220px;
-}
-
-#toggl-button-description,
-#toggl-button-project,
-#toggl-button-project-filter,
-#toggl-button-tag-filter,
-#toggl-button-tag {
-  font-size: 13px !important;
-  margin: 0 !important;
-  padding: 0 10px !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  color: #000000;
-}
-
 #toggl-button-project-filter,
 #toggl-button-tag-filter {
   font-size: 13px !important;
@@ -217,127 +74,8 @@
   padding-right: 28px !important;
 }
 
-#toggl-button-edit-form #toggl-button-tag {
-  display: none;
-  visibility: visible;
-  background: #ffffff;
-  max-width: 220px;
-  position: absolute;
-  margin-top: 40px !important;
-  height: 100px !important;
-  z-index: 1;
-}
-
-#toggl-button-edit-form #toggl-button-update {
-  font-weight: 200;
-  font-size: 16px;
-  width: 110px;
-  height: 34px;
-  line-height: 34px;
-  vertical-align: middle;
-  margin-left: 55px;
-  margin-top: 15px;
-  text-transform: uppercase;
-  color: white;
-  display: inline-block;
-  background-color: #80d364;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  text-align: center;
-}
-
-#toggl-button-edit-form #toggl-button-update:before {
-  border-color: rgba(0, 0, 0, 0.5);
-  direction: ltr;
-  content: '\2713';
-  margin-left: 0;
-  font-size: 20px;
-  position: relative;
-  color: #fff;
-  top: 0;
-  font-weight: 200;
-  left: -8px;
-}
-
-#toggl-button-edit-form #toggl-button-hide {
-  float: right;
-  background: transparent;
-  border: none;
-  color: #6a7479;
-  font-family: sans-serif, Arial;
-  font-size: 20px;
-  font-weight: 200;
-  min-height: 25px;
-  text-decoration: none;
-  margin-top: 0px;
-}
-
-/** Billable flag **/
-
-#toggl-button-edit-form .tb-billable {
-  outline: none;
-  height: 40px;
-  line-height: 40px;
-  vertical-align: middle;
-  padding-left: 10px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #8a8989;
-  transition: height 200ms ease-in-out;
-  overflow: hidden;
-  padding-top: 0 !important;
-  margin-top: 10px;
-}
-
-#toggl-button-edit-form .tb-billable.no-billable {
-  height: 0;
-}
-
-#toggl-button-edit-form .toggl-button-billable-label {
-  float: left;
-}
-
-#toggl-button-edit-form .toggl-button-billable-flag {
-  width: 42px;
-  height: 24px;
-  border-radius: 100px;
-  background-color: #cecece;
-  float: right;
-  margin-top: 6px;
-  position: relative;
-  margin-right: 2px;
-  cursor: pointer;
-}
-
-#toggl-button-edit-form .toggl-button-billable-flag span {
-  width: 18px;
-  height: 18px;
-  background-color: #ffffff;
-  border-radius: 100px;
-  position: absolute;
-  left: 4px;
-  top: 3px;
-  transition: left 200ms ease-in-out;
-}
-
-#toggl-button-edit-form .tb-billable.tb-checked .toggl-button-billable-flag {
-  background-color: #4bc800;
-}
-
-#toggl-button-edit-form
-  .tb-billable.tb-checked
-  .toggl-button-billable-flag
-  span {
-  left: 20px;
-}
-
-#toggl-button-edit-form .tb-billable:focus .toggl-button-billable-flag {
-  border: 1px solid rgb(83, 183, 253);
-  box-shadow: 0px 0px 5px rgb(26, 153, 243);
-}
-
-#toggl-button-edit-form .tb-billable:focus .toggl-button-billable-flag span {
-  top: 2px;
+.hidden, *.hidden {
+  display: none !important;
 }
 
 /********* PIVOTAL *********/

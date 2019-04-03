@@ -56,32 +56,57 @@ window.TogglButton = {
     '<form autocomplete="off">' +
     '<a class="toggl-button toggl-button-edit-form-button {service} active" href="javascript:void(0)">Stop timer</a>' +
     '<a id="toggl-button-hide">&times;</a>' +
-    '<div class="toggl-button-row" id="toggl-button-duration-row">' +
-    '<input name="toggl-button-duration" tabindex="100" type="text" pattern="[\\d]{2}:[\\d]{2}:[\\d]{2}" title="Please write the duration in the \'hh:mm:ss\' format." id="toggl-button-duration" class="toggl-button-input" value="" placeholder="00:00" autocomplete="off">' +
-    '</div>' +
-    '<div class="toggl-button-row">' +
-    '<input name="toggl-button-description" tabindex="101" type="text" id="toggl-button-description" class="toggl-button-input" value="" placeholder="(no description)" autocomplete="off">' +
-    '</div>' +
-    '<div class="toggl-button-row">' +
-    '<input name="toggl-button-project-filter" tabindex="102" type="text" id="toggl-button-project-filter" class="toggl-button-input" value="" placeholder="Filter Projects" autocomplete="off">' +
-    '<a href="javascript:void(0)" class="filter-clear">&times;</a>' +
-    '<div id="toggl-button-project-placeholder" class="toggl-button-input" disabled><span class="tb-project-bullet"></span><div class="toggl-button-text">Add project</div><span>▼</span></div>' +
-    '<div id="project-autocomplete">{projects}</div>' +
-    '</div>' +
-    '<div class="toggl-button-row">' +
-    '<input name="toggl-button-tag-filter" tabindex="103" type="text" id="toggl-button-tag-filter" class="toggl-button-input" value="" placeholder="Filter Tags" autocomplete="off">' +
-    '<a href="javascript:void(0)" class="add-new-tag">+ Add</a>' +
-    '<a href="javascript:void(0)" class="filter-clear">&times;</a>' +
-    '<div id="toggl-button-tag-placeholder" class="toggl-button-input" disabled><div class="toggl-button-text">Add tags</div><span>▼</span></div>' +
-    '<div id="tag-autocomplete">' +
-    '<div class="tag-clear">Clear selected tags</div>' +
-    '{tags}</div>' +
-    '</div>' +
-    '<div class="toggl-button-row tb-billable {billable}" tabindex="103">' +
+
+    `<div class="Dialog__field" id="toggl-button-duration-row">
+      <div>
+        <input name="toggl-button-duration" tabindex="100" type="text" pattern="[\\d]{2}:[\\d]{2}:[\\d]{2}" title="Please write the duration in the 'hh:mm:ss' format." id="toggl-button-duration" class="Input" value="" placeholder="00:00" autocomplete="off">
+      </div>
+    </div>` +
+
+    `<div class="Dialog__field">
+      <div><input name="toggl-button-description" tabindex="101" type="text" id="toggl-button-description" class="Input" value="" placeholder="What are you doing?" autocomplete="off" /></div>
+    </div>` +
+
+    `
+    <div class="Dialog__field">
+      <div>
+        <div id="toggl-button-project-placeholder" class="FormFieldTrigger__trigger" disabled><span class="tb-project-bullet"><div>No project</div></span><span class="Popdown__caret"></span></div>
+        <div class="Popdown__overlay"></div>
+        <div class="Popdown__content">
+          <div class="Popdown__filterContainer">
+            <input name="toggl-button-project-filter" tabindex="102" type="text" id="toggl-button-project-filter" class="Popdown__filter" value="" placeholder="Find project..." autocomplete="off">
+          </div>
+          <div id="project-autocomplete">{projects}</div>
+        </div>
+      </div>
+    </div>
+    ` +
+
+    `
+    <div class="Dialog__field">
+      <div>
+        <div id="toggl-button-tag-placeholder" class="FormFieldTrigger__trigger" disabled><div>Add tags</div><span class="Popdown__caret"></span></div>
+        <div class="Popdown__overlay"></div>
+        <div class="Popdown__content">
+          <div class="Popdown__filterContainer">
+            <input name="toggl-button-tag-filter" tabindex="103" type="text" id="toggl-button-tag-filter" class="Popdown__filter" value="" placeholder="Find tags..." autocomplete="off">
+          </div>
+          <div id="tag-autocomplete">
+            <div class="tag-clear">Clear selected tags</div>
+            {tags}
+          </div>
+        </div>
+      </div>
+    </div>
+    ` +
+
+    '<div class="Dialog__field" tabindex="103">' +
+    '<div class="tb-billable {billable}">' +
     '<div class="toggl-button-billable-label">Billable</div>' +
     '<div class="toggl-button-billable-flag"><span></span></div>' +
     '</div>' +
-    '<div id="toggl-button-update" tabindex="105">DONE</div>' +
+    '</div>' +
+    '<div id="toggl-button-update" class="Button__button" tabindex="105">Done</div>' +
     '<input type="submit" class="hidden">' +
     '</from>' +
     '</div>',
@@ -1103,7 +1128,7 @@ window.TogglButton = {
 
   fillProjects: function () {
     let html =
-        '<p class="project-row" data-pid="0"><span class="tb-project-bullet tb-project-color tb-no-color"></span>No project</p>';
+        '<p class="project-row" data-pid="0"><span class="tb-project-bullet tb-project-color tb-no-color">No project</span></p>';
     const projects = TogglButton.$user.projectMap;
     const clients = TogglButton.$user.clientMap;
     const clientNames = TogglButton.$user.clientNameMap;
@@ -1137,9 +1162,9 @@ window.TogglButton = {
           '"><li class="ws-row' +
           hideWs +
           '" title="' +
-          escapeHtml(element.name.toUpperCase()) +
+          escapeHtml(element.name) +
           '">' +
-          escapeHtml(element.name.toUpperCase()) +
+          escapeHtml(element.name) +
           '</li>' +
           '<ul class="client-list" data-cid="0">';
       });
@@ -1204,16 +1229,16 @@ window.TogglButton = {
         escapeHtml(project.name) +
         '" data-pid="' +
         project.id +
-        '"><span class="tb-project-bullet tb-project-color" style="background-color: ' +
+        '"><span class="tb-project-bullet tb-project-color" style="color: ' +
         project.hex_color +
-        '"></span>' +
+        '">' +
         '<span class="item-name ' +
         hasTasks +
         '" title="' +
         escapeHtml(project.name) +
         '">' +
         escapeHtml(project.name) +
-        '</span>';
+        '</span></span>';
 
     if (tasks) {
       tasksCount = tasks.length + ' task';
@@ -1989,6 +2014,9 @@ window.TogglButton = {
       console.log('Load content script: [' + file + ']');
     }
     browser.tabs.insertCSS(tabId, { file: 'styles/style.css' })
+      .then(function () {
+        return browser.tabs.insertCSS(tabId, { file: 'styles/edit-form.css' });
+      })
       .then(function () {
         browser.tabs.insertCSS(tabId, { file: 'styles/autocomplete.css' });
       });

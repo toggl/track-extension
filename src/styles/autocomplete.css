@@ -1,46 +1,11 @@
 /** Project Autocomplete **/
-#project-autocomplete {
-  max-height: 50vh;
-  overflow: auto;
-  position: absolute;
-  width: 214px;
-  outline: 1px solid #f5f5f5;
-  z-index: 6;
-  display: none;
-  padding: 0 3px !important;
-  border-radius: 3px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+#project-autocomplete, #tag-autocomplete {
+  font-size: 14px;
 }
 
-#tag-autocomplete {
-  overflow: hidden;
-}
-
-#toggl-button-edit-form.toggl-integration #project-autocomplete {
-  max-height: 400px;
-  width: 220px;
-}
-
-#toggl-button-edit-form.toggl-integration #tag-autocomplete .tag-list {
-  max-height: 400px;
-}
-
-#toggl-button-edit-form.toggl-integration #project-autocomplete a.filter-clear {
-  line-height: 16px;
-}
-
-#project-autocomplete li,
-#project-autocomplete p {
-  line-height: 22px;
-  height: 22px;
-  vertical-align: middle;
-  font-weight: 300;
-  font-size: 12px;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 5px;
+#tag-autocomplete, #project-autocomplete {
+  overflow-y: auto;
+  padding: 0 6px;
 }
 
 #project-autocomplete p {
@@ -53,13 +18,13 @@
 #project-autocomplete p.project-row.selected-item,
 #project-autocomplete p:hover {
   cursor: pointer;
-  border-radius: 100px;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0,0,0,.05);
+  outline: 0;
 }
 
 #project-autocomplete li.selected-project {
-  border-radius: 100px;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(74,199,0,.12);
+  color: #4bc800!important;
 }
 
 #project-autocomplete ul {
@@ -68,18 +33,14 @@
   margin: 0px;
 }
 
-#project-autocomplete .tb-project-bullet {
-  margin: 0;
-  left: 12px;
-  margin-top: 6px;
-}
-
 #project-autocomplete .ws-row {
-  color: #9e9e9e;
-  font-size: 13px;
+  height: 30px;
+  line-height: 30px;
+  justify-content: center;
+
+  color: black;
   border-bottom: 1px solid #ececec;
   text-align: center;
-  font-weight: 500;
   cursor: default;
   overflow: hidden;
 }
@@ -89,52 +50,37 @@
 }
 
 #project-autocomplete .project-row {
-  padding-left: 22px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
   overflow: hidden;
+
+  height: 30px;
+  border-radius: 8px;
+  padding-right: 6px;
+  margin-bottom: 2px;
+}
+
+#project-autocomplete .project-row > *:first-child {
+  flex: 2;
 }
 
 #project-autocomplete .project-row[data-pid='0'] {
   color: #a3a3a3;
 }
 
-#project-autocomplete
-  .client-list:not([data-cid='0'])
-  .project-row
-  .tb-project-bullet {
-  left: 22px;
-}
-
-#project-autocomplete .client-list:not([data-cid='0']) {
-  padding-left: 10px;
-}
-
 #project-autocomplete .client-row {
-  margin-top: 10px;
-  color: #a6a6a6;
-  font-weight: 500;
+  height: 30px;
+  padding: 15px 10px 5px;
   cursor: default;
-}
 
-.toggl-button-row.open #toggl-button-project-placeholder,
-.toggl-button-row.open #toggl-button-tag-placeholder {
-  display: none;
-}
-
-#toggl-button-project-filter,
-#toggl-button-tag-filter {
-  max-height: 0;
-  position: absolute;
-}
-
-.toggl-button-row.open #toggl-button-project-filter,
-.toggl-button-row.open #toggl-button-tag-filter {
-  max-height: 40px;
-  position: static;
-}
-
-.toggl-button-row.open #project-autocomplete,
-.toggl-button-row.open #tag-autocomplete {
-  display: block;
+  color: #7b7b7b;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 11px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
 }
 
 #project-autocomplete.filtered li,
@@ -144,7 +90,7 @@
 
 #project-autocomplete.filtered li.filter,
 #tag-autocomplete.filtered li.filter {
-  display: block;
+  display: flex;
 }
 
 #tag-autocomplete li.workspace-filter {
@@ -157,116 +103,57 @@
   display: block !important;
 }
 
-a.filter-clear {
-  display: none;
-  width: 18px;
-  height: 18px;
-  line-height: 14px;
-  vertical-align: middle;
-  text-decoration: none !important;
-  color: #6b6969;
-  font-size: 16px;
-  font-weight: bold;
-  position: absolute;
-  float: left;
-  text-align: center;
-  margin-top: -28px;
-  right: 16px;
-}
-
-a.filter-clear:hover {
-  color: #ffffff;
-  background-color: #6b6969 !important;
-  border-radius: 20px;
-}
-
-.open a.filter-clear {
-  display: block;
-}
-
-span.item-name {
-  font-weight: 300;
-  max-width: 165px;
+.item-name {
+  padding-left: 5px;
   overflow: hidden;
-  float: left;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: #000000;
-}
-
-span.item-name.has-tasks {
-  max-width: 110px;
-}
-
-.toggl-integration span.item-name {
-  max-width: 175px;
-}
-
-.toggl-integration span.item-name.has-tasks {
-  max-width: 120px;
+  color: #000;
 }
 
 /* PROJECT BULLETS */
 
 .tb-project-bullet {
-  border-radius: 50%;
-  float: left;
-  width: 8px;
-  height: 8px;
-  display: none;
-  position: absolute;
-  margin: 11px 5px auto 16px;
+  display: flex;
+  align-items: center;
+  height: 30px;
 }
+.tb-project-bullet:before {
+  color: inherit;
+  display: inline-block;
+  margin: 0 7px 1px;
+  line-height: 1;
 
-/* Project colors */
-.tb-project-color {
-  display: block;
-}
-
-#toggl-button-project-placeholder .tb-project-bullet {
-  margin-top: 16px;
-  margin-left: 0;
-}
-
-#toggl-button-project-placeholder .tb-project-color + .toggl-button-text {
-  padding-left: 12px;
-  width: 174px;
+  content: '•';
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 26px;
 }
 
 /* TAG AUTOCOMPLETE */
 
 #tag-autocomplete {
-  display: none;
-  border-radius: 3px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
-  width: 220px;
-  position: absolute;
-  z-index: 5;
-  outline: 1px solid #f5f5f5;
-}
-
-#tag-autocomplete,
-#tag-autocomplete .tag-list {
-  float: left;
+  padding-bottom: 6px;
 }
 
 #tag-autocomplete .tag-list {
-  max-height: 50vh;
-  overflow: auto;
   padding: 0;
   list-style: none;
   margin: 0;
-  margin-left: 10px;
+}
+
+#toggl-button-tag-placeholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #tag-autocomplete .tag-list li {
   float: left;
-  border-radius: 100px;
   border: solid 1px #ececec;
+  border-radius: 4px;
   margin-right: 5px;
   font-size: 14px;
-  font-weight: 300;
   line-height: 1.5;
   color: #a3a3a3;
   padding: 0 5px;
@@ -297,8 +184,6 @@ span.item-name.has-tasks {
   padding: 0 5px;
   display: block;
   color: #a6a6a6;
-  font-weight: 500;
-  font-size: 12px;
 }
 
 .tag-clear:hover {
@@ -308,11 +193,9 @@ span.item-name.has-tasks {
 .add-new-tag {
   display: none;
   float: right;
-  border-radius: 100px;
   border: solid 1px #ececec;
   margin-right: 5px;
   font-size: 14px;
-  font-weight: 300;
   line-height: 1.5;
   color: #a3a3a3;
   padding: 0 5px;
@@ -324,9 +207,6 @@ span.item-name.has-tasks {
   position: absolute;
   margin-top: -30px;
   right: 35px;
-  z-index: 2;
-  font-size: 12px;
-  font-weight: 500;
 }
 
 .add-new-tag:hover {
@@ -345,37 +225,15 @@ span.item-name.has-tasks {
 
 #project-autocomplete .task-count {
   color: #a3a3a3;
-  font-size: 12px;
   cursor: pointer;
-  font-weight: 400;
-  position: absolute;
-  right: 10px;
-  width: 55px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: clip;
+  flex: 1;
   text-align: right;
-}
-
-#project-autocomplete .task-count:hover {
-  opacity: 0.8;
+  user-select: none;
 }
 
 #project-autocomplete ul.task-list {
-  height: 0;
-  margin-left: -20px;
   display: none;
-  clear: both;
-}
-
-#project-autocomplete .task-item {
-  padding-left: 25px;
-  color: #a3a3a3;
-}
-
-#project-autocomplete .tasklist-opened {
-  height: auto !important;
-  border-radius: 0 !important;
+  width: 100%;
 }
 
 #project-autocomplete .tasklist-opened ul.task-list {
@@ -385,10 +243,23 @@ span.item-name.has-tasks {
   display: block;
 }
 
+#project-autocomplete .task-item {
+  padding-left: 10px;
+  color: #000;
+  height: 30px;
+  line-height: 30px;
+}
+#project-autocomplete .task-item:hover {
+  background-color: hsla(0,0%,69.4%,.07);
+}
+
+#project-autocomplete .tasklist-opened {
+  height: auto !important;
+}
+
 #project-autocomplete .tasklist-opened ul li.task-item {
   display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
+
 }
 
 .selected-task {

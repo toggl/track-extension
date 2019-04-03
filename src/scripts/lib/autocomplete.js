@@ -11,7 +11,8 @@ const AutoComplete = function (el, item, elem) {
   this.type = el;
   this.el = document.querySelector('#' + el + '-autocomplete');
   this.filter = document.querySelector('#toggl-button-' + el + '-filter');
-  this.filterClear = this.el.parentNode.querySelector('.filter-clear');
+  this.field = this.el.closest('.Dialog__field');
+  this.overlay = this.field.querySelector('.Popdown__overlay');
   this.placeholderItem = document.querySelector(
     '#toggl-button-' + el + '-placeholder'
   );
@@ -32,19 +33,9 @@ AutoComplete.prototype.addEvents = function () {
 
   that.placeholderItem.addEventListener('click', function (e) {
     setTimeout(function () {
-      that.filter.focus();
+      that.toggleDropdown();
     }, 50);
   });
-
-  window.addEventListener(
-    'focus',
-    function (e) {
-      if (e.target === that.filter) {
-        that.openDropdown();
-      }
-    },
-    true
-  );
 
   that.filter.addEventListener('keydown', function (e) {
     if (e.code === 'Tab') {
@@ -52,7 +43,7 @@ AutoComplete.prototype.addEvents = function () {
     }
     if (e.code === 'Enter') {
       if (
-        that.filter.parentNode.classList.contains('open') &&
+        that.field.classList.contains('open') &&
         !!that.saveSelected
       ) {
         that.saveSelected();
@@ -63,7 +54,7 @@ AutoComplete.prototype.addEvents = function () {
     }
     if (
       e.code === 'Escape' &&
-      that.placeholderItem.parentNode.classList.contains('open')
+      that.field.classList.contains('open')
     ) {
       that.closeDropdown();
       e.stopPropagation();
@@ -75,9 +66,9 @@ AutoComplete.prototype.addEvents = function () {
     that.filterSelection();
   });
 
-  that.filterClear.addEventListener('click', function (e) {
+  that.overlay.addEventListener('click', function (e) {
+    e.stopPropagation();
     that.closeDropdown();
-    e.preventDefault();
   });
 };
 
@@ -98,8 +89,17 @@ AutoComplete.prototype.clearFilters = function () {
   }
 };
 
+AutoComplete.prototype.toggleDropdown = function () {
+  if (this.field.classList.contains('open')) {
+    this.closeDropdown();
+  } else {
+    this.openDropdown();
+  }
+};
+
 AutoComplete.prototype.openDropdown = function () {
-  this.filter.parentNode.classList.add('open');
+  this.filter.closest('.Dialog__field').classList.toggle('open', true);
+  this.filter.focus();
   this.listItems = this.el.querySelectorAll(this.item);
   this.visibleItems = this.el.querySelectorAll('.' + this.type + '-row');
   this.updateHeight();
@@ -109,20 +109,16 @@ AutoComplete.prototype.closeDropdown = function (t) {
   const that = t || this;
   that.filter.value = '';
   that.el.classList.remove('filtered');
-  that.placeholderItem.parentNode.classList.remove('open');
+  that.field.classList.toggle('open', false);
   that.placeholderItem.parentNode.classList.remove('add-allowed');
   that.clearFilters();
 };
 
 AutoComplete.prototype.updateHeight = function () {
   const bodyRect = document.body.getBoundingClientRect();
-
   const elRect = this.el.getBoundingClientRect();
-
   let style = 'max-height:auto;';
-
   let listStyle = 'max-height:auto;';
-
   let calc;
 
   if (bodyRect.bottom > 0 && elRect.bottom + 25 >= bodyRect.bottom) {
@@ -363,8 +359,8 @@ ProjectAutoComplete.prototype.selectProject = function (
   silent,
   removeTask
 ) {
-  if (elem.classList.contains('item-name')) {
-    elem = elem.parentNode;
+  if (elem.classList.contains('item-name') || elem.classList.contains('tb-project-bullet')) {
+    elem = elem.closest('li');
   }
   if (!elem.classList.contains(this.type + '-row')) {
     if (elem.classList.contains('task-count')) {
@@ -518,14 +514,10 @@ ProjectAutoComplete.prototype.generateLabel = function (select, id, type, tid) {
 
 ProjectAutoComplete.prototype.filterSelection = function () {
   let key;
-
   const val = this.filter.value.toLowerCase();
-
   let row;
-
   let text;
 
-  this.updateHeight();
   if (val === this.lastFilter) {
     return;
   }
@@ -630,19 +622,9 @@ TagAutoComplete.prototype.addEvents = function () {
 
   that.placeholderItem.addEventListener('click', function (e) {
     setTimeout(function () {
-      that.filter.focus();
+      that.toggleDropdown();
     }, 50);
   });
-
-  window.addEventListener(
-    'focus',
-    function (e) {
-      if (e.target === that.filter) {
-        that.openDropdown();
-      }
-    },
-    true
-  );
 
   this.el.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -669,18 +651,18 @@ TagAutoComplete.prototype.addEvents = function () {
     }
   });
 
-  this.filterClear.addEventListener('click', function (e) {
+  that.overlay.addEventListener('click', function (e) {
+    e.stopPropagation();
     that.closeDropdown();
-    e.preventDefault();
   });
 
-  this.clearSelected.addEventListener('click', function (e) {
-    that.clearSelectedTags();
-  });
+  // this.clearSelected.addEventListener('click', function (e) {
+  //   that.clearSelectedTags();
+  // });
 
-  this.addLink.addEventListener('click', function (e) {
-    that.addNew();
-  });
+  // this.addLink.addEventListener('click', function (e) {
+  //   that.addNew();
+  // });
 };
 
 TagAutoComplete.prototype.closeDropdown = function () {

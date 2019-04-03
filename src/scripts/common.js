@@ -341,16 +341,6 @@ window.togglbutton = {
       editForm.style.display = 'none';
     };
 
-    const handler = function (e) {
-      if (
-        !/toggl-button/.test(e.target.className) &&
-        !/toggl-button/.test(e.target.parentElement.className)
-      ) {
-        closeForm();
-        this.removeEventListener('click', handler);
-      }
-    };
-
     const submitForm = function (that) {
       const selected = projectAutocomplete.getSelected();
 
@@ -457,8 +447,6 @@ window.togglbutton = {
 
       tagAutocomplete.setWorkspaceId(wid);
     });
-
-    document.addEventListener('click', handler);
   },
 
   createTimerLink: function (params) {

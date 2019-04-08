@@ -128,12 +128,7 @@ window.PopUp = {
           if (request.type === 'create-workspace') {
             return PopUp.switchView(PopUp.$menuView);
           }
-          if (!!response.type && response.type === 'New Entry') {
-            browser.extension.getBackgroundPage().db.get('showPostPopup')
-              .then(showPostPopup => {
-                if (showPostPopup) PopUp.updateEditForm(PopUp.$editView);
-              });
-          } else if (response.type === 'Update') {
+          if (response.type === 'Update') {
             // Extension update?
             TogglButton = browser.extension.getBackgroundPage().TogglButton;
             // Current TE update

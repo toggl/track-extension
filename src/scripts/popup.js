@@ -97,7 +97,6 @@ window.PopUp = {
 
   renderTimer: function () {
     const rootElement = document.getElementById('root-timer');
-    ReactDOM.unmountComponentAtNode(rootElement);
     const entry = TogglButton.$curEntry;
     ReactDOM.render(<Timer entry={entry} />, rootElement);
   },
@@ -140,7 +139,7 @@ window.PopUp = {
             PopUp.renderTimer();
             PopUp.renderEntriesList();
             PopUp.renderSummary();
-          } else if (response.type === 'list-continue') {
+          } else if (response.type === 'list-continue' || response.type === 'New Entry') {
             PopUp.renderTimer();
             PopUp.renderEntriesList();
           } else {
@@ -165,7 +164,6 @@ window.PopUp = {
   },
 
   renderEntriesList: function () {
-    const html = document.createElement('div');
     const entries = TogglButton.$user.time_entries;
     if (!entries || entries.length < 1) {
       return;
@@ -211,14 +209,7 @@ window.PopUp = {
       return;
     }
 
-    // Remove old html
-    while (PopUp.$entries.firstChild) {
-      PopUp.$entries.removeChild(PopUp.$entries.firstChild);
-    }
-
     // Render react tree
-    html.id = 'root-time-entries-list';
-    PopUp.$entries.appendChild(html);
     ReactDOM.render(<TimeEntriesList timeEntries={listEntries} projects={projects} />, document.getElementById('root-time-entries-list'));
   },
 

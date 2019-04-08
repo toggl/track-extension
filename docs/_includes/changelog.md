@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/toggl/toggl-button/compare/1.26.0...1.27.0) (2019-04-08)
+
+
+### Features
+
+* **popup:** Do not show edit form when continuing an entry ([d3977d4](https://github.com/toggl/toggl-button/commit/d3977d4))
+
 # [1.26.0](https://github.com/toggl/toggl-button/compare/1.25.0...1.26.0) (2019-04-02)
 
 

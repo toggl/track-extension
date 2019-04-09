@@ -137,13 +137,8 @@ window.TogglButton = {
                 });
               }
               if (resp.data.time_entries) {
-                resp.data.time_entries.some(function (timeEntry) {
-                  if (timeEntry.duration < 0) {
-                    entry = timeEntry;
-                    return true;
-                  }
-                  return false;
-                });
+                const { time_entries: timeEntries } = resp.data;
+                entry = timeEntries.find(te => te.duration < 0) || null;
               }
 
               if (TogglButton.hasWorkspaceBeenRevoked(resp.data.workspaces)) {
@@ -578,6 +573,11 @@ window.TogglButton = {
         }
       });
     });
+  },
+
+  latestEntry: function () {
+    const timeEntries = TogglButton.$user.time_entries || [ null ];
+    return timeEntries[timeEntries.length - 1];
   },
 
   checkPomodoroAlarm: async function (entry) {
@@ -2042,10 +2042,8 @@ window.TogglButton = {
       startAutomatically &&
       !!TogglButton.$user
     ) {
-      const lastEntryString = await db.get('latestStoppedEntry');
-      if (lastEntryString) {
-        const lastEntry = JSON.parse(lastEntryString);
-        TogglButton.$latestStoppedEntry = lastEntry;
+      TogglButton.$latestStoppedEntry = TogglButton.latestEntry();
+      if (TogglButton.$latestStoppedEntry) {
         TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, null);
         TogglButton.hideNotification('remind-to-track-time');
       }

@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/toggl/toggl-button/compare/1.27.0...1.28.0) (2019-04-09)
+
+
+### Features
+
+* **popup:** Enable starting new timer with "enter" in the timer form ([f1d327a](https://github.com/toggl/toggl-button/commit/f1d327a)), closes [#1372](https://github.com/toggl/toggl-button/issues/1372)
+
 # [1.27.0](https://github.com/toggl/toggl-button/compare/1.26.0...1.27.0) (2019-04-08)
 
 

@@ -7,6 +7,7 @@ import {
   subHours,
   subMinutes
 } from 'date-fns';
+import * as keycode from 'keycode';
 
 import start from '../icons/start.svg';
 import stop from '../icons/stop.svg';
@@ -84,10 +85,15 @@ function TimerForm () {
       : '';
     window.PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true });
   };
+  const onKeyUp = (e) => {
+    if (keycode(e.which) === 'enter') {
+      startTimer(e);
+    }
+  }
 
   return (
     <TimerContainer>
-      <TimerInput ref={inputRef} placeholder='What are you working on?' />
+      <TimerInput ref={inputRef} onKeyUp={onKeyUp} placeholder='What are you working on?' />
       <TimerButton isRunning={false} onClick={startTimer} />
     </TimerContainer>
   );

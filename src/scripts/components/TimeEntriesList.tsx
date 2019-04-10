@@ -143,18 +143,18 @@ function TimeEntryDuration ({ duration }: { duration: number }) {
   );
 }
 
-const TimeEntryDescription = styled.div`
+export const TimeEntryDescription = styled.div`
   flex: 1;
 
   white-space: nowrap;
   text-overflow: ellipsis;
-  cursor: text;
-  line-height: normal;
+  line-height: 24px;
   overflow: hidden;
   color: #222;
+  cursor: ${(props: { running?: boolean }) => props.running ? 'pointer' : 'text'};
 `;
 
-function TimeEntryProject ({ project }: { project: Project }) {
+export function TimeEntryProject ({ project }: { project: Project }) {
   return (
     <div style={{ flex: 1 }}>
       {project &&
@@ -193,11 +193,12 @@ const EntryList = styled.ul`
 const itemPadding = '.5rem .8rem';
 const itemShadow = 'rgb(232, 232, 232) 0px -1px 0px 0px inset';
 const EntryItem = styled.li`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 
   padding: ${itemPadding};
-  height: 50px;
+  height: 66px;
 
   color: ${color.grey};
   font-size: 14px;

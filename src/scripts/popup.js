@@ -98,7 +98,8 @@ window.PopUp = {
   renderTimer: function () {
     const rootElement = document.getElementById('root-timer');
     const entry = TogglButton.$curEntry;
-    ReactDOM.render(<Timer entry={entry} />, rootElement);
+    const project = entry && TogglButton.findProjectByPid(entry.pid) || null;
+    ReactDOM.render(<Timer entry={entry} project={project} />, rootElement);
   },
 
   sendMessage: function (request) {

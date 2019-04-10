@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/toggl/toggl-button/compare/1.28.1...1.29.0) (2019-04-10)
+
+
+### Features
+
+* Added workflowy.com integration ([ffeaaab](https://github.com/toggl/toggl-button/commit/ffeaaab))
+
 ## [1.28.1](https://github.com/toggl/toggl-button/compare/1.28.0...1.28.1) (2019-04-10)
 
 

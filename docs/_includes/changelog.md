@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/toggl/toggl-button/compare/1.28.0...1.28.1) (2019-04-10)
+
+
+### Bug Fixes
+
+* **timer:** Automatic start/stop on browser open/close ([4d3151c](https://github.com/toggl/toggl-button/commit/4d3151c)), closes [#1375](https://github.com/toggl/toggl-button/issues/1375)
+
 # [1.28.0](https://github.com/toggl/toggl-button/compare/1.27.0...1.28.0) (2019-04-09)
 
 

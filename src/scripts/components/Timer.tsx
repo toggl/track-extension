@@ -9,6 +9,8 @@ import {
 } from 'date-fns';
 import * as keycode from 'keycode';
 
+import { TimeEntryDescription, TimeEntryProject } from './TimeEntriesList';
+import TagsIcon from './TagsIcon';
 import start from '../icons/start.svg';
 import stop from '../icons/stop.svg';
 
@@ -29,32 +31,44 @@ export const formatDuration = (start: string | number, stop?: string | number) =
 
 type TimerProps = {
   entry: TimeEntry | null;
+  project: Project | null;
 };
 
 function Timer (props: TimerProps) {
   return props.entry
-    ? <RunningTimer entry={props.entry} />
+    ? <RunningTimer entry={props.entry} project={props.project} />
     : <TimerForm />
 }
 
-function RunningTimer(props: { entry: TimeEntry }) {
-  const { entry } = props;
+function RunningTimer(props: { entry: TimeEntry, project: Project | null }) {
+  const { entry, project } = props;
+  const tags = (entry.tags || []).join(', ');
+
   const editEntry = (e) => {
     e.preventDefault();
     window.PopUp.updateEditForm(window.PopUp.$editView);
   };
   const stopTimer = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
   };
 
   return (
-    <TimerContainer>
-      <TimerDescription title={`Click to edit ${entry.description || ''}`} onClick={editEntry} running>
-        {entry.description || NO_DESCRIPTION}
-      </TimerDescription>
-      <TimerDuration start={entry.start} />
-      <TimerButton isRunning onClick={stopTimer} />
+    <TimerContainer onClick={editEntry}>
+      <div style={{flex: '2'}}>
+        <TimeEntryDescription title={`Click to edit ${entry.description || ''}`} running>
+          {entry.description || NO_DESCRIPTION}
+        </TimeEntryDescription>
+        {project &&
+          <TimeEntryProject project={project} />
+        }
+      </div>
+      <div style={{display: 'flex',alignItems: 'center'}}>
+        {tags && <TagsIcon title={tags} />}
+        <TimerDuration start={entry.start} />
+        <TimerButton isRunning onClick={stopTimer} />
+      </div>
     </TimerContainer>
   );
 }
@@ -103,28 +117,16 @@ const TimerContainer = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
-
-  box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
   align-items: center;
-  padding: .5rem .8rem;
-  box-sizing: border-box;
-  background: #fff;
   margin-bottom: 1rem;
-  height: 50px;
-`;
+  height: 66px;
 
-const TimerDescription = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
+  padding: .5rem .8rem;
 
-  flex: 1;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-
+  cursor: pointer;
   font-size: 14px;
-  cursor: ${(props: { running?: boolean }) => props.running ? 'pointer' : 'initial'};
+  box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
+  background: #fff;
 `;
 
 const TimerInput = styled.input`
@@ -152,6 +154,7 @@ const TimerButton = styled.div`
   display: inline-block;
   width: 24px;
   height: 24px;
+  padding: 5px; /* Extra hit-area */
   background: url(${(props: TimerButtonProps) => props.isRunning ? stop : start}) no-repeat;
   background-position: 55% 50%;
   background-size: 24px;

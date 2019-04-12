@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/toggl/toggl-button/compare/1.29.0...1.30.0) (2019-04-12)
+
+
+### Features
+
+* **popup:** Show running entry project and tags on timer ([d22f669](https://github.com/toggl/toggl-button/commit/d22f669)), closes [#1370](https://github.com/toggl/toggl-button/issues/1370)
+
 # [1.29.0](https://github.com/toggl/toggl-button/compare/1.28.1...1.29.0) (2019-04-10)
 
 

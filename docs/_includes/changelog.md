@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/toggl/toggl-button/compare/1.30.0...1.30.1) (2019-04-15)
+
+
+### Bug Fixes
+
+* **wordpress:** Fix wordpress integration ([7d34c0b](https://github.com/toggl/toggl-button/commit/7d34c0b)), closes [#1362](https://github.com/toggl/toggl-button/issues/1362)
+
 # [1.30.0](https://github.com/toggl/toggl-button/compare/1.29.0...1.30.0) (2019-04-12)
 
 

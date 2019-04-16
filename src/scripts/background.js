@@ -1422,12 +1422,18 @@ window.TogglButton = {
     }
 
     const nannyCheckEnabled = await db.get('nannyCheckEnabled');
+    const isDuringWorkHours = await TogglButton.isDuringWorkHours();
+
+    if (process.env.DEBUG) {
+      console.info(`Checking for tracking reminder, enabled:${nannyCheckEnabled}, isDuringWorkHours:${isDuringWorkHours}`);
+    }
+
     if (
       TogglButton.$user &&
       currentState === 'active' &&
       nannyCheckEnabled &&
-      TogglButton.$curEntry === null &&
-      TogglButton.workingTime()
+      isDuringWorkHours &&
+      TogglButton.$curEntry === null
     ) {
       options = {
         type: 'basic',
@@ -1595,23 +1601,30 @@ window.TogglButton = {
     ga.reportEvent(eventType, buttonName);
   },
 
-  workingTime: async function () {
-    const now = new Date();
-    const nannyFromTo = await db.get('nannyFromTo');
-    const fromTo = nannyFromTo.split('-');
+  isDuringWorkHours: async function () {
+    try {
+      const now = new Date();
+      const nannyFromTo = await db.get('nannyFromTo');
+      const fromTo = nannyFromTo.split('-');
 
-    if (now.getDay() === 6 || now.getDay() === 0) {
+      if (now.getDay() === 6 || now.getDay() === 0) {
+        return false;
+      }
+      const startHelper = fromTo[0].split(':');
+      const endHelper = fromTo[1].split(':');
+      const start = new Date();
+      start.setHours(startHelper[0]);
+      start.setMinutes(startHelper[1]);
+
+      const end = new Date();
+      end.setHours(endHelper[0]);
+      end.setMinutes(endHelper[1]);
+
+      return now > start && now <= end;
+    } catch (e) {
+      bugsnagClient.notify(e);
       return false;
     }
-    const startHelper = fromTo[0].split(':');
-    const endHelper = fromTo[1].split(':');
-    const start = new Date();
-    start.setHours(startHelper[0]);
-    start.setMinutes(startHelper[1]);
-    const end = new Date();
-    end.setHours(endHelper[0]);
-    end.setMinutes(endHelper[1]);
-    return now > start && now <= end;
   },
 
   setNannyTimer: async function () {

@@ -56,7 +56,7 @@ function RunningTimer(props: { entry: TimeEntry, project: Project | null }) {
 
   return (
     <TimerContainer onClick={editEntry}>
-      <div style={{flex: '2'}}>
+      <div>
         <TimeEntryDescription title={`Click to edit ${entry.description || ''}`} running>
           {entry.description || NO_DESCRIPTION}
         </TimeEntryDescription>
@@ -64,7 +64,7 @@ function RunningTimer(props: { entry: TimeEntry, project: Project | null }) {
           <TimeEntryProject project={project} />
         }
       </div>
-      <div style={{display: 'flex',alignItems: 'center'}}>
+      <div>
         {tags && <TagsIcon title={tags} />}
         <TimerDuration start={entry.start} />
         <TimerButton isRunning onClick={stopTimer} />
@@ -127,6 +127,18 @@ const TimerContainer = styled.div`
   font-size: 14px;
   box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
   background: #fff;
+
+  > div:first-child {
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  > div:last-child {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const TimerInput = styled.input`

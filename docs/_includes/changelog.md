@@ -1,3 +1,10 @@
+## [1.30.2](https://github.com/toggl/toggl-button/compare/1.30.1...1.30.2) (2019-04-16)
+
+
+### Bug Fixes
+
+* Fix timer description pushing buttons buttons out of view ([90e9022](https://github.com/toggl/toggl-button/commit/90e9022)), closes [#1381](https://github.com/toggl/toggl-button/issues/1381)
+
 ## [1.30.1](https://github.com/toggl/toggl-button/compare/1.30.0...1.30.1) (2019-04-15)
 
 

@@ -1,3 +1,14 @@
+## [1.30.4](https://github.com/toggl/toggl-button/compare/1.30.3...1.30.4) (2019-04-23)
+
+
+### Bug Fixes
+
+* **github:** Find correct issue number in GitHub project board ([d3cb4d5](https://github.com/toggl/toggl-button/commit/d3cb4d5)), closes [#1343](https://github.com/toggl/toggl-button/issues/1343)
+* **google-mail:** Standardize button style ([69d9219](https://github.com/toggl/toggl-button/commit/69d9219))
+* **trello:** Fix card button clicks not starting the timer ([878c42a](https://github.com/toggl/toggl-button/commit/878c42a)), closes [#1299](https://github.com/toggl/toggl-button/issues/1299)
+* **trello:** Stop toggl button overlapping trello list menus ([0dcc23a](https://github.com/toggl/toggl-button/commit/0dcc23a)), closes [#1299](https://github.com/toggl/toggl-button/issues/1299)
+* **zendesk:** Improve button layout and style ([240510f](https://github.com/toggl/toggl-button/commit/240510f))
+
 ## [1.30.3](https://github.com/toggl/toggl-button/compare/1.30.2...1.30.3) (2019-04-23)
 
 

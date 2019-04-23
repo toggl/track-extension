@@ -1,3 +1,10 @@
+## [1.30.3](https://github.com/toggl/toggl-button/compare/1.30.2...1.30.3) (2019-04-23)
+
+
+### Bug Fixes
+
+* Fix tracking reminder not respecting working hours ([979177d](https://github.com/toggl/toggl-button/commit/979177d)), closes [#1383](https://github.com/toggl/toggl-button/issues/1383)
+
 ## [1.30.2](https://github.com/toggl/toggl-button/compare/1.30.1...1.30.2) (2019-04-16)
 
 

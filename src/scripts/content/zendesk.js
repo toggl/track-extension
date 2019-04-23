@@ -26,5 +26,10 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
     projectName: projectName && projectName.split(' - ').shift()
   });
 
+  // Check for strange duplicate buttons. Don't know why this happens in Zendesk.
+  if (elem.querySelector('.toggl-button')) {
+    elem.removeChild(elem.querySelector('.toggl-button'));
+  }
+
   elem.insertBefore(link, elem.querySelector('.btn-group'));
 });

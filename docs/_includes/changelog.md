@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/toggl/toggl-button/compare/1.30.4...1.31.0) (2019-04-24)
+
+
+### Features
+
+* **wrike:** Include issue number and project name in time entries ([967fca8](https://github.com/toggl/toggl-button/commit/967fca8))
+
 ## [1.30.4](https://github.com/toggl/toggl-button/compare/1.30.3...1.30.4) (2019-04-23)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "toggl-button",
-  "version": "1.30.4",
+  "version": "1.31.0",
   "description": "Add Toggl one-click time tracking to popular web tools.",
   "license": "BSD-3-Clause",
   "private": true,

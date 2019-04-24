@@ -539,6 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       PopUp.sendMessage(request);
+      window.scrollTo(0, 0);
     });
   } catch (e) {
     browser.runtime.sendMessage({

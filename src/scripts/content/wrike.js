@@ -22,7 +22,7 @@ togglbutton.render(
 
       const titleElem = $('.title-field-ghost', elem);
       const titleElemText = titleElem ? titleElem.textContent : 'not found';
-      return '#' + taskId + ' ' + titleElemText.trim();
+      return `#${taskId} ${titleElemText.trim()}`;
     };
 
     const projectText = function () {

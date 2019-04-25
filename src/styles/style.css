@@ -1640,3 +1640,15 @@ label > .toggl-button.outlook {
   cursor: default !important;
   text-decoration: none !important;
 }
+
+/********* Microsoft To-Do *********/
+.toggl-button.microsoft-todo {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.toggl-button.microsoft-todo.active,
+.taskItem-body:hover .toggl-button.microsoft-todo {
+  visibility: visible;
+  pointer-events: all;
+}

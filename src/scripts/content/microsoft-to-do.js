@@ -23,5 +23,5 @@ togglbutton.render('.taskItem-body:not(.toggl)', { observe: true }, function (
   });
 
   container.appendChild(link);
-  elem.appendChild(container);
+  elem.insertBefore(container, elem.lastElementChild);
 });

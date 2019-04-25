@@ -1,3 +1,10 @@
+## [1.31.1](https://github.com/toggl/toggl-button/compare/1.31.0...1.31.1) (2019-04-25)
+
+
+### Bug Fixes
+
+* **microsoft-todo:** Add support for to-do.microsoft.com domain ([88ca011](https://github.com/toggl/toggl-button/commit/88ca011)), closes [#1312](https://github.com/toggl/toggl-button/issues/1312)
+
 # [1.31.0](https://github.com/toggl/toggl-button/compare/1.30.4...1.31.0) (2019-04-24)
 
 

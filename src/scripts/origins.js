@@ -509,8 +509,8 @@ export default {
     url: '*://ticktick.com/*,*://*.ticktick.com/*',
     name: 'TickTick'
   },
-  'todo.microsoft.com': {
-    url: '*://*.todo.microsoft.com/*',
+  'to-do.microsoft.com': {
+    url: '*://*.to-do.microsoft.com/*',
     name: 'Microsoft To-Do',
     file: 'microsoft-to-do.js'
   },

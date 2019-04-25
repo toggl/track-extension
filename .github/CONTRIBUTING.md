@@ -44,6 +44,8 @@ Please consider the following with your pull request:
 
 ![](https://user-images.githubusercontent.com/6432028/54681215-b8dd3280-4b03-11e9-8bf9-c75712b655b2.png)
 
+>See the [Microsoft To-Do](https://github.com/toggl/toggl-button/blob/master/src/scripts/content/microsoft-to-do.js) integration for reference.
+
 **All buttons:**
 * Make sure we're not leaking styles or breaking the layout of the UI.
 * The text used as timer description should be tailored to the majority of users. E.g. if ticket ID is an important piece of information, it should be included. If it's not important information (e.g. never actually shown in the UI, only in URLs) it should not be included.

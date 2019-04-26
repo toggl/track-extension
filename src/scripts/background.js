@@ -55,11 +55,11 @@ window.TogglButton = {
     '<div id="toggl-button-edit-form">' +
     '<form autocomplete="off">' +
     '<a class="toggl-button toggl-button-edit-form-button {service} active" href="javascript:void(0)">Stop timer</a>' +
-    '<a id="toggl-button-hide">&times;</a>' +
+    '<a id="toggl-button-hide"></a>' +
 
     `<div class="Dialog__field" id="toggl-button-duration-row">
       <div>
-        <input name="toggl-button-duration" tabindex="100" type="text" pattern="[\\d]{2}:[\\d]{2}:[\\d]{2}" title="Please write the duration in the 'hh:mm:ss' format." id="toggl-button-duration" class="Input" value="" placeholder="00:00" autocomplete="off">
+        <input name="toggl-button-duration" tabindex="100" type="text" id="toggl-button-duration" class="Input" value="" placeholder="00:00" autocomplete="off">
       </div>
     </div>` +
 
@@ -2018,7 +2018,7 @@ window.TogglButton = {
         return browser.tabs.insertCSS(tabId, { file: 'styles/edit-form.css' });
       })
       .then(function () {
-        browser.tabs.insertCSS(tabId, { file: 'styles/autocomplete.css' });
+        return browser.tabs.insertCSS(tabId, { file: 'styles/autocomplete.css' });
       });
 
     browser.tabs.executeScript(tabId, { file: 'scripts/common.js' })

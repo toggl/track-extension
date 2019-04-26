@@ -223,7 +223,7 @@ p.form-row.first {
   display: flex !important;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 1rem;
+  padding-top: 5rem;
 }
 
 .running,

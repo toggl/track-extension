@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { isSameDay } from 'date-fns';
 
+import { secToHhmmImproved } from './@toggl/time-format-utils';
 import Summary from './components/Summary';
 import TimeEntriesList from './components/TimeEntriesList';
 import Timer, { formatDuration } from './components/Timer';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+import { parseDuration } from './lib/timerUtils';
 import renderLogin from './initializers/login';
 
 const browser = require('webextension-polyfill');
@@ -226,18 +228,6 @@ window.PopUp = {
     return n < 10 ? '0' + n : n;
   },
 
-  msToTime: function (duration) {
-    let seconds = parseInt((duration / 1000) % 60, 10);
-    let minutes = parseInt((duration / (1000 * 60)) % 60, 10);
-    let hours = parseInt(duration / (1000 * 60 * 60), 10);
-
-    hours = hours < 10 ? '0' + hours : hours;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-    return hours + ':' + minutes + ':' + seconds;
-  },
-
   /* Edit form functions */
   updateEditForm: function (view) {
     const pid = TogglButton.$curEntry.pid ? TogglButton.$curEntry.pid : 0;
@@ -251,7 +241,7 @@ window.PopUp = {
     togglButtonDescription.value = TogglButton.$curEntry.description
       ? TogglButton.$curEntry.description
       : '';
-    togglButtonDuration.value = PopUp.msToTime(
+    togglButtonDuration.value = secToHhmmImproved(
       new Date() - new Date(TogglButton.$curEntry.start)
     );
 
@@ -328,20 +318,6 @@ window.PopUp = {
     }
   },
 
-  // Duration changed let's calculate new start
-  getStart: function () {
-    const arr = document.querySelector('#toggl-button-duration').value.split(':');
-
-    if (!PopUp.isNumber(arr.join(''))) {
-      return false;
-    }
-
-    const duration = 1000 * (arr[2] || 0) + 60000 * arr[1] + 3600000 * arr[0];
-
-    const now = new Date();
-    return new Date(now.getTime() - duration);
-  },
-
   isNumber: function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   },
@@ -357,12 +333,20 @@ window.PopUp = {
     PopUp.$billable.classList.toggle('tb-checked', billable);
   },
 
-  submitForm: function (that) {
+  submitForm: function () {
+    // Translate human duration input if submitted without blurring
+    const $duration = document.querySelector('#toggl-button-duration');
+    let duration = $duration.value;
+    if (duration) {
+      duration = parseDuration(duration).asSeconds();
+      $duration.value = secToHhmmImproved(duration, { html: false });
+    }
+
     if (!this.isformValid()) {
       return;
     }
-    const selected = PopUp.$projectAutocomplete.getSelected();
 
+    const selected = PopUp.$projectAutocomplete.getSelected();
     const billable = !!document.querySelector(
       '.tb-billable.tb-checked:not(.no-billable)'
     );
@@ -379,9 +363,8 @@ window.PopUp = {
       service: 'dropdown'
     };
 
-    const start = PopUp.getStart();
-
-    if (start) {
+    if (duration) {
+      const start = new Date((new Date()).getTime() - duration * 1000);
       request.start = start.toISOString();
       request.duration = -1 * Math.floor(start.getTime() / 1000);
     }
@@ -522,6 +505,14 @@ document.addEventListener('DOMContentLoaded', function () {
           workspace
         };
         PopUp.sendMessage(request);
+      });
+
+    document
+      .querySelector('#toggl-button-duration')
+      .addEventListener('blur', function (event) {
+        const value = event.target.value || '';
+        const parsedInput = parseDuration(value).asSeconds();
+        event.target.value = secToHhmmImproved(parsedInput, { html: false });
       });
 
     PopUp.$entries.addEventListener('click', function (e) {

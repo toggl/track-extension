@@ -298,8 +298,8 @@ window.togglbutton = {
 
     const pid = response.entry.pid;
     const tid = response.entry.tid;
-    const editFormHeight = 350;
-    const editFormWidth = 240;
+    const editFormHeight = 300;
+    const editFormWidth = 360;
     const div = document.createElement('div');
     let editForm;
     let togglButtonDescription;

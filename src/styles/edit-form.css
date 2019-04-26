@@ -282,20 +282,28 @@
 
 #toggl-button-edit-form #toggl-button-hide {
   float: right;
-  background: transparent;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  top: -4px;
+  right: -4px;
+  cursor: pointer;
+
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTkgNi40MUwxNy41OSA1IDEyIDEwLjU5IDYuNDEgNSA1IDYuNDEgMTAuNTkgMTIgNSAxNy41OSA2LjQxIDE5IDEyIDEzLjQxIDE3LjU5IDE5IDE5IDE3LjU5IDEzLjQxIDEyeiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px;
+
   border: none;
-  color: #6a7479;
-  font-family: sans-serif, Arial;
-  font-size: 20px;
-  font-weight: 200;
-  min-height: 25px;
-  text-decoration: none;
   margin-top: 0px;
 }
 
-.toggl-button,
-#toggl-button-hide {
+.toggl-button, #toggl-button-hide {
   display: none;
+}
+
+#toggl-button-edit-form.toggl-integration #toggl-button-hide {
+  display: initial;
 }
 
 /** Billable flag **/

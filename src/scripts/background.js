@@ -1,5 +1,5 @@
 import bugsnagClient from './lib/bugsnag';
-import { escapeHtml, report, secToHHMM } from './lib/utils';
+import { escapeHtml, isTogglURL, report, secToHHMM } from './lib/utils';
 
 import Db from './lib/db';
 import Ga from './lib/ga';
@@ -1861,7 +1861,10 @@ window.TogglButton = {
         } else if (request.type === 'logout') {
           TogglButton.logoutUser().then(resolve);
         } else if (request.type === 'sync') {
-          TogglButton.fetchUser();
+          const res = TogglButton.fetchUser();
+          if (request.respond) {
+            resolve(res);
+          }
         } else if (request.type === 'timeEntry') {
           TogglButton.createTimeEntry(request)
             .then((response) => {
@@ -1936,7 +1939,7 @@ window.TogglButton = {
   },
 
   tabUpdated: async function (tabId, changeInfo, tab) {
-    if (!TogglButton.$user) {
+    if (!TogglButton.$user && !isTogglURL(tab.url)) {
       TogglButton.setBrowserActionBadge();
       return;
     }
@@ -1944,7 +1947,7 @@ window.TogglButton = {
       changeInfo.status === 'complete' &&
       tab.url.indexOf('chrome://') === -1
     ) {
-      const domain = await TogglButton.extractDomain(tab.url);
+      const domain = await TogglButton.extractDomain(tab.url, false);
       const permission = { origins: domain.origins };
 
       if (process.env.DEBUG) {
@@ -1998,9 +2001,9 @@ window.TogglButton = {
       });
   },
 
-  extractDomain: async function (url) {
+  extractDomain: async function (url, checkLogin = true) {
     let domain;
-    if (!TogglButton.$user) {
+    if (checkLogin && !TogglButton.$user) {
       return false;
     }
     // find & remove protocol (http, ftp, etc.) and get domain

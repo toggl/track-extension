@@ -29,3 +29,22 @@ document.addEventListener('webkitvisibilitychange', function () {
 });
 
 browser.extension.sendMessage({ type: 'sync' });
+
+function completeLogin () {
+  location.href = browser.extension.getURL('html/login.html?source=web-login');
+}
+
+function handleIncomingMessage (event) {
+  if (
+    event.source === window &&
+    event.data &&
+    event.data.direction === 'from-public-web'
+  ) {
+    switch (event.data.message) {
+      case 'login-success': completeLogin(); break;
+      default: console.log('Unsupported event', event);
+    }
+  }
+}
+
+window.addEventListener('message', handleIncomingMessage);

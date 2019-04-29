@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
+import browser from 'webextension-polyfill';
 
 import Logo from '../icons/Logo';
 import Spinner from './Spinner';
@@ -8,29 +9,88 @@ export interface LoginProps {
   source: 'web-login' | 'install'
 }
 
+interface LoginState {
+  loading: boolean;
+  error: string | null;
+  loggedIn: boolean;
+}
+
+async function login (setState: React.Dispatch<React.SetStateAction<LoginState>>) {
+  setState({ loading: true, error: null, loggedIn: false });
+
+  const { error, success: loggedIn } = await browser.runtime.sendMessage({
+    type: 'sync',
+    respond: true
+  });
+
+  setState({ loading: false, error, loggedIn });
+}
+
 export default function LoginPage ({ source }: LoginProps) {
-  const [ { loading }, setLoading ] = React.useState({ loading: true });
+  const [ state, setState ] = React.useState({ loading: false, error: null, loggedIn: false });
+  const { loading, error, loggedIn } = state;
 
   let content = (
-    <a href="https://ext-login-test.shantanu.now.sh">
-      <Button>Login</Button>
-    </a>
-  );
-  if (source === 'web-login' && loading) {
-    content = (
-      <CenteredButton>
-        <Spinner />
-      </CenteredButton>
-    );
-  } else if (source === 'web-login') {
-    content = (
-      <a href="settings.html?tab=account">
-        <Button>Open Settings</Button>
+    <Content>
+      <Row>
+        <Heading>Nearly there!</Heading>
+        <Subheading>Click the button below to login to your Toggl account</Subheading>
+      </Row>
+      <a href={`${process.env.TOGGL_WEB_HOST}/toggl-button-login/`}>
+        <Button>Login</Button>
       </a>
-    );
-  }
+    </Content>
+  );
 
-  setTimeout(() => setLoading({ loading: false }), 5000);
+  if (source === 'web-login') {
+    if (!loggedIn && !loading && !error) {
+      login(setState);
+    }
+
+    if (loading) {
+      content = (
+        <Content>
+          <Row>
+            <Heading>Logging you in</Heading>
+          </Row>
+          <CenteredButton>
+            <Spinner />
+          </CenteredButton>
+        </Content>
+      );
+    }
+
+    if (error) {
+      content = (
+        <Content>
+          <Row>
+            <Heading>Uh oh!!</Heading>
+            <Subheading>Something went wrong...</Subheading>
+          </Row>
+          <Subheading>
+            {error}
+          </Subheading>
+          <a href="mailto:support@toggl.com">
+            <Button>Contact support</Button>
+          </a>
+        </Content>
+      );
+    }
+
+    if (loggedIn) {
+      content = (
+        <Content>
+          <Row>
+            <Heading>You're all set!</Heading>
+            <Subheading>Click the toggl icon in your toolbar to start tracking time</Subheading>
+          </Row>
+          <a href="settings.html?tab=account">
+            <Button>Open Settings</Button>
+          </a>
+        </Content>
+      );
+    }
+  }
 
   return (
     <React.Fragment>
@@ -52,6 +112,7 @@ const Header = styled.header`
 
 const ContentWrapper = styled.main`
   height: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,6 +127,34 @@ const LogoWrapper = styled.span`
   & svg {
     fill: #282a2d;
   }
+`;
+
+const Content = styled.div`
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+
+const Row = styled.div`
+  text-align: center;
+  & h1 {
+    margin-bottom: 21px;
+  }
+`;
+
+const Heading = styled.h1`
+  font-size: 48px;
+  color: white;
+  font-weight: 700;
+  margin: 0;
+`;
+
+const Subheading = styled(Heading)`
+  color: white;
+  font-size: 21px;
+  font-weight: 500;
 `;
 
 const Button = styled.button`

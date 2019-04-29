@@ -1,5 +1,7 @@
 import bugsnagClient from './bugsnag';
 
+const togglUrlRegex = /^(\w+\.)?toggl\.(space|com)$/
+
 export function secToHHMM (sum: number) {
   const hours = Math.floor(sum / 3600);
   const minutes = Math.floor((sum % 3600) / 60);
@@ -33,4 +35,8 @@ export function escapeHtml (string: string) {
 export function getUrlParam (location: string, key: string) {
   const url = new URL(location);
   return url.searchParams.get(key);
+}
+
+export function isTogglURL (url: string) {
+  return togglUrlRegex.test(new URL(url).hostname);
 }

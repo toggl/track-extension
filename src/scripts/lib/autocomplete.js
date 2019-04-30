@@ -117,7 +117,7 @@ AutoComplete.prototype.closeDropdown = function (t) {
 AutoComplete.prototype.updateHeight = function () {
   const bodyRect = document.body.getBoundingClientRect();
   const elRect = this.el.getBoundingClientRect();
-  let style = 'max-height:auto;';
+  let popdownStyle = '';
   let listStyle = 'max-height:auto;';
   let calc;
 
@@ -126,11 +126,12 @@ AutoComplete.prototype.updateHeight = function () {
     if (calc < 55) {
       calc = 55;
     }
-    style = 'max-height: ' + calc + 'px;';
-    listStyle = 'max-height: ' + (calc - 25) + 'px;';
+    popdownStyle = 'max-height: ' + calc + 'px;';
+    listStyle = 'max-height: ' + (calc - 55 - 25) + 'px;';
   }
 
-  this.el.style = style;
+  // this.el.style = style;
+  this.el.closest('.Popdown__content').style = popdownStyle;
   if (this.type === 'tag') {
     document.querySelector('.tag-list').style = listStyle;
   }

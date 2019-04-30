@@ -455,6 +455,8 @@ ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
 
   let task;
 
+  console.log(pid, tid, el, elem);
+
   if (!!pid || pid === '0') {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
     if (project) {
@@ -472,6 +474,9 @@ ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
       }
       return result;
     }
+  } else {
+    // Reset to default.
+    elem.setAttribute('style', '');
   }
   elem.className = 'tb-project-bullet';
   return '';

@@ -155,6 +155,7 @@
 /* Original CSS */
 
 #entry-form {
+  box-sizing: border-box;
   display: none;
   padding: 0;
   width: 240px;

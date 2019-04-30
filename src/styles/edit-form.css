@@ -111,7 +111,7 @@
   padding: 0;
 
   /* Toggl Button / other */
-  overflow: scroll;
+  overflow: auto;
   background: #fff;
 }
 

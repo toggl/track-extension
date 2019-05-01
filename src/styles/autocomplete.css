@@ -151,7 +151,8 @@
 }
 
 #tag-autocomplete .tag-list li {
-  float: left;
+  width: 100%;
+  max-width: 100%;
   border: solid 1px #ececec;
   border-radius: 4px;
   margin-right: 5px;
@@ -160,7 +161,6 @@
   color: #a3a3a3;
   padding: 0 5px;
   margin-top: 5px;
-  max-width: 175px;
   text-overflow: ellipsis;
   overflow: hidden;
   max-height: 23px;
@@ -194,21 +194,16 @@
 
 .add-new-tag {
   display: none;
-  float: right;
   border: solid 1px #ececec;
-  margin-right: 5px;
   font-size: 14px;
   line-height: 1.5;
-  color: #a3a3a3;
   padding: 0 5px;
-  margin-top: 5px;
   background-color: rgba(75, 200, 0, 0.12);
   color: #4bc800;
   text-decoration: none;
   text-align: center;
-  position: absolute;
-  margin-top: -30px;
-  right: 35px;
+  border-radius: 4px;
+  margin-bottom: 2px;
 }
 
 .add-new-tag:hover {
@@ -216,12 +211,12 @@
   cursor: pointer;
 }
 
-.open.add-allowed .add-new-tag {
+.open .add-allowed .add-new-tag {
   display: block;
 }
 
-.open.add-allowed #toggl-button-project-filter,
-.open.add-allowed #toggl-button-tag-filter {
+.open .add-allowed #toggl-button-project-filter,
+.open .add-allowed #toggl-button-tag-filter {
   padding-right: 80px !important;
 }
 

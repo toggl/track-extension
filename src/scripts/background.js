@@ -93,6 +93,7 @@ window.TogglButton = {
           </div>
           <div id="tag-autocomplete">
             <div class="tag-clear">Clear selected tags</div>
+            <a href="javascript:void(0)" class="add-new-tag">+ Add tag "<span></span>"</a>
             {tags}
           </div>
         </div>

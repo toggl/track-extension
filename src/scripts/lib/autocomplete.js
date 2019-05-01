@@ -88,7 +88,7 @@ AutoComplete.prototype.clearFilters = function () {
     b[i].classList.remove('tasklist-opened');
   }
 
-  this.updateAddLink();
+  this.updateAddLink && this.updateAddLink();
 };
 
 AutoComplete.prototype.toggleDropdown = function () {
@@ -112,7 +112,7 @@ AutoComplete.prototype.closeDropdown = function (t) {
   that.filter.value = '';
   that.el.classList.remove('filtered');
   that.field.classList.toggle('open', false);
-  that.addLink.parentNode.classList.remove('add-allowed');
+  if (that.addLink) that.addLink.parentNode.classList.remove('add-allowed');
   that.clearFilters();
 };
 
@@ -129,10 +129,12 @@ AutoComplete.prototype.updateHeight = function () {
       calc = 55;
     }
     popdownStyle = 'max-height: ' + calc + 'px;';
-    listStyle = 'max-height: ' + (calc - 55 - 25) + 'px;';
+    // Not sure, but probably: 55=filter, 25=??, 24=clear-tags
+    listStyle = 'max-height: ' + (calc - 55 - 25 - 24) + 'px;';
+  } else {
+    return;
   }
 
-  // this.el.style = style;
   this.el.closest('.Popdown__content').style = popdownStyle;
   if (this.type === 'tag') {
     document.querySelector('.tag-list').style = listStyle;

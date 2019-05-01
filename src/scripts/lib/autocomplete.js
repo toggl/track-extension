@@ -17,8 +17,8 @@ const AutoComplete = function (el, item, elem) {
     '#toggl-button-' + el + '-placeholder'
   );
   this.placeholderDiv = this.placeholderItem.querySelector('div');
-  this.clearSelected = this.el.querySelector('.' + el + '-clear');
-  this.addLink = this.el.parentNode.querySelector('.add-new-' + el);
+  this.clearSelected = this.field.querySelector('.' + el + '-clear');
+  this.addLink = this.field.querySelector('.add-new-' + el);
   this.elem = elem;
   this.item = item;
   this.lastFilter = '';
@@ -87,6 +87,8 @@ AutoComplete.prototype.clearFilters = function () {
   for (i = 0; i < b.length; i++) {
     b[i].classList.remove('tasklist-opened');
   }
+
+  this.updateAddLink();
 };
 
 AutoComplete.prototype.toggleDropdown = function () {
@@ -110,7 +112,7 @@ AutoComplete.prototype.closeDropdown = function (t) {
   that.filter.value = '';
   that.el.classList.remove('filtered');
   that.field.classList.toggle('open', false);
-  that.placeholderItem.parentNode.classList.remove('add-allowed');
+  that.addLink.parentNode.classList.remove('add-allowed');
   that.clearFilters();
 };
 
@@ -662,13 +664,13 @@ TagAutoComplete.prototype.addEvents = function () {
     that.closeDropdown();
   });
 
-  // this.clearSelected.addEventListener('click', function (e) {
-  //   that.clearSelectedTags();
-  // });
+  this.clearSelected && this.clearSelected.addEventListener('click', function (e) {
+    that.clearSelectedTags();
+  });
 
-  // this.addLink.addEventListener('click', function (e) {
-  //   that.addNew();
-  // });
+  this.addLink && this.addLink.addEventListener('click', function (e) {
+    that.addNew();
+  });
 };
 
 TagAutoComplete.prototype.closeDropdown = function () {
@@ -795,15 +797,16 @@ TagAutoComplete.prototype.filterSelection = function () {
       }
     }
   }
-  this.updateAddLink();
+  this.updateAddLink(val);
 };
 
-TagAutoComplete.prototype.updateAddLink = function (e) {
+TagAutoComplete.prototype.updateAddLink = function (filterValue = '') {
   if (this.addLink) {
-    if (this.exactMatch) {
-      this.placeholderItem.parentNode.classList.remove('add-allowed');
+    if (this.exactMatch || filterValue === '') {
+      this.addLink.parentNode.classList.remove('add-allowed');
     } else {
-      this.placeholderItem.parentNode.classList.add('add-allowed');
+      this.addLink.parentNode.classList.add('add-allowed');
+      this.addLink.querySelector('span').textContent = filterValue;
     }
   }
 };

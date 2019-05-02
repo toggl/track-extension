@@ -6,7 +6,7 @@
   max-width: 360px;
 
   padding: 1rem 1rem 1.5rem !important;
- -webkit-box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
+  -webkit-box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
   -moz-box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
   box-shadow: 0 1px 3px rgba(128, 128, 128, 0.5);
   -webkit-border-radius: 3px;

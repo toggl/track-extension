@@ -242,7 +242,8 @@ window.PopUp = {
       ? TogglButton.$curEntry.description
       : '';
     togglButtonDuration.value = secToHhmmImproved(
-      new Date() - new Date(TogglButton.$curEntry.start)
+      new Date() - new Date(TogglButton.$curEntry.start),
+      { html: false }
     );
 
     PopUp.$projectAutocomplete.setup(pid, tid);
@@ -269,13 +270,8 @@ window.PopUp = {
     const durationField = document.querySelector('#toggl-button-duration');
 
     // Update edit form duration field
-    if (
-      durationField !== document.activeElement &&
-      PopUp.durationChanged === false
-    ) {
+    if (PopUp.durationChanged === false) {
       durationField.value = duration;
-    } else {
-      PopUp.durationChanged = true;
     }
 
     if (startTimer) {
@@ -507,6 +503,15 @@ document.addEventListener('DOMContentLoaded', function () {
         PopUp.sendMessage(request);
       });
 
+    document
+      .querySelector('#toggl-button-duration')
+      .addEventListener('keydown', function (event) {
+        // Doesn't cover all cases; can't really do it without introducing more state.
+        // Need a refactor.
+        if (event.code !== 'Enter' && event.code !== 'Tab') {
+          PopUp.durationChanged = true;
+        }
+      });
     document
       .querySelector('#toggl-button-duration')
       .addEventListener('blur', function (event) {

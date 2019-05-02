@@ -35,7 +35,7 @@ module.exports = config(({ development, bugsnagApiKey, production, release, vers
   entry: {
     ...entry('background'),
     ...entry('common'),
-    ...entry('login', 'tsx'),
+    ...entry('login', 'ts'),
     ...entry('popup'),
     ...entry('settings'),
     ...entryContentScripts()

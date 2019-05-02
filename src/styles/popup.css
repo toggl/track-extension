@@ -233,6 +233,9 @@ p.form-row.first {
 .header[data-view='login-form'] li.signup {
   display: block;
 }
+.header[data-view='login-form'] {
+  display: none;
+}
 
 .running,
 .stopped {

@@ -6,6 +6,7 @@ import Summary from './components/Summary';
 import TimeEntriesList from './components/TimeEntriesList';
 import Timer, { formatDuration } from './components/Timer';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+import renderLogin from './initializers/login';
 
 const browser = require('webextension-polyfill');
 
@@ -78,6 +79,7 @@ window.PopUp = {
         PopUp.renderSummary();
       } else {
         localStorage.setItem('latestStoppedEntry', '');
+        renderLogin(PopUp.$loginView, true);
         PopUp.switchView(PopUp.$loginView);
       }
     } catch (e) {

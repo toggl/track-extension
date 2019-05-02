@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import browser from 'webextension-polyfill';
 
@@ -7,6 +8,7 @@ import Spinner from './Spinner';
 
 export interface LoginProps {
   isLoggedIn: boolean;
+  isPopup: boolean;
   source: 'web-login' | 'install';
 }
 
@@ -27,7 +29,7 @@ async function login (setState: React.Dispatch<React.SetStateAction<LoginState>>
   setState({ loading: false, error, loggedIn });
 }
 
-export default function LoginPage ({ source, isLoggedIn }: LoginProps) {
+export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) {
   const [ state, setState ] = React.useState({ loading: false, error: null, loggedIn: isLoggedIn });
   const { loading, error, loggedIn } = state;
 
@@ -37,9 +39,7 @@ export default function LoginPage ({ source, isLoggedIn }: LoginProps) {
         <Heading>Nearly there!</Heading>
         <Subheading>Click the button below to login to your Toggl account</Subheading>
       </Row>
-      <a href={`${process.env.TOGGL_WEB_HOST}/toggl-button-login/`}>
-        <Button>Login</Button>
-      </a>
+      <LoginButton isPopup={isPopup} />
     </Content>
   );
 
@@ -93,6 +93,7 @@ export default function LoginPage ({ source, isLoggedIn }: LoginProps) {
 
   return (
     <React.Fragment>
+      <Global styles={page} />
       <Header style={{ display: 'flex' }}>
         <LogoWrapper>
           <Logo />
@@ -131,10 +132,36 @@ function HeaderLinks ({ loggedIn }: Pick<LoginState, 'loggedIn'>) {
   );
 }
 
+function LoginButton ({ isPopup }: Pick<LoginProps, 'isPopup'>) {
+  const url = `${process.env.TOGGL_WEB_HOST}/toggl-button-login/`;
+  return (
+    isPopup
+    ? <a href='#' onClick={openPage(url)}><Button>Login</Button></a>
+    : <a href={url}><Button>Login</Button></a>
+  );
+}
+
+const openPage = (url: string) => () => browser.tabs.create({ url });
+
 const closePage = async () => {
   const tab = await browser.tabs.getCurrent();
   browser.tabs.remove(tab.id);
 };
+
+const page = css`
+  html, body, #app {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    background: #ca9eda;
+    display: flex;
+    flex-direction: column;
+  }
+  a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
 
 const Header = styled.header`
   padding: 30px 24px;

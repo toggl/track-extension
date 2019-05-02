@@ -26,7 +26,7 @@ export const formatDuration = (start: string | number, stop?: string | number) =
   const seconds = differenceInSeconds(subMinutes(subHours(now, hours), minutes), start);
   const timeValue = (value) => value > 9 ? value : (value > 0 ? '0' + value : '00');
 
-  return `${timeValue(hours)}:${timeValue(minutes)}:${timeValue(seconds)}`;
+  return `${hours}:${timeValue(minutes)}:${timeValue(seconds)}`;
 }
 
 type TimerProps = {

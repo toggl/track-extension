@@ -366,7 +366,6 @@ window.PopUp = {
     }
 
     PopUp.sendMessage(request);
-    PopUp.renderTimer();
     PopUp.switchView(PopUp.$menuView);
   },
 

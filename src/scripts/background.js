@@ -2195,7 +2195,11 @@ if (!FF) {
 // Check whether new version is installed
 browser.runtime.onInstalled.addListener(function (details) {
   if (details.reason === 'install') {
-    if (!FF) TogglButton.checkPermissions(0);
+    if (!TogglButton.$user) {
+      browser.tabs.create({ url: 'html/login.html?source=install' });
+    } else if (!FF) {
+      TogglButton.checkPermissions(0);
+    }
   } else if (details.reason === 'update') {
     console.info(`Updated from ${details.previousVersion} to ${process.env.VERSION}.`);
     const [ prevMajor, prevMinor ] = details.previousVersion.split('.').map(Number);

@@ -365,7 +365,7 @@ ProjectAutoComplete.prototype.selectProject = function (
   removeTask
 ) {
   if (elem.classList.contains('item-name') || elem.classList.contains('tb-project-bullet')) {
-    elem = elem.closest('li');
+    elem = elem.closest('li') || elem.closest('p'); // project row / no-project row
   }
   if (!elem.classList.contains(this.type + '-row')) {
     if (elem.classList.contains('task-count')) {
@@ -452,16 +452,11 @@ ProjectAutoComplete.prototype.getSelectedProjectByPid = function (pid) {
 
 ProjectAutoComplete.prototype.setProjectBullet = function (pid, tid, el) {
   let project;
-
   const elem = el || this.placeholderItem.querySelector('.tb-project-bullet');
-
   let result;
-
   let task;
 
-  console.log(pid, tid, el, elem);
-
-  if (!!pid || pid === '0') {
+  if (pid && pid !== '0') {
     project = this.el.querySelector("li[data-pid='" + pid + "']");
     if (project) {
       elem.className = project.querySelector('.tb-project-bullet').className;

@@ -39,7 +39,10 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
         <Heading>Nearly there!</Heading>
         <Subheading>Click the button below to login to your Toggl account</Subheading>
       </Row>
-      <LoginButton isPopup={isPopup} />
+      <Row>
+        <LoginButton isPopup={isPopup} />
+        <SignupButton isPopup={isPopup} />
+      </Row>
     </Content>
   );
 
@@ -114,19 +117,19 @@ function HeaderLinks ({ loggedIn }: Pick<LoginState, 'loggedIn'>) {
   return (
     <Links>
       <li>
-        <a href="settings.html?tab=integrations">
+        <Link href="settings.html?tab=integrations">
           Integrations
-        </a>
+        </Link>
       </li>
       <li>
-        <a href="settings.html?tab=account">
+        <Link href="settings.html?tab=account">
           Account
-        </a>
+        </Link>
       </li>
       <li>
-        <a href="settings.html">
+        <Link href="settings.html">
           Settings
-        </a>
+        </Link>
       </li>
     </Links>
   );
@@ -138,6 +141,16 @@ function LoginButton ({ isPopup }: Pick<LoginProps, 'isPopup'>) {
     isPopup
     ? <a href='#' onClick={openPage(url)}><Button>Login</Button></a>
     : <a href={url}><Button>Login</Button></a>
+  );
+}
+
+function SignupButton ({ isPopup }: Pick<LoginProps, 'isPopup'>) {
+  const url = `${process.env.TOGGL_WEB_HOST}/signup/?utm_source=toggl-button&utm_medium=referral`;
+  const style = { marginTop: 20 };
+  return (
+    isPopup
+    ? <Link style={style} href='#' onClick={openPage(url)}>Create account</Link>
+    : <Link style={style} href={url}>Create account</Link>
   );
 }
 
@@ -156,11 +169,6 @@ const page = css`
     display: flex;
     flex-direction: column;
   }
-  a:-webkit-any-link {
-    color: -webkit-link;
-    cursor: pointer;
-    text-decoration: underline;
-  }
 `;
 
 const Header = styled.header`
@@ -176,13 +184,17 @@ const Links = styled.ul`
   & li {
     margin-left: 25px;
   }
+`;
 
-  & li a {
-    font-size: 13px;
-    font-weight: 500;
-    color: #282a2d;
-    line-height: 36px;
-    text-decoration: none;
+const Link = styled.a`
+  font-size: 13px;
+  font-weight: 500;
+  color: #282a2d;
+  line-height: 36px;
+  text-decoration: none;
+
+  :hover, :focus, :active {
+    text-decoration: underline;
   }
 `;
 
@@ -214,6 +226,8 @@ const Content = styled.div`
 `;
 
 const Row = styled.div`
+  display: flex;
+  flex-direction: column;
   text-align: center;
   & h1 {
     margin-bottom: 21px;

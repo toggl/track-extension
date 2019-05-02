@@ -7,7 +7,7 @@ const offlineUser = localStorage.getItem('offline_users');
 if (offlineUser) {
   userData = JSON.parse(localStorage.getItem('offline_users-' + offlineUser));
   if (userData && userData.offlineData) {
-    browser.extension.sendMessage({
+    browser.runtime.sendMessage({
       type: 'userToken',
       apiToken: userData.offlineData.api_token
     });
@@ -24,14 +24,14 @@ if (offlineUser) {
 
 document.addEventListener('webkitvisibilitychange', function () {
   if (!document.webkitHidden) {
-    browser.extension.sendMessage({ type: 'sync' });
+    browser.runtime.sendMessage({ type: 'sync' });
   }
 });
 
-browser.extension.sendMessage({ type: 'sync' });
+browser.runtime.sendMessage({ type: 'sync' });
 
 function completeLogin () {
-  location.href = browser.extension.getURL('html/login.html?source=web-login');
+  location.href = browser.runtime.getURL('html/login.html?source=web-login');
 }
 
 function handleIncomingMessage (event) {

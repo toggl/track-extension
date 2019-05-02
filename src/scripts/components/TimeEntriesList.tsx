@@ -17,7 +17,7 @@ import play from '../icons/play.svg';
 
 const NO_DESCRIPTION = '(no description)';
 
-const getTimeEntryDayGroups = (timeEntries: Array<Array<TimeEntry>>): {[date: string]: Array<Array<TimeEntry>>} => {
+const getTimeEntryDayGroups = (timeEntries: Array<Array<Toggl.TimeEntry>>): {[date: string]: Array<Array<Toggl.TimeEntry>>} => {
   return [...timeEntries]
     .sort((a, b) => {
       // Most recent entries first.
@@ -26,7 +26,7 @@ const getTimeEntryDayGroups = (timeEntries: Array<Array<TimeEntry>>): {[date: st
       return 0;
     })
     .filter((timeEntries) => timeEntries.some((te) => te.duration >= 0))
-    .reduce((groups: { [date: string]: Array<Array<TimeEntry>> }, entries) => {
+    .reduce((groups: { [date: string]: Array<Array<Toggl.TimeEntry>> }, entries) => {
       const date = format(entries[0].start, 'YYYY-MM-DD');
       groups[date] = groups[date] || [];
       groups[date].push(entries);
@@ -36,8 +36,8 @@ const getTimeEntryDayGroups = (timeEntries: Array<Array<TimeEntry>>): {[date: st
 };
 
 interface TimeEntriesListProps {
-  timeEntries: TimeEntry[][];
-  projects: IdMap<Project>;
+  timeEntries: Toggl.TimeEntry[][];
+  projects: IdMap<Toggl.Project>;
 };
 export default function TimeEntriesList (props: TimeEntriesListProps) {
   const { timeEntries = [], projects = {} } = props;
@@ -52,7 +52,7 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
         return [
           showHeading && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
           ...groupEntries.map((timeEntries, i) => {
-            const project = projects[timeEntries[0].pid] || null;
+            const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;
             return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
           })
         ]
@@ -69,8 +69,8 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
 }
 
 type TimeEntriesListItemProps = {
-  timeEntries: Array<TimeEntry>;
-  project: Project;
+  timeEntries: Array<Toggl.TimeEntry>;
+  project: Toggl.Project | null;
 };
 function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps) {
   const timeEntry = timeEntries[0];
@@ -154,7 +154,7 @@ export const TimeEntryDescription = styled.div`
   cursor: ${(props: { running?: boolean }) => props.running ? 'pointer' : 'text'};
 `;
 
-export function TimeEntryProject ({ project }: { project: Project }) {
+export function TimeEntryProject ({ project }: { project: Toggl.Project | null }) {
   return (
     <div style={{ flex: 1 }}>
       {project &&

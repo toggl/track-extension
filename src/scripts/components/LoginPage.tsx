@@ -6,7 +6,8 @@ import Logo from '../icons/Logo';
 import Spinner from './Spinner';
 
 export interface LoginProps {
-  source: 'web-login' | 'install'
+  isLoggedIn: boolean;
+  source: 'web-login' | 'install';
 }
 
 interface LoginState {
@@ -26,8 +27,8 @@ async function login (setState: React.Dispatch<React.SetStateAction<LoginState>>
   setState({ loading: false, error, loggedIn });
 }
 
-export default function LoginPage ({ source }: LoginProps) {
-  const [ state, setState ] = React.useState({ loading: false, error: null, loggedIn: false });
+export default function LoginPage ({ source, isLoggedIn }: LoginProps) {
+  const [ state, setState ] = React.useState({ loading: false, error: null, loggedIn: isLoggedIn });
   const { loading, error, loggedIn } = state;
 
   let content = (
@@ -76,28 +77,27 @@ export default function LoginPage ({ source }: LoginProps) {
         </Content>
       );
     }
+  }
 
-    if (loggedIn) {
-      content = (
-        <Content>
-          <Row>
-            <Heading>You're all set!</Heading>
-            <Subheading>Click the toggl icon in your toolbar to start tracking time</Subheading>
-          </Row>
-          <a href="settings.html?tab=account">
-            <Button>Open Settings</Button>
-          </a>
-        </Content>
-      );
-    }
+  if (loggedIn) {
+    content = (
+      <Content>
+        <Row>
+          <Heading>You're all set!</Heading>
+          <Subheading>Click the toggl icon in your toolbar to start tracking time</Subheading>
+        </Row>
+        <Button onClick={closePage}>Close page</Button>
+      </Content>
+    );
   }
 
   return (
     <React.Fragment>
-      <Header>
+      <Header style={{ display: 'flex' }}>
         <LogoWrapper>
           <Logo />
         </LogoWrapper>
+        <HeaderLinks loggedIn={loggedIn} />
       </Header>
       <ContentWrapper>
         {content}
@@ -106,8 +106,57 @@ export default function LoginPage ({ source }: LoginProps) {
   )
 }
 
+function HeaderLinks ({ loggedIn }: Pick<LoginState, 'loggedIn'>) {
+  if (!loggedIn) {
+    return null;
+  }
+  return (
+    <Links>
+      <li>
+        <a href="settings.html?tab=integrations">
+          Integrations
+        </a>
+      </li>
+      <li>
+        <a href="settings.html?tab=account">
+          Account
+        </a>
+      </li>
+      <li>
+        <a href="settings.html">
+          Settings
+        </a>
+      </li>
+    </Links>
+  );
+}
+
+const closePage = async () => {
+  const tab = await browser.tabs.getCurrent();
+  browser.tabs.remove(tab.id);
+};
+
 const Header = styled.header`
   padding: 30px 24px;
+  justify-content: space-between;
+ `;
+
+const Links = styled.ul`
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+
+  & li {
+    margin-left: 25px;
+  }
+
+  & li a {
+    font-size: 13px;
+    font-weight: 500;
+    color: #282a2d;
+    line-height: 36px;
+    text-decoration: none;
+  }
 `;
 
 const ContentWrapper = styled.main`

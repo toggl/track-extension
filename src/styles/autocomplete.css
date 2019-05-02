@@ -153,17 +153,18 @@
 #tag-autocomplete .tag-list li {
   width: 100%;
   max-width: 100%;
-  border: solid 1px #ececec;
+  height: 25px;
+  line-height: 25px;
   border-radius: 4px;
-  margin-right: 5px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #a3a3a3;
+
   padding: 0 5px;
-  margin-top: 5px;
+  margin: 5px 0;
+  margin-right: 5px;
+
+  font-size: 14px;
+  color: #a3a3a3;
   text-overflow: ellipsis;
   overflow: hidden;
-  max-height: 23px;
   word-wrap: break-word;
 }
 

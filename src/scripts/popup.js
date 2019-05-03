@@ -40,7 +40,7 @@ window.PopUp = {
   $header: document.querySelector('.header'),
   $menuView: document.querySelector('#menu'),
   $editView: document.querySelector('#entry-form'),
-  $loginView: document.querySelector('#login-form'),
+  $loginView: document.querySelector('#login-view'),
   $revokedWorkspaceView: document.querySelector('#revoked-workspace'),
   $entries: document.querySelector('.entries-list'),
   defaultErrorMessage: 'Error connecting to server',
@@ -79,7 +79,6 @@ window.PopUp = {
         PopUp.renderSummary();
       } else {
         localStorage.setItem('latestStoppedEntry', '');
-        renderLogin(PopUp.$loginView, true);
         PopUp.switchView(PopUp.$loginView);
       }
     } catch (e) {
@@ -217,6 +216,9 @@ window.PopUp = {
   },
 
   switchView: function (view) {
+    if (view === PopUp.$loginView) {
+      renderLogin(PopUp.$loginView, true);
+    }
     PopUp.$header.setAttribute('data-view', view.id);
   },
 
@@ -504,20 +506,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         browser.runtime.sendMessage(request);
-      });
-
-    document
-      .querySelector('#signin')
-      .addEventListener('submit', function (event) {
-        event.preventDefault();
-        PopUp.$errorLabel.classList.remove('show');
-        const request = {
-          type: 'login',
-          respond: true,
-          username: document.querySelector('#login_email').value,
-          password: document.querySelector('#login_password').value
-        };
-        PopUp.sendMessage(request);
       });
 
     document

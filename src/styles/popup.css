@@ -17,14 +17,11 @@ body {
   padding: 20px 20px 12px;
   display: none;
 }
-#login-form {
+#login-view {
   margin-bottom: 48px;
-  padding-top: 0px;
+  padding: 0px;
 }
 
-#login-form .form-submit-row label.left {
-  padding: 10px 0;
-}
 .forgot-link {
   height: 33px;
   line-height: 33px;
@@ -114,7 +111,7 @@ p.form-row.first {
   background-image: -o-linear-gradient(top, #f8f8f8, #e4e4e4);
   background-image: linear-gradient(to bottom, #f8f8f8, #e4e4e4);
 }
-.login-btn {
+.primary-btn {
   font-weight: 400;
   font-size: 14px;
   width: 80px;
@@ -132,7 +129,7 @@ p.form-row.first {
   text-align: center;
   padding: 0;
 }
-.login-btn:hover {
+.primary-btn:hover {
   background-color: #77c45d;
 }
 #error,
@@ -203,37 +200,19 @@ p.form-row.first {
   height: 24px;
 }
 
-
-.header .signup {
-  display: none;
-  font-size: 14px;
-}
-
-.header .signup a {
-  display: block;
-  float: right;
-  color: #fff;
-}
-
 .views > div,
 .views > ul {
   display: none;
 }
 
 .header[data-view='menu'] ~ .views #menu,
-.header[data-view='login-form'] ~ .views #login-form,
+.header[data-view='login-view'] ~ .views #login-view,
 .header[data-view='revoked-workspace'] ~ .views #revoked-workspace,
 .header[data-view='entry-form'] ~ .views #entry-form {
   display: block !important;
 }
 
-.header[data-view='login-form'] li:not(.icon) {
-  display: none;
-}
-.header[data-view='login-form'] li.signup {
-  display: block;
-}
-.header[data-view='login-form'] {
+.header[data-view='login-view'] {
   display: none;
 }
 
@@ -274,13 +253,6 @@ hr {
   background: #f30c16;
   padding: 10px 5px;
   color: white;
-}
-.user-email {
-  font-style: italic;
-  text-align: center;
-  color: #999;
-  cursor: pointer;
-  font-size: 12px;
 }
 
 .edit-button,
@@ -775,6 +747,6 @@ hr {
   flex: 1;
 }
 
-#revoked-workspace .login-btn {
+#revoked-workspace .primary-btn {
   width: 100%;
 }

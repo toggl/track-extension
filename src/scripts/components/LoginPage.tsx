@@ -68,15 +68,21 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
       content = (
         <Content>
           <Row>
-            <Heading>Uh oh!!</Heading>
+            <Heading>Uh-oh.</Heading>
             <Subheading>Something went wrong...</Subheading>
           </Row>
           <Subheading>
             {error}
           </Subheading>
-          <a href="mailto:support@toggl.com">
-            <Button>Contact support</Button>
-          </a>
+          <Row>
+            <a href="login.html?source=install" style={{ marginBottom: 21 }}>
+              <Button>Try again</Button>
+            </a>
+            <Subheading>or</Subheading>
+            <a href="mailto:support@toggl.com" style={{ color: 'white' }}>
+              <Subheading style={{ margin: 0 }}>Contact support</Subheading>
+            </a>
+          </Row>
         </Content>
       );
     }
@@ -87,9 +93,12 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
       <Content>
         <Row>
           <Heading>You're all set!</Heading>
-          <Subheading>Click the toggl icon in your toolbar to start tracking time</Subheading>
+          <Subheading>Click the Toggl icon in your toolbar to start tracking time</Subheading>
         </Row>
         <Button onClick={closePage}>Close page</Button>
+        <Link href="settings.html?tab=integrations">
+          Want to enable Toggl Button in other tools? Visit the integration settings.
+        </Link>
       </Content>
     );
   }
@@ -116,6 +125,11 @@ function HeaderLinks ({ loggedIn }: Pick<LoginState, 'loggedIn'>) {
   }
   return (
     <Links>
+      <li>
+        <Link href="https://support.toggl.com/browser-extensions">
+          Support
+        </Link>
+      </li>
       <li>
         <Link href="settings.html?tab=integrations">
           Integrations

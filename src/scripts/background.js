@@ -2086,7 +2086,9 @@ window.TogglButton = {
           show = show != null ? show : 2;
           db.set('settings-active-tab', 2);
           db.set('show-permissions-info', show);
-          browser.runtime.openOptionsPage();
+          if (TogglButton.$user) {
+            browser.runtime.openOptionsPage();
+          }
         }
       });
     }

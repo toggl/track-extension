@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/toggl/toggl-button/compare/1.31.1...1.32.0) (2019-05-06)
+
+
+### Features
+
+* Set uninstall URL to feedback page ([37abe36](https://github.com/toggl/toggl-button/commit/37abe36)), closes [#1293](https://github.com/toggl/toggl-button/issues/1293)
+
 ## [1.31.1](https://github.com/toggl/toggl-button/compare/1.31.0...1.31.1) (2019-04-25)
 
 

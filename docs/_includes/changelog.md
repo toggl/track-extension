@@ -1,3 +1,12 @@
+# [1.34.0](https://github.com/toggl/toggl-button/compare/1.33.0...1.34.0) (2019-05-07)
+
+
+### Features
+
+* **popup:** Allow human duraiton input in edit form ([1992f84](https://github.com/toggl/toggl-button/commit/1992f84))
+* **popup:** New timer form layout in toolbar popup and content popup ([b19cc46](https://github.com/toggl/toggl-button/commit/b19cc46))
+* **popup:** Scroll to top after continuing an entry ([9088c11](https://github.com/toggl/toggl-button/commit/9088c11))
+
 # [1.33.0](https://github.com/toggl/toggl-button/compare/1.32.0...1.33.0) (2019-05-07)
 
 

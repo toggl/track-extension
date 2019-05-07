@@ -1,3 +1,18 @@
+# [1.33.0](https://github.com/toggl/toggl-button/compare/1.32.0...1.33.0) (2019-05-07)
+
+
+### Bug Fixes
+
+* **toggl:** Use browser.runtime instead browser.extension ([1f33501](https://github.com/toggl/toggl-button/commit/1f33501))
+
+
+### Features
+
+* **login:** Add signup option ([6047475](https://github.com/toggl/toggl-button/commit/6047475))
+* **login:** Render new login-view to popup ([a232b39](https://github.com/toggl/toggl-button/commit/a232b39))
+* **login:** Show logged in user's info in settings ([30f2bfb](https://github.com/toggl/toggl-button/commit/30f2bfb))
+* **login:** Show login page on install/update if logged out ([33fcd0d](https://github.com/toggl/toggl-button/commit/33fcd0d))
+
 # [1.32.0](https://github.com/toggl/toggl-button/compare/1.31.1...1.32.0) (2019-05-06)
 
 

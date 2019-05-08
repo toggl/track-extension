@@ -38,5 +38,10 @@ export function getUrlParam (location: string, key: string) {
 }
 
 export function isTogglURL (url: string) {
-  return togglUrlRegex.test(new URL(url).hostname);
+  try {
+    return togglUrlRegex.test(new URL(url).hostname);
+  } catch (err) {
+    bugsnagClient.notify(err);
+    return false;
+  }
 }

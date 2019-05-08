@@ -1,3 +1,10 @@
+## [1.34.1](https://github.com/toggl/toggl-button/compare/1.34.0...1.34.1) (2019-05-08)
+
+
+### Bug Fixes
+
+* **core:** Toggl URL check ([f6faa0a](https://github.com/toggl/toggl-button/commit/f6faa0a)), closes [#1393](https://github.com/toggl/toggl-button/issues/1393)
+
 # [1.34.0](https://github.com/toggl/toggl-button/compare/1.33.0...1.34.0) (2019-05-07)
 
 

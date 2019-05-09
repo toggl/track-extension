@@ -1,3 +1,15 @@
+# [1.35.0](https://github.com/toggl/toggl-button/compare/1.34.1...1.35.0) (2019-05-09)
+
+
+### Bug Fixes
+
+* **nozbe:** Prevent style-leak ([d38bfa7](https://github.com/toggl/toggl-button/commit/d38bfa7)), closes [#1397](https://github.com/toggl/toggl-button/issues/1397)
+
+
+### Features
+
+* **nozbe:** Add button to task list ([a361965](https://github.com/toggl/toggl-button/commit/a361965))
+
 ## [1.34.1](https://github.com/toggl/toggl-button/compare/1.34.0...1.34.1) (2019-05-08)
 
 

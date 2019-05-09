@@ -108,7 +108,7 @@ window.TogglButton = {
     '</div>' +
     '</div>' +
     '<div id="toggl-button-update" class="Button__button" tabindex="105">Done</div>' +
-    '<input type="submit" class="hidden">' +
+    '<input type="submit" class="toggl-button-hidden">' +
     '</from>' +
     '</div>',
 

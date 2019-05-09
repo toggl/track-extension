@@ -74,7 +74,7 @@
   padding-right: 28px !important;
 }
 
-.hidden, *.hidden {
+.toggl-button-hidden, *.toggl-button-hidden {
   display: none !important;
 }
 

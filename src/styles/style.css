@@ -1179,6 +1179,16 @@ a.toggl-button.workfront.min {
   background-size: 24px 24px;
   color: #151515 !important;
 }
+.toggl-button.nozbe-list {
+  visibility: hidden;
+  pointer-events: none;
+}
+.task:hover .toggl-button.nozbe-list,
+.task:active .toggl-button.nozbe-list,
+.task:focus .toggl-button.nozbe-list {
+  visibility: visible;
+  pointer-events: all;
+}
 
 /********* RallyDev *********/
 .timer__container.togglContainer {

@@ -266,6 +266,12 @@
   font-size: 14px;
 }
 
+.Button__button:focus, .Button__button:hover {
+  background: #47be00;
+  color: #fff;
+  outline: none;
+}
+
 #toggl-button-edit-form #toggl-button-update {
   width: 100%;
   height: 36px;

@@ -280,7 +280,7 @@ window.togglbutton = {
   },
 
   toggleBillable: function (visible) {
-    const tabIndex = visible ? '103' : '-1';
+    const tabIndex = visible ? '0' : '-1';
     togglbutton.$billable.setAttribute('tabindex', tabIndex);
     togglbutton.$billable.classList.toggle('no-billable', !visible);
   },
@@ -447,6 +447,19 @@ window.togglbutton = {
 
       tagAutocomplete.setWorkspaceId(wid);
     });
+
+    document
+      .querySelector('#toggl-button-edit-form #toggl-button-project-placeholder')
+      .closest('.Dialog__field')
+      .addEventListener('focus', (e) => {
+        projectAutocomplete.openDropdown();
+      });
+    document
+      .querySelector('#toggl-button-edit-form #toggl-button-tag-placeholder')
+      .closest('.Dialog__field')
+      .addEventListener('focus', (e) => {
+        tagAutocomplete.openDropdown();
+      });
   },
 
   createTimerLink: function (params) {

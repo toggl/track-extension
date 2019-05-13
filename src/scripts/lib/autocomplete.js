@@ -100,7 +100,9 @@ AutoComplete.prototype.toggleDropdown = function () {
 };
 
 AutoComplete.prototype.openDropdown = function () {
-  this.filter.closest('.Dialog__field').classList.toggle('open', true);
+  this.field.classList.toggle('open', true);
+  // Avoid trapping focus inside the dropdown field while tabbing around
+  this.field.setAttribute('tabindex', '-1');
   this.filter.focus();
   this.listItems = this.el.querySelectorAll(this.item);
   this.visibleItems = this.el.querySelectorAll('.' + this.type + '-row');
@@ -114,6 +116,10 @@ AutoComplete.prototype.closeDropdown = function (t) {
   that.field.classList.toggle('open', false);
   if (that.addLink) that.addLink.parentNode.classList.remove('add-allowed');
   that.clearFilters();
+
+  // Delay enabling of tabbing again to avoid trapping focus inside this dropdown
+  // completely when using SHIFT+TAB.
+  setTimeout(() => that.field.setAttribute('tabindex', '0'));
 };
 
 AutoComplete.prototype.updateHeight = function () {

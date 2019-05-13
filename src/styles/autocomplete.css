@@ -66,6 +66,10 @@
 
 #project-autocomplete .project-row > *:first-child {
   flex: 2;
+  /* Truncate project names, avoid pushing out the task list */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #project-autocomplete .project-row[data-pid='0'] {

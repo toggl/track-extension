@@ -319,7 +319,7 @@ window.PopUp = {
   },
 
   toggleBillable: function (visible) {
-    const tabIndex = visible ? '103' : '-1';
+    const tabIndex = visible ? '0' : '-1';
     PopUp.$billable.setAttribute('tabindex', tabIndex);
     PopUp.$billable.classList.toggle('no-billable', !visible);
   },
@@ -402,6 +402,19 @@ window.PopUp = {
       .addEventListener('submit', function (e) {
         PopUp.submitForm(this);
         e.preventDefault();
+      });
+
+    document
+      .querySelector('#toggl-button-project-placeholder')
+      .closest('.Dialog__field')
+      .addEventListener('focus', (e) => {
+        PopUp.$projectAutocomplete.openDropdown();
+      });
+    document
+      .querySelector('#toggl-button-tag-placeholder')
+      .closest('.Dialog__field')
+      .addEventListener('focus', (e) => {
+        PopUp.$tagAutocomplete.openDropdown();
       });
 
     PopUp.$projectAutocomplete.onChange(function (selected) {

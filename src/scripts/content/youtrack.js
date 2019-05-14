@@ -47,7 +47,7 @@ togglbutton.render(
 togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  const container = $('.yt-agile-card__header', elem);
+  const container = $('.yt-agile-card__summary', elem);
   const projectName = $('.yt-issue-id').textContent.split('-');
 
   const description = function () {

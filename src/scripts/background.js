@@ -175,14 +175,15 @@ window.TogglButton = {
               localStorage.setItem('projects', JSON.stringify(projectMap));
               localStorage.setItem('clients', JSON.stringify(clientMap));
               TogglButton.$user = resp.data;
-              TogglButton.$user.time_entries = TogglButton.$user.time_entries.map((te) => {
-                // Ensure empty values from v8 become null.
-                return {
-                  ...te,
-                  pid: te.pid || null,
-                  tid: te.tid || null
-                };
-              });
+              TogglButton.$user.time_entries = (TogglButton.$user.time_entries || [])
+                .map((te) => {
+                  // Ensure empty values from v8 become null.
+                  return {
+                    ...te,
+                    pid: te.pid || null,
+                    tid: te.tid || null
+                  };
+                });
               TogglButton.$user.projectMap = projectMap;
               TogglButton.$user.clientMap = clientMap;
               TogglButton.$user.clientNameMap = clientNameMap;

@@ -1,3 +1,10 @@
+## [1.35.1](https://github.com/toggl/toggl-button/compare/1.35.0...1.35.1) (2019-05-14)
+
+
+### Bug Fixes
+
+* **popup:** Fix tab shortcuts in the edit form ([0c6594d](https://github.com/toggl/toggl-button/commit/0c6594d)), closes [#1402](https://github.com/toggl/toggl-button/issues/1402)
+
 # [1.35.0](https://github.com/toggl/toggl-button/compare/1.34.1...1.35.0) (2019-05-09)
 
 

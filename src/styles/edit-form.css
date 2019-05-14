@@ -223,6 +223,14 @@
   float: right;
   color: #abaaaa;
   cursor: pointer;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#toggl-button-edit-form #toggl-button-project-placeholder span div {
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #toggl-button-edit-form #toggl-button-project,

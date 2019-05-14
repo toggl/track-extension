@@ -13,7 +13,7 @@
       <li class="tab-link" data-tab="account">My Account</li>
     </ul>
   </header>
-  <body>
+  <body data-show-review-banner="false">
     <div class="container">
       <div class="guide-container">
         <div class="guide-back">
@@ -314,12 +314,23 @@
       </div>
     </div>
     <div class="footer">
-      <div>
-        Version <span id="version"></span>
+      <div id="footer-content">
+        <div>
+          <div>Version <span id="version"></span></div>
+          <div>
+            Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a>
+          </div>
+        </div>
       </div>
-      <div>
-        Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a>
-      </div>
+    </div>
+    <div id="review-prompt">
+      <span>Enjoying Toggl Button?</span>
+      <a target="_blank" rel="noopener noreferrer">
+        <button>Leave us a review</button>
+      </a>
+      <span id="close-review-prompt">
+        Close and don't ask again
+      </span>
     </div>
     <script src="../scripts/settings.js"></script>
   </body>

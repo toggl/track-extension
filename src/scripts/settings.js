@@ -1,8 +1,8 @@
+import browser from 'webextension-polyfill';
+
 import TogglOrigins from './origins';
 import bugsnagClient from './lib/bugsnag';
-import { getUrlParam } from './lib/utils';
-
-const browser = require('webextension-polyfill');
+import { getStoreLink, getUrlParam, isActiveUser } from './lib/utils';
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const ga = browser.extension.getBackgroundPage().ga;
@@ -25,6 +25,9 @@ if (FF) {
 }
 
 document.querySelector('#version').textContent = process.env.VERSION;
+document.querySelector('#review-prompt a').href = getStoreLink();
+document.querySelector('#review-prompt a').addEventListener('click', dismissReviewPrompt);
+document.querySelector('#close-review-prompt').addEventListener('click', dismissReviewPrompt);
 
 const Settings = {
   $startAutomatically: null,
@@ -159,12 +162,12 @@ const Settings = {
     }
   },
   fillDefaultProject: async function () {
-    const projects = db.getLocalCollection('projects');
+    const projects = db.getLocal('projects') || {};
     const hasProjects = Object.keys(projects).length > 0;
 
     if (hasProjects && !!TogglButton.$user) {
       const defaultProject = await db.getDefaultProject();
-      const clients = db.getLocalCollection('clients');
+      const clients = db.getLocal('clients') || {};
 
       const html = document.createElement('select');
       html.id = 'default-project';
@@ -921,6 +924,11 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     });
 
     Settings.loadSitesIntoList();
+
+    const shouldShowReviewPrompt = await isActiveUser();
+    if (shouldShowReviewPrompt) {
+      showReviewPrompt();
+    }
   } catch (err) {
     browser.runtime.sendMessage({
       type: 'error',
@@ -941,4 +949,17 @@ function changeActiveTab (name) {
   if (tabEls.length === 0) {
     console.error(new Error(`changeActiveTab: Invalid tab name: ${name}`));
   }
+}
+
+async function showReviewPrompt () {
+  const dismissedReviewPrompt = await db.get('dismissedReviewPrompt');
+  if (dismissedReviewPrompt) {
+    return;
+  }
+  document.body.dataset.showReviewBanner = true;
+}
+
+function dismissReviewPrompt () {
+  document.body.dataset.showReviewBanner = false;
+  db.set('dismissedReviewPrompt', true);
 }

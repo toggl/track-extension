@@ -45,3 +45,14 @@ export function isTogglURL (url: string) {
     return false;
   }
 }
+
+export function getStoreLink (isFirefox = false) {
+  if (isFirefox) {
+    return 'https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/';
+  }
+  return 'https://chrome.google.com/webstore/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn';
+}
+
+export async function isActiveUser () {
+  return true;
+}

@@ -1,3 +1,10 @@
+## [1.35.3](https://github.com/toggl/toggl-button/compare/1.35.2...1.35.3) (2019-05-14)
+
+
+### Bug Fixes
+
+* Fix possible type error when fetching user time entries ([bcb8ca8](https://github.com/toggl/toggl-button/commit/bcb8ca8))
+
 ## [1.35.2](https://github.com/toggl/toggl-button/compare/1.35.1...1.35.2) (2019-05-14)
 
 

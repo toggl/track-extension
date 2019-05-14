@@ -34,7 +34,8 @@ const DEFAULT_SETTINGS = {
 };
 
 const LOCAL_ONLY = {
-  [ORIGINS_KEY]: true
+  [ORIGINS_KEY]: true,
+  dismissedReviewPrompt: true
 };
 
 function isLocalOnly (key) {
@@ -180,7 +181,7 @@ export default class Db {
       : key;
 
     if (isLocalOnly(key)) {
-      return this.getLocalCollection(key);
+      return this.getLocal(key);
     }
 
     return browser.storage.sync.get(options)
@@ -254,15 +255,12 @@ export default class Db {
       });
   }
 
-  getLocalCollection (key) {
-    let collection = localStorage.getItem(key);
+  getLocal (key) {
+    const collection = localStorage.getItem(key);
     if (!collection) {
-      collection = {};
-    } else {
-      collection = JSON.parse(collection);
+      return null;
     }
-
-    return collection;
+    return JSON.parse(collection);
   }
 
   load (setting, defaultValue) {

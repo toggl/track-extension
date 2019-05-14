@@ -3,6 +3,8 @@ html {
   --text-color: #333333;
   --light-text: #7b7b7b;
   --danger: #E20505;
+  --footer-height: 42px;
+  --banner-height: 60px;
 }
 
 html.dark {
@@ -16,7 +18,8 @@ body {
   padding: 0;
   background: var(--main-bg-color);
   color: var(--text-color);
-  font-family: Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  -webkit-font-smoothing: antialiased;
 }
 
 input[type='number'],
@@ -52,7 +55,7 @@ body {
 .tabs {
   display: flex;
   overflow: hidden;
-  height: calc(100vh - 48px - 42px);
+  height: calc(100vh - 48px - var(--footer-height));
   width: 100%;
   transition: order 300ms ease-in-out;
   align-items: stretch;
@@ -447,13 +450,73 @@ header li:hover {
 }
 
 .footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: var(--footer-height);
+  width: 100%;
+  color: #8a8888;
+  font-size: 12px;
+}
+
+#footer-content {
+  height: var(--footer-height);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: white;
+}
+
+#footer-content > div {
+  height: 100%;
+  width: 360px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 42px;
-  padding: 0 15px;
   border-top: 1px solid #e5e5e5;
-  color: #8a8888;
-  font-size: 12px;
-  min-width: 360px;
+}
+
+#review-prompt {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  height: var(--banner-height);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: #88CF8F;
+  transform: translateY(var(--banner-height));
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px 4px rgba(0, 0, 0, 0.75);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  color: white;
+}
+
+#review-prompt button {
+  background: white;
+  color: black;
+  margin-left: 12px;
+  padding: 10px 36px;
+  border: 0;
+  border-radius: 24px;
+  line-height: 24px;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+  outline: 0;
+}
+
+#close-review-prompt {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+}
+
+body[data-show-review-banner="true"] #review-prompt {
+  transform: translateY(0);
 }

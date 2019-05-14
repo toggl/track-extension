@@ -1,3 +1,10 @@
+## [1.35.4](https://github.com/toggl/toggl-button/compare/1.35.3...1.35.4) (2019-05-14)
+
+
+### Bug Fixes
+
+* **wrike:** Fix errors breaking the Wrike integration ([13f683c](https://github.com/toggl/toggl-button/commit/13f683c)), closes [#1388](https://github.com/toggl/toggl-button/issues/1388)
+
 ## [1.35.3](https://github.com/toggl/toggl-button/compare/1.35.2...1.35.3) (2019-05-14)
 
 

@@ -1,3 +1,11 @@
+## [1.35.2](https://github.com/toggl/toggl-button/compare/1.35.1...1.35.2) (2019-05-14)
+
+
+### Bug Fixes
+
+* **popup:** Fix long project names breaking layout in edit form field ([c89c377](https://github.com/toggl/toggl-button/commit/c89c377))
+* **popup:** Fix long project names breaking task layout of projects dropdown ([f632a05](https://github.com/toggl/toggl-button/commit/f632a05)), closes [#1400](https://github.com/toggl/toggl-button/issues/1400)
+
 ## [1.35.1](https://github.com/toggl/toggl-button/compare/1.35.0...1.35.1) (2019-05-14)
 
 

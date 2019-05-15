@@ -160,6 +160,10 @@ export default {
     url: '*://*.feedly.com/*',
     name: 'Feedly'
   },
+  'fibery.io': {
+    url: '*://*.fibery.io/*',
+    name: 'Fibery'
+  },
   'focuster.com': {
     url: '*://*.focuster.com/*',
     name: 'Focuster'
@@ -364,8 +368,8 @@ export default {
     name: 'ProcessWire'
   },
   'produck.io': {
-    'url': '*://*.produck.io/*',
-    'name': 'Produck'
+    url: '*://*.produck.io/*',
+    name: 'Produck'
   },
   'producteev.com': {
     url: '*://*.producteev.com/*',

@@ -69,8 +69,6 @@ window.PopUp = {
               JSON.stringify(TogglButton.$latestStoppedEntry)
             );
           }
-        } else {
-          PopUp.showCurrentDuration(true);
         }
         if (!PopUp.$header.getAttribute('data-view')) {
           PopUp.switchView(PopUp.$menuView);
@@ -258,11 +256,12 @@ window.PopUp = {
     togglButtonDescription.scrollLeft = 0;
 
     PopUp.durationChanged = false;
-    PopUp.showCurrentDuration(true);
+    PopUp.updateDurationInput(true);
   },
 
-  showCurrentDuration: function (startTimer) {
+  updateDurationInput: function (startTimer) {
     if (TogglButton.$curEntry === null) {
+      PopUp.stopDurationInput();
       return;
     }
 
@@ -275,12 +274,16 @@ window.PopUp = {
     }
 
     if (startTimer) {
-      if (!PopUp.$timer) {
-        PopUp.$timer = setInterval(function () {
-          PopUp.showCurrentDuration();
-        }, 1000);
-      }
+      PopUp.stopDurationInput();
+      PopUp.$timer = setInterval(function () {
+        if (process.env.DEBUG) console.log('🕒🐭 Tick tock, the mouse ran up the clock..');
+        PopUp.updateDurationInput();
+      }, 1000);
     }
+  },
+
+  stopDurationInput: function () {
+    clearInterval(PopUp.$timer);
   },
 
   updateBillable: function (pid, noOverwrite) {
@@ -330,6 +333,8 @@ window.PopUp = {
   },
 
   submitForm: function () {
+    PopUp.stopDurationInput();
+
     // Translate human duration input if submitted without blurring
     const $duration = document.querySelector('#toggl-button-duration');
     let duration = $duration.value;

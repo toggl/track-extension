@@ -22,12 +22,14 @@ export default {
   },
   'atlassian.com': {
     url: '*://*.atlassian.com/*',
-    name: 'Atlassian'
+    name: 'Atlassian / Jira',
+    file: 'atlassian.js'
   },
   'atlassian.net': {
     url: '*://*.atlassian.net/*',
-    name: 'Atlassian',
-    clone: 'true'
+    name: 'Atlassian / Jira',
+    clone: 'true',
+    file: 'atlassian.js'
   },
   'attask-ondemand.com': {
     url: '*://*.attask-ondemand.com/*',

@@ -31,42 +31,6 @@ togglbutton.render(
   }
 );
 
-// Jira 2018-X Sprint Modal
-// We select dialog content in order to wait for the SPA to render.
-// N.B. this can bring its own issues (see comment about infinite re-renders).
-// The h1 element gets replaced and no longer has .toggl class, so we have to be careful.
-togglbutton.render(
-  'div[role="dialog"] h1:not(.toggl)',
-  { observe: true },
-  function (needle) {
-    if (process.env.DEBUG) {
-      console.info('🏃 "Jira 2018-X Sprint Modal" rendering');
-    }
-
-    const root = needle.closest('div[role="dialog"]');
-    const id = $('div:last-child > a[spacing="none"][href^="/browse/"]:last-child', root);
-    const description = $('h1:first-child', root);
-    let project = $('[data-test-id="navigation-apps.project-switcher-v2"] button > div:nth-child(2) > div');
-    let link;
-
-    if (project === null) {
-      project = $('a[href^="/browse/"][target=_self]');
-    }
-
-    if (id !== null && description !== null) {
-      link = togglbutton.createTimerLink({
-        className: 'jira2018',
-        description: id.textContent + ' ' + description.textContent,
-        projectName: project && project.textContent
-      });
-
-      // Link is not placed in exactly the same element as a regular issue page,
-      // else we encounter infinite re-renders when the SPA updates the DOM.
-      id.parentNode.appendChild(link);
-    }
-  }
-);
-
 // Jira 2018-11 issue page and board page single issue modal. Uses functions for timer values due to SPA on issue-lists.
 togglbutton.render(
   // The main "issue link" at the top of the issue.

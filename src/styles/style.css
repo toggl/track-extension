@@ -83,6 +83,14 @@
   display: none !important;
 }
 
+/********* Fibery ***********/
+.toggl-button.fibery {
+  color: white;
+  right: 125px;
+  position: absolute;
+  top: 16px;
+}
+
 /********* PIVOTAL *********/
 .toggl-button.pivotal {
   margin-top: 10px;
@@ -205,7 +213,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 .toggl-button.jira2018-modal {
-  margin-top: .5em;
+  margin-top: 0.5em;
   margin-left: 0;
   cursor: pointer;
 }
@@ -413,7 +421,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   right: 15px;
 }
 
-*:hover > .toggl-button.anydo--2018, *:hover > .toggl-button.anydo--2018__taskItem {
+*:hover > .toggl-button.anydo--2018,
+*:hover > .toggl-button.anydo--2018__taskItem {
   visibility: visible;
 }
 
@@ -841,7 +850,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 .slds-split-view__list-item .salesforce-list {
   position: absolute;
-  right: .5rem;
+  right: 0.5rem;
   visibility: hidden;
 }
 .slds-split-view__list-item:hover .salesforce-list {

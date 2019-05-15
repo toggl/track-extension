@@ -5,6 +5,10 @@ togglbutton.render(
   '#ghx-detail-view [spacing] h1:not(.toggl)',
   { observe: true },
   function () {
+    if (process.env.DEBUG) {
+      console.info('🏃 "Jira 2017 sidebar" rendering');
+    }
+
     const rootElem = $('#ghx-detail-view');
     const container = createTag('div', 'jira-ghx-toggl-button');
     const titleElem = $('[spacing] h1', rootElem);
@@ -35,6 +39,10 @@ togglbutton.render(
   'div[role="dialog"] h1:not(.toggl)',
   { observe: true },
   function (needle) {
+    if (process.env.DEBUG) {
+      console.info('🏃 "Jira 2018-X Sprint Modal" rendering');
+    }
+
     const root = needle.closest('div[role="dialog"]');
     const id = $('div:last-child > a[spacing="none"][href^="/browse/"]:last-child', root);
     const description = $('h1:first-child', root);
@@ -59,25 +67,38 @@ togglbutton.render(
   }
 );
 
-// Jira 2018-11 issue page. Uses functions for timer values due to SPA on issue-lists.
+// Jira 2018-11 issue page and board page single issue modal. Uses functions for timer values due to SPA on issue-lists.
 togglbutton.render(
-  '#jira-frontend:not(.toggl)',
+  // The main "issue link" at the top of the issue.
+  // Extra target and role selectors are to avoid picking up wrong links on issue-list-pages.
+  'a[href^="/browse/"][target=_blank]:not([role=list-item]):not(.toggl)',
+
   { observe: true },
   function (elem) {
     let titleElement;
     let projectElement;
 
-    // The main "issue link" at the top of the issue.
-    // Extra target and role selectors are to avoid picking up wrong links on issue-list-pages.
-    const issueNumberElement = $('a[href^="/browse/"][target=_blank]:not([role=list-item])', elem);
+    const issueNumberElement = elem;
     const container = issueNumberElement.parentElement.parentElement.parentElement;
+
+    if (container.querySelector('.toggl-button')) {
+      // We're checking for existence of the button as re-rendering in Jira SPA is not reliable for our uses.
+      if (process.env.DEBUG) {
+        console.info('🚫 "Jira 2018-11 issue page and board page" quit rendering early');
+      }
+      return;
+    }
+
+    if (process.env.DEBUG) {
+      console.info('🏃 "Jira 2018-11 issue page and board page" rendering');
+    }
 
     function getDescription () {
       let description = '';
 
       // Title/summary of the issue - we use the hidden "edit" button that's there for a11y
       // in order to avoid picking up actual page title in the case of issue-list-pages.
-      titleElement = $('h1 ~ button[aria-label]', elem).previousSibling;
+      titleElement = $('#jira-frontend h1 ~ button[aria-label]');
 
       if (issueNumberElement) {
         description += issueNumberElement.textContent.trim();
@@ -122,6 +143,10 @@ togglbutton.render(
   '.issue-header-content:not(.toggl)',
   { observe: true },
   function (elem) {
+    if (process.env.DEBUG) {
+      console.info('🏃 "Jira 2017 issue page" rendering');
+    }
+
     const numElem = $('#key-val', elem);
     const titleElem = $('#summary-val', elem) || '';
     let projectElem = $('.bgdPDV');

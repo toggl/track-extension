@@ -156,10 +156,12 @@ export const TimeEntryDescription = styled.div`
 
 export function TimeEntryProject ({ project }: { project: Toggl.Project | null }) {
   return (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1, overflow: 'hidden', paddingRight: 10 }}>
       {project &&
         <ProjectLargeDot color={project.hex_color}>
-          <span>{project.name}</span>
+          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {project.name}
+          </span>
         </ProjectLargeDot>
       }
     </div>

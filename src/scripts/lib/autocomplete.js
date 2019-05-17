@@ -100,6 +100,9 @@ AutoComplete.prototype.toggleDropdown = function () {
 };
 
 AutoComplete.prototype.openDropdown = function () {
+  if (this.field.classList.contains('open')) {
+    return;
+  }
   this.field.classList.toggle('open', true);
   // Avoid trapping focus inside the dropdown field while tabbing around
   this.field.setAttribute('tabindex', '-1');

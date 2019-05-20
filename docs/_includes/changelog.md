@@ -1,3 +1,12 @@
+## [1.35.6](https://github.com/toggl/toggl-button/compare/1.35.5...1.35.6) (2019-05-20)
+
+
+### Bug Fixes
+
+* **popup:** Fix duration input interval living on in the background ([f3423d5](https://github.com/toggl/toggl-button/commit/f3423d5))
+* **popup:** Large project-names hide continue button ([f7282a1](https://github.com/toggl/toggl-button/commit/f7282a1))
+* **popup:** Project selection ([cb74adb](https://github.com/toggl/toggl-button/commit/cb74adb))
+
 ## [1.35.5](https://github.com/toggl/toggl-button/compare/1.35.4...1.35.5) (2019-05-20)
 
 

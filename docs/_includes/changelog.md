@@ -1,3 +1,10 @@
+## [1.35.5](https://github.com/toggl/toggl-button/compare/1.35.4...1.35.5) (2019-05-20)
+
+
+### Bug Fixes
+
+* **jira:** Fix Jira kanban board buttons ([9f878bb](https://github.com/toggl/toggl-button/commit/9f878bb)), closes [#1408](https://github.com/toggl/toggl-button/issues/1408)
+
 ## [1.35.4](https://github.com/toggl/toggl-button/compare/1.35.3...1.35.4) (2019-05-14)
 
 

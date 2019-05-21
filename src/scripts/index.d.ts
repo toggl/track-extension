@@ -193,3 +193,7 @@ declare module Toggl {
 type TogglButton = {
   $user: Toggl.User | null;
 }
+
+type TogglDB = {
+  get<T>(key: string): Promise<T | null>;
+}

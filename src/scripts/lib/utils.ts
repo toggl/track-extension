@@ -53,6 +53,13 @@ export function getStoreLink (isFirefox = false) {
   return 'https://chrome.google.com/webstore/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn';
 }
 
-export async function isActiveUser () {
-  return true;
+/**
+ * Number of life-time entries the user must have tracked
+ * with Toggl Button to be considered an active user
+ */
+const ACTIVE_USER_TRESHOLD = 30;
+
+export async function isActiveUser (db: TogglDB) {
+  const timeEntriesTracked = await db.get<number>('timeEntriesTracked') || 0;
+  return (timeEntriesTracked >= ACTIVE_USER_TRESHOLD);
 }

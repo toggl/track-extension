@@ -5,8 +5,13 @@ togglbutton.render(
   '.window-header:not(.toggl)',
   { observe: true },
   (elem) => {
-    const descriptionElem = $('.js-move-card');
-    if (!descriptionElem) {
+    const actionButton =
+      $('.js-move-card') ||
+      $('.js-copy-card') ||
+      $('.js-archive-card') ||
+      $('.js-more-menu');
+
+    if (!actionButton) {
       return;
     }
 
@@ -32,7 +37,7 @@ togglbutton.render(
     });
 
     container.appendChild(link);
-    descriptionElem.parentNode.insertBefore(container, descriptionElem);
+    actionButton.parentNode.insertBefore(container, actionButton);
   },
   '.window-wrapper'
 );

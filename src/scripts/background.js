@@ -568,6 +568,7 @@ window.TogglButton = {
               TogglButton.localEntry = entry;
               TogglButton.updateTriggers(entry);
               ga.reportEvent(timeEntry.type, timeEntry.service);
+              db.bumpTrackedCount();
             } else {
               error = xhr.responseText;
             }

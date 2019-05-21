@@ -1,6 +1,6 @@
+import browser from 'webextension-polyfill';
 import bugsnagClient from './bugsnag';
 import storedOrigins from '../origins';
-const browser = require('webextension-polyfill');
 
 const ORIGINS_KEY = 'TogglButton-origins';
 
@@ -35,6 +35,7 @@ const DEFAULT_SETTINGS = {
 
 const LOCAL_ONLY = {
   [ORIGINS_KEY]: true,
+  timeEntriesTracked: true,
   dismissedReviewPrompt: true
 };
 
@@ -288,6 +289,11 @@ export default class Db {
     if (c && callback !== null) {
       callback();
     }
+  }
+
+  async bumpTrackedCount () {
+    const timeEntriesTracked = await this.get('timeEntriesTracked') || 0;
+    return this.set('timeEntriesTracked', timeEntriesTracked + 1);
   }
 
   resetAllSettings () {

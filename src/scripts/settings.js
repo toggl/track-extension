@@ -925,7 +925,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
 
     Settings.loadSitesIntoList();
 
-    const shouldShowReviewPrompt = await isActiveUser();
+    const shouldShowReviewPrompt = await isActiveUser(db);
     if (shouldShowReviewPrompt) {
       showReviewPrompt();
     }

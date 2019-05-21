@@ -1,3 +1,10 @@
+# [1.36.0](https://github.com/toggl/toggl-button/compare/1.35.6...1.36.0) (2019-05-21)
+
+
+### Features
+
+* **settings:** Show review prompt to active users ([c61f3c5](https://github.com/toggl/toggl-button/commit/c61f3c5)), closes [#1295](https://github.com/toggl/toggl-button/issues/1295)
+
 ## [1.35.6](https://github.com/toggl/toggl-button/compare/1.35.5...1.35.6) (2019-05-20)
 
 

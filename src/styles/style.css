@@ -24,6 +24,11 @@
   display: none;
 }
 
+.toggl-button-edit-form-button, #toggl-button-edit-form .toggl-button-edit-form-button {
+  display: inline-block !important;
+  position: initial !important;
+}
+
 .toggl-button {
   display: inline-block !important;
   user-select: none;

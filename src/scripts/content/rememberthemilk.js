@@ -22,21 +22,20 @@ togglbutton.render(
       return p.textContent;
     };
 
-    // Create and return toggl button's instance.
-    const createTogglButton = function () {
-      return togglbutton.createTimerLink({
+    const task = elem
+      .querySelector(
+        "div[role='listbox'] [role='option'] span[style*='user-select: text']"
+      );
+
+    if (task) {
+      const link = togglbutton.createTimerLink({
         className: 'rememberthemilk',
         description: getDescription,
         projectName: getProject,
         buttonType: 'minimal'
       });
-    };
 
-    // Inject toggl button to each task.
-    elem
-      .querySelector(
-        "div[role='listbox'] [role='option'] span[style*='user-select: text']"
-      )
-      .parentElement.appendChild(createTogglButton());
+      task.parentElement.appendChild(link);
+    }
   }
 );

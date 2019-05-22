@@ -111,12 +111,13 @@
 
 /********* YOUTRACK *********/
 
-.yt-agile-card__header .toggl-button.youtrack {
-  position: absolute;
-  top: 4px;
-  right: 3px;
-  float: none;
+.yt-agile-card__summary .toggl-button.youtrack:not(.active) {
+  display: none !important;
 }
+.yt-agile-card__summary:hover .toggl-button.youtrack, .yt-agile-card:hover .toggl-button.youtrack {
+  display: block !important;
+}
+
 .toggl-button.youtrack,
 .toggl-button.youtrack-new {
   float: right;

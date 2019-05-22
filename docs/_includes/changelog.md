@@ -1,3 +1,11 @@
+## [1.36.1](https://github.com/toggl/toggl-button/compare/1.36.0...1.36.1) (2019-05-22)
+
+
+### Bug Fixes
+
+* **youtrack:** Fix agile board buttons in YouTrack ([28d1ec0](https://github.com/toggl/toggl-button/commit/28d1ec0)), closes [#1364](https://github.com/toggl/toggl-button/issues/1364)
+* **youtrack:** Update Youtrack to conform to multi-button styleguide ([0661989](https://github.com/toggl/toggl-button/commit/0661989))
+
 # [1.36.0](https://github.com/toggl/toggl-button/compare/1.35.6...1.36.0) (2019-05-21)
 
 

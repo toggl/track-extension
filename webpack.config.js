@@ -47,6 +47,9 @@ module.exports = config(({ development, bugsnagApiKey, production, release, vers
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx']
   },
+  node: {
+    global: false
+  },
   module: {
     rules: [
       {

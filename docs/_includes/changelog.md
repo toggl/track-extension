@@ -1,3 +1,15 @@
+# [1.37.0](https://github.com/toggl/toggl-button/compare/1.36.2...1.37.0) (2019-05-24)
+
+
+### Bug Fixes
+
+* **fibery:** change selector to grab description in more generic way ([f0bb547](https://github.com/toggl/toggl-button/commit/f0bb547))
+
+
+### Features
+
+* **fibery:** Fibery Integration ([2852c57](https://github.com/toggl/toggl-button/commit/2852c57)), closes [#1411](https://github.com/toggl/toggl-button/issues/1411)
+
 ## [1.36.2](https://github.com/toggl/toggl-button/compare/1.36.1...1.36.2) (2019-05-24)
 
 

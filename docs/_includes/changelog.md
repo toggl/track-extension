@@ -1,3 +1,11 @@
+## [1.36.2](https://github.com/toggl/toggl-button/compare/1.36.1...1.36.2) (2019-05-24)
+
+
+### Bug Fixes
+
+* **popup:** Fix content popup layout breaking due to leaking button styles ([de22c4e](https://github.com/toggl/toggl-button/commit/de22c4e)), closes [#1415](https://github.com/toggl/toggl-button/issues/1415)
+* **rememberthemilk:** Fix errors and conform to styleguide in RememberTheMilk ([f269344](https://github.com/toggl/toggl-button/commit/f269344))
+
 ## [1.36.1](https://github.com/toggl/toggl-button/compare/1.36.0...1.36.1) (2019-05-22)
 
 

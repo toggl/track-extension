@@ -1,3 +1,10 @@
+## [1.37.1](https://github.com/toggl/toggl-button/compare/1.37.0...1.37.1) (2019-05-28)
+
+
+### Bug Fixes
+
+* **build:** Stop webpack from using eval ([4a4a8b5](https://github.com/toggl/toggl-button/commit/4a4a8b5)), closes [#1427](https://github.com/toggl/toggl-button/issues/1427)
+
 # [1.37.0](https://github.com/toggl/toggl-button/compare/1.36.2...1.37.0) (2019-05-24)
 
 

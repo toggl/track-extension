@@ -1,3 +1,10 @@
+## [1.37.2](https://github.com/toggl/toggl-button/compare/1.37.1...1.37.2) (2019-05-28)
+
+
+### Bug Fixes
+
+* **trello:** Trello integration when the 'Move' button is missing ([c3f6976](https://github.com/toggl/toggl-button/commit/c3f6976)), closes [#1423](https://github.com/toggl/toggl-button/issues/1423)
+
 ## [1.37.1](https://github.com/toggl/toggl-button/compare/1.37.0...1.37.1) (2019-05-28)
 
 

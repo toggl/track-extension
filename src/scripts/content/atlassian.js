@@ -62,15 +62,15 @@ togglbutton.render(
 
       // Title/summary of the issue - we use the hidden "edit" button that's there for a11y
       // in order to avoid picking up actual page title in the case of issue-list-pages.
-      titleElement = $('#jira-frontend h1 ~ button[aria-label]');
+      titleElement = document.querySelector('h1 ~ button[aria-label]');
 
       if (issueNumberElement) {
         description += issueNumberElement.textContent.trim();
       }
 
-      if (titleElement) {
+      if (titleElement && titleElement.previousSibling) {
         if (description) description += ' ';
-        description += titleElement.textContent.trim();
+        description += titleElement.previousSibling.textContent.trim();
       }
 
       return description;

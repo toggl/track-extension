@@ -1,3 +1,10 @@
+## [1.37.3](https://github.com/toggl/toggl-button/compare/1.37.2...1.37.3) (2019-06-03)
+
+
+### Bug Fixes
+
+* **jira:** Fix timer descriptions in Jira ([4e36c6f](https://github.com/toggl/toggl-button/commit/4e36c6f))
+
 ## [1.37.2](https://github.com/toggl/toggl-button/compare/1.37.1...1.37.2) (2019-05-28)
 
 

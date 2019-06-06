@@ -1,9 +1,9 @@
-const CleanPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
+const { CleanWebpackPlugin: CleanPlugin } = require('clean-webpack-plugin');
 const { EnvironmentPlugin } = require('webpack');
 
 const log = require('webpack-log')({ name: 'wds' });
@@ -78,7 +78,7 @@ module.exports = config(({ development, bugsnagApiKey, production, release, vers
       GA_TRACKING_ID: 'UA-3215787-22',
       VERSION: version
     }),
-    new CleanPlugin([path.resolve(__dirname, 'dist')]),
+    new CleanPlugin(),
     new CopyPlugin([
       ...copy({
         from: 'html/',

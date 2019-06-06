@@ -1,10 +1,11 @@
-const path = require('path');
-const fs = require('fs');
 const CleanPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
+const fs = require('fs');
+const path = require('path');
 const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
 const { EnvironmentPlugin } = require('webpack');
+
 const log = require('webpack-log')({ name: 'wds' });
 const pkg = require('./package.json');
 

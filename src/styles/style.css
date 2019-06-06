@@ -1422,3 +1422,16 @@ label > .toggl-button.outlook {
   visibility: visible;
   pointer-events: all;
 }
+
+/********* Corgee *********/
+.toggl-button.corgee {
+  position: relative;
+  top: 9px;
+  right: 5px;
+}
+.toggl-button.corgee-tasks {
+  position: relative;
+  top: 5px;
+  margin-right: 5px;
+  margin-top: -7px;
+}

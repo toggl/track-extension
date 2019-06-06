@@ -2,6 +2,7 @@
 !.editorconfig
 !.eslintrc.js
 !.gitignore
+!.npmrc
 !.travis.yml
 
 dist/

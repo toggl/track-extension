@@ -98,6 +98,10 @@ export default {
     url: '*://*.codebasehq.com/*',
     name: 'Codebase'
   },
+  'corgee.com': {
+    url: '*://*.corgee.com/*',
+    name: 'Corgee'
+  },
   'desk.com': {
     url: '*://*.desk.com/web/agent/*',
     name: 'Desk.com'

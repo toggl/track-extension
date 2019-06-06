@@ -27,6 +27,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Codeable](https://www.codeable.io/)
 - [Codebase](https://www.codebasehq.com/)
 - [Countersoft](https://www.countersoft.com)
+- [Corgee](https://corgee.com)
 - [Desk](https://www.desk.com/)
 - [DevDocs](http://devdocs.io/)
 - [Doit.im](https://i.doit.im/)

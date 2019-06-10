@@ -155,6 +155,8 @@ Then depending on your browser, continue with the following steps.
 2.  Choose "Load unpacked extension..."
 3.  Select the `dist/chrome/` directory
 
+**Note** that you will sometimes need to manually reload the unpacked extension, depending which files you're working on.
+
 #### On Firefox:
 
 1. Navigate to `about:debugging`

@@ -26,7 +26,7 @@ export default class Ga {
             'v=1&tid=' +
             process.env.GA_TRACKING_ID +
             '&cid=' +
-            this.clientId +
+            clientId +
             '&aip=1' +
             '&ds=extension&t=event&ec=' +
             event +

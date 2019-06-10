@@ -1,3 +1,10 @@
+## [1.37.4](https://github.com/toggl/toggl-button/compare/1.37.3...1.37.4) (2019-06-10)
+
+
+### Bug Fixes
+
+* **analytics:** Fix client ID not being sent in usage statistics ([4c9fa5a](https://github.com/toggl/toggl-button/commit/4c9fa5a))
+
 ## [1.37.3](https://github.com/toggl/toggl-button/compare/1.37.2...1.37.3) (2019-06-03)
 
 

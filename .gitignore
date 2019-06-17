@@ -1,8 +1,9 @@
 .*
 !.editorconfig
-!.gitignore
-!.travis.yml
 !.eslintrc.js
+!.gitignore
+!.npmrc
+!.travis.yml
 
 dist/
 node_modules/

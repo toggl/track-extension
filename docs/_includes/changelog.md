@@ -1,3 +1,16 @@
+# [1.38.0](https://github.com/toggl/toggl-button/compare/1.37.4...1.38.0) (2019-06-17)
+
+
+### Bug Fixes
+
+* **package:** Apply npm audit fixes ([b911b44](https://github.com/toggl/toggl-button/commit/b911b44))
+* **package:** Move misplaced dependencies ([ab997e2](https://github.com/toggl/toggl-button/commit/ab997e2))
+
+
+### Features
+
+* **npm:** prefer exact version when adding dependencies ([a05c844](https://github.com/toggl/toggl-button/commit/a05c844))
+
 ## [1.37.4](https://github.com/toggl/toggl-button/compare/1.37.3...1.37.4) (2019-06-10)
 
 

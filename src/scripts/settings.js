@@ -539,16 +539,21 @@ const Settings = {
       const origins = [];
       let i;
       let key;
-      const customOrigins = await db.getAllOrigins();
+      const allOrigins = await db.getAllOrigins();
+      const customOrigins = {};
       let skip = false;
 
       try {
+        for (key in allOrigins) {
+          if (typeof allOrigins[key] === 'string') {
+            customOrigins[key] = allOrigins[key];
+          }
+        }
+
         for (i = 0; i < result.origins.length; i++) {
           for (key in customOrigins) {
-            if (customOrigins.hasOwnProperty(key) && !skip) {
-              if (result.origins[i].indexOf(key) !== -1) {
-                skip = true;
-              }
+            if (result.origins[i].indexOf(key) !== -1) {
+              skip = true;
             }
           }
 

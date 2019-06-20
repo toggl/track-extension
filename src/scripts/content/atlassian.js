@@ -169,7 +169,7 @@ togglbutton.render(
     link.style.marginLeft = '8px';
 
     const issueLinkContainer =
-      $('.issue-link').parentElement || $('.aui-nav li').lastElementChild;
+      ($('.issue-link') || {}).parentElement || ($('.aui-nav li') || {}).lastElementChild;
     issueLinkContainer && issueLinkContainer.appendChild(link);
   }
 );

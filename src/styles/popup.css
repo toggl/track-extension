@@ -211,7 +211,7 @@ p.form-row.first {
 .header[data-view='menu'] ~ .views #menu,
 .header[data-view='login-view'] ~ .views #login-view,
 .header[data-view='revoked-workspace'] ~ .views #revoked-workspace,
-.header[data-view='entry-form'] ~ .views #entry-form {
+.header[data-view='toggl-button-entry-form'] ~ .views #toggl-button-entry-form {
   display: block !important;
 }
 
@@ -219,7 +219,7 @@ p.form-row.first {
   display: none;
 }
 
-.header[data-view='entry-form'] ~ .views #entry-form {
+.header[data-view='toggl-button-entry-form'] ~ .views #toggl-button-entry-form {
   display: flex !important;
   align-items: flex-start;
   justify-content: center;
@@ -404,7 +404,7 @@ hr {
 
 /* Entry form styles */
 
-.views #entry-form {
+.views #toggl-button-entry-form {
   /* Bigger width in the toolbar popup. It'll be changed completely in "Timer popup" issue. */
   width: 100%;
   height: 100%;

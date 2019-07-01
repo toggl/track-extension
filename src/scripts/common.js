@@ -450,13 +450,13 @@ window.togglbutton = {
 
     document
       .querySelector('#toggl-button-edit-form #toggl-button-project-placeholder')
-      .closest('.Dialog__field')
+      .closest('.TB__Dialog__field')
       .addEventListener('focus', (e) => {
         projectAutocomplete.openDropdown();
       });
     document
       .querySelector('#toggl-button-edit-form #toggl-button-tag-placeholder')
-      .closest('.Dialog__field')
+      .closest('.TB__Dialog__field')
       .addEventListener('focus', (e) => {
         tagAutocomplete.openDropdown();
       });

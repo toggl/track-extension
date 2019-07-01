@@ -57,24 +57,24 @@ window.TogglButton = {
     '<a class="toggl-button toggl-button-edit-form-button {service} active" href="javascript:void(0)">Stop timer</a>' +
     '<a id="toggl-button-hide"></a>' +
 
-    `<div class="Dialog__field" id="toggl-button-duration-row">
+    `<div class="TB__Dialog__field" id="toggl-button-duration-row">
       <div>
-        <input name="toggl-button-duration" type="text" id="toggl-button-duration" class="Input" value="" placeholder="00:00" autocomplete="off">
+        <input name="toggl-button-duration" type="text" id="toggl-button-duration" class="TB__Input" value="" placeholder="00:00" autocomplete="off">
       </div>
     </div>` +
 
-    `<div class="Dialog__field">
-      <div><input name="toggl-button-description" type="text" id="toggl-button-description" class="Input" value="" placeholder="What are you doing?" autocomplete="off" /></div>
+    `<div class="TB__Dialog__field">
+      <div><input name="toggl-button-description" type="text" id="toggl-button-description" class="TB__Input" value="" placeholder="What are you doing?" autocomplete="off" /></div>
     </div>` +
 
     `
-    <div class="Dialog__field" tabindex="0">
+    <div class="TB__Dialog__field" tabindex="0">
       <div>
-        <div id="toggl-button-project-placeholder" class="FormFieldTrigger__trigger" disabled><span class="tb-project-bullet"><div>No project</div></span><span class="Popdown__caret"></span></div>
-        <div class="Popdown__overlay"></div>
-        <div class="Popdown__content">
-          <div class="Popdown__filterContainer">
-            <input name="toggl-button-project-filter" type="text" id="toggl-button-project-filter" class="Popdown__filter" value="" placeholder="Find project..." autocomplete="off">
+        <div id="toggl-button-project-placeholder" class="TB__FormFieldTrigger__trigger" disabled><span class="tb-project-bullet"><div>No project</div></span><span class="TB__Popdown__caret"></span></div>
+        <div class="TB__Popdown__overlay"></div>
+        <div class="TB__Popdown__content">
+          <div class="TB__Popdown__filterContainer">
+            <input name="toggl-button-project-filter" type="text" id="toggl-button-project-filter" class="TB__Popdown__filter" value="" placeholder="Find project..." autocomplete="off">
           </div>
           <div id="project-autocomplete">{projects}</div>
         </div>
@@ -83,13 +83,13 @@ window.TogglButton = {
     ` +
 
     `
-    <div class="Dialog__field" tabindex="0">
+    <div class="TB__Dialog__field" tabindex="0">
       <div>
-        <div id="toggl-button-tag-placeholder" class="FormFieldTrigger__trigger" disabled><div>Add tags</div><span class="Popdown__caret"></span></div>
-        <div class="Popdown__overlay"></div>
-        <div class="Popdown__content">
-          <div class="Popdown__filterContainer">
-            <input name="toggl-button-tag-filter" type="text" id="toggl-button-tag-filter" class="Popdown__filter" value="" placeholder="Find tags..." autocomplete="off">
+        <div id="toggl-button-tag-placeholder" class="TB__FormFieldTrigger__trigger" disabled><div>Add tags</div><span class="TB__Popdown__caret"></span></div>
+        <div class="TB__Popdown__overlay"></div>
+        <div class="TB__Popdown__content">
+          <div class="TB__Popdown__filterContainer">
+            <input name="toggl-button-tag-filter" type="text" id="toggl-button-tag-filter" class="TB__Popdown__filter" value="" placeholder="Find tags..." autocomplete="off">
           </div>
           <div id="tag-autocomplete">
             <div class="tag-clear">Clear selected tags</div>
@@ -101,13 +101,13 @@ window.TogglButton = {
     </div>
     ` +
 
-    '<div class="Dialog__field">' +
+    '<div class="TB__Dialog__field">' +
     '<div class="tb-billable {billable}">' +
     '<div class="toggl-button-billable-label">Billable</div>' +
     '<div class="toggl-button-billable-flag"><span></span></div>' +
     '</div>' +
     '</div>' +
-    '<div id="toggl-button-update" tabindex="0" class="Button__button">Done</div>' +
+    '<div id="toggl-button-update" tabindex="0" class="TB__Button__button">Done</div>' +
     '<input type="submit" class="toggl-button-hidden">' +
     '</from>' +
     '</div>',

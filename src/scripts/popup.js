@@ -41,7 +41,7 @@ window.PopUp = {
   $billable: null,
   $header: document.querySelector('.header'),
   $menuView: document.querySelector('#menu'),
-  $editView: document.querySelector('#entry-form'),
+  $editView: document.querySelector('#toggl-button-entry-form'),
   $loginView: document.querySelector('#login-view'),
   $revokedWorkspaceView: document.querySelector('#revoked-workspace'),
   $entries: document.querySelector('.entries-list'),
@@ -403,7 +403,7 @@ window.PopUp = {
       });
 
     document
-      .querySelector('#entry-form form')
+      .querySelector('#toggl-button-entry-form form')
       .addEventListener('submit', function (e) {
         PopUp.submitForm(this);
         e.preventDefault();
@@ -411,13 +411,13 @@ window.PopUp = {
 
     document
       .querySelector('#toggl-button-project-placeholder')
-      .closest('.Dialog__field')
+      .closest('.TB__Dialog__field')
       .addEventListener('focus', (e) => {
         PopUp.$projectAutocomplete.openDropdown();
       });
     document
       .querySelector('#toggl-button-tag-placeholder')
-      .closest('.Dialog__field')
+      .closest('.TB__Dialog__field')
       .addEventListener('focus', (e) => {
         PopUp.$tagAutocomplete.openDropdown();
       });

@@ -11,8 +11,8 @@ const AutoComplete = function (el, item, elem) {
   this.type = el;
   this.el = document.querySelector('#' + el + '-autocomplete');
   this.filter = document.querySelector('#toggl-button-' + el + '-filter');
-  this.field = this.el.closest('.Dialog__field');
-  this.overlay = this.field.querySelector('.Popdown__overlay');
+  this.field = this.el.closest('.TB__Dialog__field');
+  this.overlay = this.field.querySelector('.TB__Popdown__overlay');
   this.placeholderItem = document.querySelector(
     '#toggl-button-' + el + '-placeholder'
   );
@@ -144,7 +144,7 @@ AutoComplete.prototype.updateHeight = function () {
     return;
   }
 
-  this.el.closest('.Popdown__content').style = popdownStyle;
+  this.el.closest('.TB__Popdown__content').style = popdownStyle;
   if (this.type === 'tag') {
     document.querySelector('.tag-list').style = listStyle;
   }

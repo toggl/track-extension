@@ -1,3 +1,10 @@
+## [1.38.1](https://github.com/toggl/toggl-button/compare/1.38.0...1.38.1) (2019-07-01)
+
+
+### Bug Fixes
+
+* **settings:** Fix "disable add integrations" button ([16823df](https://github.com/toggl/toggl-button/commit/16823df)), closes [#1439](https://github.com/toggl/toggl-button/issues/1439)
+
 # [1.38.0](https://github.com/toggl/toggl-button/compare/1.37.4...1.38.0) (2019-06-17)
 
 

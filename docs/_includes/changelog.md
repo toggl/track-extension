@@ -1,3 +1,11 @@
+## [1.38.2](https://github.com/toggl/toggl-button/compare/1.38.1...1.38.2) (2019-07-01)
+
+
+### Bug Fixes
+
+* **jira:** Fix error being thrown by the Jira 2017 page renderer ([2bc2b24](https://github.com/toggl/toggl-button/commit/2bc2b24)), closes [#1346](https://github.com/toggl/toggl-button/issues/1346)
+* **jira:** Split board and issue page selectors ([fb99ee2](https://github.com/toggl/toggl-button/commit/fb99ee2)), closes [#1346](https://github.com/toggl/toggl-button/issues/1346)
+
 ## [1.38.1](https://github.com/toggl/toggl-button/compare/1.38.0...1.38.1) (2019-07-01)
 
 

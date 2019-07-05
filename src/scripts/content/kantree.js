@@ -80,9 +80,8 @@ togglbutton.render(
         const taskDesc = $('.title', elem).textContent.trim();
         const cardRef = $('.card-view-header a.ref').textContent.trim();
         desc = `Subtask ${taskId}: ${taskDesc} (on task ${cardRef})`;
-      } catch (e) {
-        return desc;
-      }
+      } catch (e) {}
+      return desc;
     };
 
     const taskId = subTaskRef.textContent.trim();

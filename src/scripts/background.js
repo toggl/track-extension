@@ -5,10 +5,24 @@ import Db from './lib/db';
 import Ga from './lib/ga';
 
 const browser = require('webextension-polyfill');
+const FIVE_MINUTES = 5 * 60;
 
 let openWindowsCount = 0;
 
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
+
+const shouldTriggerNotification = (state, seconds) => {
+  return (
+    state === 'active' && seconds > FIVE_MINUTES ||
+    state === 'idle' && seconds > 0 && (seconds % FIVE_MINUTES) === 0
+  );
+};
+
+/**
+ * Returns true if the user is active or idle state
+ * @param state - 'active' | 'idle' | 'locked'
+ */
+const isIdleOrActive = state => state !== 'locked';
 
 function filterTabs (handler) {
   return function (tabs) {
@@ -1406,24 +1420,32 @@ window.TogglButton = {
     browser.notifications.create('idle-detection', options);
   },
 
+  updateLastWork: (date) => {
+    TogglButton.$lastWork = {
+      id: TogglButton.$curEntry.id,
+      date: date || new Date()
+    };
+  },
+
   onUserState: function (state) {
     TogglButton.$userState = state;
     const now = new Date();
     const inactiveSeconds = Math.floor((now - TogglButton.$lastWork.date) / 1000);
 
-    if (TogglButton.$user && state === 'active' && TogglButton.$curEntry) {
+    if (TogglButton.$user && isIdleOrActive(state) && TogglButton.$curEntry) {
       // trigger discard time notification once the user has been idle for
       // at least 5min
       if (
         TogglButton.$lastWork.id === TogglButton.$curEntry.id &&
-        inactiveSeconds >= 5 * 60
+        shouldTriggerNotification(state, inactiveSeconds)
       ) {
         TogglButton.showIdleDetectionNotification(inactiveSeconds);
+        TogglButton.updateLastWork(TogglButton.$lastWork.date);
       }
-      TogglButton.$lastWork = {
-        id: TogglButton.$curEntry.id,
-        date: now
-      };
+
+      if (state === 'active') {
+        TogglButton.updateLastWork();
+      }
     }
     clearTimeout(TogglButton.$checkingUserState);
     TogglButton.$checkingUserState = null;

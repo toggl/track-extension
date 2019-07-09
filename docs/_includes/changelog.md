@@ -1,3 +1,10 @@
+## [1.39.1](https://github.com/toggl/toggl-button/compare/1.39.0...1.39.1) (2019-07-09)
+
+
+### Bug Fixes
+
+* **styles:** Prefix edit-form css with TB__ ([4befea5](https://github.com/toggl/toggl-button/commit/4befea5)), closes [#1446](https://github.com/toggl/toggl-button/issues/1446)
+
 # [1.39.0](https://github.com/toggl/toggl-button/compare/1.38.2...1.39.0) (2019-07-09)
 
 

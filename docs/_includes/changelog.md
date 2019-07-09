@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/toggl/toggl-button/compare/1.38.2...1.39.0) (2019-07-09)
+
+
+### Features
+
+* Added support for Corgee ([7796314](https://github.com/toggl/toggl-button/commit/7796314)), closes [#1432](https://github.com/toggl/toggl-button/issues/1432)
+
 ## [1.38.2](https://github.com/toggl/toggl-button/compare/1.38.1...1.38.2) (2019-07-01)
 
 

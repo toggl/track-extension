@@ -1,7 +1,7 @@
 'use strict';
 
 togglbutton.render(
-  '.chr-QuickDetailQuickDetailEditor',
+  '.chr-PeriscopeContainer',
   { observe: true },
   function (elem) {
     const descriptionElem = $(

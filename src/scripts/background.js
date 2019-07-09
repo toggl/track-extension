@@ -1410,20 +1410,29 @@ window.TogglButton = {
     TogglButton.$userState = state;
     const now = new Date();
     const inactiveSeconds = Math.floor((now - TogglButton.$lastWork.date) / 1000);
-
-    if (TogglButton.$user && state === 'active' && TogglButton.$curEntry) {
-      // trigger discard time notification once the user has been idle for
-      // at least 5min
-      if (
-        TogglButton.$lastWork.id === TogglButton.$curEntry.id &&
-        inactiveSeconds >= 5 * 60
-      ) {
-        TogglButton.showIdleDetectionNotification(inactiveSeconds);
-      }
+    const updateLastWork = (date) => {
       TogglButton.$lastWork = {
         id: TogglButton.$curEntry.id,
-        date: now
+        date: date || now
       };
+    };
+
+    if (TogglButton.$user && ['active', 'idle'].includes(state) && TogglButton.$curEntry) {
+      // trigger discard time notification once the user has been idle for
+      // at least 5min
+      const FIVE_MINUTES = 5 * 60;
+      if (
+        TogglButton.$lastWork.id === TogglButton.$curEntry.id &&
+        inactiveSeconds % FIVE_MINUTES === 0 ||
+        (state === 'active' && inactiveSeconds >= FIVE_MINUTES)
+      ) {
+        TogglButton.showIdleDetectionNotification(inactiveSeconds);
+        updateLastWork(TogglButton.$lastWork.date);
+      }
+
+      if (state === 'active') {
+        updateLastWork();
+      }
     }
     clearTimeout(TogglButton.$checkingUserState);
     TogglButton.$checkingUserState = null;

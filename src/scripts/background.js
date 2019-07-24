@@ -1417,13 +1417,19 @@ window.TogglButton = {
       };
     };
 
+    const FIVE_MINUTES = 5 * 60;
+
+    const shouldTriggerNotification = (seconds) => {
+      const offsets = [-2, -1, 0, 1, 2];
+      return offsets.some(offset => seconds % (FIVE_MINUTES + offset) === 0);
+    };
+
     if (TogglButton.$user && ['active', 'idle'].includes(state) && TogglButton.$curEntry) {
       // trigger discard time notification once the user has been idle for
       // at least 5min
-      const FIVE_MINUTES = 5 * 60;
       if (
         TogglButton.$lastWork.id === TogglButton.$curEntry.id &&
-        inactiveSeconds % FIVE_MINUTES === 0 ||
+        shouldTriggerNotification(inactiveSeconds) ||
         (state === 'active' && inactiveSeconds >= FIVE_MINUTES)
       ) {
         TogglButton.showIdleDetectionNotification(inactiveSeconds);

@@ -24,11 +24,19 @@ function descriptionSelector () {
     (formTitleElem ? formTitleElem.value : '');
 }
 
+function isElementVisible (element) {
+  return element && element.offsetParent !== null;
+}
+
 togglbutton.render(
   '.witform-layout-content-container:not(.toggl)',
   { observe: true },
   function () {
-    const container = $('.work-item-form-header-controls-container');
+    const visibleContainers = Array
+      .from(document.querySelectorAll('.work-item-form-header-controls-container'))
+      .filter(isElementVisible);
+
+    const container = visibleContainers.length > 0 && visibleContainers[0];
 
     const vsActiveClassElem = $(
       '.commandbar.header-bottom > .commandbar-item > .displayed'

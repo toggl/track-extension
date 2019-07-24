@@ -23,13 +23,15 @@ function projectSelector () {
   return projectElement ? projectElement.textContent : '';
 }
 
-function descriptionSelector () {
-  const formIdElem = $('.work-item-form-id span');
-  const formTitleElem = $('.work-item-form-title input');
+function descriptionSelectorFactory (container) {
+  return function () {
+    const formIdElem = $('.work-item-form-id span', container);
+    const formTitleElem = $('.work-item-form-title input', container);
 
-  return (formIdElem ? formIdElem.innerText : '') +
-    ' ' +
-    (formTitleElem ? formTitleElem.value : '');
+    return (formIdElem ? formIdElem.innerText : '') +
+      ' ' +
+      (formTitleElem ? formTitleElem.value : '');
+  };
 }
 
 function isElementVisible (element) {
@@ -41,11 +43,12 @@ togglbutton.render(
   { observe: true },
   function () {
     const activeButtonContainer = getContainer('.work-item-form-header-controls-container');
+    const activeHeaderContainer = getContainer('.work-item-form-main-header');
     const vsActiveClassElem = $('.commandbar.header-bottom > .commandbar-item > .displayed');
 
     const link = togglbutton.createTimerLink({
       className: 'visual-studio-online',
-      description: descriptionSelector,
+      description: descriptionSelectorFactory(activeHeaderContainer),
       projectName: projectSelector
     });
 

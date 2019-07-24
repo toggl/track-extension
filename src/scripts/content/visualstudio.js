@@ -6,6 +6,14 @@
 */
 'use strict';
 
+function getContainer (selector) {
+  const visibleContainers = Array
+    .from(document.querySelectorAll(selector))
+    .filter(isElementVisible);
+
+  return visibleContainers.length > 0 && visibleContainers[0];
+}
+
 // We need to find proper project element, which differs between old and new layout
 function projectSelector () {
   const oldLayoutProjectElement = $('.tfs-selector span');
@@ -32,15 +40,8 @@ togglbutton.render(
   '.witform-layout-content-container:not(.toggl)',
   { observe: true },
   function () {
-    const visibleContainers = Array
-      .from(document.querySelectorAll('.work-item-form-header-controls-container'))
-      .filter(isElementVisible);
-
-    const container = visibleContainers.length > 0 && visibleContainers[0];
-
-    const vsActiveClassElem = $(
-      '.commandbar.header-bottom > .commandbar-item > .displayed'
-    );
+    const activeButtonContainer = getContainer('.work-item-form-header-controls-container');
+    const vsActiveClassElem = $('.commandbar.header-bottom > .commandbar-item > .displayed');
 
     const link = togglbutton.createTimerLink({
       className: 'visual-studio-online',
@@ -54,7 +55,7 @@ togglbutton.render(
       vsActiveClassElem.textContent === 'Work Items' ||
       vsActiveClassElem.textContent === 'Backlogs'
     ) {
-      container.appendChild(link);
+      activeButtonContainer.appendChild(link);
     }
   }
 );

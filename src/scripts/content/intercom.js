@@ -1,16 +1,29 @@
 'use strict';
 
-togglbutton.render('div.card.conversation__card.o__in-list:not(.o__hoverable):not(.toggl)', { observe: true }, function (elem) {
-  const description = $('div.conversation__card__title__text', elem).innerText.trim();
-  const link = togglbutton.createTimerLink({
-    className: 'intercom',
-    description: description,
-    buttonType: 'minimal'
+togglbutton.render('.conversation__card__content-expanded__controls .inbox__conversation-controls__pane-selector:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    if (elem.querySelector('.toggl-button')) {
+      // With the way this UI renders, we must check for existence of the button.
+      return;
+    }
+
+    const root = elem.closest('.card.conversation__card');
+    const descriptionSelector = () => {
+      const description = $('.inbox__card__header__title', root);
+      return description ? description.textContent.trim().replace(/ +/g, ' ') : '';
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'intercom',
+      description: descriptionSelector
+    });
+
+    // Stop button being re-rendered while trying to click. Intercom has some kind of handlers doing things.
+    link.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
+    elem.appendChild(link);
   });
-
-  if ($('.toggl-button.intercom') !== null) {
-    $('.toggl-button.intercom').remove();
-  }
-
-  $('.js__conversation-controls-action-icons', elem).appendChild(link);
-});

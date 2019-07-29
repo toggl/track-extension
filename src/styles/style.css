@@ -1138,16 +1138,10 @@ a.toggl-button.workfront.min {
 
 /********* INTERCOM *********/
 .toggl-button.intercom {
-  color: #a7bfcb;
   float: right;
-  font-weight: 700;
+  text-decoration: none;
   margin-top: 6px;
   margin-right: 5px;
-  text-decoration: none;
-}
-
-.toggl-button.intercom:hover {
-  color: #546e7a;
 }
 
 /********* PROCESSWIRE *********/

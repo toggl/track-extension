@@ -5,7 +5,7 @@
   "license": "BSD-3-Clause",
   "private": true,
   "engines": {
-    "node": ">=8.11.3"
+    "node": ">=10.14.0"
   },
   "scripts": {
     "start": "webpack-cli --mode development --watch",

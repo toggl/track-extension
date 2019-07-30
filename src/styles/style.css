@@ -1043,17 +1043,6 @@ li > .toggl-button.phabricator {
   margin-bottom: 0.4rem;
 }
 
-table.work-package-table .wp-table--cell-td.id {
-  position: relative;
-  padding-right: 14px;
-}
-
-table.work-package-table .toggl-button.openproject {
-  position: absolute;
-  right: 0px;
-  top: 10px;
-}
-
 /********* ZUBE *********/
 #card-primary-attributes-container .toggl-button.zube {
   margin-left: 30px;

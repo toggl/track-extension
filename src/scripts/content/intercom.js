@@ -14,10 +14,14 @@ togglbutton.render('.conversation__card__content-expanded__controls .inbox__conv
       return description ? description.textContent.trim().replace(/ +/g, ' ') : '';
     };
 
+    /**
+     * @type {HTMLElement}
+     */
     const link = togglbutton.createTimerLink({
       className: 'intercom',
       description: descriptionSelector
     });
+    link.style.paddingRight = '15px';
 
     // Stop button being re-rendered while trying to click. Intercom has some kind of handlers doing things.
     link.addEventListener('mousedown', (e) => {

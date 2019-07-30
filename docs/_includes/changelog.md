@@ -1,3 +1,18 @@
+# [1.40.0](https://github.com/toggl/toggl-button/compare/1.39.1...1.40.0) (2019-07-30)
+
+
+### Bug Fixes
+
+* **asana:** Fix project selection in Asana integration ([e1e89f6](https://github.com/toggl/toggl-button/commit/e1e89f6)), closes [#1457](https://github.com/toggl/toggl-button/issues/1457)
+* **intercom:** Add horizontal padding to button ([7830a1d](https://github.com/toggl/toggl-button/commit/7830a1d))
+* **intercom:** Fix Intercom conversations integration ([8fc1df3](https://github.com/toggl/toggl-button/commit/8fc1df3))
+
+
+### Features
+
+* **idle-detection:** Always trigger idle notification after time-interval ([af8c809](https://github.com/toggl/toggl-button/commit/af8c809)), closes [#1444](https://github.com/toggl/toggl-button/issues/1444)
+* **kantree:** Add Kantree integration ([a06ad78](https://github.com/toggl/toggl-button/commit/a06ad78))
+
 ## [1.39.1](https://github.com/toggl/toggl-button/compare/1.39.0...1.39.1) (2019-07-09)
 
 

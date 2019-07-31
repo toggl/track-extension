@@ -1,7 +1,7 @@
 'use strict';
 /* global togglbutton, $ */
 
-const todoistEditor = document.getElementById('editor');
+const todoistEditor = document.getElementById('content');
 
 togglbutton.render(
   '.task_item .content:not(.toggl)',

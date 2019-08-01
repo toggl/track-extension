@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/toggl/toggl-button/compare/1.40.0...1.40.1) (2019-08-01)
+
+
+### Bug Fixes
+
+* **todoist:** Fix Todoist integration breaking when switching between projects ([c4af915](https://github.com/toggl/toggl-button/commit/c4af915)), closes [#1462](https://github.com/toggl/toggl-button/issues/1462)
+
 # [1.40.0](https://github.com/toggl/toggl-button/compare/1.39.1...1.40.0) (2019-07-30)
 
 

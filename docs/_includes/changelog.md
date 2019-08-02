@@ -1,3 +1,10 @@
+## [1.40.2](https://github.com/toggl/toggl-button/compare/1.40.1...1.40.2) (2019-08-02)
+
+
+### Bug Fixes
+
+* **OpenProject:** Remove toggl button from work package list. ([69b75d5](https://github.com/toggl/toggl-button/commit/69b75d5))
+
 ## [1.40.1](https://github.com/toggl/toggl-button/compare/1.40.0...1.40.1) (2019-08-01)
 
 

@@ -1,4 +1,9 @@
 export default {
+  '-- custom --': {
+    url: '*://*.example.com/*',
+    name: 'My website (custom integration only)',
+    file: 'custom.js'
+  },
   'agenocrm.com': {
     url: '*://*.agenocrm.com/*',
     name: 'AgenoCRM',

@@ -1,6 +1,11 @@
 'use strict';
 /* global createTag */
 
+const getProject = () => {
+  const project = $('.board-header-btn-text');
+  return project ? project.textContent.trim() : '';
+};
+
 togglbutton.render(
   '.window-header:not(.toggl)',
   { observe: true },
@@ -16,11 +21,8 @@ togglbutton.render(
     }
 
     const getDescription = () => {
-      return $('.window-title h2', elem).textContent.trim();
-    };
-
-    const getProject = () => {
-      return $('.board-header-btn-name').textContent.trim();
+      const description = $('.window-title h2', elem);
+      return description ? description.textContent.trim() : '';
     };
 
     const container = createTag('div', 'button-link trello-tb-wrapper');
@@ -47,18 +49,26 @@ togglbutton.render(
   '.checklist-item-details:not(.toggl)',
   { observe: true },
   (elem) => {
-    const titleElem = $('.window-title h2');
-    const taskElem = $('.checklist-item-details-text', elem);
+    const getTitleText = () => {
+      const title = $('.window-title h2');
+      return title ? title.textContent.trim() : '';
+    };
 
-    const getProject = () => {
-      return $('.board-header-btn-name').textContent.trim();
+    const getTaskText = () => {
+      const task = $('.checklist-item-details-text', elem);
+      return task ? task.textContent.trim() : '';
+    };
+
+    const getDescription = () => {
+      console.log(`${getTitleText()} - ${getTaskText()}`);
+      return `${getTitleText()} - ${getTaskText()}`;
     };
 
     const link = togglbutton.createTimerLink({
       className: 'trello-list',
       buttonType: 'minimal',
       projectName: getProject,
-      description: titleElem.textContent + ' - ' + taskElem.textContent
+      description: getDescription
     });
 
     link.classList.add('checklist-item-menu');

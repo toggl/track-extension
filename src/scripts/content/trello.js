@@ -60,7 +60,6 @@ togglbutton.render(
     };
 
     const getDescription = () => {
-      console.log(`${getTitleText()} - ${getTaskText()}`);
       return `${getTitleText()} - ${getTaskText()}`;
     };
 

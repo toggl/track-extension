@@ -537,12 +537,21 @@ window.togglbutton = {
       return;
     }
 
-    const current = Array.from(document.querySelectorAll(
+    // Sort to find the "Best matching button".
+    // E.g. if running entry is `I am cat`, it should match `I am cat` over `I am cat and dog`
+    // Note: don't know why this isn't an exact match, probably some legacy reasons.
+    const matchingButtons = Array.from(document.querySelectorAll(
       '.toggl-button:not(.toggl-button-edit-form-button)'))
-      .find(button => button.title.indexOf(entry.description) !== -1);
+      .filter(button => button.title.indexOf(entry.description) !== -1)
+      .sort((a, b) => {
+        if (a.title.length > b.title.length) return -1;
+        if (b.title.length < a.title.length) return 1;
+        return 0;
+      });
+    const bestMatch = matchingButtons.pop();
 
-    if (current) {
-      togglbutton.activateTimerLink(current);
+    if (bestMatch) {
+      togglbutton.activateTimerLink(bestMatch);
     } else {
       togglbutton.deactivateAllTimerLinks();
     }

@@ -1,3 +1,11 @@
+## [1.40.3](https://github.com/toggl/toggl-button/compare/1.40.2...1.40.3) (2019-08-14)
+
+
+### Bug Fixes
+
+* **common:** Fix identification of running entry button in updateTimerLink ([e4c0381](https://github.com/toggl/toggl-button/commit/e4c0381))
+* **trello:** Fix Trello integration after UI updates ([bce19a0](https://github.com/toggl/toggl-button/commit/bce19a0))
+
 ## [1.40.2](https://github.com/toggl/toggl-button/compare/1.40.1...1.40.2) (2019-08-02)
 
 

@@ -106,7 +106,7 @@ module.exports = config(({ development, bugsnagApiKey, production, release, vers
         to: 'firefox/manifest.json',
         transform: transformManifest('firefox')
       }
-    ]),
+    ], { copyUnmodified: true }),
     production && release &&
       new BugsnagSourceMapUploaderPlugin({
         apiKey: bugsnagApiKey,

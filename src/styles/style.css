@@ -306,7 +306,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 /********* TEAMWEEK *********/
 .toggl-button.teamweek-new {
   color: rgba(47, 47, 47, 0.8);
-  margin: 8px 0px 5px 4px;
+  margin-right: 10px;
 }
 
 #toggl-button-edit-form .toggl-button.teamweek-new {

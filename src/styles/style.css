@@ -957,19 +957,25 @@ li > .toggl-button.phabricator {
 /********* SLACK *********/
 .toggl-button.slack {
   background-color: #fff !important;
-  height: 45px;
   z-index: 9;
-  width: 40px;
-  background-position-y: 10px !important;
-  background-position-x: 8px !important;
+  padding: 0 13px;
 }
 
 .c-message_actions__button .toggl-button.slack-message {
-  background-color: #fff !important;
-  background-size: 16px !important;
-  padding-left: 1px;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 14px;
+  padding-left: 0;
+  background-size: 14px 14px;
+  background-position: center bottom;
+}
+
+.c-message_actions__button .slack-message-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
 }
 
 /********* ZOHO BOOKS *********/

@@ -1,15 +1,17 @@
 'use strict';
 /* global togglbutton, $ */
 
+const getTextContent = (element) => element ? element.textContent.trim() : '';
+
 togglbutton.render('[data-qa="channel_name"]:not(.toggl)', { observe: true }, () => {
   const placeholder = $('[data-qa="channel_header__buttons"]').firstChild.parentNode;
-  const projectName = $('.p-classic_nav__team_header__team__name').textContent.trim();
-  const description = $('[data-qa="channel_name"]').textContent.trim();
+  const projectName = $('.p-classic_nav__team_header__team__name');
+  const description = $('[data-qa="channel_name"]');
 
   const link = togglbutton.createTimerLink({
     className: 'slack',
-    description,
-    projectName,
+    description: getTextContent(description),
+    projectName: getTextContent(projectName),
     buttonType: 'minimal'
   });
 
@@ -31,7 +33,7 @@ togglbutton.render('.c-message--hover:not(.toggl)', { observe: true }, elem => {
   const buttonContainer = document.createElement('span');
   const link = togglbutton.createTimerLink({
     className: 'slack-message',
-    projectName: projectName.textContent.trim(),
+    projectName: getTextContent(projectName),
     description: description.textContent.trim(),
     buttonType: 'minimal'
   });

@@ -955,8 +955,7 @@ li > .toggl-button.phabricator {
 }
 
 /********* SLACK *********/
-.toggl-button.slack {
-  background-color: #fff !important;
+div[data-qa="channel_header__buttons"] .toggl-button.slack {
   z-index: 9;
   padding: 0 13px;
 }

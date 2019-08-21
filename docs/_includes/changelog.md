@@ -1,3 +1,11 @@
+## [1.40.5](https://github.com/toggl/toggl-button/compare/1.40.4...1.40.5) (2019-08-21)
+
+
+### Bug Fixes
+
+* **visualstudio:** get active item's description ([24bf237](https://github.com/toggl/toggl-button/commit/24bf237))
+* **visualstudio:** use correct container to render button ([8841ddf](https://github.com/toggl/toggl-button/commit/8841ddf)), closes [#1459](https://github.com/toggl/toggl-button/issues/1459)
+
 ## [1.40.4](https://github.com/toggl/toggl-button/compare/1.40.3...1.40.4) (2019-08-21)
 
 

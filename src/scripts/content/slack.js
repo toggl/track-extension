@@ -7,6 +7,12 @@ togglbutton.render('[data-qa="channel_name"]:not(.toggl)', { observe: true }, ()
   const placeholder = $('[data-qa="channel_header__buttons"]').firstChild.parentNode;
   const projectName = $('.p-classic_nav__team_header__team__name');
   const description = $('[data-qa="channel_name"]');
+  const isRendered = $('.toggl-button', placeholder) != null;
+
+  if (isRendered) {
+    // Do not duplicate the button.
+    return;
+  }
 
   const link = togglbutton.createTimerLink({
     className: 'slack',

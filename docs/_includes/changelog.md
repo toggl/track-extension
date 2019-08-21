@@ -1,3 +1,13 @@
+## [1.40.6](https://github.com/toggl/toggl-button/compare/1.40.5...1.40.6) (2019-08-21)
+
+
+### Bug Fixes
+
+* **slack:** Fix duplicate buttons next to channel name ([aabcfd8](https://github.com/toggl/toggl-button/commit/aabcfd8))
+* **slack:** Fix selectors that could fail the script ([76570a5](https://github.com/toggl/toggl-button/commit/76570a5))
+* **slack:** Fix slack integration after UI updates ([273be30](https://github.com/toggl/toggl-button/commit/273be30)), closes [#1477](https://github.com/toggl/toggl-button/issues/1477)
+* **slack:** Fix toggl icon glitch ([e6c1ae9](https://github.com/toggl/toggl-button/commit/e6c1ae9))
+
 ## [1.40.5](https://github.com/toggl/toggl-button/compare/1.40.4...1.40.5) (2019-08-21)
 
 

@@ -1,3 +1,10 @@
+## [1.40.4](https://github.com/toggl/toggl-button/compare/1.40.3...1.40.4) (2019-08-21)
+
+
+### Bug Fixes
+
+* **build:** Copy all files between builds ([27c408a](https://github.com/toggl/toggl-button/commit/27c408a)), closes [#1468](https://github.com/toggl/toggl-button/issues/1468)
+
 ## [1.40.3](https://github.com/toggl/toggl-button/compare/1.40.2...1.40.3) (2019-08-14)
 
 

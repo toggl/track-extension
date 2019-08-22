@@ -1,3 +1,10 @@
+## [1.40.7](https://github.com/toggl/toggl-button/compare/1.40.6...1.40.7) (2019-08-22)
+
+
+### Bug Fixes
+
+* **teamweek:** Fix broken integration ([4f5dc5f](https://github.com/toggl/toggl-button/commit/4f5dc5f)), closes [#1455](https://github.com/toggl/toggl-button/issues/1455)
+
 ## [1.40.6](https://github.com/toggl/toggl-button/compare/1.40.5...1.40.6) (2019-08-21)
 
 

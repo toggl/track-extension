@@ -111,3 +111,27 @@ togglbutton.render(
     container.appendChild(link);
   }
 );
+
+// Teamwork Desk - new design 2019
+togglbutton.render(
+  '.ticket-view-page__main-content:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    // ticket view
+    const container = $('.title', elem);
+    const id = $('.ticket-id', elem).textContent;
+    const description = $('.title__subject', elem).textContent;
+
+    const descFunc = function () {
+      return id.trim() + ' ' + description.trim();
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'teamwork',
+      buttonType: 'minimal',
+      description: descFunc
+    });
+
+    container.appendChild(link);
+  }
+);

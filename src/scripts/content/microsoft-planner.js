@@ -1,14 +1,11 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.taskCard:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    description = $('.title', elem).textContent;
+togglbutton.render('.taskCard:not(.toggl)', { observe: true }, function (elem) {
+  const description = $('.title', elem).textContent;
 
-  function getProject() {
-    var plannerTaskboardName = $('.planTaskboardPage .primaryTextSection h1'),
-      planName = $(".planName", elem);
+  function getProject () {
+    const plannerTaskboardName = $('.planTaskboardPage .primaryTextSection h1');
+    const planName = $('.planName', elem);
 
     if (plannerTaskboardName) {
       return plannerTaskboardName.textContent;
@@ -16,10 +13,9 @@ togglbutton.render('.taskCard:not(.toggl)', {observe: true}, function (elem) {
     if (planName) {
       return planName.textContent;
     }
-    return;
   }
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'microsoftplanner',
     description: description,
     projectName: getProject,

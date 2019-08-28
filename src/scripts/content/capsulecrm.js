@@ -1,22 +1,19 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
 // List items
-togglbutton.render('.list li:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    taskElement = $('.task-title', elem),
-    description = $('a', taskElement).textContent.trim(),
-    projectName = function () {
-      var label = $('span.highlight', taskElement);
-      if (!!label) {
-        return label.textContent;
-      }
-      return "";
-    };
+togglbutton.render('.list li:not(.toggl)', { observe: true }, function (elem) {
+  const taskElement = $('.task-title', elem);
+  const description = $('a', taskElement).textContent.trim();
 
-  link = togglbutton.createTimerLink({
+  const projectName = function () {
+    const label = $('span.highlight', taskElement);
+    if (label) {
+      return label.textContent;
+    }
+    return '';
+  };
+
+  const link = togglbutton.createTimerLink({
     className: 'capsule',
     description: description,
     projectName: projectName,
@@ -25,33 +22,37 @@ togglbutton.render('.list li:not(.toggl)', {observe: true}, function (elem) {
 
   taskElement.appendChild(link);
 });
-
 
 // List items in new UI
-togglbutton.render('.task-item:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    taskElement = $('.task-item-title', elem),
-    description = function () {
-      var desc = $('.task-item-title-text', elem);
-      if (!!desc) {
+togglbutton.render(
+  '.general-task-item:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const taskElement = $('.general-task-item-title', elem);
+
+    const description = function () {
+      const desc = $('.general-task-item-title-text', elem);
+      if (desc) {
         return desc.textContent.trim();
       }
-      return "";
-    },
-    projectName = function () {
-      var label = $('span.task-item-category', elem);
-      if (!!label) {
-        return label.textContent;
-      }
-      return "";
+      return '';
     };
 
-  link = togglbutton.createTimerLink({
-    className: 'capsule',
-    description: description,
-    projectName: projectName,
-    buttonType: 'minimal'
-  });
+    const projectName = function () {
+      const label = $('.general-task-item-category', elem);
+      if (label) {
+        return label.textContent;
+      }
+      return '';
+    };
 
-  taskElement.appendChild(link);
-});
+    const link = togglbutton.createTimerLink({
+      className: 'capsule',
+      description: description,
+      projectName: projectName,
+      buttonType: 'minimal'
+    });
+
+    taskElement.appendChild(link);
+  }
+);

@@ -1,66 +1,77 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
+/* global createTag */
 
-togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('div', 'button-link trello-tb-wrapper'),
-    //duration,
-    descFunc,
-    titleElem = $('.window-title h2', elem),
-    //trackedContainer = createTag('div', 'toggl-tracked'),
-    //trackedElem = $('.other-actions'),
-    projectElem = $('.board-header > a'),
-    descriptionElem = $('.js-move-card');
+const getProject = () => {
+  const project = $('.board-header-btn-text');
+  return project ? project.textContent.trim() : '';
+};
 
-  if (!descriptionElem) {
-    return;
-  }
+togglbutton.render(
+  '.window-header:not(.toggl)',
+  { observe: true },
+  (elem) => {
+    const actionButton =
+      $('.js-move-card') ||
+      $('.js-copy-card') ||
+      $('.js-archive-card') ||
+      $('.js-more-menu');
 
-  descFunc = function () {
-    return titleElem.textContent;
-  };
+    if (!actionButton) {
+      return;
+    }
 
-  link = togglbutton.createTimerLink({
-    className: 'trello',
-    description: descFunc,
-    projectName: projectElem.textContent,
-    calculateTotal: true
-  });
+    const getDescription = () => {
+      const description = $('.window-title h2', elem);
+      return description ? description.textContent.trim() : '';
+    };
 
-  container.appendChild(link);
-  descriptionElem.parentNode.insertBefore(container, descriptionElem);
+    const container = createTag('div', 'button-link trello-tb-wrapper');
+    const link = togglbutton.createTimerLink({
+      className: 'trello',
+      description: getDescription,
+      projectName: getProject
+    });
 
-  // Add Tracked time text
-  /*
-  duration = togglbutton.calculateTrackedTime(titleElem.textContent);
-  h3 = document.createElement("h3");
-  h3.textContent = "Time tracked";
+    // Pass through click on Trello button to the timer link
+    container.addEventListener('click', (e) => {
+      e.preventDefault();
+      link.click();
+    });
 
-  p = document.createElement("p");
-  p.setAttribute("title", "Time tracked with Toggl: " + duration);
-  p.textContent = duration;
-
-  trackedContainer.appendChild(h3);
-  trackedContainer.appendChild(p);
-  trackedElem.parentNode.insertBefore(trackedContainer, trackedElem);
-  */
-}, ".window-wrapper");
+    container.appendChild(link);
+    actionButton.parentNode.insertBefore(container, actionButton);
+  },
+  '.window-wrapper'
+);
 
 /* Checklist buttons */
-togglbutton.render('.checklist-item-details:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    projectElem = $('.board-header > a'),
-    titleElem = $('.window-title h2'),
-    taskElem = $('.checklist-item-details-text', elem);
+togglbutton.render(
+  '.checklist-item-details:not(.toggl)',
+  { observe: true },
+  (elem) => {
+    const getTitleText = () => {
+      const title = $('.window-title h2');
+      return title ? title.textContent.trim() : '';
+    };
 
-  link = togglbutton.createTimerLink({
-    className: 'trello',
-    buttonType: 'minimal',
-    projectName: projectElem.textContent,
-    description: titleElem.textContent + ' - ' + taskElem.textContent
-  });
+    const getTaskText = () => {
+      const task = $('.checklist-item-details-text', elem);
+      return task ? task.textContent.trim() : '';
+    };
 
-  link.classList.add('checklist-item-button');
-  elem.parentNode.appendChild(link);
-}, ".checklist-items-list, .window-wrapper");
+    const getDescription = () => {
+      return `${getTitleText()} - ${getTaskText()}`;
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'trello-list',
+      buttonType: 'minimal',
+      projectName: getProject,
+      description: getDescription
+    });
+
+    link.classList.add('checklist-item-menu');
+    elem.querySelector('.checklist-item-menu-wrapper').appendChild(link);
+  },
+  '.checklist-items-list, .window-wrapper'
+);

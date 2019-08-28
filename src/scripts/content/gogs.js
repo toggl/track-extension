@@ -1,19 +1,16 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('#issue-title:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    titleElem = $("#issue-title"),
-    description = titleElem.textContent.trim(),
-    projectElem = $('.issue .header .breadcrumb a:last-child'),
-    project;
+togglbutton.render('#issue-title:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const titleElem = $('#issue-title');
+  let description = titleElem.textContent.trim();
+  const projectElem = $('.issue .header .breadcrumb a:last-child');
 
-  description = $(".index").textContent + " " + description;
-  project = projectElem.textContent.split(' / ').pop();
+  description = $('.index').textContent + ' ' + description;
+  const project = projectElem.textContent.split(' / ').pop();
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'gogs',
     description: description,
     projectName: project

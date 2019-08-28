@@ -1,38 +1,41 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render("div[role='listbox'] [role='option']:not(.toggl)", {observe: true}, function (elem) {
-  var getDescription,
-    getProject,
-    createTogglButton;
+togglbutton.render(
+  "div[role='listbox'] [role='option']:not(.toggl)",
+  { observe: true },
+  function (elem) {
+    // Get task's description.
+    const getDescription = function () {
+      return elem
+        .querySelector(
+          "div[role='listbox'] [role='option'] span[style*='user-select: text']"
+        )
+        .textContent.trim();
+    };
 
-  // Get task's description.
-  getDescription = function () {
-    return elem.querySelector("div[role='listbox'] [role='option'] span[style*='user-select: text']")
-      .textContent.trim();
-  };
+    // Get project name if in project task view
+    const getProject = function () {
+      const p = $('.b-Mj.b-wd .b-f-n');
+      if (!p) {
+        return;
+      }
+      return p.textContent;
+    };
 
-  // Get project name if in project task view
-  getProject = function () {
-    var p = $('.b-Mj.b-wd .b-f-n');
-    if (!p) {
-      return;
+    const task = elem
+      .querySelector(
+        "div[role='listbox'] [role='option'] span[style*='user-select: text']"
+      );
+
+    if (task) {
+      const link = togglbutton.createTimerLink({
+        className: 'rememberthemilk',
+        description: getDescription,
+        projectName: getProject,
+        buttonType: 'minimal'
+      });
+
+      task.parentElement.appendChild(link);
     }
-    return p.textContent;
-  };
-
-  // Create and return toggl button's instance.
-  createTogglButton = function () {
-    return togglbutton.createTimerLink({
-      className: 'rememberthemilk',
-      description: getDescription,
-      projectName: getProject,
-      buttonType: 'minimal'
-    });
-  };
-
-  // Inject toggl button to each task.
-  elem.querySelector("div[role='listbox'] [role='option'] span[style*='user-select: text']")
-    .parentElement.appendChild(createTogglButton());
-});
+  }
+);

@@ -1,17 +1,19 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('#task-detail-view:not(.toggl)', {observe: true}, function (elem) {
-  var text = $('#tasktitle', elem).textContent,
-    project = $('#project-setting input', elem).getAttribute('value'),
+togglbutton.render('#task-detail-view:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const project = $('#project-setting input', elem).getAttribute('value');
 
-    link = togglbutton.createTimerLink({
-      className: 'TickTick',
-      description: text,
-      projectName: project
-    });
+  const text = function () {
+    return $('.task-title', elem).textContent;
+  };
+
+  const link = togglbutton.createTimerLink({
+    className: 'TickTick',
+    description: text,
+    projectName: project
+  });
 
   $('#tasktitle').appendChild(link);
 });

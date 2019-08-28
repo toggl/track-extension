@@ -1,60 +1,71 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
+// Salesforce legacy view
+
 // Updated Listing view
-togglbutton.render('.bMyTask .list tr.dataRow:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, projectFunc,
-    container = elem.querySelectorAll(".bMyTask .list tr.dataRow .dataCell a")[0];
-  if (container === null) {
-    return;
+togglbutton.render(
+  '.bMyTask .list tr.dataRow:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const container = elem.querySelectorAll(
+      '.bMyTask .list tr.dataRow .dataCell a'
+    )[0];
+    if (container === null) {
+      return;
+    }
+
+    const descFunc = () => {
+      return container.textContent;
+    };
+
+    const projectFunc = () => {
+      return (
+        ($('.accountBlock .mruText') &&
+          $('.accountBlock .mruText').textContent) ||
+        ''
+      );
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'salesforce-legacy',
+      buttonType: 'minimal',
+      description: descFunc,
+      projectName: projectFunc
+    });
+
+    container.insertBefore(link, container.firstChild);
   }
-
-  descFunc = function () {
-    return container.textContent;
-  };
-
-  projectFunc = function () {
-    return ($('.accountBlock .mruText') && $('.accountBlock .mruText').textContent) || "";
-  };
-
-  link = togglbutton.createTimerLink({
-    className: 'salesforce',
-    buttonType: 'minimal',
-    description: descFunc,
-    projectName: projectFunc
-  });
-
-  container.insertBefore(link, container.firstChild);
-});
+);
 
 // Detail view
-togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, projectFunc, parent,
-    container = $('.content', elem);
+togglbutton.render('#bodyCell:not(.toggl)', { observe: true }, function (elem) {
+  const container = $('.content', elem);
 
   if (container === null) {
     return;
   }
 
-  parent = $('.pageType', container);
+  const parent = $('.pageType', container);
 
   if (!parent) {
     return;
   }
 
-  descFunc = function () {
-    var desc = $('.pageDescription', container);
-    return desc ? desc.textContent.trim() : "";
+  const descFunc = () => {
+    const desc = $('.pageDescription', container);
+    return desc ? desc.textContent.trim() : '';
   };
 
-  projectFunc = function () {
-    return ($('.accountBlock .mruText') && $('.accountBlock .mruText').textContent) || "";
+  const projectFunc = () => {
+    return (
+      ($('.accountBlock .mruText') &&
+        $('.accountBlock .mruText').textContent) ||
+      ''
+    );
   };
 
-  link = togglbutton.createTimerLink({
-    className: 'salesforce',
+  const link = togglbutton.createTimerLink({
+    className: 'salesforce-legacy',
     description: descFunc,
     projectName: projectFunc
   });
@@ -62,24 +73,54 @@ togglbutton.render('#bodyCell:not(.toggl)', {observe: true}, function (elem) {
   parent.appendChild(link);
 });
 
-// Lightning
-togglbutton.render('.runtime_sales_activitiesTaskCommon.runtime_sales_activitiesTaskRow:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, projectFunc;
+// Lightning Task List view/sidebar
+togglbutton.render(
+  '.slds-split-view__list-item:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const getDescription = () => {
+      return $('.uiOutputText', elem).textContent.trim();
+    };
 
-  descFunc = function () {
-    return $(".subject .uiOutputText", elem).textContent;
-  };
+    const link = togglbutton.createTimerLink({
+      className: 'salesforce-list',
+      description: getDescription,
+      buttonType: 'minimal'
+    });
 
-  projectFunc = function () {
-    return $(".runtime_sales_activitiesTaskContentFields ul").lastChild.textContent;
-  };
+    $('.uiOutputText', elem).parentElement.parentElement.appendChild(link);
+  }
+);
 
-  link = togglbutton.createTimerLink({
-    className: 'salesforce-lightning',
-    description: descFunc,
-    projectName: projectFunc,
-    buttonType: "minimal"
-  });
+togglbutton.render(
+  '.slds-page-header__title:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const description = $('.uiOutputText:not(.selectedListView)', elem);
+    if (!description) {
+      // Looks like a title not relevant to a record, ignore.
+      return;
+    }
 
-  $('.left', elem).appendChild(link);
-});
+    const getDescription = () => {
+      return description.textContent.trim();
+    };
+    const getProject = () => {
+      let project = $('[title="Account Name"]');
+      if (!project) project = $('[title="Related To"]');
+
+      if (project) {
+        return project.nextSibling.textContent.trim();
+      }
+      return getDescription();
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'salesforce',
+      description: getDescription,
+      projectName: getProject,
+      buttonType: 'minimal'
+    });
+    description.appendChild(link);
+  }, 'header,.active,.oneRecordHomeFlexipage'
+);

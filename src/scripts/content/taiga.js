@@ -1,33 +1,33 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
 
 /* Epic/User story/Task/Issue details button */
-togglbutton.render('.detail-title-wrapper:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    projectElem = $('.us-detail .project-name'),
-    refElem = $('.detail-number', elem),
-    titleElem = $('.detail-subject', elem);
+togglbutton.render(
+  '.detail-title-wrapper:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const projectElem = $('.us-detail .project-name');
+    const refElem = $('.detail-number', elem);
+    const titleElem = $('.detail-subject', elem);
 
-  link = togglbutton.createTimerLink({
-    className: 'taiga',
-    buttonType: 'minimal',
-    projectName: projectElem.textContent,
-    description: refElem.textContent.trim() + ' ' + titleElem.textContent
-  });
+    const link = togglbutton.createTimerLink({
+      className: 'taiga',
+      buttonType: 'minimal',
+      projectName: projectElem.textContent,
+      description: refElem.textContent.trim() + ' ' + titleElem.textContent
+    });
 
-  elem.insertBefore(link, $('.detail-title-text', elem));
-});
+    elem.insertBefore(link, $('.detail-title-text', elem));
+  }
+);
 
 /* Epics Dashboard */
-togglbutton.render('.epic-row .name:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.epic-row .name:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const titleElem = $('a', elem);
+  const projectElem = $('.epics .project-name');
 
-  var link,
-    titleElem = $('a', elem),
-    projectElem = $('.epics .project-name');
-
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'taiga',
     buttonType: 'minimal',
     description: titleElem.textContent,
@@ -38,14 +38,14 @@ togglbutton.render('.epic-row .name:not(.toggl)', {observe: true}, function (ele
 });
 
 /* Backlog buttons */
-togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render('.user-story-name:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const projectElem = $('.backlog .project-name');
+  const refElem = $('a > span:nth-child(1)', elem);
+  const taskElem = $('a > span:nth-child(2)', elem);
 
-  var link,
-    projectElem = $('.backlog .project-name'),
-    refElem = $('a > span:nth-child(1)', elem),
-    taskElem = $('a > span:nth-child(2)', elem);
-
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'taiga',
     buttonType: 'minimal',
     projectName: projectElem.textContent,
@@ -56,54 +56,61 @@ togglbutton.render('.user-story-name:not(.toggl)', {observe: true}, function (el
 });
 
 /* Kanban buttons */
-togglbutton.render('.kanban .card-title:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    refElem = $('a > span:nth-child(1)', elem),
-    titleElem = $('a > span:nth-child(2)', elem),
-    projectElem = $('.kanban .project-name');
+togglbutton.render(
+  '.kanban .card-title:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const refElem = $('a > span:nth-child(1)', elem);
+    const titleElem = $('a > span:nth-child(2)', elem);
+    const projectElem = $('.kanban .project-name');
 
-  link = togglbutton.createTimerLink({
-    className: 'taiga',
-    buttonType: 'minimal',
-    description: refElem.textContent + ' ' + titleElem.textContent,
-    projectName: projectElem.textContent
-  });
+    const link = togglbutton.createTimerLink({
+      className: 'taiga',
+      buttonType: 'minimal',
+      description: refElem.textContent + ' ' + titleElem.textContent,
+      projectName: projectElem.textContent
+    });
 
-  elem.insertBefore(link, $('a', elem));
-});
+    elem.insertBefore(link, $('a', elem));
+  }
+);
 
 /* Sprint Taskboard tasks buttons */
-togglbutton.render('.taskboard .card-title:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render(
+  '.taskboard .card-title:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const refElem = $('.card-title > a > span:nth-child(1)', elem);
+    const titleElem = $('.card-title > a > span:nth-child(2)', elem);
+    const projectElem = $('.taskboard .project-name-short');
 
-  var link,
-    refElem = $('.card-title > a > span:nth-child(1)', elem),
-    titleElem = $('.card-title > a > span:nth-child(2)', elem),
-    projectElem = $('.taskboard .project-name-short');
+    const link = togglbutton.createTimerLink({
+      className: 'taiga',
+      buttonType: 'minimal',
+      description: refElem.textContent.trim() + ' ' + titleElem.textContent,
+      projectName: projectElem.textContent
+    });
 
-  link = togglbutton.createTimerLink({
-    className: 'taiga',
-    buttonType: 'minimal',
-    description: refElem.textContent.trim() + ' ' + titleElem.textContent,
-    projectName: projectElem.textContent
-  });
-
-  elem.insertBefore(link, $('a', elem));
-});
-
+    elem.insertBefore(link, $('a', elem));
+  }
+);
 
 /* Issues list buttons */
-togglbutton.render('.issues-table .row:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    projectElem = $('.issues-page .project-name'),
-    refElem = $('a > span:nth-child(1)', elem),
-    taskElem = $('a > span:nth-child(2)', elem);
+togglbutton.render(
+  '.issues-table .row:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const projectElem = $('.issues-page .project-name');
+    const refElem = $('a > span:nth-child(1)', elem);
+    const taskElem = $('a > span:nth-child(2)', elem);
 
-  link = togglbutton.createTimerLink({
-    className: 'taiga',
-    buttonType: 'minimal',
-    projectName: projectElem.textContent,
-    description: refElem.textContent.trim() + ' ' + taskElem.textContent
-  });
+    const link = togglbutton.createTimerLink({
+      className: 'taiga',
+      buttonType: 'minimal',
+      projectName: projectElem.textContent,
+      description: refElem.textContent.trim() + ' ' + taskElem.textContent
+    });
 
-  elem.insertBefore(link, $('.subject', elem));
-});
+    elem.insertBefore(link, $('.subject', elem));
+  }
+);

@@ -1,33 +1,35 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, location: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('.pane_header:not(.toggl)', {observe: true}, function (elem) {
-  var link, titleFunc, description,
-    projectName = $('title').textContent,
-    divTag = document.createElement("div");
+togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  let description;
+  const projectName = $('title').textContent;
 
-  titleFunc = function () {
-    var titleElem = $('.selected .tab_text .title'),
-      ticketNum = location.href.match(/tickets\/(\d+)/);
+  const titleFunc = function () {
+    const titleElem = $('.selected .tab_text .title');
+    const ticketNum = location.href.match(/tickets\/(\d+)/);
 
     if (titleElem !== null) {
       description = titleElem.textContent.trim();
     }
 
     if (ticketNum) {
-      description = '#' + ticketNum[1].trim() + " " + description;
+      description = '#' + ticketNum[1].trim() + ' ' + description;
     }
     return description;
   };
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'zendesk',
     description: titleFunc,
     projectName: projectName && projectName.split(' - ').shift()
   });
 
-  divTag.appendChild(link);
-  elem.insertBefore(divTag, elem.querySelector(".btn-group"));
+  // Check for strange duplicate buttons. Don't know why this happens in Zendesk.
+  if (elem.querySelector('.toggl-button')) {
+    elem.removeChild(elem.querySelector('.toggl-button'));
+  }
+
+  elem.insertBefore(link, elem.querySelector('.btn-group'));
 });

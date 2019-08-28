@@ -1,20 +1,20 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('#viewTask-infoSummary:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render(
+  '#viewTask-infoSummary:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const projectNr = elem.querySelector('dd').textContent;
+    const project = $('#viewTask-projectName', elem).textContent;
+    const title = $('h2', elem).textContent;
+    const description = projectNr + ' - ' + project + ' : ' + title;
 
-  var link,
-    projectNr = elem.querySelector('dd').textContent,
-    project = $('#viewTask-projectName', elem).textContent,
-    title = $('h2', elem).textContent,
-    description = projectNr + " - " + project + " : " + title;
+    const link = togglbutton.createTimerLink({
+      className: 'proworkflow',
+      description: description,
+      projectName: projectNr + ' - ' + project
+    });
 
-  link = togglbutton.createTimerLink({
-    className: 'proworkflow',
-    description: description,
-    projectName: projectNr + " - " + project
-  });
-
-  elem.appendChild(link);
-});
+    elem.appendChild(link);
+  }
+);

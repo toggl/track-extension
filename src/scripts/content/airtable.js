@@ -1,22 +1,21 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('.detailViewWithActivityFeedBase .dialog > .header > .flex-auto:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render(
+  '.detailViewWithActivityFeedBase .dialog > .header > .flex-auto:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const container = $('.justify-center.relative > .items-center', elem);
 
-  var link, descFunc,
-    container = $('.justify-center > .relative', elem),
-    description = $('.truncate.flex-auto.line-height-3', elem);
+    const getDescription = () => {
+      const description = $('.truncate.line-height-3', elem);
+      return description ? description.innerText : '';
+    };
 
-  descFunc = function () {
-    return !!description ? description.innerText : "";
-  };
+    const link = togglbutton.createTimerLink({
+      className: 'airtable',
+      description: getDescription
+    });
 
-  link = togglbutton.createTimerLink({
-    className: 'airtable',
-    description: descFunc
-  });
-
-  container.appendChild(link);
-});
+    container.appendChild(link);
+  }
+);

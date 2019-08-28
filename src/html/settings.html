@@ -6,38 +6,41 @@
   </head>
   <header>
     <ul class="tab-links">
-      <li class="tab-link active" data-tab="1">General</li>
-      <li class="tab-link" data-tab="2">Pomodoro Timer</li>
-      <li class="tab-link" data-tab="3">Permissions</li>
+      <li class="tab-link" data-tab="general">General</li>
+      <li class="tab-link" data-tab="pomodoro">Pomodoro Timer</li>
+      <li class="tab-link" data-tab="integrations">Integrations</li>
+      <li class="tab-link" data-tab="telemetry">Telemetry</li>
+      <li class="tab-link" data-tab="account">My Account</li>
     </ul>
   </header>
-  <body>
+  <body data-show-review-banner="false">
     <div class="container">
       <div class="guide-container">
         <div class="guide-back">
         </div>
         <div class="guide">
 
-          <div data-id="1">
+          <div data-id="0">
             <b>Welcome to Toggl Button!</b></br>
             <p><i>This Permissions settings tab allows to enable/disable integrations and define custom domains.</i>
             </p>
             <p>
-              You can enable all integrations you want to use with the Toggl Button by clicking the "Enable all" button under "Url Permissions". Also you can pick the tools you want by ticking the checkboxes.
+              You can enable all integrations you want to use with the Toggl Button by clicking the "Enable all" button under "URL Permissions". Also you can pick the tools you want by ticking the checkboxes.
             </p>
-            <p>You can also define custom domains in the "Custom Domain Url Permissions" section of the page. Just type in the domain address, select the tool you are running on it and press "Add"</p>
+            <p>You can also define custom domains in the "Custom Domain URL Permissions" section of the page. Just type in the domain address, select the tool you are running on it and press "Add".</p>
+            <p>The telemetry settings tab allows you to control sending usage metrics and error reports to help make Toggl Button better.</p>
           </div>
 
-          <div data-id="2">
+          <div data-id="1">
             <b>Welcome to Toggl Button!</b></br>
             <p><i>The Permissions tab allows you to enable/disable integrations and define custom domains.</i></p>
             <p>
               You can enable/disable all tools you by clicking the buttons on top of the list. Also you can pick the tools you want by ticking the checkbox in front of them.
             </p>
-            <p>You can also define custom domains in the "Custom Domain Url Permissions" section of the page. Just type in the domain address, select the tool you are running on that domain and press "Add"</p>
+            <p>You can also define custom domains in the "Custom Domain URL Permissions" section of the page. Just type in the domain address, select the tool you are running on that domain and press "Add"</p>
           </div>
 
-          <div data-id="3">
+          <div data-id="2">
             <b>Enable integrations!</b><br>
             <p>Hey Toggler! We have a ton of integrations that make your time tracking life easier, faster &amp; way more convenient.</p>
             <p>To use them, check off any integrations you'd like to enable under "URL Permissions" -- or click enable all.</p>
@@ -51,116 +54,186 @@
           <button>Close</button>
         </div>
       </div>
-      <div class="tabs" data-tab="1">
-        <div class="tab tab-1">
-          <ul class="list">
-            <li>
-              <label for="default-project">Default Project</label>
-              <div id="default-project-container">
+      <div class="tabs">
+        <div class="tab" data-tab="general">
+          <div class="fields">
+            <div class="field">
+              <div class="field__label">
+                <label for="default-project">Default Project</label>
+                <div class="description">The default project will be selected when timer is started with no matched project</div>
               </div>
-              <div class="description">The default project will be selected when timer is started with no matched project</div>
-            </li>
-            <li>
-              <label for="remember-project-per">Remember project per</label>
-              <select id="remember-project-per">
-                <option value="false">Use global default</option>
-                <option value="service">Service</option>
-                <option value="url">URL</option>
-              </select>
-              <div class="description">This will remember the last project used on each service/url separately. Overrides default project.</div>
-            </li>
-            <li>
-              <input type="checkbox" id="show_right_click_button">
-              <label for="show_right_click_button">Show "Start timer" item in right click menu</label>
-              <div class="description">Makes it super easy to start timer with any copied text as description. If something is copied to clipboard you can start timer with that text. If clipboard is empty, page title is used as the description.</div>
-            </li>
-            <li>
-              <input type="checkbox" id="start_automatically">
-              <label for="start_automatically">Start automatically</label>
-              <div class="description">Start time tracking of latest task when the browser starts</div>
-            </li>
-            <li>
-              <input type="checkbox" id="stop_automatically">
-              <label for="stop_automatically">Stop automatically</label>
-              <div class="description">Stop time tracking when the browser is closed</div>
-            </li>
-            <li>
-              <input type="checkbox" id="show_post_start_popup">
-              <label for="show_post_start_popup">Show post-start popup</label>
-              <div class="description">Opens up edit form right after clicking "Start timer" link</div>
-            </li>
-            <li class="nag-nanny">
-              <input type="checkbox" id="nag-nanny">
-              <label for="nag-nanny">Remind me to track</label>
-              <p class="description">Shows reminder notification if user has forgot to start timer while working</p>
-              <div class="subsettings-details">
-                <span>Track activity on workdays</span>
-                <p>
-                  <label for="nag-nanny-from">From:</label>
-                  <input type="time" id="nag-nanny-from">
-                </p>
-                <p>
-                  <label for="nag-nanny-to">To:</label>
-                  <input type="time" id="nag-nanny-to">
-                </p>
-                <p>
-                  <label for="nag-nanny-interval">Minutes since stopping last Time Entry</label>
-                  <input type="number" id="nag-nanny-interval" min="1">
-                </p>
-              </div>
-            </li>
-            <li class="discard-notification">
-              <input type="checkbox" id="idle-detection">
-              <label for="discard-notification">Idle detection</label>
-              <div class="description">Shows notification when timer was tracking but user has been idle and allows to discard idle time</div>
-            </li>
-            <li class="stop-at-day-end">
-              <input type="checkbox" id="stop-at-day-end">
-              <label for="stop-at-day-end">Stop automatically at the end of the day</label>
-              <p class="description">The timer will be stopped automatically at this time of day</p>
-              <div class="subsettings-details">
-                <p>
-                  <label for="day-end-time">End of day time:</label>
-                  <input type="time" id="day-end-time">
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="tab tab-2">
-          <ul class="list">
-            <li class="pomodoro-mode">
-              <input type="checkbox" id="pomodoro-mode">
-              <label for="pomodoro-mode">Enable Pomodoro Timer</label>
-              <p class="description">Allows user to define Pomodoro Timer interval. Pomodoro timer starts running every time a time entry is started. At the end of the interval the user is shown notification to take a break.
-                User can set an option to stop or continue time tracking when pomodoro timer ends.</p>
-              <div class="subsettings-details">
-                <p>
-                  <label for="pomodoro-interval">Pomodoro timer interval in minutes</label>
-                  <input type="number" id="pomodoro-interval" min="1">
-                </p>
-                <p>
-                  <input type="checkbox" id="pomodoro-stop-time">
-                  <label for ="pomodoro-stop-time">Stop time tracking when pomodoro time ends</label>
-                </p>
-                <div class="pomodoro-sound">
-                  <input type="checkbox" id="enable-sound-signal">
-                  <label for="enable-sound-signal">Enable sound notification at the end of an interval</label>
 
-                  <p class="pomodoro-sound-volume">
-                    <label for="sound-volume">Sound volume</label>
-                    <input type="range" id="sound-volume">
-                    <span id="volume-label">100%</span>
-                    <button id="sound-test">Test &#9658;</button>
-                  </p>
+              <div>
+                <div id="default-project-container">
                 </div>
+              </div>
             </div>
-            </li>
-          <ul>
+
+            <div class="field">
+              <div class="field__label">
+                <label for="remember-project-per">Remember last chosen project</label>
+                <div class="description">Remembers the last project you used on each integration or URL. Overrides the default project.</div>
+              </div>
+
+              <div>
+                <select id="remember-project-per">
+                  <option value="false">Use global default</option>
+                  <option value="service">Service</option>
+                  <option value="url">URL</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="field__label">
+                <label for="enable-auto-tagging">Enable automatic tagging</label>
+                <div class="description">If an integration supports tags or labels, automatically add them to the timer and
+                  create them in Toggl. Not available in all integrations.</div>
+              </div>
+
+              <div>
+                <input type="checkbox" id="enable-auto-tagging">
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="field">
+              <div class="field__label">
+                <label for="start_automatically">Start timer automatically</label>
+                <div class="description">Starts the timer with the most recent task when the browser is opened</div>
+              </div>
+              <div>
+                <input type="checkbox" id="start_automatically">
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="field__label">
+                <label for="stop_automatically">Stop timer automatically</label>
+                <div class="description">Stops the timer when the browser is closed</div>
+              </div>
+              <div>
+                <input type="checkbox" id="stop_automatically">
+              </div>
+            </div>
+
+            <div class="field nag-nanny">
+              <div class="field__label">
+                <label for="nag-nanny">Remind me to track time</label>
+                <div class="description">Receive a notification if you forget to track time during work hours</div>
+                <div class="subsettings-details">
+                    On weekdays from <input type="time" id="nag-nanny-from"> to <input type="time" id="nag-nanny-to">&nbsp;, after <input type="number" id="nag-nanny-interval" min="1"> minutes since the last time entry was stopped.
+                </div>
+              </div>
+              <div>
+                <input type="checkbox" id="nag-nanny">
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="field__label">
+                <label for="discard-notification">Idle detection</label>
+                <div class="description">Receive a notification when you've been idle and the timer was running, allowing you to discard the time.</div>
+              </div>
+              <div>
+                <input type="checkbox" id="idle-detection">
+              </div>
+            </div>
+
+            <div class="field stop-at-day-end">
+              <div class="field__label">
+                <label for="stop-at-day-end">Stop timer automatically at the end of the day</label>
+                <div class="description">The timer will be stopped automatically when your day ends</div>
+                <div class="subsettings-detail">
+                  <div class="subsettings-details">
+                    <label for="day-end-time">End of day time:</label>
+                    <input type="time" id="day-end-time">
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <input type="checkbox" id="stop-at-day-end">
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="field">
+              <div class="field__label">
+                <label for="show_post_start_popup">Show post-start popup</label>
+                <div class="description">Opens the edit form immediately after clicking a "Start timer" link</div>
+              </div>
+              <div>
+                <input type="checkbox" id="show_post_start_popup">
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="field__label">
+                <label for="show_right_click_button">Show "Start timer" item in right click menu</label>
+                <div class="description">Makes it super easy to start a timer with any highlighted text. If you highlight text on the page, you can start a timer for it in the right-click menu. If nothing is selected, page title is used as the description.</div>
+              </div>
+              <div>
+                <input type="checkbox" id="show_right_click_button">
+              </div>
+            </div>
+
+            <div class="field danger-zone">
+              <div class="field__label">
+                <label>Reset all settings</label>
+                <p><strong>This action is irreversible.</strong> All Toggl Button settings will be reset and you will be logged out.</p>
+              </div>
+              <div>
+                <button id="reset-all-settings">Reset all settings to default</button>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="tab tab-3">
+        <div class="tab" data-tab="pomodoro">
+          <div class="fields">
+            <div class="field pomodoro-mode">
+              <div class="field__label">
+                <label for="pomodoro-mode">Enable Pomodoro Timer</label>
+                <div class="description">A Pomodoro timer is started when you start a time entry. At the end of the Pomodoro interval, you will receive a notification to take a break.</div>
+
+                <div class="subsettings-details">
+                  <div>
+                    <label for="pomodoro-interval">Pomodoro timer interval in minutes</label>
+                    <input type="number" id="pomodoro-interval" min="1">
+                  </div>
+                  <p>
+                    <input type="checkbox" id="pomodoro-stop-time">
+                    <label for="pomodoro-stop-time">Stop time tracking when pomodoro time ends</label>
+                  </p>
+                  <div class="pomodoro-sound">
+                    <input type="checkbox" id="enable-sound-signal">
+                    <label for="enable-sound-signal">Enable sound notification at the end of an interval</label>
+
+                    <p class="pomodoro-sound-volume">
+                      <label for="sound-volume">Sound volume</label>
+                      <input type="range" id="sound-volume">
+                      <span id="volume-label">100%</span>
+                      <button id="sound-test">Test &#9658;</button>
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+              <div>
+                <input type="checkbox" id="pomodoro-mode">
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="tab" data-tab="integrations">
           <div class="section">
-            <h2>Url Permissions</h2>
+            <h2>Integrations</h2>
+            <p>Enable the tools you want to use with Toggl Button. You can enable everything by clicking the "Enable all" button.</p>
             <div class="permissions-toolbar" data-id="regular">
               <input type="text" id="permission-filter" placeholder="Filter permissions"/>
               <a href="javascript:void(0)" id="filter-clear">&times;</a>
@@ -170,27 +243,94 @@
               </div>
             </div>
             <div id="perm-container"></div>
-            <p class="description">Enable tools you want to use with Toggl Button. You can enable all by clicking "Enable all" button in the top.</p>
           </div>
 
-          </br>
-
           <div class="section">
-            <h2>Custom Domain Url Permissions</h2>
-            <input type="text" id="new-permission" placeholder="custom domain url"/>
-            <div id="origins-container"></div>
-            <p class="description">Define custom domains here. Just type in the domain name without http(s) in format "toggl.com" and select the integration from dropdown. Ports are currently not supported.</p>
-            <button id="add-permission">Add</button>
+            <h2>Custom Integrations</h2>
+            <p>If you use a tool hosted on a custom domain, you can enable it here. Enter the domain name in the format "toggl.com" and select the integration from the dropdown. <em>Ports are not supported.</em></p>
+            <input type="text" id="new-permission" placeholder="Custom domain url"/>
+            <div class="button-container">
+                <div id="origins-container"></div>
+                <button id="add-permission">Add</button>
+            </div>
             <div class="permissions-toolbar" data-id="custom">
             </div>
             <div id="custom-perm-container"></div>
           </div>
         </div>
+        <div class="tab" data-tab="telemetry">
+          <ul class="list">
+            <li>
+              <input type="checkbox" id="send-usage-statistics">
+              <label for="send-usage-statistics">Send usage statistics</label>
+              <div class="description">Help us understand how Toggl Button is used by sending usage statistics.</div>
+            </li>
+            <li>
+              <input type="checkbox" id="send-error-reports">
+              <label for="send-error-reports">Send error reports</label>
+              <div class="description">Submit error reports to help us fix issues with Toggl Button.</div>
+            </li>
+          </ul>
+        </div>
+        <div class="tab" data-tab="account">
+          <div class="fields">
+            <div class="field">
+                <div class="field__label">
+                  <label>Logged in as</label>
+                </div>
+                <div>
+                  <span id="login-info"></span>
+                </div>
+              </div>
+            <div class="field">
+              <div class="field__label">
+                <label>Go to Toggl Web App</label>
+                <p>View reports and change workspace settings.</p>
+              </div>
+              <div>
+                <a href="https://toggl.com/app/timer" target="_blank">Toggl Web App</a>
+              </div>
+            </div>
+            <div class="field">
+              <div class="field__label">
+                <label>Sync Toggl data</label>
+                <p>Your latest projects, tags etc. will be loaded into Toggl Button.</p>
+              </div>
+              <div>
+                <button id="sync-data">Sync with Toggl</button>
+              </div>
+            </div>
+            <div class="field">
+              <div class="field__label">
+                <label>Log out of my Toggl Account</label>
+                <p>You will be logged out of Toggl Button.</p>
+              </div>
+              <div>
+                <button id="log-out">Log Out</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="footer">
-      Version <span id="version"></span>
-      <p class="changelog">Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a></p>
+      <div id="footer-content">
+        <div>
+          <div>Version <span id="version"></span></div>
+          <div>
+            Changelog: <a href="http://toggl.github.io/toggl-button">http://toggl.github.io/toggl-button</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="review-prompt">
+      <span>Enjoying Toggl Button?</span>
+      <a target="_blank" rel="noopener noreferrer">
+        <button>Leave us a review</button>
+      </a>
+      <span id="close-review-prompt">
+        Close and don't ask again
+      </span>
     </div>
     <script src="../scripts/settings.js"></script>
   </body>

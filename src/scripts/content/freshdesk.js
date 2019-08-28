@@ -1,21 +1,15 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false, createTag:false*/
-
 'use strict';
+/* global createTag */
 
-togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
-  var link, container = createTag('li', 'ticket-btns'),
-    //duration,
-    description,
-    titleElem = $('h2.subject', elem),
-    idElem = $('#ticket-display-id'),
-    //trackedContainer = createTag('div', 'open-box toggl-time-tracked'),
-    //trackedElem = $('.open-box'),
-    projectElem = $('.logo_text'),
-    buttonsElem = $('.ticket-actions > ul');
+togglbutton.render('#Pagearea:not(.toggl)', { observe: true }, function (elem) {
+  const container = createTag('li', 'ticket-btns');
+  const titleElem = $('h2.subject', elem);
+  const idElem = $('#ticket-display-id');
+  const projectElem = $('.logo_text');
+  const buttonsElem = $('.ticket-actions > ul');
+  const description = idElem.textContent.trim() + ' ' + titleElem.textContent.trim();
 
-  description = idElem.textContent.trim() + ' ' + titleElem.textContent.trim();
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'freshdesk',
     description: description,
     projectName: projectElem && projectElem.textContent.trim(),
@@ -24,17 +18,46 @@ togglbutton.render('#Pagearea:not(.toggl)', {observe: true}, function (elem) {
 
   container.appendChild(link);
   buttonsElem.appendChild(container, buttonsElem);
-/*
-  duration = togglbutton.calculateTrackedTime(description);
-  h3 = document.createElement("h3");
-  h3.textContent = "Time tracked";
+});
 
-  p = document.createElement("p");
-  p.setAttribute("title", "Time tracked with Toggl: " + duration);
-  p.textContent = duration;
+// Freshdesk mint (late 2018)
+togglbutton.render('.page-actions__left:not(.toggl)', { observe: true }, elem => {
+  const descriptionElem = $('.ticket-subject-heading');
 
-  trackedContainer.appendChild(h3);
-  trackedContainer.appendChild(p);
-  trackedElem.parentNode.insertBefore(trackedContainer, trackedElem.nextSibling);
-*/
+  // if there's no description element it's overview page, don't show
+  if (!descriptionElem) {
+    return;
+  }
+
+  const descriptionSelector = () => {
+    const ticketNumber = $('.breadcrumb__item.active').textContent.trim();
+    // Remove other buttons/controls from the ticket subject
+    const subjectElement = $('.ticket-subject-heading').cloneNode(true);
+    for (const child of subjectElement.children) {
+      subjectElement.removeChild(child);
+    }
+
+    return `${ticketNumber} ${subjectElement.textContent.trim()}`;
+  };
+
+  const link = togglbutton.createTimerLink({
+    className: 'freshdesk__mint',
+    description: descriptionSelector,
+    buttonType: 'minimal',
+    tags: () => {
+      const tagList = $('.ticket-tags ul');
+      if (!tagList ||
+        !tagList.children ||
+        !tagList.children.length) { return []; }
+
+      return [...tagList.querySelectorAll('li')]
+        .map(listItem => {
+          const content = listItem.querySelector('.tag-options');
+          const tag = content ? content.textContent : '';
+          return tag.trim().replace(/[\r\n\t]/ig, ''); /* UI has strange characters in the markup, let's avoid it */
+        });
+    }
+  });
+
+  elem.appendChild(link);
 });

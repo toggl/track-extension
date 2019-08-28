@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - 10.14.0
+
+jobs:
+  include:
+    - stage: build
+      script: npm run lint:ci
+      script: npm run build
+    - stage: release
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release

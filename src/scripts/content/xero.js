@@ -1,18 +1,70 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, createTag: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('#frmMain', {}, function (elem) {
-  var link, liTag;
+togglbutton.render('.xrh-header--main:not(.toggl)', {}, function (elem) {
+  const container = $('.xrh-addons');
+  let descriptionNode;
 
-  link = togglbutton.createTimerLink({
+  if ($('#page_title h1')) {
+    // Quotes
+    // Sales overview
+    // Purchase Orders
+    // Purchases overview
+    // Expense claims
+    // Products and services
+    descriptionNode = $('#page_title h1');
+  } else if ($('#title')) {
+    // Invoices
+    // Bills
+    // Bank account
+    // Manual journals
+    // Pay Run
+    descriptionNode = $('#title');
+  } else if ($('.page-title h1')) {
+    // Reports child
+    descriptionNode = $('.page-title h1').cloneNode(true);
+    descriptionNode.removeChild($('span', descriptionNode));
+  } else if ($('header.xui-pageheading')) {
+    // Dashboard
+    // Reports
+    // Advanced accounting
+    // Projects
+    descriptionNode = $('.xui-pageheading');
+    // Dashboard
+    // Reports
+    // Projects
+    if ($('h1', descriptionNode)) {
+      descriptionNode = $('h1', descriptionNode);
+    }
+  } else if ($('.fa-pagetitle')) {
+    // Fixed assets
+    descriptionNode = $('.fa-pagetitle');
+  }
+
+  const link = togglbutton.createTimerLink({
     className: 'xero',
     projectName: 'Finance',
-    description: $('#frmMain h1').textContent.trim()
+    description: descriptionNode ? descriptionNode.textContent.trim() : '',
+    buttonType: 'minimal'
   });
 
-  liTag = createTag("li", "xn-h-menu");
-  liTag.appendChild(link);
-  $('.xn-h-header-tabs ul').appendChild(liTag);
+  const div = createTag('div', 'xrh-focusable--child xrh-iconwrapper');
+  div.appendChild(link);
+
+  const button = createTag('button', 'xrh-button xrh-addon--iconbutton xrh-header--iconbutton xrh-focusable--parent');
+  button.type = 'button';
+
+  button.addEventListener('click', function (e) {
+    e.stopPropagation();
+    link.click();
+  });
+
+  button.appendChild(div);
+
+  const liTag = createTag('li', 'xrh-addon');
+  liTag.appendChild(button);
+
+  if (container) {
+    const userIcon = $('[data-automationid="xrh-addon-user"]', container);
+    container.insertBefore(liTag, userIcon);
+  }
 });

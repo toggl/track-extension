@@ -1,31 +1,32 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('.content-column .btn-toolbar:not(.toggl)', {observe: true}, function (elem) {
+togglbutton.render(
+  '.content-column .btn-toolbar:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const description = function () {
+      let first = document.querySelector('.pcs-template-body .pcs-label b');
+      let second = document.querySelector('.pcs-template-body #tmp_ref_number');
 
-  var link,
-    description = function () {
-      var first = document.querySelector('.pcs-template-body .pcs-label b'),
-        second = document.querySelector('.pcs-template-body #tmp_ref_number');
-
-      first = (!!first ? first.textContent.trim() + " " : "");
-      second = (!!second ? second.textContent.trim() : "");
+      first = first ? first.textContent.trim() + ' ' : '';
+      second = second ? second.textContent.trim() : '';
       return first + second;
-    },
+    };
 
-    project = function () {
-      var p = document.querySelector('.pcs-template-body .pcs-customer-name a');
-      p = (!!p ? p.textContent.trim() : "");
+    const project = function () {
+      let p = document.querySelector(
+        '.pcs-template-body .pcs-customer-name a'
+      );
+      p = p ? p.textContent.trim() : '';
       return p;
     };
 
-  link = togglbutton.createTimerLink({
-    className: 'zoho_books',
-    description: description,
-    projectName: project
-  });
+    const link = togglbutton.createTimerLink({
+      className: 'zoho_books',
+      description: description,
+      projectName: project
+    });
 
-  elem.appendChild(link);
-});
+    elem.appendChild(link);
+  }
+);

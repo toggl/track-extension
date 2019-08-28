@@ -1,15 +1,13 @@
-/*jslint indent: 2 */
-/*global document: false, $: false, localStorage: false, chrome:false*/
-
 'use strict';
+const browser = require('webextension-polyfill');
 
-var userData, offlineUser;
-offlineUser = localStorage.getItem('offline_users');
+let userData;
+const offlineUser = localStorage.getItem('offline_users');
 
 if (offlineUser) {
   userData = JSON.parse(localStorage.getItem('offline_users-' + offlineUser));
   if (userData && userData.offlineData) {
-    chrome.extension.sendMessage({
+    browser.runtime.sendMessage({
       type: 'userToken',
       apiToken: userData.offlineData.api_token
     });
@@ -17,18 +15,36 @@ if (offlineUser) {
 }
 
 (function () {
-  var version, source, s;
-  version = chrome.runtime.getManifest().version;
-  source = 'window.TogglButton = { version: "' + version + '" }';
-  s = document.createElement('script');
+  const version = browser.runtime.getManifest().version;
+  const source = `window.TogglButton = { version: "${version}" }`;
+  const s = document.createElement('script');
   s.textContent = source;
   document.body.appendChild(s);
-}());
+})();
 
 document.addEventListener('webkitvisibilitychange', function () {
   if (!document.webkitHidden) {
-    chrome.extension.sendMessage({type: "sync"}, function () {return; });
+    browser.runtime.sendMessage({ type: 'sync' });
   }
 });
 
-chrome.extension.sendMessage({type: "sync"}, function () {return; });
+browser.runtime.sendMessage({ type: 'sync' });
+
+function completeLogin () {
+  location.href = browser.runtime.getURL('html/login.html?source=web-login');
+}
+
+function handleIncomingMessage (event) {
+  if (
+    event.source === window &&
+    event.data &&
+    event.data.direction === 'from-public-web'
+  ) {
+    switch (event.data.message) {
+      case 'login-success': completeLogin(); break;
+      default: console.log('Unsupported event', event);
+    }
+  }
+}
+
+window.addEventListener('message', handleIncomingMessage);

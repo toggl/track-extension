@@ -1,37 +1,39 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, location: false, togglbutton: false*/
-
 'use strict';
 
-togglbutton.render('.case .content-top-toolbar .controls ul:not(.toggl)', { observe: true }, function (elem) {
-  console.log('boom');
+togglbutton.render(
+  '.case .content-top-toolbar .controls ul:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const projectName = document.querySelector('title').textContent;
+    const liTag = document.createElement('li');
 
-  var link, titleFunc, description,
-    projectName = document.querySelector('title').textContent,
-    liTag = document.createElement("li");
+    const titleFunc = function () {
+      const titleElem = document.querySelector('.content h1.title');
+      const ticketNum = location.href.match(/case\/(\d+)/);
+      let description;
 
-  titleFunc = function () {
-    var titleElem = document.querySelector('.content h1.title'),
-      ticketNum = location.href.match(/case\/(\d+)/);
+      if (titleElem !== null) {
+        description = titleElem.textContent;
+      }
 
-    if (titleElem !== null) {
-      description = titleElem.textContent;
-    }
+      if (ticketNum) {
+        description = '#' + ticketNum[1] + ' ' + description;
+      }
 
-    if (ticketNum) {
-      description = '#' + ticketNum[1] + " " + description;
-    }
+      return description;
+    };
 
-    return description;
-  };
+    const link = togglbutton.createTimerLink({
+      className: 'desk',
+      description: titleFunc,
+      projectName: projectName && projectName.split(': ').shift(),
+      buttonType: 'minimal'
+    });
 
-  link = togglbutton.createTimerLink({
-    className: 'desk',
-    description: titleFunc,
-    projectName: projectName && projectName.split(': ').shift(),
-    buttonType: "minimal"
-  });
-
-  liTag.appendChild(link);
-  elem.insertBefore(liTag, elem.querySelector(".case .controls.pull-right li.actions"));
-});
+    liTag.appendChild(link);
+    elem.insertBefore(
+      liTag,
+      elem.querySelector('.case .controls.pull-right li.actions')
+    );
+  }
+);

@@ -1,13 +1,12 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
 // Tickets page
-togglbutton.render('#content .right:not(.toggl)', {observe: true}, function (elem) {
-  var div, link,
-    description = $('h2.Thread__subject').textContent.trim(),
-    project = $('.site-header__title').textContent.trim(),
-    existingTag = $('.sidebar__module.toggl');
+togglbutton.render('#content .right:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const description = $('h2.Thread__subject').textContent.trim();
+  const project = $('.site-header__title').textContent.trim();
+  const existingTag = $('.sidebar__module.toggl');
 
   if (existingTag) {
     if (existingTag.parentNode.firstChild.classList.contains('toggl')) {
@@ -16,10 +15,10 @@ togglbutton.render('#content .right:not(.toggl)', {observe: true}, function (ele
     existingTag.parentNode.removeChild(existingTag);
   }
 
-  div = document.createElement("div");
-  div.classList.add("sidebar__module", "toggl");
+  const div = document.createElement('div');
+  div.classList.add('sidebar__module', 'toggl');
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'codebase',
     description: description,
     projectName: project
@@ -30,16 +29,19 @@ togglbutton.render('#content .right:not(.toggl)', {observe: true}, function (ele
 });
 
 // Merge Requests page
-togglbutton.render('.merge-request-summary:not(.toggl)', {observe: true}, function () {
-  var link,
-    description = $('h2.u-ellipsis').textContent.trim(),
-    project = $('.site-header__title').textContent.trim();
+togglbutton.render(
+  '.merge-request-summary:not(.toggl)',
+  { observe: true },
+  function () {
+    const description = $('h2.u-ellipsis').textContent.trim();
+    const project = $('.site-header__title').textContent.trim();
 
-  link = togglbutton.createTimerLink({
-    className: 'codebase',
-    description: description,
-    projectName: project
-  });
+    const link = togglbutton.createTimerLink({
+      className: 'codebase',
+      description: description,
+      projectName: project
+    });
 
-  $('.merge-request-summary__title').appendChild(link);
-});
+    $('.merge-request-summary__title').appendChild(link);
+  }
+);

@@ -1,23 +1,94 @@
-/*jslint indent: 2 plusplus: true*/
-/*global $: false, togglbutton: false*/
-
 'use strict';
+/* global togglbutton, $ */
 
-function getProjectNameFromLabel(elem) {
-  var projectLabel = '', projectLabelEle = $('.pname', elem.parentNode.parentNode);
+const todoistEditor = document.getElementById('content');
+
+togglbutton.render(
+  '.task_item .content:not(.toggl)',
+  { observe: true, observeTarget: todoistEditor, debounceInterval: 100 },
+  elem => {
+    const container = $('.text', elem);
+
+    const descriptionSelector = () => {
+      const clone = container.cloneNode(true);
+      let i = 0;
+      let child = null;
+
+      // Clean up UI elements that appear in the same node as the description
+      while (clone.children.length > i) {
+        child = clone.children[i];
+        if (
+          child.tagName === 'B' ||
+          child.tagName === 'I' ||
+          child.tagName === 'STRONG' ||
+          child.tagName === 'EM'
+        ) {
+          i++;
+        } else if (child.tagName === 'A') {
+          if (
+            child.classList.contains('ex_link') ||
+            child.getAttribute('href').indexOf('mailto:') === 0
+          ) {
+            i++;
+          } else {
+            child.remove();
+          }
+        } else {
+          child.remove();
+        }
+      }
+
+      return clone.textContent.trim();
+    };
+
+    const tagsSelector = () => {
+      const tags = elem.querySelectorAll('.labels_holder a:not(.label_sep)');
+
+      return [...tags].map(tag => {
+        return tag.textContent;
+      });
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'todoist',
+      description: descriptionSelector,
+      projectName: getProjectNames(elem),
+      buttonType: 'minimal',
+      tags: tagsSelector
+    });
+
+    container.insertBefore(link, container.lastChild);
+  }
+);
+
+/*
+Projects may have a hierarchy in Todoist.
+
+The selector functions for project name take this into account.
+All project names found in the hierarchy will be passed to Toggl button,
+which will figure out what the lowest level existing project is.
+
+E.g.
+- Project hierarchy is MyProject > MySubProject > MyFeatureProject
+- Selector will find all three project names and pass to Toggl Button
+- Toggl Button will first check if MyFeatureProject exists, and if it doesn't, try to use the next parent etc.
+*/
+
+function getProjectNameFromLabel (elem) {
+  let projectLabel = '';
+  const projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
   if (projectLabelEle) {
     projectLabel = projectLabelEle.textContent.trim();
   }
   return projectLabel;
 }
 
-var levelPattern = /(?:^|\s)indent_([0-9]*?)(?:\s|$)/;
-function getParentEle(sidebarCurrentEle) {
-  var curLevel, parentClass, parentCandidate;
-  curLevel = sidebarCurrentEle.className.match(levelPattern)[1];
-  parentClass = 'indent_' + (curLevel - 1);
+function getParentEle (sidebarCurrentEle) {
+  const levelPattern = /(?:^|\s)indent_(\d*?)(?:\s|$)/;
+  const curLevel = sidebarCurrentEle.className.match(levelPattern)[1];
+  const parentClass = 'indent_' + (curLevel - 1);
+  let parentCandidate = sidebarCurrentEle;
 
-  parentCandidate = sidebarCurrentEle;
   while (parentCandidate.previousElementSibling) {
     parentCandidate = parentCandidate.previousElementSibling;
     if (parentCandidate.classList.contains(parentClass)) {
@@ -27,27 +98,35 @@ function getParentEle(sidebarCurrentEle) {
   return parentCandidate;
 }
 
-function isTopLevelProject(sidebarCurrentEle) {
+function isTopLevelProject (sidebarCurrentEle) {
   return sidebarCurrentEle.classList.contains('indent_1');
 }
 
-function getProjectNameHierarchy(sidebarCurrentEle) {
-  var parentProjectEle, projectName;
-  projectName = $('.name', sidebarCurrentEle).firstChild.textContent.trim();
+function getProjectNameHierarchy (sidebarCurrentEle) {
+  const projectName = $(
+    '.name',
+    sidebarCurrentEle
+  ).firstChild.textContent.trim();
+
   if (isTopLevelProject(sidebarCurrentEle)) {
     return [projectName];
   }
-  parentProjectEle = getParentEle(sidebarCurrentEle);
+
+  const parentProjectEle = getParentEle(sidebarCurrentEle);
   return [projectName].concat(getProjectNameHierarchy(parentProjectEle));
 }
 
-function projectWasJustCreated(projectId) {
+function projectWasJustCreated (projectId) {
   return projectId.startsWith('_');
 }
 
-function getSidebarCurrentEle(elem) {
-  var editorInstance, projectId, sidebarRoot, sidebarColorEle, sidebarCurrentEle;
-  editorInstance = elem.closest('.project_editor_instance');
+function getSidebarCurrentEle (elem) {
+  let projectId;
+  let sidebarRoot;
+  let sidebarColorEle;
+  let sidebarCurrentEle;
+  const editorInstance = elem.closest('.project_editor_instance');
+
   if (editorInstance) {
     projectId = editorInstance.getAttribute('data-project-id');
     sidebarRoot = $('#project_list');
@@ -63,57 +142,27 @@ function getSidebarCurrentEle(elem) {
   return sidebarCurrentEle;
 }
 
-function getProjectNames(elem) {
-  var projectNames, viewingInbox, sidebarCurrentEle;
-  viewingInbox = $('#filter_inbox.current, #filter_team_inbox.current');
-  if (viewingInbox) {
-    projectNames = ['Inbox'];
-  } else {
-    sidebarCurrentEle = getSidebarCurrentEle(elem);
-    if (sidebarCurrentEle) {
-      projectNames = getProjectNameHierarchy(sidebarCurrentEle);
+function getProjectNames (elem) {
+  // Return a function for timer link to use, in order for projects to be retrieved
+  // at the moment the button is clicked (rather than only on load)
+  return () => {
+    let projectNames;
+    let sidebarCurrentEle;
+
+    const isViewingInbox = $(
+      '#filter_inbox.current, #filter_team_inbox.current'
+    );
+
+    if (isViewingInbox) {
+      projectNames = ['Inbox'];
     } else {
-      projectNames = [getProjectNameFromLabel(elem)];
-    }
-  }
-  return projectNames;
-}
-
-togglbutton.render('.task_item .content:not(.toggl)', {observe: true}, function (elem) {
-  var link, descFunc, container = $('.text', elem);
-
-  descFunc = function () {
-    var clone = container.cloneNode(true),
-      i = 0,
-      child = null;
-
-    while (clone.children.length > i) {
-      child = clone.children[i];
-      if (child.tagName === "B"
-          || child.tagName === "I"
-          || child.tagName === "STRONG"
-          || child.tagName === "EM") {
-        i++;
-      } else if (child.tagName === "A") {
-        if (child.classList.contains("ex_link")
-            || child.getAttribute("href").indexOf("mailto:") === 0) {
-          i++;
-        } else {
-          child.remove();
-        }
+      sidebarCurrentEle = getSidebarCurrentEle(elem);
+      if (sidebarCurrentEle) {
+        projectNames = getProjectNameHierarchy(sidebarCurrentEle);
       } else {
-        child.remove();
+        projectNames = [getProjectNameFromLabel(elem)];
       }
     }
-
-    return clone.textContent.trim();
+    return projectNames;
   };
-
-  link = togglbutton.createTimerLink({
-    className: 'todoist',
-    description: descFunc(),
-    projectName: getProjectNames(elem)
-  });
-
-  container.insertBefore(link, container.lastChild);
-});
+}

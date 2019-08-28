@@ -1,17 +1,15 @@
-/*jslint indent: 2, unparam: true*/
-/*global $: false, document: false, togglbutton: false*/
-
 'use strict';
 
-//On premise installation
-togglbutton.render('.requestEditbrsty:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    description = $('#requestSubject_ID', elem).textContent,
-    project = "Tickets to be Allocated",
-    ticketId = $('#requestId', elem).textContent,
-    togglCell = document.createElement("td");
+// On premise installation
+togglbutton.render('.requestEditbrsty:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const description = $('#requestSubject_ID', elem).textContent;
+  const project = 'Tickets to be Allocated';
+  const ticketId = $('#requestId', elem).textContent;
+  const togglCell = document.createElement('td');
 
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'manageengine',
     description: ticketId + ' : ' + description,
     projectName: project
@@ -22,22 +20,25 @@ togglbutton.render('.requestEditbrsty:not(.toggl)', {observe: true}, function (e
   $('td#startListMenuItems > table > tbody > tr').appendChild(togglCell);
 });
 
-//Cloud version
-togglbutton.render('#WorkOrderDetailsTable_CT:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    description = $('#details-middle-container h1', elem).textContent,
-    projectElem = $("#projectholder p") || {},
-    project = projectElem.textContent,
-    ticketId = $('#reqid', elem).textContent,
-    togglCell = document.createElement("li");
+// Cloud version
+togglbutton.render(
+  '#WorkOrderDetailsTable_CT:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const description = $('#details-middle-container h1', elem).textContent;
+    const projectElem = $('#projectholder p') || {};
+    const project = projectElem.textContent;
+    const ticketId = $('#reqid', elem).textContent;
+    const togglCell = document.createElement('li');
 
-  link = togglbutton.createTimerLink({
-    className: 'manageengine',
-    description: ticketId + ': ' + description,
-    projectName: project
-  });
+    const link = togglbutton.createTimerLink({
+      className: 'manageengine',
+      description: ticketId + ': ' + description,
+      projectName: project
+    });
 
-  togglCell.appendChild(link);
+    togglCell.appendChild(link);
 
-  $('#details-middle-container ul.reply-actions').appendChild(togglCell);
-});
+    $('#details-middle-container ul.reply-actions').appendChild(togglCell);
+  }
+);

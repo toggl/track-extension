@@ -1,22 +1,34 @@
-/*jslint indent: 2 */
-/*global $: false, document: false, togglbutton: false*/
 'use strict';
 
-togglbutton.render('.editor__header:not(.toggl)', {observe: true}, function (elem) {
-  var link,
-    tabs = $('.editor__switch-mode', elem),
-    description = function () {
-      return document.querySelector(".editor-title__input").value;
-    };
+// WP 4.9
+togglbutton.render('#poststuff:not(.toggl)', { observe: true }, function (elem) {
+  const heading = document.querySelector('.wp-heading-inline');
+  const description = function () {
+    return elem.querySelector('#title').value;
+  };
 
-  if (!!$('.toggl-button')) {
-    return;
-  }
-
-  link = togglbutton.createTimerLink({
+  const link = togglbutton.createTimerLink({
     className: 'wordpress',
     description: description
   });
 
-  tabs.parentElement.insertBefore(link, tabs);
+  heading.append(link);
+});
+
+// WP 5.1
+togglbutton.render('.edit-post-header:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const targetElement = elem.querySelector('.edit-post-header__settings');
+  const description = function () {
+    const titleInput = document.getElementById('post-title-0');
+    return titleInput ? titleInput.value : '';
+  };
+
+  const link = togglbutton.createTimerLink({
+    className: 'wordpress',
+    description: description
+  });
+
+  targetElement.prepend(link);
 });

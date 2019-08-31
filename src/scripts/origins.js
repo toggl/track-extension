@@ -477,6 +477,10 @@ export default {
     url: '*://www.sourcelair.com/*',
     name: 'Sourcelair'
   },
+  'standardnotes.org': {
+    url: '*://*.standardnotes.org/*',
+    name: 'Standardnotes'
+  },
   'spidergap.com': {
     url: '*://*.spidergap.com/*',
     name: 'Spidergap'

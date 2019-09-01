@@ -20,7 +20,6 @@ togglbutton.render(
     });
 
     container.appendChild(link);
-    console.log(togglButtonLoc.parentNode);
     togglButtonLoc.parentNode.insertBefore(container, togglButtonLoc);
   }
 );

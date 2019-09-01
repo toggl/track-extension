@@ -140,6 +140,10 @@ export default {
     url: '*://*.drupal.org/*',
     name: 'Drupal'
   },
+  'dynamics.com': {
+    url: '*://*.dynamics.com/*',
+    name: 'Dynamics 365'
+  },
   'eproject.me': {
     url: '*://*.eproject.me/*',
     name: 'Eproject.me'

@@ -34,6 +34,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [DokuWiki](https://www.dokuwiki.org/)
 - [Draftin](https://draftin.com/)
 - [Drupal](https://www.drupal.org)
+- [Dynamics 365 Customer Engagement (Unified Interface)](https://www.dynamics.com/)
 - [e(Project)](https://eproject.me/)
 - [Esa](https://esa.io)
 - [Eventum](https://launchpad.net/eventum)

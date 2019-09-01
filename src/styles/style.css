@@ -1315,10 +1315,23 @@ label > .toggl-button.outlook {
 }
 
 /********* NOTION *********/
-#notion-app .toggl-button.notion {
+#notion-app .notion-tb-wrapper {
   cursor: pointer;
-  margin-right: 13px;
-  margin-top: 6px;
+  margin-left: 3px;
+  padding: 2px 8px 0 6px;
+  border-radius: 3px;
+  order: 2;
+}
+
+#notion-app .notion-tb-wrapper:hover {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+#notion-app .toggl-button.notion {
+  color: rgba(55, 53, 47, 0.4);
+  text-decoration: none;
+  line-height: 1.35;
+  height: 23px;
 }
 
 /********* TURTLE *********/

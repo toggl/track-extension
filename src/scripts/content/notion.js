@@ -1,27 +1,26 @@
 'use strict';
 
 togglbutton.render(
-  '.notion-overlay-container .notion-peek-renderer .notion-page-controls + .notion-selectable > [contenteditable="true"][placeholder="Untitled"]:not(.toggl)',
+  '.notion-page-controls:not(.toggl)',
   { observe: true },
   function (elem) {
     const container = createTag('div', 'button-link notion-tb-wrapper');
-    const descriptionElem = elem;
-    const projectElem = $(
-      '.notion-sidebar-container > * > * > * > * > * > * > * > * + * > * > *'
-    );
+
+    const descriptionElem = () => {
+      return document.title;
+    };
+
     const togglButtonLoc = $(
-      '.notion-overlay-container .notion-peek-renderer [rel="noopener noreferrer nofollow"] + [style*="flex-grow: 1"] + *'
+      '.notion-page-controls > div'
     );
 
     const link = togglbutton.createTimerLink({
       className: 'notion',
-      description: descriptionElem.textContent.trim(),
-      projectName: projectElem && projectElem.textContent,
-      calculateTotal: true,
-      buttonType: 'minimal'
+      description: descriptionElem
     });
 
     container.appendChild(link);
+    console.log(togglButtonLoc.parentNode);
     togglButtonLoc.parentNode.insertBefore(container, togglButtonLoc);
   }
 );

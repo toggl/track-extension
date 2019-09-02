@@ -1,43 +1,29 @@
 'use strict';
 
-// Meeting details
-togglbutton.render('.popupPanel:not(.toggl)', { observe: true }, function (
-  elem
-) {
-  const container = $('._ch_q1 ._ch_f1', elem).parentElement;
-  const title = $('._ch_q1 ._ch_g1', elem);
+// Inbox emails
+togglbutton.render('[aria-label="Content pane"] [role="heading"] span:not(.toggl)', { observe: true }, elem => {
+  const container = elem.parentElement;
 
   const link = togglbutton.createTimerLink({
     className: 'outlook',
-    description: title.textContent
+    description: elem.textContent
   });
 
   container.appendChild(link);
 });
 
-// Meeting peek popup
-togglbutton.render('.peekPopup:not(.toggl)', { observe: true }, function (elem) {
-  const otherPeopleContainer = $('._cmm_a1', elem);
-  const myContainer = $('._ck_i', elem);
-  const title = $('.ms-font-xl.o365button', elem);
-  let container;
-  let link;
+// Composing emails
+togglbutton.render('[aria-label="Command toolbar"] .ms-CommandBar-primaryCommand:not(.toggl)', { observe: true }, elem => {
+  const isComposingEmail = elem.querySelector('button[name="Send"]');
 
-  // Other people events
-  if (otherPeopleContainer) {
-    container = otherPeopleContainer;
-    link = togglbutton.createTimerLink({
+  if (isComposingEmail) {
+    const subject = () => document.querySelector('[aria-label="Add a subject"]').value;
+
+    const link = togglbutton.createTimerLink({
       className: 'outlook',
-      description: title.textContent,
-      buttonType: 'minimal'
+      description: subject
     });
-  } else if (myContainer) {
-    container = myContainer;
-    link = togglbutton.createTimerLink({
-      className: 'outlook',
-      description: title.textContent
-    });
+
+    elem.appendChild(link);
   }
-
-  container.appendChild(link);
 });

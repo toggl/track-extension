@@ -1299,19 +1299,14 @@ li .toggl-button.heflo {
 }
 
 /********* OUTLOOK *********/
-._ck_k .toggl-button.outlook {
-  vertical-align: middle;
-  position: relative;
-  top: 1px;
-}
-label > .toggl-button.outlook {
+.toggl-button.outlook {
   margin-left: 10px;
+  color: rgb(102, 102, 102);
+  text-decoration: none;
 }
-._ck_i .toggl-button.outlook {
-  color: inherit;
-  vertical-align: middle;
-  position: relative;
-  top: 1px;
+
+.ms-CommandBar-primaryCommand .toggl-button.outlook {
+  align-self: center;
 }
 
 /********* NOTION *********/

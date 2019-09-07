@@ -50,6 +50,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Gmail](https://mail.google.com)
 - [Gogs](http://gogs.io/)
 - [Google Calendar](https://www.google.com/calendar)
+- [Google Classroom](https://classroom.google.com/)
 - [Google Docs](https://docs.google.com/)
 - [Google Inbox](https://inbox.google.com)
 - [Google Keep](https://keep.google.com/)

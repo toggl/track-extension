@@ -208,6 +208,10 @@ export default {
     url: '*://calendar.google.com/*',
     name: 'Google Calendar'
   },
+  'classroom.google.com': {
+    url: '*://classroom.google.com/*',
+    name: 'Google Classroom'
+  },
   'docs.google.com': {
     url: '*://docs.google.com/*',
     name: 'Google Docs'

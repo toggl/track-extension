@@ -762,6 +762,14 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-left: -4px;
 }
 
+.toggl-button.google-classroom {
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  font-size: .8125rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
 /********* DOBAMBAM *********/
 .toggl-button.dobambam {
   float: right;

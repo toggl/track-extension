@@ -1,3 +1,10 @@
+## [1.40.8](https://github.com/toggl/toggl-button/compare/1.40.7...1.40.8) (2019-09-11)
+
+
+### Bug Fixes
+
+* **outlook:** Fix Outlook integration ([9384fee](https://github.com/toggl/toggl-button/commit/9384fee)), closes [#1484](https://github.com/toggl/toggl-button/issues/1484)
+
 ## [1.40.7](https://github.com/toggl/toggl-button/compare/1.40.6...1.40.7) (2019-08-22)
 
 

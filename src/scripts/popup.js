@@ -421,6 +421,16 @@ window.PopUp = {
       .addEventListener('focus', (e) => {
         PopUp.$tagAutocomplete.openDropdown();
       });
+    document
+      .querySelector('#toggl-button-duration')
+      .addEventListener('focus', (e) => {
+        PopUp.stopDurationInput();
+      });
+    document
+      .querySelector('#toggl-button-duration')
+      .addEventListener('blur', (e) => {
+        PopUp.updateDurationInput(true);
+      });
 
     PopUp.$projectAutocomplete.onChange(function (selected) {
       const project = TogglButton.findProjectByPid(selected.pid);

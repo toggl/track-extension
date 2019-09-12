@@ -370,6 +370,17 @@ window.PopUp = {
       request.duration = -1 * Math.floor(start.getTime() / 1000);
     }
 
+    // Update UI right away without waiting for request
+    TogglButton.$curEntry.description = document.querySelector('#toggl-button-description').value;
+    TogglButton.$curEntry.start = request.start;
+    TogglButton.$curEntry.duration = request.duration;
+    TogglButton.$curEntry.pid = selected.pid;
+    TogglButton.$curEntry.projectName = selected.name;
+    TogglButton.$curEntry.tags = PopUp.$tagAutocomplete.getSelected();
+    TogglButton.$curEntry.tid = selected.tid;
+    TogglButton.$curEntry.billable = billable;
+    PopUp.renderTimer();
+
     PopUp.sendMessage(request);
     PopUp.switchView(PopUp.$menuView);
   },

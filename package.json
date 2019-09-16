@@ -76,7 +76,7 @@
     "fs-extra": "8.0.1",
     "husky": "2.4.0",
     "lint-staged": "8.2.0",
-    "semantic-release": "15.13.15",
+    "semantic-release": "15.13.24",
     "svg-url-loader": "2.3.2",
     "ts-loader": "6.0.2",
     "typescript": "3.5.1",

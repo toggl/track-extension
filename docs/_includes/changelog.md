@@ -1,3 +1,10 @@
+## [1.40.9](https://github.com/toggl/toggl-button/compare/1.40.8...1.40.9) (2019-09-17)
+
+
+### Bug Fixes
+
+* **popup:** Fix cursor jump when focusing duration ([d142fcd](https://github.com/toggl/toggl-button/commit/d142fcd))
+
 ## [1.40.8](https://github.com/toggl/toggl-button/compare/1.40.7...1.40.8) (2019-09-11)
 
 

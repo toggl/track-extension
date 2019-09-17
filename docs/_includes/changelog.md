@@ -1,3 +1,10 @@
+# [1.41.0](https://github.com/toggl/toggl-button/compare/1.40.9...1.41.0) (2019-09-17)
+
+
+### Features
+
+* Add Dynamics 365 integration ([2d63be4](https://github.com/toggl/toggl-button/commit/2d63be4))
+
 ## [1.40.9](https://github.com/toggl/toggl-button/compare/1.40.8...1.40.9) (2019-09-17)
 
 

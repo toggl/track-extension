@@ -22,15 +22,9 @@ togglbutton.render('#headerContainer:not(.toggl)',
         return (title ? title.textContent : '');
       }
     };
-    const getProjectName = function () {
-      // entity: incident
-      const customername = $('li[data-id="customerid.fieldControl-LookupResultsDropdown_customerid_selected_tag"]');
-      return (customername ? customername.textContent : '');
-    };
     const link = togglbutton.createTimerLink({
       className: 'dynamics365',
-      description: getDescription,
-      projectName: getProjectName
+      description: getDescription
     });
     elem.appendChild(link);
   });

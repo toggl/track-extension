@@ -132,6 +132,8 @@ togglbutton.render(
       description: descFunc
     });
 
+    link.style.margin = "3px 0 0 7px";
+
     container.appendChild(link);
   }
 );

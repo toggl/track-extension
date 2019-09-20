@@ -1,3 +1,10 @@
+## [1.41.1](https://github.com/toggl/toggl-button/compare/1.41.0...1.41.1) (2019-09-20)
+
+
+### Bug Fixes
+
+* **teamweek:** Fix broken integration for Teamwork Desk ([e75df85](https://github.com/toggl/toggl-button/commit/e75df85))
+
 # [1.41.0](https://github.com/toggl/toggl-button/compare/1.40.9...1.41.0) (2019-09-17)
 
 

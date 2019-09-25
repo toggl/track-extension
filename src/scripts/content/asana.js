@@ -1,21 +1,58 @@
 'use strict';
 
-// New UI Board view v1 and v2
-togglbutton.render(
-  '.BoardColumnCardsContainer-item:not(.toggl)',
-  { observe: true },
-  function (elem) {
-    if ($('.toggl-button', elem)) {
+// Spreadsheet view, 2019. Inserts button next to to the task name.
+togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe: true },
+  function (taskNameCell) {
+    const container = taskNameCell.closest('.SpreadsheetRow');
+
+    if (container.querySelector('.toggl-button')) {
+      // Due to the way this UI is rendered, we must check for existence of old buttons manually.
       return;
     }
-    const container = $('.BoardCardWithCustomProperties-assigneeAndDueDate', elem);
-    const description = $('.BoardCardWithCustomProperties-name', elem).textContent;
-    const project = $('.SidebarItemRow.is-selected').textContent;
+
+    const descriptionSelector = () => taskNameCell.querySelector('textarea').textContent.trim();
+    const projectSelector = () => {
+      const projectCell = container.querySelector('.SpreadsheetTaskRow-projectsCell');
+      if (!projectCell) {
+        return '';
+      }
+
+      // There can be multiple projects, but we can't support trying to match multiple yet.
+      const firstProject = projectCell.querySelector('.Pill');
+      return firstProject ? firstProject.textContent.trim() : '';
+    };
 
     const link = togglbutton.createTimerLink({
-      className: 'asana-board',
+      className: 'asana-spreadsheet',
+      description: descriptionSelector,
+      projectName: projectSelector,
+      buttonType: 'minimal'
+    });
+
+    taskNameCell.insertAdjacentElement('afterend', link);
+  }
+);
+
+// 2019 My Tasks view, possibly other similar views.
+togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
+  function (elem) {
+    if (elem.querySelector('.toggl-button')) {
+      // Due to the way this UI is rendered, we must check for existence of old buttons manually.
+      return;
+    }
+    const container = elem.querySelector('.ItemRowTwoColumnStructure-left');
+    const description = elem.querySelector('.TaskName textarea').textContent;
+
+    const projectSelector = () => {
+      const projectElement = elem.querySelector('.TaskRow-pots .Pill');
+
+      return projectElement ? projectElement.textContent : '';
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'asana-new-ui',
       description: description,
-      projectName: project,
+      projectName: projectSelector,
       buttonType: 'minimal'
     });
 
@@ -23,7 +60,7 @@ togglbutton.render(
   }
 );
 
-// New UI Board task detail view v2
+// Old and Beta UI - detail view
 togglbutton.render(
   '.SingleTaskPane-titleRow:not(.toggl)',
   { observe: true },

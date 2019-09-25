@@ -156,6 +156,10 @@
   margin-top: 3px;
   opacity: 0;
 }
+.toggl-button.asana-new-ui {
+  align-self: center;
+  margin-right: 10px;
+}
 .BoardCard--hover .toggl-button.asana-board,
 .SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 .SingleTaskPaneToolbarEasyCompletion .toggl-button.asana-board {
@@ -172,6 +176,10 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 .BoardCardWithCustomProperties-assigneeAndDueDate .toggl-button {
   margin-left: 10px;
+}
+
+.toggl-button.asana-spreadsheet {
+  margin-right: 5px; /* Ensure any additional controls are spaced  */
 }
 
 /********* PODIO *********/

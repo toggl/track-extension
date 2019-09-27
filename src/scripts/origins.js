@@ -501,6 +501,10 @@ export default {
     url: '*://tasks.office.com/*',
     name: 'Microsoft Planner'
   },
+  'tfs2': {
+    url: '*://tfs2/*/pullrequest/*',
+    name: 'Team Foundation Server'
+  },
   'teamweek.com': {
     url: '*://*.teamweek.com/*',
     name: 'Teamweek'

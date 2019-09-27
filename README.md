@@ -107,6 +107,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Sprintly](https://sprint.ly)
 - [Taiga](https://taiga.io/)
 - [TargetProcess](https://www.targetprocess.com/)
+- [Team Foundation Server](http://tfs2/)
 - [Teamleader](http://www.teamleader.eu/)
 - [TeamWeek](https://teamweek.com/)
 - [Teamwork](https://www.teamwork.com/)

@@ -18,7 +18,7 @@ togglbutton.render(
     };
 
     const link = togglbutton.createTimerLink({
-      className: 'tfs2',
+      className: 'teamfoundationserver',
       description: descriptionSelector,
       projectName: projectSelector,
       tags: tagsSelector

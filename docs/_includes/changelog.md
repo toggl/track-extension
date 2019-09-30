@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/toggl/toggl-button/compare/1.41.2...1.42.0) (2019-09-30)
+
+
+### Features
+
+* Enable gmail integration to work with Drag-app popup view ([43e4327](https://github.com/toggl/toggl-button/commit/43e4327))
+
 ## [1.41.2](https://github.com/toggl/toggl-button/compare/1.41.1...1.41.2) (2019-09-30)
 
 

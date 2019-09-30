@@ -1,3 +1,10 @@
+## [1.42.1](https://github.com/toggl/toggl-button/compare/1.42.0...1.42.1) (2019-09-30)
+
+
+### Bug Fixes
+
+* YouTrack integration ([1536d44](https://github.com/toggl/toggl-button/commit/1536d44)), closes [#1509](https://github.com/toggl/toggl-button/issues/1509)
+
 # [1.42.0](https://github.com/toggl/toggl-button/compare/1.41.2...1.42.0) (2019-09-30)
 
 

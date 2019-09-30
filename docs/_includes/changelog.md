@@ -1,3 +1,10 @@
+## [1.41.2](https://github.com/toggl/toggl-button/compare/1.41.1...1.41.2) (2019-09-30)
+
+
+### Bug Fixes
+
+* **popup:** Fix tag/project dropdown toggle ([d40b843](https://github.com/toggl/toggl-button/commit/d40b843)), closes [#1422](https://github.com/toggl/toggl-button/issues/1422)
+
 ## [1.41.1](https://github.com/toggl/toggl-button/compare/1.41.0...1.41.1) (2019-09-20)
 
 

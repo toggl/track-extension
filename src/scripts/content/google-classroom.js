@@ -14,6 +14,6 @@ togglbutton.render('div[data-without-stream-item-materials]', { observe: true },
     className: 'google-classroom',
     description: titleFunc
   });
-  console.log('trigger', link);
+
   $('.rec5Nb.QRiHXd', elem).appendChild(link);
 });

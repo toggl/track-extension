@@ -504,8 +504,7 @@ export default {
   'teamfoundationserver': {
     url: '*://*/pullrequest/*',
     name: 'Team Foundation Server',
-    file: 'teamfoundationserver.js',
-    clone: 'true'
+    file: 'teamfoundationserver.js'
   },
   'teamweek.com': {
     url: '*://*.teamweek.com/*',

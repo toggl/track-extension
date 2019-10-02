@@ -6,11 +6,11 @@ togglbutton.render(
   $container => {
     const descriptionSelector = () => {
       const e = $('input.vc-title-text');
-      return 'Code Review: ' + (e && e.value);
+      return (e && e.value);
     };
 
     const projectSelector = () => {
-      return 'QA Work [Product]';
+      return undefined;
     };
 
     const tagsSelector = () => {

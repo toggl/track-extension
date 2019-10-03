@@ -287,17 +287,24 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   position: absolute;
   opacity: 0;
   margin-top: 2px;
-  margin-left: 6px;
+  margin-left: 150px;
   white-space: nowrap;
 }
 
-.todo__unassigned-unscheduled + .toggl-button.basecamp3 {
-  margin-left: 90px;
-}
-
-.todo:not(.selected):hover .toggl-button.basecamp3 {
+.todo:not(.selected):hover .toggl-button.basecamp3,
+.todo:not(.selected) .toggl-button.basecamp3.active,
+.todo:not(.selected) .metadata .toggl-button.basecamp3 {
   opacity: 1;
 }
+.todo:not(.selected).completed .toggl-button.basecamp3 {
+  margin-left: 6px;
+  transform: scale(0.8) translateY(-3px);
+}
+.todo:not(.selected) .metadata .toggl-button.basecamp3 {
+  margin-left: 6px;
+  transform: scale(0.9) translateY(-2px);
+}
+
 
 .card-grid .toggl-button.basecamp3 {
   opacity: 0 !important;

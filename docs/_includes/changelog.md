@@ -1,3 +1,16 @@
+# [1.43.0](https://github.com/toggl/toggl-button/compare/1.42.1...1.43.0) (2019-10-03)
+
+
+### Bug Fixes
+
+* **google-classroom:** remove console.log ([062de8f](https://github.com/toggl/toggl-button/commit/062de8f))
+
+
+### Features
+
+* **google-classroom:** add to readme ([bb7702d](https://github.com/toggl/toggl-button/commit/bb7702d))
+* **google-classroom:** new integration ([7650a3b](https://github.com/toggl/toggl-button/commit/7650a3b))
+
 ## [1.42.1](https://github.com/toggl/toggl-button/compare/1.42.0...1.42.1) (2019-09-30)
 
 

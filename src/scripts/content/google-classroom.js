@@ -5,8 +5,8 @@ togglbutton.render('div[data-without-stream-item-materials]', { observe: true },
     return;
   }
 
+  const title = $('h1', elem);
   const titleFunc = () => {
-    const title = $('h1', elem);
     return title ? title.textContent.trim() : '';
   };
 
@@ -15,5 +15,8 @@ togglbutton.render('div[data-without-stream-item-materials]', { observe: true },
     description: titleFunc
   });
 
-  $('.rec5Nb.QRiHXd', elem).appendChild(link);
+  link.style.margin = '1rem 1rem 0';
+  link.style.whiteSpace = 'nowrap';
+
+  title.nextSibling.appendChild(link);
 });

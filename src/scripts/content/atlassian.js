@@ -14,7 +14,8 @@ togglbutton.render(
     const titleElem = $('[spacing] h1', rootElem);
     const numElem = $('[spacing] a', rootElem);
     const projectElem = $('.bgdPDV');
-    let description = titleElem.textContent;
+    const epic = getEpic();
+    let description = epic + titleElem.textContent;
     if (numElem !== null) {
       description = numElem.textContent + ' ' + description;
     }
@@ -53,7 +54,11 @@ togglbutton.render(
 
     const link = togglbutton.createTimerLink({
       className: 'jira2018',
-      description: getDescription(issueNumberElement),
+      description: () => {
+        const epic = getEpic();
+
+        return epic + getDescription(issueNumberElement)();
+      },
       projectName: getProject
     });
 
@@ -84,7 +89,11 @@ togglbutton.render(
 
     const link = togglbutton.createTimerLink({
       className: 'jira2018',
-      description: getDescription(issueNumberElement),
+      description: () => {
+        const epic = getEpic();
+
+        return epic + getDescription(issueNumberElement)();
+      },
       projectName: getProject
     });
 
@@ -135,14 +144,14 @@ togglbutton.render(
     if (process.env.DEBUG) {
       console.info('🏃 "Jira 2017 issue page" rendering');
     }
-
     const numElem = $('#key-val', elem);
     const titleElem = $('#summary-val', elem) || '';
     let projectElem = $('.bgdPDV');
+    const epic = getEpic();
     let description;
 
     if (titleElem) {
-      description = titleElem.textContent.trim();
+      description = epic + titleElem.textContent.trim();
     }
 
     if (numElem !== null) {
@@ -182,7 +191,8 @@ togglbutton.render('#ghx-detail-issue:not(.toggl)', { observe: true }, function 
   const titleElem = $('[data-field-id="summary"]', elem);
   const numElem = $('.ghx-fieldname-issuekey a');
   const projectElem = $('.ghx-project', elem);
-  let description = titleElem.textContent;
+  const epic = getEpic();
+  let description = epic + titleElem.textContent;
   if (numElem !== null) {
     description = numElem.textContent + ' ' + description;
   }
@@ -206,6 +216,7 @@ togglbutton.render(
     const numElem = $('#key-val', elem);
     const titleElem = $('#summary-val', elem) || '';
     const projectElem = $('#project-name-val', elem);
+    const epic = getEpic();
 
     if (titleElem) {
       description = titleElem.textContent;
@@ -220,7 +231,7 @@ togglbutton.render(
 
     const link = togglbutton.createTimerLink({
       className: 'jira',
-      description: description,
+      description: epic + description,
       projectName: projectElem && projectElem.textContent
     });
 
@@ -236,8 +247,9 @@ togglbutton.render(
 togglbutton.render('#title-heading:not(.toggl)', { observe: true }, function (
   elem
 ) {
+  const epic = getEpic();
   const titleElem = $('[id="title-text"]', elem);
-  const description = titleElem.textContent.trim();
+  const description = epic + titleElem.textContent.trim();
 
   const link = togglbutton.createTimerLink({
     className: 'confluence',
@@ -246,3 +258,13 @@ togglbutton.render('#title-heading:not(.toggl)', { observe: true }, function (
 
   $('#title-text').appendChild(link);
 });
+
+function getEpic () {
+  console.log('getEpic');
+  const breadcrumbs = document.querySelectorAll("#jira-issue-header [class^='BreadcrumbsItem_'] span > span");
+  if (breadcrumbs && breadcrumbs.length > 1) {
+    return breadcrumbs[0].innerHTML + ' / ';
+  }
+
+  return '';
+}

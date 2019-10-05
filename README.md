@@ -132,6 +132,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Wunderlist](https://www.wunderlist.com)
 - [Xero](https://www.xero.com/)
 - [YouTrack](http://www.jetbrains.com/youtrack/)
+- [Zammad](https://zammad.com/)
 - [Zendesk](https://www.zendesk.com/)
 - [Zube](https://zube.io/)
 - [VivifyScrum](https://www.vivifyscrum.com/)

@@ -675,5 +675,9 @@ export default {
     url: '*://app.vivifyscrum.com/*',
     name: 'VivifyScrum',
     clone: 'true'
+  },
+  'zammad.com': {
+    url: '*://*.zammad.com/*',
+    name: 'Zammad'
   }
 };

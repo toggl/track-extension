@@ -4,6 +4,8 @@ import { escapeHtml, isTogglURL, report, secToHHMM } from './lib/utils';
 import Db from './lib/db';
 import Ga from './lib/ga';
 
+const $ = require('jquery');
+
 const browser = require('webextension-polyfill');
 const FIVE_MINUTES = 5 * 60;
 
@@ -1975,6 +1977,9 @@ window.TogglButton = {
           browser.runtime.openOptionsPage();
         } else if (request.type === 'create-workspace') {
           TogglButton.createWorkspace(request, sendResponse);
+        } else if (request.type === 'apiCall') {
+          console.log('making api call');
+          makeApiCall(request).then(res => resolve(res));
         } else {
           resolve(undefined);
         }
@@ -2292,5 +2297,19 @@ if (!FF) {
       sendResponse({ version: process.env.VERSION });
     }
     return undefined;
+  });
+}
+
+function makeApiCall (request) {
+  return $.ajax({
+    data: JSON.stringify(request.payload),
+    dataType: 'json',
+    headers: {
+      'Authorization': 'Basic' + btoa(TogglButton.$user.api_token),
+      'Content-Type': 'application/json'
+    },
+    method: request.method,
+    processData: false,
+    url: request.url
   });
 }

@@ -69,6 +69,10 @@ togglbutton.render(
     // container.appendChild(link);
 
     const createLink = (projectId) => {
+      if (container.querySelector('.toggl-button')) {
+        return;
+      }
+
       const link = togglbutton.createTimerLink({
         className: 'jira2018',
         description: () => {
@@ -121,6 +125,10 @@ togglbutton.render(
     // container.appendChild(link);
 
     const createLink = (projectId) => {
+      if (container.querySelector('.toggl-button')) {
+        return;
+      }
+
       const link = togglbutton.createTimerLink({
         className: 'jira2018',
         description: () => {

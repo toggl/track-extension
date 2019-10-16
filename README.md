@@ -44,6 +44,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Focuster](https://www.focuster.com/)
 - [Flow](http://getflow.com/)
 - [FogBugz](http://www.fogcreek.com/fogbugz/)
+- [Freedcamp](https://freedcamp.com/)
 - [Freshdesk](https://www.freshdesk.com/)
 - [Ginko App](https://gingkoapp.com/)
 - [GitHub](https://github.com/)

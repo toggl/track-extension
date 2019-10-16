@@ -1514,3 +1514,8 @@ body.notion-body.dark .toggl-button.notion {
   margin-top: 5px;
   z-index: 9999;
 }
+
+/********* Freedcamp *********/
+.toggl-button.freedcamp {
+  margin-top: 5px;
+}

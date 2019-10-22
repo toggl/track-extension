@@ -471,8 +471,6 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 /********* TODOIST *********/
 .toggl-button.todoist {
-  padding-left: 20px;
-  margin-bottom: -6px;
   visibility: hidden;
 }
 

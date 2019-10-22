@@ -4,45 +4,16 @@
 const todoistEditor = document.getElementById('content');
 
 togglbutton.render(
-  '.task_item .content:not(.toggl)',
+  '.task_item .task_item_actions:not(.toggl)',
   { observe: true, observeTarget: todoistEditor, debounceInterval: 100 },
   elem => {
-    const container = $('.text', elem);
+    const content = elem.closest('.task_item').querySelector('.content');
+    const text = content.querySelector('.text');
 
-    const descriptionSelector = () => {
-      const clone = container.cloneNode(true);
-      let i = 0;
-      let child = null;
-
-      // Clean up UI elements that appear in the same node as the description
-      while (clone.children.length > i) {
-        child = clone.children[i];
-        if (
-          child.tagName === 'B' ||
-          child.tagName === 'I' ||
-          child.tagName === 'STRONG' ||
-          child.tagName === 'EM'
-        ) {
-          i++;
-        } else if (child.tagName === 'A') {
-          if (
-            child.classList.contains('ex_link') ||
-            child.getAttribute('href').indexOf('mailto:') === 0
-          ) {
-            i++;
-          } else {
-            child.remove();
-          }
-        } else {
-          child.remove();
-        }
-      }
-
-      return clone.textContent.trim();
-    };
+    const descriptionSelector = () => text.querySelector('.task_item_content_text').textContent;
 
     const tagsSelector = () => {
-      const tags = elem.querySelectorAll('.labels_holder a:not(.label_sep)');
+      const tags = content.querySelectorAll('.labels_holder a:not(.label_sep)');
 
       return [...tags].map(tag => {
         return tag.textContent;
@@ -52,12 +23,19 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'todoist',
       description: descriptionSelector,
-      projectName: getProjectNames(elem),
+      projectName: getProjectNames(content),
       buttonType: 'minimal',
       tags: tagsSelector
     });
 
-    container.insertBefore(link, container.lastChild);
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('task_info', 'task_content_item');
+    wrapper.style.display = 'flex';
+    wrapper.style.alignItems = 'center';
+    wrapper.style.justifyContent = 'center';
+    wrapper.appendChild(link);
+
+    elem.insertBefore(wrapper, elem.firstChild);
   }
 );
 

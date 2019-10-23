@@ -1,3 +1,10 @@
+# [1.44.0](https://github.com/toggl/toggl-button/compare/1.43.0...1.44.0) (2019-10-23)
+
+
+### Features
+
+* **todoist:** Support new Todoist Foundations interface ([96e0981](https://github.com/toggl/toggl-button/commit/96e0981)), closes [#1521](https://github.com/toggl/toggl-button/issues/1521)
+
 # [1.43.0](https://github.com/toggl/toggl-button/compare/1.42.1...1.43.0) (2019-10-03)
 
 

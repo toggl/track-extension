@@ -1,3 +1,10 @@
+## [1.44.1](https://github.com/toggl/toggl-button/compare/1.44.0...1.44.1) (2019-10-23)
+
+
+### Bug Fixes
+
+* **basecamp3:** Improve layout and UX ([53d44fd](https://github.com/toggl/toggl-button/commit/53d44fd)), closes [#1426](https://github.com/toggl/toggl-button/issues/1426)
+
 # [1.44.0](https://github.com/toggl/toggl-button/compare/1.43.0...1.44.0) (2019-10-23)
 
 

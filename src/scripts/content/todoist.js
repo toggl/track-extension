@@ -13,7 +13,7 @@ togglbutton.render(
     const descriptionSelector = () => text.querySelector('.task_item_content_text').textContent;
 
     const tagsSelector = () => {
-      const tags = content.querySelectorAll('.labels_holder a:not(.label_sep)');
+      const tags = content.querySelectorAll('a.label');
 
       return [...tags].map(tag => {
         return tag.textContent;

@@ -1,3 +1,10 @@
+## [1.44.2](https://github.com/toggl/toggl-button/compare/1.44.1...1.44.2) (2019-10-25)
+
+
+### Bug Fixes
+
+* **todoist:** Selector to fetch labels/tags ([de43db3](https://github.com/toggl/toggl-button/commit/de43db3)), closes [#1529](https://github.com/toggl/toggl-button/issues/1529)
+
 ## [1.44.1](https://github.com/toggl/toggl-button/compare/1.44.0...1.44.1) (2019-10-23)
 
 

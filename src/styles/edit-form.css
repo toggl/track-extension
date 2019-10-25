@@ -144,6 +144,10 @@
   color: black;
 }
 
+#toggl-button-edit-form .TB__Popdown__filter::placeholder {
+  color: #7b7b7b !important;
+}
+
 .TB__Popdown__content {
   display: none;
   max-height: 50vh;
@@ -173,16 +177,18 @@
   align-items: center;
 }
 
-#toggl-button-edit-form .toggl-button {
+#toggl-button-edit-form a.toggl-button {
   margin: 0 0 1rem 0 !important;
   border: none !important;
   visibility: visible !important;
   float: none !important;
   opacity: 1 !important;
+  color: black;
 }
 
-#toggl-button-edit-form .toggl-button:hover {
+#toggl-button-edit-form a.toggl-button:hover {
   background-color: transparent;
+  text-decoration: underline;
 }
 
 #toggl-button-edit-form .toggl-button-input {

@@ -5,6 +5,10 @@
   padding: 0 6px;
 }
 
+#tag-autocomplete::-webkit-scrollbar-track, .TB__Popdown__content::-webkit-scrollbar-track {
+  background: initial !important;
+}
+
 #tag-autocomplete {
   /* aligned with filter bar whilst it's the "old" tag design as opposed to a list */
   padding: 0 15px;

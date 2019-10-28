@@ -10,9 +10,10 @@ const inheritsFrom = function (child, parent) {
 const AutoComplete = function (el, item, elem) {
   this.type = el;
   this.el = document.querySelector('#' + el + '-autocomplete');
+  this.content = this.el.parentElement;
   this.filter = document.querySelector('#toggl-button-' + el + '-filter');
   this.field = this.el.closest('.TB__Dialog__field');
-  this.overlay = this.field.querySelector('.TB__Popdown__overlay');
+  this.overlay = document.body;
   this.placeholderItem = document.querySelector(
     '#toggl-button-' + el + '-placeholder'
   );
@@ -31,10 +32,12 @@ const AutoComplete = function (el, item, elem) {
 AutoComplete.prototype.addEvents = function () {
   const that = this;
 
-  that.placeholderItem.addEventListener('click', function (e) {
-    setTimeout(function () {
-      that.toggleDropdown();
-    }, 50);
+  this.placeholderItem.addEventListener('click', function () { that.toggleDropdown(); });
+
+  this.field.addEventListener('focus', function (e) {
+    const target = e.explicitOriginalTarget;
+    if (target && that.field !== target && that.field.contains(target)) return;
+    that.openDropdown();
   });
 
   that.filter.addEventListener('keydown', function (e) {
@@ -67,8 +70,10 @@ AutoComplete.prototype.addEvents = function () {
   });
 
   that.overlay.addEventListener('click', function (e) {
-    e.stopPropagation();
-    that.closeDropdown();
+    if (!that.content.contains(e.target) && !that.placeholderItem.contains(e.target)) {
+      e.stopPropagation();
+      that.closeDropdown();
+    }
   });
 };
 
@@ -634,10 +639,12 @@ TagAutoComplete.prototype.setup = function (selected, wid) {
 TagAutoComplete.prototype.addEvents = function () {
   const that = this;
 
-  that.placeholderItem.addEventListener('click', function (e) {
-    setTimeout(function () {
-      that.toggleDropdown();
-    }, 50);
+  this.placeholderItem.addEventListener('click', function () { that.toggleDropdown(); });
+
+  this.field.addEventListener('focus', function (e) {
+    const target = e.explicitOriginalTarget;
+    if (target && that.field !== target && that.field.contains(target)) return;
+    that.openDropdown();
   });
 
   this.el.addEventListener('click', function (e) {
@@ -666,8 +673,10 @@ TagAutoComplete.prototype.addEvents = function () {
   });
 
   that.overlay.addEventListener('click', function (e) {
-    e.stopPropagation();
-    that.closeDropdown();
+    if (!that.content.contains(e.target) && !that.placeholderItem.contains(e.target)) {
+      e.stopPropagation();
+      that.closeDropdown();
+    }
   });
 
   this.clearSelected && this.clearSelected.addEventListener('click', function (e) {

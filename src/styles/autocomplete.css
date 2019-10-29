@@ -5,6 +5,10 @@
   padding: 0 6px;
 }
 
+#tag-autocomplete::-webkit-scrollbar-track, .TB__Popdown__content::-webkit-scrollbar-track {
+  background: initial !important;
+}
+
 #tag-autocomplete {
   /* aligned with filter bar whilst it's the "old" tag design as opposed to a list */
   padding: 0 15px;
@@ -197,7 +201,7 @@
   opacity: 0.7;
 }
 
-.add-new-tag {
+#tag-autocomplete .add-new-tag {
   display: none;
   border: solid 1px #ececec;
   font-size: 14px;
@@ -211,12 +215,12 @@
   margin-bottom: 2px;
 }
 
-.add-new-tag:hover {
+#tag-autocomplete .add-new-tag:hover {
   background-color: rgba(75, 200, 0, 0.2);
   cursor: pointer;
 }
 
-.open .add-allowed .add-new-tag {
+.open #tag-autocomplete.add-allowed .add-new-tag {
   display: block;
 }
 

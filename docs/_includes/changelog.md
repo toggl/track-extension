@@ -1,3 +1,18 @@
+## [1.44.5](https://github.com/toggl/toggl-button/compare/1.44.4...1.44.5) (2019-10-29)
+
+
+### Bug Fixes
+
+* **Todoist:** Fix edit form scrollbars on dark mode ([fd0db8f](https://github.com/toggl/toggl-button/commit/fd0db8f))
+* **Todoist:** Fix time entry edit form on dark mode ([b196372](https://github.com/toggl/toggl-button/commit/b196372)), closes [#1531](https://github.com/toggl/toggl-button/issues/1531)
+
+## [1.44.4](https://github.com/toggl/toggl-button/compare/1.44.3...1.44.4) (2019-10-29)
+
+
+### Bug Fixes
+
+* **popup:** Fix possible error with tags rendering in edit forms ([d42053d](https://github.com/toggl/toggl-button/commit/d42053d))
+
 ## [1.44.3](https://github.com/toggl/toggl-button/compare/1.44.2...1.44.3) (2019-10-29)
 
 

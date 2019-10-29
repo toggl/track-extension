@@ -122,9 +122,6 @@ declare module Toggl {
   export interface ClientNameMap {
     [clientName: string]: Client;
   }
-  export interface TagMap {
-    [tagName: string]: Tag;
-  }
 
   export interface Task {
     id: number;
@@ -185,7 +182,6 @@ declare module Toggl {
     projectMap: ProjectMap;
     clientMap: ClientMap;
     clientNameMap: ClientNameMap;
-    tagMap: TagMap;
     projectTaskList: ProjectTaskList;
   }
 }

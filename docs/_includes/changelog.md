@@ -1,3 +1,10 @@
+## [1.44.3](https://github.com/toggl/toggl-button/compare/1.44.2...1.44.3) (2019-10-29)
+
+
+### Bug Fixes
+
+* **tags:** Don't override tags with same names ([e923f3b](https://github.com/toggl/toggl-button/commit/e923f3b)), closes [#1535](https://github.com/toggl/toggl-button/issues/1535)
+
 ## [1.44.2](https://github.com/toggl/toggl-button/compare/1.44.1...1.44.2) (2019-10-25)
 
 

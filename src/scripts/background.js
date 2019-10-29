@@ -1281,9 +1281,7 @@ window.TogglButton = {
   },
 
   fillTags: function () {
-    const tags = TogglButton
-      .$user
-      .tags
+    const tags = (TogglButton.$user.tags || [])
       .sort((t1, t2) => t1.name.localeCompare(t2.name))
       .map(t => `
         <li

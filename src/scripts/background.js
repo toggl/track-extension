@@ -137,7 +137,6 @@ window.TogglButton = {
           const projectMap = {};
           const clientMap = {};
           const clientNameMap = {};
-          const tagMap = {};
           let projectTaskList = null;
           let entry = null;
 
@@ -159,11 +158,6 @@ window.TogglButton = {
                 resp.data.clients.forEach(function (client) {
                   clientMap[client.id] = client;
                   clientNameMap[client.name.toLowerCase() + client.id] = client;
-                });
-              }
-              if (resp.data.tags) {
-                resp.data.tags.forEach(function (tag) {
-                  tagMap[tag.name] = tag;
                 });
               }
               if (resp.data.tasks) {
@@ -201,7 +195,6 @@ window.TogglButton = {
               TogglButton.$user.projectMap = projectMap;
               TogglButton.$user.clientMap = clientMap;
               TogglButton.$user.clientNameMap = clientNameMap;
-              TogglButton.$user.tagMap = tagMap;
               TogglButton.$user.projectTaskList = projectTaskList;
               if (!TogglButton.$user.default_wid) {
                 const defaultWS = TogglButton.$user.workspaces[0];

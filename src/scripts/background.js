@@ -170,10 +170,8 @@ window.TogglButton = {
                   projectTaskList[pid].push(task);
                 });
               }
-              if (resp.data.time_entries) {
-                const { time_entries: timeEntries } = resp.data;
-                entry = timeEntries.find(te => te.duration < 0) || null;
-              }
+              const timeEntries = (resp.data || {}).time_entries || [];
+              entry = timeEntries.find(te => te.duration < 0) || null;
 
               if (TogglButton.hasWorkspaceBeenRevoked(resp.data.workspaces)) {
                 TogglButton.showRevokedWSView();
@@ -1281,9 +1279,7 @@ window.TogglButton = {
   },
 
   fillTags: function () {
-    const tags = TogglButton
-      .$user
-      .tags
+    const tags = (TogglButton.$user.tags || [])
       .sort((t1, t2) => t1.name.localeCompare(t2.name))
       .map(t => `
         <li

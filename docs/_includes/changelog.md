@@ -1,3 +1,10 @@
+## [1.44.4](https://github.com/toggl/toggl-button/compare/1.44.3...1.44.4) (2019-10-29)
+
+
+### Bug Fixes
+
+* **popup:** Fix possible error with tags rendering in edit forms ([d42053d](https://github.com/toggl/toggl-button/commit/d42053d))
+
 ## [1.44.3](https://github.com/toggl/toggl-button/compare/1.44.2...1.44.3) (2019-10-29)
 
 

@@ -1288,31 +1288,26 @@ window.TogglButton = {
   },
 
   fillTags: function () {
-    let html = '<ul class="tag-list">';
-    const tags = TogglButton.$user.tagMap;
-    let i;
-    let key = null;
-    const keys = [];
+    const tags = TogglButton
+      .$user
+      .tags
+      .sort((t1, t2) => t1.name.localeCompare(t2.name))
+      .map(t => `
+        <li
+          class="tag-item"
+          data-wid=${escapeHtml(t.wid)}
+          title=${escapeHtml(t.name)}
+        >
+        ${escapeHtml(t.name)}
+        </li>
+      `.trim()
+      ).join('\n');
 
-    for (key in tags) {
-      if (tags.hasOwnProperty(key)) {
-        keys.push(key);
-      }
-    }
-    keys.sort();
-
-    for (i = 0; i < keys.length; i++) {
-      key = keys[i];
-      html +=
-        '<li class="tag-item" data-wid="' +
-        escapeHtml(tags[key].wid) +
-        '" title="' +
-        escapeHtml(tags[key].name) +
-        '">' +
-        escapeHtml(tags[key].name) +
-        '</li>';
-    }
-    return html + '</ul>';
+    return `
+      <ul class="tag-list">
+        ${tags}
+      </ul>
+    `.trim();
   },
 
   refreshPage: function () {

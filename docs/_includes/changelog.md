@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/toggl/toggl-button/compare/1.44.5...1.45.0) (2019-10-30)
+
+
+### Features
+
+* **asana:** Support new Asana Spreadsheet UI (in beta) ([bbe4e63](https://github.com/toggl/toggl-button/commit/bbe4e63)), closes [#1508](https://github.com/toggl/toggl-button/issues/1508)
+
 ## [1.44.5](https://github.com/toggl/toggl-button/compare/1.44.4...1.44.5) (2019-10-29)
 
 

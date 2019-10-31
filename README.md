@@ -1,4 +1,4 @@
-# Toggl Button extension for Chrome and Firefox
+# Toggl Button
 
 [![Build Status](https://travis-ci.org/toggl/toggl-button.svg?branch=master)](https://travis-ci.org/toggl/toggl-button)
 

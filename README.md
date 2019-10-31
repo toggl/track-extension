@@ -1,6 +1,4 @@
-# Toggl Button
-
-[![Build Status](https://travis-ci.org/toggl/toggl-button.svg?branch=master)](https://travis-ci.org/toggl/toggl-button)
+# Toggl Button [![Build Status](https://travis-ci.org/toggl/toggl-button.svg?branch=master)](https://travis-ci.org/toggl/toggl-button)
 
 Add Toggl one-click time tracking to popular web tools.
 

@@ -1,4 +1,4 @@
-# Toggl Button [![Build Status](https://travis-ci.org/toggl/toggl-button.svg?branch=master)](https://travis-ci.org/toggl/toggl-button)
+# Toggl Button [![Build Status](https://travis-ci.org/toggl/toggl-button.svg?branch=master)](https://travis-ci.org/toggl/toggl-button) [![Chrome Extension](https://img.shields.io/chrome-web-store/v/oejgccbfbmkkpaidnkphaiaecficdnfn.svg?label=Chrome%20Extension)](https://chrome.google.com/webstore/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn)
 
 Add Toggl one-click time tracking to popular web tools.
 

@@ -1,6 +1,9 @@
 # Toggl Button [![Build Status](https://travis-ci.org/toggl/toggl-button.svg?branch=master)](https://travis-ci.org/toggl/toggl-button) [![Chrome Extension](https://img.shields.io/chrome-web-store/v/oejgccbfbmkkpaidnkphaiaecficdnfn.svg?label=Chrome%20Extension)](https://chrome.google.com/webstore/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn) [![Firefox Add-on](https://img.shields.io/amo/v/toggl-button-time-tracker.svg?label=Firefox%20Add-on)](https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/)
 
-Add Toggl one-click time tracking to popular web tools.
+> Track time effortlessly.
+
+Start and stop the timer from the web tools you use daily. Get the time-tracking
+out of the way and focus on real work.
 
 ## Compatible services
 - [AgenoCRM](https://agenocrm.com/)

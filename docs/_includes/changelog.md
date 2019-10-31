@@ -1,3 +1,10 @@
+## [1.45.1](https://github.com/toggl/toggl-button/compare/1.45.0...1.45.1) (2019-10-31)
+
+
+### Bug Fixes
+
+* **google-calendar:** Support Google Calendar detail view ([be4d5d0](https://github.com/toggl/toggl-button/commit/be4d5d0)), closes [#955](https://github.com/toggl/toggl-button/issues/955)
+
 # [1.45.0](https://github.com/toggl/toggl-button/compare/1.44.5...1.45.0) (2019-10-30)
 
 

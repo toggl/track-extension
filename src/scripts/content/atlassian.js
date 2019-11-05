@@ -380,6 +380,8 @@ function createProject (task, clientObj, workspaceId) {
     if (res.data && res.data.id) {
       console.log('created project', res.data);
       return res.data;
+    } else {
+      throw new Error('createProjectError');
     }
   });
 }
@@ -402,6 +404,8 @@ function createClient (project, workspaceId) {
     if (res.data && res.data.id) {
       console.log('created client: ', res.data);
       return res.data;
+    } else {
+      throw new Error('createClientError');
     }
   });
 }
@@ -443,6 +447,10 @@ function addLinkWithProject (createLink) {
       addNewProject(project, task)
         .then(projectObj => {
           createLink(projectObj ? projectObj.id : undefined);
+        })
+        .catch((err) => {
+          console.log('addLinkCatch', err);
+          createLink();
         });
     }
   }, 750);

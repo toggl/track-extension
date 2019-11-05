@@ -69,7 +69,7 @@ togglbutton.render(
     // container.appendChild(link);
 
     const createLink = (projectId) => {
-      if (container.querySelector('.toggl-button')) {
+      if (document.querySelector('.toggl-button')) {
         return;
       }
 
@@ -125,7 +125,7 @@ togglbutton.render(
     // container.appendChild(link);
 
     const createLink = (projectId) => {
-      if (container.querySelector('.toggl-button')) {
+      if (document.querySelector('.toggl-button')) {
         return;
       }
 
@@ -310,6 +310,9 @@ function getEpic () {
   const breadcrumbs = document.querySelectorAll("#jira-issue-header [class^='BreadcrumbsItem_'] span > span");
   if (breadcrumbs && breadcrumbs.length > 1) {
     epic = breadcrumbs[0].innerHTML + ' / ';
+    if (epic && epic.includes('Add Epic')) {
+      epic = '';
+    }
   }
 
   return epic;

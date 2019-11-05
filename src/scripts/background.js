@@ -1979,7 +1979,11 @@ window.TogglButton = {
           TogglButton.createWorkspace(request, sendResponse);
         } else if (request.type === 'apiCall') {
           console.log('making api call');
-          makeApiCall(request).then(res => resolve(res));
+          makeApiCall(request)
+            .then(res => resolve(res))
+            .fail((jqXHR, textStatus, errorThrown) => {
+              resolve(undefined);
+            });
         } else {
           resolve(undefined);
         }

@@ -69,7 +69,7 @@ togglbutton.render(
     // container.appendChild(link);
 
     const createLink = (projectId) => {
-      if (container.querySelector('.toggl-button')) {
+      if (document.querySelector('.toggl-button')) {
         return;
       }
 
@@ -125,7 +125,7 @@ togglbutton.render(
     // container.appendChild(link);
 
     const createLink = (projectId) => {
-      if (container.querySelector('.toggl-button')) {
+      if (document.querySelector('.toggl-button')) {
         return;
       }
 
@@ -310,6 +310,9 @@ function getEpic () {
   const breadcrumbs = document.querySelectorAll("#jira-issue-header [class^='BreadcrumbsItem_'] span > span");
   if (breadcrumbs && breadcrumbs.length > 1) {
     epic = breadcrumbs[0].innerHTML + ' / ';
+    if (epic && epic.includes('Add Epic')) {
+      epic = '';
+    }
   }
 
   return epic;
@@ -377,6 +380,8 @@ function createProject (task, clientObj, workspaceId) {
     if (res.data && res.data.id) {
       console.log('created project', res.data);
       return res.data;
+    } else {
+      throw new Error('createProjectError');
     }
   });
 }
@@ -399,6 +404,8 @@ function createClient (project, workspaceId) {
     if (res.data && res.data.id) {
       console.log('created client: ', res.data);
       return res.data;
+    } else {
+      throw new Error('createClientError');
     }
   });
 }
@@ -440,6 +447,10 @@ function addLinkWithProject (createLink) {
       addNewProject(project, task)
         .then(projectObj => {
           createLink(projectObj ? projectObj.id : undefined);
+        })
+        .catch((err) => {
+          console.log('addLinkCatch', err);
+          createLink();
         });
     }
   }, 750);

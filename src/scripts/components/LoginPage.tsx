@@ -3,6 +3,7 @@ import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import browser from 'webextension-polyfill';
 
+import bugsnagClient from '../lib/bugsnag';
 import Logo from '../icons/Logo';
 import Spinner from './Spinner';
 
@@ -30,8 +31,14 @@ async function login (setState: React.Dispatch<React.SetStateAction<LoginState>>
 }
 
 export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) {
-  const [ state, setState ] = React.useState({ loading: false, error: null, loggedIn: isLoggedIn });
+  const [ state, setState ] = React.useState<LoginState>({ loading: false, error: null, loggedIn: isLoggedIn });
   const { loading, error, loggedIn } = state;
+
+  React.useEffect(() => {
+    if (error) {
+      bugsnagClient.notify(new Error(error), { context: 'login-page' });
+    }
+  }, [error]);
 
   let content = (
     <Content>

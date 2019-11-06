@@ -41,6 +41,7 @@ out of the way and focus on real work.
 - [Eventum](https://launchpad.net/eventum)
 - [Evernote](https://www.evernote.com/)
 - [Exana](https://exana.io/)
+- [Favro](https://favro.com/)
 - [Feedly](http://feedly.com/)
 - [Focuster](https://www.focuster.com/)
 - [Flow](http://getflow.com/)

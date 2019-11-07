@@ -441,6 +441,10 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   visibility: visible;
 }
 
+.TaskItemControls--in + .toggl-button.anydo--2018__taskItem {
+  visibility: hidden;
+}
+
 /********* WUNDERLIST *********/
 .toggl-button.wunderlist {
   text-decoration: none;

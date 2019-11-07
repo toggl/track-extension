@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/toggl/toggl-button/compare/1.45.2...1.46.0) (2019-11-07)
+
+
+### Features
+
+* **todoist:** Add button to task view ([b0a3bed](https://github.com/toggl/toggl-button/commit/b0a3bed))
+
 ## [1.45.2](https://github.com/toggl/toggl-button/compare/1.45.1...1.45.2) (2019-11-07)
 
 

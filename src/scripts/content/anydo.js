@@ -28,13 +28,13 @@ togglbutton.render(
   '.TaskListRow[draggable=true]:not(.toggl)',
   { observe: true },
   elem => {
-    const descriptionElem = $('input', elem);
+    const descriptionElem = elem.querySelector('.TaskItem__label__text__title').textContent;
     const projectElem = $('.TasksToolBarCategoryTitle');
 
     const link = togglbutton.createTimerLink({
       buttonType: 'minimal',
       className: 'anydo--2018__taskItem',
-      description: descriptionElem ? descriptionElem.value : '',
+      description: descriptionElem,
       projectName: projectElem ? projectElem.textContent : ''
     });
 

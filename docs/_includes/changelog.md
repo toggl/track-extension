@@ -1,3 +1,10 @@
+## [1.45.2](https://github.com/toggl/toggl-button/compare/1.45.1...1.45.2) (2019-11-07)
+
+
+### Bug Fixes
+
+* **any.do:** Hide in list view when delete button is visible ([4ed8fc2](https://github.com/toggl/toggl-button/commit/4ed8fc2))
+
 ## [1.45.1](https://github.com/toggl/toggl-button/compare/1.45.0...1.45.1) (2019-10-31)
 
 

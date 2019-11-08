@@ -3,24 +3,18 @@
 
 // any.do Q4 2018: task card
 togglbutton.render('.CardScrollView:not(.toggl)', { observe: true }, elem => {
-  const descriptionElem = $('textarea', elem);
+  const descriptionSelector = () => elem.querySelector('textarea').value;
 
-  // Since task popup has same selector as overview
-  // do nothing when description is not present
-  if (!descriptionElem) {
-    return;
-  }
-
-  const projectElem = $('.TasksToolBarCategoryTitle');
+  const projectSelector = () => document.querySelector('.TasksToolBarCategoryTitle').textContent;
 
   const link = togglbutton.createTimerLink({
     buttonType: 'minimal',
     className: 'anydo--2018',
-    description: descriptionElem.value,
-    projectName: projectElem ? projectElem.textContent : ''
+    description: descriptionSelector,
+    projectName: projectSelector
   });
 
-  descriptionElem.before(link);
+  elem.querySelector('textarea').before(link);
 });
 
 // Any.do Q4 2018: tasks lists
@@ -28,17 +22,16 @@ togglbutton.render(
   '.TaskListRow[draggable=true]:not(.toggl)',
   { observe: true },
   elem => {
-    const descriptionElem = elem.querySelector('.TaskItem__label__text__title').textContent;
-    const projectElem = $('.TasksToolBarCategoryTitle');
+    const descriptionSelector = () => elem.querySelector('.TaskItem__label__text__title').textContent;
+    const projectSelector = () => document.querySelector('.TasksToolBarCategoryTitle').textContent;
 
     const link = togglbutton.createTimerLink({
       buttonType: 'minimal',
       className: 'anydo--2018__taskItem',
-      description: descriptionElem,
-      projectName: projectElem ? projectElem.textContent : ''
+      description: descriptionSelector,
+      projectName: projectSelector
     });
 
-    const container = $('.TaskItem', elem);
-    container.appendChild(link);
+    elem.querySelector('.TaskItem').appendChild(link);
   }
 );

@@ -1,19 +1,25 @@
 'use strict';
 
-togglbutton.render('#task-detail-view:not(.toggl)', { observe: true }, function (
-  elem
-) {
-  const project = $('#project-setting input', elem).getAttribute('value');
+togglbutton.render('#task-detail-view:not(.toggl)', { observe: true }, function renderTickTick (elem) {
+  function getProject () {
+    const projectEl = elem.querySelector('.project-setting input');
+    return projectEl ? projectEl.value.trim() : '';
+  }
 
-  const text = function () {
-    return $('.task-title', elem).textContent;
-  };
+  function getDescription () {
+    const descriptionEl = elem.querySelector('#tasktitle div[contenteditable]');
+    return descriptionEl ? descriptionEl.textContent.trim() : '';
+  }
 
-  const link = togglbutton.createTimerLink({
+  const button = togglbutton.createTimerLink({
     className: 'TickTick',
-    description: text,
-    projectName: project
+    description: getDescription,
+    projectName: getProject
   });
+  button.style.marginBottom = '15px';
 
-  $('#tasktitle').appendChild(link);
+  const root = elem.querySelector('#td-caption');
+  if (root) {
+    root.insertBefore(button, root.firstChild);
+  }
 });

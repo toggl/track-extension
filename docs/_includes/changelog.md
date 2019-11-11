@@ -1,3 +1,10 @@
+## [1.46.1](https://github.com/toggl/toggl-button/compare/1.46.0...1.46.1) (2019-11-11)
+
+
+### Bug Fixes
+
+* **tick-tick:** Add support for new TickTick UI ([7e8ebdf](https://github.com/toggl/toggl-button/commit/7e8ebdf)), closes [#1514](https://github.com/toggl/toggl-button/issues/1514)
+
 # [1.46.0](https://github.com/toggl/toggl-button/compare/1.45.2...1.46.0) (2019-11-07)
 
 

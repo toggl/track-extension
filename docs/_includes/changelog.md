@@ -1,3 +1,10 @@
+## [1.46.2](https://github.com/toggl/toggl-button/compare/1.46.1...1.46.2) (2019-11-12)
+
+
+### Bug Fixes
+
+* **any.do:** Retrieve correct descriptions in task list view ([#1552](https://github.com/toggl/toggl-button/issues/1552)) ([56021e6](https://github.com/toggl/toggl-button/commit/56021e6)), closes [#1551](https://github.com/toggl/toggl-button/issues/1551) [#1553](https://github.com/toggl/toggl-button/issues/1553)
+
 ## [1.46.1](https://github.com/toggl/toggl-button/compare/1.46.0...1.46.1) (2019-11-11)
 
 

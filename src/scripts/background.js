@@ -48,8 +48,15 @@ window.TogglButton = {
   $ApiV8Url: `${process.env.API_URL}/v8`,
   $ApiV9Url: `${process.env.API_URL}/v9`,
   $sendResponse: null,
-  $socket: null,
-  $retrySocket: false,
+  websocket: {
+    socket: null,
+    maxRetryCount: 30,
+    retryCount: 0,
+    retryInterval: 5,
+    get retryEnabled () {
+      return TogglButton.websocket.retryCount < TogglButton.websocket.maxRetryCount;
+    }
+  },
   $nannyTimer: null,
   $lastSyncDate: null,
   $lastWork: {
@@ -268,13 +275,15 @@ window.TogglButton = {
   },
 
   setupSocket: function () {
-    if (TogglButton.$socket && !TogglButton.$retrySocket) {
+    if (TogglButton.websocket.socket && !TogglButton.websocket.retryEnabled) {
       return;
     }
 
     try {
-      TogglButton.$socket = new WebSocket('wss://stream.toggl.com/ws');
-    } catch (e) {
+      TogglButton.websocket.socket = new WebSocket('wss://stream.toggl.com/ws');
+    } catch (error) {
+      bugsnagClient.notify(error, { context: 'websocket' });
+      TogglButton.retryWebsocketConnection();
       return;
     }
 
@@ -286,28 +295,28 @@ window.TogglButton = {
       type: 'pong'
     });
 
-    TogglButton.$socket.onopen = function () {
+    TogglButton.websocket.socket.onopen = function () {
+      TogglButton.resetWebsocketState();
       const data = JSON.stringify(authenticationMessage);
       try {
-        return TogglButton.$socket.send(data);
+        return TogglButton.websocket.socket.send(data);
       } catch (error) {
-        console.log('Exception while sending:', error);
+        if (process.env.DEBUG) console.log(error);
+        bugsnagClient.notify(error, { context: 'websocket' });
       }
     };
 
-    TogglButton.$socket.onerror = function (e) {
-      return console.log('onerror: ', e);
+    TogglButton.websocket.socket.onerror = function (error) {
+      bugsnagClient.notify(error, { context: 'websocket' });
+      return console.log('onerror: ', error);
     };
 
-    TogglButton.$socket.onclose = function () {
-      const retrySeconds = Math.floor(Math.random() * 30);
-      if (TogglButton.$retrySocket) {
-        setTimeout(TogglButton.setupSocket, retrySeconds * 1000);
-        TogglButton.$retrySocket = false;
-      }
+    TogglButton.websocket.socket.onclose = function () {
+      bugsnagClient.leaveBreadcrumb('Websocket connection closed');
+      TogglButton.retryWebsocketConnection();
     };
 
-    TogglButton.$socket.onmessage = function (msg) {
+    TogglButton.websocket.socket.onmessage = function (msg) {
       // test for empty json
       if (!msg.data) {
         return;
@@ -317,14 +326,40 @@ window.TogglButton = {
         if (data.model === 'time_entry') {
           TogglButton.updateCurrentEntry(data);
         }
-      } else if (TogglButton.$socket !== null) {
+      } else if (TogglButton.websocket.socket !== null) {
         try {
-          TogglButton.$socket.send(pingResponse);
+          TogglButton.websocket.socket.send(pingResponse);
         } catch (error) {
-          console.log('Exception while sending:', error);
+          if (process.env.DEBUG) console.log(error);
+          bugsnagClient.notify(error, { context: 'websocket' });
         }
       }
     };
+  },
+
+  // Attempt a websocket reconnection, obeying timeouts and maximum retry limits
+  retryWebsocketConnection: function () {
+    // TODO: reintroduce some variance so we don't have all clients reconnecting at once
+    // Retry connection, increasing the timeout each time, up to 1 minute.
+    const retrySeconds = Math.min(60, TogglButton.websocket.retryInterval * TogglButton.websocket.retryCount);
+    if (TogglButton.websocket.retryEnabled) {
+      setTimeout(() => {
+        TogglButton.websocket.retryCount++;
+        TogglButton.setupSocket();
+
+        bugsnagClient.leaveBreadcrumb(`Websocket reconnection attempt ${TogglButton.websocket.retryCount}`);
+        if (process.env.DEBUG) console.info(`Websocket reconnection attempt ${TogglButton.websocket.retryCount}`);
+
+        if (!TogglButton.websocket.retryEnabled) {
+          bugsnagClient.leaveBreadcrumb('Websocket reconnections abandoned');
+        }
+      }, retrySeconds * 1000);
+    }
+  },
+
+  // Resets the reconnection state to give things another chance
+  resetWebsocketState: function () {
+    TogglButton.websocket.retryCount = 0;
   },
 
   updateTriggers: function (entry) {

@@ -1,3 +1,10 @@
+## [1.46.3](https://github.com/toggl/toggl-button/compare/1.46.2...1.46.3) (2019-11-13)
+
+
+### Bug Fixes
+
+* **websocket:** Reimplement continuous websocket reconnection attempts ([cfc4856](https://github.com/toggl/toggl-button/commit/cfc4856))
+
 ## [1.46.2](https://github.com/toggl/toggl-button/compare/1.46.1...1.46.2) (2019-11-12)
 
 

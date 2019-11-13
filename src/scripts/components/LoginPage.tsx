@@ -220,7 +220,7 @@ const Link = styled.a`
 `;
 
 const ContentWrapper = styled.main`
-  height: 100%;
+  height: 450px;
   flex: 1;
   display: flex;
   align-items: center;

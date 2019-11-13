@@ -35,36 +35,56 @@ const getTimeEntryDayGroups = (timeEntries: Array<Array<Toggl.TimeEntry>>): {[da
     }, {})
 };
 
+const TimeEntriesFooter = () => (
+  <Footer>
+    <a target="_blank" href="https://toggl.com/app/timer?utm_source=toggl-button&utm_medium=referral">
+      <Button>
+        See more on <strong>toggl.com</strong>
+      </Button>
+    </a>
+  </Footer>);   
+
 interface TimeEntriesListProps {
   timeEntries: Toggl.TimeEntry[][];
   projects: IdMap<Toggl.Project>;
 };
 export default function TimeEntriesList (props: TimeEntriesListProps) {
   const { timeEntries = [], projects = {} } = props;
+
+  if (timeEntries.length === 0) {
+    return (
+      <Container>
+        <div />
+        <NoEntries>
+          <img src="../../images/stopwatch.png" width="177px" height="179px" />
+          <Description>
+            Get ready to track time and boost your productivity!
+          </Description>
+        </NoEntries>
+        <TimeEntriesFooter/>
+      </Container>);
+  }
+
   const dayGroups = getTimeEntryDayGroups(timeEntries);
 
   return (
-    <EntryList>
-      {Object.keys(dayGroups).map((date, groupIndex) => {
-        const groupEntries = dayGroups[date];
-        const showHeading = !isSameDay(date, Date.now());
+    <Container>
+      <EntryList>
+        {Object.keys(dayGroups).map((date, groupIndex) => {
+          const groupEntries = dayGroups[date];
+          const showHeading = !isSameDay(date, Date.now());
 
-        return [
-          showHeading && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
-          ...groupEntries.map((timeEntries, i) => {
-            const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;
-            return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
-          })
-        ]
-      })}
-      <Footer>
-        <a target="_blank" href="https://toggl.com/app/timer?utm_source=toggl-button&utm_medium=referral">
-          <Button>
-            See more on <strong>toggl.com</strong>
-          </Button>
-        </a>
-      </Footer>
-    </EntryList>
+          return [
+            showHeading && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
+            ...groupEntries.map((timeEntries, i) => {
+              const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;
+              return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
+            })
+          ]
+        })}
+      </EntryList>
+      <TimeEntriesFooter/>
+    </Container>
   );
 }
 
@@ -182,6 +202,26 @@ const ContinueButton = styled.div`
   &:hover {
     opacity: 1.0;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 410px;
+`;
+
+const NoEntries = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+`;
+
+const Description = styled.p`
+  color: #a3a3a3;
+  margin-top: 25px;
+  font-size: 14px;
 `;
 
 const EntryList = styled.ul`

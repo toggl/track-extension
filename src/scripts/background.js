@@ -296,7 +296,7 @@ window.TogglButton = {
     });
 
     TogglButton.websocket.socket.onopen = function () {
-      TogglButton.resetWebsocketState();
+      TogglButton.resetWebsocketRetryCount();
       const data = JSON.stringify(authenticationMessage);
       try {
         return TogglButton.websocket.socket.send(data);
@@ -358,7 +358,7 @@ window.TogglButton = {
   },
 
   // Resets the reconnection state to give things another chance
-  resetWebsocketState: function () {
+  resetWebsocketRetryCount: function () {
     TogglButton.websocket.retryCount = 0;
   },
 

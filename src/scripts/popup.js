@@ -168,6 +168,7 @@ window.PopUp = {
   renderEntriesList: function () {
     const entries = TogglButton.$user.time_entries;
     if (!entries || entries.length < 1) {
+      ReactDOM.render(<TimeEntriesList />, document.getElementById('root-time-entries-list'));
       return;
     }
 
@@ -206,10 +207,6 @@ window.PopUp = {
       if (project) sum.projects[project.id] = project;
       return sum;
     }, { listEntries: [], projects: {} });
-
-    if (!listEntries.length) {
-      return;
-    }
 
     // Render react tree
     ReactDOM.render(<TimeEntriesList timeEntries={listEntries} projects={projects} />, document.getElementById('root-time-entries-list'));

@@ -1,5 +1,9 @@
 @import './edit-form.css';
 
+html, body {
+  min-height: 550px;
+}
+
 body {
   font-size: 14px;
   overflow: hidden;

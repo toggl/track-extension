@@ -1,3 +1,12 @@
+## [1.46.4](https://github.com/toggl/toggl-button/compare/1.46.3...1.46.4) (2019-11-14)
+
+
+### Bug Fixes
+
+* **popup:** Fix keyboard navigation for dropdowns (in-page) ([5becec8](https://github.com/toggl/toggl-button/commit/5becec8)), closes [#1422](https://github.com/toggl/toggl-button/issues/1422)
+* **popup:** Fix tag/project dropdown toggle in-page ([0983c2e](https://github.com/toggl/toggl-button/commit/0983c2e)), closes [#1422](https://github.com/toggl/toggl-button/issues/1422)
+* **popup:** Improve keyboard navigation and bring back overlay ([1fc388d](https://github.com/toggl/toggl-button/commit/1fc388d)), closes [#1422](https://github.com/toggl/toggl-button/issues/1422)
+
 ## [1.46.3](https://github.com/toggl/toggl-button/compare/1.46.2...1.46.3) (2019-11-13)
 
 

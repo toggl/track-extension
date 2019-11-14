@@ -306,9 +306,9 @@ window.TogglButton = {
       }
     };
 
-    TogglButton.websocket.socket.onerror = function (error) {
-      bugsnagClient.notify(error, { context: 'websocket' });
-      return console.log('onerror: ', error);
+    TogglButton.websocket.socket.onerror = function (event) {
+      // Note: The error event for websockets doesn't really contain anything reportable.
+      return console.error('Websocket error: ', event);
     };
 
     TogglButton.websocket.socket.onclose = function () {

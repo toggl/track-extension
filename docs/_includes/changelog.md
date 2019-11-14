@@ -1,3 +1,11 @@
+## [1.46.5](https://github.com/toggl/toggl-button/compare/1.46.4...1.46.5) (2019-11-14)
+
+
+### Bug Fixes
+
+* **ws:** Bump retry duration numbers ([dd101d3](https://github.com/toggl/toggl-button/commit/dd101d3))
+* **ws:** Implement exponential backoff ([7fe387a](https://github.com/toggl/toggl-button/commit/7fe387a))
+
 ## [1.46.4](https://github.com/toggl/toggl-button/compare/1.46.3...1.46.4) (2019-11-14)
 
 

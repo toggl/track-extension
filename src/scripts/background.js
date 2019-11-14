@@ -6,6 +6,7 @@ import Ga from './lib/ga';
 
 const browser = require('webextension-polyfill');
 const FIVE_MINUTES = 5 * 60;
+const ONE_HOUR = 60 * 60;
 
 let openWindowsCount = 0;
 
@@ -17,6 +18,22 @@ const shouldTriggerNotification = (state, seconds) => {
     state === 'idle' && seconds > 0 && (seconds % FIVE_MINUTES) === 0
   );
 };
+
+function randomInt (min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function jitter () {
+  // Random amount between 0-5 seconds
+  return randomInt(0, 5);
+}
+
+function backoff (retryInterval, retryCount) {
+  return Math.min(
+    (retryInterval * Math.pow(2, retryCount)) + jitter(),
+    ONE_HOUR
+  );
+}
 
 /**
  * Returns true if the user is active or idle state
@@ -52,11 +69,7 @@ window.TogglButton = {
     socket: null,
     maxRetryCount: 30,
     retryCount: 0,
-    retryInterval: 5,
-    get retryEnabled () {
-      return false;
-      // return TogglButton.websocket.retryCount < TogglButton.websocket.maxRetryCount;
-    }
+    retryInterval: 5
   },
   $nannyTimer: null,
   $lastSyncDate: null,
@@ -276,10 +289,6 @@ window.TogglButton = {
   },
 
   setupSocket: function () {
-    if (TogglButton.websocket.socket && !TogglButton.websocket.retryEnabled) {
-      return;
-    }
-
     try {
       TogglButton.websocket.socket = new WebSocket('wss://stream.toggl.com/ws');
     } catch (error) {
@@ -341,21 +350,15 @@ window.TogglButton = {
   // Attempt a websocket reconnection, obeying timeouts and maximum retry limits
   retryWebsocketConnection: function () {
     // TODO: reintroduce some variance so we don't have all clients reconnecting at once
-    // Retry connection, increasing the timeout each time, up to 1 minute.
-    const retrySeconds = Math.min(60, TogglButton.websocket.retryInterval * TogglButton.websocket.retryCount);
-    if (TogglButton.websocket.retryEnabled) {
-      setTimeout(() => {
-        TogglButton.websocket.retryCount++;
-        TogglButton.setupSocket();
+    // Retry connection, increasing the timeout each time, up to 30 minutes.
+    const retrySeconds = backoff(TogglButton.websocket.retryInterval, TogglButton.websocket.retryCount);
+    setTimeout(() => {
+      TogglButton.websocket.retryCount++;
+      TogglButton.setupSocket();
 
-        bugsnagClient.leaveBreadcrumb(`Websocket reconnection attempt ${TogglButton.websocket.retryCount}`);
-        if (process.env.DEBUG) console.info(`Websocket reconnection attempt ${TogglButton.websocket.retryCount}`);
-
-        if (!TogglButton.websocket.retryEnabled) {
-          bugsnagClient.leaveBreadcrumb('Websocket reconnections abandoned');
-        }
-      }, retrySeconds * 1000);
-    }
+      bugsnagClient.leaveBreadcrumb(`Websocket reconnection attempt ${TogglButton.websocket.retryCount}`);
+      if (process.env.DEBUG) console.info(`Websocket reconnection attempt ${TogglButton.websocket.retryCount}`);
+    }, retrySeconds * 1000);
   },
 
   // Resets the reconnection state to give things another chance

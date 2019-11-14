@@ -92,6 +92,7 @@ window.TogglButton = {
     <div class="TB__Dialog__field" tabindex="0">
       <div>
         <div id="toggl-button-project-placeholder" class="TB__FormFieldTrigger__trigger" disabled><span class="tb-project-bullet"><div>No project</div></span><span class="TB__Popdown__caret"></span></div>
+        <div class="TB__Popdown__overlay"></div>
         <div class="TB__Popdown__content">
           <div class="TB__Popdown__filterContainer">
             <input name="toggl-button-project-filter" type="text" id="toggl-button-project-filter" class="TB__Popdown__filter" value="" placeholder="Find project..." autocomplete="off">
@@ -106,6 +107,7 @@ window.TogglButton = {
     <div class="TB__Dialog__field" tabindex="0">
       <div>
         <div id="toggl-button-tag-placeholder" class="TB__FormFieldTrigger__trigger" disabled><div>Add tags</div><span class="TB__Popdown__caret"></span></div>
+        <div class="TB__Popdown__overlay"></div>
         <div class="TB__Popdown__content">
           <div class="TB__Popdown__filterContainer">
             <input name="toggl-button-tag-filter" type="text" id="toggl-button-tag-filter" class="TB__Popdown__filter" value="" placeholder="Find tags..." autocomplete="off">

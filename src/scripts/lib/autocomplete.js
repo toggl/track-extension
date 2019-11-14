@@ -13,7 +13,7 @@ const AutoComplete = function (el, item, elem) {
   this.content = this.el.parentElement;
   this.filter = document.querySelector('#toggl-button-' + el + '-filter');
   this.field = this.el.closest('.TB__Dialog__field');
-  this.overlay = document.body;
+  this.overlay = this.field.querySelector('.TB__Popdown__overlay');
   this.placeholderItem = document.querySelector(
     '#toggl-button-' + el + '-placeholder'
   );
@@ -32,12 +32,20 @@ const AutoComplete = function (el, item, elem) {
 AutoComplete.prototype.addEvents = function () {
   const that = this;
 
-  this.placeholderItem.addEventListener('click', function () { that.toggleDropdown(); });
+  const bindedToggleDropdown = that.toggleDropdown.bind(that);
 
   this.field.addEventListener('focus', function (e) {
-    const target = e.explicitOriginalTarget;
-    if (target && that.field !== target && that.field.contains(target)) return;
     that.openDropdown();
+
+    setTimeout(() => {
+      that.placeholderItem.addEventListener('click', bindedToggleDropdown);
+    }, 150);
+  });
+
+  this.field.addEventListener('focusout', function (e) {
+    if (that.field.contains(e.relatedTarget)) return;
+    that.placeholderItem.removeEventListener('click', bindedToggleDropdown);
+    that.closeDropdown();
   });
 
   that.filter.addEventListener('keydown', function (e) {
@@ -639,12 +647,20 @@ TagAutoComplete.prototype.setup = function (selected, wid) {
 TagAutoComplete.prototype.addEvents = function () {
   const that = this;
 
-  this.placeholderItem.addEventListener('click', function () { that.toggleDropdown(); });
+  const bindedToggleDropdown = that.toggleDropdown.bind(that);
 
   this.field.addEventListener('focus', function (e) {
-    const target = e.explicitOriginalTarget;
-    if (target && that.field !== target && that.field.contains(target)) return;
     that.openDropdown();
+
+    setTimeout(() => {
+      that.placeholderItem.addEventListener('click', bindedToggleDropdown);
+    }, 150);
+  });
+
+  this.field.addEventListener('focusout', function (e) {
+    if (that.field.contains(e.relatedTarget)) return;
+    that.placeholderItem.removeEventListener('click', bindedToggleDropdown);
+    that.closeDropdown();
   });
 
   this.el.addEventListener('click', function (e) {

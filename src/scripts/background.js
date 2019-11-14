@@ -7,6 +7,7 @@ import Ga from './lib/ga';
 const browser = require('webextension-polyfill');
 const FIVE_MINUTES = 5 * 60;
 const ONE_HOUR = 60 * 60;
+const RETRY_INTERVAL = 15;
 
 let openWindowsCount = 0;
 
@@ -24,13 +25,13 @@ function randomInt (min, max) {
 }
 
 function jitter () {
-  // Random amount between 0-5 seconds
-  return randomInt(0, 5);
+  // Random duration between 0-60 seconds
+  return randomInt(0, 60);
 }
 
-function backoff (retryInterval, retryCount) {
+function backoff (retryCount) {
   return Math.min(
-    (retryInterval * Math.pow(2, retryCount)) + jitter(),
+    (RETRY_INTERVAL * Math.pow(2, retryCount)) + jitter(),
     ONE_HOUR
   );
 }
@@ -67,9 +68,7 @@ window.TogglButton = {
   $sendResponse: null,
   websocket: {
     socket: null,
-    maxRetryCount: 30,
-    retryCount: 0,
-    retryInterval: 5
+    retryCount: 0
   },
   $nannyTimer: null,
   $lastSyncDate: null,
@@ -350,8 +349,8 @@ window.TogglButton = {
   // Attempt a websocket reconnection, obeying timeouts and maximum retry limits
   retryWebsocketConnection: function () {
     // TODO: reintroduce some variance so we don't have all clients reconnecting at once
-    // Retry connection, increasing the timeout each time, up to 30 minutes.
-    const retrySeconds = backoff(TogglButton.websocket.retryInterval, TogglButton.websocket.retryCount);
+    // Retry connection, increasing the timeout each time, up to 60 minutes.
+    const retrySeconds = backoff(TogglButton.websocket.retryCount);
     setTimeout(() => {
       TogglButton.websocket.retryCount++;
       TogglButton.setupSocket();

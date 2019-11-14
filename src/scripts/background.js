@@ -54,7 +54,8 @@ window.TogglButton = {
     retryCount: 0,
     retryInterval: 5,
     get retryEnabled () {
-      return TogglButton.websocket.retryCount < TogglButton.websocket.maxRetryCount;
+      return false;
+      // return TogglButton.websocket.retryCount < TogglButton.websocket.maxRetryCount;
     }
   },
   $nannyTimer: null,

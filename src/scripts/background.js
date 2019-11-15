@@ -288,6 +288,14 @@ window.TogglButton = {
   },
 
   setupSocket: function () {
+    // Don't reinitialize if socket is not closed
+    if (
+      TogglButton.websocket.socket &&
+      TogglButton.websocket.socket.readyState !== WebSocket.CLOSED
+    ) {
+      return;
+    }
+
     try {
       TogglButton.websocket.socket = new WebSocket('wss://stream.toggl.com/ws');
     } catch (error) {

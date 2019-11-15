@@ -1,3 +1,10 @@
+## [1.46.6](https://github.com/toggl/toggl-button/compare/1.46.5...1.46.6) (2019-11-15)
+
+
+### Bug Fixes
+
+* **websocket:** Ensure only one websocket connection is opened ([cdd3da6](https://github.com/toggl/toggl-button/commit/cdd3da6))
+
 ## [1.46.5](https://github.com/toggl/toggl-button/compare/1.46.4...1.46.5) (2019-11-14)
 
 

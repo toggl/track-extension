@@ -106,7 +106,6 @@ window.togglbutton = {
   user: {},
   duration_format: '',
   currentDescription: '',
-  fullPageHeight: getFullPageHeight(),
   fullVersion: 'TogglButton',
   render: function (selector, opts, renderer, mutationSelector) {
     browser.runtime.sendMessage({ type: 'activate' })
@@ -204,7 +203,7 @@ window.togglbutton = {
     if (left + editFormWidth > window.innerWidth) {
       left = window.innerWidth - 10 - editFormWidth;
     }
-    if (top + editFormHeight > togglbutton.fullPageHeight) {
+    if (top + editFormHeight > getFullPageHeight()) {
       top = window.innerHeight + document.body.scrollTop - 10 - editFormHeight;
     }
     return { left: left, top: top };

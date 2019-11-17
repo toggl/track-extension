@@ -1,3 +1,10 @@
+# [1.47.0](https://github.com/toggl/toggl-button/compare/1.46.6...1.47.0) (2019-11-17)
+
+
+### Features
+
+* add zammad integration for toggl button ([0afe216](https://github.com/toggl/toggl-button/commit/0afe216))
+
 ## [1.46.6](https://github.com/toggl/toggl-button/compare/1.46.5...1.46.6) (2019-11-15)
 
 

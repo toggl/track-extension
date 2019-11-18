@@ -1,3 +1,10 @@
+## [1.47.1](https://github.com/toggl/toggl-button/compare/1.47.0...1.47.1) (2019-11-18)
+
+
+### Bug Fixes
+
+* **popup:** Add minimum height to popup ([ed57c3c](https://github.com/toggl/toggl-button/commit/ed57c3c)), closes [#1534](https://github.com/toggl/toggl-button/issues/1534)
+
 # [1.47.0](https://github.com/toggl/toggl-button/compare/1.46.6...1.47.0) (2019-11-17)
 
 

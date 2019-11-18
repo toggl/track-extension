@@ -24,12 +24,7 @@ if (FF) {
 window.PopUp = {
   $postStartText: ' post-start popup',
   $popUpButton: null,
-  $togglButton: document.querySelector('.stop-button'),
-  $resumeButton: document.querySelector('.resume-button'),
   $errorLabel: document.querySelector('.error'),
-  $editButton: document.querySelector('.edit-button'),
-  $tagIcon: document.querySelector('.tag-icon'),
-  $projectBullet: document.querySelector('.timer .tb-project-bullet'),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
   $timer: null,
@@ -455,7 +450,6 @@ window.PopUp = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  let onClickSendMessage;
   const req = {
     type: 'sync',
     respond: false
@@ -464,21 +458,6 @@ document.addEventListener('DOMContentLoaded', function () {
   try {
     PopUp.sendMessage(req);
     PopUp.showPage();
-    PopUp.$editButton.addEventListener('click', function () {
-      PopUp.updateEditForm(PopUp.$editView);
-    });
-    onClickSendMessage = function () {
-      const request = {
-        type: this.getAttribute('data-event'),
-        respond: true,
-        service: 'dropdown'
-      };
-      clearInterval(PopUp.$timer);
-      PopUp.$timer = null;
-
-      PopUp.sendMessage(request);
-    };
-    PopUp.$resumeButton.addEventListener('click', onClickSendMessage);
 
     document
       .querySelector('.header .sync-data')

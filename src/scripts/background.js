@@ -629,13 +629,13 @@ window.TogglButton = {
             if (timeEntry.respond) {
               const showPostPopup = await db.get('showPostPopup');
               resolve({
-                success: success,
+                success,
                 type: 'New Entry',
-                entry: entry,
-                showPostPopup: showPostPopup,
+                entry,
+                showPostPopup,
                 html: TogglButton.getEditForm(),
-                hasTasks: hasTasks,
-                error: error
+                hasTasks,
+                error
               });
             } else {
               resolve({

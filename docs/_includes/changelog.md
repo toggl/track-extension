@@ -1,3 +1,10 @@
+## [1.47.2](https://github.com/toggl/toggl-button/compare/1.47.1...1.47.2) (2019-11-19)
+
+
+### Bug Fixes
+
+* **popup:** Get page height when opening popup ([f9ffca2](https://github.com/toggl/toggl-button/commit/f9ffca2))
+
 ## [1.47.1](https://github.com/toggl/toggl-button/compare/1.47.0...1.47.1) (2019-11-18)
 
 

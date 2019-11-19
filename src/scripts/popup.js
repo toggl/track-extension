@@ -228,13 +228,18 @@ window.PopUp = {
    */
   renderEditForm: function (timeEntry) {
     const pid = timeEntry.pid || 0;
-    const tid = timeEntry.id || 0;
+    const tid = timeEntry.tid || 0;
     const wid = timeEntry.wid;
     const togglButtonDescription = document.querySelector(
       '#toggl-button-description'
     );
     const togglButtonDuration = document.querySelector('#toggl-button-duration');
     const isCurrentEntry = TogglButton.$curEntry && TogglButton.$curEntry.id === timeEntry.id;
+
+    const editView = document.getElementById('toggl-button-edit-form');
+    if (timeEntry.id && editView) {
+      editView.dataset.timeEntryId = timeEntry.id;
+    }
 
     const duration = differenceInSeconds(
       new Date(isCurrentEntry ? undefined : timeEntry.stop),
@@ -365,6 +370,11 @@ window.PopUp = {
       billable: billable,
       service: 'dropdown'
     };
+    const editView = document.getElementById('toggl-button-edit-form');
+    const timeEntryId = editView.dataset.timeEntryId;
+    if (timeEntryId) {
+      request.id = +timeEntryId;
+    }
 
     if (duration) {
       const start = new Date((new Date()).getTime() - duration * 1000);

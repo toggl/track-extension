@@ -44,9 +44,8 @@ function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | 
   const { entry, project } = props;
   const tags = (entry.tags || []).join(', ');
 
-  const editEntry = (e) => {
-    e.preventDefault();
-    window.PopUp.updateEditForm(window.PopUp.$editView);
+  const editEntry = (e: React.MouseEvent) => {
+    window.PopUp.renderEditForm(entry);
   };
   const stopTimer = (e) => {
     e.preventDefault();

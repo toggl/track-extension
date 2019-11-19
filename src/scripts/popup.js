@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { isSameDay } from 'date-fns';
+import { isSameDay, differenceInSeconds } from 'date-fns';
 
 import { secToHhmmImproved } from './@toggl/time-format-utils';
 import Summary from './components/Summary';
@@ -234,12 +234,14 @@ window.PopUp = {
       '#toggl-button-description'
     );
     const togglButtonDuration = document.querySelector('#toggl-button-duration');
+    const isCurrentEntry = TogglButton.$curEntry.id === timeEntry.id;
 
-    togglButtonDescription.value = timeEntry.description || '';
-    togglButtonDuration.value = secToHhmmImproved(
-      new Date() - new Date(timeEntry.start),
-      { html: false }
+    const duration = differenceInSeconds(
+      new Date(isCurrentEntry ? undefined : timeEntry.stop),
+      new Date(timeEntry.start)
     );
+    togglButtonDescription.value = timeEntry.description || '';
+    togglButtonDuration.value = secToHhmmImproved(duration, { html: false });
 
     PopUp.$projectAutocomplete.setup(pid, tid);
     PopUp.$tagAutocomplete.setup(timeEntry.tags, wid);
@@ -253,9 +255,8 @@ window.PopUp = {
     togglButtonDescription.scrollLeft = 0;
 
     PopUp.durationChanged = false;
-
     // Setup duration updater if entry is running
-    if (TogglButton.$curEntry.id === timeEntry.id) {
+    if (isCurrentEntry) {
       PopUp.updateDurationInput(true);
     }
   },

@@ -107,13 +107,8 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
   const entriesCount = timeEntries.length;
   const earliestStartTime = format(timeEntries[timeEntries.length - 1].start, 'HH:mm');
 
-  const editEntry = (e) => {
-    e.preventDefault();
-    window.PopUp.updateEditForm(window.PopUp.$editView);
-  };
-
   return (
-    <EntryItem onClick={editEntry}>
+    <EntryItem onClick={editEntry(timeEntry)}>
       <EntryItemRow>
         {entriesCount > 1 &&
           <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
@@ -132,6 +127,11 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
     </EntryItem>
   );
 }
+
+const editEntry = (timeEntry: Toggl.TimeEntry) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  window.PopUp.renderEditForm(timeEntry);
+};
 
 const GroupedEntryCounter = styled.div`
   display: flex;

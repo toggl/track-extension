@@ -93,6 +93,7 @@ type TimeEntriesListItemProps = {
   project: Toggl.Project | null;
 };
 function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps) {
+  const tids = timeEntries.map(({ id }) => id);
   const timeEntry = timeEntries[0];
   const description = timeEntry.description || NO_DESCRIPTION;
   const isBillable = !!timeEntry.billable;
@@ -107,8 +108,13 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
   const entriesCount = timeEntries.length;
   const earliestStartTime = format(timeEntries[timeEntries.length - 1].start, 'HH:mm');
 
+  const editEntry = (e) => {
+    e.preventDefault();
+    window.PopUp.updateEditForm(window.PopUp.$editView);
+  };
+
   return (
-    <EntryItem>
+    <EntryItem onClick={editEntry}>
       <EntryItemRow>
         {entriesCount > 1 &&
           <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
@@ -246,6 +252,7 @@ const EntryItem = styled.li`
   font-size: 14px;
   box-shadow: ${itemShadow};
   background-color: ${color.white};
+  cursor: pointer;
 
   &:hover {
     background-color: ${color.listItemHover};

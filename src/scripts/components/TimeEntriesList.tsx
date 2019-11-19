@@ -42,7 +42,7 @@ const TimeEntriesFooter = () => (
         See more on <strong>toggl.com</strong>
       </Button>
     </a>
-  </Footer>);   
+  </Footer>);
 
 interface TimeEntriesListProps {
   timeEntries: Toggl.TimeEntry[][];
@@ -93,7 +93,6 @@ type TimeEntriesListItemProps = {
   project: Toggl.Project | null;
 };
 function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps) {
-  const tids = timeEntries.map(({ id }) => id);
   const timeEntry = timeEntries[0];
   const description = timeEntry.description || NO_DESCRIPTION;
   const isBillable = !!timeEntry.billable;

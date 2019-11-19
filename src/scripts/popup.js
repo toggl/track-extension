@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { isSameDay, differenceInSeconds } from 'date-fns';
+import { addSeconds, differenceInSeconds, isSameDay } from 'date-fns';
 
 import { secToHhmmImproved } from './@toggl/time-format-utils';
 import Summary from './components/Summary';
@@ -127,10 +127,12 @@ window.PopUp = {
             return PopUp.switchView(PopUp.$menuView);
           }
           if (response.type === 'Update') {
-            // Extension update?
+            // Edit form update
             TogglButton = browser.extension.getBackgroundPage().TogglButton;
             // Current TE update
             PopUp.renderTimer();
+            PopUp.renderEntriesList();
+            PopUp.renderSummary();
           } else if (response.type === 'update') {
             // Current TE update
             PopUp.renderTimer();
@@ -239,6 +241,9 @@ window.PopUp = {
     const editView = document.getElementById('toggl-button-edit-form');
     if (timeEntry.id && editView) {
       editView.dataset.timeEntryId = timeEntry.id;
+      editView.dataset.workspaceId = timeEntry.wid;
+      editView.dataset.startTime = timeEntry.start;
+      editView.dataset.stopTime = timeEntry.stop;
     }
 
     const duration = differenceInSeconds(
@@ -375,11 +380,25 @@ window.PopUp = {
     if (timeEntryId) {
       request.id = +timeEntryId;
     }
+    const workspaceId = editView.dataset.workspaceId;
+    if (workspaceId) {
+      request.wid = +workspaceId;
+    }
+
+    const startTime = editView.dataset.startTime;
 
     if (duration) {
-      const start = new Date((new Date()).getTime() - duration * 1000);
-      request.start = start.toISOString();
-      request.duration = -1 * Math.floor(start.getTime() / 1000);
+      if (startTime) {
+        request.start = new Date(startTime).toISOString();
+        request.duration = duration;
+        request.stop = addSeconds(new Date(startTime), duration).toISOString();
+      } else {
+        const start = new Date(
+          (new Date()).getTime() - duration * 1000
+        );
+        request.start = start.toISOString();
+        request.duration = -1 * Math.floor(start.getTime() / 1000);
+      }
     }
 
     PopUp.sendMessage(request);

@@ -1,3 +1,5 @@
+/// <reference path="./index.d.ts" />
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { isSameDay } from 'date-fns';
@@ -219,28 +221,31 @@ window.PopUp = {
   },
 
   /* Edit form functions */
-  updateEditForm: function (view) {
-    const pid = TogglButton.$curEntry.pid ? TogglButton.$curEntry.pid : 0;
-    const tid = TogglButton.$curEntry.tid ? TogglButton.$curEntry.tid : 0;
-    const wid = TogglButton.$curEntry.wid;
+
+  /**
+   * Render edit-form for given time entry object
+   * @param timeEntry {Toggl.TimeEntry} - The time entry object to render
+   */
+  renderEditForm: function (timeEntry) {
+    const pid = timeEntry.pid || 0;
+    const tid = timeEntry.id || 0;
+    const wid = timeEntry.wid;
     const togglButtonDescription = document.querySelector(
       '#toggl-button-description'
     );
     const togglButtonDuration = document.querySelector('#toggl-button-duration');
 
-    togglButtonDescription.value = TogglButton.$curEntry.description
-      ? TogglButton.$curEntry.description
-      : '';
+    togglButtonDescription.value = timeEntry.description || '';
     togglButtonDuration.value = secToHhmmImproved(
-      new Date() - new Date(TogglButton.$curEntry.start),
+      new Date() - new Date(timeEntry.start),
       { html: false }
     );
 
     PopUp.$projectAutocomplete.setup(pid, tid);
-    PopUp.$tagAutocomplete.setup(TogglButton.$curEntry.tags, wid);
+    PopUp.$tagAutocomplete.setup(timeEntry.tags, wid);
 
-    PopUp.setupBillable(!!TogglButton.$curEntry.billable, pid);
-    PopUp.switchView(view);
+    PopUp.setupBillable(!!timeEntry.billable, pid);
+    PopUp.switchView(PopUp.$editView);
 
     // Put focus to the beginning of desctiption field
     togglButtonDescription.focus();
@@ -248,7 +253,11 @@ window.PopUp = {
     togglButtonDescription.scrollLeft = 0;
 
     PopUp.durationChanged = false;
-    PopUp.updateDurationInput(true);
+
+    // Setup duration updater if entry is running
+    if (TogglButton.$curEntry.id === timeEntry.id) {
+      PopUp.updateDurationInput(true);
+    }
   },
 
   updateDurationInput: function (startTimer) {

@@ -234,7 +234,7 @@ window.PopUp = {
       '#toggl-button-description'
     );
     const togglButtonDuration = document.querySelector('#toggl-button-duration');
-    const isCurrentEntry = TogglButton.$curEntry.id === timeEntry.id;
+    const isCurrentEntry = TogglButton.$curEntry && TogglButton.$curEntry.id === timeEntry.id;
 
     const duration = differenceInSeconds(
       new Date(isCurrentEntry ? undefined : timeEntry.stop),
@@ -525,6 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!e.target.dataset.continueId) {
         return;
       }
+      e.stopPropagation();
       const id = e.target.dataset.continueId;
       const timeEntry = TogglButton.$user.time_entries.find((entry) => entry.id === +id);
 

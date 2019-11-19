@@ -143,7 +143,7 @@ window.TogglButton = {
     '</div>' +
     '<div id="toggl-button-update" tabindex="0" class="TB__Button__button">Done</div>' +
     '<input type="submit" class="toggl-button-hidden">' +
-    '</from>' +
+    '</form>' +
     '</div>',
 
   fetchUser: function (token) {

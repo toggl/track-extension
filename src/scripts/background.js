@@ -993,20 +993,20 @@ window.TogglButton = {
     let entry;
     let error = '';
     let project;
+    const isRunningEntry = TogglButton.$curEntry && TogglButton.$curEntry.id === timeEntry.id;
 
     return new Promise(function (resolve, reject) {
-      if (!TogglButton.$curEntry) {
-        resolve();
-        return;
-      }
       entry = {
         description: timeEntry.description,
         pid: timeEntry.pid || null,
         tags: timeEntry.tags,
         tid: timeEntry.tid || null,
         billable: timeEntry.billable,
-        wid: TogglButton.$curEntry.wid
+        wid: timeEntry.wid || TogglButton.$curEntry.wid
       };
+      if (timeEntry.id) {
+        entry.id = timeEntry.id;
+      }
 
       if (entry.pid) {
         project = TogglButton.findProjectByPid(parseInt(entry.pid, 10));
@@ -1016,13 +1016,16 @@ window.TogglButton = {
       if (timeEntry.start) {
         entry.start = timeEntry.start;
       }
+      if (!isRunningEntry) {
+        entry.stop = timeEntry.stop;
+      }
 
       if (timeEntry.duration) {
         entry.duration = timeEntry.duration;
       }
 
       TogglButton.ajax(
-        `/time_entries/${TogglButton.$curEntry.id}`,
+        `/time_entries/${timeEntry.id}`,
         {
           method: 'PUT',
           payload: entry,
@@ -1033,8 +1036,15 @@ window.TogglButton = {
               if (success) {
                 entry = JSON.parse(xhr.responseText);
                 // Not using TogglButton.updateCurrent as the time is not changed
-                TogglButton.$curEntry = entry;
-                TogglButton.setBrowserAction(entry);
+                if (isRunningEntry) {
+                  TogglButton.$curEntry = entry;
+                  TogglButton.setBrowserAction(entry);
+                } else {
+                  const idx = TogglButton.$user.time_entries.findIndex(t => t.id === timeEntry.id);
+                  if (idx) {
+                    TogglButton.$user.time_entries[idx] = entry;
+                  }
+                }
               } else {
                 error = xhr.responseText;
               }

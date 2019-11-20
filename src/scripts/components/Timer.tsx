@@ -56,7 +56,7 @@ function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | 
   return (
     <TimerContainer onClick={editEntry}>
       <div>
-        <TimeEntryDescription title={`Click to edit ${entry.description || ''}`} running>
+        <TimeEntryDescription title={`Click to edit ${entry.description || ''}`}>
           {entry.description || NO_DESCRIPTION}
         </TimeEntryDescription>
         {project &&

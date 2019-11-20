@@ -19,6 +19,11 @@ const DEFAULT_SETTINGS = {
   pomodoroSoundEnabled: true,
   pomodoroSoundVolume: 1,
   pomodoroStopTimeTrackingWhenTimerEnds: true,
+
+  pomodoroTickerEnabled: false,
+  pomodoroTickerFile: 'sounds/tick-tock.mp3',
+  pomodoroTickerVolume: 1,
+
   pomodoroInterval: 25,
   stopAtDayEnd: false,
   dayEndTime: '17:00',

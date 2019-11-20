@@ -102,7 +102,7 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
   }, 0);
   const entriesCount = timeEntries.length;
   const earliestStartTime = format(timeEntries[timeEntries.length - 1].start, 'HH:mm');
-  const isGrouped = entriesCount > 1 && groupEntries
+  const isGrouped = entriesCount > 1 && groupEntries;
   const toggleGrouping = () => setGroupEntries(val => !val);
 
   const content = [

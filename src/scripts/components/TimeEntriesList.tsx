@@ -214,7 +214,6 @@ const GroupedEntryCounter = styled.div`
   width: 24px;
   height: 24px;
   font-size: 14px;
-  cursor: default;
 `;
 
 function TimeEntryDuration ({ duration }: { duration: number }) {
@@ -233,7 +232,7 @@ export const TimeEntryDescription = styled.div`
   line-height: 24px;
   overflow: hidden;
   color: #222;
-  cursor: ${(props: { running?: boolean }) => props.running ? 'pointer' : 'text'};
+  cursor: pointer;
 `;
 
 export function TimeEntryProject ({ project }: { project: Toggl.Project | null }) {

@@ -3,6 +3,7 @@ import { escapeHtml, isTogglURL, report, secToHHMM } from './lib/utils';
 
 import Db from './lib/db';
 import Ga from './lib/ga';
+import Sound from './lib/sound';
 
 const browser = require('webextension-polyfill');
 const FIVE_MINUTES = 5 * 60;
@@ -80,6 +81,7 @@ window.TogglButton = {
   checkingWorkdayEnd: false,
   pomodoroAlarm: null,
   pomodoroProgressTimer: null,
+  $ticker: null,
   localEntry: null,
   $userState: 'active',
   $fullVersion: `TogglButton/${process.env.VERSION}`,
@@ -381,6 +383,7 @@ window.TogglButton = {
 
     TogglButton.$curEntry = entry;
     if (entry) {
+      TogglButton.startTicker();
       if (update) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
@@ -392,6 +395,7 @@ window.TogglButton = {
       }
     } else {
       // Clear pomodoro timer
+      TogglButton.stopTicker();
       clearTimeout(TogglButton.pomodoroAlarm);
       TogglButton.pomodoroAlarm = null;
       clearInterval(TogglButton.pomodoroProgressTimer);
@@ -2202,6 +2206,23 @@ window.TogglButton = {
         sendResponse({ type: 'create-workspace', success: false });
       }
     });
+  },
+
+  startTicker: async function () {
+    const pomodoroTickerEnabled = await db.get('pomodoroTickerEnabled');
+    if (pomodoroTickerEnabled) {
+      if (TogglButton.$ticker) return;
+      const pomodoroTickerFile = await db.get('pomodoroTickerFile');
+      const pomodoroTickerVolume = await db.get('pomodoroTickerVolume');
+      const ticker = await Sound.instance(pomodoroTickerFile, +pomodoroTickerVolume, true);
+      TogglButton.$ticker = ticker;
+      TogglButton.$ticker.play();
+    }
+  },
+
+  stopTicker: async function () {
+    TogglButton.$ticker && await TogglButton.$ticker.stop();
+    TogglButton.$ticker = null;
   }
 };
 

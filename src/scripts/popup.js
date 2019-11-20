@@ -243,7 +243,7 @@ window.PopUp = {
       editView.dataset.timeEntryId = timeEntry.id;
       editView.dataset.workspaceId = timeEntry.wid;
       editView.dataset.startTime = timeEntry.start;
-      editView.dataset.stopTime = timeEntry.stop;
+      timeEntry.stop && (editView.dataset.stopTime = timeEntry.stop);
     }
 
     const duration = differenceInSeconds(
@@ -386,9 +386,10 @@ window.PopUp = {
     }
 
     const startTime = editView.dataset.startTime;
+    const stopTime = editView.dataset.stopTime;
 
     if (duration) {
-      if (startTime) {
+      if (startTime && stopTime) {
         request.start = new Date(startTime).toISOString();
         request.duration = duration;
         request.stop = addSeconds(new Date(startTime), duration).toISOString();

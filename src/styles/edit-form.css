@@ -261,6 +261,7 @@
   height: 100px !important;
 }
 
+.TB__Secondary__button,
 .TB__Button__button {
   display: inline-block;
   position: relative;
@@ -281,14 +282,38 @@
   font-size: 14px;
 }
 
+.TB__Secondary__button:focus, .TB__Secondary__button:hover,
 .TB__Button__button:focus, .TB__Button__button:hover {
   background: #47be00;
   color: #fff;
   outline: none;
 }
 
-#toggl-button-edit-form #toggl-button-update {
+.TB__Secondary__button {
+  background: white;
+  color: black;
+  box-shadow: rgb(75, 200, 0) 0px 0px 0px 1px inset;
+}
+
+#tb-actions-button-group {
+  display: flex;
   width: 100%;
+}
+
+#tb-edit-form-cancel,
+#toggl-button-update {
+  flex: 1;
+}
+
+#tb-edit-form-cancel {
+  margin-right: 10px;
+}
+#toggl-button-edit-form.toggl-integration #tb-edit-form-cancel {
+  display: none;
+  visibility: hidden;
+}
+
+#toggl-button-edit-form #toggl-button-update {
   height: 36px;
   font-weight: normal;
 }

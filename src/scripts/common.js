@@ -386,6 +386,16 @@ window.togglbutton = {
       }
     });
 
+    // Cancel button
+    $('#tb-edit-form-cancel', editForm).addEventListener('click', function (e) {
+      closeForm();
+    });
+    $('#tb-edit-form-cancel').addEventListener('keydown', function (e) {
+      if (e.code === 'Enter' || e.code === 'Space') {
+        closeForm();
+      }
+    });
+
     $('form', editForm).addEventListener('submit', function (e) {
       submitForm(this);
       e.preventDefault();

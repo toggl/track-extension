@@ -406,6 +406,7 @@ header li:hover {
 
 /* Pomodoro tab */
 
+#ticker-sound-volume,
 #sound-volume {
   width: 80px;
   margin-left: 20px;
@@ -413,6 +414,7 @@ header li:hover {
   top: 4px;
 }
 
+#ticker-volume-label,
 #volume-label {
   display: inline-block;
   margin-left: 8px;
@@ -432,8 +434,9 @@ header li:hover {
   transition: height 300ms ease-in-out;
 }
 
+#enable-ticker-sound:checked ~ .pomodoro-sound-volume,
 #enable-sound-signal:checked ~ .pomodoro-sound-volume {
-  height: 64px;
+  height: 28px;
 }
 
 .danger-zone {

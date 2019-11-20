@@ -1,6 +1,6 @@
 .TB__Dialog__field {
   position: relative;
-
+  outline: none;
   width: 320px;
 }
 

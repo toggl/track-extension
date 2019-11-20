@@ -129,6 +129,7 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
         timeEntry={timeEntry}
         onRowClick={editEntry(timeEntry)}
         project={project}
+        indent={entriesCount > 1}
       />
     ))
   );
@@ -147,7 +148,8 @@ function TimeEntryRow ({
   renderHeader,
   entriesCount,
   earliestStartTime,
-  totalDuration
+  totalDuration,
+  indent
 }: {
   timeEntry: Toggl.TimeEntry,
   onRowClick: (event: React.MouseEvent) => void,
@@ -156,6 +158,7 @@ function TimeEntryRow ({
   entriesCount?: number,
   earliestStartTime?: string,
   totalDuration?: number,
+  indent?: boolean
 }) {
 
   const description = timeEntry.description || NO_DESCRIPTION;
@@ -165,7 +168,7 @@ function TimeEntryRow ({
     : '';
 
   return (
-    <EntryItem onClick={onRowClick}>
+    <EntryItem onClick={onRowClick} indent={indent}>
       <EntryItemRow>
         {renderHeader && entriesCount && earliestStartTime &&
           <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
@@ -301,6 +304,7 @@ const EntryItem = styled.li`
   flex-direction: column;
 
   padding: ${itemPadding};
+  ${({ indent }: { indent?: boolean }) => indent ? 'padding-left: 3rem;' : ''}
   height: 66px;
 
   color: ${color.grey};

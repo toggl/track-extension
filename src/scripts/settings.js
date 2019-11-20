@@ -49,6 +49,11 @@ const Settings = {
   $defaultProjectContainer: null,
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
+
+  $pomodoroTickerSound: null,
+  $pomodoroTickerVolume: null,
+  $pomodoroTickerVolumeLabel: null,
+
   $sendUsageStatistics: null,
   $sendErrorReports: null,
   $enableAutoTagging: null,
@@ -83,11 +88,21 @@ const Settings = {
       const stopAtDayEnd = await db.get('stopAtDayEnd');
       const dayEndTime = await db.get('dayEndTime');
 
-      Settings.$loginInfo.textContent = TogglButton.$user.email;
+      Settings.$loginInfo.textContent = TogglButton.$user && TogglButton.$user.email || '';
 
       document.querySelector('#nag-nanny-interval').value = nannyInterval / 60000;
       Settings.$pomodoroVolume.value = volume;
       Settings.$pomodoroVolumeLabel.textContent = volume + '%';
+
+      const pomodoroTickerEnabled = await db.get('pomodoroTickerEnabled');
+      const pomodoroTickerVolume = await db.get('pomodoroTickerVolume');
+      const tickerVolume = parseInt(pomodoroTickerVolume * 100, 10);
+      Settings.$pomodoroTickerVolume.value = tickerVolume;
+      Settings.$pomodoroTickerVolumeLabel.textContent = tickerVolume + '%';
+      Settings.toggleState(
+        Settings.$pomodoroTickerSound,
+        pomodoroTickerEnabled
+      );
 
       Settings.toggleState(
         Settings.$showRightClickButton,
@@ -647,6 +662,11 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$enableAutoTagging = document.querySelector('#enable-auto-tagging');
     Settings.$resetAllSettings = document.querySelector('#reset-all-settings');
 
+    // Pomordoro focus interval sound elements
+    Settings.$pomodoroTickerSound = document.querySelector('#enable-ticker-sound');
+    Settings.$pomodoroTickerVolume = document.querySelector('#ticker-sound-volume');
+    Settings.$pomodoroTickerVolumeLabel = document.querySelector('#ticker-volume-label');
+
     // Show permissions page with notice
     const dontShowPermissions = await db.get('dont-show-permissions');
     if (
@@ -794,6 +814,45 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         sound.src = '../' + soundFile;
         sound.volume = Settings.$pomodoroVolume.value / 100;
         sound.play();
+      });
+
+    // Pomodoro interval listeners
+    Settings.$pomodoroTickerSound.addEventListener('click', async function (e) {
+      const pomodoroTickerEnabled = await db.get('pomodoroTickerEnabled');
+      await db.set('pomodoroTickerEnabled', !pomodoroTickerEnabled);
+    });
+
+    Settings.$pomodoroTickerVolume.addEventListener('input', function (e) {
+      Settings.$pomodoroTickerVolumeLabel.textContent = e.target.value + '%';
+    });
+
+    Settings.$pomodoroTickerVolume.addEventListener('change', async function (e) {
+      await db.set(
+        'pomodoroTickerVolume',
+        e.target.value / 100
+      );
+      Settings.$pomodoroTickerVolumeLabel.textContent = e.target.value + '%';
+    });
+
+    const tickerSoundTest = document.querySelector('#ticker-sound-test');
+    const tickerSound = new Audio();
+    let isPlaying = false;
+
+    tickerSoundTest
+      .addEventListener('click', async function () {
+        if (isPlaying) {
+          tickerSound.pause();
+          isPlaying = false;
+          tickerSoundTest.innerHTML = 'Test';
+          return;
+        }
+        isPlaying = true;
+        tickerSoundTest.innerHTML = 'Stop';
+        const soundFile = await db.get('pomodoroTickerFile');
+        tickerSound.src = '../' + soundFile;
+        tickerSound.volume = Settings.$pomodoroTickerVolume.value / 100;
+        tickerSound.loop = true;
+        tickerSound.play();
       });
 
     const saveNagNanny = (e) => {

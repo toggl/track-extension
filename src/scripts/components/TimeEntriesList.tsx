@@ -93,7 +93,7 @@ type TimeEntriesListItemProps = {
   project: Toggl.Project | null;
 };
 function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps) {
-  const [groupEntries, setGroupEntries] = React.useState(true)
+  const [isGroupCollapsed, setGroupCollapsed] = React.useState(true)
   const timeEntry = timeEntries[0];
 
   const totalDuration = timeEntries.reduce((sum, entry) => {
@@ -102,8 +102,11 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
   }, 0);
   const entriesCount = timeEntries.length;
   const earliestStartTime = format(timeEntries[timeEntries.length - 1].start, 'HH:mm');
-  const isGrouped = entriesCount > 1 && groupEntries;
-  const toggleGrouping = () => setGroupEntries(val => !val);
+  const isGrouped = entriesCount > 1 && isGroupCollapsed;
+  const toggleGrouping = React.useCallback(
+    () => setGroupCollapsed(val => !val),
+    [setGroupCollapsed]
+  );
 
   const content = [
     entriesCount > 1 && (

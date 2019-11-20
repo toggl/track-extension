@@ -11,15 +11,24 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
     }
 
     const descriptionSelector = () => taskNameCell.querySelector('textarea').textContent.trim();
+    const projectHeaderSelector = () => {
+      // Try to look for for page project title instead.
+      const projectHeader = document.querySelector('.TopbarPageHeaderStructure.ProjectPageHeader .TopbarPageHeaderStructure-title');
+      if (!projectHeader) {
+        return '';
+      }
+      return projectHeader.textContent.trim();
+    };
     const projectSelector = () => {
       const projectCell = container.querySelector('.SpreadsheetTaskRow-projectsCell');
       if (!projectCell) {
-        return '';
+        // Try to look for for page project title instead.
+        return projectHeaderSelector();
       }
 
       // There can be multiple projects, but we can't support trying to match multiple yet.
       const firstProject = projectCell.querySelector('.Pill');
-      return firstProject ? firstProject.textContent.trim() : '';
+      return firstProject ? firstProject.textContent.trim() : projectHeaderSelector();
     };
 
     const link = togglbutton.createTimerLink({

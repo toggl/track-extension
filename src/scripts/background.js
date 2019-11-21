@@ -143,7 +143,7 @@ window.TogglButton = {
     '</div>' +
     `
       <div id="tb-actions-button-group">
-        <button id="tb-edit-form-cancel" tabindex="0" class="TB__Secondary__button">Cancel</button>
+        <button type="button" id="tb-edit-form-cancel" tabindex="0" class="TB__Secondary__button">Cancel</button>
         <div id="toggl-button-update" tabindex="0" class="TB__Button__button">Done</div>
       </div>
     ` +

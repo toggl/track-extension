@@ -1,3 +1,21 @@
+# [1.48.0](https://github.com/toggl/toggl-button/compare/1.47.2...1.48.0) (2019-11-21)
+
+
+### Bug Fixes
+
+* **code:** TS error ([212526d](https://github.com/toggl/toggl-button/commit/212526d))
+* **popup:** Editing running entry stops it ([4901661](https://github.com/toggl/toggl-button/commit/4901661))
+* **popup:** Fix cursor on Timer rows ([46be635](https://github.com/toggl/toggl-button/commit/46be635))
+* **popup:** Remove outline from edit form dropdowns ([7aa5306](https://github.com/toggl/toggl-button/commit/7aa5306))
+
+
+### Features
+
+* **edit:** Open edit view when clicking on an existing time entry ([59335d7](https://github.com/toggl/toggl-button/commit/59335d7))
+* **popup:** Add cancel button to skip TE update ([4816847](https://github.com/toggl/toggl-button/commit/4816847))
+* **popup:** Allow editing of stopped entries ([53344f4](https://github.com/toggl/toggl-button/commit/53344f4)), closes [#1565](https://github.com/toggl/toggl-button/issues/1565)
+* **popup:** Allow expanding grouped entries ([55035a2](https://github.com/toggl/toggl-button/commit/55035a2)), closes [#1579](https://github.com/toggl/toggl-button/issues/1579)
+
 ## [1.47.2](https://github.com/toggl/toggl-button/compare/1.47.1...1.47.2) (2019-11-19)
 
 

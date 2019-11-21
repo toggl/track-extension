@@ -42,7 +42,7 @@ const TimeEntriesFooter = () => (
         See more on <strong>toggl.com</strong>
       </Button>
     </a>
-  </Footer>);   
+  </Footer>);
 
 interface TimeEntriesListProps {
   timeEntries: Toggl.TimeEntry[][];
@@ -93,12 +93,8 @@ type TimeEntriesListItemProps = {
   project: Toggl.Project | null;
 };
 function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps) {
+  const [groupEntries, setGroupEntries] = React.useState(true)
   const timeEntry = timeEntries[0];
-  const description = timeEntry.description || NO_DESCRIPTION;
-  const isBillable = !!timeEntry.billable;
-  const tags = (timeEntry.tags && timeEntry.tags.length > 0)
-    ? timeEntry.tags.join(', ')
-    : '';
 
   const totalDuration = timeEntries.reduce((sum, entry) => {
     if (entry.duration > 0) sum += entry.duration;
@@ -106,18 +102,76 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
   }, 0);
   const entriesCount = timeEntries.length;
   const earliestStartTime = format(timeEntries[timeEntries.length - 1].start, 'HH:mm');
+  const isGrouped = entriesCount > 1 && groupEntries
+  const toggleGrouping = () => setGroupEntries(val => !val);
+
+  const content = [
+    entriesCount > 1 && (
+      <TimeEntryRow
+        renderHeader
+        key={`grouped-${timeEntry.id}`}
+        timeEntry={timeEntry}
+        onRowClick={toggleGrouping}
+        project={project}
+        entriesCount={entriesCount}
+        earliestStartTime={earliestStartTime}
+        totalDuration={totalDuration}
+      />
+    )
+  ].concat(
+    (!isGrouped ? timeEntries : []).map(timeEntry => (
+      <TimeEntryRow
+        renderHeader={false}
+        key={timeEntry.id}
+        timeEntry={timeEntry}
+        onRowClick={editEntry(timeEntry)}
+        project={project}
+      />
+    ))
+  );
 
   return (
-    <EntryItem>
+    <React.Fragment>
+      {content}
+    </React.Fragment>
+  );
+}
+
+function TimeEntryRow ({
+  timeEntry,
+  onRowClick,
+  project,
+  renderHeader,
+  entriesCount,
+  earliestStartTime,
+  totalDuration
+}: {
+  timeEntry: Toggl.TimeEntry,
+  onRowClick: (event: React.MouseEvent) => void,
+  project: Toggl.Project | null,
+  renderHeader: boolean,
+  entriesCount?: number,
+  earliestStartTime?: string,
+  totalDuration?: number,
+}) {
+
+  const description = timeEntry.description || NO_DESCRIPTION;
+  const isBillable = !!timeEntry.billable;
+  const tags = (timeEntry.tags && timeEntry.tags.length > 0)
+    ? timeEntry.tags.join(', ')
+    : '';
+
+  return (
+    <EntryItem onClick={onRowClick}>
       <EntryItemRow>
-        {entriesCount > 1 &&
+        {renderHeader && entriesCount && earliestStartTime &&
           <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
         }
         <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
         <EntryIcons>
           <BillableIcon active={isBillable} />
           {tags && <TagsIcon title={tags} />}
-          <TimeEntryDuration duration={totalDuration} />
+          <TimeEntryDuration duration={totalDuration || timeEntry.duration} />
         </EntryIcons>
       </EntryItemRow>
       <EntryItemRow>
@@ -125,8 +179,13 @@ function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps
         <ContinueButton data-continue-id={timeEntry.id} title='Continue this entry' />
       </EntryItemRow>
     </EntryItem>
-  );
+  )
 }
+
+const editEntry = (timeEntry: Toggl.TimeEntry) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  window.PopUp.renderEditForm(timeEntry);
+};
 
 const GroupedEntryCounter = styled.div`
   display: flex;
@@ -246,6 +305,7 @@ const EntryItem = styled.li`
   font-size: 14px;
   box-shadow: ${itemShadow};
   background-color: ${color.white};
+  cursor: pointer;
 
   &:hover {
     background-color: ${color.listItemHover};

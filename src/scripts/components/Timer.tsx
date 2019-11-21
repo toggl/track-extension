@@ -44,11 +44,10 @@ function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | 
   const { entry, project } = props;
   const tags = (entry.tags || []).join(', ');
 
-  const editEntry = (e) => {
-    e.preventDefault();
-    window.PopUp.updateEditForm(window.PopUp.$editView);
+  const editEntry = () => {
+    window.PopUp.renderEditForm(entry);
   };
-  const stopTimer = (e) => {
+  const stopTimer = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });

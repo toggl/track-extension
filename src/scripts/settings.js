@@ -47,6 +47,7 @@ const Settings = {
   $stopAtDayEnd: null,
   $defaultProject: null,
   $defaultProjectContainer: null,
+  $pomodoroFocusMode: null,
   $pomodoroVolume: null,
   $pomodoroVolumeLabel: null,
 
@@ -81,6 +82,7 @@ const Settings = {
       const nannyCheckEnabled = await db.get('nannyCheckEnabled');
       const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
       const pomodoroInterval = await db.get('pomodoroInterval');
+      const pomodoroFocusMode = await db.get('pomodoroFocusMode');
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
       const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
       const sendUsageStatistics = await db.get('sendUsageStatistics');
@@ -133,6 +135,10 @@ const Settings = {
         pomodoroModeEnabled
       );
       document.querySelector('.field.pomodoro-mode').classList.toggle('field--showDetails', pomodoroModeEnabled);
+      Settings.toggleState(
+        Settings.$pomodoroFocusMode,
+        pomodoroFocusMode
+      );
       Settings.toggleState(
         Settings.$pomodoroSound,
         pomodoroSoundEnabled
@@ -644,6 +650,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$nanny = document.querySelector('#nag-nanny');
     Settings.$idleDetection = document.querySelector('#idle-detection');
     Settings.$pomodoroMode = document.querySelector('#pomodoro-mode');
+    Settings.$pomodoroFocusMode = document.querySelector('#pomodoro-focus-mode');
     Settings.$pomodoroSound = document.querySelector('#enable-sound-signal');
     Settings.$pomodoroStopTimeTracking = document.querySelector(
       '#pomodoro-stop-time'
@@ -763,6 +770,10 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
       Settings.toggleSetting(e.target, !pomodoroModeEnabled, 'toggle-pomodoro');
       document.querySelector('.field.pomodoro-mode').classList.toggle('field--showDetails', !pomodoroModeEnabled);
+    });
+    Settings.$pomodoroFocusMode.addEventListener('click', async function (e) {
+      const pomodoroFocusMode = await db.get('pomodoroFocusMode');
+      Settings.toggleSetting(e.target, !pomodoroFocusMode, 'toggle-pomodoro-focus-mode');
     });
     Settings.$pomodoroSound.addEventListener('click', async function (e) {
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');

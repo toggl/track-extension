@@ -82,6 +82,8 @@ window.TogglButton = {
   pomodoroAlarm: null,
   pomodoroProgressTimer: null,
   $ticker: null,
+  pomodoroInterval: null,
+  pomodoroFocusMode: null,
   localEntry: null,
   $userState: 'active',
   $fullVersion: `TogglButton/${process.env.VERSION}`,
@@ -670,9 +672,11 @@ window.TogglButton = {
   },
 
   checkPomodoroAlarm: async function (entry) {
+    console.log('checking pomo alarm');
     const duration = new Date() - new Date(entry.start);
-    const pomodoroInterval = await db.get('pomodoroInterval');
-    const interval = parseInt(pomodoroInterval, 10) * 60000;
+    TogglButton.pomodoroInterval = await db.get('pomodoroInterval');
+    TogglButton.pomodoroFocusMode = await db.get('pomodoroFocusMode');
+    const interval = parseInt(TogglButton.pomodoroInterval, 10) * 60000;
     if (duration < interval) {
       TogglButton.triggerPomodoroAlarm(interval - duration);
     }
@@ -1895,6 +1899,8 @@ window.TogglButton = {
           );
         } else if (request.type === 'toggle-pomodoro') {
           db.set('pomodoroModeEnabled', request.state);
+        } else if (request.type === 'toggle-pomodoro-focus-mode') {
+          db.set('pomodoroFocusMode', request.state);
         } else if (request.type === 'toggle-pomodoro-sound') {
           db.set('pomodoroSoundEnabled', request.state);
         } else if (request.type === 'toggle-pomodoro-interval') {

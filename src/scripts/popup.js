@@ -7,6 +7,7 @@ import { addSeconds, differenceInSeconds, isSameDay } from 'date-fns';
 import { secToHhmmImproved } from './@toggl/time-format-utils';
 import Summary from './components/Summary';
 import TimeEntriesList from './components/TimeEntriesList';
+import Pomodoro from './components/Pomodoro';
 import Timer, { formatDuration } from './components/Timer';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 import { parseDuration } from './lib/timerUtils';
@@ -165,6 +166,10 @@ window.PopUp = {
   },
 
   renderEntriesList: function () {
+    if (TogglButton.pomodoroFocusMode && TogglButton.pomodoroAlarm) {
+      ReactDOM.render(<Pomodoro entry={TogglButton.$curEntry} interval={TogglButton.pomodoroInterval} />, document.getElementById('root-time-entries-list'));
+      return;
+    }
     const entries = TogglButton.$user.time_entries;
     if (!entries || entries.length < 1) {
       ReactDOM.render(<TimeEntriesList />, document.getElementById('root-time-entries-list'));

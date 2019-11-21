@@ -388,10 +388,12 @@ window.togglbutton = {
 
     // Cancel button
     $('#tb-edit-form-cancel', editForm).addEventListener('click', function (e) {
+      e.preventDefault();
       closeForm();
     });
     $('#tb-edit-form-cancel').addEventListener('keydown', function (e) {
       if (e.code === 'Enter' || e.code === 'Space') {
+        e.preventDefault();
         closeForm();
       }
     });

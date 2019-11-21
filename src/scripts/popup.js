@@ -406,6 +406,10 @@ window.PopUp = {
     PopUp.switchView(PopUp.$menuView);
   },
 
+  closeForm: function () {
+    PopUp.switchView(PopUp.$menuView);
+  },
+
   isformValid: function () {
     return !!document.querySelector('#toggl-button-edit-form form:valid');
   },
@@ -431,6 +435,20 @@ window.PopUp = {
       .addEventListener('keydown', function (e) {
         if (e.code === 'Enter' || e.code === 'Space') {
           PopUp.submitForm(this);
+        }
+      });
+
+    // Cancel button
+    document.querySelector('#tb-edit-form-cancel')
+      .addEventListener('click', function (e) {
+        e.preventDefault();
+        PopUp.closeForm();
+      });
+    document.querySelector('#tb-edit-form-cancel')
+      .addEventListener('keydown', function (e) {
+        if (e.code === 'Enter' || e.code === 'Space') {
+          e.preventDefault();
+          PopUp.closeForm();
         }
       });
 

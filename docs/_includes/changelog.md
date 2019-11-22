@@ -1,3 +1,10 @@
+## [1.48.1](https://github.com/toggl/toggl-button/compare/1.48.0...1.48.1) (2019-11-22)
+
+
+### Bug Fixes
+
+* **asana:** Fix project selection in list views ([309f0e9](https://github.com/toggl/toggl-button/commit/309f0e9))
+
 # [1.48.0](https://github.com/toggl/toggl-button/compare/1.47.2...1.48.0) (2019-11-21)
 
 

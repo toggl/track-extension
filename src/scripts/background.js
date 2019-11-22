@@ -388,7 +388,6 @@ window.TogglButton = {
 
     TogglButton.$curEntry = entry;
     if (entry) {
-      TogglButton.startTicker();
       if (update) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
@@ -687,6 +686,7 @@ window.TogglButton = {
     }
     const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
     if (pomodoroModeEnabled) {
+      TogglButton.startTicker();
       const intervalSetting = await db.get('pomodoroInterval');
       const pomodoroInterval = parseInt(intervalSetting, 10) * 60000;
       const interval = value || pomodoroInterval;

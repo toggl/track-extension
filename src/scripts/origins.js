@@ -679,5 +679,9 @@ export default {
   'zammad.com': {
     url: '*://*.zammad.com/*',
     name: 'Zammad'
+  },
+  'zenhub.com': {
+    url: '*://app.zenhub.com/*',
+    name: 'Zenhub'
   }
 };

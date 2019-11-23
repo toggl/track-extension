@@ -3,8 +3,7 @@
 
 /* Hover on Bullet Popup */
 togglbutton.render(
-  // TODO: Change selector if the popup ever gets a constant class.
-  '.name:not(.toggl) > div:not(.content)',
+  '.name:not(.toggl) > .flyout.menu',
   { observe: true },
   $container => {
     const $bulletInfo = $('.content', $container.parentElement);
@@ -29,13 +28,35 @@ togglbutton.render(
 
 /* More Options Menu Popup */
 togglbutton.render(
-  // TODO: Change selector if the popup ever gets a constant class.
-  '.selected:not(.mainTreeRoot) ~ .pageControls > .pageMenu:not(.toggl) >' +
-  ' div:nth-child(2)',
+  '.pageMenu:not(.toggl) > .flyout.menu',
   { observe: true },
   $container => {
     // Get the content of the top bullet.
     const $bulletInfo = $('.content');
+
+    const descriptionSelector = () => {
+      return getDescription($bulletInfo);
+    };
+
+    const tagsSelector = () => {
+      return getTags($bulletInfo);
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'workflowy',
+      description: descriptionSelector,
+      tags: tagsSelector
+    });
+
+    insertLink($container, link);
+  }
+);
+
+togglbutton.render(
+  '.menu.itemMenu:not(.toggl) > .flyout.menu',
+  { observe: true },
+  $container => {
+    const $bulletInfo = $('.content', $container.parentElement.parentElement);
 
     const descriptionSelector = () => {
       return getDescription($bulletInfo);
@@ -122,22 +143,25 @@ function getTags (bulletInfo) {
 function insertLink (popup, link) {
   const INSERT_POSITION = 3;
 
-  /* Massage the DOM */
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('workflowy-toggl-wrapper');
-  // This makes sure the 'Start timer' link matches the style of the other
-  // options (even when the theme is changed).
-  wrapper.classList.add(popup.children[0].classList[0]);
-  wrapper.appendChild(link);
-  popup.insertBefore(wrapper, popup.children[INSERT_POSITION]);
+  const templateMenuItem = popup.children[0];
+  const templateSpan = templateMenuItem.children[0];
+  const templateLink = templateSpan.children[0];
+
+  link.className += ' ' + templateLink.className;
+  const span = document.createElement('span');
+  span.className += ' ' + templateSpan.className;
+  span.appendChild(link);
+  const menuItem = document.createElement('div');
+  menuItem.className += ' ' + templateMenuItem.className;
+  menuItem.appendChild(span);
+  popup.insertBefore(menuItem, popup.children[INSERT_POSITION]);
 
   // We have to add the toggl class to the parent of the popup,
   // because the popup's classes get overwritten by workflowy.
   const parent = popup.parentElement;
   parent.classList.add('toggl');
 
-  // And remove the class when the parent element's children change (meaning
-  // the popup is deleted).
+  // And remove the class when the popup is deleted.
   const observer = new MutationObserver(function (mutationsList, observer) {
     parent.classList.remove('toggl');
     observer.disconnect();

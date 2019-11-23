@@ -1398,24 +1398,17 @@ body.notion-body.dark .toggl-button.notion {
 }
 
 /****** WORKFLOWY ******/
-.workflowy-toggl-wrapper {
-  display: flex !important;
-}
-
 .toggl-button.workflowy:not(.toggl-button-edit-form-button) {
   background-position-x: right;
   background-position-y: center;
-  background-size: 14px 14px;
-  line-height: 24px;
-  height: 24px;
-  font-size: 100%;
-  padding-left: 0;
-  padding-right: 23px;
-  flex-grow: 1;
-  -webkit-box-flex: 1;
+  background-size: 16px 16px;
+  line-height: inherit;
+  height: inherit;
+  font-size: inherit;
+  padding: inherit;
+  cursor: inherit;
+  text-decoration: inherit;
   color: inherit !important;
-  cursor: default !important;
-  text-decoration: none !important;
 }
 
 /********* Microsoft To-Do *********/

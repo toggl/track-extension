@@ -1449,3 +1449,14 @@ li .toggl-button.heflo {
   margin-right: 5px;
   margin-top: -7px;
 }
+
+/********* ZENHUB *********/
+.toggl-button.zenhub {
+  padding-left: 25px;
+  color: #333;
+  font-size: 12px;
+}
+.toggl-button.zenhub:hover {
+  color: #5e60ba;
+  text-decoration: none;
+}

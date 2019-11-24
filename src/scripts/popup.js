@@ -1,5 +1,6 @@
 /// <reference path="./index.d.ts" />
 
+import browser from 'webextension-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { addSeconds, differenceInSeconds, isSameDay } from 'date-fns';
@@ -13,8 +14,6 @@ import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 import { parseDuration } from './lib/timerUtils';
 import renderLogin from './initializers/login';
 
-const browser = require('webextension-polyfill');
-
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
 
@@ -24,7 +23,7 @@ if (FF) {
   document.querySelector('body').classList.add('ff');
 }
 
-window.PopUp = {
+const Popup = {
   $postStartText: ' post-start popup',
   $popUpButton: null,
   $errorLabel: document.querySelector('.error'),
@@ -509,8 +508,20 @@ window.PopUp = {
         e.preventDefault();
       }
     });
+  },
+
+  handleBackgroundMessage: function (request) {
+    if (process.env.DEBUG) {
+      console.log('Popup:handleBackgroundMessage', request);
+    }
+    switch (request.type) {
+      case 'bg/render-entries-list':
+        Popup.renderEntriesList();
+        break;
+    }
   }
 };
+window.PopUp = Popup;
 
 document.addEventListener('DOMContentLoaded', function () {
   const req = {
@@ -599,4 +610,6 @@ document.addEventListener('DOMContentLoaded', function () {
       category: 'Popup'
     });
   }
+
+  browser.runtime.onMessage.addListener(Popup.handleBackgroundMessage);
 });

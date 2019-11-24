@@ -1,11 +1,12 @@
+import browser from 'webextension-polyfill';
+
 import bugsnagClient from './lib/bugsnag';
 import { escapeHtml, isTogglURL, report, secToHHMM } from './lib/utils';
-
+import { renderTimeEntries } from './lib/actions';
 import Db from './lib/db';
 import Ga from './lib/ga';
 import Sound from './lib/sound';
 
-const browser = require('webextension-polyfill');
 const FIVE_MINUTES = 5 * 60;
 const ONE_HOUR = 60 * 60;
 const RETRY_INTERVAL = 15;
@@ -709,6 +710,7 @@ window.TogglButton = {
         updateProgress,
         pomodoroInterval / steps
       );
+      browser.runtime.sendMessage(renderTimeEntries());
       updateProgress();
     }
   },

@@ -788,8 +788,8 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       Settings.saveSetting(rememberPer, 'change-remember-project-per');
     });
 
-    document.querySelector('.tab-links').addEventListener('click', e => {
-      const tabLink = e.target.closest('.tab-link');
+    document.querySelector('.nav-links').addEventListener('click', e => {
+      const tabLink = e.target.closest('.nav-link');
       const selectedTab = tabLink.dataset.tab;
       changeActiveTab(selectedTab);
     });
@@ -1007,8 +1007,17 @@ function changeActiveTab (name) {
     e.classList.remove('active');
   });
 
+  let title = '';
+
   const tabEls = document.querySelectorAll(`[data-tab="${name}"]`);
-  tabEls.forEach(e => e.classList.add('active'));
+  tabEls.forEach(e => {
+    e.classList.add('active');
+    if (!title) {
+      title = e.textContent;
+    }
+  });
+
+  document.querySelector('#title').textContent = title;
 
   if (tabEls.length === 0) {
     console.error(new Error(`changeActiveTab: Invalid tab name: ${name}`));

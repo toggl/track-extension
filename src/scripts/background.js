@@ -1011,6 +1011,8 @@ window.TogglButton = {
       };
       if (timeEntry.id) {
         entry.id = timeEntry.id;
+      } else {
+        entry.id = TogglButton.$curEntry.id;
       }
 
       if (entry.pid) {
@@ -1030,7 +1032,7 @@ window.TogglButton = {
       }
 
       TogglButton.ajax(
-        `/time_entries/${timeEntry.id}`,
+        `/time_entries/${entry.id}`,
         {
           method: 'PUT',
           payload: entry,

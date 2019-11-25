@@ -105,6 +105,7 @@ const Settings = {
         Settings.$pomodoroTickerSound,
         pomodoroTickerEnabled
       );
+      document.querySelector('.field.pomodoro-ticker').classList.toggle('field--showDetails', pomodoroTickerEnabled);
 
       Settings.toggleState(
         Settings.$showRightClickButton,
@@ -143,6 +144,7 @@ const Settings = {
         Settings.$pomodoroSound,
         pomodoroSoundEnabled
       );
+      document.querySelector('.field.pomodoro-sound').classList.toggle('field--showDetails', pomodoroSoundEnabled);
       Settings.toggleState(
         Settings.$pomodoroStopTimeTracking,
         pomodoroStopTimeTrackingWhenTimerEnds
@@ -314,19 +316,13 @@ const Settings = {
         if (customs.hasOwnProperty(k) && !!TogglOrigins[customs[k]]) {
           li = document.createElement('li');
 
+          dom = document.createElement('div');
+          dom.innerHTML = `<strong>${k}</strong> - ${TogglOrigins[customs[k]].name}`;
+          li.appendChild(dom);
+
           dom = document.createElement('a');
           dom.className = 'remove-custom';
           dom.textContent = 'delete';
-          li.appendChild(dom);
-
-          dom = document.createElement('strong');
-          dom.textContent = k;
-          li.appendChild(dom);
-
-          li.appendChild(document.createTextNode(' - '));
-
-          dom = document.createElement('i');
-          dom.textContent = TogglOrigins[customs[k]].name;
           li.appendChild(dom);
 
           customHtml.appendChild(li);
@@ -408,7 +404,7 @@ const Settings = {
                   input.setAttribute('checked', 'checked');
                 }
 
-                dom = document.createElement('div');
+                dom = document.createElement('label');
                 dom.textContent = `${TogglOrigins[key].name} - ${key}`;
 
                 li.appendChild(input);
@@ -703,10 +699,10 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     const updateFilteredList = function (val) {
       if (val.length > 0) {
         Settings.$permissionsList.classList.add('filtered');
-        Settings.$permissionFilterClear.style.display = 'block';
+        Settings.$permissionFilterClear.style.opacity = '1';
       } else {
         Settings.$permissionsList.classList.remove('filtered');
-        Settings.$permissionFilterClear.style.display = 'none';
+        Settings.$permissionFilterClear.style.opacity = '0';
       }
 
       const permissionItems = document.querySelectorAll('#permissions-list li');
@@ -778,6 +774,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$pomodoroSound.addEventListener('click', async function (e) {
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
       Settings.toggleSetting(e.target, !pomodoroSoundEnabled, 'toggle-pomodoro-sound');
+      document.querySelector('.field.pomodoro-sound').classList.toggle('field--showDetails', !pomodoroSoundEnabled);
     });
     Settings.$pomodoroStopTimeTracking.addEventListener('click', async function (e) {
       const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
@@ -799,8 +796,9 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       Settings.saveSetting(rememberPer, 'change-remember-project-per');
     });
 
-    document.querySelector('.tab-links').addEventListener('click', e => {
-      const tabLink = e.target.closest('.tab-link');
+    document.querySelector('.nav-links').addEventListener('click', e => {
+      const tabLink = e.target.closest('.nav-link');
+      if (!tabLink) return;
       const selectedTab = tabLink.dataset.tab;
       changeActiveTab(selectedTab);
     });
@@ -831,6 +829,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$pomodoroTickerSound.addEventListener('click', async function (e) {
       const pomodoroTickerEnabled = await db.get('pomodoroTickerEnabled');
       await db.set('pomodoroTickerEnabled', !pomodoroTickerEnabled);
+      document.querySelector('.field.pomodoro-ticker').classList.toggle('field--showDetails', !pomodoroTickerEnabled);
     });
 
     Settings.$pomodoroTickerVolume.addEventListener('input', function (e) {
@@ -1018,8 +1017,17 @@ function changeActiveTab (name) {
     e.classList.remove('active');
   });
 
+  let title = '';
+
   const tabEls = document.querySelectorAll(`[data-tab="${name}"]`);
-  tabEls.forEach(e => e.classList.add('active'));
+  tabEls.forEach(e => {
+    e.classList.add('active');
+    if (!title) {
+      title = e.textContent;
+    }
+  });
+
+  document.querySelector('#title').textContent = title;
 
   if (tabEls.length === 0) {
     console.error(new Error(`changeActiveTab: Invalid tab name: ${name}`));

@@ -1,3 +1,10 @@
+## [1.48.2](https://github.com/toggl/toggl-button/compare/1.48.1...1.48.2) (2019-11-25)
+
+
+### Bug Fixes
+
+* **popup:** Undefined TE id used in API call ([cf3d069](https://github.com/toggl/toggl-button/commit/cf3d069)), closes [#1596](https://github.com/toggl/toggl-button/issues/1596)
+
 ## [1.48.1](https://github.com/toggl/toggl-button/compare/1.48.0...1.48.1) (2019-11-22)
 
 

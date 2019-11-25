@@ -50,13 +50,13 @@ export default function Pomodoro(props: PomodoroProps) {
 
   return (
     <Container>
-      <Clock>
+      <Clock onClick={stopTimer} >
         <Countdown x="50%" y="50%">
           {formatDuration(countdown)}
         </Countdown>
         <circle stroke="#eee" {...ringProps} />
         <ActiveRing {...ringProps} style={{ strokeDashoffset }} />
-        <Stop width="60" height="60" rx="2" x="120" y="120" onClick={stopTimer} />
+        <Stop width="72" height="72" rx="2" x="114" y="114" />
       </Clock>
     </Container>
   );

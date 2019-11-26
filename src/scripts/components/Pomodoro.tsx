@@ -1,17 +1,14 @@
 import * as React from "react";
-import { differenceInSeconds } from "date-fns";
 import styled from "@emotion/styled";
 
-function formatDuration(seconds: number) {
-  const m = Math.floor(seconds / 60);
-  const s = seconds - m * 60;
-  return m + ":" + (s < 10 ? "0" : "") + s;
-}
+import useCountdown from '../shared/use-countdown';
 
-function getCountdown(start: string, interval: number) {
-  const intervalSeconds = interval * 60;
-  const elapsed = differenceInSeconds(new Date(), start);
-  return intervalSeconds - elapsed;
+function formatCountdown (seconds: number) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  const mm = m.toString().padStart(2, '0');
+  const ss = s.toString().padStart(2, '0');
+  return mm + ':' + ss;
 }
 
 function stopTimer (e: React.MouseEvent) {
@@ -34,25 +31,14 @@ interface PomodoroProps {
   interval: number;
 }
 export default function Pomodoro(props: PomodoroProps) {
-  const [countdown, setCountdown] = React.useState(
-    getCountdown(props.entry.start, props.interval)
-  );
-
-  React.useEffect(() => {
-    if (!countdown) return;
-    const intervalId = setInterval(() => {
-      setCountdown(countdown - 1);
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, [countdown]);
-
+  const countdown = useCountdown(props.entry.start, props.interval);
   const strokeDashoffset = (countdown / (props.interval * 60)) * 892;
 
   return (
     <Container>
       <Clock>
         <Countdown x="50%" y="50%">
-          {formatDuration(countdown)}
+          {formatCountdown(countdown)}
         </Countdown>
         <circle stroke="#eee" {...ringProps} />
         <ActiveRing {...ringProps} style={{ strokeDashoffset }} />

@@ -11,8 +11,8 @@ import { Button } from '../@toggl/ui/buttons';
 import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
 import { borderRadius } from '../@toggl/style/lib/variables';
+import { formatDuration } from '../@toggl/time-format-utils/format-duration';
 
-import { formatDuration } from './Timer';
 import play from '../icons/play.svg';
 
 const NO_DESCRIPTION = '(no description)';

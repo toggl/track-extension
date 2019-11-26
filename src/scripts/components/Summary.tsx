@@ -1,13 +1,17 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import browser from 'webextension-polyfill';
 
 import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
 
-function Summary () {
-  const totals = browser.extension.getBackgroundPage().TogglButton.calculateSums();
-
+function Summary ({
+  totals
+}: {
+  totals: {
+    today: string,
+    week: string
+  }
+}) {
   return (
     <SummaryRow>
       <div>Today: {totals.today}</div>

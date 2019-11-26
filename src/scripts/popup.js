@@ -71,9 +71,7 @@ const Popup = {
           PopUp.switchView(PopUp.$menuView);
         }
 
-        PopUp.renderTimer();
-        PopUp.renderEntriesList();
-        PopUp.renderSummary();
+        Popup.renderApp();
       } else {
         localStorage.setItem('latestStoppedEntry', '');
         PopUp.switchView(PopUp.$loginView);
@@ -87,10 +85,17 @@ const Popup = {
     }
   },
 
+  renderApp: function () {
+    PopUp.renderTimer();
+    PopUp.renderEntriesList();
+    PopUp.renderSummary();
+  },
+
   renderSummary: function () {
     const rootElement = document.getElementById('root-summary');
+    const totals = TogglButton.calculateSums();
     ReactDOM.unmountComponentAtNode(rootElement);
-    ReactDOM.render(<Summary />, rootElement);
+    ReactDOM.render(<Summary totals={totals} />, rootElement);
   },
 
   renderTimer: function () {
@@ -130,16 +135,12 @@ const Popup = {
             // Edit form update
             TogglButton = browser.extension.getBackgroundPage().TogglButton;
             // Current TE update
-            PopUp.renderTimer();
-            PopUp.renderEntriesList();
-            PopUp.renderSummary();
+            PopUp.renderApp();
           } else if (response.type === 'update') {
             // Current TE update
             PopUp.renderTimer();
           } else if (response.type === 'Stop') {
-            PopUp.renderTimer();
-            PopUp.renderEntriesList();
-            PopUp.renderSummary();
+            PopUp.renderApp();
           } else if (response.type === 'list-continue' || response.type === 'New Entry') {
             PopUp.renderTimer();
             PopUp.renderEntriesList();

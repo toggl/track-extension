@@ -47,11 +47,6 @@ function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | 
   const editEntry = () => {
     window.PopUp.renderEditForm(entry);
   };
-  const stopTimer = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
-  };
 
   return (
     <TimerContainer onClick={editEntry}>
@@ -111,6 +106,12 @@ function TimerForm () {
     </TimerContainer>
   );
 }
+
+const stopTimer = (e: React.MouseEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
+};
 
 const TimerContainer = styled.div`
   box-sizing: border-box;

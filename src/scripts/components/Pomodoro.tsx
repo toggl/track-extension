@@ -14,6 +14,12 @@ function getCountdown(start: string, interval: number) {
   return intervalSeconds - elapsed;
 }
 
+function stopTimer (e: React.MouseEvent) {
+  e.preventDefault();
+  e.stopPropagation();
+  window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
+}
+
 const ringProps = {
   r: "142",
   cx: "150",
@@ -42,21 +48,15 @@ export default function Pomodoro(props: PomodoroProps) {
 
   const strokeDashoffset = (countdown / (props.interval * 60)) * 892;
 
-  const stopTimer = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
-  };
-
   return (
     <Container>
-      <Clock onClick={stopTimer} >
+      <Clock>
         <Countdown x="50%" y="50%">
           {formatDuration(countdown)}
         </Countdown>
         <circle stroke="#eee" {...ringProps} />
         <ActiveRing {...ringProps} style={{ strokeDashoffset }} />
-        <Stop width="72" height="72" rx="2" x="114" y="114" />
+        <Stop width="72" height="72" rx="2" x="114" y="114" onClick={stopTimer} />
       </Clock>
     </Container>
   );
@@ -71,7 +71,6 @@ const Container = styled.div`
 `;
 
 const Clock = styled.svg`
-  cursor: pointer;
   width: 300px;
   height: 300px;
   &:hover text {
@@ -92,6 +91,7 @@ const Stop = styled.rect`
   fill: #f41d1d;
   opacity: 0;
   transition: 0.2s opacity ease-in;
+  cursor: pointer;
 `;
 
 const Countdown = styled.text`

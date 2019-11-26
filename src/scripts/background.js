@@ -673,7 +673,6 @@ window.TogglButton = {
   },
 
   checkPomodoroAlarm: async function (entry) {
-    console.log('checking pomo alarm');
     const duration = new Date() - new Date(entry.start);
     TogglButton.pomodoroInterval = await db.get('pomodoroInterval');
     TogglButton.pomodoroFocusMode = await db.get('pomodoroFocusMode');

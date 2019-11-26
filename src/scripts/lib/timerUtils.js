@@ -1,41 +1,41 @@
-import map from 'lodash.map'
-import reduce from 'lodash.reduce'
-import moment from 'moment'
-import { secToHhmmImproved } from '../@toggl/time-format-utils/index'
+import map from 'lodash.map';
+import reduce from 'lodash.reduce';
+import moment from 'moment';
+import { secToHhmmImproved } from '../@toggl/time-format-utils/index';
 
 const _ = {
   map,
   reduce
-}
+};
 
-const MAX_DURATION = 3596400000 // 999 hours in milliseconds
-const HHMMSS_DURATION_REGEX = /^\s*(\d+)?[ :;_/-]?([\d,.]+)?:?([[ :;_/-]+[\d,.]+)?\s*$/
-const HUMAN_DURATION_REGEX = /^\s*((\d+(?:\.|,)?\d*|\d*(?:\.|,)?\d+)\s*(((m|min|mins|minute|minutes)?)|((h|hr|hrs|hour|hours)?)|((s|sec|secs|second|seconds)?)|((d|ds|day|days)?)|((w|wk|wks|week|weeks)?))?\s*)+$/i
+const MAX_DURATION = 3596400000; // 999 hours in milliseconds
+const HHMMSS_DURATION_REGEX = /^\s*(\d+)?[ :;_/-]?([\d,.]+)?:?([[ :;_/-]+[\d,.]+)?\s*$/;
+const HUMAN_DURATION_REGEX = /^\s*((\d+(?:\.|,)?\d*|\d*(?:\.|,)?\d+)\s*(((m|min|mins|minute|minutes)?)|((h|hr|hrs|hour|hours)?)|((s|sec|secs|second|seconds)?)|((d|ds|day|days)?)|((w|wk|wks|week|weeks)?))?\s*)+$/i;
 
 /**
  * Returns stop date of given time entry, handling duronly entries.
  * @param  {object} timeEntry Time entry
  * @return {string}
  */
-export function getStopDate(timeEntry) {
+export function getStopDate (timeEntry) {
   return (
     timeEntry.stop ||
     moment(timeEntry.start)
       .add(getDuration(timeEntry), 'seconds')
       .format()
-  )
+  );
 }
 
-export function getStartDateSeconds(timeEntry) {
-  return moment(timeEntry.start).unix()
+export function getStartDateSeconds (timeEntry) {
+  return moment(timeEntry.start).unix();
 }
 /**
  * Returns stop date of given time entry as a unix timestamp (seconds)
  * @param  {object} timeEntry Time entry
  * @return {number}
  */
-export function getStopDateSeconds(timeEntry) {
-  return moment(getStopDate(timeEntry)).unix()
+export function getStopDateSeconds (timeEntry) {
+  return moment(getStopDate(timeEntry)).unix();
 }
 
 /**
@@ -43,14 +43,14 @@ export function getStopDateSeconds(timeEntry) {
  * @param  {object} timeEntry Time entry
  * @return {number} duration in seconds
  */
-export function getDuration(timeEntry) {
+export function getDuration (timeEntry) {
   if (timeEntry.duration >= 0) {
-    return timeEntry.duration
+    return timeEntry.duration;
   }
   if (timeEntry.duronly) {
-    return moment().unix() + timeEntry.duration
+    return moment().unix() + timeEntry.duration;
   }
-  return moment().diff(timeEntry.start, 'seconds')
+  return moment().diff(timeEntry.start, 'seconds');
 }
 
 /**
@@ -60,10 +60,10 @@ export function getDuration(timeEntry) {
  * @param {Date} stop time (optional)
  * @return {number} duration in seconds
  */
-export function calculateDuration(start, stop) {
-  const startValue = start.valueOf()
-  const stopValue = stop ? stop.valueOf() : 0
-  return Math.round((stopValue - startValue) / 1000)
+export function calculateDuration (start, stop) {
+  const startValue = start.valueOf();
+  const stopValue = stop ? stop.valueOf() : 0;
+  return Math.round((stopValue - startValue) / 1000);
 }
 
 /**
@@ -73,12 +73,12 @@ export function calculateDuration(start, stop) {
  * @param {number} duration in seconds
  * @return {Date} stop date
  */
-export function calculateStopDate(start, duration) {
-  if (duration < 0) return null
+export function calculateStopDate (start, duration) {
+  if (duration < 0) return null;
 
-  const startValue = start.valueOf()
-  const stopValue = startValue + duration * 1000
-  return moment(stopValue).toDate()
+  const startValue = start.valueOf();
+  const stopValue = startValue + duration * 1000;
+  return moment(stopValue).toDate();
 }
 
 /**
@@ -86,11 +86,11 @@ export function calculateStopDate(start, duration) {
  * @param  {Object|Array} timeEntries Time entries
  * @return {string}
  */
-export function getGroupStartDate(timeEntries) {
+export function getGroupStartDate (timeEntries) {
   const firstTE = _(timeEntries.slice())
     .sortBy(getStartDateSeconds)
-    .head()
-  return firstTE.start
+    .head();
+  return firstTE.start;
 }
 
 /**
@@ -98,11 +98,11 @@ export function getGroupStartDate(timeEntries) {
  * @param  {Object|Array} timeEntries Time entries
  * @return {string}
  */
-export function getGroupStopDate(timeEntries) {
+export function getGroupStopDate (timeEntries) {
   const firstTE = _(timeEntries.slice())
     .sortBy(getStopDateSeconds)
-    .last()
-  return getStopDate(firstTE)
+    .last();
+  return getStopDate(firstTE);
 }
 
 /**
@@ -110,18 +110,18 @@ export function getGroupStopDate(timeEntries) {
  * @param  {Object|Array} timeEntries Time entries to sum
  * @return {number}             Total duration in seconds
  */
-export function getGroupDuration(timeEntries) {
+export function getGroupDuration (timeEntries) {
   return _.reduce(
     timeEntries,
     (sum, te) => {
-      if (!te.duration) return sum
+      if (!te.duration) return sum;
 
-      const duration = getDuration(te)
-      sum += duration
-      return sum
+      const duration = getDuration(te);
+      sum += duration;
+      return sum;
     },
     0
-  )
+  );
 }
 
 /**
@@ -129,8 +129,8 @@ export function getGroupDuration(timeEntries) {
  * @param  {string}  duration Duration
  * @return {Boolean}
  */
-export function isValidDuration(duration) {
-  return isValidTimeDuration(duration) || isValidHumanDuration(duration)
+export function isValidDuration (duration) {
+  return isValidTimeDuration(duration) || isValidHumanDuration(duration);
 }
 
 /**
@@ -138,8 +138,8 @@ export function isValidDuration(duration) {
  * @param  {string}  duration Duration
  * @return {Boolean}
  */
-export function isValidTimeDuration(duration) {
-  return HHMMSS_DURATION_REGEX.test(duration)
+export function isValidTimeDuration (duration) {
+  return HHMMSS_DURATION_REGEX.test(duration);
 }
 
 /**
@@ -147,8 +147,8 @@ export function isValidTimeDuration(duration) {
  * @param  {string}  duration Duration
  * @return {Boolean}
  */
-export function isValidHumanDuration(duration) {
-  return HUMAN_DURATION_REGEX.test(duration)
+export function isValidHumanDuration (duration) {
+  return HUMAN_DURATION_REGEX.test(duration);
 }
 
 /**
@@ -156,10 +156,10 @@ export function isValidHumanDuration(duration) {
  * @param  {object} Duration
  * @return {object} Duration
  */
-export function forceMaxDuration(duration) {
+export function forceMaxDuration (duration) {
   return duration.asMilliseconds() > MAX_DURATION
     ? moment.duration(MAX_DURATION)
-    : duration
+    : duration;
 }
 
 /**
@@ -168,11 +168,11 @@ export function forceMaxDuration(duration) {
  * @param  {string} str Duration string to parse
  * @return {object} Duration in milliseconds
  */
-export function parseDuration(str) {
+export function parseDuration (str) {
   const duration = isValidHumanDuration(str)
     ? parseHumanDuration(str)
-    : parseTimeDuration(str)
-  return forceMaxDuration(duration)
+    : parseTimeDuration(str);
+  return forceMaxDuration(duration);
 }
 
 /**
@@ -190,20 +190,20 @@ export function parseDuration(str) {
  * @param  {string}  str Duration
  * @return {Duration} the momentjs duration object, always positive
  */
-export function parseTimeDuration(str) {
-  str = str.replace(/[,.]+/g, '.').replace(/[ :;_/-]+/g, ':') // 2,5;5 => 2.5:5
-  let hms = _.map(str.split(':'), part => parseFloat(part || 0))
+export function parseTimeDuration (str) {
+  str = str.replace(/[,.]+/g, '.').replace(/[ :;_/-]+/g, ':'); // 2,5;5 => 2.5:5
+  let hms = _.map(str.split(':'), part => parseFloat(part || 0));
 
   if (hms.length === 1) {
-    if (hms[0] > 99) hms = [Math.floor(hms[0] / 100), hms[0] % 100, void 0]
-    else hms = [void 0, hms[0], void 0]
+    if (hms[0] > 99) hms = [Math.floor(hms[0] / 100), hms[0] % 100, void 0];
+    else hms = [void 0, hms[0], void 0];
   }
 
-  if (hms.length >= 2) hms = [hms[0], hms[1], hms[2] || void 0]
+  if (hms.length >= 2) hms = [hms[0], hms[1], hms[2] || void 0];
 
   return moment.duration({
     seconds: (hms[0] || 0) * 60 * 60 + (hms[1] || 0) * 60 + (hms[2] || 0)
-  })
+  });
 }
 
 /**
@@ -219,72 +219,72 @@ export function parseTimeDuration(str) {
  * @param {string} [options.defaultUnit] The unit to default to, pluralized
  * @return {moment|null}
  */
-export function parseHumanDuration(inputDuration, options = {}) {
-  let input = inputDuration
-  let match = HHMMSS_DURATION_REGEX.exec(input)
+export function parseHumanDuration (inputDuration, options = {}) {
+  let input = inputDuration;
+  let match = HHMMSS_DURATION_REGEX.exec(input);
   if (match) {
-    return parseTimeDuration(input)
+    return parseTimeDuration(input);
   }
 
-  let accumulated = null
-  let value
-  let valueDuration
-  input = input.replace(/[,.]+/g, '.')
-  match = HUMAN_DURATION_REGEX.exec(input)
+  let accumulated = null;
+  let value;
+  let valueDuration;
+  input = input.replace(/[,.]+/g, '.');
+  match = HUMAN_DURATION_REGEX.exec(input);
 
   // Go through regex matches and accumulate a duration
   while (match) {
-    value = +match[2]
+    value = +match[2];
 
     // Parse the value according to the group
     // If there was no group defined then parse the values as minutes
     // If `,` or `.` is used then parse as hours
-    const hasUnitMinutes = match[5] != null
-    const hasUnitHours = match[7] != null
-    const hasUnitSeconds = match[9] != null
-    const hasUnitDays = match[11] != null
-    const hasUnitWeeks = match[13] != null
-    const isDecimalNoUnit = /^\d*\.\d*$/.exec(match[1])
+    const hasUnitMinutes = match[5] != null;
+    const hasUnitHours = match[7] != null;
+    const hasUnitSeconds = match[9] != null;
+    const hasUnitDays = match[11] != null;
+    const hasUnitWeeks = match[13] != null;
+    const isDecimalNoUnit = /^\d*\.\d*$/.exec(match[1]);
 
     if (hasUnitHours) {
-      valueDuration = { hours: value }
+      valueDuration = { hours: value };
     } else if (hasUnitSeconds) {
-      valueDuration = { seconds: value }
+      valueDuration = { seconds: value };
     } else if (hasUnitMinutes) {
-      valueDuration = { minutes: value }
+      valueDuration = { minutes: value };
     } else if (hasUnitDays) {
-      valueDuration = { days: value }
+      valueDuration = { days: value };
     } else if (hasUnitWeeks) {
-      valueDuration = { weeks: value }
+      valueDuration = { weeks: value };
     } else if (options.defaultUnit) {
       valueDuration = {
         [options.defaultUnit]: value
-      }
+      };
     } else if (isDecimalNoUnit && !options.defaultDecimal) {
-      valueDuration = { hours: value }
+      valueDuration = { hours: value };
     } else {
-      valueDuration = { minutes: value }
+      valueDuration = { minutes: value };
     }
 
-    if (!accumulated) accumulated = moment.duration(0)
-    accumulated = accumulated.add(valueDuration)
+    if (!accumulated) accumulated = moment.duration(0);
+    accumulated = accumulated.add(valueDuration);
 
     // We could just re-run `exec` on the string and it should work, but we'd
     // have to take the beginning of the line constraint and mess up validation.
-    input = input.replace(match[1], '')
-    match = HUMAN_DURATION_REGEX.exec(input)
+    input = input.replace(match[1], '');
+    match = HUMAN_DURATION_REGEX.exec(input);
     if (match && input) {
-      if (isDecimalNoUnit) return null
+      if (isDecimalNoUnit) return null;
     } else {
-      return accumulated
+      return accumulated;
     }
   }
 
-  return accumulated
+  return accumulated;
 }
 
-export function formatDuration(duration, options) {
-  return secToHhmmImproved(duration, options)
+export function formatDuration (duration, options) {
+  return secToHhmmImproved(duration, options);
 }
 
 /**
@@ -293,7 +293,7 @@ export function formatDuration(duration, options) {
  * @param  {string}  time the input string
  * @return {Boolean}
  */
-export function isValidTime(time) {
+export function isValidTime (time) {
   return [
     'H',
     'HA',
@@ -331,7 +331,7 @@ export function isValidTime(time) {
     'HH;mm',
     'HH;mmA',
     'HH;mm A'
-  ].some(format => moment(time, format, true).isValid())
+  ].some(format => moment(time, format, true).isValid());
 }
 
 /**
@@ -344,11 +344,11 @@ export function isValidTime(time) {
  * @param  {Date} prevDate    if no am/pm specified in string, compare both to this date and use whatever is closest.
  * @return {object}              {hours: ..., minutes: ...}
  */
-export function parseTime(str, use24hClock, prevDate = null) {
+export function parseTime (str, use24hClock, prevDate = null) {
   str = str
     .toLowerCase()
     .replace(/[,.:;]+/, ':')
-    .trim()
+    .trim();
 
   /**
    * Parse hours and minutes from the time string and return the hours minute components
@@ -356,17 +356,17 @@ export function parseTime(str, use24hClock, prevDate = null) {
    * @param  {string} str The input string such as '100', '1:00', '1200', '12:00'
    * @return {array}      [hh, mm]
    */
-  function getHoursMinutes(str) {
+  function getHoursMinutes (str) {
     if (str.indexOf(':') > -1) {
-      return _.map(str.split(':'), part => parseInt(part, 10) || 0)
+      return _.map(str.split(':'), part => parseInt(part, 10) || 0);
     } else {
-      str = str.replace(/[^0-9]/g, '')
+      str = str.replace(/[^0-9]/g, '');
       if (str.length <= 2) {
-        return [parseInt(str, 10), 0] // h and hh
+        return [parseInt(str, 10), 0]; // h and hh
       } else if (str.length <= 3) {
-        return [parseInt(str[0], 10), parseInt(str.substr(1), 10)] // hmm
+        return [parseInt(str[0], 10), parseInt(str.substr(1), 10)]; // hmm
       } else {
-        return [parseInt(str.substr(0, 2), 10), parseInt(str.substr(2), 10)] // hhmm and hhmmmmmm..
+        return [parseInt(str.substr(0, 2), 10), parseInt(str.substr(2), 10)]; // hhmm and hhmmmmmm..
       }
     }
   }
@@ -376,31 +376,31 @@ export function parseTime(str, use24hClock, prevDate = null) {
    * @param  {array} hm [hh, mm]
    * @return {array}    [hh, mm]
    */
-  function overflowMinutes(hm) {
-    hm = hm.slice()
-    hm[0] += Math.floor(hm[1] / 60)
-    hm[1] = hm[1] % 60
-    return hm
+  function overflowMinutes (hm) {
+    hm = hm.slice();
+    hm[0] += Math.floor(hm[1] / 60);
+    hm[1] = hm[1] % 60;
+    return hm;
   }
 
-  let hm = getHoursMinutes(str)
-  hm[0] = hm[0] % 24 // Lose extra days
-  hm = overflowMinutes(hm)
+  let hm = getHoursMinutes(str);
+  hm[0] = hm[0] % 24; // Lose extra days
+  hm = overflowMinutes(hm);
 
   // If we're in 24h mode or the user inputs more than 12 hours, there's no need to add any more magic
   if (use24hClock || hm[0] >= 13) {
-    return { hours: hm[0], minutes: hm[1] }
+    return { hours: hm[0], minutes: hm[1] };
   }
 
-  const isPM = _isPm(str, hm, use24hClock, prevDate)
+  const isPM = _isPm(str, hm, use24hClock, prevDate);
 
-  if (hm[0] === 12) hm[0] = 0 // twelvehouranians say 12:00 when they mean 0:00. We need to normalize that
+  if (hm[0] === 12) hm[0] = 0; // twelvehouranians say 12:00 when they mean 0:00. We need to normalize that
 
   if (isPM === true) {
-    hm[0] += 12
+    hm[0] += 12;
   }
 
-  return { hours: hm[0], minutes: hm[1] }
+  return { hours: hm[0], minutes: hm[1] };
 }
 
 /**
@@ -410,49 +410,49 @@ export function parseTime(str, use24hClock, prevDate = null) {
  * @param  {string} str The time string like '11:22a', assumed to be in 12h format
  * @return {boolean}    true if PM
  */
-export function _isPm(str, hm, use24hClock, prevDate) {
-  let isPM = null // null represents "we don't know"
-  const ampmMatch = str.toLowerCase().match(/(a|p)m?$/)
+export function _isPm (str, hm, use24hClock, prevDate) {
+  let isPM = null; // null represents "we don't know"
+  const ampmMatch = str.toLowerCase().match(/(a|p)m?$/);
 
   if (ampmMatch) {
-    str = str.substr(0, str.length - ampmMatch[0].length)
-    isPM = ampmMatch[0] === 'p' || ampmMatch[0] === 'pm'
+    str = str.substr(0, str.length - ampmMatch[0].length);
+    isPM = ampmMatch[0] === 'p' || ampmMatch[0] === 'pm';
   } else if (!use24hClock && prevDate) {
     // No am/pm found in string but we need *something* => take the closest value to prevDate
-    if (hm[0] === 12) hm = [0, hm[1]] // twelvehouranians say 12:00 when they mean 0:00. We need to normalize that
-    const date = moment().set({ hours: hm[0], minutes: hm[1] })
+    if (hm[0] === 12) hm = [0, hm[1]]; // twelvehouranians say 12:00 when they mean 0:00. We need to normalize that
+    const date = moment().set({ hours: hm[0], minutes: hm[1] });
     const prevTimeInPrevDay = moment()
       .subtract(1, 'day')
-      .set({ hours: prevDate.getHours(), minutes: prevDate.getMinutes() })
+      .set({ hours: prevDate.getHours(), minutes: prevDate.getMinutes() });
     const prevTimeInCurrentDay = moment().set({
       hours: prevDate.getHours(),
       minutes: prevDate.getMinutes()
-    })
+    });
     const prevTimeInNextDay = moment()
       .add(1, 'day')
-      .set({ hours: prevDate.getHours(), minutes: prevDate.getMinutes() })
-    const diffPrevDay = Math.abs(date.valueOf() - prevTimeInPrevDay.valueOf())
+      .set({ hours: prevDate.getHours(), minutes: prevDate.getMinutes() });
+    const diffPrevDay = Math.abs(date.valueOf() - prevTimeInPrevDay.valueOf());
     const diffCurrentDayAM = Math.abs(
       date.valueOf() - prevTimeInCurrentDay.valueOf()
-    )
+    );
     const diffCurrentDayPM = Math.abs(
       date.valueOf() + 12 * 60 * 60 * 1000 - prevTimeInCurrentDay.valueOf()
-    )
+    );
     const diffNextDay = Math.abs(
       date.valueOf() + 12 * 60 * 60 * 1000 - prevTimeInNextDay.valueOf()
-    )
+    );
     const smallest = Math.min(
       diffPrevDay,
       diffCurrentDayAM,
       diffCurrentDayPM,
       diffNextDay
-    )
+    );
 
-    if (smallest === diffPrevDay) isPM = false
-    else if (smallest === diffCurrentDayAM) isPM = false
-    else if (smallest === diffCurrentDayPM) isPM = true
-    else if (smallest === diffNextDay) isPM = true
+    if (smallest === diffPrevDay) isPM = false;
+    else if (smallest === diffCurrentDayAM) isPM = false;
+    else if (smallest === diffCurrentDayPM) isPM = true;
+    else if (smallest === diffNextDay) isPM = true;
   }
 
-  return isPM
+  return isPM;
 }

@@ -1,33 +1,17 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import {
-  differenceInHours,
-  differenceInMinutes,
-  differenceInSeconds,
-  subHours,
-  subMinutes
-} from 'date-fns';
+import { addSeconds } from 'date-fns';
 import * as keycode from 'keycode';
+
+import { formatDuration } from '../@toggl/time-format-utils/format-duration';
 
 import { TimeEntryDescription, TimeEntryProject } from './TimeEntriesList';
 import TagsIcon from './TagsIcon';
 import start from '../icons/start.svg';
 import stop from '../icons/stop.svg';
+import { useDuration } from '../shared/use-duration';
 
 const NO_DESCRIPTION = '(no description)';
-
-/**
- * Returns the elapsed time since `since` as a duration in the format hh:mm:ss.
- */
-export const formatDuration = (start: string | number, stop?: string | number) => {
-  const now = stop || Date.now();
-  const hours = differenceInHours(now, start);
-  const minutes = differenceInMinutes(subHours(now, hours), start);
-  const seconds = differenceInSeconds(subMinutes(subHours(now, hours), minutes), start);
-  const timeValue = (value) => value > 9 ? value : (value > 0 ? '0' + value : '00');
-
-  return `${hours}:${timeValue(minutes)}:${timeValue(seconds)}`;
-}
 
 type TimerProps = {
   entry: Toggl.TimeEntry | null;
@@ -68,18 +52,10 @@ function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | 
 }
 
 function TimerDuration ({ start }: { start: string }) {
-  const [ duration, setDuration ] = React.useState(formatDuration(start));
-
-  React.useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDuration(formatDuration(start));
-    }, 1000);
-    return () => clearTimeout(timeoutId);
-  })
-
+  const duration = useDuration(start);
   return (
     <Duration>
-      {duration}
+      {formatDuration(start, addSeconds(start, duration))}
     </Duration>
   )
 }

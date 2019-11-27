@@ -1,3 +1,18 @@
+# [1.49.0](https://github.com/toggl/toggl-button/compare/1.48.2...1.49.0) (2019-11-27)
+
+
+### Bug Fixes
+
+* **pomodoro:** Only trigger ticker if TE started from popup ([994b5f9](https://github.com/toggl/toggl-button/commit/994b5f9))
+* **popup:** Only start focus view if pomodoro alarm is running ([eb1e3a1](https://github.com/toggl/toggl-button/commit/eb1e3a1))
+
+
+### Features
+
+* **focus:** Add focus mode for pomodoro ([9821cfb](https://github.com/toggl/toggl-button/commit/9821cfb))
+* **pomodoro:** Add ticker sound support ([f413ad9](https://github.com/toggl/toggl-button/commit/f413ad9)), closes [#1568](https://github.com/toggl/toggl-button/issues/1568)
+* **pomodoro:** Add ticking sound preference in settings ([7f4f2ba](https://github.com/toggl/toggl-button/commit/7f4f2ba))
+
 ## [1.48.2](https://github.com/toggl/toggl-button/compare/1.48.1...1.48.2) (2019-11-25)
 
 

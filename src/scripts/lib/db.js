@@ -26,6 +26,7 @@ const DEFAULT_SETTINGS = {
 
   pomodoroInterval: 25,
   pomodoroBreakInterval: 5,
+  pomodoroLongBreakInterval: 15,
 
   stopAtDayEnd: false,
   dayEndTime: '17:00',

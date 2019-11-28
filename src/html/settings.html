@@ -261,13 +261,31 @@
             <input type="checkbox" id="pomodoro-break">
             <label for="pomodoro-break">
               <span class="setting">Break Timer</span>
-              <span class="description">Enable tracking of break between Pomodoro sessions.
+              <span class="description">Track breaks between Pomodoro sessions.
             </label>
             <div class="subsettings-details">
               Short break timer interval in minutes <input type="number" id="pomodoro-break-interval" min="1" class="xs">
             </div>
             <div class="subsettings-details">
               Long break timer interval in minutes <input type="number" id="pomodoro-long-break-interval" min="1" class="xs">
+            </div>
+            <div class="subsettings-details">
+              <label for="pomodoro-long-break-gap">
+                <span class="description">Start long break</span>
+              </label>
+              <select id="pomodoro-long-break-gap">
+                <option value="0">never</option>
+                <option value="2">after every other session</option>
+                <option value="3">after every third session</option>
+                <option value="4">after every fourth session</option>
+                <option value="5">after every fifth session</option>
+                <option value="6">after every sixth session</option>
+                <option value="7">after every seventh session</option>
+                <option value="8">after every eight session</option>
+                <option value="9">after every ninth session</option>
+                <option value="10">after every tenth session</option>
+              </select>
+              </select>
             </div>
           </div>
 

@@ -26,6 +26,8 @@ const DEFAULT_SETTINGS = {
   pomodoroTickerVolume: 1,
 
   pomodoroInterval: 25,
+  pomodoroBreakInterval: 5,
+
   stopAtDayEnd: false,
   dayEndTime: '17:00',
   defaultProject: 0,

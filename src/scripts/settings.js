@@ -39,8 +39,11 @@ const Settings = {
   $darkMode: null,
   $postPopup: null,
   $nanny: null,
+
   $pomodoroMode: null,
+  $pomodoroBreak: null,
   $pomodoroSound: null,
+
   $permissionFilter: document.querySelector('#permission-filter'),
   $permissionFilterClear: document.querySelector('#filter-clear'),
   $permissionsList: document.querySelector('#permissions-list'),
@@ -85,8 +88,11 @@ const Settings = {
       const idleDetectionEnabled = await db.get('idleDetectionEnabled');
       const showPostPopup = await db.get('showPostPopup');
       const nannyCheckEnabled = await db.get('nannyCheckEnabled');
+
       const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
+      const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
       const pomodoroInterval = await db.get('pomodoroInterval');
+      const pomodoroBreakInterval = await db.get('pomodoroBreakInterval');
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
       const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
@@ -157,7 +163,12 @@ const Settings = {
         Settings.$pomodoroMode,
         pomodoroModeEnabled
       );
+      Settings.toggleState(
+        Settings.$pomodoroBreak,
+        pomodoroBreakEnabled
+      );
       document.querySelector('.field.pomodoro-mode').classList.toggle('field--showDetails', pomodoroModeEnabled);
+      document.querySelector('.field.pomodoro-break').classList.toggle('field--showDetails', pomodoroBreakEnabled);
       Settings.toggleState(
         Settings.$pomodoroFocusMode,
         pomodoroFocusMode
@@ -188,6 +199,7 @@ const Settings = {
       });
 
       document.querySelector('#pomodoro-interval').value = pomodoroInterval;
+      document.querySelector('#pomodoro-break-interval').value = pomodoroBreakInterval;
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -667,6 +679,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$nanny = document.querySelector('#nag-nanny');
     Settings.$idleDetection = document.querySelector('#idle-detection');
     Settings.$pomodoroMode = document.querySelector('#pomodoro-mode');
+    Settings.$pomodoroBreak = document.querySelector('#pomodoro-break');
     Settings.$pomodoroFocusMode = document.querySelector('#pomodoro-focus-mode');
     Settings.$pomodoroSound = document.querySelector('#enable-sound-signal');
     Settings.$pomodoroStopTimeTracking = document.querySelector(
@@ -781,6 +794,11 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
       Settings.toggleSetting(e.target, !pomodoroModeEnabled, 'toggle-pomodoro');
       document.querySelector('.field.pomodoro-mode').classList.toggle('field--showDetails', !pomodoroModeEnabled);
+    });
+    Settings.$pomodoroBreak.addEventListener('click', async function (e) {
+      const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
+      await db.set('pomodoroBreakEnabled', !pomodoroBreakEnabled);
+      document.querySelector('.field.pomodoro-break').classList.toggle('field--showDetails', !pomodoroBreakEnabled);
     });
     Settings.$pomodoroFocusMode.addEventListener('click', async function (e) {
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
@@ -915,6 +933,16 @@ document.addEventListener('DOMContentLoaded', async function (e) {
           +document.querySelector('#pomodoro-interval').value,
           'toggle-pomodoro-interval'
         );
+      });
+    document
+      .querySelector('#pomodoro-break-interval')
+      .addEventListener('blur', async function (e) {
+        const val = +e.target.value;
+        if (val < 1) {
+          e.target.val = 1;
+          return;
+        }
+        await db.set('pomodoroBreakInterval', val);
       });
 
     document

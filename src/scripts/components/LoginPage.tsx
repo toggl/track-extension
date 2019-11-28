@@ -4,13 +4,23 @@ import styled from '@emotion/styled';
 import browser from 'webextension-polyfill';
 
 import bugsnagClient from '../lib/bugsnag';
+import {
+  Content,
+  Row,
+  Heading,
+  Subheading,
+  Button,
+  CenteredButton,
+  Link
+} from '../@toggl/ui/components';
 import Logo from '../icons/Logo';
 import Spinner from './Spinner';
+import QuickStartGuide from './QuickStartGuide';
 
 export interface LoginProps {
   isLoggedIn: boolean;
   isPopup: boolean;
-  source: 'web-login' | 'install';
+  source: 'web-login' | 'install' | 'quick-start';
 }
 
 interface LoginState {
@@ -40,6 +50,12 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
     }
   }, [error]);
 
+  React.useEffect(() => {
+    if (source === 'web-login' && loading) document.title = 'Logging in to Toggl Button';
+    if (source === 'web-login' && error) document.title = 'Could not login to Toggl Button';
+    if (source === 'quick-start' || loggedIn) document.title = 'Welcome to Toggl Button';
+  }, [source, loading, error, loggedIn]);
+
   let content = (
     <Content>
       <Row>
@@ -64,9 +80,11 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
           <Row>
             <Heading>Logging you in</Heading>
           </Row>
-          <CenteredButton>
-            <Spinner />
-          </CenteredButton>
+          <Row>
+            <CenteredButton>
+              <Spinner />
+            </CenteredButton>
+          </Row>
         </Content>
       );
     }
@@ -95,19 +113,8 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
     }
   }
 
-  if (loggedIn) {
-    content = (
-      <Content>
-        <Row>
-          <Heading>You're all set!</Heading>
-          <Subheading>Click the Toggl icon in your toolbar to start tracking time</Subheading>
-        </Row>
-        <Button onClick={closePage}>Close page</Button>
-        <Link href="settings.html?tab=integrations">
-          Want to enable Toggl Button in other tools? Visit the integration settings.
-        </Link>
-      </Content>
-    );
+  if (source === 'quick-start' || loggedIn) {
+    content = <QuickStartGuide />
   }
 
   return (
@@ -133,8 +140,13 @@ function HeaderLinks ({ loggedIn }: Pick<LoginState, 'loggedIn'>) {
   return (
     <Links>
       <li>
-        <Link href="https://support.toggl.com/browser-extensions">
-          Support
+        <Link href="settings.html">
+          Settings
+        </Link>
+      </li>
+      <li>
+        <Link href="settings.html?tab=pomodoro">
+          Pomodoro
         </Link>
       </li>
       <li>
@@ -143,13 +155,18 @@ function HeaderLinks ({ loggedIn }: Pick<LoginState, 'loggedIn'>) {
         </Link>
       </li>
       <li>
+        <Link href="settings.html?tab=telemetry">
+          Telemetry
+        </Link>
+      </li>
+      <li>
         <Link href="settings.html?tab=account">
           Account
         </Link>
       </li>
       <li>
-        <Link href="settings.html">
-          Settings
+        <Link href="https://support.toggl.com/browser-extensions">
+          User Guide
         </Link>
       </li>
     </Links>
@@ -177,23 +194,33 @@ function SignupButton ({ isPopup }: Pick<LoginProps, 'isPopup'>) {
 
 const openPage = (url: string) => () => browser.tabs.create({ url });
 
-const closePage = async () => {
-  const tab = await browser.tabs.getCurrent();
-  browser.tabs.remove(tab.id);
-};
-
 const page = css`
   html, body, #app {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: GTWalsheim,Arial,sans-serif;
     margin: 0;
     background: #ca9eda;
     display: flex;
     flex-direction: column;
   }
+
+  p {
+    line-height: 1.71;
+    font-weight: 500;
+  }
+
+  p.small {
+    font-size: 13px;
+    line-height: 1.1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+  }
+
 `;
 
 const Header = styled.header`
-  padding: 30px 24px;
+  padding: 40px;
   justify-content: space-between;
  `;
 
@@ -204,28 +231,15 @@ const Links = styled.ul`
 
   & li {
     margin-left: 25px;
-  }
-`;
-
-const Link = styled.a`
-  font-size: 13px;
-  font-weight: 500;
-  color: #282a2d;
-  line-height: 36px;
-  text-decoration: none;
-
-  :hover, :focus, :active {
-    text-decoration: underline;
+    font-size: 13px;
   }
 `;
 
 const ContentWrapper = styled.main`
-  height: 450px;
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
 `;
 
 const LogoWrapper = styled.span`
@@ -238,63 +252,3 @@ const LogoWrapper = styled.span`
   }
 `;
 
-const Content = styled.div`
-  min-height: 40vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  & h1 {
-    margin-bottom: 21px;
-  }
-`;
-
-const Heading = styled.h1`
-  font-size: 48px;
-  color: white;
-  font-weight: 700;
-  margin: 0;
-`;
-
-const Subheading = styled(Heading)`
-  color: white;
-  font-size: 21px;
-  font-weight: 500;
-`;
-
-const Button = styled.button`
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: baseline;
-  justify-content: center;
-  background-color: #e24f54;
-  border: 0;
-  border-radius: 24px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 500;
-  height: 48px;
-  line-height: 48px;
-  min-width: 218px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  width: auto;
-  padding: 0 15px;
-  outline: none;
-`;
-
-const CenteredButton = styled(Button)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

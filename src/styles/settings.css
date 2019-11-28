@@ -614,7 +614,6 @@ section .field--showDetails .subsettings-details {
   padding: 10px 36px;
   border: 0;
   border-radius: 24px;
-  line-height: 24px;
   text-decoration: none;
   cursor: pointer;
   font-weight: 500;

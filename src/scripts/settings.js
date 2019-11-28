@@ -93,6 +93,7 @@ const Settings = {
       const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
       const pomodoroInterval = await db.get('pomodoroInterval');
       const pomodoroBreakInterval = await db.get('pomodoroBreakInterval');
+      const pomodoroLongBreakInterval = await db.get('pomodoroLongBreakInterval');
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
       const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
@@ -200,6 +201,7 @@ const Settings = {
 
       document.querySelector('#pomodoro-interval').value = pomodoroInterval;
       document.querySelector('#pomodoro-break-interval').value = pomodoroBreakInterval;
+      document.querySelector('#pomodoro-long-break-interval').value = pomodoroLongBreakInterval;
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -936,14 +938,10 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       });
     document
       .querySelector('#pomodoro-break-interval')
-      .addEventListener('blur', async function (e) {
-        const val = +e.target.value;
-        if (val < 1) {
-          e.target.val = 1;
-          return;
-        }
-        await db.set('pomodoroBreakInterval', val);
-      });
+      .addEventListener('blur', setDurationValue('pomodoroBreakInterval'));
+    document
+      .querySelector('#pomodoro-long-break-interval')
+      .addEventListener('blur', setDurationValue('pomodoroLongBreakInterval'));
 
     document
       .querySelector('#day-end-time')
@@ -1066,6 +1064,17 @@ async function showReviewPrompt () {
     return;
   }
   document.body.dataset.showReviewBanner = true;
+}
+
+function setDurationValue (key) {
+  return async function (e) {
+    const val = +e.target.value;
+    if (val < 1) {
+      e.target.val = 1;
+      return;
+    }
+    await db.set(key, val);
+  };
 }
 
 function dismissReviewPrompt () {

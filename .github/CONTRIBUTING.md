@@ -50,6 +50,26 @@ Please consider the following with your pull request:
 * Make sure we're not leaking styles or breaking the layout of the UI.
 * The text used as timer description should be tailored to the majority of users. E.g. if ticket ID is an important piece of information, it should be included. If it's not important information (e.g. never actually shown in the UI, only in URLs) it should not be included.
 
+### Private integration
+
+If you want to integrate `Toggl Button` with your private project on your custom domain you can
+assign the domain to `Generic Toggl` integration in settings "Permissions" tab.
+
+Your site needs to contain some variation of the following HTML element, where the Toggl Button will
+be created as its child:
+
+```html
+<div
+  class="toggl-root"
+  data-class-name="name-of-the-integration"
+  data-description="Description of a new entry"
+  data-project-id="ID of a project that the entry should be assigned to"
+  data-project-name="Name of a project that the entry should be assigned to"
+  data-tags="list,of,tags"
+  data-type="minimal"
+></div>
+```
+
 ## Making changes to the core extension code
 
 Please consider future maintainers and the "generic" nature of the extension in mind when writing new features. All changes should be tested across both Chrome and Firefox.

@@ -184,6 +184,10 @@ export default {
     url: '*://*.freshdesk.com/*',
     name: 'Freshdesk'
   },
+  'generic-toggl': {
+    url: '*://*/*',
+    name: 'Generic Toggl'
+  },
   'getflow.com': {
     url: '*://*.getflow.com/*',
     name: 'Getflow'

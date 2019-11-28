@@ -89,6 +89,7 @@ const Settings = {
       const pomodoroInterval = await db.get('pomodoroInterval');
       const pomodoroBreakInterval = await db.get('pomodoroBreakInterval');
       const pomodoroLongBreakInterval = await db.get('pomodoroLongBreakInterval');
+      const pomodoroLongBreakGap = await db.get('pomodoroLongBreakGap');
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
       const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
@@ -180,6 +181,7 @@ const Settings = {
       document.querySelector('#pomodoro-interval').value = pomodoroInterval;
       document.querySelector('#pomodoro-break-interval').value = pomodoroBreakInterval;
       document.querySelector('#pomodoro-long-break-interval').value = pomodoroLongBreakInterval;
+      document.querySelector('#pomodoro-long-break-gap').value = pomodoroLongBreakGap;
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -934,6 +936,12 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     document
       .querySelector('#pomodoro-long-break-interval')
       .addEventListener('blur', setDurationValue('pomodoroLongBreakInterval'));
+    document
+      .querySelector('#pomodoro-long-break-gap')
+      .addEventListener('change', async function (e) {
+        const val = e.target.value;
+        await db.set('pomodoroLongBreakGap', +val || 0);
+      });
 
     document
       .querySelector('#day-end-time')

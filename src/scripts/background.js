@@ -151,6 +151,9 @@ window.TogglButton = {
         <button type="button" id="tb-edit-form-cancel" tabindex="0" class="TB__Secondary__button">Cancel</button>
         <div id="toggl-button-update" tabindex="0" class="TB__Button__button">Done</div>
       </div>
+      <div id="tb-actions-button-group">
+        <div id="toggl-button-delete" tabindex="0" class="TB__Button__button danger">Delete</div>
+      </div>
     ` +
     '<input type="submit" class="toggl-button-hidden">' +
     '</form>' +
@@ -1089,6 +1092,48 @@ window.TogglButton = {
     });
   },
 
+  deleteTimeEntry: function (timeEntry, sendResponse) {
+    return new Promise(function (resolve, reject) {
+      TogglButton.ajax(
+        `/time_entries/${timeEntry.id}`,
+        {
+          method: 'DELETE',
+          baseUrl: TogglButton.$ApiV9Url,
+          onLoad: function (xhr) {
+            const success = xhr.status === 200;
+            if (success) {
+              const timeEntryId = parseInt(timeEntry.id, 10);
+              if (TogglButton.$curEntry && TogglButton.$curEntry.id === timeEntryId) {
+                TogglButton.$curEntry = null;
+                TogglButton.updateTriggers(null);
+              }
+              const entries = TogglButton.$user.time_entries.filter(function (entry) {
+                return entry.id !== timeEntryId;
+              });
+              TogglButton.$user.time_entries = entries;
+            }
+            try {
+              resolve({ success: success, type: 'delete', id: timeEntry.id });
+              ga.reportEvent(timeEntry.type, timeEntry.service);
+            } catch (e) {
+              report(e);
+              resolve({
+                success: false,
+                type: 'delete'
+              });
+            }
+          },
+          onError: function (xhr) {
+            resolve({
+              success: false,
+              type: 'delete'
+            });
+          }
+        }
+      );
+    });
+  },
+
   setBrowserActionBadge: function () {
     let badge = '';
     if (!TogglButton.$user) {
@@ -1991,6 +2036,9 @@ window.TogglButton = {
             sendResponse
           );
           TogglButton.hideNotification('remind-to-track-time');
+        } else if (request.type === 'delete') {
+          TogglButton.deleteTimeEntry(request, sendResponse)
+            .then(resolve);
         } else if (request.type === 'update') {
           TogglButton.updateTimeEntry(request, sendResponse)
             .then(resolve);

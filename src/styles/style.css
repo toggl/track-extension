@@ -354,11 +354,12 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* WORKSECTION *********/
-#tmenu2 .toggl-button.worksection {
-  margin-top: 9px;
-  padding-top: 0px;
-  line-height: 21px;
-  padding-left: 21px;
+.toggl-button.worksection-taskview {
+  margin: 10px 15px;
+}
+
+.toggl-button.worksection-listview {
+  margin-right: 5px;
 }
 
 /********* REVIEWBOARD *********/

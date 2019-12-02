@@ -249,7 +249,7 @@ const Popup = {
       editView.dataset.timeEntryId = timeEntry.id;
       editView.dataset.workspaceId = timeEntry.wid;
       editView.dataset.startTime = timeEntry.start;
-      timeEntry.stop && (editView.dataset.stopTime = timeEntry.stop);
+      editView.dataset.stopTime = timeEntry.stop || '';
     }
 
     const duration = differenceInSeconds(

@@ -139,14 +139,14 @@ AutoComplete.prototype.closeDropdown = function (t) {
 };
 
 AutoComplete.prototype.updateHeight = function () {
-  const bodyRect = document.body.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
   const elRect = this.el.getBoundingClientRect();
   let popdownStyle = '';
   let listStyle = 'max-height:auto;';
   let calc;
 
-  if (bodyRect.bottom > 0 && elRect.bottom + 25 >= bodyRect.bottom) {
-    calc = window.scrollY + bodyRect.bottom - elRect.top - 10;
+  if (windowHeight > 0 && elRect.bottom + 25 >= windowHeight) {
+    calc = window.scrollY + windowHeight - elRect.top - 10;
     if (calc < 55) {
       calc = 55;
     }

@@ -60,7 +60,7 @@ function filterTabs (handler) {
   };
 }
 
-window.TogglButton = {
+const TogglButton = {
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,
@@ -82,6 +82,7 @@ window.TogglButton = {
   checkingWorkdayEnd: false,
   pomodoroAlarm: null,
   pomodoroProgressTimer: null,
+  pomodoroSessionCount: 0,
   $ticker: null,
   pomodoroInterval: null,
   pomodoroFocusMode: null,
@@ -386,7 +387,7 @@ window.TogglButton = {
     TogglButton.websocket.retryCount = 0;
   },
 
-  updateTriggers: function (entry) {
+  updateTriggers: function (entry, created = false) {
     const update =
       !!TogglButton.localEntry &&
       !!entry &&
@@ -394,6 +395,9 @@ window.TogglButton = {
 
     TogglButton.$curEntry = entry;
     if (entry) {
+      if (created) {
+        TogglButton.bumpSession();
+      }
       if (update) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
@@ -633,7 +637,7 @@ window.TogglButton = {
             if (success) {
               entry = JSON.parse(xhr.responseText);
               TogglButton.localEntry = entry;
-              TogglButton.updateTriggers(entry);
+              TogglButton.updateTriggers(entry, true);
               ga.reportEvent(timeEntry.type, timeEntry.service);
               db.bumpTrackedCount();
             } else {
@@ -836,6 +840,7 @@ window.TogglButton = {
   resetPomodoroProgress: function (entry) {
     clearInterval(TogglButton.pomodoroProgressTimer);
     TogglButton.pomodoroProgressTimer = null;
+    TogglButton.resetPomodoroSession();
     TogglButton.updateTriggers(entry);
   },
 
@@ -2295,8 +2300,21 @@ window.TogglButton = {
   stopTicker: async function () {
     TogglButton.$ticker && await TogglButton.$ticker.stop();
     TogglButton.$ticker = null;
+  },
+
+  bumpSession: async function () {
+    const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
+    const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
+    if (!pomodoroModeEnabled || !pomodoroBreakEnabled) return;
+    ++TogglButton.pomodoroSessionCount;
+  },
+
+  resetPomodoroSession: function () {
+    TogglButton.pomodoroSessionCount = 0;
   }
 };
+
+window.TogglButton = TogglButton;
 
 browser.webRequest.onBeforeSendHeaders.addListener(
   function (info) {

@@ -137,6 +137,8 @@ const Popup = {
             TogglButton = browser.extension.getBackgroundPage().TogglButton;
             // Current TE update
             PopUp.renderApp();
+          } else if (response.type === 'delete') {
+            PopUp.renderApp();
           } else if (response.type === 'update') {
             // Current TE update
             PopUp.renderTimer();
@@ -350,7 +352,7 @@ const Popup = {
     PopUp.$billable.classList.toggle('tb-checked', billable);
   },
 
-  submitForm: function () {
+  updateTimeEntry: function () {
     PopUp.stopDurationInput();
 
     // Translate human duration input if submitted without blurring
@@ -412,6 +414,19 @@ const Popup = {
     PopUp.switchView(PopUp.$menuView);
   },
 
+  deleteTimeEntry: function () {
+    const editView = document.getElementById('toggl-button-edit-form');
+    const timeEntryId = editView.dataset.timeEntryId;
+
+    const request = {
+      type: 'delete',
+      id: timeEntryId
+    };
+
+    Popup.sendMessage(request);
+    PopUp.switchView(PopUp.$menuView);
+  },
+
   closeForm: function () {
     PopUp.switchView(PopUp.$menuView);
   },
@@ -433,14 +448,14 @@ const Popup = {
     document
       .querySelector('#toggl-button-update')
       .addEventListener('click', function (e) {
-        PopUp.submitForm(this);
+        PopUp.updateTimeEntry(this);
       });
 
     document
       .querySelector('#toggl-button-update')
       .addEventListener('keydown', function (e) {
         if (e.code === 'Enter' || e.code === 'Space') {
-          PopUp.submitForm(this);
+          PopUp.updateTimeEntry(this);
         }
       });
 
@@ -458,10 +473,25 @@ const Popup = {
         }
       });
 
+    // Delete button
+    document
+      .querySelector('#toggl-button-delete')
+      .addEventListener('click', function (e) {
+        PopUp.deleteTimeEntry(this);
+      });
+
+    document
+      .querySelector('#toggl-button-delete')
+      .addEventListener('keydown', function (e) {
+        if (e.code === 'Enter' || e.code === 'Space') {
+          PopUp.deleteTimeEntry(this);
+        }
+      });
+
     document
       .querySelector('#toggl-button-entry-form form')
       .addEventListener('submit', function (e) {
-        PopUp.submitForm(this);
+        PopUp.updateTimeEntry(this);
         e.preventDefault();
       });
 

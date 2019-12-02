@@ -82,7 +82,7 @@ const TogglButton = {
   checkingWorkdayEnd: false,
   pomodoroAlarm: null,
   pomodoroProgressTimer: null,
-  pomodoroSessionCount: 0,
+  pomodoroBreakCount: 0,
   $ticker: null,
   pomodoroInterval: null,
   pomodoroFocusMode: null,
@@ -395,9 +395,6 @@ const TogglButton = {
 
     TogglButton.$curEntry = entry;
     if (entry) {
-      if (created) {
-        TogglButton.bumpSession();
-      }
       if (update) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
@@ -637,7 +634,7 @@ const TogglButton = {
             if (success) {
               entry = JSON.parse(xhr.responseText);
               TogglButton.localEntry = entry;
-              TogglButton.updateTriggers(entry, true);
+              TogglButton.updateTriggers(entry);
               ga.reportEvent(timeEntry.type, timeEntry.service);
               db.bumpTrackedCount();
             } else {
@@ -840,7 +837,7 @@ const TogglButton = {
   resetPomodoroProgress: function (entry) {
     clearInterval(TogglButton.pomodoroProgressTimer);
     TogglButton.pomodoroProgressTimer = null;
-    TogglButton.resetPomodoroSession();
+    TogglButton.resetBreakCount();
     TogglButton.updateTriggers(entry);
   },
 
@@ -951,6 +948,11 @@ const TogglButton = {
     const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
     if (!pomodoroModeEnabled) {
       return;
+    }
+
+    const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
+    if (pomodoroBreakEnabled) {
+      TogglButton.startBreakTimer();
     }
 
     let notificationId = 'pomodoro-time-is-up';
@@ -2302,15 +2304,24 @@ const TogglButton = {
     TogglButton.$ticker = null;
   },
 
-  bumpSession: async function () {
+  bumpBreakCount: async function () {
     const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
     const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
     if (!pomodoroModeEnabled || !pomodoroBreakEnabled) return;
-    ++TogglButton.pomodoroSessionCount;
+    ++TogglButton.pomodoroBreakCount;
   },
 
-  resetPomodoroSession: function () {
-    TogglButton.pomodoroSessionCount = 0;
+  resetBreakCount: function () {
+    TogglButton.pomodoroBreakCount = 0;
+  },
+
+  startBreakTimer: async function () {
+    await TogglButton.bumpBreakCount();
+    TogglButton.createTimeEntry({
+      type: 'timeEntry',
+      description: 'Pomodoro Break',
+      service: 'pomodoro-break'
+    }, null);
   }
 };
 

@@ -9,7 +9,7 @@ import {
 /**
  * Returns the elapsed time since `since` as a duration in the format hh:mm:ss.
  */
-export const formatDuration = (start: string | number, stop?: string | number | Date) => {
+export const formatDuration = (start: string | number | Date, stop?: string | number | Date) => {
   const now = stop || Date.now();
   const hours = differenceInHours(now, start);
   const minutes = differenceInMinutes(subHours(now, hours), start);

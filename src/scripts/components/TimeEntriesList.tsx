@@ -19,9 +19,14 @@ import playGreen from '../icons/play-green.svg';
 const NO_DESCRIPTION = '(no description)';
 const NO_PROJECT = '(no project)';
 
-const secondsToHhmmss = (seconds: number) => {
-  return new Date(seconds * 1000).toISOString().substr(11, 8)
-};
+const groupDuration = (entries: Toggl.TimeEntry[][]) => {
+  const total = entries
+    // Our minimum supported browser versions don't have Array.flat
+    .reduce((acc, val) => acc.concat(val), [])
+    .reduce((sum, { duration }) => sum + duration, 0);
+
+  return formatDuration(subSeconds(new Date(), total));
+}
 
 const getTimeEntryDayGroups = (timeEntries: Array<Array<Toggl.TimeEntry>>): {[date: string]: Array<Array<Toggl.TimeEntry>>} => {
   return [...timeEntries]
@@ -72,10 +77,6 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
   }
 
   const dayGroups = getTimeEntryDayGroups(timeEntries);
-  const sumDuration = entries => {
-    const total = entries.flat().reduce((sum, {duration}) => sum + duration, 0);
-    return total;
-  }
 
   return (
     <Container>
@@ -87,7 +88,7 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
                 <span>
                 {format(date, 'ddd, D MMM')}</span>
                 <span>
-                {secondsToHhmmss(sumDuration(groupEntries))}</span>
+                {groupDuration(groupEntries)}</span>
               </EntryHeading>
               {groupEntries.map((timeEntries, i) => {
                 const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;
@@ -106,6 +107,7 @@ type TimeEntriesListItemProps = {
   timeEntries: Array<Toggl.TimeEntry>;
   project: Toggl.Project | null;
 };
+
 function TimeEntriesListItem ({ timeEntries, project }: TimeEntriesListItemProps) {
   const [isGroupCollapsed, setGroupCollapsed] = React.useState(true)
   const timeEntry = timeEntries[0];
@@ -190,7 +192,7 @@ function TimeEntryRow ({
       }
       <EntryItemText>
         <TimeEntryDescription title={description && description}>
-          {description ? description : <Placeholder>{NO_DESCRIPTION}</Placeholder>}
+          {description || <Placeholder>{NO_DESCRIPTION}</Placeholder>}
         </TimeEntryDescription>
         <TimeEntryProject project={project} />
       </EntryItemText>

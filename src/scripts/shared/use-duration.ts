@@ -12,7 +12,7 @@ export const useDuration = (start: string) => {
 
   const updateDuration = React.useCallback(() => {
     setDuration(timeElapsed(start));
-  }, [setDuration]);
+  }, [start, setDuration]);
 
   useInterval(updateDuration, ONE_SECOND);
 

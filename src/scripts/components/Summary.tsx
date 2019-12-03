@@ -14,7 +14,6 @@ function Summary ({
 }) {
   return (
     <SummaryRow>
-      <div>Today: {totals.today}</div>
       <div>This week: {totals.week}</div>
     </SummaryRow>
   )
@@ -22,7 +21,7 @@ function Summary ({
 
 const SummaryRow = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   height: 30px;
   padding: 0 .8rem;

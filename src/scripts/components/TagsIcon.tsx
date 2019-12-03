@@ -22,6 +22,6 @@ const Wrapper = styled.span`
 
 const Icon = styled.svg`
   &:hover > path {
-    fill: ${color.grey};
+    fill: ${color.black};
   }
 `;

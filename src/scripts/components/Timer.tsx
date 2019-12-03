@@ -94,7 +94,6 @@ const TimerContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 1rem;
   height: 66px;
 
   padding: .5rem .8rem;

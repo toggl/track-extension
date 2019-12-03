@@ -91,7 +91,7 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
                 {secondsToHhmmss(sumDuration(groupEntries))}</span>
               </EntryHeading>
               {...groupEntries.map((timeEntries, i) => {
-                const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;                
+                const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;
                 return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
                 })}
             </EntryDayGroup>
@@ -324,6 +324,10 @@ const EntryDayGroup = styled.div`
   background: white;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 3px 0px;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
 `;
 
 const EntryItem = styled.li`

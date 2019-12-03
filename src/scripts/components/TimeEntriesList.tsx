@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { format, isSameDay, subSeconds } from 'date-fns';
+import { format, subSeconds } from 'date-fns';
 
 import BillableIcon from './BillableIcon';
 import TagsIcon from './TagsIcon';
@@ -14,8 +14,14 @@ import { borderRadius } from '../@toggl/style/lib/variables';
 import { formatDuration } from '../@toggl/time-format-utils/format-duration';
 
 import play from '../icons/play.svg';
+import playGreen from '../icons/play-green.svg';
 
 const NO_DESCRIPTION = '(no description)';
+const NO_PROJECT = '(no project)';
+
+const secondsToHhmmss = (seconds: number) => {
+  return new Date(seconds * 1000).toISOString().substr(11, 8)
+};
 
 const getTimeEntryDayGroups = (timeEntries: Array<Array<Toggl.TimeEntry>>): {[date: string]: Array<Array<Toggl.TimeEntry>>} => {
   return [...timeEntries]
@@ -66,20 +72,29 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
   }
 
   const dayGroups = getTimeEntryDayGroups(timeEntries);
+  const sumDuration = entries => {
+    const total = entries.flat().reduce((sum, {duration}) => sum + duration, 0);
+    return total;
+  }
 
   return (
     <Container>
       <EntryList>
         {Object.keys(dayGroups).map((date, groupIndex) => {
           const groupEntries = dayGroups[date];
-          const showHeading = !isSameDay(date, Date.now());
-
           return [
-            showHeading && <EntryHeading key={`tegroup-${groupIndex}`}>{format(date, 'ddd, D MMM')}</EntryHeading>,
-            ...groupEntries.map((timeEntries, i) => {
-              const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;
-              return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
-            })
+            <EntryDayGroup>
+              <EntryHeading key={`tegroup-${groupIndex}`}>
+                <span>
+                {format(date, 'ddd, D MMM')}</span>
+                <span>
+                {secondsToHhmmss(sumDuration(groupEntries))}</span>
+              </EntryHeading>
+              {...groupEntries.map((timeEntries, i) => {
+                const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;                
+                return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
+                })}
+            </EntryDayGroup>
           ]
         })}
       </EntryList>
@@ -161,7 +176,7 @@ function TimeEntryRow ({
   indent?: boolean
 }) {
 
-  const description = timeEntry.description || NO_DESCRIPTION;
+  const description = timeEntry.description;
   const isBillable = !!timeEntry.billable;
   const tags = (timeEntry.tags && timeEntry.tags.length > 0)
     ? timeEntry.tags.join(', ')
@@ -169,21 +184,25 @@ function TimeEntryRow ({
 
   return (
     <EntryItem onClick={onRowClick} indent={indent}>
-      <EntryItemRow>
-        {renderHeader && entriesCount && earliestStartTime &&
+      {renderHeader && entriesCount && earliestStartTime &&
+        <GroupedEntryIcon>
           <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>
-        }
-        <TimeEntryDescription title={description}>{description}</TimeEntryDescription>
-        <EntryIcons>
+        </GroupedEntryIcon>
+      }
+      <EntryItemText>
+        <TimeEntryDescription title={description && description}>
+          {description ? description : <Placeholder>{NO_DESCRIPTION}</Placeholder>}
+        </TimeEntryDescription>
+        <TimeEntryProject project={project} />
+      </EntryItemText>
+      <EntryItemActions>
+        <TimeEntryDuration duration={totalDuration || timeEntry.duration} />
+        <EntryIcons className="entry-icons">
           <BillableIcon active={isBillable} />
           {tags && <TagsIcon title={tags} />}
-          <TimeEntryDuration duration={totalDuration || timeEntry.duration} />
+          <ContinueButton data-continue-id={timeEntry.id} title='Continue this entry' />
         </EntryIcons>
-      </EntryItemRow>
-      <EntryItemRow>
-        <TimeEntryProject project={project} />
-        <ContinueButton data-continue-id={timeEntry.id} title='Continue this entry' />
-      </EntryItemRow>
+      </EntryItemActions>
     </EntryItem>
   )
 }
@@ -193,16 +212,19 @@ const editEntry = (timeEntry: Toggl.TimeEntry) => (e: React.MouseEvent) => {
   window.PopUp.renderEditForm(timeEntry);
 };
 
+const GroupedEntryIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+`;
+
 const GroupedEntryCounter = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-right: 10px;
   flex-shrink: 0;
-
-  height: 30px;
-  width: 30px;
 
   border-radius: ${borderRadius};
 
@@ -232,21 +254,20 @@ export const TimeEntryDescription = styled.div`
 
   white-space: nowrap;
   text-overflow: ellipsis;
-  line-height: 24px;
   overflow: hidden;
   color: #222;
-  cursor: pointer;
 `;
 
 export function TimeEntryProject ({ project }: { project: Toggl.Project | null }) {
   return (
-    <div style={{ flex: 1, overflow: 'hidden', paddingRight: 10 }}>
-      {project &&
+    <div style={{ overflow: 'hidden' }}>
+      {project ?
         <ProjectLargeDot color={project.hex_color}>
-          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {project.name}
           </span>
         </ProjectLargeDot>
+        : <Placeholder>{NO_PROJECT}</Placeholder>
       }
     </div>
   );
@@ -261,10 +282,11 @@ const ContinueButton = styled.div`
   background-size: 14px;
   border: none;
   cursor: pointer;
-  opacity: 0.5;
 
   &:hover {
-    opacity: 1.0;
+    background: url(${playGreen}) no-repeat;
+    background-position: 55% 50%;
+    background-size: 14px;
   }
 `;
 
@@ -288,62 +310,81 @@ const Description = styled.p`
   font-size: 14px;
 `;
 
-const EntryList = styled.ul`
-  list-style: none;
-  white-space: nowrap;
-  padding: 0;
-  margin: 0;
-
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+const Placeholder = styled.span`
+  color: ${color.greyish};
 `;
-const itemPadding = '.5rem .8rem';
-const itemShadow = 'rgb(232, 232, 232) 0px -1px 0px 0px inset';
+
+const EntryList = styled.div`
+  padding: 0 15px;
+  margin: 0;
+`;
+
+const EntryDayGroup = styled.div`
+  margin-top: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 3px 0px;
+`;
+
 const EntryItem = styled.li`
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
+  align-items: stretch;
+  padding: 10px 15px;
+  ${({ indent }: { indent?: boolean }) => indent ? 'padding-left: 53px;' : ''}
 
-  padding: ${itemPadding};
-  ${({ indent }: { indent?: boolean }) => indent ? 'padding-left: 3rem;' : ''}
-  height: 66px;
-
-  color: ${color.grey};
   font-size: 14px;
-  box-shadow: ${itemShadow};
-  background-color: ${color.white};
+  border-bottom: 1px solid ${color.listItemHover};
   cursor: pointer;
 
   &:hover {
     background-color: ${color.listItemHover};
   }
 
-  &:last-child {
-    box-shadow: none;
+  .entry-icons {
+    opacity: 0.2;
   }
 
-  & ~ EntryHeading {
-    margin-top: 1rem;
+  &:hover .entry-icons {
+    opacity: 1;
   }
 `;
 
 const EntryHeading = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 
-  padding: ${itemPadding};
+  padding: 15px;
   height: 25px;
   color: ${color.black};
   font-weight: ${text.bold};
-  box-shadow: ${itemShadow};
 `;
 
-const EntryItemRow = styled.div`
+const EntryItemText = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 auto;
+  padding-right: 10px;
+  overflow: hidden;
 
-  flex: 1;
+  > * {
+    display: flex;
+    align-items: center;
+    height: 25px;
+  }
+`;
+
+const EntryItemActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  > * {
+    height: 22px;
+  }
 `;
 
 const EntryIcons = styled.div`

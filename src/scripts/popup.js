@@ -3,7 +3,7 @@
 import browser from 'webextension-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { addSeconds, differenceInSeconds, isSameDay } from 'date-fns';
+import { addSeconds, differenceInSeconds } from 'date-fns';
 
 import { secToHhmmImproved } from './@toggl/time-format-utils';
 import { formatDuration } from './@toggl/time-format-utils/format-duration';
@@ -13,12 +13,11 @@ import Pomodoro from './components/Pomodoro';
 import Timer from './components/Timer';
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 import { parseDuration } from './lib/timerUtils';
+import { groupTimeEntriesByDay } from './lib/groupUtils';
 import renderLogin from './initializers/login';
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
-
-const ENTRIES_LIST_LIMIT = 15;
 
 if (FF) {
   document.querySelector('body').classList.add('ff');
@@ -179,41 +178,8 @@ const Popup = {
       return;
     }
 
-    const hasExistingGroup = (entry) => ([te]) => {
-      return isSameDay(te.start, entry.start) &&
-        te.description === entry.description &&
-        te.pid === entry.pid &&
-        (te.tags || []).join(',') === (entry.tags || []).join(',') &&
-        te.billable === entry.billable;
-    };
-
     // Transform entries into an ordered list of grouped time entries
-    const { listEntries, projects } = [...entries].reverse().reduce((sum, entry) => {
-      // Exclude running TE.
-      if (entry.duration < 0) {
-        return sum;
-      }
-
-      const existingGroupIndex = sum.listEntries.findIndex(hasExistingGroup(entry));
-      if (existingGroupIndex === -1) {
-        // This TE group has not been seen yet.
-        if (sum.listEntries.length >= ENTRIES_LIST_LIMIT) return sum;
-        sum.listEntries.push([entry]);
-      } else {
-        // This TE group already exists.
-        sum.listEntries[existingGroupIndex].push(entry);
-        sum.listEntries[existingGroupIndex].sort((a, b) => {
-          // Most recent entries first.
-          if (a.start > b.start) return -1;
-          if (b.start > a.start) return 1;
-          return 0;
-        });
-      }
-
-      const project = TogglButton.findProjectByPid(entry.pid);
-      if (project) sum.projects[project.id] = project;
-      return sum;
-    }, { listEntries: [], projects: {} });
+    const { listEntries, projects } = groupTimeEntriesByDay(entries);
 
     // Render react tree
     ReactDOM.render(<TimeEntriesList timeEntries={listEntries} projects={projects} />, document.getElementById('root-time-entries-list'));

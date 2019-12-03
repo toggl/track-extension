@@ -80,22 +80,21 @@ export default function TimeEntriesList (props: TimeEntriesListProps) {
   return (
     <Container>
       <EntryList>
-        {Object.keys(dayGroups).map((date, groupIndex) => {
-          const groupEntries = dayGroups[date];
-          return [
-            <EntryDayGroup>
-              <EntryHeading key={`tegroup-${groupIndex}`}>
+        {Object.entries(dayGroups).map(([date, groupEntries], idx) => {
+          return (
+            <EntryDayGroup key={idx}>
+              <EntryHeading key={`tegroup-${idx}`}>
                 <span>
                 {format(date, 'ddd, D MMM')}</span>
                 <span>
                 {secondsToHhmmss(sumDuration(groupEntries))}</span>
               </EntryHeading>
-              {...groupEntries.map((timeEntries, i) => {
+              {groupEntries.map((timeEntries, i) => {
                 const project = timeEntries[0].pid && projects[timeEntries[0].pid] || null;
-                return <TimeEntriesListItem key={`te-${groupIndex}-${i}`} timeEntries={timeEntries} project={project} />;
-                })}
+                return <TimeEntriesListItem key={`te-${idx}-${i}`} timeEntries={timeEntries} project={project} />;
+              })}
             </EntryDayGroup>
-          ]
+          );
         })}
       </EntryList>
       <TimeEntriesFooter/>

@@ -1,3 +1,11 @@
+## [1.49.1](https://github.com/toggl/toggl-button/compare/1.49.0...1.49.1) (2019-12-03)
+
+
+### Bug Fixes
+
+* **popup:** Stop time cleared when opening running entry ([4cbb138](https://github.com/toggl/toggl-button/commit/4cbb138))
+* **popup:** Update running duration correctly ([c156bb3](https://github.com/toggl/toggl-button/commit/c156bb3))
+
 # [1.49.0](https://github.com/toggl/toggl-button/compare/1.48.2...1.49.0) (2019-11-27)
 
 

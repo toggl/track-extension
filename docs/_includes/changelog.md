@@ -1,3 +1,11 @@
+## [1.49.2](https://github.com/toggl/toggl-button/compare/1.49.1...1.49.2) (2019-12-03)
+
+
+### Bug Fixes
+
+* **autocomplete:** Fix autocomplete height to be calculated based on window's innerHeight ([e2d0697](https://github.com/toggl/toggl-button/commit/e2d0697)), closes [#1606](https://github.com/toggl/toggl-button/issues/1606)
+* **worksection:** Fix worksection integration after layout change ([cfafa18](https://github.com/toggl/toggl-button/commit/cfafa18)), closes [#1496](https://github.com/toggl/toggl-button/issues/1496)
+
 ## [1.49.1](https://github.com/toggl/toggl-button/compare/1.49.0...1.49.1) (2019-12-03)
 
 

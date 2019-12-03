@@ -23,13 +23,11 @@ const SummaryRow = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  height: 30px;
-  padding: 0 .8rem;
+  padding: 15px 30px;
 
   color: ${color.black};
   font-weight: ${text.bold};
   font-size: 12px;
-  margin-bottom: .25rem;
 `;
 
 export default Summary;

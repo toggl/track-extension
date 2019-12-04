@@ -378,7 +378,7 @@ const EntryItemText = styled.div`
   > * {
     display: flex;
     align-items: center;
-    height: 25px;
+    height: 22px;
   }
 `;
 
@@ -389,6 +389,8 @@ const EntryItemActions = styled.div`
 
   > * {
     height: 22px;
+    display: flex;
+    align-items: center;
   }
 `;
 

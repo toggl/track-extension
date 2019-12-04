@@ -1328,10 +1328,16 @@ li .toggl-button.heflo {
 }
 
 /********* NOTION *********/
-#notion-app .toggl-button.notion {
-  cursor: pointer;
-  margin-right: 13px;
-  margin-top: 6px;
+.toggl-button.notion {
+  color: rgb(55, 53, 47);
+  cursor: pointer !important;
+  margin-right: 8px;
+  margin-top: 4px;
+  text-decoration: none;
+}
+
+body.notion-body.dark .toggl-button.notion {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /********* TURTLE *********/

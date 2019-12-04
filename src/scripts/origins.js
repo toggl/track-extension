@@ -316,7 +316,7 @@ export default {
   },
   'notion.so': {
     url: '*://*.notion.so/*',
-    name: 'Notion by Matt',
+    name: 'Notion',
     file: 'notion.js'
   },
   'nozbe.com': {

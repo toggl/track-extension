@@ -65,17 +65,22 @@ select, input, input[type="number"], input[type="text"] {
   outline: none;
 }
 
-select:hover, input:hover {
-  border-color: var(--border-hover-color);
+select:-moz-focusring {
+    color: transparent !important;
+    text-shadow: 0 0 0 #000;
 }
 
-select {
+select:hover, select:focus, input:hover, input:focus {
+  border-color: var(--border-hover-color) !important;
+}
+
+select, select:hover {
   cursor: pointer;
   width: 300px;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA3IDQiPjxwYXRoIGZpbGw9IiM3QjdCN0IiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTMuNSAyLjc5M0w2LjE0Ni4xNDZhLjUuNSAwIDEgMSAuNzA4LjcwOGwtMyAzYS41LjUgMCAwIDEtLjcwOCAwbC0zLTNBLjUuNSAwIDAgMSAuODU0LjE0NkwzLjUgMi43OTN6Ii8+PC9zdmc+") 96% no-repeat var(--header-bg-color);
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA3IDQiPjxwYXRoIGZpbGw9IiM3QjdCN0IiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTMuNSAyLjc5M0w2LjE0Ni4xNDZhLjUuNSAwIDEgMSAuNzA4LjcwOGwtMyAzYS41LjUgMCAwIDEtLjcwOCAwbC0zLTNBLjUuNSAwIDAgMSAuODU0LjE0NkwzLjUgMi43OTN6Ii8+PC9zdmc+") 96% no-repeat var(--header-bg-color) !important;
   color: var(--text-color);
 }
 

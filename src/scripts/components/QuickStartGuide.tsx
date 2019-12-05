@@ -32,12 +32,12 @@ export default function QuickStartGuide () {
             <div>
               <h5>Easy & fast</h5>
               <h3>Create time entries</h3>
-              <p>Just click the "Play" icon to start recording your first time entry!</p>
+              <p>Just click the "Play" icon to start tracking your first time entry!</p>
               <p>When you're done with your task, click on the "Stop" icon to save your entry.</p>
-              <p>The Toggl Button popup also shows a list of all your recent time entries*.</p>
+              <p>The Toggl Button popup shows a list of your recent time entries*. You can edit them from here.</p>
               <p>You can also enable useful time tracking features like idle detection and reminders from the Settings page.</p>
               <Link href="settings.html"><Button>Settings</Button></Link>
-              <Link href="https://toggl.com/app" target="_blank"><p className="small">*To see older time entries, or run more complex reports, check out our web app!</p></Link>
+              <Link href="https://toggl.com/app" target="_blank"><p className="small">*To see older time entries or run more complex reports, check out our web app on toggl.com!</p></Link>
             </div>
           </div>
           <div>
@@ -49,11 +49,11 @@ export default function QuickStartGuide () {
             <div>
               <h5>Supercharge your tools</h5>
               <h3>Use integrations</h3>
-              <p>Add a Toggl Button to 130+ services for super fast time tracking!</p>
-              <p>Once enabled, just click on the Toggl Button icon to start a time entry. Toggl Button will automatically fill in the description for you.</p>
-              <p>If Toggl Button can detect a project, <em>and</em> there's project with the same name in any of your Toggl workspaces, it'll be selected too!</p>
+              <p>Add Toggl Button to 130+ tools for super fast time tracking!</p>
+              <p>Once enabled, Toggl Button will show up inside the tool - just click on the Toggl Button icon to start a time entry. The description will automatically be filled in for you.</p>
+              <p>If Toggl Button can detect a project, <em>and</em> there's a project with the same name in any of your Toggl workspaces, it'll be selected too!</p>
               <p>You can stop entries by clicking the same icon again, or move straight onto another task by clicking the new task's icon.</p>
-              <p>Check out the Integrations page now to see if your tool is supported!</p>
+              <p>Check out the Integrations page now to see if your favourite tools are supported!</p>
               <Link href="settings.html?tab=integrations"><Button>Integrations</Button></Link>
             </div>
           </div>

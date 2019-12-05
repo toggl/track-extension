@@ -146,19 +146,19 @@
           <div class="field">
             <label for="default-project">
               <span class="setting">Default project</span>
-              <span class="description">Use this project if no other matching ones are found.</span>
+              <span class="description">This project will be added to new time entries if no other matching projects are found.</span>
             </label>
             <div id="default-project-container"></div>
           </div>
           <div class="field">
             <label for="remember-project-per">
               <span class="setting">Remember last chosen project</span>
-              <span class="description">Remembers the last project you used on each integration or URL. Overrides the default project setting.</span>
+              <span class="description">Remembers the last project you used. This overrides the "Default project" setting.</span>
             </label>
             <select id="remember-project-per">
-              <option value="false">Don't re-use last project</option>
-              <option value="service">Service</option>
-              <option value="url">URL</option>
+              <option value="false">Don't remember last project</option>
+              <option value="service">Remember for each integration</option>
+              <option value="url">Remember for each URL / webpage</option>
             </select>
           </div>
         </section>
@@ -183,7 +183,7 @@
           <div class="checkbox field stop-at-day-end">
             <input type="checkbox" id="stop-at-day-end">
             <label for="stop-at-day-end">
-              <span class="setting">Stop timer automatically at a specified time</span>
+              <span class="setting">Stop timer automatically at a specified time of day</span>
               <span class="description">Stop the timer automatically when it reaches your specified time.</span>
             </label>
             <div class="subsettings-details">
@@ -203,7 +203,7 @@
               <span class="description">Receive a notification if you're not tracking time during specified hours.</span>
             </label>
             <div class="subsettings-details">
-              On weekdays from <input type="time" id="nag-nanny-from"> to <input type="time" id="nag-nanny-to"> after <input type="number" id="nag-nanny-interval" min="1" class="xs"> minutes since the last time entry stopped.
+              On weekdays from <input type="time" id="nag-nanny-from"> to <input type="time" id="nag-nanny-to"> remind me after <input type="number" id="nag-nanny-interval" min="1" class="xs"> minutes since the last time entry stopped.
             </div>
           </div>
           <div class="checkbox field">
@@ -317,7 +317,7 @@
           <p>Enable the tools you want to use with Toggl Button. You can enable everything by clicking the "Enable all" button.</p>
           <div class="permissions-toolbar" data-id="regular">
             <a href="javascript:void(0)" id="filter-clear">&times;</a>
-            <input type="text" id="permission-filter" placeholder="Filter integrations"/>
+            <input type="text" id="permission-filter" placeholder="Search" />
             <div class="button-container">
               <button class="enable-all button">Enable all</button>
               <button class="disable-all button">Disable all</button>

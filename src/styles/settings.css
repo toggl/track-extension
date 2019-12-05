@@ -487,14 +487,14 @@ section .field--showDetails .subsettings-details {
 }
 
 #permission-filter {
-  width: 376px;
+  box-sizing: border-box;
+  width: 400px;
 }
 
 #filter-clear {
   opacity: 0;
-  position: absolute;
   margin-top: 16px;
-  left: 425px;
+  margin-left: -25px;
   color: var(--text-color);
   text-decoration: none;
   font-weight: 700;

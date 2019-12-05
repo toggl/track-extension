@@ -145,7 +145,8 @@ button, .button {
   outline: none;
 }
 
-button:hover, .button:hover {
+button:hover, button:enabled:hover, .button:hover, .button:enabled:hover {
+  background: var(--header-bg-color);
   border-color: var(--border-hover-color);
 }
 
@@ -156,8 +157,9 @@ button.danger {
   margin-top: 12px;
 }
 
-button.danger:hover {
+button.danger:hover, button.danger:enabled:hover {
   color: var(--danger-hover-color);
+  background: var(--header-bg-color);
 }
 
 input[type="time"] {

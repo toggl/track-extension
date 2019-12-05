@@ -796,13 +796,6 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       Settings.saveSetting(rememberPer, 'change-remember-project-per');
     });
 
-    document.querySelector('.nav-links').addEventListener('click', e => {
-      const tabLink = e.target.closest('.nav-link');
-      if (!tabLink) return;
-      const selectedTab = tabLink.dataset.tab;
-      changeActiveTab(selectedTab);
-    });
-
     Settings.$pomodoroVolume.addEventListener('input', function (e) {
       Settings.$pomodoroVolumeLabel.textContent = e.target.value + '%';
     });

@@ -23,16 +23,16 @@ export const Subheading = styled.h2`
 `;
 
 export const Button = styled.button`
+  display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   background-color: #e24f54;
   border: 0;
   border-radius: 24px;
   color: #fff;
   cursor: pointer;
-  display: inline-block;
   font-size: 14px;
   font-family: GTWalsheim,Arial,sans-serif;
   font-weight: 500;

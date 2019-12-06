@@ -52,9 +52,8 @@ export default function QuickStartGuide () {
               <h5>Supercharge your tools</h5>
               <h3>Use integrations</h3>
               <p>Add Toggl Button to 130+ tools for super fast time tracking!</p>
-              <p>Once enabled, Toggl Button will show up inside the tool - just click on the Toggl Button icon to start a time entry. The description will automatically be filled in for you.</p>
-              <p>If Toggl Button can detect a project, <em>and</em> there's a project with the same name in any of your Toggl workspaces, it'll be selected too!</p>
-              <p>You can stop entries by clicking the same icon again, or move straight onto another task by clicking the new task's icon.</p>
+              <p>Once enabled, Toggl Button will show up inside the tool - just click on the Toggl Button icon to start a time entry.</p>
+              <p>The description (and the project, if possible) will automatically be filled in for you.</p>
               <p>Check out the Integrations page now to see if your favourite tools are supported!</p>
               <Link href="settings.html?tab=integrations"><Button>Integrations <Arrow/></Button></Link>
             </div>

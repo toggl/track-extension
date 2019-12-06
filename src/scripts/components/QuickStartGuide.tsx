@@ -5,6 +5,8 @@ import browser from 'webextension-polyfill';
 
 import { Content, Row, Heading, Subheading, Button, Link } from '../@toggl/ui/components';
 
+const Arrow = () => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12l-18 12v-24z"/></svg>);
+
 const closePage = async () => {
   const tab = await browser.tabs.getCurrent();
   browser.tabs.remove(tab.id);
@@ -36,7 +38,7 @@ export default function QuickStartGuide () {
               <p>When you're done with your task, click on the "Stop" icon to save your entry.</p>
               <p>The Toggl Button popup shows a list of your recent time entries*. You can edit them from here.</p>
               <p>You can also enable useful time tracking features like idle detection and reminders from the Settings page.</p>
-              <Link href="settings.html"><Button>Settings</Button></Link>
+              <Link href="settings.html"><Button>Settings <Arrow/></Button></Link>
               <Link href="https://toggl.com/app" target="_blank"><p className="small">*To see older time entries or run more complex reports, check out our web app on toggl.com!</p></Link>
             </div>
           </div>
@@ -54,7 +56,7 @@ export default function QuickStartGuide () {
               <p>If Toggl Button can detect a project, <em>and</em> there's a project with the same name in any of your Toggl workspaces, it'll be selected too!</p>
               <p>You can stop entries by clicking the same icon again, or move straight onto another task by clicking the new task's icon.</p>
               <p>Check out the Integrations page now to see if your favourite tools are supported!</p>
-              <Link href="settings.html?tab=integrations"><Button>Integrations</Button></Link>
+              <Link href="settings.html?tab=integrations"><Button>Integrations <Arrow/></Button></Link>
             </div>
           </div>
           <div>
@@ -70,7 +72,7 @@ export default function QuickStartGuide () {
               <p>Pomodoro® is a technique to help you focus on a task, by working hard for short intervals then taking a break.</p>
               <p>Toggl Button's pomodoro mode lets you set your interval length, and reminds you to take a break when time's up. You can also enable a ticking sound to help keep you on track.</p>
               <p>Turn it on from the Pomodoro page.</p>
-              <Link href="settings.html?tab=pomodoro"><Button>Pomodoro</Button></Link>
+              <Link href="settings.html?tab=pomodoro"><Button>Pomodoro <Arrow/></Button></Link>
             </div>
           </div>
           <div>
@@ -161,6 +163,17 @@ const section = css`
 
     Button:hover {
       background: rgb(241,244,246);
+    }
+
+    Button svg {
+      width: 8px;
+      margin-left: 10px;
+      transition: all 0.2s ease-in;
+    }
+
+    Button:hover svg {
+      width: 10px;
+      margin-left: 8px;
     }
   }
 

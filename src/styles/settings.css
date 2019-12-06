@@ -404,8 +404,11 @@ section .field--showDetails .subsettings-details {
   display: inline;
 }
 
-.origin-list {
+#permissions-list {
   height: 290px;
+}
+
+.origin-list {
   width: 400px;
   padding: 0;
   list-style: none;
@@ -502,6 +505,10 @@ section .field--showDetails .subsettings-details {
 
 .filtered ~ #filter-clear {
   display: block;
+}
+
+.button-container {
+  padding-bottom: 20px;
 }
 
 #default-project-container {

@@ -670,23 +670,6 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$pomodoroTickerVolume = document.querySelector('#ticker-sound-volume');
     Settings.$pomodoroTickerVolumeLabel = document.querySelector('#ticker-volume-label');
 
-    // Show permissions page with notice
-    const dontShowPermissions = await db.get('dont-show-permissions');
-    if (
-      !dontShowPermissions
-    ) {
-      const showPermissionsInfo = await db.get('show-permissions-info');
-      document.querySelector('.guide-container').style.display = 'flex';
-      document.querySelector(
-        ".guide > div[data-id='" + (showPermissionsInfo || 0) + "']"
-      ).style.display =
-        'block';
-      document
-        .querySelector('.guide button')
-        .setAttribute('data-id', showPermissionsInfo || 0);
-      db.set('show-permissions-info', 0);
-    }
-
     // Change active tab if present in search param
     const activeTabParam = getUrlParam(document.location, 'tab');
     changeActiveTab(activeTabParam || DEFAULT_TAB);
@@ -928,20 +911,6 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       },
       false
     );
-
-    document
-      .querySelector('.guide button')
-      .addEventListener('click', function (e) {
-        const disableChecked = document.querySelector(
-          '#disable-permission-notice'
-        ).checked;
-        db.set('dont-show-permissions', disableChecked);
-        document.querySelector('.guide-container').style.display = 'none';
-        document.querySelector(
-          ".guide > div[data-id='" + e.target.getAttribute('data-id') + "']"
-        ).style.display =
-          'none';
-      });
 
     Settings.$resetAllSettings.addEventListener('click', function (e) {
       bugsnagClient.leaveBreadcrumb('Triggered reset all settings');

@@ -92,6 +92,14 @@ const Settings = {
 
       Settings.$loginInfo.textContent = TogglButton.$user && TogglButton.$user.email || '';
 
+      document.querySelector('.expand').addEventListener('click', e => {
+        const expand = e.target.closest('.expand');
+        const content = expand.querySelector('.content');
+        const hidden = getComputedStyle(content).display === 'none';
+        content.style.display = hidden ? 'inline-block' : 'none';
+        expand.querySelector('.title').style.display = hidden ? 'none' : 'block';
+      });
+
       document.querySelector('#nag-nanny-interval').value = nannyInterval / 60000;
       Settings.$pomodoroVolume.value = volume;
       Settings.$pomodoroVolumeLabel.textContent = volume + '%';

@@ -52,6 +52,10 @@ body {
   align-items: stretch;
 }
 
+a {
+  color: var(--text-color);
+}
+
 select, input, input[type="number"], input[type="text"] {
   height: var(--input-height);
   margin-top: 5px;

@@ -39,7 +39,7 @@ export default function QuickStartGuide () {
               <p>The Toggl Button popup shows a list of your recent time entries*. You can edit them from here.</p>
               <p>You can also enable useful time tracking features like idle detection and reminders from the Settings page.</p>
               <Link href="settings.html"><Button>Settings <Arrow/></Button></Link>
-              <Link href="https://toggl.com/app" target="_blank"><p className="small">*To see older time entries or run more complex reports, check out our web app on toggl.com!</p></Link>
+              <p className="small">*To see older time entries or run more complex reports, check out our web app at <Link href="https://toggl.com/app" target="_blank">toggl.com</Link>!</p>
             </div>
           </div>
           <div>

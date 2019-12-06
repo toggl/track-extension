@@ -145,13 +145,13 @@ function HeaderLinks ({ loggedIn }: Pick<LoginState, 'loggedIn'>) {
         </Link>
       </li>
       <li>
-        <Link href="settings.html?tab=pomodoro">
-          Pomodoro
+        <Link href="settings.html?tab=integrations">
+          Integrations
         </Link>
       </li>
       <li>
-        <Link href="settings.html?tab=integrations">
-          Integrations
+        <Link href="settings.html?tab=pomodoro">
+          Pomodoro
         </Link>
       </li>
       <li>

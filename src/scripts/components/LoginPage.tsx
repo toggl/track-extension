@@ -213,6 +213,11 @@ const page = css`
     line-height: 1.1;
   }
 
+  p.small a {
+    line-height: 1.1;
+    text-decoration: underline;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
   }

@@ -394,6 +394,24 @@ section .field--showDetails .subsettings-details {
   padding-top: var(--m-radius);
 }
 
+.expand {
+  margin-left: 30px;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.expand .title {
+  color: var(--selected-color);
+  font-size: 0.9em;
+  padding-bottom: 5px;
+}
+
+.expand .content {
+  display: none;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, var(--box-shadow-opacity)) 0px 1px 3px 0px;
+}
+
 /* Permissions tab */
 
 /*

@@ -1,3 +1,10 @@
+# [1.50.0](https://github.com/toggl/toggl-button/compare/1.49.2...1.50.0) (2019-12-09)
+
+
+### Features
+
+* Add ZenHub integration ([45526ff](https://github.com/toggl/toggl-button/commit/45526ff))
+
 ## [1.49.2](https://github.com/toggl/toggl-button/compare/1.49.1...1.49.2) (2019-12-03)
 
 

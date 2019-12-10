@@ -1,3 +1,10 @@
+## [1.51.1](https://github.com/toggl/toggl-button/compare/1.51.0...1.51.1) (2019-12-10)
+
+
+### Bug Fixes
+
+* **notion:** Fix Notion integration ([34c3a5c](https://github.com/toggl/toggl-button/commit/34c3a5c)), closes [#1454](https://github.com/toggl/toggl-button/issues/1454)
+
 # [1.51.0](https://github.com/toggl/toggl-button/compare/1.50.0...1.51.0) (2019-12-10)
 
 

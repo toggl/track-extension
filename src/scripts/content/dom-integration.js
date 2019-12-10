@@ -3,7 +3,6 @@
 togglbutton.render('.toggl-root:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  console.log(elem);
   const integrationClassName = elem.getAttribute('data-class-name');
   const description = elem.getAttribute('data-description');
   const projectName = elem.getAttribute('data-project-name');
@@ -12,7 +11,7 @@ togglbutton.render('.toggl-root:not(.toggl)', { observe: true }, function (
   const type = elem.getAttribute('data-type');
 
   const link = togglbutton.createTimerLink({
-    className: integrationClassName || 'generic-toggl',
+    className: integrationClassName || 'dom-integration',
     description: description,
     projectName: projectName,
     projectId: parseInt(projectId, 10),

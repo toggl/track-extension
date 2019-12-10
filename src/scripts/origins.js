@@ -128,6 +128,10 @@ export default {
     name: 'DokuWiki',
     file: 'dokuwiki.js'
   },
+  'dom-integration': {
+    url: '*://*/*',
+    name: 'DOM Integration'
+  },
   'draftin.com': {
     url: '*://*.draftin.com/*',
     name: 'Draftin'
@@ -183,10 +187,6 @@ export default {
   'freshdesk.com': {
     url: '*://*.freshdesk.com/*',
     name: 'Freshdesk'
-  },
-  'generic-toggl': {
-    url: '*://*/*',
-    name: 'Generic Toggl'
   },
   'getflow.com': {
     url: '*://*.getflow.com/*',

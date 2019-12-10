@@ -1,3 +1,10 @@
+# [1.51.0](https://github.com/toggl/toggl-button/compare/1.50.0...1.51.0) (2019-12-10)
+
+
+### Features
+
+* Add option to integrate with private projects with generic integration ([f25be55](https://github.com/toggl/toggl-button/commit/f25be55)), closes [#1524](https://github.com/toggl/toggl-button/issues/1524)
+
 # [1.50.0](https://github.com/toggl/toggl-button/compare/1.49.2...1.50.0) (2019-12-09)
 
 

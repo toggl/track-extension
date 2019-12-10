@@ -129,7 +129,7 @@ export default {
     file: 'dokuwiki.js'
   },
   'dom-integration': {
-    url: '*://*/*',
+    url: '*://toggl-button-dom-demo.now.sh/*',
     name: 'DOM Integration'
   },
   'draftin.com': {

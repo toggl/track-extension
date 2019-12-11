@@ -1,3 +1,37 @@
+# [1.52.0](https://github.com/toggl/toggl-button/compare/1.51.1...1.52.0) (2019-12-11)
+
+
+### Bug Fixes
+
+* **onboarding:** Update guide text ([a8c9285](https://github.com/toggl/toggl-button/commit/a8c9285))
+* **popup:** Fix time entry vertical alignment ([835a2d1](https://github.com/toggl/toggl-button/commit/835a2d1))
+* **quickstart:** Add arrows to button links ([5f8aaa3](https://github.com/toggl/toggl-button/commit/5f8aaa3))
+* **quickstart:** Make webapp link more obvious ([556dff9](https://github.com/toggl/toggl-button/commit/556dff9))
+* **quickstart:** Remove default link styling ([27d161b](https://github.com/toggl/toggl-button/commit/27d161b))
+* **quickstart:** Simplify integrations text ([e466bf1](https://github.com/toggl/toggl-button/commit/e466bf1))
+* **settings:** Add focus mode preview image ([49fd09f](https://github.com/toggl/toggl-button/commit/49fd09f))
+* **settings:** Add link to Integrations from General settings ([78bd269](https://github.com/toggl/toggl-button/commit/78bd269))
+* **settings:** Add nofollow and noopener to external link ([23f947f](https://github.com/toggl/toggl-button/commit/23f947f))
+* **settings:** Add Pomodoro blurb with link for more info ([aaed042](https://github.com/toggl/toggl-button/commit/aaed042))
+* **settings:** Fix button hover styles ([8c98630](https://github.com/toggl/toggl-button/commit/8c98630))
+* **settings:** Fix integration filter clear button ([fcd96d0](https://github.com/toggl/toggl-button/commit/fcd96d0))
+* **settings:** Fix select box style ([dbbc2ea](https://github.com/toggl/toggl-button/commit/dbbc2ea))
+* **settings:** Make filter-clear clickable area larger ([8f206db](https://github.com/toggl/toggl-button/commit/8f206db))
+* **settings:** Minor fixes for integrations page ([af70539](https://github.com/toggl/toggl-button/commit/af70539))
+* **settings:** Move integrations to before Pomodoro ([cde5511](https://github.com/toggl/toggl-button/commit/cde5511))
+* **settings:** Remove guide popup ([973f9e6](https://github.com/toggl/toggl-button/commit/973f9e6))
+* **settings:** Style updates ([5d6d918](https://github.com/toggl/toggl-button/commit/5d6d918))
+* **settings:** Update styles to match webapp design better ([de0705e](https://github.com/toggl/toggl-button/commit/de0705e))
+* **settings:** Update text on various settings ([0fda848](https://github.com/toggl/toggl-button/commit/0fda848))
+* **settings:** Use normal links for settings pages ([499bed2](https://github.com/toggl/toggl-button/commit/499bed2))
+
+
+### Features
+
+* **popup:** Delete time entries ([f9b4941](https://github.com/toggl/toggl-button/commit/f9b4941))
+* **quickstart:** Add quickstart guide ([90fe195](https://github.com/toggl/toggl-button/commit/90fe195))
+* **settings:** Update settings page to match the Toggl webapp ([10954d9](https://github.com/toggl/toggl-button/commit/10954d9))
+
 ## [1.51.1](https://github.com/toggl/toggl-button/compare/1.51.0...1.51.1) (2019-12-10)
 
 

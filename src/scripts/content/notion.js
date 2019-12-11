@@ -1,24 +1,23 @@
 'use strict';
 
-// Selectors here are madness, it works for as of Dec 4th 2019
-// Button renders in popup/dialog view
+// Button renders left of page title
 togglbutton.render(
-  '.notion-peek-renderer:not(.toggl)',
+  '.notion-page-controls + div:not(.toggl)',
   { observe: true },
   function (elem) {
+    elem.style.position = 'relative';
+
     function getDescription () {
-      const descriptionElem = elem.querySelector('.notion-scroller .notion-selectable div[contenteditable="true"]');
+      const descriptionElem = elem;
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }
 
     const link = togglbutton.createTimerLink({
       className: 'notion',
+      buttonType: 'minimal',
       description: getDescription
     });
 
-    const root = elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)');
-    if (root) {
-      root.prepend(link);
-    }
+    elem.prepend(link);
   }
 );

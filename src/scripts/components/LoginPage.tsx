@@ -203,6 +203,11 @@ const page = css`
     flex-direction: column;
   }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   p {
     line-height: 1.71;
     font-weight: 500;

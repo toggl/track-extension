@@ -14,6 +14,7 @@ html {
   --text-color: rgb(51,51,51);
   --light-text: rgb(123,123,123);
   --header-bg-color: rgb(255,255,255);
+  --divider-color: rgb(243,243,243);
   --border-color: rgb(221,221,221);
   --border-hover-color: rgb(206,206,206);
   --selected-color: rgb(75,200,0);
@@ -28,6 +29,7 @@ html.dark {
   --text-color: rgb(202,202,202);
   --light-text: rgb(172,172,172);
   --header-bg-color: rgb(38,38,38);
+  --divider-color: rgb(49,49,49);
   --border-color: rgb(58,58,58);
   --border-hover-color: rgb(96,96,96);
   --danger-color: rgb(255,88,88);
@@ -44,7 +46,7 @@ body {
   color: var(--text-color);
   font-family: Roboto, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
-}
+} 
 
 body {
   height: 100vh;
@@ -66,12 +68,13 @@ select, input, input[type="number"], input[type="text"] {
   border: 1px solid var(--border-color);
   border-radius: var(--m-radius);
   padding: 0 12px;
+  text-shadow: none;
   outline: none;
 }
 
 select:-moz-focusring {
     color: transparent !important;
-    text-shadow: 0 0 0 #000;
+    text-shadow: 0 0 0 var(--text-color);
 }
 
 select:hover, select:focus, input:hover, input:focus {
@@ -85,7 +88,7 @@ select, select:hover {
   -webkit-appearance: none;
   appearance: none;
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA3IDQiPjxwYXRoIGZpbGw9IiM3QjdCN0IiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTMuNSAyLjc5M0w2LjE0Ni4xNDZhLjUuNSAwIDEgMSAuNzA4LjcwOGwtMyAzYS41LjUgMCAwIDEtLjcwOCAwbC0zLTNBLjUuNSAwIDAgMSAuODU0LjE0NkwzLjUgMi43OTN6Ii8+PC9zdmc+") 96% no-repeat var(--header-bg-color) !important;
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 input[type="checkbox"] {
@@ -146,6 +149,7 @@ button, .button {
   border-radius: var(--m-radius);
   border: solid 1px var(--border-color);
   padding: 0 36px;
+  text-shadow: none;
   outline: none;
 }
 
@@ -232,11 +236,11 @@ nav .section {
 }
 
 nav .section h3, nav .section .setting {
+  color: rgb(123, 123, 123);
   font-size: 11px;
   font-weight: 500;
   line-height: 11px;
   text-transform: uppercase;
-  color: rgb(123,123,123);
   margin: 0;
   padding: 19px 0px 7px 8px;
 }
@@ -334,10 +338,12 @@ section {
   padding: 0 20px;
   border-radius: var(--m-radius);
   font-size: var(--font-size);
+  background: var(--header-bg-color);
   box-shadow: rgba(0, 0, 0, var(--box-shadow-opacity)) 0px 1px 3px 0px;
 }
 
 section h3, section .setting {
+  color: var(--text-color);
   font-size: var(--font-size);
   font-weight: 500;
   margin: 0;
@@ -355,7 +361,7 @@ section button, section .button {
 
 section .headline {
   padding: 18px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--divider-color);
   margin-bottom: 18px;
 }
 

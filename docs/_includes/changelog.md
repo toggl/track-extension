@@ -1,3 +1,10 @@
+## [1.52.1](https://github.com/toggl/toggl-button/compare/1.52.0...1.52.1) (2019-12-13)
+
+
+### Bug Fixes
+
+* **workflowy:** Workflowy styles. ([bab428c](https://github.com/toggl/toggl-button/commit/bab428c))
+
 # [1.52.0](https://github.com/toggl/toggl-button/compare/1.51.1...1.52.0) (2019-12-11)
 
 

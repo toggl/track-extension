@@ -1170,6 +1170,18 @@ window.TogglButton = {
     browser.browserAction.setIcon({ path: imagePath });
   },
 
+  setupToken: function (response) {
+    try {
+      const parsedResponse = JSON.parse(response);
+      const { api_token: apiToken } = parsedResponse.data;
+      localStorage.setItem('userToken', apiToken);
+    } catch (err) {
+      bugsnagClient.notify(new Error('Login token-parse failed'), {
+        metaData: { response }
+      });
+    }
+  },
+
   loginUser: function (request) {
     let error;
     return new Promise((resolve, reject) => {
@@ -1177,6 +1189,7 @@ window.TogglButton = {
         method: 'POST',
         onLoad: function (xhr) {
           if (xhr.status === 200) {
+            TogglButton.setupToken(xhr.responseText);
             TogglButton.queue.push(TogglButton.checkPermissions);
             TogglButton.fetchUser()
               .then((response) => {

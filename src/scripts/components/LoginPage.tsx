@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import browser from 'webextension-polyfill';
 
 import bugsnagClient from '../lib/bugsnag';
+import { sendMessage } from '../lib/messaging';
 import {
   Content,
   Row,
@@ -16,6 +17,7 @@ import {
 import Logo from '../icons/Logo';
 import Spinner from './Spinner';
 import QuickStartGuide from './QuickStartGuide';
+import LoginForm from './LoginForm';
 
 export interface LoginProps {
   isLoggedIn: boolean;
@@ -56,6 +58,13 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
     if (source === 'quick-start' || loggedIn) document.title = 'Welcome to Toggl Button';
   }, [source, loading, error, loggedIn]);
 
+  const onLoginError = React.useCallback(
+    (error: string) => {
+      setState({ loading: false, loggedIn: false, error });
+    },
+    [setState]
+  );
+
   let content = (
     <Content>
       <Row>
@@ -91,22 +100,25 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
 
     if (error) {
       content = (
-        <Content>
+        <Content style={{ height: '100%' }}>
           <Row>
             <Heading>Uh-oh.</Heading>
-            <Subheading>Something went wrong...</Subheading>
+            <Subheading>
+              {'Something went wrong...'}
+              <br />
+              {error}
+            </Subheading>
           </Row>
-          <Subheading>
-            {error}
-          </Subheading>
           <Row>
             <a href="login.html?source=install" style={{ marginBottom: 21 }}>
               <Button>Try again</Button>
             </a>
-            <Subheading>or</Subheading>
-            <a href="mailto:support@toggl.com" style={{ color: 'white' }}>
-              <Subheading style={{ margin: 0 }}>Contact support</Subheading>
-            </a>
+            <Subheading>or login directly</Subheading>
+            <LoginForm
+              onSubmit={performLogin}
+              onSuccess={onLoginSuccess}
+              onError={onLoginError}
+            />
           </Row>
         </Content>
       );
@@ -193,6 +205,14 @@ function SignupButton ({ isPopup }: Pick<LoginProps, 'isPopup'>) {
 }
 
 const openPage = (url: string) => () => browser.tabs.create({ url });
+
+const performLogin = (username: string, password: string) => (
+  sendMessage({ type: 'login', username, password })
+);
+
+const onLoginSuccess = () => {
+  location.href = 'login.html?source=quick-start';
+};
 
 const page = css`
   html, body, #app {

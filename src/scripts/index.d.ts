@@ -193,3 +193,22 @@ type TogglButton = {
 type TogglDB = {
   get<T>(key: string): Promise<T | null>;
 }
+
+interface LoginRequest {
+  type: 'login';
+  username: string;
+  password: string;
+}
+
+type ButtonRequest = LoginRequest;
+
+interface SuccessResponse {
+  success: true;
+}
+
+interface FailureResponse {
+  success: false;
+  error: string;
+}
+
+type ButtonResponse = SuccessResponse | FailureResponse;

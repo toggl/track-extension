@@ -25,7 +25,7 @@ if (FF) {
 }
 
 document.querySelector('#version').textContent = process.env.VERSION;
-document.querySelector('#review-prompt a').href = getStoreLink();
+document.querySelector('#review-prompt a').href = getStoreLink(FF);
 document.querySelector('#review-prompt a').addEventListener('click', dismissReviewPrompt);
 document.querySelector('#close-review-prompt').addEventListener('click', dismissReviewPrompt);
 

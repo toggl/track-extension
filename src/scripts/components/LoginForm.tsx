@@ -27,7 +27,10 @@ export default function LoginForm ({ onSubmit, onSuccess, onError }: LoginFormPr
       const response = await onSubmit(email, password);
       setLoading(false);
 
-      if (!response) return;
+      if (!response) {
+        onError('Unknown Error');
+        return;
+      }
 
       if (response.success) {
         onSuccess();

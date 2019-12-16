@@ -1,3 +1,10 @@
+## [1.52.2](https://github.com/toggl/toggl-button/compare/1.52.1...1.52.2) (2019-12-16)
+
+
+### Bug Fixes
+
+* **popup:** Restore current day total, inc running timer, to summary ([66cd5e9](https://github.com/toggl/toggl-button/commit/66cd5e9))
+
 ## [1.52.1](https://github.com/toggl/toggl-button/compare/1.52.0...1.52.1) (2019-12-13)
 
 

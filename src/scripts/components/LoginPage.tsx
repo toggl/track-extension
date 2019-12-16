@@ -34,12 +34,21 @@ interface LoginState {
 async function login (setState: React.Dispatch<React.SetStateAction<LoginState>>) {
   setState({ loading: true, error: null, loggedIn: false });
 
-  const { error, success: loggedIn } = await browser.runtime.sendMessage({
+  const response = await sendMessage({
     type: 'sync',
     respond: true
   });
 
-  setState({ loading: false, error, loggedIn });
+  if (!response) {
+    setState({ loading: false, loggedIn: false, error: 'Unknown Error' });
+    return;
+  }
+
+  setState({
+    loading: false,
+    error: (response as FailureResponse).error,
+    loggedIn: response.success
+  });
 }
 
 export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) {

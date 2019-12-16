@@ -200,7 +200,12 @@ interface LoginRequest {
   password: string;
 }
 
-type ButtonRequest = LoginRequest;
+interface SyncRequest {
+  type: 'sync';
+  respond: true;
+}
+
+type ButtonRequest = LoginRequest | SyncRequest;
 
 interface SuccessResponse {
   success: true;

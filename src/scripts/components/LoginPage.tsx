@@ -122,7 +122,7 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
             <a href="login.html?source=install" style={{ marginBottom: 21 }}>
               <Button>Try again</Button>
             </a>
-            <Subheading>or login directly</Subheading>
+            <Subheading>or log in directly</Subheading>
             <LoginForm
               onSubmit={performLogin}
               onSuccess={onLoginSuccess}

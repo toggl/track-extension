@@ -66,6 +66,10 @@ export default {
     url: '*://app.breeze.pm/*',
     name: 'Breeze'
   },
+  'brokerengine.com.au': {
+    url: '*://app.brokerengine.com.au/*',
+    name: 'BrokerEngine'
+  },
   'www.bugherd.com': {
     url: '*://www.bugherd.com/*',
     name: 'BugHerd'

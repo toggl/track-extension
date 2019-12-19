@@ -1460,3 +1460,25 @@ body.notion-body.dark .toggl-button.notion {
   color: #5e60ba;
   text-decoration: none;
 }
+
+/********* BROKERENGINE *********/
+[data-toggl="taskRow"] .toggl-button.brokerengine {
+  background-color: #fff !important;
+  border-radius: 10px;
+  margin-left: 12px;
+  transition: opacity 100ms ease-out;
+}
+
+[data-toggl="taskRow"] .toggl-button.brokerengine:not(.active) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+[data-toggl="taskRow"]:hover .toggl-button.brokerengine {
+  opacity: 1;
+  visibility: visible;
+}
+
+[data-toggl="loanDrawer"] .toggl-button.brokerengine {
+  margin-left: 12px;
+}

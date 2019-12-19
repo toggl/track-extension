@@ -31,3 +31,21 @@ togglbutton.render('.conversation__card__content-expanded__controls .inbox__conv
 
     elem.appendChild(link);
   });
+
+togglbutton.render('.articles__editor__header-text:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const descriptionSelector = () => {
+      const description = elem.textContent;
+      return description ? description.trim() : '';
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'intercom',
+      description: descriptionSelector,
+      buttonType: 'minimal'
+    });
+    link.style.margin = '3px 15px';
+
+    elem.appendChild(link);
+  });

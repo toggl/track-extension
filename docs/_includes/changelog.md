@@ -1,3 +1,17 @@
+# [1.53.0](https://github.com/toggl/toggl-button/compare/1.52.2...1.53.0) (2019-12-19)
+
+
+### Bug Fixes
+
+* **login:** Handle no response state ([3109644](https://github.com/toggl/toggl-button/commit/3109644))
+* **login:** Persist API token on login ([f98e064](https://github.com/toggl/toggl-button/commit/f98e064))
+* **settings:** Review link for firefox ([3ec5d35](https://github.com/toggl/toggl-button/commit/3ec5d35))
+
+
+### Features
+
+* **login:** Add fallback login mechanism ([4302b1b](https://github.com/toggl/toggl-button/commit/4302b1b))
+
 ## [1.52.2](https://github.com/toggl/toggl-button/compare/1.52.1...1.52.2) (2019-12-16)
 
 

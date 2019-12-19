@@ -1,3 +1,11 @@
+# [1.54.0](https://github.com/toggl/toggl-button/compare/1.53.0...1.54.0) (2019-12-19)
+
+
+### Features
+
+* **intercom:** Add button to KB article edit page ([2c9d5a5](https://github.com/toggl/toggl-button/commit/2c9d5a5))
+* **intercom:** Add button to KB article edit page ([e750cfe](https://github.com/toggl/toggl-button/commit/e750cfe))
+
 # [1.53.0](https://github.com/toggl/toggl-button/compare/1.52.2...1.53.0) (2019-12-19)
 
 

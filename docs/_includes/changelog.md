@@ -1,3 +1,10 @@
+## [1.54.1](https://github.com/toggl/toggl-button/compare/1.54.0...1.54.1) (2019-12-20)
+
+
+### Bug Fixes
+
+* **setings:** Integration filter not working with upper-case text ([cc079b1](https://github.com/toggl/toggl-button/commit/cc079b1)), closes [#1628](https://github.com/toggl/toggl-button/issues/1628)
+
 # [1.54.0](https://github.com/toggl/toggl-button/compare/1.53.0...1.54.0) (2019-12-19)
 
 

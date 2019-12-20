@@ -696,9 +696,10 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         Settings.$permissionFilterClear.style.opacity = '0';
       }
 
+      val = val.toLowerCase();
       const permissionItems = document.querySelectorAll('#permissions-list li');
       permissionItems.forEach((item) => {
-        if (item.textContent.toLowerCase().indexOf(val) !== -1) {
+        if (item.textContent.toLowerCase().includes(val)) {
           item.classList.add('filter');
         } else if (item.classList) {
           item.classList.remove('filter');

@@ -1,3 +1,10 @@
+# [1.55.0](https://github.com/toggl/toggl-button/compare/1.54.1...1.55.0) (2019-12-24)
+
+
+### Features
+
+* Add BrokerEngine integration ([7af0ec1](https://github.com/toggl/toggl-button/commit/7af0ec1))
+
 ## [1.54.1](https://github.com/toggl/toggl-button/compare/1.54.0...1.54.1) (2019-12-20)
 
 

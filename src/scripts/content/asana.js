@@ -69,30 +69,22 @@ togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
   }
 );
 
-// Old and Beta UI - detail view
+// Dec 2019 detail view
 togglbutton.render(
-  '.SingleTaskPane-titleRow:not(.toggl)',
+  '.SingleTaskPaneSpreadsheet:not(.toggl)',
   { observe: true },
   function (elem) {
     if ($('.toggl-button', elem)) {
       return;
     }
-    const container = $('.SingleTaskPaneToolbar');
 
     const descriptionSelector = () => {
-      return $(
-        '.SingleTaskPane-titleRow .simpleTextarea',
-        elem.parentNode
-      ).textContent;
+      return $('.SingleTaskTitleInput-taskName textarea', elem).textContent.trim();
     };
 
     const projectSelector = () => {
-      const projectElement = $(
-        '.SingleTaskPane-projects .TaskProjectPill-projectName',
-        elem.parentNode
-      );
-
-      return projectElement ? projectElement.textContent : '';
+      const projectEl = $('.TaskProjectToken-potTokenizerPill', elem);
+      return projectEl ? projectEl.textContent.trim() : '';
     };
 
     const link = togglbutton.createTimerLink({
@@ -102,11 +94,9 @@ togglbutton.render(
       buttonType: 'minimal'
     });
 
-    link.style.marginRight = '5px';
+    link.style.margin = '0 5px';
 
-    if (container) {
-      const closeButton = container.lastElementChild;
-      container.insertBefore(link, closeButton);
-    }
+    const firstButton = elem.querySelector('.SingleTaskPaneToolbar-button');
+    firstButton.parentNode.insertBefore(link, firstButton);
   }
 );

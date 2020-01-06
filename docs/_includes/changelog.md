@@ -1,3 +1,10 @@
+## [1.55.1](https://github.com/toggl/toggl-button/compare/1.55.0...1.55.1) (2020-01-06)
+
+
+### Bug Fixes
+
+* **asana:** Fix Asana detail view ([c243368](https://github.com/toggl/toggl-button/commit/c243368)), closes [#1631](https://github.com/toggl/toggl-button/issues/1631) [#1633](https://github.com/toggl/toggl-button/issues/1633) [#1634](https://github.com/toggl/toggl-button/issues/1634)
+
 # [1.55.0](https://github.com/toggl/toggl-button/compare/1.54.1...1.55.0) (2019-12-24)
 
 

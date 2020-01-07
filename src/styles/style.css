@@ -1328,11 +1328,46 @@ li .toggl-button.heflo {
 }
 
 /********* NOTION *********/
+.toggl-button-notion-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  border-radius: 3px;
+  padding: 0 8px;
+  cursor: pointer !important;
+}
+
+.toggl-button-notion-wrapper:hover {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+body.notion-body.dark .toggl-button-notion-wrapper:hover {
+  background: rgb(71, 76, 80);
+}
+
+.toggl-button-notion-wrapper + *:not(*[role=button]) {
+  margin-left: 8px;
+}
+
+.toggl-button.notion {
+  color: rgb(55, 53, 47);
+  text-decoration: none;
+}
+
+body.notion-body.dark .toggl-button.notion {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .toggl-button.notion.min {
   cursor: pointer !important;
   position: absolute;
-  top: 17px;
+  top: 16px;
   left: -30px;
+}
+
+.notion-peek-renderer .toggl-button.min {
+  display: none !important;
 }
 
 /********* TURTLE *********/

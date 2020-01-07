@@ -295,40 +295,44 @@ window.togglbutton = {
       return;
     }
 
-    const pid = response.entry.pid;
-    const tid = response.entry.tid;
-    const editFormHeight = 300;
-    const editFormWidth = 360;
-    const div = document.createElement('div');
-    let editForm;
-    let togglButtonDescription;
+    if (response.type === 'Stop') return;
+
+    const frameWrapper = document.createElement('div');
+    const frame = document.createElement('iframe');
 
     const elemRect = togglbutton.element.getBoundingClientRect();
-    editForm = $('#toggl-button-edit-form');
-    const position = togglbutton.topPosition(
-      elemRect, editFormWidth, editFormHeight);
+    const editFormHeight = 300;
+    const editFormWidth = 360;
+    const position = togglbutton.topPosition(elemRect, editFormWidth, editFormHeight);
 
-    if (editForm !== null) {
-      togglButtonDescription = $('#toggl-button-description');
-      togglButtonDescription.value = response.entry.description || '';
+    const frameWrapperStyle = 'z-index: 200000; position: absolute; background: white; border-radius: 8px; overflow: hidden; ' +
+      `top: ${position.top}px; left: ${position.left}px; height: ${editFormHeight}px; width: ${editFormWidth}px;`;
+    frameWrapper.setAttribute('id', 'toggl-button-frame-wrapper');
+    frameWrapper.setAttribute('style', frameWrapperStyle);
+    frame.setAttribute('id', 'toggl-button-frame');
+    frame.setAttribute('style', 'position: absolute; height: 100%; width: 100%; border: none;');
+    frame.setAttribute('title', 'Toggl Button');
+    frame.srcdoc = response.html.replace('{service}', togglbutton.serviceName);
+    // reuse the popup page?
+    // frame.src = '../html/popup.html';
 
-      projectAutocomplete.setup(pid, tid);
-      tagAutocomplete.setup(response.entry.tags, response.entry.wid);
-      togglbutton.setupBillable(!!response.entry.billable, pid);
+    frameWrapper.appendChild(frame);
+    document.body.appendChild(frameWrapper);
 
-      editForm.style.left = position.left + 'px';
-      editForm.style.top = position.top + 'px';
-      editForm.style.display = 'block';
-      setCursorAtBeginning(togglButtonDescription);
-      return;
-    }
+    document.addEventListener('click', function (e) {
+      const frameWrapperEl = document.getElementById('toggl-button-frame-wrapper');
+      if (!frameWrapperEl.contains(e.target)) {
+        frameWrapperEl.parentNode.removeChild(frameWrapperEl);
+      }
+    }, { once: true });
 
-    div.innerHTML = response.html.replace('{service}', togglbutton.serviceName);
-    editForm = div.firstChild;
-    editForm.style.left = position.left + 'px';
-    editForm.style.top = position.top + 'px';
+    const pid = response.entry.pid;
+    const tid = response.entry.tid;
+    // this selector doesn't work
+    const editForm = document.getElementById('toggl-button-frame').contentWindow.document.getElementById('toggl-button-edit-form');
+    const togglButtonDescription = $('#toggl-button-description', editForm);
+
     editForm.classList.add('toggl-integration');
-    document.body.appendChild(editForm);
     togglbutton.$billable = $('.tb-billable', editForm);
 
     projectAutocomplete = new ProjectAutoComplete('project', 'li', togglbutton);
@@ -362,7 +366,6 @@ window.togglbutton = {
     };
 
     // Fill in data if edit form was not present
-    togglButtonDescription = $('#toggl-button-description', editForm);
     togglButtonDescription.value = response.entry.description || '';
     setCursorAtBeginning(togglButtonDescription);
     projectAutocomplete.setup(pid, tid);

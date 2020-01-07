@@ -295,8 +295,6 @@ window.togglbutton = {
       return;
     }
 
-    if (response.type === 'Stop') return;
-
     const frameWrapper = document.createElement('div');
     const frame = document.createElement('iframe');
 
@@ -304,6 +302,10 @@ window.togglbutton = {
     const editFormHeight = 300;
     const editFormWidth = 360;
     const position = togglbutton.topPosition(elemRect, editFormWidth, editFormHeight);
+    const content = response.html.replace('{service}', togglbutton.serviceName);
+    const blob = URL.createObjectURL(new Blob([content], { type: 'text/html' }));
+    const pid = response.entry.pid;
+    const tid = response.entry.tid;
 
     const frameWrapperStyle = 'z-index: 200000; position: absolute; background: white; border-radius: 8px; overflow: hidden; ' +
       `top: ${position.top}px; left: ${position.left}px; height: ${editFormHeight}px; width: ${editFormWidth}px;`;
@@ -312,7 +314,7 @@ window.togglbutton = {
     frame.setAttribute('id', 'toggl-button-frame');
     frame.setAttribute('style', 'position: absolute; height: 100%; width: 100%; border: none;');
     frame.setAttribute('title', 'Toggl Button');
-    frame.srcdoc = response.html.replace('{service}', togglbutton.serviceName);
+    frame.src = blob;
     // reuse the popup page?
     // frame.src = '../html/popup.html';
 
@@ -326,140 +328,140 @@ window.togglbutton = {
       }
     }, { once: true });
 
-    const pid = response.entry.pid;
-    const tid = response.entry.tid;
-    // this selector doesn't work
-    const editForm = document.getElementById('toggl-button-frame').contentWindow.document.getElementById('toggl-button-edit-form');
-    const togglButtonDescription = $('#toggl-button-description', editForm);
+    const frameElement = document.getElementById('toggl-button-frame');
+    frameElement.addEventListener('load', function () {
+      const editForm = frameElement.contentWindow.document.getElementById('toggl-button-edit-form');
+      const togglButtonDescription = $('#toggl-button-description', editForm);
 
-    editForm.classList.add('toggl-integration');
-    togglbutton.$billable = $('.tb-billable', editForm);
+      editForm.classList.add('toggl-integration');
+      togglbutton.$billable = $('.tb-billable', editForm);
 
-    projectAutocomplete = new ProjectAutoComplete('project', 'li', togglbutton);
-    tagAutocomplete = new TagAutoComplete('tag', 'li', togglbutton);
+      projectAutocomplete = new ProjectAutoComplete('project', 'li', togglbutton);
+      tagAutocomplete = new TagAutoComplete('tag', 'li', togglbutton);
 
-    const closeForm = function () {
-      projectAutocomplete.closeDropdown();
-      tagAutocomplete.closeDropdown();
-      editForm.style.display = 'none';
-    };
-
-    const submitForm = function (that) {
-      const selected = projectAutocomplete.getSelected();
-
-      const billable = !!document.querySelector(
-        '.tb-billable.tb-checked:not(.no-billable)'
-      );
-
-      const request = {
-        type: 'update',
-        description: $('#toggl-button-description').value,
-        pid: selected.pid,
-        projectName: selected.name,
-        tags: tagAutocomplete.getSelected(),
-        tid: selected.tid,
-        billable: billable,
-        service: togglbutton.serviceName
+      const closeForm = function () {
+        projectAutocomplete.closeDropdown();
+        tagAutocomplete.closeDropdown();
+        editForm.style.display = 'none';
       };
-      browser.runtime.sendMessage(request);
-      closeForm();
-    };
 
-    // Fill in data if edit form was not present
-    togglButtonDescription.value = response.entry.description || '';
-    setCursorAtBeginning(togglButtonDescription);
-    projectAutocomplete.setup(pid, tid);
-    tagAutocomplete.setSelected(response.entry.tags);
-    tagAutocomplete.setWorkspaceId(response.entry.wid);
+      const submitForm = function (that) {
+        const selected = projectAutocomplete.getSelected();
 
-    togglbutton.setupBillable(!!response.entry.billable, pid);
+        const billable = !!document.querySelector(
+          '.tb-billable.tb-checked:not(.no-billable)'
+        );
 
-    // Data fill end
-    $('#toggl-button-hide', editForm).addEventListener('click', function (e) {
-      closeForm();
-    });
+        const request = {
+          type: 'update',
+          description: $('#toggl-button-description').value,
+          pid: selected.pid,
+          projectName: selected.name,
+          tags: tagAutocomplete.getSelected(),
+          tid: selected.tid,
+          billable: billable,
+          service: togglbutton.serviceName
+        };
+        browser.runtime.sendMessage(request);
+        closeForm();
+      };
 
-    $('#toggl-button-update', editForm).addEventListener('click', function (e) {
-      submitForm(this);
-    });
+      // Fill in data if edit form was not present
+      togglButtonDescription.value = response.entry.description || '';
+      setCursorAtBeginning(togglButtonDescription);
+      projectAutocomplete.setup(pid, tid);
+      tagAutocomplete.setSelected(response.entry.tags);
+      tagAutocomplete.setWorkspaceId(response.entry.wid);
 
-    $('#toggl-button-update').addEventListener('keydown', function (e) {
-      if (e.code === 'Enter' || e.code === 'Space') {
+      togglbutton.setupBillable(!!response.entry.billable, pid);
+
+      // Data fill end
+      $('#toggl-button-hide', editForm).addEventListener('click', function (e) {
+        closeForm();
+      });
+
+      $('#toggl-button-update', editForm).addEventListener('click', function (e) {
         submitForm(this);
-      }
-    });
+      });
 
-    // Cancel button
-    $('#tb-edit-form-cancel', editForm).addEventListener('click', function (e) {
-      e.preventDefault();
-      closeForm();
-    });
-    $('#tb-edit-form-cancel').addEventListener('keydown', function (e) {
-      if (e.code === 'Enter' || e.code === 'Space') {
+      $('#toggl-button-update').addEventListener('keydown', function (e) {
+        if (e.code === 'Enter' || e.code === 'Space') {
+          submitForm(this);
+        }
+      });
+
+      // Cancel button
+      $('#tb-edit-form-cancel', editForm).addEventListener('click', function (e) {
         e.preventDefault();
         closeForm();
-      }
-    });
+      });
+      $('#tb-edit-form-cancel').addEventListener('keydown', function (e) {
+        if (e.code === 'Enter' || e.code === 'Space') {
+          e.preventDefault();
+          closeForm();
+        }
+      });
 
-    $('form', editForm).addEventListener('submit', function (e) {
-      submitForm(this);
-      e.preventDefault();
-    });
-
-    $('.toggl-button', editForm).addEventListener('click', function (e) {
-      e.preventDefault();
-      const link = togglbutton.element;
-      link.classList.remove('active');
-      link.style.color = '';
-      if (!link.classList.contains('min')) {
-        link.textContent = 'Start timer';
-      }
-      browser.runtime
-        .sendMessage({ type: 'stop' })
-        .then(togglbutton.addEditForm);
-
-      closeForm();
-      return false;
-    });
-
-    /* prevent certain host webapps from processing key commands */
-    $('form', editForm).addEventListener('keydown', function (e) {
-      e.stopPropagation();
-    });
-
-    togglbutton.$billable.addEventListener('click', function () {
-      this.classList.toggle('tb-checked');
-    });
-
-    togglbutton.$billable.addEventListener('keydown', function (e) {
-      let prevent = false;
-      if (e.code === 'Space') {
-        prevent = true;
-        this.classList.toggle('tb-checked');
-      }
-
-      if (e.code === 'ArrowLeft') {
-        prevent = true;
-        this.classList.toggle('tb-checked', false);
-      }
-
-      if (e.code === 'ArrowRight') {
-        prevent = true;
-        this.classList.toggle('tb-checked', true);
-      }
-
-      if (prevent) {
-        e.stopPropagation();
+      $('form', editForm).addEventListener('submit', function (e) {
+        submitForm(this);
         e.preventDefault();
-      }
-    });
+      });
 
-    projectAutocomplete.onChange(function (selected) {
-      const project = togglbutton.findProjectByPid(selected.pid);
+      $('.toggl-button', editForm).addEventListener('click', function (e) {
+        e.preventDefault();
+        const link = togglbutton.element;
+        link.classList.remove('active');
+        link.style.color = '';
+        if (!link.classList.contains('min')) {
+          link.textContent = 'Start timer';
+        }
+        browser.runtime
+          .sendMessage({ type: 'stop' })
+          .then(togglbutton.addEditForm);
 
-      const wid = project ? project.wid : response.entry.wid;
+        closeForm();
+        return false;
+      });
 
-      tagAutocomplete.setWorkspaceId(wid);
+      /* prevent certain host webapps from processing key commands */
+      $('form', editForm).addEventListener('keydown', function (e) {
+        e.stopPropagation();
+      });
+
+      togglbutton.$billable.addEventListener('click', function () {
+        this.classList.toggle('tb-checked');
+      });
+
+      togglbutton.$billable.addEventListener('keydown', function (e) {
+        let prevent = false;
+        if (e.code === 'Space') {
+          prevent = true;
+          this.classList.toggle('tb-checked');
+        }
+
+        if (e.code === 'ArrowLeft') {
+          prevent = true;
+          this.classList.toggle('tb-checked', false);
+        }
+
+        if (e.code === 'ArrowRight') {
+          prevent = true;
+          this.classList.toggle('tb-checked', true);
+        }
+
+        if (prevent) {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      });
+
+      projectAutocomplete.onChange(function (selected) {
+        const project = togglbutton.findProjectByPid(selected.pid);
+
+        const wid = project ? project.wid : response.entry.wid;
+
+        tagAutocomplete.setWorkspaceId(wid);
+      });
     });
   },
 

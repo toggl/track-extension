@@ -26,7 +26,6 @@ if (FF) {
 const Popup = {
   $postStartText: ' post-start popup',
   $popUpButton: null,
-  $isIntegrationPopup: false,
   $errorLabel: document.querySelector('.error'),
   $projectAutocomplete: null,
   $tagAutocomplete: null,
@@ -89,7 +88,7 @@ const Popup = {
   renderApp: function () {
     const view = new URL(window.location.href).searchParams.get('view');
     if (view && view === 'integration-popup') {
-      Popup.$isIntegrationPopup = true;
+      document.documentElement.classList.add('integration-popup');
       Popup.renderEditForm(TogglButton.$curEntry);
       return;
     }

@@ -308,7 +308,7 @@
   background: rgb(243, 243, 243);
 }
 
-#tb-actions-button-group {
+.tb-actions-button-group {
   display: flex;
   width: 100%;
 }

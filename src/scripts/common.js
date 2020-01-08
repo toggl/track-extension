@@ -294,7 +294,7 @@ window.togglbutton = {
     const editFormWidth = 360;
     const position = togglbutton.topPosition(elemRect, editFormWidth, editFormHeight);
 
-    const frameWrapperStyle = 'z-index: 200000; position: absolute; background: white; border-radius: 8px; overflow: hidden; ' +
+    const frameWrapperStyle = 'z-index: 200000; position: absolute; background: white; border-radius: 6px; overflow: hidden; ' +
       `top: ${position.top}px; left: ${position.left}px; height: ${editFormHeight}px; width: ${editFormWidth}px;`;
     frameWrapper.setAttribute('id', 'toggl-button-frame-wrapper');
     frameWrapper.setAttribute('style', frameWrapperStyle);

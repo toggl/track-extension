@@ -714,7 +714,11 @@ TagAutoComplete.prototype.setSelected = function (tags) {
 
   if (tags) {
     for (i = 0; i < tags.length; i += 1) {
-      item = this.el.querySelector("li[title='" + tags[i] + "']");
+      // must escape colon, as it has special meaning for querySelector
+      const escapedFilter = tags[i].replace(/:/g, function (tag) {
+        return '\\' + tag;
+      });
+      item = this.el.querySelector("li[title='" + escapedFilter + "']");
       if (!item) {
         this.addNew(tags[i]);
       } else {

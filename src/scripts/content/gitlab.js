@@ -4,21 +4,13 @@ togglbutton.render(
   '.issue-details .detail-page-description:not(.toggl)',
   { observe: true },
   function (elem) {
-    const numElem =
-        $('.identifier') ||
-        $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title');
-
-    const titleElem = $('.title', elem);
-
-    const projectElem =
-        $('.title .project-item-select-holder') ||
-        $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
-
+    const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
     const actionsElem = $('.detail-page-header-actions');
-    let description = titleElem.textContent.trim();
-    if (numElem !== null) {
+
+    let description = getTitle(elem);
+    if (breadcrumbsSubTitle) {
       description =
-        numElem.textContent
+        breadcrumbsSubTitle
           .split(' ')
           .pop()
           .trim() +
@@ -29,7 +21,7 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
-      projectName: projectElem.textContent
+      projectName: getProjectSelector
     });
 
     actionsElem.parentElement.insertBefore(link, actionsElem);
@@ -40,21 +32,14 @@ togglbutton.render(
   '.merge-request-details .detail-page-description:not(.toggl)',
   { observe: true },
   function (elem) {
-    const numElem =
-        $('.identifier') ||
-        $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title');
-    const titleElem = $('.title', elem);
-    const projectElem =
-        $('.title .project-item-select-holder') ||
-        $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
+    const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
     const actionsElem = $('.detail-page-header-actions');
 
-    let description = titleElem.textContent.trim();
-
-    if (numElem !== null) {
+    let description = getTitle(elem);
+    if (breadcrumbsSubTitle) {
       description =
         'MR' +
-        numElem.textContent
+        breadcrumbsSubTitle
           .split(' ')
           .pop()
           .trim()
@@ -66,9 +51,28 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
-      projectName: projectElem.textContent
+      projectName: getProjectSelector
     });
 
     actionsElem.parentElement.insertBefore(link, actionsElem);
   }
 );
+
+function getTitle (parent) {
+  const $el = $('.title', parent);
+
+  return $el ? $el.textContent.trim() : '';
+}
+
+function getBreadcrumbsSubTitle () {
+  const $el =
+    $('.identifier') ||
+    $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title');
+
+  return $el ? $el.textContent.trim() : '';
+}
+
+function getProjectSelector () {
+  const $el = $('.title .project-item-select-holder') || $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
+  return $el ? $el.textContent.trim() : '';
+}

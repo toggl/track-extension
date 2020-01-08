@@ -21,6 +21,7 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
+      tags: tagsSelector,
       projectName: getProjectSelector
     });
 
@@ -51,6 +52,7 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
+      tags: tagsSelector,
       projectName: getProjectSelector
     });
 
@@ -75,4 +77,24 @@ function getBreadcrumbsSubTitle () {
 function getProjectSelector () {
   const $el = $('.title .project-item-select-holder') || $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
   return $el ? $el.textContent.trim() : '';
+}
+
+function tagsSelector () {
+  const $tagList = $('div[data-qa-selector="labels_block"]');
+
+  if (!$tagList) {
+    return [];
+  }
+
+  const tagItems = $tagList.children;
+  const tags = [];
+  let index;
+
+  for (index in tagItems) {
+    if (tagItems.hasOwnProperty(index)) {
+      tags.push(tagItems[index].textContent);
+    }
+  }
+
+  return tags;
 }

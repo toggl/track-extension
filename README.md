@@ -39,7 +39,7 @@ out of the way and focus on real work.
 - [Dynamics 365 Customer Engagement (Unified Interface)](https://www.dynamics.com/)
 - [e(Project)](https://eproject.me/)
 - [Esa](https://esa.io)
-- [Eventum](https://launchpad.net/eventum)
+- [Eventum](https://github.com/eventum/eventum)
 - [Evernote](https://www.evernote.com/)
 - [Exana](https://exana.io/)
 - [Feedly](http://feedly.com/)

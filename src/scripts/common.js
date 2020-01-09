@@ -419,6 +419,14 @@ window.togglbutton = {
       return false;
     });
 
+    document.addEventListener('click', function (e) {
+      const editFormPopup = document.getElementById('toggl-button-edit-form');
+      if (!editFormPopup.contains(e.target)) {
+        closeForm();
+        return false;
+      }
+    });
+
     /* prevent certain host webapps from processing key commands */
     $('form', editForm).addEventListener('keydown', function (e) {
       e.stopPropagation();

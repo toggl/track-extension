@@ -54,7 +54,8 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'jira2018',
       description: getDescription(issueNumberElement),
-      projectName: getProject
+      projectName: getProject,
+      container: '#jira-issue-header'
     });
 
     container.appendChild(link);

@@ -1,3 +1,11 @@
+## [1.55.2](https://github.com/toggl/toggl-button/compare/1.55.1...1.55.2) (2020-01-09)
+
+
+### Bug Fixes
+
+* **notion:** Return header button to popup pages and add styles ([b6a6329](https://github.com/toggl/toggl-button/commit/b6a6329))
+* **notion:** Timer link on Notion main page ([913ca0d](https://github.com/toggl/toggl-button/commit/913ca0d))
+
 ## [1.55.1](https://github.com/toggl/toggl-button/compare/1.55.0...1.55.1) (2020-01-06)
 
 

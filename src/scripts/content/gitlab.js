@@ -93,6 +93,10 @@ function tagsSelector () {
   for (index in tagItems) {
     if (tagItems.hasOwnProperty(index)) {
       const tagName = tagItems[index].textContent.trim();
+      // Skip no labels: <span className="no-value">None</span>
+      if (tagName === 'None') {
+        continue;
+      }
       tags.push(tagName);
     }
   }

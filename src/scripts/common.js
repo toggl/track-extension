@@ -327,8 +327,10 @@ window.togglbutton = {
     editForm = div.firstChild;
     editForm.style.left = position.left + 'px';
     editForm.style.top = position.top + 'px';
+    editForm.style.position = 'fixed';
     editForm.classList.add('toggl-integration');
-    document.body.appendChild(editForm);
+    const container = response.container ? document.querySelector(response.container) : document.body;
+    container.appendChild(editForm);
     togglbutton.$billable = $('.tb-billable', editForm);
 
     projectAutocomplete = new ProjectAutoComplete('project', 'li', togglbutton);
@@ -505,7 +507,8 @@ window.togglbutton = {
           projectName: invokeIfFunction(params.projectName),
           createdWith: togglbutton.fullVersion + '-' + togglbutton.serviceName,
           service: togglbutton.serviceName,
-          url: window.location.href
+          url: window.location.href,
+          container: params.container || ''
         };
       }
       togglbutton.element = e.target;

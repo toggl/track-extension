@@ -31,24 +31,25 @@ togglbutton.render(
   }
 );
 
-// Issue page 2019-06-20
+// Jira Jan 2020 issue detail page. Uses functions for timer values due to SPA on issue-lists.
 togglbutton.render(
-  'div[class*="Droplist-"] + div a[href^="/browse/"]:not(.toggl)',
+  // The main "issue link" at the top of the issue.
+  '#jira-issue-header:not(.toggl)',
   { observe: true },
   function (elem) {
-    const issueNumberElement = elem;
-    const container = issueNumberElement.parentElement.parentElement.parentElement;
+    const container = elem.querySelector('[class^=BreadcrumbsContainer]');
+    const issueNumberElement = container.lastElementChild;
 
     if (container.querySelector('.toggl-button')) {
       // We're checking for existence of the button as re-rendering in Jira SPA is not reliable for our uses.
       if (process.env.DEBUG) {
-        console.info('🚫 "Jira 2019-06 issue page" quit rendering early');
+        console.info('🚫 "Jira 2020-01 issue detail" quit rendering early');
       }
       return;
     }
 
     if (process.env.DEBUG) {
-      console.info('🏃 "Jira 2019-06 issue page" rendering');
+      console.info('🏃 "Jira 2020-01 issue detail" rendering');
     }
 
     const link = togglbutton.createTimerLink({
@@ -56,37 +57,6 @@ togglbutton.render(
       description: getDescription(issueNumberElement),
       projectName: getProject,
       container: '#jira-issue-header'
-    });
-
-    container.appendChild(link);
-  }
-);
-
-// Jira 2019-06-20 board page. Uses functions for timer values due to SPA on issue-lists.
-togglbutton.render(
-  // The main "issue link" at the top of the issue.
-  'div[class*="GridColumnElement__GridColumn-"]:first-child a[href^="/browse/"]:not(.toggl)',
-  { observe: true },
-  function (elem) {
-    const issueNumberElement = elem;
-    const container = issueNumberElement.parentElement.parentElement.parentElement;
-
-    if (container.querySelector('.toggl-button')) {
-      // We're checking for existence of the button as re-rendering in Jira SPA is not reliable for our uses.
-      if (process.env.DEBUG) {
-        console.info('🚫 "Jira 2019-06 board page" quit rendering early');
-      }
-      return;
-    }
-
-    if (process.env.DEBUG) {
-      console.info('🏃 "Jira 2019-06 board page" rendering');
-    }
-
-    const link = togglbutton.createTimerLink({
-      className: 'jira2018',
-      description: getDescription(issueNumberElement),
-      projectName: getProject
     });
 
     container.appendChild(link);

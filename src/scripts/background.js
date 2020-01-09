@@ -560,6 +560,7 @@ window.TogglButton = {
 
   createTimeEntry: async function (timeEntry) {
     const type = timeEntry.type;
+    const container = timeEntry.container;
     const start = new Date();
     let defaultProject;
     const rememberProjectPer = await db.get('rememberProjectPer');
@@ -648,6 +649,7 @@ window.TogglButton = {
                 entry,
                 showPostPopup,
                 html: TogglButton.getEditForm(),
+                container,
                 hasTasks,
                 error
               });

@@ -92,7 +92,8 @@ function tagsSelector () {
 
   for (index in tagItems) {
     if (tagItems.hasOwnProperty(index)) {
-      tags.push(tagItems[index].textContent);
+      const tagName = tagItems[index].textContent.trim();
+      tags.push(tagName);
     }
   }
 

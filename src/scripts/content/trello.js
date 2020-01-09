@@ -29,7 +29,8 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'trello',
       description: getDescription,
-      projectName: getProject
+      projectName: getProject,
+      container: '.window-wrapper'
     });
 
     // Pass through click on Trello button to the timer link
@@ -67,7 +68,8 @@ togglbutton.render(
       className: 'trello-list',
       buttonType: 'minimal',
       projectName: getProject,
-      description: getDescription
+      description: getDescription,
+      container: '.window-wrapper'
     });
 
     link.classList.add('checklist-item-menu');

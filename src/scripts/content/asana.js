@@ -100,3 +100,45 @@ togglbutton.render(
     firstButton.parentNode.insertBefore(link, firstButton);
   }
 );
+
+// Old and Beta UI - detail view
+togglbutton.render(
+  '.SingleTaskPane-titleRow:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    if ($('.toggl-button', elem)) {
+      return;
+    }
+    const container = $('.SingleTaskPaneToolbar');
+
+    const descriptionSelector = () => {
+      return $(
+        '.SingleTaskPane-titleRow .simpleTextarea',
+        elem.parentNode
+      ).textContent;
+    };
+
+    const projectSelector = () => {
+      const projectElement = $(
+        '.SingleTaskPane-projects .TaskProjectPill-projectName',
+        elem.parentNode
+      );
+
+      return projectElement ? projectElement.textContent : '';
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'asana-board',
+      description: descriptionSelector,
+      projectName: projectSelector,
+      buttonType: 'minimal'
+    });
+
+    link.style.marginRight = '5px';
+
+    if (container) {
+      const closeButton = container.lastElementChild;
+      container.insertBefore(link, closeButton);
+    }
+  }
+);

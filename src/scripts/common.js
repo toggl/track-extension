@@ -329,6 +329,8 @@ window.togglbutton = {
     editForm.style.top = position.top + 'px';
     editForm.style.position = 'fixed';
     editForm.classList.add('toggl-integration');
+    // if a container was provided to createTimerlink, append editForm to that container
+    // for avoiding unwanted interactions with some services' events
     const container = response.container ? document.querySelector(response.container) : document.body;
     container.appendChild(editForm);
     togglbutton.$billable = $('.tb-billable', editForm);

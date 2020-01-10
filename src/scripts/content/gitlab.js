@@ -1,5 +1,15 @@
 'use strict';
 
+// jsonata jsonataExpression for tags, must return an array of tags
+// @see http://docs.jsonata.org/overview.html
+// http://try.jsonata.org/Hkg_K4EZL
+const jsonataExpression = `
+{
+  "projectName" : project.name,
+  "tags": labels
+}
+`;
+
 togglbutton.render(
   '.issue-details .detail-page-description:not(.toggl)',
   { observe: true },
@@ -21,8 +31,7 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
-      tags: tagsSelector,
-      projectName: getProjectSelector
+      ...buildParameters(jsonataExpression)
     });
 
     actionsElem.parentElement.insertBefore(link, actionsElem);
@@ -52,8 +61,7 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: description,
-      tags: tagsSelector,
-      projectName: getProjectSelector
+      ...buildParameters(jsonataExpression)
     });
 
     actionsElem.parentElement.insertBefore(link, actionsElem);
@@ -74,12 +82,39 @@ function getBreadcrumbsSubTitle () {
   return $el ? $el.textContent.trim() : '';
 }
 
-function getProjectSelector () {
+function getProjectName () {
   const $el = $('.title .project-item-select-holder') || $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
   return $el ? $el.textContent.trim() : '';
 }
 
-function tagsSelector () {
+function getProjectPath () {
+  const $el = $('a[data-qa-selector="project_link"]');
+
+  return $el ? $el.getAttribute('href') : null;
+}
+
+function buildParameters (expression) {
+  const json = {
+    project: {
+      name: getProjectName(),
+      path: getProjectPath()
+    },
+    labels: getLabels()
+  };
+
+  let parameters = [];
+  try {
+    console.log('jsonata', json, expression);
+    parameters = window.jsonata(expression).evaluate(json);
+    console.log('jsonata result', parameters);
+  } catch (e) {
+    console.error('jsonata error', e);
+  }
+
+  return parameters;
+}
+
+function getLabels () {
   const $tagList = $('div[data-qa-selector="labels_block"]');
 
   if (!$tagList) {

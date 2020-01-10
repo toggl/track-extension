@@ -1,3 +1,10 @@
+## [1.56.1](https://github.com/toggl/toggl-button/compare/1.56.0...1.56.1) (2020-01-10)
+
+
+### Bug Fixes
+
+* **asana:** Restore old detail view until update rolled out for all users ([6f47cba](https://github.com/toggl/toggl-button/commit/6f47cba))
+
 # [1.56.0](https://github.com/toggl/toggl-button/compare/1.55.2...1.56.0) (2020-01-10)
 
 

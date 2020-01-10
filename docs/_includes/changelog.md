@@ -1,3 +1,17 @@
+# [1.56.0](https://github.com/toggl/toggl-button/compare/1.55.2...1.56.0) (2020-01-10)
+
+
+### Bug Fixes
+
+* **edit-popup:** Comment to explain container purpose ([98db80e](https://github.com/toggl/toggl-button/commit/98db80e))
+* **jira:** Fix two buttons on next-gen Jira issue detail view ([0b26f95](https://github.com/toggl/toggl-button/commit/0b26f95))
+* **jira:** Move edit popup for issue view inside the issue header element ([342f30a](https://github.com/toggl/toggl-button/commit/342f30a)), closes [#1448](https://github.com/toggl/toggl-button/issues/1448)
+
+
+### Features
+
+* **edit-popup:** Edit popup can be added to a container ([d1946ce](https://github.com/toggl/toggl-button/commit/d1946ce))
+
 ## [1.55.2](https://github.com/toggl/toggl-button/compare/1.55.1...1.55.2) (2020-01-09)
 
 

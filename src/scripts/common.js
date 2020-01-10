@@ -1,4 +1,5 @@
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+import jsonata from 'jsonata';
 const browser = require('webextension-polyfill');
 
 let projectAutocomplete; let tagAutocomplete;
@@ -7,6 +8,8 @@ window.$ = (s, elem) => {
   elem = elem || document;
   return elem.querySelector(s);
 };
+
+window.jsonata = jsonata;
 
 window.createTag = (name, className, textContent) => {
   const tag = document.createElement(name);

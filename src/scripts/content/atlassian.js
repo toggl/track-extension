@@ -70,7 +70,12 @@ const getDescription = (issueNumberElement) => () => {
   const titleElement = document.querySelector('h1 ~ button[aria-label]');
 
   if (issueNumberElement) {
-    description += issueNumberElement.textContent.trim();
+    // Inspect deeper to avoid other hidden elements which can contain text
+    // https://github.com/toggl/toggl-button/issues/1644
+    const issueLink = issueNumberElement.querySelector('a');
+    if (issueLink) {
+      description += issueLink.textContent.trim();
+    }
   }
 
   if (titleElement && titleElement.previousSibling) {

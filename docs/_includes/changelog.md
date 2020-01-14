@@ -1,3 +1,10 @@
+## [1.56.2](https://github.com/toggl/toggl-button/compare/1.56.1...1.56.2) (2020-01-14)
+
+
+### Bug Fixes
+
+* **jira:** Fix "copy link" text being included in time entry descriptions ([c41f056](https://github.com/toggl/toggl-button/commit/c41f056)), closes [#1644](https://github.com/toggl/toggl-button/issues/1644)
+
 ## [1.56.1](https://github.com/toggl/toggl-button/compare/1.56.0...1.56.1) (2020-01-10)
 
 

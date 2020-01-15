@@ -50,7 +50,7 @@ togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
       return;
     }
     const container = elem.querySelector('.ItemRowTwoColumnStructure-left');
-    const description = elem.querySelector('.TaskName textarea').textContent;
+    const descriptionSelector = () => elem.querySelector('.TaskName textarea').textContent;
 
     const projectSelector = () => {
       const projectElement = elem.querySelector('.TaskRow-pots .Pill');
@@ -60,7 +60,7 @@ togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
 
     const link = togglbutton.createTimerLink({
       className: 'asana-new-ui',
-      description: description,
+      description: descriptionSelector,
       projectName: projectSelector,
       buttonType: 'minimal'
     });

@@ -296,8 +296,7 @@
 }
 
 .TB__Button__button.danger {
-  width: 100%;
-  margin-top: 12px;
+  flex: 1;
   background: none;
   color: rgb(226, 5, 5);
   font-weight: 400;
@@ -308,9 +307,17 @@
   background: rgb(243, 243, 243);
 }
 
-#tb-actions-button-group {
+.tb-actions-button-group {
   display: flex;
   width: 100%;
+}
+
+.tb-actions-button-group ~ .tb-actions-button-group {
+  margin-top: 12px;
+}
+
+.toggl-integration .tb-actions-button-group ~ .tb-actions-button-group {
+  display: none;
 }
 
 #tb-edit-form-cancel,
@@ -320,13 +327,6 @@
 
 #tb-edit-form-cancel {
   margin-right: 10px;
-}
-#toggl-button-edit-form.toggl-integration #tb-edit-form-cancel {
-  display: none;
-  visibility: hidden;
-}
-#toggl-button-edit-form.toggl-integration #toggl-button-delete {
-  display: none;
 }
 
 #toggl-button-edit-form #toggl-button-update {

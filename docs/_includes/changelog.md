@@ -1,3 +1,10 @@
+## [1.56.3](https://github.com/toggl/toggl-button/compare/1.56.2...1.56.3) (2020-01-15)
+
+
+### Bug Fixes
+
+* **trello:** Move edit popup inside Trello card (in DOM) ([3bd27ce](https://github.com/toggl/toggl-button/commit/3bd27ce)), closes [#1622](https://github.com/toggl/toggl-button/issues/1622)
+
 ## [1.56.2](https://github.com/toggl/toggl-button/compare/1.56.1...1.56.2) (2020-01-14)
 
 

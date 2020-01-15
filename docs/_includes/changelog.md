@@ -1,3 +1,10 @@
+## [1.56.4](https://github.com/toggl/toggl-button/compare/1.56.3...1.56.4) (2020-01-15)
+
+
+### Bug Fixes
+
+* **asana:** Get task description when button is clicked ([ca3f93e](https://github.com/toggl/toggl-button/commit/ca3f93e)), closes [#1646](https://github.com/toggl/toggl-button/issues/1646)
+
 ## [1.56.3](https://github.com/toggl/toggl-button/compare/1.56.2...1.56.3) (2020-01-15)
 
 

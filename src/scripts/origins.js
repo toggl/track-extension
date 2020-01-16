@@ -252,6 +252,10 @@ export default {
     url: '*://app.heflo.com/*',
     name: 'HEFLO'
   },
+  'helprace.com': {
+    url: '*://*.helprace.com/*',
+    name: 'Helprace'
+  },
   'helpscout.net': {
     url: '*://secure.helpscout.net/*',
     name: 'Helpscout'

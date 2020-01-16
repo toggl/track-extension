@@ -60,6 +60,7 @@ out of the way and focus on real work.
 - [GQueues](https://www.gqueues.com/)
 - [Habitica](https://habitica.com)
 - [HEFLO](https://app.heflo.com/)
+- [Helprace](https://helprace.com/)
 - [Help Scout](http://www.helpscout.net/)
 - [Husky](https://www.huskymarketingplanner.com/)
 - [Intercom](https://www.intercom.com/)

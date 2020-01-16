@@ -76,6 +76,7 @@ out of the way and focus on real work.
 - [Microsoft Planner](https://tasks.office.com/)
 - [miniCRM](https://minicrm.pl/)
 - [Newsletter2Go](http://www.newsletter2go.com/)
+- [Notion](https://www.notion.so/)
 - [Nozbe](https://nozbe.com/)
 - [ONLYOFFICE](https://www.onlyoffice.com/)
 - [Onshape](https://onshape.com/)

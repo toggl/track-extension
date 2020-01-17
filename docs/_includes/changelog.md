@@ -1,3 +1,10 @@
+# [1.57.0](https://github.com/toggl/toggl-button/compare/1.56.4...1.57.0) (2020-01-17)
+
+
+### Features
+
+* **edit-form:** Make the Done button larger, group the Cancel and Delete buttons ([284f98d](https://github.com/toggl/toggl-button/commit/284f98d)), closes [#1632](https://github.com/toggl/toggl-button/issues/1632)
+
 ## [1.56.4](https://github.com/toggl/toggl-button/compare/1.56.3...1.56.4) (2020-01-15)
 
 

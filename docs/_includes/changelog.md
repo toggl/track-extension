@@ -1,3 +1,10 @@
+# [1.58.0](https://github.com/toggl/toggl-button/compare/1.57.0...1.58.0) (2020-01-17)
+
+
+### Features
+
+* **edit-popup:** Close popup edit form when user clicks outside ([#1641](https://github.com/toggl/toggl-button/issues/1641)) ([fb58dfe](https://github.com/toggl/toggl-button/commit/fb58dfe))
+
 # [1.57.0](https://github.com/toggl/toggl-button/compare/1.56.4...1.57.0) (2020-01-17)
 
 

@@ -423,6 +423,18 @@ window.togglbutton = {
       return false;
     });
 
+    function closeOnClickOutside (e) {
+      if (editForm.style.display !== 'none') {
+        const editFormPopup = document.getElementById('toggl-button-edit-form');
+        if (!editFormPopup.contains(e.target)) {
+          closeForm();
+          return false;
+        }
+      }
+    }
+
+    document.addEventListener('click', closeOnClickOutside);
+
     /* prevent certain host webapps from processing key commands */
     $('form', editForm).addEventListener('keydown', function (e) {
       e.stopPropagation();

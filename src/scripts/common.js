@@ -420,11 +420,12 @@ window.togglbutton = {
     });
 
     function closeOnClickOutside (e) {
-      const editFormPopup = document.getElementById('toggl-button-edit-form');
-      if (!editFormPopup.contains(e.target)) {
-        document.removeEventListener('click', closeOnClickOutside);
-        closeForm();
-        return false;
+      if (editForm.style.display !== 'none') {
+        const editFormPopup = document.getElementById('toggl-button-edit-form');
+        if (!editFormPopup.contains(e.target)) {
+          closeForm();
+          return false;
+        }
       }
     }
 

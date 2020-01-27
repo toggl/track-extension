@@ -1,3 +1,10 @@
+# [1.59.0](https://github.com/toggl/toggl-button/compare/1.58.0...1.59.0) (2020-01-27)
+
+
+### Features
+
+* **helprace:** Add Helprace integration ([13189de](https://github.com/toggl/toggl-button/commit/13189de))
+
 # [1.58.0](https://github.com/toggl/toggl-button/compare/1.57.0...1.58.0) (2020-01-17)
 
 

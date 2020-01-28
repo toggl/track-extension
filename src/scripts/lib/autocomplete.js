@@ -142,25 +142,19 @@ AutoComplete.prototype.updateHeight = function () {
   const windowHeight = window.innerHeight;
   const elRect = this.el.getBoundingClientRect();
   let popdownStyle = '';
-  let listStyle = 'max-height:auto;';
   let calc;
 
   if (windowHeight > 0 && elRect.bottom + 25 >= windowHeight) {
-    calc = window.scrollY + windowHeight - elRect.top - 10;
+    calc = windowHeight - elRect.top + 45;
     if (calc < 55) {
       calc = 55;
     }
     popdownStyle = 'max-height: ' + calc + 'px;';
-    // Not sure, but probably: 55=filter, 25=??, 24=clear-tags
-    listStyle = 'max-height: ' + (calc - 55 - 25 - 24) + 'px;';
   } else {
     return;
   }
 
   this.el.closest('.TB__Popdown__content').style = popdownStyle;
-  if (this.type === 'tag') {
-    document.querySelector('.tag-list').style = listStyle;
-  }
 };
 
 //* Project autocomplete *//

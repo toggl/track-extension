@@ -40,20 +40,6 @@ function invokeIfFunction (trial) {
   return trial;
 }
 
-function getFullPageHeight () {
-  const body = document.body;
-
-  const html = document.documentElement;
-
-  return Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    html.clientHeight,
-    html.scrollHeight,
-    html.offsetHeight
-  );
-}
-
 function setCursorAtBeginning (elem) {
   elem.focus();
   elem.setSelectionRange(0, 0);
@@ -203,9 +189,10 @@ window.togglbutton = {
     if (left + editFormWidth > window.innerWidth) {
       left = window.innerWidth - 10 - editFormWidth;
     }
-    if (top + editFormHeight > getFullPageHeight()) {
+    if (top + editFormHeight > window.innerHeight) {
       top = window.innerHeight + document.body.scrollTop - 10 - editFormHeight;
     }
+
     return { left: left, top: top };
   },
 

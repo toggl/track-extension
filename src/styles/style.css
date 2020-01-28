@@ -1500,13 +1500,11 @@ body.notion-body.dark .toggl-button.notion {
 }
 
 [data-toggl="taskRow"] .toggl-button.brokerengine:not(.active) {
-  opacity: 0;
-  visibility: hidden;
+  opacity: 0.4;
 }
 
 [data-toggl="taskRow"]:hover .toggl-button.brokerengine {
   opacity: 1;
-  visibility: visible;
 }
 
 [data-toggl="loanDrawer"] .toggl-button.brokerengine {

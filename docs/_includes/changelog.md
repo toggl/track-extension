@@ -1,3 +1,10 @@
+## [1.59.1](https://github.com/toggl/toggl-button/compare/1.59.0...1.59.1) (2020-01-28)
+
+
+### Bug Fixes
+
+* **autocomplete:** Fix autocomplete dropdowns being too long ([f36bee1](https://github.com/toggl/toggl-button/commit/f36bee1)), closes [#1659](https://github.com/toggl/toggl-button/issues/1659)
+
 # [1.59.0](https://github.com/toggl/toggl-button/compare/1.58.0...1.59.0) (2020-01-27)
 
 

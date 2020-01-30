@@ -1418,8 +1418,8 @@ window.TogglButton = {
       .map(t => `
         <li
           class="tag-item"
-          data-wid=${escapeHtml(t.wid)}
-          title=${escapeHtml(t.name)}
+          data-wid="${escapeHtml(t.wid)}"
+          title="${escapeHtml(t.name)}"
         >
         ${escapeHtml(t.name)}
         </li>

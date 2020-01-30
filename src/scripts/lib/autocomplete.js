@@ -708,13 +708,31 @@ TagAutoComplete.prototype.selectTag = function (e) {
 };
 
 TagAutoComplete.prototype.setSelected = function (tags) {
-  let i; let item;
-
   this.clearSelectedTags();
 
+  /**
+   * Create map of elements keyed to element .title attribute value.
+   * @param {NodeList} elements
+   */
+  const mapByTitle = function (elements) {
+    let i;
+    let title;
+    const result = {};
+
+    for (i = 0; i < elements.length; i += 1) {
+      title = elements[i].getAttribute('title');
+      result[title] = elements[i];
+    }
+
+    return result;
+  };
+
   if (tags) {
+    const current = mapByTitle(this.el.querySelectorAll('li[title]'));
+    let i; let item;
+
     for (i = 0; i < tags.length; i += 1) {
-      item = this.el.querySelector("li[title='" + tags[i] + "']");
+      item = current[tags[i]];
       if (!item) {
         this.addNew(tags[i]);
       } else {

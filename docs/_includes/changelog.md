@@ -1,3 +1,10 @@
+## [1.59.2](https://github.com/toggl/toggl-button/compare/1.59.1...1.59.2) (2020-01-30)
+
+
+### Bug Fixes
+
+* **autocomplete:** Fix escaping of tag names in html title attribute ([b0c21d8](https://github.com/toggl/toggl-button/commit/b0c21d8))
+
 ## [1.59.1](https://github.com/toggl/toggl-button/compare/1.59.0...1.59.1) (2020-01-28)
 
 

@@ -1,12 +1,12 @@
 'use strict';
 /* global togglbutton, $ */
 
-/* Hover on Bullet Popup */
+/* Task more menu (formerly bullet hover) */
 togglbutton.render(
-  '.name:not(.toggl) > .flyout.menu',
+  '.name:not(.toggl) div:not(.toggl) > .flyout.menu',
   { observe: true },
   $container => {
-    const $bulletInfo = $('.content', $container.parentElement);
+    const $bulletInfo = $('.content', $container.closest('.name'));
 
     const descriptionSelector = () => {
       return getDescription($bulletInfo);

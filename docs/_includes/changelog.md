@@ -1,3 +1,10 @@
+## [1.59.3](https://github.com/toggl/toggl-button/compare/1.59.2...1.59.3) (2020-02-05)
+
+
+### Bug Fixes
+
+* **workflowy:** Fix Workflowy integration ([7936a94](https://github.com/toggl/toggl-button/commit/7936a94)), closes [#1662](https://github.com/toggl/toggl-button/issues/1662)
+
 ## [1.59.2](https://github.com/toggl/toggl-button/compare/1.59.1...1.59.2) (2020-01-30)
 
 

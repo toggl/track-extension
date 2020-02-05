@@ -1,3 +1,10 @@
+## [1.60.1](https://github.com/toggl/toggl-button/compare/1.60.0...1.60.1) (2020-02-05)
+
+
+### Bug Fixes
+
+* **autocomplete:** Fix long task names overlapping in project dropdown ([361fb0a](https://github.com/toggl/toggl-button/commit/361fb0a)), closes [#1667](https://github.com/toggl/toggl-button/issues/1667)
+
 # [1.60.0](https://github.com/toggl/toggl-button/compare/1.59.3...1.60.0) (2020-02-05)
 
 

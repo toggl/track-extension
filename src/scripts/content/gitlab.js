@@ -88,17 +88,14 @@ function tagsSelector () {
 
   const tagItems = $tagList.children;
   const tags = [];
-  let index;
 
-  for (index in tagItems) {
-    if (tagItems.hasOwnProperty(index)) {
-      const tagName = tagItems[index].textContent.trim();
-      // Skip no labels: <span className="no-value">None</span>
-      if (tagName === 'None') {
-        continue;
-      }
-      tags.push(tagName);
+  for (const node of Object.values(tagItems)) {
+    const tagName = node.textContent.trim();
+    // Skip no labels: <span className="no-value">None</span>
+    if (tagName === 'None') {
+      continue;
     }
+    tags.push(tagName);
   }
 
   return tags;

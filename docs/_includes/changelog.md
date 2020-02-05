@@ -1,3 +1,16 @@
+# [1.60.0](https://github.com/toggl/toggl-button/compare/1.59.3...1.60.0) (2020-02-05)
+
+
+### Bug Fixes
+
+* **gitlab:** Skip label None, when no labels are assigned ([167484f](https://github.com/toggl/toggl-button/commit/167484f))
+* **gitlab:** Trim tag name of newlines ([ef4622f](https://github.com/toggl/toggl-button/commit/ef4622f))
+
+
+### Features
+
+* **gitlab:** Add labels as tags in GitLab button ([f6b8f90](https://github.com/toggl/toggl-button/commit/f6b8f90))
+
 ## [1.59.3](https://github.com/toggl/toggl-button/compare/1.59.2...1.59.3) (2020-02-05)
 
 

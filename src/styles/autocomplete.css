@@ -254,6 +254,11 @@
   color: #000;
   height: 30px;
   line-height: 30px;
+
+  /* Truncate task names. Full name will be in title attribute */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #project-autocomplete .task-item:hover {
   background-color: hsla(0,0%,69.4%,.07);

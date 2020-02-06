@@ -5,7 +5,6 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-    const actionsElem = $('.time_tracker');
 
     let description = getTitle(elem);
     if (breadcrumbsSubTitle) {
@@ -18,14 +17,7 @@ togglbutton.render(
         description;
     }
 
-    const link = togglbutton.createTimerLink({
-      className: 'gitlab',
-      description: description,
-      tags: tagsSelector,
-      projectName: getProjectSelector
-    });
-
-    actionsElem.parentElement.appendChild(link, actionsElem);
+    insertButton(description);
   }
 );
 
@@ -34,7 +26,6 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-    const actionsElem = $('.time_tracker');
 
     let description = getTitle(elem);
     if (breadcrumbsSubTitle) {
@@ -49,16 +40,21 @@ togglbutton.render(
         description;
     }
 
-    const link = togglbutton.createTimerLink({
-      className: 'gitlab',
-      description: description,
-      tags: tagsSelector,
-      projectName: getProjectSelector
-    });
-
-    actionsElem.parentElement.appendChild(link, actionsElem);
+    insertButton(description);
   }
 );
+
+function insertButton (description) {
+  const el = $('.time_tracker');
+  const link = togglbutton.createTimerLink({
+    className: 'gitlab',
+    description: description,
+    tags: tagsSelector,
+    projectName: getProjectSelector
+  });
+
+  el.parentElement.appendChild(link, el);
+}
 
 function getTitle (parent) {
   const $el = $('.title', parent);

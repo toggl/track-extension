@@ -5,7 +5,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-    const actionsElem = $('.detail-page-header-actions');
+    const actionsElem = $('.time_tracker');
 
     let description = getTitle(elem);
     if (breadcrumbsSubTitle) {
@@ -25,7 +25,7 @@ togglbutton.render(
       projectName: getProjectSelector
     });
 
-    actionsElem.parentElement.insertBefore(link, actionsElem);
+    actionsElem.parentElement.appendChild(link, actionsElem);
   }
 );
 
@@ -34,7 +34,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-    const actionsElem = $('.detail-page-header-actions');
+    const actionsElem = $('.time_tracker');
 
     let description = getTitle(elem);
     if (breadcrumbsSubTitle) {
@@ -56,7 +56,7 @@ togglbutton.render(
       projectName: getProjectSelector
     });
 
-    actionsElem.parentElement.insertBefore(link, actionsElem);
+    actionsElem.parentElement.appendChild(link, actionsElem);
   }
 );
 

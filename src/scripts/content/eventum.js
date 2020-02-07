@@ -18,10 +18,46 @@ togglbutton.render('.issue_view:not(.toggl)', {}, function (elem) {
   const link = togglbutton.createTimerLink({
     className: 'eventum',
     description: '#' + issueId + ' ' + description,
-    projectName: project
+    projectName: project,
+    tags: getTags
   });
 
   const container = $('div#issue_menu', elem);
   const spanTag = document.createElement('span');
   container.parentNode.appendChild(spanTag.appendChild(link));
 });
+
+function getTags () {
+  const customFields = getCustomFields();
+
+  // for now, just return values of all custom fields
+  return Object.values(customFields);
+}
+
+/**
+ * Abstract method to extract custom fields as field name => field value.
+ *
+ * @returns {{}}
+ */
+function getCustomFields () {
+  const fields = {};
+  const $rows = document.querySelectorAll('div.issue_section#custom_fields>div.content>table>tbody>tr');
+
+  if (!$rows) {
+    return fields;
+  }
+
+  for (const $row of Object.values($rows)) {
+    const $cells = $row.children;
+    const fieldName = $cells[0].textContent.trim();
+    const fieldValue = $cells[1].textContent.trim();
+
+    // Empty values have no purpose
+    if (!fieldValue) {
+      continue;
+    }
+    fields[fieldName] = fieldValue;
+  }
+
+  return fields;
+}

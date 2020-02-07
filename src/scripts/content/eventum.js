@@ -1,5 +1,14 @@
 'use strict';
 
+// jsonata jsonataExpression for tags, must return an array of tags
+// @see http://docs.jsonata.org/overview.html
+const jsonataExpression = `
+  {
+    "projectName" : project.name,
+    "tags": custom_fields
+  }
+`;
+
 togglbutton.render('.issue_view:not(.toggl)', {}, function (elem) {
   const issueId = $('#issue_overview', elem).getAttribute('data-issue-id');
   const description = $('#issue_overview #issue_summary', elem).textContent;
@@ -18,8 +27,7 @@ togglbutton.render('.issue_view:not(.toggl)', {}, function (elem) {
   const link = togglbutton.createTimerLink({
     className: 'eventum',
     description: '#' + issueId + ' ' + description,
-    projectName: project,
-    tags: getTags
+    ...buildParameters(jsonataExpression, project)
   });
 
   const container = $('div#issue_menu', elem);
@@ -27,11 +35,24 @@ togglbutton.render('.issue_view:not(.toggl)', {}, function (elem) {
   container.parentNode.appendChild(spanTag.appendChild(link));
 });
 
-function getTags () {
-  const customFields = getCustomFields();
+function buildParameters (expression, projectName) {
+  const json = {
+    project: {
+      name: projectName
+    },
+    custom_fields: getCustomFields()
+  };
 
-  // for now, just return values of all custom fields
-  return Object.values(customFields);
+  let parameters = [];
+  try {
+    console.log('jsonata', json, expression);
+    parameters = window.jsonata(expression).evaluate(json);
+    console.log('jsonata result', parameters);
+  } catch (e) {
+    console.error('jsonata error', e);
+  }
+
+  return parameters;
 }
 
 /**

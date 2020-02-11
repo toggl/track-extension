@@ -1,3 +1,10 @@
+## [1.60.2](https://github.com/toggl/toggl-button/compare/1.60.1...1.60.2) (2020-02-11)
+
+
+### Bug Fixes
+
+* **toggl-plan:** Migrate Teamweek integration to Toggl Plan ([5b229d7](https://github.com/toggl/toggl-button/commit/5b229d7))
+
 ## [1.60.1](https://github.com/toggl/toggl-button/compare/1.60.0...1.60.1) (2020-02-05)
 
 

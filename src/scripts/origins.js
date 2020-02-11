@@ -517,10 +517,6 @@ export default {
     url: '*://tasks.office.com/*',
     name: 'Microsoft Planner'
   },
-  'teamweek.com': {
-    url: '*://*.teamweek.com/*',
-    name: 'Teamweek'
-  },
   'teamwork.com': {
     url: '*://*.teamwork.com/*',
     name: 'Teamwork'
@@ -558,9 +554,14 @@ export default {
     clone: 'true'
   },
   'www.toggl.com': {
-    url: '*://*.toggl.com/*',
+    url: '*://www.toggl.com/*',
     name: 'Toggl',
     clone: 'true'
+  },
+  'plan.toggl.com': {
+    url: '*://plan.toggl.com/*',
+    name: 'Toggl Plan',
+    file: 'toggl-plan.js'
   },
   'toodledo.com': {
     url: '*://*.toodledo.com/*',

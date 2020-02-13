@@ -1192,7 +1192,6 @@ window.TogglButton = {
         onLoad: function (xhr) {
           if (xhr.status === 200) {
             TogglButton.setupToken(xhr.responseText);
-            TogglButton.queue.push(TogglButton.checkPermissions);
             TogglButton.fetchUser()
               .then((response) => {
                 TogglButton.refreshPage();
@@ -2254,22 +2253,6 @@ window.TogglButton = {
     }
   },
 
-  checkPermissions: async function (show) {
-    const dontShowPermissions = await db.get('dont-show-permissions');
-    if (!dontShowPermissions && !FF) {
-      browser.permissions.getAll().then(function (results) {
-        if (show != null || results.origins.length === 2) {
-          show = show != null ? show : 2;
-          db.set('settings-active-tab', 2);
-          db.set('show-permissions-info', show);
-          if (TogglButton.$user) {
-            browser.runtime.openOptionsPage();
-          }
-        }
-      });
-    }
-  },
-
   hasWorkspaceBeenRevoked: function (workspaces) {
     return workspaces.length === 0;
   },
@@ -2383,17 +2366,11 @@ window.onbeforeunload = function () {
     });
 };
 
-if (!FF) {
-  TogglButton.checkPermissions();
-}
-
 // Check whether new version is installed
 browser.runtime.onInstalled.addListener(function (details) {
   if (details.reason === 'install') {
     if (!TogglButton.$user) {
       browser.tabs.create({ url: 'html/login.html?source=install' });
-    } else if (!FF) {
-      TogglButton.checkPermissions(0);
     }
   } else if (details.reason === 'update') {
     console.info(`Updated from ${details.previousVersion} to ${process.env.VERSION}.`);

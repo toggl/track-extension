@@ -31,9 +31,6 @@ const DEFAULT_SETTINGS = {
   rememberProjectPer: 'false',
   enableAutoTagging: false,
 
-  'dont-show-permissions': false,
-  'show-permissions-info': 0,
-  'settings-active-tab': 0,
   sendErrorReports: true,
   sendUsageStatistics: true
 };

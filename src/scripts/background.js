@@ -1990,11 +1990,6 @@ window.TogglButton = {
           db.updateSetting('rememberProjectPer', request.state);
           db.resetDefaultProjects();
         } else if (
-          request.type === 'update-dont-show-permissions' ||
-          request.type === 'update-settings-active-tab'
-        ) {
-          db.updateSetting(request.type.substr(7), request.state);
-        } else if (
           request.type === 'update-send-usage-statistics'
         ) {
           db.updateSetting('sendUsageStatistics', request.state);

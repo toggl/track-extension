@@ -7,7 +7,7 @@ togglbutton.render('#task-detail-view:not(.toggl)', { observe: true }, function 
   }
 
   function getDescription () {
-    const descriptionEl = elem.querySelector('#tasktitle div[contenteditable]');
+    const descriptionEl = elem.querySelector('.task-title');
     return descriptionEl ? descriptionEl.textContent.trim() : '';
   }
 

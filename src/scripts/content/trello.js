@@ -71,9 +71,13 @@ togglbutton.render(
       description: getDescription,
       container: '.window-wrapper'
     });
-
-    link.classList.add('checklist-item-menu');
-    elem.querySelector('.checklist-item-menu-wrapper').appendChild(link);
+    const wrapper = document.createElement('span');
+    wrapper.classList.add('checklist-item-menu');
+    wrapper.style.display = 'flex';
+    wrapper.style.alignItems = 'center';
+    wrapper.style.marginRight = '4px';
+    wrapper.appendChild(link);
+    elem.querySelector('.checklist-item-controls').appendChild(wrapper);
   },
   '.checklist-items-list, .window-wrapper'
 );

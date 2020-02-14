@@ -1,3 +1,10 @@
+## [1.60.3](https://github.com/toggl/toggl-button/compare/1.60.2...1.60.3) (2020-02-14)
+
+
+### Bug Fixes
+
+* **ticktick:** Fix TickTick not filling in timer description ([e8c36ec](https://github.com/toggl/toggl-button/commit/e8c36ec)), closes [#1670](https://github.com/toggl/toggl-button/issues/1670)
+
 ## [1.60.2](https://github.com/toggl/toggl-button/compare/1.60.1...1.60.2) (2020-02-11)
 
 

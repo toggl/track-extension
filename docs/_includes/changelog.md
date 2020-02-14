@@ -1,3 +1,10 @@
+## [1.60.4](https://github.com/toggl/toggl-button/compare/1.60.3...1.60.4) (2020-02-14)
+
+
+### Bug Fixes
+
+* **trello:** Restore support for Trello check-lists ([6711a8e](https://github.com/toggl/toggl-button/commit/6711a8e)), closes [#1672](https://github.com/toggl/toggl-button/issues/1672)
+
 ## [1.60.3](https://github.com/toggl/toggl-button/compare/1.60.2...1.60.3) (2020-02-14)
 
 

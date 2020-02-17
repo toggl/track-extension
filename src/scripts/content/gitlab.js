@@ -30,7 +30,7 @@ togglbutton.render(
 );
 
 togglbutton.render(
-  '.merge-request-details .detail-page-description:not(.toggl)',
+  '.merge-request-details > .detail-page-description:not(.toggl)',
   { observe: true },
   function (elem) {
     const breadcrumbsSubTitle = getBreadcrumbsSubTitle();

@@ -21,7 +21,7 @@ togglbutton.render('#detailBar > div:not(.toggl)', { observe: true }, function (
     return project
       ? project.textContent
         .trim()
-        .replace('<', '')
+        .replace(/</g, '')
         .trim()
       : '';
   };

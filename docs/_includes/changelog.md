@@ -1,3 +1,10 @@
+## [1.60.5](https://github.com/toggl/toggl-button/compare/1.60.4...1.60.5) (2020-02-24)
+
+
+### Bug Fixes
+
+* **gitlab:** Fix Gitlab MR showing two Toggl buttons ([f7b9c8c](https://github.com/toggl/toggl-button/commit/f7b9c8c))
+
 ## [1.60.4](https://github.com/toggl/toggl-button/compare/1.60.3...1.60.4) (2020-02-14)
 
 

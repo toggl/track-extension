@@ -104,9 +104,7 @@ function buildParameters (expression) {
 
   let parameters = [];
   try {
-    console.log('jsonata', json, expression);
     parameters = window.jsonata(expression).evaluate(json);
-    console.log('jsonata result', parameters);
   } catch (e) {
     console.error('jsonata error', e);
   }

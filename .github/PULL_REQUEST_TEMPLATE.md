@@ -2,7 +2,7 @@ Please remember the [Contributing Guidelines](https://github.com/toggl/toggl-but
 
 ## :star2: What does this PR do?
 
-<!-- Concise description of what this PR achieves, including any context. -->
+<!-- A Concise description of what this PR achieves, including any context. -->
 
 <!-- If you're adding a new integration, please make sure it follows the "style guide" https://github.com/toggl/toggl-button/blob/master/.github/CONTRIBUTING.md -->
 

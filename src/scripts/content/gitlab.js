@@ -2,7 +2,6 @@
 
 // jsonata jsonataExpression for tags, must return an array of tags
 // @see http://docs.jsonata.org/overview.html
-// http://try.jsonata.org/Hkg_K4EZL
 const jsonataExpression = `
 {
   "projectName" : project.name,

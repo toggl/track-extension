@@ -17,7 +17,8 @@ togglbutton.render(
         description;
     }
 
-    insertButton(description);
+    insertButton($('.detail-page-header-actions'), description, true);
+    insertButton($('.time_tracker'), description);
   }
 );
 
@@ -40,12 +41,17 @@ togglbutton.render(
         description;
     }
 
-    insertButton(description);
+    insertButton($('.detail-page-header-actions'), description, true);
+    insertButton($('.time_tracker'), description);
   }
 );
 
-function insertButton (description) {
-  const el = $('.time_tracker');
+/**
+ * @param $el
+ * @param {String} description
+ * @param {boolean} prepend
+ */
+function insertButton ($el, description, prepend = false) {
   const link = togglbutton.createTimerLink({
     className: 'gitlab',
     description: description,
@@ -53,7 +59,11 @@ function insertButton (description) {
     projectName: getProjectSelector
   });
 
-  el.parentElement.appendChild(link, el);
+  if (prepend) {
+    $el.parentElement.insertBefore(link, $el);
+  } else {
+    $el.parentElement.appendChild(link, $el);
+  }
 }
 
 function getTitle (parent) {

@@ -1,6 +1,9 @@
 'use strict';
 /* global togglbutton, $ */
 
+const stylesheet = document.styleSheets.item(document.styleSheets.length - 1);
+stylesheet.insertRule('.toggl-button.active {visibility:visible !important}');
+
 togglbutton.render(
   '.ListItem:not(.toggl)',
   { observe: true },
@@ -24,7 +27,6 @@ togglbutton.render(
     });
     link.classList.add('task-link');
     link.setAttribute('style', linkStyle);
-    console.error($container);
     $('.ListItem-text', $container).after(link);
     $container.onmouseenter = () => {
       console.log(link.style.visibility);

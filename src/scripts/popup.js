@@ -551,6 +551,17 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
     document
+      .querySelector('.header .log-out')
+      .addEventListener('click', function () {
+        const request = {
+          type: 'logout',
+          respond: false
+        };
+
+        browser.runtime.sendMessage(request);
+      });
+
+    document
       .querySelector('#workspace')
       .addEventListener('submit', function (event) {
         event.preventDefault();

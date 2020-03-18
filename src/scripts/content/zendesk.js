@@ -7,7 +7,7 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
   const projectName = $('title').textContent;
 
   const titleFunc = function () {
-    const titleElem = $('.selected .tab_text .title');
+    const titleElem = $('[data-test-id="header-tab-title"]');
     const ticketNum = location.href.match(/tickets\/(\d+)/);
 
     if (titleElem !== null) {

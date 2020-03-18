@@ -1,3 +1,10 @@
+## [1.60.6](https://github.com/toggl/toggl-button/compare/1.60.5...1.60.6) (2020-03-18)
+
+
+### Bug Fixes
+
+* **zendesk:** Fix title selector ([a755af6](https://github.com/toggl/toggl-button/commit/a755af6)), closes [#1689](https://github.com/toggl/toggl-button/issues/1689)
+
 ## [1.60.5](https://github.com/toggl/toggl-button/compare/1.60.4...1.60.5) (2020-02-24)
 
 

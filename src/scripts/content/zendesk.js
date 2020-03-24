@@ -7,11 +7,11 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
   const projectName = $('title').textContent;
 
   const titleFunc = function () {
-    const titleElem = $('[data-test-id="header-tab-title"]');
+    const titleElem = $('.editable .ember-view input', elem);
     const ticketNum = location.href.match(/tickets\/(\d+)/);
 
     if (titleElem !== null) {
-      description = titleElem.textContent.trim();
+      description = titleElem.value.trim();
     }
 
     if (ticketNum) {

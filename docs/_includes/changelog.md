@@ -1,3 +1,10 @@
+## [1.60.7](https://github.com/toggl/toggl-button/compare/1.60.6...1.60.7) (2020-03-24)
+
+
+### Bug Fixes
+
+* **zendesk:** Fix title for Zendesk integration ([05118b6](https://github.com/toggl/toggl-button/commit/05118b6)), closes [#1689](https://github.com/toggl/toggl-button/issues/1689)
+
 ## [1.60.6](https://github.com/toggl/toggl-button/compare/1.60.5...1.60.6) (2020-03-18)
 
 

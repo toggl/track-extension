@@ -544,6 +544,11 @@ export default {
     name: 'Microsoft To-Do',
     file: 'microsoft-to-do.js'
   },
+  'to-do.office.com': {
+    url: '*://*.to-do.office.com/*',
+    name: 'Microsoft To-Do',
+    file: 'microsoft-to-do.js'
+  },
   'todoist.com': {
     url: '*://*.todoist.com/app*',
     name: 'Todoist'

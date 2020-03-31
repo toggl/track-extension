@@ -1,6 +1,6 @@
 'use strict';
 
-const browser = require('webextension-polyfill');
+// const browser = require('webextension-polyfill');
 
 // Jira 2017 board sidebar
 togglbutton.render(
@@ -15,7 +15,7 @@ togglbutton.render(
     const container = createTag('div', 'jira-ghx-toggl-button');
     const titleElem = $('[spacing] h1', rootElem);
     const numElem = $('[spacing] a', rootElem);
-    const projectElem = $('.bgdPDV');
+    // const projectElem = $('.bgdPDV');
     const epic = getEpic();
     let description = epic + titleElem.textContent;
     if (numElem !== null) {
@@ -26,7 +26,8 @@ togglbutton.render(
       className: 'jira2017',
       description: description,
       buttonType: 'minimal',
-      projectName: projectElem && projectElem.textContent
+      // projectName: projectElem && projectElem.textContent
+      projectId: getProjectId
     });
 
     container.appendChild(link);
@@ -54,38 +55,17 @@ togglbutton.render(
       console.info('🏃 "Jira 2019-06 issue page" rendering');
     }
 
-    // const link = togglbutton.createTimerLink({
-    //   className: 'jira2018',
-    //   description: () => {
-    //     const epic = getEpic();
+    const link = togglbutton.createTimerLink({
+      className: 'jira2018',
+      description: () => {
+        const epic = getEpic();
 
-    //     return epic + getDescription(issueNumberElement)();
-    //   },
-    //   // projectName: getProject
-    //   // projectName: getProjectId
-    //   projectId: getProjectId
-    // });
+        return epic + getDescription(issueNumberElement)();
+      },
+      projectId: getProjectId
+    });
 
-    // container.appendChild(link);
-
-    const createLink = (projectId) => {
-      if (document.querySelector('.toggl-button')) {
-        return;
-      }
-
-      const link = togglbutton.createTimerLink({
-        className: 'jira2018',
-        description: () => {
-          const epic = getEpic();
-          return epic + getDescription(issueNumberElement)();
-        },
-        projectId: projectId
-      });
-
-      container.appendChild(link);
-    };
-
-    addLinkWithProject(createLink);
+    container.appendChild(link);
   }
 );
 
@@ -110,38 +90,17 @@ togglbutton.render(
       console.info('🏃 "Jira 2019-06 board page" rendering');
     }
 
-    // const link = togglbutton.createTimerLink({
-    //   className: 'jira2018',
-    //   description: () => {
-    //     const epic = getEpic();
+    const link = togglbutton.createTimerLink({
+      className: 'jira2018',
+      description: () => {
+        const epic = getEpic();
 
-    //     return epic + getDescription(issueNumberElement)();
-    //   },
-    //   // projectName: getProject
-    //   // projectName: getProjectId
-    //   projectId: getProjectId
-    // });
+        return epic + getDescription(issueNumberElement)();
+      },
+      projectId: getProjectId
+    });
 
-    // container.appendChild(link);
-
-    const createLink = (projectId) => {
-      if (document.querySelector('.toggl-button')) {
-        return;
-      }
-
-      const link = togglbutton.createTimerLink({
-        className: 'jira2018',
-        description: () => {
-          const epic = getEpic();
-          return epic + getDescription(issueNumberElement)();
-        },
-        projectId: projectId
-      });
-
-      container.appendChild(link);
-    };
-
-    addLinkWithProject(createLink);
+    container.appendChild(link);
   }
 );
 
@@ -320,16 +279,18 @@ function getEpic () {
 
 function getProjectOpenAir () {
   let project = '';
-  const headers = document.querySelectorAll('h2');
-  if (headers) {
-    const arr = Array.from(headers);
-    const projHeader = arr.find(h => h.textContent === 'OpenAir Project information');
-    if (projHeader) {
-      const projElem = projHeader.parentNode.parentNode.querySelector("[class^='Content-'] > div > div");
-      if (projElem) {
-        project = projElem.textContent;
-      }
+  const button = document.querySelector('button[aria-label*="OpenAir Project"');
+
+  if (button) {
+    const div = button.parentNode.querySelector('div');
+
+    if (div) {
+      project = div.innerHTML;
     }
+  }
+
+  if (!project) {
+    console.log('No project name found.');
   }
 
   return project;
@@ -337,121 +298,52 @@ function getProjectOpenAir () {
 
 function getTaskOpenAir () {
   let task = '';
-  const headers = document.querySelectorAll('h2');
-  if (headers) {
-    const arr = Array.from(headers);
-    const taskheader = arr.find(h => h.textContent === 'OpenAir Task information');
-    if (taskheader) {
-      const taskElem = taskheader.parentNode.parentNode.querySelector("[class^='Content-'] > div > div");
-      if (taskElem) {
-        task = taskElem.textContent;
-      }
+  const button = document.querySelector('button[aria-label*="OpenAir Task"');
+
+  if (button) {
+    const div = button.parentNode.querySelector('div');
+
+    if (div) {
+      task = div.innerHTML;
     }
+  }
+
+  if (!task) {
+    console.log('No task name found.');
   }
 
   return task;
 }
 
-function getProjectId (project, task) {
-  const client = togglbutton.user.clients.find(c => c.name === project);
-  if (client) {
-    const proj = togglbutton.user.projects.find(p => p.cid === client.id && p.name === task);
-    if (proj) {
-      return proj.id;
-    }
-  }
-}
+function getProjectId () {
+  const project = getProjectOpenAir();
+  const task = getTaskOpenAir();
 
-function createProject (task, clientObj, workspaceId) {
-  if (!(task && clientObj && workspaceId)) {
-    return Promise.resolve();
-  }
-
-  const projectObj = togglbutton.user.projects.find(p => p.name === task && p.cid === clientObj.id);
-  if (projectObj) {
-    return Promise.resolve(projectObj);
-  }
-
-  return backgroundApiCall(
-    { project: { name: task, wid: workspaceId, /* "is_private":true, */ cid: clientObj.id } },
-    'https://www.toggl.com/api/v8/projects',
-    'POST'
-  ).then(res => {
-    if (res.data && res.data.id) {
-      console.log('created project', res.data);
-      return res.data;
-    } else {
-      throw new Error('createProjectError');
-    }
-  });
-}
-
-function createClient (project, workspaceId) {
-  if (!(project && workspaceId)) {
-    return Promise.resolve();
+  if (!(project && task)) {
+    return;
   }
 
   const client = togglbutton.user.clients.find(c => c.name === project);
-  if (client) {
-    return Promise.resolve(client);
+  if (!client) {
+    console.log(`No matching client found for ${project}`);
+    return;
   }
 
-  return backgroundApiCall(
-    { client: { name: project, wid: workspaceId } },
-    'https://www.toggl.com/api/v8/clients',
-    'POST'
-  ).then(res => {
-    if (res.data && res.data.id) {
-      console.log('created client: ', res.data);
-      return res.data;
-    } else {
-      throw new Error('createClientError');
-    }
-  });
+  const proj = togglbutton.user.projects.find(p => p.cid === client.id && p.name === task);
+  if (!proj) {
+    console.log(`No matching project found for ${task}`);
+    return;
+  }
+
+  return proj.id;
 }
 
-function backgroundApiCall (payload, url, method) {
-  // Send to background script
-  return browser.runtime.sendMessage({
-    type: 'apiCall',
-    payload: payload,
-    url: url,
-    method: method
-  });
-}
-
-function addNewProject (project, task) {
-  const workspaceId = togglbutton.user.workspaces[0].id;
-  return createClient(project, workspaceId)
-    .then(clientObj => {
-      return createProject(task, clientObj, workspaceId);
-    })
-    .then(projectObj => {
-      return browser.runtime.sendMessage({ type: 'sync', respond: true })
-        .then(res => {
-          return projectObj;
-        });
-    });
-}
-
-function addLinkWithProject (createLink) {
-  setTimeout(() => {
-    const project = getProjectOpenAir();
-    const task = getTaskOpenAir();
-    const projId = getProjectId(project, task);
-    if (projId || !(project && task)) {
-      console.log(projId, project, task);
-      createLink(projId);
-    } else {
-      console.log(projId, project, task);
-      addNewProject(project, task)
-        .then(projectObj => {
-          createLink(projectObj ? projectObj.id : undefined);
-        })
-        .catch((err) => {
-          console.log('addLinkCatch', err);
-          createLink();
-        });
-    }
-  }, 750);
-}
+// function backgroundApiCall (payload, url, method) {
+//   // Send to background script
+//   return browser.runtime.sendMessage({
+//     type: 'apiCall',
+//     payload: payload,
+//     url: url,
+//     method: method
+//   });
+// }

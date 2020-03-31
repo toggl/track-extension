@@ -1,3 +1,10 @@
+## [1.60.8](https://github.com/toggl/toggl-button/compare/1.60.7...1.60.8) (2020-03-31)
+
+
+### Bug Fixes
+
+* **help:** Point the User Guide to the correct KB article ([c5c4fe2](https://github.com/toggl/toggl-button/commit/c5c4fe2)), closes [#1700](https://github.com/toggl/toggl-button/issues/1700)
+
 ## [1.60.7](https://github.com/toggl/toggl-button/compare/1.60.6...1.60.7) (2020-03-24)
 
 

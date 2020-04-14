@@ -182,6 +182,14 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-right: 5px; /* Ensure any additional controls are spaced  */
 }
 
+.toggl-button.asana-board-view {
+  opacity: 0;
+}
+
+.BoardCard--hover .toggl-button.asana-board-view {
+  opacity: 1;
+}
+
 /********* PODIO *********/
 .toggl-button.podio {
   width: 65px;

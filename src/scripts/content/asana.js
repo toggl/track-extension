@@ -1,5 +1,31 @@
 'use strict';
 
+// Board view, 2020. Inserts button next to assignee/due date.
+togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true },
+  boadCardElem => {
+    const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-name').textContent.trim();
+
+    const projectSelector = () => {
+      const projectElement = document.querySelector('.TopbarPageHeaderStructure-titleRow > h1');
+      if (!projectElement) return '';
+
+      return projectElement.textContent.trim();
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'asana-board-view',
+      description: descriptionSelector,
+      projectName: projectSelector,
+      buttonType: 'minimal'
+    });
+
+    const injectContainer = boadCardElem.querySelector('.BoardCard-rightMetadata');
+    if (injectContainer) {
+      injectContainer.insertAdjacentElement('afterbegin', link);
+    }
+  }
+);
+
 // Spreadsheet view, 2019. Inserts button next to to the task name.
 togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe: true },
   function (taskNameCell) {

@@ -316,6 +316,11 @@ window.togglbutton = {
     editForm.style.top = position.top + 'px';
     editForm.style.position = 'fixed';
     editForm.classList.add('toggl-integration');
+
+    // Some integrations uses trap zones which prevents from focus everything inside this element
+    // See: https://github.com/theKashey/focus-lock
+    editForm.setAttribute('data-no-focus-lock', true);
+
     // if a container was provided to createTimerlink, append editForm to that container
     // for avoiding unwanted interactions with some services' events
     const container = response.container ? document.querySelector(response.container) : document.body;

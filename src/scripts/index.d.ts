@@ -217,3 +217,13 @@ interface FailureResponse {
 }
 
 type ButtonResponse = SuccessResponse | FailureResponse;
+
+interface CustomTemplateMessage {
+  customTemplate: string;
+  useCustomTemplate: boolean;
+
+}
+
+interface CustomTemplateParserMap {
+  [key: string]: string|((...args: any[]) => string);
+}

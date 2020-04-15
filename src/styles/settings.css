@@ -46,7 +46,7 @@ body {
   color: var(--text-color);
   font-family: Roboto, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
-} 
+}
 
 body {
   height: 100vh;
@@ -673,4 +673,10 @@ section .field--showDetails .subsettings-details {
 
 body[data-show-review-banner="true"] #review-prompt {
   transform: translateY(0);
+}
+
+.custom-template-input:disabled {
+  background-color: var(--border-color);
+  color: var(--light-text);
+  cursor: not-allowed;
 }

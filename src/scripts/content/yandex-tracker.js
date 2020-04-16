@@ -5,7 +5,7 @@
 togglbutton.render('.b-ticket:not(.toggl)', { observe: true }, $container => {
   const description = [
     '.b-ticket-info__item.b-ticket-info__item_is_key',
-    '.b-ticket__title'
+    '.b-ticket__title div[title]'
   ]
     .map(selector => $(selector, $container).textContent.trim())
     .join(': ');

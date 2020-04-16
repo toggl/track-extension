@@ -699,6 +699,10 @@ export default {
     name: 'VivifyScrum',
     clone: 'true'
   },
+  'tracker.yandex.ru': {
+    url: '*://tracker.yandex.ru/*',
+    name: 'Yandex Tracker'
+  },
   'zammad.com': {
     url: '*://*.zammad.com/*',
     name: 'Zammad'

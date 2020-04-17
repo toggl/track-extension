@@ -874,6 +874,9 @@ window.TogglButton = {
                   browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user });
                 }));
             }
+            if (xhr.status === 400 && xhr.response && xhr.response.includes('please add a')) {
+              TogglButton.showUnmetConstraintsNotification(xhr.response);
+            }
           },
           onError: function (xhr) {
             resolve({
@@ -920,6 +923,9 @@ window.TogglButton = {
                   browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user });
                 }));
             }
+            if (xhr.status === 400 && xhr.response && xhr.response.includes('please add a')) {
+              TogglButton.showUnmetConstraintsNotification(xhr.response);
+            }
           },
           onError: function (xhr) {
             resolve({
@@ -930,6 +936,20 @@ window.TogglButton = {
         }
       );
     });
+  },
+
+  showUnmetConstraintsNotification: function (message) {
+    const notificationId = 'unmet-constraints';
+    const options = {
+      type: 'basic',
+      iconUrl: 'images/icon-128.png',
+      title: 'Toggl Button',
+      message,
+      priority: 2
+    };
+
+    TogglButton.hideNotification(notificationId);
+    browser.notifications.create(notificationId, options);
   },
 
   pomodoroStopTimeTracking: async function () {

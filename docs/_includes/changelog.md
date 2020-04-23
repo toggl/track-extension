@@ -1,3 +1,10 @@
+## [1.60.9](https://github.com/toggl/toggl-button/compare/1.60.8...1.60.9) (2020-04-23)
+
+
+### Bug Fixes
+
+* **form:** Add no focus lock attribute to form ([4b6d9bd](https://github.com/toggl/toggl-button/commit/4b6d9bd)), closes [#1704](https://github.com/toggl/toggl-button/issues/1704)
+
 ## [1.60.8](https://github.com/toggl/toggl-button/compare/1.60.7...1.60.8) (2020-03-31)
 
 

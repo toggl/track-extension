@@ -1,82 +1,50 @@
 'use strict';
 /* global togglbutton, $ */
 
-/* Task more menu (formerly bullet hover) */
+// The bullet that has been interacted with most recently.
+let recentBullet = null;
+
+// The timer link (from createTimerLink).
+// Must be global so that its title can be updated to reflect the bullet
+// that has been interacted with most recently.
+let link = null;
+
 togglbutton.render(
-  '.name:not(.toggl) div:not(.toggl) > .flyout.menu',
+  '.header:not(.toggl)',
   { observe: true },
   $container => {
-    const $bulletInfo = $('.content', $container.closest('.name'));
+    if ($container.querySelector('.toggl-button')) {
+      // Check for existence in case it's there from a previous render
+      return;
+    }
 
-    const descriptionSelector = () => {
-      return getDescription($bulletInfo);
-    };
-
-    const tagsSelector = () => {
-      return getTags($bulletInfo);
-    };
-
-    const link = togglbutton.createTimerLink({
+    link = togglbutton.createTimerLink({
       className: 'workflowy',
-      description: descriptionSelector,
-      tags: tagsSelector
+      buttonType: 'minimal',
+      description: getDescription,
+      tags: getTags
     });
 
-    insertLink($container, link);
+    $container.insertBefore(link, $container.children[3]);
   }
 );
 
-/* More Options Menu Popup */
-togglbutton.render(
-  '.pageMenu:not(.toggl) > .flyout.menu',
-  { observe: true },
-  $container => {
-    // Get the content of the top bullet.
-    const $bulletInfo = $('.content');
-
-    const descriptionSelector = () => {
-      return getDescription($bulletInfo);
-    };
-
-    const tagsSelector = () => {
-      return getTags($bulletInfo);
-    };
-
-    const link = togglbutton.createTimerLink({
-      className: 'workflowy',
-      description: descriptionSelector,
-      tags: tagsSelector
-    });
-
-    insertLink($container, link);
+// Updates the bullet that has been interacted with most recently.
+// Updates the link's title to match.
+document.addEventListener('focusin', function (e) {
+  const focus = document.activeElement;
+  if (focus.className.includes('content')) {
+    recentBullet = focus;
   }
-);
+  // TODO: May want to move this into a function in case toggl-button ever
+  //   supports i18n.
+  link.title = 'Start timer: ' + getDescription();
+});
 
-togglbutton.render(
-  '.menu.itemMenu:not(.toggl) > .flyout.menu',
-  { observe: true },
-  $container => {
-    const $bulletInfo = $('.content', $container.parentElement.parentElement);
+function getDescription () {
+  // Current most recently focused bullet or top bullet.
+  const bulletInfo = recentBullet || $('.content');
 
-    const descriptionSelector = () => {
-      return getDescription($bulletInfo);
-    };
-
-    const tagsSelector = () => {
-      return getTags($bulletInfo);
-    };
-
-    const link = togglbutton.createTimerLink({
-      className: 'workflowy',
-      description: descriptionSelector,
-      tags: tagsSelector
-    });
-
-    insertLink($container, link);
-  }
-);
-
-function getDescription (bulletInfo) {
   let description = '';
   let currentNode = bulletInfo.childNodes[0];
   while (currentNode !== bulletInfo) {
@@ -110,7 +78,10 @@ function getDescription (bulletInfo) {
   return description.trim();
 }
 
-function getTags (bulletInfo) {
+function getTags () {
+  // Current most recently focused bullet or top bullet.
+  const bulletInfo = recentBullet || $('.content');
+
   const tagsArray = [];
   let currentNode = bulletInfo.childNodes[0];
   while (currentNode !== bulletInfo) {
@@ -138,33 +109,4 @@ function getTags (bulletInfo) {
     currentNode = nextNode;
   }
   return tagsArray;
-}
-
-function insertLink (popup, link) {
-  const INSERT_POSITION = 3;
-
-  const templateMenuItem = popup.children[0];
-  const templateSpan = templateMenuItem.children[0];
-  const templateLink = templateSpan.children[0];
-
-  link.className += ' ' + templateLink.className;
-  const span = document.createElement('span');
-  span.className += ' ' + templateSpan.className;
-  span.appendChild(link);
-  const menuItem = document.createElement('div');
-  menuItem.className += ' ' + templateMenuItem.className;
-  menuItem.appendChild(span);
-  popup.insertBefore(menuItem, popup.children[INSERT_POSITION]);
-
-  // We have to add the toggl class to the parent of the popup,
-  // because the popup's classes get overwritten by workflowy.
-  const parent = popup.parentElement;
-  parent.classList.add('toggl');
-
-  // And remove the class when the popup is deleted.
-  const observer = new MutationObserver(function (mutationsList, observer) {
-    parent.classList.remove('toggl');
-    observer.disconnect();
-  });
-  observer.observe(parent, { childList: true });
 }

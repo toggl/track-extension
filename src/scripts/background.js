@@ -590,7 +590,12 @@ window.TogglButton = {
         });
       });
     }
-    const shouldIncludeTags = (enableAutoTagging || type === 'list-continue' || type === 'resume');
+    const shouldIncludeTags = (
+      enableAutoTagging || // Auto-add tags found in integration script
+      type === 'list-continue' || // Include tags when using Continue in the UI
+      type === 'resume' || // Include tags when continuing latest entry in reminder notification
+      type === 'idle-detection-notification-continue' // Include tags when using Continue-and-discard in idle detection
+    );
 
     entry = {
       start: start.toISOString(),
@@ -1737,6 +1742,7 @@ window.TogglButton = {
         }).then(() => {
           // discard idle time and continue
           if (buttonID === 1) {
+            timeEntry.type = 'idle-detection-notification-continue';
             TogglButton.createTimeEntry(timeEntry);
             buttonName = 'discard_continue';
           }

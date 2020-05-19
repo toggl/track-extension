@@ -1053,19 +1053,8 @@ div[data-qa="channel_header__buttons"] .toggl-button.slack {
 }
 
 /********* EVERNOTE *********/
-.toggl-wrapper.evernote {
-  display: inline-block;
-  margin-top: 5px;
-  min-width: 100px;
-}
-
 .toggl-button.evernote {
-  font-family: gotham, helvetica, arial, sans-serif !important;
-  font-size: 13px !important;
-}
-
-.toggl-button.evernote-2018 {
-  margin: 0 5px 0 10px;
+  margin-right: 18px;
 }
 
 /********* OPENPROJECT *********/

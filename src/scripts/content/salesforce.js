@@ -92,25 +92,33 @@ togglbutton.render(
   }
 );
 
+const lightningSelector = (selector) => {
+  // Navigate around many views being present in the DOM, hidden/revealed at various times
+  return $(`.slds-template__container > .lafSinglePaneWindowManager >.windowViewMode-normal ${selector}`);
+};
+
 togglbutton.render(
-  '.slds-page-header__title:not(.toggl)',
+  '.utilitybar.slds-utility-bar:not(.toggl)',
   { observe: true },
   function (elem) {
-    const description = $('.uiOutputText:not(.selectedListView)', elem);
-    if (!description) {
-      // Looks like a title not relevant to a record, ignore.
-      return;
-    }
-
     const getDescription = () => {
-      return description.textContent.trim();
+      let description = lightningSelector('.slds-page-header__title .uiOutputText:not(.selectedListView)');
+      if (!description) description = lightningSelector('.slds-page-header__title lightning-formatted-name');
+      if (!description) description = lightningSelector('.slds-page-header__title lightning-formatted-text');
+      return description ? description.textContent.trim() : '';
     };
+
     const getProject = () => {
-      let project = $('[title="Account Name"]');
-      if (!project) project = $('[title="Related To"]');
+      // If there's localization these will fail, but we're mostly out of options.
+      let project = lightningSelector('[title="Account Name"]');
+      if (!project) project = lightningSelector('[title="Related To"]');
+      if (!project) project = lightningSelector('[title="Company"]');
 
       if (project) {
-        return project.nextSibling.textContent.trim();
+        // We must try to go deep, since .textContent doesn't work at all on some components.
+        let innerEl = project.nextSibling.querySelector('a');
+        if (!innerEl) innerEl = project.nextSibling.querySelector('lightning-formatted-text');
+        return innerEl ? innerEl.textContent.trim() : '';
       }
       return getDescription();
     };
@@ -118,9 +126,12 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'salesforce',
       description: getDescription,
-      projectName: getProject,
-      buttonType: 'minimal'
+      projectName: getProject
     });
-    description.appendChild(link);
-  }, 'header,.active,.oneRecordHomeFlexipage'
+
+    const wrapper = document.createElement('li');
+    wrapper.classList.add('slds-utility-bar__item', 'slds-utility-bar__action', 'toggl-button-salesforce-wrapper');
+    wrapper.appendChild(link);
+    elem.appendChild(wrapper);
+  }
 );

@@ -854,19 +854,15 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   padding-right: 5px;
   margin-bottom: -6px;
 }
-
 .toggl-button.salesforce-legacy:not(.minimal) {
   margin-left: 5px;
   font-size: 12px;
   text-decoration: none;
   font-weight: normal;
 }
-
-.toggl-button:not(.toggl-button-edit-form-button).salesforce {
-  margin-top: 0;
-  position: relative;
-  top: 2px;
-  left: 5px;
+/* Lightning UI */
+.toggl-button-salesforce-wrapper {
+  margin-left: auto;
 }
 .custom-truncate .toggl-button.salesforce {
   /* avoid button image being truncated */

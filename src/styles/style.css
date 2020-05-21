@@ -1519,3 +1519,10 @@ body.notion-body.dark .toggl-button.notion {
 [data-toggl="loanDrawer"] .toggl-button.brokerengine {
   margin-left: 12px;
 }
+
+/********* LiveAgent *********/
+.toggl-button.liveagent{
+  cursor: pointer;
+  margin: 1em;
+  text-Align :center;
+}

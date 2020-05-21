@@ -299,6 +299,11 @@ export default {
     url: '*://app.liquidplanner.com/*',
     name: 'Liquidplanner'
   },
+  'ladesk.com': {
+    url: '*://*.ladesk.com/*',
+    name: 'LiveAgent',
+    file: 'liveagent.js'
+  },
   'mantishub.com': {
     url: '*://*.mantishub.com/*',
     name: 'Mantishub'

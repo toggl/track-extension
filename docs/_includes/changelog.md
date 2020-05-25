@@ -1,3 +1,10 @@
+## [1.60.10](https://github.com/toggl/toggl-button/compare/1.60.9...1.60.10) (2020-05-25)
+
+
+### Bug Fixes
+
+* **idle-detection:** Fix tags not being included when using discard + continue option ([#1731](https://github.com/toggl/toggl-button/issues/1731)) ([d28df63](https://github.com/toggl/toggl-button/commit/d28df63)), closes [#1717](https://github.com/toggl/toggl-button/issues/1717)
+
 ## [1.60.9](https://github.com/toggl/toggl-button/compare/1.60.8...1.60.9) (2020-04-23)
 
 

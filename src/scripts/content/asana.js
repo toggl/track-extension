@@ -43,7 +43,9 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
       if (!projectHeader) {
         return '';
       }
-      return projectHeader.textContent.trim();
+      return projectHeader.textContent
+        .replace(/\u00a0/g, ' ') // There can be &nbsp; in Asana header content
+        .trim();
     };
     const projectSelector = () => {
       const projectCell = container.querySelector('.SpreadsheetTaskRow-projectsCell');

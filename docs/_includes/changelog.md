@@ -1,3 +1,10 @@
+## [1.60.11](https://github.com/toggl/toggl-button/compare/1.60.10...1.60.11) (2020-05-25)
+
+
+### Bug Fixes
+
+* **asana:** Fix Asana not matching project names ([#1734](https://github.com/toggl/toggl-button/issues/1734)) ([2c712a6](https://github.com/toggl/toggl-button/commit/2c712a6)), closes [#1730](https://github.com/toggl/toggl-button/issues/1730)
+
 ## [1.60.10](https://github.com/toggl/toggl-button/compare/1.60.9...1.60.10) (2020-05-25)
 
 

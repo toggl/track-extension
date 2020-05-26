@@ -49,7 +49,8 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'visual-studio-online',
       description: descriptionSelectorFactory(activeHeaderContainer),
-      projectName: projectSelector
+      projectName: projectSelector,
+      container: '.work-item-form-main-header'
     });
 
     // For new layout vs_activeClassElem is not longer required, we can skip it

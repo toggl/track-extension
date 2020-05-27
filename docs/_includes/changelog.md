@@ -1,3 +1,10 @@
+## [1.60.12](https://github.com/toggl/toggl-button/compare/1.60.11...1.60.12) (2020-05-27)
+
+
+### Bug Fixes
+
+* **salesforce:** Fix Salesforce Lightning buttons being temperemental ([#1736](https://github.com/toggl/toggl-button/issues/1736)) ([8289ee5](https://github.com/toggl/toggl-button/commit/8289ee5)), closes [#1724](https://github.com/toggl/toggl-button/issues/1724)
+
 ## [1.60.11](https://github.com/toggl/toggl-button/compare/1.60.10...1.60.11) (2020-05-25)
 
 

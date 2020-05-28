@@ -1,3 +1,10 @@
+## [1.60.13](https://github.com/toggl/toggl-button/compare/1.60.12...1.60.13) (2020-05-28)
+
+
+### Bug Fixes
+
+* **evernote:** Fix Evernote integration ([#1732](https://github.com/toggl/toggl-button/issues/1732)) ([1926124](https://github.com/toggl/toggl-button/commit/1926124))
+
 ## [1.60.12](https://github.com/toggl/toggl-button/compare/1.60.11...1.60.12) (2020-05-27)
 
 

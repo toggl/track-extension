@@ -38,7 +38,7 @@ togglbutton.render('.kr-row:not(.toggl)', { observe: true }, function (elem) {
       {
         className: 'coda',
         buttonType: 'minimal',
-        description: row.cells[task].text
+        description: row.cells[task].text + ' - #' + row.cells[task].id
       },
       project > 0 && {
         projectName: row.cells[project].text

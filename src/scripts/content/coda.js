@@ -33,12 +33,18 @@ togglbutton.render('.kr-row:not(.toggl)', { observe: true }, function (elem) {
   if (!isTask) return;
 
   // build the button
-  const link = togglbutton.createTimerLink({
-    className: 'coda',
-    buttonType: 'minimal',
-    projectName: row.cells[project].text,
-    description: row.cells[task].text
-  });
+  const link = togglbutton.createTimerLink(
+    Object.assign(
+      {
+        className: 'coda',
+        buttonType: 'minimal',
+        description: row.cells[task].text
+      },
+      project > 0 && {
+        projectName: row.cells[project].text
+      }
+    )
+  );
 
   // style it for coda
   const wrapper = document.createElement('div');
@@ -48,6 +54,6 @@ togglbutton.render('.kr-row:not(.toggl)', { observe: true }, function (elem) {
   wrapper.style.justifyContent = 'center';
   wrapper.appendChild(link);
 
-  // insert it just before the task description
-  elem.insertBefore(wrapper, row.cells[task].cell);
+  // add it to the end of the task
+  elem.appendChild(wrapper);
 });

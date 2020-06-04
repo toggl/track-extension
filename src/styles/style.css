@@ -425,6 +425,12 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   font-weight: initial;
 }
 
+.toggl-button.zendesk-agent-ws:not(.toggl-button-edit-form-button) {
+  margin-right: 15px;
+
+  font-weight: initial;
+}
+
 /********* ANYDO *********/
 .toggl-button.anydo {
   color: #099acb;

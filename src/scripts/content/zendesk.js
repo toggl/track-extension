@@ -33,3 +33,33 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
 
   elem.insertBefore(link, elem.querySelector('.btn-group'));
 });
+
+togglbutton.render('[data-test-id="customer-context-tab-navigation"]', { observe: true }, function (
+  elem
+) {
+  // Manual check for existence in this SPA.
+  if (elem.querySelector('.toggl-button')) return;
+
+  const titleFunc = function () {
+    let description;
+
+    const titleElem = document.querySelector('[aria-label="Subject"]');
+    const ticketNum = location.href.match(/tickets\/(\d+)/);
+
+    if (titleElem !== null) {
+      description = titleElem.value.trim();
+    }
+
+    if (ticketNum) {
+      description = '#' + ticketNum[1].trim() + ' ' + description;
+    }
+    return description;
+  };
+
+  const link = togglbutton.createTimerLink({
+    className: 'zendesk-agent-ws',
+    description: titleFunc
+  });
+
+  elem.prepend(link);
+});

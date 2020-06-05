@@ -1,3 +1,10 @@
+# [1.61.0](https://github.com/toggl/toggl-button/compare/1.60.13...1.61.0) (2020-06-05)
+
+
+### Features
+
+* **eventum:** Add support for fetching custom fields as tags ([7f3073b](https://github.com/toggl/toggl-button/commit/7f3073b))
+
 ## [1.60.13](https://github.com/toggl/toggl-button/compare/1.60.12...1.60.13) (2020-05-28)
 
 

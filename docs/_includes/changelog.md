@@ -1,3 +1,10 @@
+## [1.62.1](https://github.com/toggl/toggl-button/compare/1.62.0...1.62.1) (2020-06-09)
+
+
+### Bug Fixes
+
+* **todoist:** Fixes for Todoist version 1006 ([7d4331d](https://github.com/toggl/toggl-button/commit/7d4331d)), closes [#1747](https://github.com/toggl/toggl-button/issues/1747)
+
 # [1.62.0](https://github.com/toggl/toggl-button/compare/1.61.0...1.62.0) (2020-06-09)
 
 

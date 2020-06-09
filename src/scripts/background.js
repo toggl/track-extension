@@ -977,12 +977,14 @@ window.TogglButton = {
 
     let notificationId = 'pomodoro-time-is-up';
     let stopSound;
-    const latestDescription =
+    const description =
         TogglButton.$curEntry && TogglButton.$curEntry.description
-          ? ' (' + TogglButton.$curEntry.description + ')'
+          ? TogglButton.$curEntry.description
           : '';
+    let truncatedDescription = description.slice(0, 30);
+    if (truncatedDescription.length < description.length) truncatedDescription += '.. ';
 
-    let topButtonTitle = 'Continue Latest' + latestDescription;
+    let topButtonTitle = `Continue Latest ${description && `(${truncatedDescription})`}`;
     let bottomButtonTitle = 'Start New';
 
     TogglButton.pomodoroStopTimeTracking();

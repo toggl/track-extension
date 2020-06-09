@@ -70,7 +70,8 @@ togglbutton.render(
   '.task_list_item .task_list_item__actions:not(.toggl)',
   { observe: true, observeTarget: todoistEditor, debounceInterval: 100 },
   elem => {
-    const content = elem.closest('.task_list_item').querySelector('.task_list_item__content');
+    const rootEl = elem.closest('.task_list_item');
+    const content = rootEl.querySelector('.task_list_item__content');
 
     const descriptionSelector = () => {
       const text = content.querySelector('.task_content');
@@ -78,11 +79,17 @@ togglbutton.render(
     };
 
     let project = '';
-    const projectId = elem.closest('.task_list_item').getAttribute('data-item-id');
+    const projectId = rootEl.getAttribute('data-item-id');
+
     if (document.getElementById(`item_${projectId}`)) {
+      // (legacy?) project ID element
       const projectContent = document.getElementById(`item_${projectId}`).querySelector('.content');
       project = getProjectNames(projectContent);
+    } else if (rootEl.querySelector('.task_list_item__project')) {
+      // Project name shown alongside the task in UI
+      project = rootEl.querySelector('.task_list_item__project').textContent.trim();
     } else {
+      // Try to look for a parent item with a known project
       project = getParentIfProject(elem.closest('.item_detail'));
     }
 
@@ -127,6 +134,8 @@ function getProjectNameFromLabel (elem) {
   const projectLabelEle = $('.project_item__name', elem.parentNode.parentNode);
   if (projectLabelEle) {
     projectLabel = projectLabelEle.textContent.trim();
+  } else if ($('.task_list_item__project', elem.parentNode.parentNode)) {
+    projectLabel = $('.task_list_item__project', elem).textContent.trim();
   }
   return projectLabel;
 }

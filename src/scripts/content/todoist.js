@@ -221,6 +221,8 @@ function getProjectNames (elem) {
 }
 
 function getParentIfProject (elem) {
+  if (!elem) return '';
+
   const parent = elem.querySelector('.item_detail_parent_info');
   let project = '';
 

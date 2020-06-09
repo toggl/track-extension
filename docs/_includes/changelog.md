@@ -1,3 +1,10 @@
+# [1.62.0](https://github.com/toggl/toggl-button/compare/1.61.0...1.62.0) (2020-06-09)
+
+
+### Features
+
+* **integration:** Add Zendesk Agent Workspace support ([5fdcbde](https://github.com/toggl/toggl-button/commit/5fdcbde)), closes [#1696](https://github.com/toggl/toggl-button/issues/1696)
+
 # [1.61.0](https://github.com/toggl/toggl-button/compare/1.60.13...1.61.0) (2020-06-05)
 
 

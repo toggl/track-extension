@@ -39,25 +39,19 @@ togglbutton.render(
 );
 
 // task view
-togglbutton.render('.item_detail:not(.toggl)', { observe: true }, elem => {
-  const container = elem.querySelector('.item_actions');
-
-  const descriptionSelector = () =>
-    elem.querySelector('.item_overview_content').firstChild.textContent;
-
-  const tagsSelector = () => {
-    const tags = elem.querySelectorAll('a.item_overview_label');
-
-    return [...tags].map(tag => tag.textContent);
-  };
-
-  const project = getParentIfProject(elem);
+// First example of data-attribute integration ✨
+togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)', { observe: true }, elem => {
+  const description = () => elem.dataset.itemContent || '';
+  const project = () => elem.dataset.itemProjectName || '';
+  const tags = () => Array.from(elem.querySelectorAll('[data-item-label-name]'))
+    .map(el => el.dataset.itemLabelName)
+    .filter(Boolean);
 
   const link = togglbutton.createTimerLink({
     className: 'todoist-detail',
-    description: descriptionSelector,
+    description: description,
     projectName: project,
-    tags: tagsSelector,
+    tags: tags,
     buttonType: 'minimal'
   });
 
@@ -68,9 +62,7 @@ togglbutton.render('.item_detail:not(.toggl)', { observe: true }, elem => {
   wrapper.style.justifyContent = 'center';
   wrapper.appendChild(link);
 
-  if (container) {
-    container.insertBefore(wrapper, container.firstChild);
-  }
+  elem.insertBefore(wrapper, elem.firstChild);
 });
 
 // task view - subtasks
@@ -80,7 +72,10 @@ togglbutton.render(
   elem => {
     const content = elem.closest('.task_list_item').querySelector('.task_list_item__content');
 
-    const descriptionSelector = () => content.querySelector('.task_list_item__text').textContent;
+    const descriptionSelector = () => {
+      const text = content.querySelector('.task_content');
+      return text ? text.textContent.trim() : '';
+    };
 
     let project = '';
     const projectId = elem.closest('.task_list_item').getAttribute('data-item-id');

@@ -5,7 +5,6 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-    const actionsElem = $('.detail-page-header-actions');
 
     let description = getTitle(elem);
     if (breadcrumbsSubTitle) {
@@ -18,14 +17,8 @@ togglbutton.render(
         description;
     }
 
-    const link = togglbutton.createTimerLink({
-      className: 'gitlab',
-      description: description,
-      tags: tagsSelector,
-      projectName: getProjectSelector
-    });
-
-    actionsElem.parentElement.insertBefore(link, actionsElem);
+    insertButton($('.detail-page-header-actions'), description, true);
+    insertButton($('.time_tracker'), description);
   }
 );
 
@@ -34,7 +27,6 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-    const actionsElem = $('.detail-page-header-actions');
 
     let description = getTitle(elem);
     if (breadcrumbsSubTitle) {
@@ -49,16 +41,30 @@ togglbutton.render(
         description;
     }
 
-    const link = togglbutton.createTimerLink({
-      className: 'gitlab',
-      description: description,
-      tags: tagsSelector,
-      projectName: getProjectSelector
-    });
-
-    actionsElem.parentElement.insertBefore(link, actionsElem);
+    insertButton($('.detail-page-header-actions'), description, true);
+    insertButton($('.time_tracker'), description);
   }
 );
+
+/**
+ * @param $el
+ * @param {String} description
+ * @param {boolean} prepend
+ */
+function insertButton ($el, description, prepend = false) {
+  const link = togglbutton.createTimerLink({
+    className: 'gitlab',
+    description: description,
+    tags: tagsSelector,
+    projectName: getProjectSelector
+  });
+
+  if (prepend) {
+    $el.parentElement.insertBefore(link, $el);
+  } else {
+    $el.parentElement.appendChild(link, $el);
+  }
+}
 
 function getTitle (parent) {
   const $el = $('.title', parent);
@@ -88,17 +94,14 @@ function tagsSelector () {
 
   const tagItems = $tagList.children;
   const tags = [];
-  let index;
 
-  for (index in tagItems) {
-    if (tagItems.hasOwnProperty(index)) {
-      const tagName = tagItems[index].textContent.trim();
-      // Skip no labels: <span className="no-value">None</span>
-      if (tagName === 'None') {
-        continue;
-      }
-      tags.push(tagName);
+  for (const node of Object.values(tagItems)) {
+    const tagName = node.textContent.trim();
+    // Skip no labels: <span className="no-value">None</span>
+    if (tagName === 'None') {
+      continue;
     }
+    tags.push(tagName);
   }
 
   return tags;

@@ -68,8 +68,14 @@ togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)
 // task view - subtasks
 togglbutton.render(
   '.task_list_item .task_list_item__actions:not(.toggl)',
-  { observe: true, observeTarget: todoistEditor, debounceInterval: 100 },
+  { observe: true, observeTarget: todoistEditor, debounceInterval: 300 },
   elem => {
+    const isButtonAdded = elem.querySelector('.toggl-button') !== null;
+
+    if (isButtonAdded) {
+      return;
+    }
+
     const rootEl = elem.closest('.task_list_item');
     const content = rootEl.querySelector('.task_list_item__content');
 

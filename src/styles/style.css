@@ -1426,17 +1426,12 @@ body.notion-body.dark .toggl-button.notion {
 }
 
 /****** WORKFLOWY ******/
-.toggl-button.workflowy:not(.toggl-button-edit-form-button) {
-  background-position-x: right;
-  background-position-y: center;
-  background-size: 16px 16px;
-  line-height: inherit;
-  height: inherit;
-  font-size: inherit;
-  padding: inherit;
-  cursor: inherit;
-  text-decoration: inherit;
-  color: inherit !important;
+.toggl-button.min.workflowy {
+  width: 36px;
+  height: 36px;
+  padding-left: 0;
+  margin-right: 6px;
+  background-position: center;
 }
 
 /********* Microsoft To-Do *********/

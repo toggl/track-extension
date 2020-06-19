@@ -1,3 +1,10 @@
+## [1.62.2](https://github.com/toggl/toggl-button/compare/1.62.1...1.62.2) (2020-06-19)
+
+
+### Bug Fixes
+
+* **workflowy:** Move workflowy to minimal button ([#1720](https://github.com/toggl/toggl-button/issues/1720)) ([3674b03](https://github.com/toggl/toggl-button/commit/3674b03))
+
 ## [1.62.1](https://github.com/toggl/toggl-button/compare/1.62.0...1.62.1) (2020-06-09)
 
 

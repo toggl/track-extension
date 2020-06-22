@@ -1,3 +1,10 @@
+## [1.62.3](https://github.com/toggl/toggl-button/compare/1.62.2...1.62.3) (2020-06-22)
+
+
+### Bug Fixes
+
+* **todoist:** Fix duplicated button on todoist ([#1755](https://github.com/toggl/toggl-button/issues/1755)) ([cf50f2b](https://github.com/toggl/toggl-button/commit/cf50f2b)), closes [#1752](https://github.com/toggl/toggl-button/issues/1752)
+
 ## [1.62.2](https://github.com/toggl/toggl-button/compare/1.62.1...1.62.2) (2020-06-19)
 
 

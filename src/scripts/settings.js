@@ -351,9 +351,7 @@ const Settings = {
               .replace('*://*.', '')
               .replace('*://', '')
               .replace('/*', '');
-            if (url.split('.').length > 2) {
-              name = url.substr(url.indexOf('.') + 1);
-            }
+
             Settings.origins[name] = {
               id: i,
               origin: origins[i],

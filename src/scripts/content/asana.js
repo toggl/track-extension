@@ -1,6 +1,6 @@
 'use strict';
 
-// Board view, 2020. Inserts button next to assignee/due date.
+// Board view. Inserts button next to assignee/due date.
 togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true },
   boadCardElem => {
     const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-name').textContent.trim();
@@ -17,6 +17,7 @@ togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true
       description: descriptionSelector,
       projectName: projectSelector,
       buttonType: 'minimal'
+      // N.B. tags cannot be supported on board view as the information is not available.
     });
 
     const injectContainer = boadCardElem.querySelector('.BoardCard-rightMetadata');
@@ -26,7 +27,7 @@ togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true
   }
 );
 
-// Spreadsheet view, 2019. Inserts button next to to the task name.
+// Spreadsheet view. Inserts button next to to the task name.
 togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe: true },
   function (taskNameCell) {
     const container = taskNameCell.closest('.SpreadsheetRow');
@@ -59,10 +60,16 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
       return firstProject ? firstProject.textContent.trim() : projectHeaderSelector();
     };
 
+    const tagsSelector = () => {
+      const tags = container.querySelectorAll('.SpreadsheetTaskRow-tagsCell .Pill');
+      return [...tags].map(tag => tag.textContent.trim());
+    };
+
     const link = togglbutton.createTimerLink({
       className: 'asana-spreadsheet',
       description: descriptionSelector,
       projectName: projectSelector,
+      tags: tagsSelector,
       buttonType: 'minimal'
     });
 
@@ -116,7 +123,7 @@ togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
   }
 );
 
-// Dec 2019 detail view
+// Task detail. My Tasks, Spreadsheet, Board, ...
 togglbutton.render(
   '.SingleTaskPaneSpreadsheet:not(.toggl)',
   { observe: true },
@@ -134,10 +141,16 @@ togglbutton.render(
       return projectEl ? projectEl.textContent.trim() : '';
     };
 
+    const tagsSelector = () => {
+      const tags = elem.querySelectorAll('.TaskTagTokenPills .Pill');
+      return [...tags].map(tag => tag.textContent.trim());
+    };
+
     const link = togglbutton.createTimerLink({
       className: 'asana-board',
       description: descriptionSelector,
       projectName: projectSelector,
+      tags: tagsSelector,
       buttonType: 'minimal'
     });
 

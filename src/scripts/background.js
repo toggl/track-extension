@@ -120,7 +120,6 @@ window.TogglButton = {
       </div>
     </div>
     ` +
-
     `
     <div class="TB__Dialog__field" tabindex="0">
       <div>
@@ -2091,6 +2090,10 @@ window.TogglButton = {
           resolve({
             currentEntry: TogglButton.$curEntry
           });
+        } else if (request.type === 'getClubhouseCustomTemplateSettings') {
+          const useCustomTemplate = await db.get('clubhouseUseCustomTemplate');
+          const customTemplate = await db.get('clubhouseCustomTemplate');
+          return resolve({ useCustomTemplate, customTemplate });
         } else if (request.type === 'error') {
           // Handling integration errors
           error = new Error();

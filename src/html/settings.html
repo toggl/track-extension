@@ -38,6 +38,14 @@
               <span>Integrations</span>
             </a>
           </li>
+          <li class="nav-link" data-tab="clubhouse" >
+            <a href="settings.html?tab=clubhouse">
+              <div class="nav-icon">
+                <img width="16" height="16" src="../images/Clubhouse_FlagSymbol_White.png" />
+              </div>
+              <span>Clubhouse</span>
+            </a>
+          </li>
           <li class="nav-link" data-tab="pomodoro">
             <a href="settings.html?tab=pomodoro">
               <div class="nav-icon">
@@ -232,6 +240,35 @@
               <span class="description">All Toggl Button settings will be reset and you will be logged out.</span>
             </label>
             <button id="reset-all-settings" class="button danger">Reset all settings to default</button>
+          </div>
+        </section>
+      </div>
+      <div class="tab" data-tab="clubhouse">
+        <section>
+          <div class="headline">
+            <h3>Clubhouse settings</h3>
+          </div>
+          <div class="checkbox field">
+            <input type="checkbox" id="clubhouse-use-custom-template">
+            <label for="clubhouse-use-custom-template">
+              <span class="setting">Use Custom Description Template</span>
+              <span class="description">Allows for a custom description template.</span>
+            </label>
+          </div>
+          <div class="text field clubhouse-custom-template">
+            <label for="clubhouse-custom-template">
+              <span class="setting">Custom Description Template</span>
+              <span class="description">
+                Input any of the Following fields surrounded by curly-braces {{ }} to dynamically generate a toggle time description from a Clubhouse card.
+                <ul>
+                  <li>epicName</li>
+                  <li>projectName</li>
+                  <li>storyId</li>
+                  <li>storyTitle</li>
+                </ul>
+              </span>
+              <input type="text" id="clubhouse-custom-template" class="custom-template-input" />
+            </label>
           </div>
         </section>
       </div>

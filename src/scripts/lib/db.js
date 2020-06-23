@@ -31,6 +31,10 @@ const DEFAULT_SETTINGS = {
   rememberProjectPer: 'false',
   enableAutoTagging: false,
 
+  // Clubhouse Settings
+  clubhouseUseCustomTemplate: false,
+  clubhouseCustomTemplate: '[{{ epicName }}] ({{ storyId }}) - {{ storyTitle }}',
+
   sendErrorReports: true,
   sendUsageStatistics: true
 };

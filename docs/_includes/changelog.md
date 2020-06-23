@@ -1,3 +1,10 @@
+## [1.62.5](https://github.com/toggl/toggl-button/compare/1.62.4...1.62.5) (2020-06-23)
+
+
+### Bug Fixes
+
+* **pomodoro:** Truncate long time entry descriptions in Pomodoro notification ([#1749](https://github.com/toggl/toggl-button/issues/1749)) ([fc18a51](https://github.com/toggl/toggl-button/commit/fc18a51)), closes [#1746](https://github.com/toggl/toggl-button/issues/1746)
+
 ## [1.62.4](https://github.com/toggl/toggl-button/compare/1.62.3...1.62.4) (2020-06-23)
 
 

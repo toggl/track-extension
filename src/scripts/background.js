@@ -11,8 +11,6 @@ const FIVE_MINUTES = 5 * 60;
 const ONE_HOUR = 60 * 60;
 const RETRY_INTERVAL = 15;
 
-let openWindowsCount = 0;
-
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
 
 const shouldTriggerNotification = (state, seconds) => {
@@ -2265,14 +2263,14 @@ window.TogglButton = {
   },
 
   stopTrackingOnBrowserClosed: async function () {
-    openWindowsCount--;
     const stopAutomatically = await db.get('stopAutomatically');
-    if (
-      stopAutomatically &&
-      openWindowsCount === 0 &&
-      TogglButton.$curEntry
-    ) {
-      TogglButton.stopTimeEntry(TogglButton.$curEntry);
+    if (!stopAutomatically) {
+      return;
+    }
+
+    const windows = await browser.windows.getAll();
+    if (windows.length === 0 && TogglButton.$curEntry) {
+      await TogglButton.stopTimeEntry(TogglButton.$curEntry);
     }
   },
 
@@ -2368,26 +2366,11 @@ if (!FF) {
   browser.notifications.onButtonClicked.addListener(TogglButton.notificationBtnClick);
 }
 browser.windows.onCreated.addListener(TogglButton.startAutomatically);
-browser.windows.getAll().then(function (windows) {
-  openWindowsCount = windows.length;
-});
-browser.windows.onCreated.addListener(function () {
-  openWindowsCount++;
-});
 browser.windows.onRemoved.addListener(TogglButton.stopTrackingOnBrowserClosed);
 
 browser.runtime
   .setUninstallURL('https://toggl.com/toggl-button-feedback/')
   .catch(bugsnagClient.notify);
-
-window.onbeforeunload = function () {
-  db.get('stopAutomatically')
-    .then((stopAutomatically) => {
-      if (stopAutomatically && TogglButton.$curEntry) {
-        TogglButton.stopTimeEntry(TogglButton.$curEntry);
-      }
-    });
-};
 
 // Check whether new version is installed
 browser.runtime.onInstalled.addListener(function (details) {

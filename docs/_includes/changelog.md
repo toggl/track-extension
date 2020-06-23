@@ -1,3 +1,10 @@
+## [1.62.4](https://github.com/toggl/toggl-button/compare/1.62.3...1.62.4) (2020-06-23)
+
+
+### Bug Fixes
+
+* **autocomplete:** Fix tasks sometimes not showing in the Project dropdown when searching ([#1760](https://github.com/toggl/toggl-button/issues/1760)) ([087c3e0](https://github.com/toggl/toggl-button/commit/087c3e0)), closes [#1737](https://github.com/toggl/toggl-button/issues/1737)
+
 ## [1.62.3](https://github.com/toggl/toggl-button/compare/1.62.2...1.62.3) (2020-06-22)
 
 

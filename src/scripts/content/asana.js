@@ -70,30 +70,49 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
   }
 );
 
-// 2019 My Tasks view, possibly other similar views.
+// 2020 My Tasks view, possibly other similar views.
 togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
   function (elem) {
     if (elem.querySelector('.toggl-button')) {
       // Due to the way this UI is rendered, we must check for existence of old buttons manually.
       return;
     }
-    const container = elem.querySelector('.ItemRowTwoColumnStructure-left');
     const descriptionSelector = () => elem.querySelector('.TaskName textarea').textContent;
 
-    const projectSelector = () => {
-      const projectElement = elem.querySelector('.TaskRow-pots .Pill');
+    // attempt at separating projects and tags, which are not differentiated in the dom
+    // assume first pill is a project and any others are tags
+    // misses tags which are in the "..." overflow, and if there is a tag without a project
+    const pillSelector = (type) => {
+      const pills = [...elem.querySelectorAll('.NavigationLink')]
+        .map(pill => pill.textContent.trim());
+      if (type === 'project') {
+        return pills.length ? pills[0] : '';
+      } else if (type === 'tags') {
+        return pills.length > 1 ? pills.slice(1) : [];
+      }
+    };
 
-      return projectElement ? projectElement.textContent : '';
+    const projectSelector = () => {
+      return pillSelector('project');
+    };
+
+    const tagsSelector = () => {
+      return pillSelector('tags');
     };
 
     const link = togglbutton.createTimerLink({
       className: 'asana-new-ui',
       description: descriptionSelector,
       projectName: projectSelector,
+      tags: tagsSelector,
       buttonType: 'minimal'
     });
 
-    container.appendChild(link);
+    const wrapper = document.createElement('div');
+    wrapper.style.margin = '3px 0 0 4px';
+    wrapper.appendChild(link);
+
+    elem.appendChild(wrapper);
   }
 );
 

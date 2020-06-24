@@ -1,3 +1,10 @@
+## [1.62.7](https://github.com/toggl/toggl-button/compare/1.62.6...1.62.7) (2020-06-24)
+
+
+### Bug Fixes
+
+* **todoist:** Move list item button to far right and only visible on hover ([#1765](https://github.com/toggl/toggl-button/issues/1765)) ([a347fd2](https://github.com/toggl/toggl-button/commit/a347fd2)), closes [#1758](https://github.com/toggl/toggl-button/issues/1758)
+
 ## [1.62.6](https://github.com/toggl/toggl-button/compare/1.62.5...1.62.6) (2020-06-24)
 
 

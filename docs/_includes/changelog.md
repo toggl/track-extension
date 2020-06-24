@@ -1,3 +1,10 @@
+## [1.62.6](https://github.com/toggl/toggl-button/compare/1.62.5...1.62.6) (2020-06-24)
+
+
+### Bug Fixes
+
+* **slack:** Update Slack web integration ([#1761](https://github.com/toggl/toggl-button/issues/1761)) ([95ab1cc](https://github.com/toggl/toggl-button/commit/95ab1cc)), closes [#1729](https://github.com/toggl/toggl-button/issues/1729)
+
 ## [1.62.5](https://github.com/toggl/toggl-button/compare/1.62.4...1.62.5) (2020-06-23)
 
 

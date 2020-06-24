@@ -982,26 +982,21 @@ li > .toggl-button.phabricator {
 }
 
 /********* SLACK *********/
-div[data-qa="channel_header__buttons"] .toggl-button.slack {
-  z-index: 9;
-  padding: 0 13px;
-}
-
-.c-message_actions__button .toggl-button.slack-message {
-  width: 20px;
-  height: 14px;
+.toggl-button.slack-message:not(.toggl-button-edit-form-button) {
+  position: relative;
+  top: 2px;
+  width: 16px;
+  height: 16px;
   padding-left: 0;
-  background-size: 14px 14px;
+  background-size: 100%;
   background-position: center bottom;
 }
 
-.c-message_actions__button .slack-message-container {
+.slack-message-container {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
 }
 
 /********* ZOHO BOOKS *********/

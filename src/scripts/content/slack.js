@@ -3,11 +3,11 @@
 
 const getTextContent = (element) => element ? element.textContent.trim() : '';
 
-togglbutton.render('[data-qa="channel_name"]:not(.toggl)', { observe: true }, () => {
-  const placeholder = $('[data-qa="channel_header__buttons"]').firstChild.parentNode;
-  const projectName = $('.p-classic_nav__team_header__team__name');
+const getWorkspaceName = () => getTextContent($('.p-ia__sidebar_header__team_name_text'));
+
+togglbutton.render('.p-ia__view_header:not(.toggl)', { observe: true }, (elem) => {
   const description = $('[data-qa="channel_name"]');
-  const isRendered = $('.toggl-button', placeholder) != null;
+  const isRendered = $('.toggl-button', elem) != null;
 
   if (isRendered) {
     // Do not duplicate the button.
@@ -17,39 +17,38 @@ togglbutton.render('[data-qa="channel_name"]:not(.toggl)', { observe: true }, ()
   const link = togglbutton.createTimerLink({
     className: 'slack',
     description: getTextContent(description),
-    projectName: getTextContent(projectName),
+    projectName: getWorkspaceName,
     buttonType: 'minimal'
   });
 
-  placeholder.insertBefore(link, placeholder.firstChild);
+  elem.insertBefore(link, elem.lastChild);
 });
 
-togglbutton.render('.c-message--hover:not(.toggl)', { observe: true }, elem => {
+togglbutton.render('.c-message_kit__hover:not(.toggl)', { observe: true }, elem => {
   const placeholder = $('.c-message_actions__button:last-child');
-  const description = $('.c-message__body', elem);
-  const projectName = $('.p-classic_nav__team_header__team__name');
-  const isRendered = $('.toggl-button', placeholder) != null;
+  const description = elem.closest('.c-message_kit__message').querySelector('.c-message_kit__blocks--rich_text');
+  const isRendered = $('.toggl-button', placeholder.parentNode) != null;
 
-  if (!description || isRendered) {
-    // Non-text message, don't insert button.
+  if (isRendered) {
     return;
   }
 
-  const button = document.createElement('button');
-  const buttonContainer = document.createElement('span');
+  const getDescription = () => getTextContent(description);
+
   const link = togglbutton.createTimerLink({
     className: 'slack-message',
-    projectName: getTextContent(projectName),
-    description: description.textContent.trim(),
+    projectName: getWorkspaceName,
+    description: getDescription,
     buttonType: 'minimal'
   });
 
+  const button = document.createElement('button');
+  const buttonContainer = document.createElement('span');
   buttonContainer.className = 'slack-message-container';
-  buttonContainer.appendChild(link);
 
-  button.className = 'c-button-unstyled c-message_actions__button';
+  button.className = 'c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_small c-message_actions__button';
   button.setAttribute('type', 'button');
-  button.appendChild(buttonContainer);
+  button.appendChild(link);
 
   placeholder.parentNode.insertBefore(button, placeholder);
 });

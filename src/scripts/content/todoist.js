@@ -3,41 +3,6 @@
 
 const todoistEditor = document.getElementById('content');
 
-// main list view
-togglbutton.render(
-  '.task_item .task_item_actions:not(.toggl)',
-  { observe: true, observeTarget: todoistEditor, debounceInterval: 100 },
-  elem => {
-    const content = elem.closest('.task_item').querySelector('.content');
-    const text = content.querySelector('.text');
-
-    const descriptionSelector = () => text.querySelector('.task_item_content_text').textContent;
-
-    const tagsSelector = () => {
-      const tags = content.querySelectorAll('a.label');
-
-      return [...tags].map(tag => tag.textContent);
-    };
-
-    const link = togglbutton.createTimerLink({
-      className: 'todoist',
-      description: descriptionSelector,
-      projectName: getProjectNames(content),
-      buttonType: 'minimal',
-      tags: tagsSelector
-    });
-
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('task_content_item');
-    wrapper.style.display = 'flex';
-    wrapper.style.alignItems = 'center';
-    wrapper.style.justifyContent = 'center';
-    wrapper.appendChild(link);
-
-    elem.insertBefore(wrapper, elem.firstChild);
-  }
-);
-
 // task view
 // First example of data-attribute integration ✨
 togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)', { observe: true }, elem => {
@@ -62,7 +27,7 @@ togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)
   wrapper.style.justifyContent = 'center';
   wrapper.appendChild(link);
 
-  elem.insertBefore(wrapper, elem.firstChild);
+  elem.lastChild.before(wrapper);
 });
 
 // task view - subtasks
@@ -116,9 +81,10 @@ togglbutton.render(
     const wrapper = document.createElement('div');
     wrapper.style.display = 'flex';
     wrapper.style.marginTop = '3px';
+    wrapper.style.marginLeft = '8px';
     wrapper.appendChild(link);
 
-    elem.insertBefore(wrapper, elem.firstChild);
+    elem.lastChild.before(wrapper);
   }
 );
 

@@ -137,8 +137,8 @@ togglbutton.render(
     };
 
     const projectSelector = () => {
-      const projectEl = $('.TaskProjectToken-potTokenizerPill', elem);
-      return projectEl ? projectEl.textContent.trim() : '';
+      const projectEl = elem.querySelectorAll('.TaskProjectToken-potTokenizerPill');
+      return [...projectEl].map(el => el.textContent.trim());
     };
 
     const tagsSelector = () => {

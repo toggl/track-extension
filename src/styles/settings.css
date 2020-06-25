@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&subset=cyrillic,latin-ext);
+@import './colours.css';
 
 html {
   --banner-height: 60px;
@@ -9,31 +10,27 @@ html {
   --s-radius: 4px;
 
   --font-size: 14px;
+  --selected-color: var(--green);
 
-  --main-bg-color: rgb(250,251,252);
-  --text-color: rgb(51,51,51);
-  --light-text: rgb(123,123,123);
-  --header-bg-color: rgb(255,255,255);
-  --divider-color: rgb(243,243,243);
-  --border-color: rgb(221,221,221);
-  --border-hover-color: rgb(206,206,206);
-  --selected-color: rgb(75,200,0);
-  --danger-color: rgb(226,5,5);
-  --danger-hover-color: rgb(203,4,4);
+  --main-bg-color: var(--extra-light-grey);
+  --text-color: var(--another-black);
+  --header-bg-color: var(--white);
+  --divider-color: var(--lighter-grey);
+  --border-color: var(--lighter-grey);
+  --border-hover-color: var(--greyish);
+  --danger-color: var(--red);
 
   --box-shadow-opacity: 0.13;
 }
 
 html.dark {
-  --main-bg-color: rgb(34,34,34);
-  --text-color: rgb(202,202,202);
-  --light-text: rgb(172,172,172);
-  --header-bg-color: rgb(38,38,38);
-  --divider-color: rgb(49,49,49);
-  --border-color: rgb(58,58,58);
-  --border-hover-color: rgb(96,96,96);
-  --danger-color: rgb(255,88,88);
-  --danger-hover-color: rgb(255,104,104);
+  --main-bg-color:  var(--dark-grey);
+  --text-color: var(--lighter-grey);
+  --header-bg-color: var(--darker-black);
+  --divider-color: var(--grey);
+  --border-color: var(--dark-grey);
+  --border-hover-color: var(--grey);
+  --danger-color: var(--red-on-dark);
 
   --box-shadow-opacity: 0.5;
 }
@@ -46,7 +43,7 @@ body {
   color: var(--text-color);
   font-family: Roboto, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
-} 
+}
 
 body {
   height: 100vh;
@@ -154,7 +151,7 @@ button, .button {
 }
 
 button:hover, button:enabled:hover, .button:hover, .button:enabled:hover {
-  background: var(--header-bg-color);
+  background: var(--main-bg-color);
   border-color: var(--border-hover-color);
 }
 
@@ -166,8 +163,7 @@ button.danger {
 }
 
 button.danger:hover, button.danger:enabled:hover {
-  color: var(--danger-hover-color);
-  background: var(--header-bg-color);
+  background: var(--main-bg-color);
 }
 
 input[type="time"] {
@@ -217,8 +213,8 @@ input[type="range"]::-moz-range-thumb {
 
 nav {
   flex: 0 0 auto;
-  background: #323232;
-  color: white;
+  background: var(--mineshaft);
+  color: var(--white);
   height: 100%;
   width: var(--sidebar-width);
   z-index: 10;
@@ -286,6 +282,10 @@ nav .section li span {
   padding-left: 5px;
 }
 
+.nav-link {
+  cursor: pointer;
+}
+
 /* main content */
 
 div.content {
@@ -324,7 +324,7 @@ header h2 {
   display: none;
   position: relative;
   flex: 1 0 100%;
-  padding: 20px;
+  padding: 10px 20px;
   box-sizing: border-box;
 }
 
@@ -374,7 +374,8 @@ section .field .option {
 }
 
 section .field .description {
-  color: var(--light-text);
+  color: var(--text-color);
+  opacity: 0.6;
 }
 
 section .field .subsettings-details {
@@ -621,12 +622,14 @@ section .field--showDetails .subsettings-details {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  color: var(--light-text);
+  color: var(--text-color);
+  opacity: 0.6;
   font-size: 12px;
 }
 
 .footer a {
-  color: var(--light-text);
+  color: var(--text-color);
+  opacity: 0.6;
 }
 
 .footer > * {

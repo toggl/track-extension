@@ -86,9 +86,17 @@ const Popup = {
   },
 
   renderApp: function () {
+    PopUp.checkDarkMode();
     PopUp.renderTimer();
     PopUp.renderEntriesList();
     PopUp.renderSummary();
+  },
+
+  checkDarkMode: async function () {
+    const darkMode = await TogglButton.checkDarkMode();
+    if (darkMode) {
+      document.querySelector('body').classList.add('dark');
+    }
   },
 
   renderSummary: function () {

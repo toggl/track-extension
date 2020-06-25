@@ -34,14 +34,14 @@ function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | 
 
   return (
     <TimerContainer onClick={editEntry}>
-      <div>
+      <RunningTimerDescription>
         <TimeEntryDescription title={`Click to edit ${entry.description || ''}`}>
           {entry.description || NO_DESCRIPTION}
         </TimeEntryDescription>
         {project &&
           <TimeEntryProject project={project} />
         }
-      </div>
+      </RunningTimerDescription>
       <div>
         {tags && <TagsIcon title={tags} />}
         <TimerDuration start={entry.start} />
@@ -100,8 +100,8 @@ const TimerContainer = styled.div`
 
   cursor: pointer;
   font-size: 14px;
-  box-shadow: rgb(232, 232, 232) 0px -1px 0px 0px inset;
-  background: #fff;
+  box-shadow: var(--border-color) 0px -1px 0px 0px inset;
+  background: var(--base-color);
 
   > div:first-child {
     flex: 1;
@@ -116,13 +116,22 @@ const TimerContainer = styled.div`
   }
 `;
 
+const RunningTimerDescription = styled.div`
+  margin-left: 10px;
+`
+
 const TimerInput = styled.input`
   flex: 1;
-  height: 100%;
-  padding-right: 1rem;
+  height: 40px;
+  padding: 0 1rem;
   border: none;
 
   font-size: 14px;
+  font-family: var(--main-font);
+  background: var(--main-bg-color);
+  color: var(--font-color);
+  margin-right: 10px;
+  border-radius: 20px;
 
   &:hover, &:focus {
     outline: none;
@@ -131,6 +140,7 @@ const TimerInput = styled.input`
 
 const Duration = styled.div`
   padding: 0 .8rem;
+  color: var(--font-color);
 `;
 
 
@@ -139,12 +149,11 @@ type TimerButtonProps = {
 };
 const TimerButton = styled.div`
   display: inline-block;
-  width: 24px;
-  height: 24px;
-  padding: 5px; /* Extra hit-area */
+  width: 40px;
+  height: 40px;
   background: url(${(props: TimerButtonProps) => props.isRunning ? stop : start}) no-repeat;
   background-position: 55% 50%;
-  background-size: 24px;
+  background-size: 38px;
   border: none;
   cursor: pointer;
 `;

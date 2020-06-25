@@ -4,17 +4,14 @@ import { format, subSeconds } from 'date-fns';
 
 import BillableIcon from './BillableIcon';
 import TagsIcon from './TagsIcon';
+import ContinueIcon from './ContinueIcon';
 
 import { ProjectLargeDot } from '../@toggl/ui/icons';
 import { Button } from '../@toggl/ui/buttons';
 
-import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
 import { borderRadius } from '../@toggl/style/lib/variables';
 import { formatDuration } from '../@toggl/time-format-utils/format-duration';
-
-import play from '../icons/play.svg';
-import playGreen from '../icons/play-green.svg';
 
 const NO_DESCRIPTION = '(no description)';
 const NO_PROJECT = '(no project)';
@@ -49,9 +46,9 @@ const getTimeEntryDayGroups = (timeEntries: Array<Array<Toggl.TimeEntry>>): {[da
 const TimeEntriesFooter = () => (
   <Footer>
     <a target="_blank" href="https://toggl.com/app/timer?utm_source=toggl-button&utm_medium=referral">
-      <Button>
+      <MoreButton>
         See more on <strong>toggl.com</strong>
-      </Button>
+      </MoreButton>
     </a>
   </Footer>);
 
@@ -201,7 +198,7 @@ function TimeEntryRow ({
         <EntryIcons className="entry-icons">
           <BillableIcon active={isBillable} />
           {tags && <TagsIcon title={tags} />}
-          <ContinueButton data-continue-id={timeEntry.id} title='Continue this entry' />
+          <ContinueIcon data-continue-id={timeEntry.id} title='Continue this entry' />
         </EntryIcons>
       </EntryItemActions>
     </EntryItem>
@@ -232,9 +229,10 @@ const GroupedEntryCounter = styled.div`
   cursor: pointer;
   transition: background ease-in 0.05s, color ease-in 0.05s;
 
-  border: 1px solid ${color.extraLightGrey};
-  background-color: ${color.white};
-  color: ${color.grey};
+  border: 1px solid var(--border-color);
+  background-color: var(--base-color);
+  color: var(--font-color);
+  opacity: 0.8;
 
   /* Changes from webapp */
   width: 24px;
@@ -256,7 +254,7 @@ export const TimeEntryDescription = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  color: #222;
+  color: var(--font-color);
 `;
 
 export function TimeEntryProject ({ project }: { project: Toggl.Project | null }) {
@@ -273,23 +271,6 @@ export function TimeEntryProject ({ project }: { project: Toggl.Project | null }
     </div>
   );
 }
-
-const ContinueButton = styled.div`
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background: url(${play}) no-repeat;
-  background-position: 55% 50%;
-  background-size: 14px;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    background: url(${playGreen}) no-repeat;
-    background-position: 55% 50%;
-    background-size: 14px;
-  }
-`;
 
 const Container = styled.div`
   display: flex;
@@ -312,7 +293,8 @@ const Description = styled.p`
 `;
 
 const Placeholder = styled.span`
-  color: ${color.greyish};
+  color: var(--font-color);
+  opacity: 0.6;
 `;
 
 const EntryList = styled.div`
@@ -322,7 +304,7 @@ const EntryList = styled.div`
 
 const EntryDayGroup = styled.div`
   margin-top: 15px;
-  background: white;
+  background: var(--base-color);
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 3px 0px;
 
@@ -339,15 +321,15 @@ const EntryItem = styled.li`
   ${({ indent }: { indent?: boolean }) => indent ? 'padding-left: 53px;' : ''}
 
   font-size: 14px;
-  border-bottom: 1px solid ${color.listItemHover};
+  border-bottom: 1px solid var(--border-color);
   cursor: pointer;
 
   &:hover {
-    background-color: ${color.listItemHover};
+    background-color: var(--active-color);
   }
 
   .entry-icons {
-    opacity: 0.2;
+    opacity: 0.5;
   }
 
   &:hover .entry-icons {
@@ -363,7 +345,7 @@ const EntryHeading = styled.div`
 
   padding: 15px;
   height: 25px;
-  color: ${color.black};
+  color: var(--font-color);
   font-weight: ${text.bold};
 `;
 
@@ -386,6 +368,7 @@ const EntryItemActions = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  color: var(--font-color);
 
   > * {
     height: 22px;
@@ -409,3 +392,9 @@ const Footer = styled(EntryHeading)`
   justify-content: center;
   padding: 30px 0;
 `;
+
+const MoreButton = styled(Button)`
+  background-color: var(--base-color);
+  border: none;
+  color: var(--font-color);
+`

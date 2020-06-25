@@ -9,6 +9,7 @@ const DEFAULT_SETTINGS = {
   startAutomatically: false,
   stopAutomatically: false,
   showRightClickButton: true,
+  darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
   showPostPopup: true,
   nannyCheckEnabled: true,
   nannyInterval: 3600000,

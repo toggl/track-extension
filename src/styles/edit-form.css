@@ -24,7 +24,7 @@
 
   /* shared/input */
   font-family: Roboto, Helvetica, sans-serif;
-  color: #000;
+  color: var(--font-color);
   font-size: 14px;
   line-height: normal;
   font-weight: 400;
@@ -43,7 +43,7 @@
   height: 36px;
   padding: 10px 12px;
   outline: none;
-  border: 1px solid #f3f3f3;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   transition: color .5s;
   background-color: initial;
@@ -72,7 +72,7 @@
   height: 100%;
   padding: 10px 12px;
   line-height: normal;
-  border: 1px solid #f3f3f3;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   color: #7b7b7b;
   cursor: pointer;
@@ -112,7 +112,8 @@
 
   /* Toggl Button / other */
   overflow: auto;
-  background: #fff;
+  background: var(--base-color);
+  color: var(--font-color);
 }
 
 .TB__Popdown__caret {
@@ -135,17 +136,18 @@
   width: 100%;
   padding: 0 0 0 32px;
   margin: 0;
-  border: 1px solid #ececec;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   box-shadow: none;
-  background: #fff url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTMiIGhlaWdodD0iMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxjaXJjbGUgaWQ9ImEiIGN4PSI1IiBjeT0iNSIgcj0iNSIvPjxtYXNrIGlkPSJiIiBtYXNrQ29udGVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjZmZmIj48dXNlIHhsaW5rOmhyZWY9IiNhIi8+PC9tYXNrPjwvZGVmcz48ZyBzdHJva2U9IiNDRUNFQ0UiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHVzZSBtYXNrPSJ1cmwoI2IpIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgeGxpbms6aHJlZj0iI2EiLz48cGF0aCBkPSJNOCA4bDQgNCIvPjwvZz48L3N2Zz4=) 10px no-repeat;
+  background: var(--base-color) url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTMiIGhlaWdodD0iMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxjaXJjbGUgaWQ9ImEiIGN4PSI1IiBjeT0iNSIgcj0iNSIvPjxtYXNrIGlkPSJiIiBtYXNrQ29udGVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjZmZmIj48dXNlIHhsaW5rOmhyZWY9IiNhIi8+PC9tYXNrPjwvZGVmcz48ZyBzdHJva2U9IiNDRUNFQ0UiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHVzZSBtYXNrPSJ1cmwoI2IpIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgeGxpbms6aHJlZj0iI2EiLz48cGF0aCBkPSJNOCA4bDQgNCIvPjwvZz48L3N2Zz4=) 10px no-repeat;
   outline: none;
   line-height: 28px!important;
-  color: black;
+  color: var(--font-color);
 }
 
 #toggl-button-edit-form .TB__Popdown__filter::placeholder {
-  color: #7b7b7b !important;
+  color: var(--font-color) !important;
+  opacity: 0.8;
 }
 
 .TB__Popdown__content {
@@ -183,7 +185,7 @@
   visibility: visible !important;
   float: none !important;
   opacity: 1 !important;
-  color: black;
+  color: var(--font-color);
 }
 
 #toggl-button-edit-form a.toggl-button:hover {
@@ -268,13 +270,11 @@
   padding: 10px 18px;
   border: none;
   border-radius: 8px;
-  background: #4bc800;
   outline: none;
   cursor: pointer;
   transition: all .1s;
 
   /* .text__button */
-  color: #fff;
   font-weight: 500;
   line-height: normal;
   text-align: center;
@@ -282,29 +282,37 @@
   font-size: 14px;
 }
 
-.TB__Secondary__button:focus, .TB__Secondary__button:hover,
-.TB__Button__button:focus, .TB__Button__button:hover {
-  background: #47be00;
+.TB__Button__button {
+  background: #4bc800;
   color: #fff;
-  outline: none;
 }
 
 .TB__Secondary__button {
-  background: white;
-  color: black;
-  box-shadow: rgb(75, 200, 0) 0px 0px 0px 1px inset;
+  background: var(--base-color);
+  color: var(--font-color);
+  border: 1px solid var(--main-bg-color);
+}
+
+.TB__Button__button:focus, .TB__Button__button:hover {
+  background: #47be00;
+}
+
+.TB__Secondary__button:focus, .TB__Secondary__button:hover {
+  background: var(--main-bg-color);
+  color: var(--font-color);
+  outline: none;
 }
 
 .TB__Button__button.danger {
   flex: 1;
-  background: none;
-  color: rgb(226, 5, 5);
+  background: var(--base-color);
+  color: var(--danger-color);
   font-weight: 400;
-  box-shadow: rgb(230, 230, 230) 0px 0px 0px 1px inset;
+  border: 1px solid var(--main-bg-color);
 }
 
 .TB__Button__button.danger:hover {
-  background: rgb(243, 243, 243);
+  background: var(--main-bg-color);
 }
 
 .tb-actions-button-group {

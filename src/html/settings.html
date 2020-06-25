@@ -3,6 +3,8 @@
   <head>
     <title>Toggl Button - Settings</title>
     <link rel="stylesheet" href="../styles/settings.css"/>
+
+    <script src="../scripts/settings-theme.js"></script>
   </head>
   <body data-show-review-banner="false">
     <nav>
@@ -19,61 +21,51 @@
         <h3>Settings</h3>
         <ul class="nav-links">
           <li class="nav-link" data-tab="general">
-            <a href="settings.html?tab=general">
-              <div class="nav-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="#fff" d="M24 14v-4l-3-1-1-2 2-2-3-3-2 2-2-1-1-3h-4L9 3 7 4 5 2 2 5l2 2-1 2-3 1v4l3 1 1 2-2 2 3 3 2-2 2 1 1 3h4l1-3 2-1 2 2 3-3-2-2 1-2 3-1zm-12 2a4 4 0 110-8 4 4 0 010 8z"/>
-                </svg>
-              </div>
-              <span>General</span>
-            </a>
+            <div class="nav-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <path fill="#fff" d="M24 14v-4l-3-1-1-2 2-2-3-3-2 2-2-1-1-3h-4L9 3 7 4 5 2 2 5l2 2-1 2-3 1v4l3 1 1 2-2 2 3 3 2-2 2 1 1 3h4l1-3 2-1 2 2 3-3-2-2 1-2 3-1zm-12 2a4 4 0 110-8 4 4 0 010 8z"/>
+              </svg>
+            </div>
+            <span>General</span>
           </li>
           <li class="nav-link" data-tab="integrations">
-            <a href="settings.html?tab=integrations">
-              <div class="nav-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="#fff" d="M12 0L8 4l6 5H0v6h14l-6 5 4 4 12-12z"/>
-                </svg>
-              </div>
-              <span>Integrations</span>
-            </a>
+            <div class="nav-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <path fill="#fff" d="M12 0L8 4l6 5H0v6h14l-6 5 4 4 12-12z"/>
+              </svg>
+            </div>
+            <span>Integrations</span>
           </li>
           <li class="nav-link" data-tab="pomodoro">
-            <a href="settings.html?tab=pomodoro">
-              <div class="nav-icon">
-                <svg width="16" height="16" viewBox="0 0 26 26">
-                  <defs>
-                    <clipPath id="a">
-                      <path d="M0 0h26v26H0z"/>
-                    </clipPath>
-                  </defs>
-                  <g clip-path="url(#a)">
-                    <path fill="#fff" fill-rule="evenodd" d="M4.7 4.7C1.4 6.4 0 8.9 0 14c0 6.8 3.2 11.8 13 12 9.5 0 13-3 13-13a9 9 0 00-4.7-8.4c-.8.7-1.4 1-1.3 1.4l3 5c-2.1 1.4-9.8-2-10-2-3 2.3-8.7 1.6-9 1-.4-1 2.3-2.5 3-4-.9-.2-1.7-.8-2.3-1.3zm2.2-1.9c1.6-.2 3.3.1 5.1.2.2 0 .8-3 1-3 .3 0 1.8.4 2 1 .1.4-.2 2 0 2 .9 0 3.3-1 5 0l.2.2c-.9.3-2.2 1-3.2 1.8-.8.8 3.6 4.4 2 4-4.1-1-5.5-2.4-6-2a11 11 0 01-6 2c1.5-1.5 3.3-4 3-4a7.5 7.5 0 01-3.1-2.2z"/>
-                  </g>
-                </svg>
-              </div>
-              <span>Pomodoro</span>
-            </a>
+            <div class="nav-icon">
+              <svg width="16" height="16" viewBox="0 0 26 26">
+                <defs>
+                  <clipPath id="a">
+                    <path d="M0 0h26v26H0z"/>
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#a)">
+                  <path fill="#fff" fill-rule="evenodd" d="M4.7 4.7C1.4 6.4 0 8.9 0 14c0 6.8 3.2 11.8 13 12 9.5 0 13-3 13-13a9 9 0 00-4.7-8.4c-.8.7-1.4 1-1.3 1.4l3 5c-2.1 1.4-9.8-2-10-2-3 2.3-8.7 1.6-9 1-.4-1 2.3-2.5 3-4-.9-.2-1.7-.8-2.3-1.3zm2.2-1.9c1.6-.2 3.3.1 5.1.2.2 0 .8-3 1-3 .3 0 1.8.4 2 1 .1.4-.2 2 0 2 .9 0 3.3-1 5 0l.2.2c-.9.3-2.2 1-3.2 1.8-.8.8 3.6 4.4 2 4-4.1-1-5.5-2.4-6-2a11 11 0 01-6 2c1.5-1.5 3.3-4 3-4a7.5 7.5 0 01-3.1-2.2z"/>
+                </g>
+              </svg>
+            </div>
+            <span>Pomodoro</span>
           </li>
           <li class="nav-link" data-tab="telemetry">
-            <a href="settings.html?tab=telemetry">
-              <div class="nav-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="#fff" d="M6 0c-6 12 4 22 16 16L6 0zM5 24H2l7-6 6 6h-3l-3-2-4 2zM22 2a1 1 0 01-2 1l-3 5-3-3 5-3V1a2 2 0 013 1z"/>
-                </svg>
-              </div>
-              <span>Telemetry</span>
-            </a>
+            <div class="nav-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <path fill="#fff" d="M6 0c-6 12 4 22 16 16L6 0zM5 24H2l7-6 6 6h-3l-3-2-4 2zM22 2a1 1 0 01-2 1l-3 5-3-3 5-3V1a2 2 0 013 1z"/>
+              </svg>
+            </div>
+            <span>Telemetry</span>
           </li>
           <li class="nav-link" data-tab="account">
-            <a href="settings.html?tab=account">
-              <div class="nav-icon">
-                <svg width="16" height="16" viewBox="0 0 12 12">
-                  <path fill="#fff" d="M10 9C9 9 7 8 8 7c2-5 0-7-2-7-3 0-4 2-2 7 1 1-1 2-2 2-2 0-2 1-2 3h12c0-2 0-3-2-3zm0 0"/>
-                </svg>
-              </div>
-              <span>My Account</span>
-            </a>
+            <div class="nav-icon">
+              <svg width="16" height="16" viewBox="0 0 12 12">
+                <path fill="#fff" d="M10 9C9 9 7 8 8 7c2-5 0-7-2-7-3 0-4 2-2 7 1 1-1 2-2 2-2 0-2 1-2 3h12c0-2 0-3-2-3zm0 0"/>
+              </svg>
+            </div>
+            <span>My Account</span>
           </li>
         </ul>
       </div>
@@ -119,7 +111,7 @@
             </h3>
           </div>
           <p>You can add Toggl Button to over 130 tools, including Trello, Asana, JIRA and many more.</p>
-          <p> Visit the <a href="?tab=integrations">Integrations page</a> to use this feature.</p>
+          <p> Visit the <a class="nav-link" data-tab="integrations">Integrations page</a> to use this feature.</p>
         </section>
         <section>
           <div class="headline">
@@ -219,6 +211,13 @@
             <label for="show_right_click_button">
               <span class="setting">Show "Start timer" option in browser right click menu</span>
               <span class="description">Select text and start a timer with that description from the right-click menu. If nothing is selected, the page title is used as the description.</span>
+            </label>
+          </div>
+          <div class="checkbox field">
+            <input type="checkbox" id="dark_mode">
+            <label for="dark_mode">
+              <span class="setting">Enable dark mode</span>
+              <span class="description">Use dark mode for Toggl Button.</span>
             </label>
           </div>
         </section>

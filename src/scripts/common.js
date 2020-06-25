@@ -317,6 +317,10 @@ window.togglbutton = {
     editForm.style.position = 'fixed';
     editForm.classList.add('toggl-integration');
 
+    if (response.darkMode) {
+      editForm.classList.add('dark');
+    }
+
     // Some integrations uses trap zones which prevents from focus everything inside this element
     // See: https://github.com/theKashey/focus-lock
     editForm.setAttribute('data-no-focus-lock', true);

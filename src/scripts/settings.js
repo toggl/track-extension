@@ -28,11 +28,15 @@ document.querySelector('#version').textContent = process.env.VERSION;
 document.querySelector('#review-prompt a').href = getStoreLink(FF);
 document.querySelector('#review-prompt a').addEventListener('click', dismissReviewPrompt);
 document.querySelector('#close-review-prompt').addEventListener('click', dismissReviewPrompt);
+[...document.querySelectorAll('.nav-link')].forEach(link => {
+  link.addEventListener('click', changeActiveTab);
+});
 
 const Settings = {
   $startAutomatically: null,
   $stopAutomatically: null,
   $showRightClickButton: null,
+  $darkMode: null,
   $postPopup: null,
   $nanny: null,
   $pomodoroMode: null,
@@ -74,6 +78,7 @@ const Settings = {
       Settings.setFromTo();
       const nannyInterval = await db.get('nannyInterval');
       const showRightClickButton = await db.get('showRightClickButton');
+      const darkMode = await db.get('darkMode');
       const enableAutoTagging = await db.get('enableAutoTagging');
       const startAutomatically = await db.get('startAutomatically');
       const stopAutomatically = await db.get('stopAutomatically');
@@ -89,6 +94,11 @@ const Settings = {
       const sendErrorReports = await db.get('sendErrorReports');
       const stopAtDayEnd = await db.get('stopAtDayEnd');
       const dayEndTime = await db.get('dayEndTime');
+
+      if (darkMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('darkMode', true);
+      }
 
       Settings.$loginInfo.textContent = TogglButton.$user && TogglButton.$user.email || '';
 
@@ -118,6 +128,10 @@ const Settings = {
       Settings.toggleState(
         Settings.$showRightClickButton,
         showRightClickButton
+      );
+      Settings.toggleState(
+        Settings.$darkMode,
+        darkMode
       );
       Settings.toggleState(
         Settings.$enableAutoTagging,
@@ -648,6 +662,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$showRightClickButton = document.querySelector(
       '#show_right_click_button'
     );
+    Settings.$darkMode = document.querySelector('#dark_mode');
     Settings.$postPopup = document.querySelector('#show_post_start_popup');
     Settings.$nanny = document.querySelector('#nag-nanny');
     Settings.$idleDetection = document.querySelector('#idle-detection');
@@ -726,6 +741,12 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         'toggle-right-click-button'
       );
       TogglButton.toggleRightClickButton(!showRightClickButton);
+    });
+    Settings.$darkMode.addEventListener('click', async function (e) {
+      const darkMode = await db.get('darkMode');
+      Settings.toggleSetting(e.target, !darkMode, 'toggle-dark-mode');
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('darkMode', !darkMode);
     });
     Settings.$enableAutoTagging.addEventListener('click', async function (e) {
       const enableAutoTagging = await db.get('enableAutoTagging');
@@ -981,7 +1002,11 @@ document.addEventListener('DOMContentLoaded', async function (e) {
   }
 });
 
-function changeActiveTab (name) {
+function changeActiveTab (tab) {
+  const elem = tab.target ? tab.path.find(e => e.dataset.tab) : undefined;
+
+  const name = elem ? elem.dataset.tab : tab;
+
   document.querySelectorAll('.active').forEach(e => {
     e.classList.remove('active');
   });

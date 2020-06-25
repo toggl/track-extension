@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 
-import * as color from '../@toggl/style/lib/color';
 import * as text from '../@toggl/style/lib/text';
 
 function Summary ({
@@ -26,7 +25,7 @@ const SummaryRow = styled.div`
   align-items: center;
   padding: 15px 30px;
 
-  color: ${color.black};
+  color: var(--font-color);
   font-weight: ${text.bold};
   font-size: 12px;
 `;

@@ -648,6 +648,7 @@ window.TogglButton = {
 
             if (timeEntry.respond) {
               const showPostPopup = await db.get('showPostPopup');
+              const darkMode = await db.get('darkMode');
               resolve({
                 success,
                 type: 'New Entry',
@@ -656,6 +657,7 @@ window.TogglButton = {
                 html: TogglButton.getEditForm(),
                 container,
                 hasTasks,
+                darkMode,
                 error
               });
             } else {
@@ -680,6 +682,12 @@ window.TogglButton = {
   latestEntry: function () {
     const timeEntries = TogglButton.$user.time_entries || [ null ];
     return timeEntries[timeEntries.length - 1];
+  },
+
+  checkDarkMode: async function () {
+    const darkMode = await db.get('darkMode');
+
+    return darkMode;
   },
 
   checkPomodoroAlarm: async function (entry) {
@@ -1999,6 +2007,8 @@ window.TogglButton = {
           db.set('pomodoroSoundVolume', request.state);
         } else if (request.type === 'toggle-right-click-button') {
           db.updateSetting('showRightClickButton', request.state);
+        } else if (request.type === 'toggle-dark-mode') {
+          db.updateSetting('darkMode', request.state);
         } else if (request.type === 'toggle-start-automatically') {
           db.updateSetting('startAutomatically', request.state);
         } else if (request.type === 'toggle-stop-automatically') {

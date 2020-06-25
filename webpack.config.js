@@ -39,6 +39,7 @@ module.exports = config(({ development, bugsnagApiKey, production, release, vers
     ...entry('login', 'ts'),
     ...entry('popup'),
     ...entry('settings'),
+    ...entry('settings-theme'),
     ...entryContentScripts()
   },
   output: {

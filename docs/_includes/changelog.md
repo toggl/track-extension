@@ -1,3 +1,11 @@
+## [1.62.8](https://github.com/toggl/toggl-button/compare/1.62.7...1.62.8) (2020-06-25)
+
+
+### Bug Fixes
+
+* **asana:** Update project selector for My Tasks page ([8aa8f05](https://github.com/toggl/toggl-button/commit/8aa8f05)), closes [#1757](https://github.com/toggl/toggl-button/issues/1757)
+* **settings:** Fix issues with integration checkboxes ([d883dc3](https://github.com/toggl/toggl-button/commit/d883dc3)), closes [#1728](https://github.com/toggl/toggl-button/issues/1728)
+
 ## [1.62.7](https://github.com/toggl/toggl-button/compare/1.62.6...1.62.7) (2020-06-24)
 
 

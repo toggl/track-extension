@@ -1,3 +1,10 @@
+# [1.63.0](https://github.com/toggl/toggl-button/compare/1.62.8...1.63.0) (2020-06-25)
+
+
+### Features
+
+* **asana:** Add Automatic Tagging feature to Asana ([9d05224](https://github.com/toggl/toggl-button/commit/9d05224)), closes [#1691](https://github.com/toggl/toggl-button/issues/1691)
+
 ## [1.62.8](https://github.com/toggl/toggl-button/compare/1.62.7...1.62.8) (2020-06-25)
 
 

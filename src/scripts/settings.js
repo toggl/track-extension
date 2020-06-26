@@ -50,7 +50,6 @@ const Settings = {
   $newPermission: document.querySelector('#new-permission'),
   $originsSelect: document.querySelector('#origins'),
   origins: [],
-  $pomodoroStopTimeTracking: null,
   $stopAtDayEnd: null,
   $defaultProject: null,
   $defaultProjectContainer: null,
@@ -97,7 +96,6 @@ const Settings = {
       const pomodoroLongBreakGap = await db.get('pomodoroLongBreakGap');
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
-      const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
       const sendUsageStatistics = await db.get('sendUsageStatistics');
       const sendErrorReports = await db.get('sendErrorReports');
       const stopAtDayEnd = await db.get('stopAtDayEnd');
@@ -180,10 +178,6 @@ const Settings = {
         pomodoroSoundEnabled
       );
       document.querySelector('.field.pomodoro-sound').classList.toggle('field--showDetails', pomodoroSoundEnabled);
-      Settings.toggleState(
-        Settings.$pomodoroStopTimeTracking,
-        pomodoroStopTimeTrackingWhenTimerEnds
-      );
       Settings.toggleState(
         Settings.$sendUsageStatistics,
         sendUsageStatistics
@@ -686,9 +680,6 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$pomodoroBreak = document.querySelector('#pomodoro-break');
     Settings.$pomodoroFocusMode = document.querySelector('#pomodoro-focus-mode');
     Settings.$pomodoroSound = document.querySelector('#enable-sound-signal');
-    Settings.$pomodoroStopTimeTracking = document.querySelector(
-      '#pomodoro-stop-time'
-    );
     Settings.$stopAtDayEnd = document.querySelector('#stop-at-day-end');
     Settings.$defaultProjectContainer = document.querySelector(
       '#default-project-container'
@@ -812,10 +803,6 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
       Settings.toggleSetting(e.target, !pomodoroSoundEnabled, 'toggle-pomodoro-sound');
       document.querySelector('.field.pomodoro-sound').classList.toggle('field--showDetails', !pomodoroSoundEnabled);
-    });
-    Settings.$pomodoroStopTimeTracking.addEventListener('click', async function (e) {
-      const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
-      Settings.toggleSetting(e.target, !pomodoroStopTimeTrackingWhenTimerEnds, 'toggle-pomodoro-stop-time');
     });
 
     Settings.$stopAtDayEnd.addEventListener('click', async function (e) {

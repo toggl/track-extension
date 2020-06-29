@@ -702,7 +702,7 @@ const TogglButton = {
       breaksEnabled,
       longBreakEnabled: !!longBreakOnNthBreak,
       longBreakOnNthBreak
-    }, console.log);
+    }, process.env.DEBUG ? console.log : null);
   },
 
   getPomodoroIntervalForState: function (state) {
@@ -993,7 +993,7 @@ const TogglButton = {
       return;
     }
 
-    const notificationId = 'pomodoro-time-is-up';
+    const notificationId = isEndOfBreak ? 'pomodoro-break-time-is-up' : 'pomodoro-time-is-up';
     let stopSound;
     const description =
         TogglButton.$latestStoppedEntry && TogglButton.$latestStoppedEntry.description
@@ -1764,7 +1764,7 @@ const TogglButton = {
         });
       }
       eventType = 'idle';
-    } else if (notificationId === 'pomodoro-time-is-up') {
+    } else if (notificationId === 'pomodoro-time-is-up' || notificationId === 'pomodoro-break-time-is-up') {
       timeEntry = TogglButton.$latestStoppedEntry;
       if (timeEntry) {
         timeEntry.type = 'timeEntry';
@@ -1772,7 +1772,8 @@ const TogglButton = {
       } else {
         timeEntry = { type: 'timeEntry', service: type };
       }
-      // continue timer
+      // continue timer (cancel break if relevant)
+      if (notificationId === 'pomodoro-time-is-up') TogglButton.pomodoro.cancelBreak();
       TogglButton.createTimeEntry(timeEntry);
       buttonName = 'continue';
       eventType = 'pomodoro';
@@ -1790,9 +1791,6 @@ const TogglButton = {
         buttonName = 'continue';
       }
       eventType = 'workday-end';
-    }
-    if (!FF) {
-      TogglButton.onNotificationClicked(notificationId);
     }
     ga.reportEvent(eventType, buttonName);
   },
@@ -1834,12 +1832,10 @@ const TogglButton = {
     }
   },
 
-  // Triggered when user clicks a notification (but not on a button in the notification)
-  // N.B. Buttons do not exist in Firefox, so we trigger notificationBtnClick from here in Firefox.
+  // Triggered when user clicks the body of a notification
+  // We assume this maps to the first button's action (note browsers such as Firefox do not support buttons at all)
   onNotificationClicked: function (notificationId) {
-    if (FF) {
-      TogglButton.notificationBtnClick(notificationId, 0);
-    }
+    TogglButton.notificationBtnClick(notificationId, 0);
     if (notificationId === 'remind-to-track-time') {
       TogglButton.setNannyTimer();
     } else {

@@ -83,6 +83,10 @@ export default {
     url: '*://*.capsulecrm.com/*',
     name: 'CapsuleCRM'
   },
+  'checkvist.com': {
+    url: '*://checkvist.com/*',
+    name: 'Checkvist'
+  },
   'clickup.com': {
     url: '*://*.clickup.com/*',
     name: 'ClickUp'

@@ -1552,3 +1552,45 @@ body.notion-body.dark .toggl-button.notion {
   font-weight: bold;
   position: relative;
   top: -3px;
+}
+
+/********* CHECKVIST *********/
+.toggl-button.checkvist {
+  position: absolute;
+  top: 7px;
+  right: -43px;
+  opacity: 0;
+}
+
+.toggl-button.checkvist.active,
+.toggl-button.checkvist:hover,
+.selectedTask > .toggl-button.checkvist,
+.task.toggl > .coreDiv:hover .toggl-button.checkvist {
+  opacity: 1;
+}
+
+#tasks_block:not(.togglLeft) .coreDiv {
+  margin-right: 35px;
+}
+
+#tasks_block.togglLeft ul.topLevel {
+  padding-left: 48px;
+}
+
+#tasks_block.togglLeft .toggl-button.checkvist {
+  left: -43px;
+}
+
+#tasks_block.togglLeft .task.toggl > .coreDiv::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  width: 45px;
+}
+
+.tag[class^="tag_toggl"],
+.tag[class*=" tag_toggl"] {
+  display: none;
+}

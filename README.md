@@ -23,6 +23,7 @@ out of the way and focus on real work.
 - [Bugherd](https://www.bugherd.com/)
 - [Bugzilla](https://bugzilla.mozilla.org/)
 - [CapsuleCRM](http://www.capsulecrm.com/)
+- [Checkvist](https://checkvist.com)
 - [ClickUp](https://clickup.com/)
 - [CLOUDES](http://cloudes.me/)
 - [Clubhouse](https://clubhouse.io/)

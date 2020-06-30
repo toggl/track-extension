@@ -744,9 +744,13 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     });
     Settings.$darkMode.addEventListener('click', async function (e) {
       const darkMode = await db.get('darkMode');
-      Settings.toggleSetting(e.target, !darkMode, 'toggle-dark-mode');
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('darkMode', !darkMode);
+      const next = !darkMode;
+      Settings.toggleSetting(e.target, next, 'toggle-dark-mode');
+      document.documentElement.classList.remove('dark');
+      if (next) {
+        document.documentElement.classList.add('dark');
+      }
+      localStorage.setItem('darkMode', next);
     });
     Settings.$enableAutoTagging.addEventListener('click', async function (e) {
       const enableAutoTagging = await db.get('enableAutoTagging');

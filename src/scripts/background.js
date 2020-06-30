@@ -684,12 +684,6 @@ window.TogglButton = {
     return timeEntries[timeEntries.length - 1];
   },
 
-  checkDarkMode: async function () {
-    const darkMode = await db.get('darkMode');
-
-    return darkMode;
-  },
-
   checkPomodoroAlarm: async function (entry) {
     const duration = new Date() - new Date(entry.start);
     TogglButton.pomodoroInterval = await db.get('pomodoroInterval');

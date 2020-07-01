@@ -1,3 +1,10 @@
+# [1.64.0](https://github.com/toggl/toggl-button/compare/1.63.0...1.64.0) (2020-07-01)
+
+
+### Features
+
+* **dark-mode:** Add dark mode ([f3fbc5e](https://github.com/toggl/toggl-button/commit/f3fbc5e)), closes [#1575](https://github.com/toggl/toggl-button/issues/1575)
+
 # [1.63.0](https://github.com/toggl/toggl-button/compare/1.62.8...1.63.0) (2020-06-25)
 
 

@@ -197,12 +197,12 @@ export default class Db {
         let value = result[key];
         if (hasDefaultValue && typeof value !== typeof defaultValue) {
           if (process.env.DEBUG) {
-            console.info(`Retrieved setting [${key}] is incorrect type`, value);
+            console.log(`Retrieved setting [${key}] is incorrect type`, value);
           }
           value = defaultValue;
         }
 
-        if (process.env.DEBUG) {
+        if (process.env.DEBUG_STORAGE) {
           console.info(`Retrieved value ${key}: `, value);
         }
         return transformLegacyValue(value);
@@ -217,7 +217,7 @@ export default class Db {
   getMultiple (settings) {
     return browser.storage.sync.get(settings)
       .then((result) => {
-        if (process.env.DEBUG) {
+        if (process.env.DEBUG_STORAGE) {
           console.info(`Retrieved values ${Object.keys(settings).join(', ')}: `, Object.values(result).map(JSON.stringify).join(', '));
         }
         return Object.keys(result).reduce((results, key) => {
@@ -240,7 +240,7 @@ export default class Db {
         console.error(`Error attempting to save ${setting};`, e);
       })
       .finally(() => {
-        if (process.env.DEBUG) {
+        if (process.env.DEBUG_STORAGE) {
           console.info(`Saved setting ${setting} :`, value);
         }
       });
@@ -257,7 +257,7 @@ export default class Db {
         console.error(`Error attempting to save settings:`, settings, e);
       })
       .finally(() => {
-        if (process.env.DEBUG) {
+        if (process.env.DEBUG_STORAGE) {
           console.info(`Saved multiple settings :`, settings);
         }
       });

@@ -213,7 +213,7 @@ const TogglButton = {
                 TogglButton.showRevokedWSView();
               }
 
-              TogglButton.updateTriggers(entry);
+              TogglButton.updateTriggers(entry, 'fetch-user');
               localStorage.setItem('projects', JSON.stringify(projectMap));
               localStorage.setItem('clients', JSON.stringify(clientMap));
               TogglButton.$user = resp.data;
@@ -387,15 +387,16 @@ const TogglButton = {
     TogglButton.websocket.retryCount = 0;
   },
 
-  updateTriggers: function (entry, created = false) {
-    const update =
-      !!TogglButton.localEntry &&
-      !!entry &&
-      TogglButton.localEntry.id === entry.id;
-
+  updateTriggers: function (entry, context = null) {
+    // (At this point the entry should already be confirmed as either the same entry or a new running entry)
     TogglButton.$curEntry = entry;
+
     if (entry) {
-      if (update) {
+      const isUpdatingEntryCreatedInTogglButton =
+        TogglButton.checkPomodoroAlarm(entry); !!TogglButton.localEntry &&
+          TogglButton.localEntry.id === entry.id;
+
+      if (isUpdatingEntryCreatedInTogglButton) {
         TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
         TogglButton.$nannyTimer = null;
@@ -405,19 +406,21 @@ const TogglButton = {
         });
       }
     } else {
+      // Possibly deleted entry or something wants to cancel all triggers.
       // Clear pomodoro timer
       TogglButton.stopTicker();
       clearTimeout(TogglButton.pomodoroAlarmTimeout);
       TogglButton.pomodoroAlarmTimeout = null;
       clearInterval(TogglButton.pomodoroProgressInterval);
       TogglButton.pomodoroProgressInterval = null;
+
       browser.browserAction.setIcon({
         path: { '19': 'images/inactive-19.png', '38': 'images/inactive-38.png' }
       });
     }
+
     // Toggle workday end check
     TogglButton.startCheckingDayEnd(!!entry);
-
     TogglButton.toggleCheckingUserState(!!entry);
     TogglButton.setBrowserAction(entry);
   },
@@ -461,7 +464,7 @@ const TogglButton = {
     }
 
     if (data.action === 'INSERT') {
-      TogglButton.updateTriggers(entry);
+      TogglButton.updateTriggers(entry, 'websocket-insert');
     } else if (
       data.action === 'UPDATE' &&
       (TogglButton.$curEntry === null || entry.id === TogglButton.$curEntry.id)
@@ -471,14 +474,14 @@ const TogglButton = {
         TogglButton.updateEntriesDb();
         entry = null;
       }
-      TogglButton.updateTriggers(entry);
+      TogglButton.updateTriggers(entry, 'websocket-update');
     } else if (data.action === 'delete') {
       if (
         TogglButton.$curEntry !== null &&
         TogglButton.$curEntry.id === entry.id
       ) {
         TogglButton.$latestStoppedEntry = entry;
-        TogglButton.updateTriggers(null);
+        TogglButton.updateTriggers(null, 'websocket-delete');
       }
     }
   },
@@ -640,7 +643,7 @@ const TogglButton = {
             if (success) {
               entry = JSON.parse(xhr.responseText);
               TogglButton.localEntry = entry;
-              TogglButton.updateTriggers(entry);
+              TogglButton.updateTriggers(entry, 'create-time-entry');
               ga.reportEvent(timeEntry.type, timeEntry.service);
               db.bumpTrackedCount();
             } else {
@@ -847,7 +850,7 @@ const TogglButton = {
     clearInterval(TogglButton.pomodoroProgressInterval);
     TogglButton.pomodoroProgressInterval = null;
     TogglButton.resetBreakCount();
-    TogglButton.updateTriggers(entry);
+    TogglButton.updateTriggers(entry, 'reset-pomodoro-progress');
   },
 
   stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {
@@ -1143,7 +1146,7 @@ const TogglButton = {
               const timeEntryId = parseInt(timeEntry.id, 10);
               if (TogglButton.$curEntry && TogglButton.$curEntry.id === timeEntryId) {
                 TogglButton.$curEntry = null;
-                TogglButton.updateTriggers(null);
+                TogglButton.updateTriggers(null, 'delete-time-entry');
               }
               const entries = TogglButton.$user.time_entries.filter(function (entry) {
                 return entry.id !== timeEntryId;
@@ -1267,7 +1270,7 @@ const TogglButton = {
         method: 'DELETE',
         onLoad: function (xhr) {
           TogglButton.$user = null;
-          TogglButton.updateTriggers(null);
+          TogglButton.updateTriggers(null, 'logout');
           localStorage.removeItem('userToken');
           resolve({ success: xhr.status === 200, xhr: xhr });
           if (xhr.status === 200) {

@@ -3,6 +3,7 @@ import browser from 'webextension-polyfill';
 import bugsnagClient from './lib/bugsnag';
 import { escapeHtml, isTogglURL, report, secToHHMM } from './lib/utils';
 import { renderTimeEntries } from './lib/actions';
+import createPomodoroState from './lib/pomodoro';
 import Db from './lib/db';
 import Ga from './lib/ga';
 import Sound from './lib/sound';
@@ -80,9 +81,9 @@ const TogglButton = {
   },
   $checkingUserState: false,
   checkingWorkdayEnd: false,
+  pomodoro: null,
   pomodoroAlarmTimeout: null,
   pomodoroProgressInterval: null,
-  pomodoroBreakCount: 0,
   $pomodoroTickerSound: null,
   pomodoroInterval: null,
   pomodoroFocusMode: null,
@@ -393,13 +394,14 @@ const TogglButton = {
 
     if (entry) {
       const isUpdatingEntryCreatedInTogglButton =
-        TogglButton.checkPomodoroAlarm(entry); !!TogglButton.localEntry &&
-          TogglButton.localEntry.id === entry.id;
+        !!TogglButton.localEntry &&
+        TogglButton.localEntry.id === entry.id;
 
       if (isUpdatingEntryCreatedInTogglButton) {
-        TogglButton.checkPomodoroAlarm(entry);
         clearTimeout(TogglButton.$nannyTimer);
         TogglButton.$nannyTimer = null;
+
+        if (context !== 'websocket-insert') TogglButton.checkPomodoroAlarmOnUpdate(entry);
       } else {
         browser.browserAction.setIcon({
           path: { '19': 'images/active-19.png', '38': 'images/active-38.png' }
@@ -643,6 +645,9 @@ const TogglButton = {
             if (success) {
               entry = JSON.parse(xhr.responseText);
               TogglButton.localEntry = entry;
+              if (TogglButton.pomodoro.state === 'idle') {
+                TogglButton.pomodoro.beginPomodoro();
+              }
               TogglButton.updateTriggers(entry, 'create-time-entry');
               ga.reportEvent(timeEntry.type, timeEntry.service);
               db.bumpTrackedCount();
@@ -688,52 +693,71 @@ const TogglButton = {
     return timeEntries[timeEntries.length - 1];
   },
 
-  checkPomodoroAlarm: async function (entry) {
+  initializePomodoro: async function () {
+    const breaksEnabled = await db.get('pomodoroBreakEnabled');
+    const longBreakOnNthBreak = await db.get('pomodoroLongBreakGap');
+
+    // FIXME: Changes to these settings will not be refletced if changed after the extension runs.
+    TogglButton.pomodoro = createPomodoroState({
+      breaksEnabled,
+      longBreakEnabled: !!longBreakOnNthBreak,
+      longBreakOnNthBreak
+    }, console.log);
+  },
+
+  getPomodoroIntervalForState: function (state) {
+    if (!state.includes('break')) return db.get('pomodoroInterval');
+    return state === 'shortbreak'
+      ? db.get('pomodoroBreakInterval')
+      : db.get('pomodoroLongBreakInterval');
+  },
+
+  checkPomodoroAlarmOnUpdate: async function (entry) {
     const duration = new Date() - new Date(entry.start);
-    TogglButton.pomodoroInterval = await db.get('pomodoroInterval');
-    TogglButton.pomodoroFocusMode = await db.get('pomodoroFocusMode');
-    const interval = parseInt(TogglButton.pomodoroInterval, 10) * 60000;
+    const interval = parseInt(await TogglButton.getPomodoroIntervalForState(TogglButton.pomodoro.state), 10) * 60000;
+
     if (duration < interval) {
-      TogglButton.triggerPomodoroAlarm(interval - duration);
+      TogglButton.trackPomodoroProgress(interval - duration);
     }
   },
 
-  triggerPomodoroAlarm: async function (value) {
-    if (TogglButton.pomodoroAlarmTimeout !== null) {
-      clearTimeout(TogglButton.pomodoroAlarmTimeout);
-      TogglButton.pomodoroAlarmTimeout = null;
-      clearInterval(TogglButton.pomodoroProgressInterval);
-    }
+  trackPomodoroProgress: async function (elapsedValue) {
+    clearTimeout(TogglButton.pomodoroAlarmTimeout);
+    TogglButton.pomodoroAlarmTimeout = null;
+    clearInterval(TogglButton.pomodoroProgressInterval);
+    TogglButton.pomodoroProgressInterval = null;
+
     const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
-    if (pomodoroModeEnabled) {
-      TogglButton.startTicker();
-      const intervalSetting = await db.get('pomodoroInterval');
-      const pomodoroInterval = parseInt(intervalSetting, 10) * 60000;
-      const interval = value || pomodoroInterval;
-      const steps = 120;
-      const elapsedTime = (pomodoroInterval - interval) / pomodoroInterval;
-      const updateProgress = TogglButton.updatePomodoroProgress(
-        interval,
-        steps,
-        elapsedTime
-      );
-      TogglButton.pomodoroAlarmTimeout = setTimeout(
-        TogglButton.pomodoroAlarmStop,
-        interval
-      );
-      TogglButton.pomodoroProgressInterval = setInterval(
-        updateProgress,
-        pomodoroInterval / steps
-      );
-      browser.runtime.sendMessage(renderTimeEntries());
-      updateProgress();
-    }
+    if (!pomodoroModeEnabled) return;
+
+    TogglButton.startPomodoroTickerSound();
+
+    const intervalSetting = parseInt(await TogglButton.getPomodoroIntervalForState(TogglButton.pomodoro.state), 10) * 60000;
+    const interval = elapsedValue || intervalSetting;
+    const steps = 120;
+    const elapsedTime = (intervalSetting - interval) / intervalSetting;
+    const updateProgress = TogglButton.getPomodoroProgressUpdater(
+      interval,
+      steps,
+      // TODO: Check if this can become a bad value and cause the icon to break.
+      elapsedTime
+    );
+    TogglButton.pomodoroAlarmTimeout = setTimeout(
+      () => TogglButton.onPomodoroEnd(TogglButton.pomodoro.state.includes('break')),
+      interval
+    );
+    TogglButton.pomodoroProgressInterval = setInterval(
+      updateProgress,
+      intervalSetting / steps
+    );
+    browser.runtime.sendMessage(renderTimeEntries());
+    updateProgress();
   },
 
-  updatePomodoroProgress: function (interval, steps, elapsedTime) {
+  getPomodoroProgressUpdater: function (interval, steps, elapsedTime) {
     let current = 0;
     let intervalCount = 0;
-    return async function () {
+    return async function updatePomodoroProgress () {
       let key;
       let img;
       const imagePaths = {
@@ -849,22 +873,21 @@ const TogglButton = {
   resetPomodoroProgress: function (entry) {
     clearInterval(TogglButton.pomodoroProgressInterval);
     TogglButton.pomodoroProgressInterval = null;
-    TogglButton.resetBreakCount();
     TogglButton.updateTriggers(entry, 'reset-pomodoro-progress');
   },
 
-  stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {
+  stopTimeEntryPomodoro: function (timeEntry) {
     return new Promise(async (resolve) => {
-      const pomodoroInterval = await db.get('pomodoroInterval');
-      const pomodoroDuration = parseInt(pomodoroInterval, 10) * 60;
-
       if (!TogglButton.$curEntry) {
         resolve();
         return;
       }
 
+      const pomodoroInterval = await TogglButton.getPomodoroIntervalForState(TogglButton.pomodoro.state);
+      const pomodoroDuration = parseInt(pomodoroInterval, 10) * 60;
+
       const entry = {
-        duration: pomodoroDuration
+        duration: Math.min(new Date() - new Date(TogglButton.$curEntry.start), pomodoroDuration)
       };
 
       TogglButton.ajax(
@@ -964,76 +987,54 @@ const TogglButton = {
     browser.notifications.create(notificationId, options);
   },
 
-  pomodoroStopTimeTracking: async function () {
-    const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
-    if (pomodoroStopTimeTrackingWhenTimerEnds) {
-      TogglButton.stopTimeEntryPomodoro({
-        type: 'pomodoro-stop',
-        service: 'dropdown'
-      });
-    } else {
-      TogglButton.resetPomodoroProgress(TogglButton.$curEntry);
-    }
-  },
-
-  pomodoroAlarmStop: async function () {
+  onPomodoroEnd: async function (isEndOfBreak = false) {
     const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
     if (!pomodoroModeEnabled) {
       return;
     }
 
-    const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
-    if (pomodoroBreakEnabled) {
-      TogglButton.startBreakTimer();
-    }
-
-    let notificationId = 'pomodoro-time-is-up';
+    const notificationId = 'pomodoro-time-is-up';
     let stopSound;
     const description =
-        TogglButton.$curEntry && TogglButton.$curEntry.description
-          ? TogglButton.$curEntry.description
+        TogglButton.$latestStoppedEntry && TogglButton.$latestStoppedEntry.description
+          ? TogglButton.$latestStoppedEntry.description
           : '';
     let truncatedDescription = description.slice(0, 30);
     if (truncatedDescription.length < description.length) truncatedDescription += '.. ';
 
-    let topButtonTitle = `Continue Latest ${description && `(${truncatedDescription})`}`;
-    let bottomButtonTitle = 'Start New';
+    await TogglButton.stopTimeEntryPomodoro({
+      type: 'pomodoro-stop',
+      service: 'dropdown'
+    });
 
-    TogglButton.pomodoroStopTimeTracking();
-
-    const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
-    if (!pomodoroStopTimeTrackingWhenTimerEnds) {
-      notificationId = 'pomodoro-time-is-up-dont-stop';
-      topButtonTitle = 'Stop timer';
-      bottomButtonTitle = 'Stop and Start New';
+    if (isEndOfBreak) {
+      TogglButton.pomodoro.endBreak();
+    } else {
+      TogglButton.pomodoro.endPomodoro().beginBreak();
+      TogglButton.startBreakTimer();
     }
 
     const options = {
       type: 'basic',
       iconUrl: 'images/icon-128.png',
       title: 'Toggl Button - Pomodoro Timer',
-      message: 'Time is up! Take a break',
+      message: isEndOfBreak ? 'Hope you enjoyed your break! Time to get back to work.' : 'Time is up! Take a break or click to continue tracking.',
       priority: 2
     };
+
+    const topButtonTitle = `Continue ${description && `(${truncatedDescription})`}`;
 
     if (!FF) {
       options.requireInteraction = true;
       options.buttons = [
-        { title: topButtonTitle },
-        { title: bottomButtonTitle }
+        { title: topButtonTitle }
       ];
-    } else {
-      const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
-      if (!pomodoroStopTimeTrackingWhenTimerEnds) {
-        options.message += '. Click to stop tracking.';
-      } else {
-        options.message += '. Click to continue tracking.';
-      }
     }
 
     TogglButton.hideNotification(notificationId);
     browser.notifications.create(notificationId, options);
 
+    // Play "ding" sound
     const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
     if (pomodoroSoundEnabled) {
       const pomodoroSoundFile = await db.get('pomodoroSoundFile');
@@ -1764,21 +1765,16 @@ const TogglButton = {
       }
       eventType = 'idle';
     } else if (notificationId === 'pomodoro-time-is-up') {
-      if (buttonID === 0) {
-        timeEntry = TogglButton.$latestStoppedEntry;
-        if (timeEntry) {
-          timeEntry.type = 'timeEntry';
-          timeEntry.service = type;
-        } else {
-          timeEntry = { type: 'timeEntry', service: type };
-        }
-        // continue timer
-        TogglButton.createTimeEntry(timeEntry, null);
-        buttonName = 'continue';
+      timeEntry = TogglButton.$latestStoppedEntry;
+      if (timeEntry) {
+        timeEntry.type = 'timeEntry';
+        timeEntry.service = type;
       } else {
-        // start timer
-        TogglButton.createTimeEntry({ type: 'timeEntry', service: type }, null);
+        timeEntry = { type: 'timeEntry', service: type };
       }
+      // continue timer
+      TogglButton.createTimeEntry(timeEntry);
+      buttonName = 'continue';
       eventType = 'pomodoro';
     } else if (notificationId === 'workday-ended-notification') {
       if (buttonID === 0) {
@@ -1794,13 +1790,6 @@ const TogglButton = {
         buttonName = 'continue';
       }
       eventType = 'workday-end';
-    } else if (notificationId === 'pomodoro-time-is-up-dont-stop') {
-      if (buttonID === 0) {
-        TogglButton.stopTimeEntry(TogglButton.$curEntry);
-      } else {
-        TogglButton.createTimeEntry({ type: 'timeEntry', service: type }, null);
-      }
-      eventType = 'pomodoro';
     }
     if (!FF) {
       TogglButton.onNotificationClicked(notificationId);
@@ -2313,7 +2302,7 @@ const TogglButton = {
     });
   },
 
-  startTicker: async function () {
+  startPomodoroTickerSound: async function () {
     const pomodoroTickerEnabled = await db.get('pomodoroTickerEnabled');
     if (pomodoroTickerEnabled) {
       if (TogglButton.$pomodoroTickerSound) return;
@@ -2330,22 +2319,10 @@ const TogglButton = {
     TogglButton.$pomodoroTickerSound = null;
   },
 
-  bumpBreakCount: async function () {
-    const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
-    const pomodoroBreakEnabled = await db.get('pomodoroBreakEnabled');
-    if (!pomodoroModeEnabled || !pomodoroBreakEnabled) return;
-    ++TogglButton.pomodoroBreakCount;
-  },
-
-  resetBreakCount: function () {
-    TogglButton.pomodoroBreakCount = 0;
-  },
-
-  startBreakTimer: async function () {
-    await TogglButton.bumpBreakCount();
+  startBreakTimer: function () {
     TogglButton.createTimeEntry({
       type: 'timeEntry',
-      description: 'Pomodoro Break',
+      description: TogglButton.pomodoro.state === 'shortbreak' ? 'Pomodoro Break' : 'Pomodoro Long Break',
       service: 'pomodoro-break'
     }, null);
   }
@@ -2391,8 +2368,8 @@ db.get('showRightClickButton')
 TogglButton.fetchUser();
 TogglButton.setNannyTimer();
 TogglButton.startCheckingUserState();
+TogglButton.initializePomodoro();
 browser.tabs.onUpdated.addListener(TogglButton.tabUpdated);
-browser.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 db.get('stopAtDayEnd').then(TogglButton.startCheckingDayEnd);
 browser.runtime.onMessage.addListener(TogglButton.newMessage);
 browser.notifications.onClosed.addListener(TogglButton.onNotificationClosed);

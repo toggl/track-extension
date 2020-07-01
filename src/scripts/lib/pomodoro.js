@@ -7,9 +7,9 @@ const defaultOptions = {
   longBreakOnNthBreak: 4
 };
 
-export default function createPomodoroState (partialOptions, log = null) {
+export default function createPomodoroState (partialOptions, log = () => {}) {
   const options = { ...defaultOptions, ...partialOptions };
-  if (log) log(`⏱ Pomodoro initialized: ${JSON.stringify(options)}`);
+  log(`⏱ Pomodoro initialized: ${JSON.stringify(options)}`);
 
   let state = 'idle';
   let pomodoroCount = 0;

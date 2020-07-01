@@ -80,10 +80,10 @@ const TogglButton = {
   },
   $checkingUserState: false,
   checkingWorkdayEnd: false,
-  pomodoroAlarm: null,
-  pomodoroProgressTimer: null,
+  pomodoroAlarmTimeout: null,
+  pomodoroProgressInterval: null,
   pomodoroBreakCount: 0,
-  $ticker: null,
+  $pomodoroTickerSound: null,
   pomodoroInterval: null,
   pomodoroFocusMode: null,
   localEntry: null,
@@ -407,10 +407,10 @@ const TogglButton = {
     } else {
       // Clear pomodoro timer
       TogglButton.stopTicker();
-      clearTimeout(TogglButton.pomodoroAlarm);
-      TogglButton.pomodoroAlarm = null;
-      clearInterval(TogglButton.pomodoroProgressTimer);
-      TogglButton.pomodoroProgressTimer = null;
+      clearTimeout(TogglButton.pomodoroAlarmTimeout);
+      TogglButton.pomodoroAlarmTimeout = null;
+      clearInterval(TogglButton.pomodoroProgressInterval);
+      TogglButton.pomodoroProgressInterval = null;
       browser.browserAction.setIcon({
         path: { '19': 'images/inactive-19.png', '38': 'images/inactive-38.png' }
       });
@@ -696,10 +696,10 @@ const TogglButton = {
   },
 
   triggerPomodoroAlarm: async function (value) {
-    if (TogglButton.pomodoroAlarm !== null) {
-      clearTimeout(TogglButton.pomodoroAlarm);
-      TogglButton.pomodoroAlarm = null;
-      clearInterval(TogglButton.pomodoroProgressTimer);
+    if (TogglButton.pomodoroAlarmTimeout !== null) {
+      clearTimeout(TogglButton.pomodoroAlarmTimeout);
+      TogglButton.pomodoroAlarmTimeout = null;
+      clearInterval(TogglButton.pomodoroProgressInterval);
     }
     const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
     if (pomodoroModeEnabled) {
@@ -714,11 +714,11 @@ const TogglButton = {
         steps,
         elapsedTime
       );
-      TogglButton.pomodoroAlarm = setTimeout(
+      TogglButton.pomodoroAlarmTimeout = setTimeout(
         TogglButton.pomodoroAlarmStop,
         interval
       );
-      TogglButton.pomodoroProgressTimer = setInterval(
+      TogglButton.pomodoroProgressInterval = setInterval(
         updateProgress,
         pomodoroInterval / steps
       );
@@ -791,7 +791,7 @@ const TogglButton = {
           }
         }
       } else {
-        clearInterval(TogglButton.pomodoroProgressTimer);
+        clearInterval(TogglButton.pomodoroProgressInterval);
         browser.browserAction.setIcon({
           path: imagePaths
         });
@@ -844,8 +844,8 @@ const TogglButton = {
   },
 
   resetPomodoroProgress: function (entry) {
-    clearInterval(TogglButton.pomodoroProgressTimer);
-    TogglButton.pomodoroProgressTimer = null;
+    clearInterval(TogglButton.pomodoroProgressInterval);
+    TogglButton.pomodoroProgressInterval = null;
     TogglButton.resetBreakCount();
     TogglButton.updateTriggers(entry);
   },
@@ -1189,7 +1189,7 @@ const TogglButton = {
     let title = browser.runtime.getManifest().browser_action.default_title;
 
     TogglButton.updatePopup();
-    if (TogglButton.pomodoroProgressTimer) {
+    if (TogglButton.pomodoroProgressInterval) {
       return;
     }
     if (runningEntry) {
@@ -2313,18 +2313,18 @@ const TogglButton = {
   startTicker: async function () {
     const pomodoroTickerEnabled = await db.get('pomodoroTickerEnabled');
     if (pomodoroTickerEnabled) {
-      if (TogglButton.$ticker) return;
+      if (TogglButton.$pomodoroTickerSound) return;
       const pomodoroTickerFile = await db.get('pomodoroTickerFile');
       const pomodoroTickerVolume = await db.get('pomodoroTickerVolume');
       const ticker = await Sound.instance(pomodoroTickerFile, +pomodoroTickerVolume, true);
-      TogglButton.$ticker = ticker;
-      TogglButton.$ticker.play();
+      TogglButton.$pomodoroTickerSound = ticker;
+      TogglButton.$pomodoroTickerSound.play();
     }
   },
 
   stopTicker: async function () {
-    TogglButton.$ticker && await TogglButton.$ticker.stop();
-    TogglButton.$ticker = null;
+    TogglButton.$pomodoroTickerSound && await TogglButton.$pomodoroTickerSound.stop();
+    TogglButton.$pomodoroTickerSound = null;
   },
 
   bumpBreakCount: async function () {

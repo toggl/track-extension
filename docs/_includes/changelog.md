@@ -1,3 +1,11 @@
+## [1.64.1](https://github.com/toggl/toggl-button/compare/1.64.0...1.64.1) (2020-07-10)
+
+
+### Bug Fixes
+
+* **settings:** Replace event path usage with element.closest ([e91a5e5](https://github.com/toggl/toggl-button/commit/e91a5e5)), closes [#1776](https://github.com/toggl/toggl-button/issues/1776)
+* **theme:** Type error on updating doc.body ([37d5a68](https://github.com/toggl/toggl-button/commit/37d5a68))
+
 # [1.64.0](https://github.com/toggl/toggl-button/compare/1.63.0...1.64.0) (2020-07-01)
 
 

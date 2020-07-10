@@ -1007,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
 });
 
 function changeActiveTab (tab) {
-  const elem = tab.target ? tab.path.find(e => e.dataset.tab) : undefined;
+  const elem = tab.target ? tab.target.closest('[data-tab]') : undefined;
 
   const name = elem ? elem.dataset.tab : tab;
 

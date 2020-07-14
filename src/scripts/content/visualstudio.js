@@ -45,6 +45,11 @@ togglbutton.render(
     const activeButtonContainer = getContainer('.work-item-form-header-controls-container');
     const activeHeaderContainer = getContainer('.work-item-form-main-header');
     const vsActiveClassElem = $('.commandbar.header-bottom > .commandbar-item > .displayed');
+    const isAlreadyAdded = getContainer('.work-item-form-header-controls-container .toggl-button').length>0;
+
+    if (isAlreadyAdded) {
+      return;
+    }
 
     const link = togglbutton.createTimerLink({
       className: 'visual-studio-online',

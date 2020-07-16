@@ -1,4 +1,6 @@
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+/* eslint-disable-next-line import/no-webpack-loader-syntax */
+import togglButtonSVG from '!!raw-loader!./icons/toggl-button.svg';
 const browser = require('webextension-polyfill');
 
 let projectAutocomplete; let tagAutocomplete;
@@ -498,12 +500,8 @@ window.togglbutton = {
       link.title = 'Start timer: ' + link.title;
     }
 
-    link.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348.87 348.86">
-        <title>${link.title}</title>
-        <path d="M174.43,268.15A89.33,89.33,0,0,1,150.84,92.67v26a64.66,64.66,0,1,0,47.2,0v-26a89.33,89.33,0,0,1-23.61,175.48M161.61,62.83h25.66V190.11H161.61ZM174.43,0A174.43,174.43,0,1,0,348.87,174.43,174.42,174.42,0,0,0,174.43,0" style="fill:#e1393f"/>
-      </svg>
-    `;
+    link.innerHTML = togglButtonSVG;
+    setLinkText(link, link.title);
 
     link.addEventListener('click', function (e) {
       let opts;

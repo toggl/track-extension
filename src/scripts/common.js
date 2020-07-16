@@ -78,6 +78,11 @@ function secondsToTime (duration, format) {
   return response;
 }
 
+function setLinkText (link, text) {
+  const title = link.querySelector('svg title');
+  title.textContent = text;
+}
+
 window.togglbutton = {
   $billable: null,
   isStarted: false,
@@ -409,7 +414,7 @@ window.togglbutton = {
       link.classList.remove('active');
       link.style.color = '';
       if (!link.classList.contains('min')) {
-        link.textContent = 'Start timer';
+        setLinkText(link, 'Start Timer');
       }
       browser.runtime
         .sendMessage({ type: 'stop' })
@@ -493,11 +498,18 @@ window.togglbutton = {
       link.title = 'Start timer: ' + link.title;
     }
 
+    link.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348.87 348.86">
+        <title>${link.title}</title>
+        <path d="M174.43,268.15A89.33,89.33,0,0,1,150.84,92.67v26a64.66,64.66,0,1,0,47.2,0v-26a89.33,89.33,0,0,1-23.61,175.48M161.61,62.83h25.66V190.11H161.61ZM174.43,0A174.43,174.43,0,1,0,348.87,174.43,174.42,174.42,0,0,0,174.43,0" style="fill:#e1393f"/>
+      </svg>
+    `;
+
     link.addEventListener('click', function (e) {
       let opts;
       e.preventDefault();
       e.stopPropagation();
-      link = e.target;
+      link = e.currentTarget;
 
       if (link.classList.contains('active')) {
         togglbutton.deactivateTimerLink(link);
@@ -521,7 +533,7 @@ window.togglbutton = {
           container: params.container || ''
         };
       }
-      togglbutton.element = e.target;
+      togglbutton.element = e.currentTarget;
       browser.runtime
         .sendMessage(opts)
         .then(togglbutton.addEditForm);
@@ -579,7 +591,7 @@ window.togglbutton = {
 
     const isMinimal = link.classList.contains('min');
     if (!isMinimal) {
-      link.textContent = 'Stop timer';
+      setLinkText(link, 'Start timer');
     }
   },
 
@@ -596,7 +608,7 @@ window.togglbutton = {
     link.style.color = '';
     const minimal = link.classList.contains('min');
     if (!minimal) {
-      link.textContent = 'Start timer';
+      setLinkText(link, 'Start timer');
     }
   },
 

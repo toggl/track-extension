@@ -81,8 +81,16 @@ function secondsToTime (duration, format) {
 }
 
 function setLinkText (link, text) {
+  let span = link.querySelector('svg+span');
   const title = link.querySelector('svg title');
+
+  if (!span) {
+    span = document.createElement('span');
+    link.appendChild(span);
+  }
+
   title.textContent = text;
+  span.textContent = text;
 }
 
 window.togglbutton = {
@@ -501,7 +509,7 @@ window.togglbutton = {
     }
 
     link.innerHTML = togglButtonSVG;
-    setLinkText(link, link.title);
+    setLinkText(link, 'Start Timer');
 
     link.addEventListener('click', function (e) {
       let opts;
@@ -589,7 +597,7 @@ window.togglbutton = {
 
     const isMinimal = link.classList.contains('min');
     if (!isMinimal) {
-      setLinkText(link, 'Start timer');
+      setLinkText(link, 'Stop timer');
     }
   },
 

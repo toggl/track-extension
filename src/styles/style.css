@@ -86,18 +86,18 @@
   width: 19px;
   height: 19px;
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: middle;
+}
+
+.toggl-button span {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .toggl-button.min {
   height: 19px;
   width: 19px;
   overflow: hidden;
-}
-
-.toggl-button.min {
-  width: 19px;
-  height: 19px;
 }
 
 .toggl-button.min:not(.active) svg path {
@@ -148,7 +148,6 @@
 
 /********* GITHUB *********/
 .toggl-button.github {
-  padding-left: 25px;
   color: #767676;
   font-size: 12px;
 }
@@ -282,6 +281,11 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   text-decoration: none;
   cursor: pointer;
   color: #737373;
+}
+
+.toggl-button.trello:not(.toggl-button-edit-form-button) svg {
+  margin-left: -5px;
+  margin-right: 2px;
 }
 
 .toggl-button.trello-list:not(.toggl-button-edit-form-button) {
@@ -538,6 +542,10 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* TODOIST *********/
+.toggl-button.min svg {
+  vertical-align: baseline;
+}
+
 .toggl-button.todoist-detail-subtask {
   visibility: hidden;
 }
@@ -961,6 +969,12 @@ li > .toggl-button.phabricator {
   position: relative;
   top: 6px;
   left: 5px;
+}
+
+/********* Clickup *********/
+.toggl-button.clickup.min svg,
+.toggl-button.clickup.min span {
+  visibility: hidden;
 }
 
 /********* CLOUDES.ME *********/

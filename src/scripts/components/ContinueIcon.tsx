@@ -15,6 +15,7 @@ export default function ContinueIcon (props: { title: string }) {
 const Wrapper = styled.span`
   line-height: 0;
   padding-left: 1px;
+  position: relative;
 
   & path {
     fill: var(--font-color);
@@ -29,6 +30,8 @@ const Wrapper = styled.span`
 
 const Target = styled.div`
   position: absolute;
-  width: 12px;
-  height: 16px;
+  width: 22px;
+  left: -5px;
+  height: 26px;
+  top: -5px;
 `

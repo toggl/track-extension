@@ -6,6 +6,8 @@ import { renderTimeEntries } from './lib/actions';
 import Db from './lib/db';
 import Ga from './lib/ga';
 import Sound from './lib/sound';
+/* eslint-disable-next-line import/no-webpack-loader-syntax */
+import togglButtonSVG from '!!raw-loader!./icons/toggl-button.svg';
 
 const FIVE_MINUTES = 5 * 60;
 const ONE_HOUR = 60 * 60;
@@ -93,7 +95,9 @@ window.TogglButton = {
   $editForm:
     '<div id="toggl-button-edit-form">' +
     '<form autocomplete="off">' +
-    '<a class="toggl-button toggl-button-edit-form-button {service} active" href="javascript:void(0)">Stop timer</a>' +
+    '<a class="toggl-button toggl-button-edit-form-button {service} active" href="javascript:void(0)">' +
+    togglButtonSVG +
+    '<span>Stop timer</span></a>' +
     '<a id="toggl-button-hide"></a>' +
 
     `<div class="TB__Dialog__field" id="toggl-button-duration-row">

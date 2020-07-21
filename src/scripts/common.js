@@ -1,4 +1,6 @@
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
+/* eslint-disable-next-line import/no-webpack-loader-syntax */
+import togglButtonSVG from '!!raw-loader!./icons/toggl-button.svg';
 const browser = require('webextension-polyfill');
 
 let projectAutocomplete; let tagAutocomplete;
@@ -76,6 +78,19 @@ function secondsToTime (duration, format) {
   }
 
   return response;
+}
+
+function setLinkText (link, text) {
+  let span = link.querySelector('svg+span');
+  const title = link.querySelector('svg title');
+
+  if (!span) {
+    span = document.createElement('span');
+    link.appendChild(span);
+  }
+
+  title.textContent = text;
+  span.textContent = text;
 }
 
 window.togglbutton = {
@@ -409,7 +424,7 @@ window.togglbutton = {
       link.classList.remove('active');
       link.style.color = '';
       if (!link.classList.contains('min')) {
-        link.textContent = 'Start timer';
+        setLinkText(link, 'Start Timer');
       }
       browser.runtime
         .sendMessage({ type: 'stop' })
@@ -493,11 +508,14 @@ window.togglbutton = {
       link.title = 'Start timer: ' + link.title;
     }
 
+    link.innerHTML = togglButtonSVG;
+    setLinkText(link, 'Start Timer');
+
     link.addEventListener('click', function (e) {
       let opts;
       e.preventDefault();
       e.stopPropagation();
-      link = e.target;
+      link = e.currentTarget;
 
       if (link.classList.contains('active')) {
         togglbutton.deactivateTimerLink(link);
@@ -521,7 +539,7 @@ window.togglbutton = {
           container: params.container || ''
         };
       }
-      togglbutton.element = e.target;
+      togglbutton.element = e.currentTarget;
       browser.runtime
         .sendMessage(opts)
         .then(togglbutton.addEditForm);
@@ -579,7 +597,7 @@ window.togglbutton = {
 
     const isMinimal = link.classList.contains('min');
     if (!isMinimal) {
-      link.textContent = 'Stop timer';
+      setLinkText(link, 'Stop timer');
     }
   },
 
@@ -596,7 +614,7 @@ window.togglbutton = {
     link.style.color = '';
     const minimal = link.classList.contains('min');
     if (!minimal) {
-      link.textContent = 'Start timer';
+      setLinkText(link, 'Start timer');
     }
   },
 

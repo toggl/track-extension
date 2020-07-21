@@ -97,6 +97,7 @@
     "moment": "2.24.0",
     "nanoid": "1.2.6",
     "prop-types": "15.7.2",
+    "raw-loader": "4.0.1",
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "react-emotion": "10.0.0"

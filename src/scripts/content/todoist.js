@@ -80,8 +80,7 @@ togglbutton.render(
 
     const wrapper = document.createElement('div');
     wrapper.style.display = 'flex';
-    wrapper.style.marginTop = '3px';
-    wrapper.style.marginLeft = '8px';
+    wrapper.style.marginTop = '2px';
     wrapper.appendChild(link);
 
     elem.lastChild.before(wrapper);

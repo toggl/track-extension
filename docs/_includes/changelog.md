@@ -1,3 +1,10 @@
+## [1.64.2](https://github.com/toggl/toggl-button/compare/1.64.1...1.64.2) (2020-07-21)
+
+
+### Bug Fixes
+
+* **todoist:** Fix button not showing on Todoist ([#1788](https://github.com/toggl/toggl-button/issues/1788)) ([dfd2416](https://github.com/toggl/toggl-button/commit/dfd2416)), closes [#1774](https://github.com/toggl/toggl-button/issues/1774)
+
 ## [1.64.1](https://github.com/toggl/toggl-button/compare/1.64.0...1.64.1) (2020-07-10)
 
 

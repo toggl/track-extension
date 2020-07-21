@@ -1,3 +1,10 @@
+## [1.64.3](https://github.com/toggl/toggl-button/compare/1.64.2...1.64.3) (2020-07-21)
+
+
+### Bug Fixes
+
+* **teamwork:** Reposition Toggl Button after UI redesign ([d761d38](https://github.com/toggl/toggl-button/commit/d761d38))
+
 ## [1.64.2](https://github.com/toggl/toggl-button/compare/1.64.1...1.64.2) (2020-07-21)
 
 

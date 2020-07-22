@@ -464,6 +464,11 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   font-weight: initial;
 }
 
+[data-test-id="customer-context-tab-navigation"] .toggl-button.toggl-button.zendesk-agent-ws {
+  margin-left: 10px;
+  margin-top: 2px;
+}
+
 .toggl-button.zendesk-agent-ws:not(.toggl-button-edit-form-button) {
   margin-right: 15px;
 

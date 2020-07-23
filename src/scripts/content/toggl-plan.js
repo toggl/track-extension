@@ -27,9 +27,6 @@ togglbutton.render('.task-form:not(.toggl)',
       projectName: getProjectText
     });
 
-    link.style.marginTop = '-1px';
-    link.style.marginLeft = '16px';
-
     container.parentNode.insertBefore(link, container);
   }
 );

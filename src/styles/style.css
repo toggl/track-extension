@@ -364,14 +364,10 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   opacity: 0 !important;
 }
 
-/********* TEAMWEEK *********/
-.toggl-button.teamweek-new {
-  color: rgba(47, 47, 47, 0.8);
-  margin-right: 10px;
-}
-
-#toggl-button-edit-form .toggl-button.teamweek-new {
-  position: static;
+/********* TOGGL-PLAN *********/
+a.toggl-button.toggl-plan {
+  margin-top: -1px;
+  margin-left: 16px;
 }
 
 /********* Produck *********/

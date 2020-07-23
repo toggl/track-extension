@@ -1,3 +1,10 @@
+## [1.64.4](https://github.com/toggl/toggl-button/compare/1.64.3...1.64.4) (2020-07-23)
+
+
+### Bug Fixes
+
+* **toggl-plan:** Improve Toggl Plan integration ([448d2ba](https://github.com/toggl/toggl-button/commit/448d2ba))
+
 ## [1.64.3](https://github.com/toggl/toggl-button/compare/1.64.2...1.64.3) (2020-07-21)
 
 

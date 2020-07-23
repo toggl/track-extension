@@ -1,24 +1,35 @@
 'use strict';
 
-togglbutton.render('.task-form:not(.toggl)', { observe: true }, elem => {
-  const container = $('[data-hook=actions-menu]', elem);
+// Changed from teamweek to Toggl-Plan
+// Version active on July 2020
+togglbutton.render('.task-form:not(.toggl)',
+  { observe: true },
+  element => {
+    const container = element.querySelector('[data-hook=actions-menu]');
 
-  const getDescriptionText = () => {
-    const titleElement = $('[data-hook=name-input]', elem);
-    return titleElement ? titleElement.textContent.trim() : '';
-  };
+    const getDescriptionText = () => {
+      const titleElement = element.querySelector('[data-hook=name-editor] textarea');
+      return titleElement ? titleElement.textContent.trim() : '';
+    };
 
-  const getProjectText = () => {
-    const projectElement = $('[data-hook=project-select] [data-hook=input-label]', elem);
-    return projectElement ? projectElement.textContent.trim() : null;
-  };
+    const getProjectText = () => {
+      const planElement = element.querySelector('[data-hook=plan-editor] [data-hook=input-value]');
 
-  const link = togglbutton.createTimerLink({
-    className: 'teamweek-new',
-    buttonType: 'minimal',
-    description: getDescriptionText,
-    projectName: getProjectText
-  });
+      return planElement
+        ? planElement.textContent.trim()
+        : '';
+    };
 
-  container.parentNode.insertBefore(link, container);
-});
+    const link = togglbutton.createTimerLink({
+      className: 'toggl-plan',
+      buttonType: 'minimal',
+      description: getDescriptionText,
+      projectName: getProjectText
+    });
+
+    link.style.marginTop = '-1px';
+    link.style.marginLeft = '16px';
+
+    container.parentNode.insertBefore(link, container);
+  }
+);

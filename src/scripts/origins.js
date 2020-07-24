@@ -561,12 +561,14 @@ export default {
   'toggl.com': {
     url: '*://toggl.com/*',
     name: 'Toggl',
-    clone: 'true'
+    clone: 'true',
+    hideFromList: true
   },
   'www.toggl.com': {
     url: '*://www.toggl.com/*',
     name: 'Toggl',
-    clone: 'true'
+    clone: 'true',
+    hideFromList: true
   },
   'plan.toggl.com': {
     url: '*://plan.toggl.com/*',

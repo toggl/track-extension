@@ -410,8 +410,10 @@ const Settings = {
                 html.appendChild(option);
               }
 
-              // Don't show toggl.com as it's not optional
-              if (key.indexOf('toggl') === -1 && !!TogglOrigins[key].url) {
+              const isOriginAllowed = !!TogglOrigins[key].url;
+              const isVisibleInList = !TogglOrigins[key].hideFromList;
+
+              if (isOriginAllowed && isVisibleInList) {
                 li = document.createElement('li');
                 li.id = key;
                 li.className = disabled;

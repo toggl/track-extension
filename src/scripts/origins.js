@@ -94,6 +94,10 @@ export default {
     url: '*://app.clubhouse.io/*',
     name: 'Clubhouse'
   },
+  'coda.io': {
+    url: '*://coda.io/d/*',
+    name: 'Coda'
+  },
   'codeable.io': {
     url: '*://app.codeable.io/*',
     name: 'Codeable'

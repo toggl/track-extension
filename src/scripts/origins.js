@@ -12,7 +12,7 @@ export default {
     url: '*://*.any.do/*',
     name: 'Anydo'
   },
-  'asana.com': {
+  'app.asana.com': {
     url: '*://app.asana.com/*',
     name: 'Asana'
   },
@@ -62,11 +62,11 @@ export default {
     url: '*://*.bitrix24.com/*',
     name: 'Bitrix24'
   },
-  'breeze.pm': {
+  'app.breeze.pm': {
     url: '*://app.breeze.pm/*',
     name: 'Breeze'
   },
-  'brokerengine.com.au': {
+  'app.brokerengine.com.au': {
     url: '*://app.brokerengine.com.au/*',
     name: 'BrokerEngine'
   },
@@ -90,11 +90,11 @@ export default {
     url: '*://*.cloudes.me/*',
     name: 'Cloudes.me'
   },
-  'clubhouse.io': {
+  'app.clubhouse.io': {
     url: '*://app.clubhouse.io/*',
     name: 'Clubhouse'
   },
-  'codeable.io': {
+  'app.codeable.io': {
     url: '*://app.codeable.io/*',
     name: 'Codeable'
   },
@@ -232,7 +232,7 @@ export default {
     url: '*://keep.google.com/*',
     name: 'Google Keep'
   },
-  'khanacademy.org': {
+  'www.khanacademy.org': {
     url: '*://www.khanacademy.org/*',
     name: 'KhanAcademy'
   },
@@ -240,7 +240,7 @@ export default {
     url: '*://mail.google.com/*',
     name: 'Google Mail'
   },
-  'gqueues.com': {
+  'www.gqueues.com': {
     url: '*://www.gqueues.com/*',
     name: 'GQueues'
   },
@@ -248,7 +248,7 @@ export default {
     url: '*://habitica.com/*',
     name: 'Habitica'
   },
-  'heflo.com': {
+  'app.heflo.com': {
     url: '*://app.heflo.com/*',
     name: 'HEFLO'
   },
@@ -256,11 +256,11 @@ export default {
     url: '*://*.helprace.com/*',
     name: 'Helprace'
   },
-  'helpscout.net': {
+  'secure.helpscout.net': {
     url: '*://secure.helpscout.net/*',
     name: 'Helpscout'
   },
-  'huskymarketingplanner.com': {
+  'app.huskymarketingplanner.com': {
     url: '*://app.huskymarketingplanner.com/*',
     name: 'Husky Marketing Planner',
     file: 'husky-marketing-planner.js'
@@ -295,7 +295,7 @@ export default {
     url: '*://*.kantree.io/*',
     name: 'Kantree'
   },
-  'liquidplanner.com': {
+  'app.liquidplanner.com': {
     url: '*://app.liquidplanner.com/*',
     name: 'Liquidplanner'
   },
@@ -308,7 +308,7 @@ export default {
     name: 'Mantishub',
     clone: 'true'
   },
-  'meistertask.com': {
+  'www.meistertask.com': {
     url: '*://www.meistertask.com/*',
     name: 'MeisterTask'
   },
@@ -331,7 +331,7 @@ export default {
     name: 'Notion',
     file: 'notion.js'
   },
-  'nozbe.com': {
+  'app.nozbe.com': {
     url: '*://app.nozbe.com/*',
     name: 'Nozbe'
   },
@@ -356,7 +356,7 @@ export default {
     url: '*://*.onshape.com/*',
     name: 'Onshape'
   },
-  'osticket.com': {
+  'supportsystem.com': {
     url: '*://*.supportsystem.com/*',
     name: 'osTicket',
     file: 'osticket.js'
@@ -493,7 +493,7 @@ export default {
     url: '*://*.smartboard.cl/*',
     name: 'Smartboard'
   },
-  'sourcelair.com': {
+  'www.sourcelair.com': {
     url: '*://www.sourcelair.com/*',
     name: 'Sourcelair'
   },
@@ -686,7 +686,7 @@ export default {
     url: '*://overv.io/*',
     name: 'Overv'
   },
-  'teamleader.eu': {
+  'app.teamleader.eu': {
     url: '*://app.teamleader.eu/*',
     name: 'Teamleader'
   },
@@ -694,7 +694,7 @@ export default {
     url: '*://*.manageengine.com/*',
     name: 'ManageEngine'
   },
-  'vivifyscrum.com': {
+  'app.vivifyscrum.com': {
     url: '*://app.vivifyscrum.com/*',
     name: 'VivifyScrum',
     clone: 'true'
@@ -703,7 +703,7 @@ export default {
     url: '*://*.zammad.com/*',
     name: 'Zammad'
   },
-  'zenhub.com': {
+  'app.zenhub.com': {
     url: '*://app.zenhub.com/*',
     name: 'Zenhub'
   }

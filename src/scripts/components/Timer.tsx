@@ -6,6 +6,7 @@ import * as keycode from 'keycode';
 import { formatDuration } from '../@toggl/time-format-utils/format-duration';
 
 import { TimeEntryDescription, TimeEntryProject } from './TimeEntriesList';
+import TimerAutoComplete from './TimerAutoComplete'
 import TagsIcon from './TagsIcon';
 import start from '../icons/start.svg';
 import stop from '../icons/stop.svg';
@@ -16,12 +17,14 @@ const NO_DESCRIPTION = '(no description)';
 type TimerProps = {
   entry: Toggl.TimeEntry | null;
   project: Toggl.Project | null;
+  timeEntries: Array<Toggl.TimeEntry> | null;
+  clients: Array<Toggl.Client> | null;
 };
 
 function Timer (props: TimerProps) {
   return props.entry
     ? <RunningTimer entry={props.entry} project={props.project} />
-    : <TimerForm />
+    : <TimerForm timeEntries={props.timeEntries} clients={props.clients} />
 }
 
 function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | null }) {
@@ -60,8 +63,11 @@ function TimerDuration ({ start }: { start: string }) {
   )
 }
 
-function TimerForm () {
+function TimerForm ({ timeEntries, clients }) {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [isDropdownOpen, setIsDropdown] = React.useState(false)
+  const [description, setDescription] = React.useState('')
+
   const startTimer = (e) => {
     e.preventDefault();
     const description = inputRef && inputRef.current
@@ -75,11 +81,23 @@ function TimerForm () {
     }
   }
 
+  const onChange = () => {
+    if(inputRef && inputRef.current) {
+      setIsDropdown(!!inputRef.current.value)
+      setDescription(inputRef.current.value)
+    }
+  }
+
   return (
-    <TimerContainer>
-      <TimerInput ref={inputRef} onKeyUp={onKeyUp} placeholder='What are you working on?' />
-      <TimerButton isRunning={false} onClick={startTimer} />
-    </TimerContainer>
+    <React.Fragment>
+      <TimerContainer>
+        <TimerInput ref={inputRef} onKeyUp={onKeyUp} onChange={onChange} placeholder='What are you working on?' />
+        <TimerButton isRunning={false} onClick={startTimer} />
+      </TimerContainer>
+      {isDropdownOpen &&
+        <TimerAutoComplete filter={description} timeEntries={timeEntries} clients={clients} />
+      }
+    </React.Fragment>
   );
 }
 

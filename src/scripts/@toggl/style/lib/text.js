@@ -12,6 +12,16 @@ export const [light, normal, semibold, bold] = [300, 400, 500, 700];
 
 export const [regular] = ['14px'];
 
+export const label = css`
+  font-family: ${font.roboto};
+  color: ${color.grey};
+  font-size: 11px;
+  line-height: normal;
+  font-weight: ${semibold};
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+`;
+
 export const withDot = css`
   color: ${color.greyish};
 

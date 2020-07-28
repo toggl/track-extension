@@ -102,7 +102,8 @@ const Popup = {
     const rootElement = document.getElementById('root-timer');
     const entry = TogglButton.$curEntry;
     const project = entry && TogglButton.findProjectByPid(entry.pid) || null;
-    ReactDOM.render(<Timer entry={entry} project={project} />, rootElement);
+    const timeEntries = TogglButton.$user.time_entries;
+    ReactDOM.render(<Timer entry={entry} timeEntries={timeEntries} project={project} clients={TogglButton.$user.clientMap} />, rootElement);
   },
 
   sendMessage: function (request) {

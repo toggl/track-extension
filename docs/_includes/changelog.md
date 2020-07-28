@@ -1,3 +1,10 @@
+## [1.64.5](https://github.com/toggl/toggl-button/compare/1.64.4...1.64.5) (2020-07-28)
+
+
+### Bug Fixes
+
+* **zendesk:** Fix missing TE description ([#1796](https://github.com/toggl/toggl-button/issues/1796)) ([feeb7dd](https://github.com/toggl/toggl-button/commit/feeb7dd)), closes [#1794](https://github.com/toggl/toggl-button/issues/1794)
+
 ## [1.64.4](https://github.com/toggl/toggl-button/compare/1.64.3...1.64.4) (2020-07-23)
 
 

@@ -43,16 +43,19 @@ togglbutton.render('[data-test-id="customer-context-tab-navigation"]', { observe
   const titleFunc = function () {
     let description;
 
-    const titleElem = document.querySelector('[aria-label="Subject"]');
     const ticketNum = location.href.match(/tickets\/(\d+)/);
 
-    if (titleElem !== null) {
-      description = titleElem.value.trim();
+    if (ticketNum) {
+      const id = ticketNum[1].trim();
+      const titleElem = document.querySelector(`[data-side-conversations-anchor-id="${id}"] [data-test-id="ticket-pane-subject"]`);
+
+      if (titleElem !== null) {
+        description = titleElem.value.trim();
+      }
+
+      description = '#' + id + ' ' + description;
     }
 
-    if (ticketNum) {
-      description = '#' + ticketNum[1].trim() + ' ' + description;
-    }
     return description;
   };
 

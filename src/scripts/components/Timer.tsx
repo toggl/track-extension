@@ -19,12 +19,14 @@ type TimerProps = {
   project: Toggl.Project | null;
   timeEntries: Array<Toggl.TimeEntry> | null;
   clients: Array<Toggl.Client> | null;
+  tasks: object | null;
+  projects: object | null;
 };
 
 function Timer (props: TimerProps) {
   return props.entry
     ? <RunningTimer entry={props.entry} project={props.project} />
-    : <TimerForm timeEntries={props.timeEntries} clients={props.clients} />
+    : <TimerForm timeEntries={props.timeEntries} clients={props.clients} tasks={props.tasks} projects={props.projects} />
 }
 
 function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | null }) {
@@ -63,10 +65,12 @@ function TimerDuration ({ start }: { start: string }) {
   )
 }
 
-function TimerForm ({ timeEntries, clients }) {
+function TimerForm ({ timeEntries, clients, projects, tasks }) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [isDropdownOpen, setIsDropdown] = React.useState(false)
   const [description, setDescription] = React.useState('')
+
+  const taskList = React.useMemo(() => tasks.flat(), tasks)
 
   const startTimer = (e) => {
     e.preventDefault();
@@ -95,7 +99,7 @@ function TimerForm ({ timeEntries, clients }) {
         <TimerButton isRunning={false} onClick={startTimer} />
       </TimerContainer>
       {isDropdownOpen &&
-        <TimerAutoComplete filter={description} timeEntries={timeEntries} clients={clients} />
+        <TimerAutoComplete filter={description} timeEntries={timeEntries} clients={clients} tasks={taskList} projects={projects} />
       }
     </React.Fragment>
   );
@@ -165,6 +169,7 @@ const Duration = styled.div`
 type TimerButtonProps = {
   isRunning: boolean;
 };
+
 const TimerButton = styled.div`
   display: inline-block;
   width: 40px;

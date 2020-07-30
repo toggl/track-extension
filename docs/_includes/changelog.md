@@ -1,3 +1,10 @@
+## [1.64.6](https://github.com/toggl/toggl-button/compare/1.64.5...1.64.6) (2020-07-30)
+
+
+### Bug Fixes
+
+* **settings:** Integrations settings not "checking" ([#1802](https://github.com/toggl/toggl-button/issues/1802)) ([0c9f7eb](https://github.com/toggl/toggl-button/commit/0c9f7eb)), closes [#1775](https://github.com/toggl/toggl-button/issues/1775)
+
 ## [1.64.5](https://github.com/toggl/toggl-button/compare/1.64.4...1.64.5) (2020-07-28)
 
 

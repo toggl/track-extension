@@ -5,6 +5,7 @@ import Highlighter from "react-highlight-words";
 
 import { groupTimeEntriesByDay } from '../lib/groupUtils';
 import { label, withDot, withLargeDot } from '../@toggl/style/lib/text';
+import { borderRadius } from '../@toggl/style/lib/variables';
 import { greyish } from '../@toggl/style/lib/color';
 
 type TimerAutoComplete= {
@@ -13,16 +14,18 @@ type TimerAutoComplete= {
   clients: Array<Toggl.Client>;
   tasks: Array<Toggl.Task>;
   projects: object;
+  onSelect: (object) => void
 };
 
 const FUSE_OPTIONS = {
-  includeMatches: true,
   minMatchCharLength: 2,
   threshold: 0.0,
   ignoreLocation: true
 }
 
-export default function TimerAutocomplete ({ filter, timeEntries, clients, tasks, projects }: TimerAutoComplete) {
+const MAX_NUMBER_SUGGESTIONS = 3
+
+export default function TimerAutocomplete ({ filter, onSelect, timeEntries, clients, tasks, projects }: TimerAutoComplete) {
   const { listEntries }  = groupTimeEntriesByDay(timeEntries)
   const uniqueTimeEntries = listEntries.reduce((latestEntries, entries) => {
     latestEntries.push(entries[0])
@@ -33,21 +36,21 @@ export default function TimerAutocomplete ({ filter, timeEntries, clients, tasks
   const fuseProjects = new Fuse(Object.values(projects), { ...FUSE_OPTIONS, keys: ['name'] })
   const fuseTasks = new Fuse(tasks, { ...FUSE_OPTIONS, keys: ['name'] })
 
-  const filteredTimeEntries= fuseTimeEntries.search(filter)
-  const filteredProjects = fuseProjects.search(filter)
-  const filteredTasks = fuseTasks.search(filter)
+  const filteredTimeEntries= fuseTimeEntries.search(filter).slice(0, MAX_NUMBER_SUGGESTIONS)
+  const filteredProjects = fuseProjects.search(filter).slice(0, MAX_NUMBER_SUGGESTIONS)
+  const filteredTasks = fuseTasks.search(filter).slice(0, MAX_NUMBER_SUGGESTIONS)
 
   const hasItems = filteredTimeEntries.length > 0 || filteredProjects.length > 0 || filteredTasks.length > 0
 
-  return hasItems ?
+  return filter.length >= 2 && hasItems ?
       <Dropdown>
-          <TimeEntrySuggestions allProjects={projects} filteredProjects={filteredProjects} filteredTimeEntries={filteredTimeEntries} filteredTasks={filteredTasks} clients={clients} filter={filter}/>
+          <TimeEntrySuggestions onSelect={onSelect} allProjects={projects} filteredProjects={filteredProjects} filteredTimeEntries={filteredTimeEntries} filteredTasks={filteredTasks} clients={clients} filter={filter}/>
       </Dropdown>
         : null
 }
 
 
-function TimeEntrySuggestions ({ filter, filteredTimeEntries, filteredProjects, filteredTasks, allProjects, clients }) {
+function TimeEntrySuggestions ({ filter, filteredTimeEntries, filteredProjects, filteredTasks, allProjects, clients, onSelect }) {
   return (
     <React.Fragment>
         {filteredTimeEntries.length > 0 &&
@@ -55,7 +58,7 @@ function TimeEntrySuggestions ({ filter, filteredTimeEntries, filteredProjects, 
             <Label>Previously tracked time entries</Label>
             <Items>
               {
-                filteredTimeEntries.map(({ item: timeEntry }) => <TimeEntrySuggestion key={timeEntry.id} timeEntry={timeEntry} project={allProjects[timeEntry.pid]} client={allProjects[timeEntry.pid] && allProjects[timeEntry.pid].cid && clients[allProjects[timeEntry.pid].cid]} filter={filter} />)
+                filteredTimeEntries.map(({ item: timeEntry }) => <TimeEntrySuggestion key={timeEntry.id} onSelect={onSelect} timeEntry={timeEntry} project={allProjects[timeEntry.pid]} client={allProjects[timeEntry.pid] && allProjects[timeEntry.pid].cid && clients[allProjects[timeEntry.pid].cid]} filter={filter} />)
               }
             </Items>
           </React.Fragment>
@@ -84,9 +87,9 @@ function TimeEntrySuggestions ({ filter, filteredTimeEntries, filteredProjects, 
   )
 }
 
-function TimeEntrySuggestion ({ timeEntry, project, filter, client }) {
+function TimeEntrySuggestion ({ timeEntry, project, filter, client, onSelect }) {
   return (
-    <Entry>
+    <Entry onClick={() => onSelect(timeEntry)}>
       <Highlighter highlightStyle={{backgroundColor: 'rgba(0,0,0,0.06)'}} searchWords={[filter]} textToHighlight={timeEntry.description} />
       { project && <Project color={project.hex_color}>{project.name}</Project>}
       { client && <Client>{client.name}</Client>}
@@ -126,6 +129,12 @@ const Entry = styled.li`
   align-items: center;
   padding: 0 10px;
   height: 30px;
+  cursor: pointer;
+
+  &:hover, &:focus {
+    border-radius: ${borderRadius};
+    background-color: rgba(0,0,0,0.04);
+  }
 `
 
 const Project = styled.span`
@@ -152,7 +161,7 @@ const Dropdown = styled.div`
   top: 55px;
   z-index: 1000;
   height: auto;
-  width: 100%;
+  width: 440px;
   margin: 0 8px;
   padding: 5px;
 

@@ -66,7 +66,6 @@ function TimerDuration ({ start }: { start: string }) {
 }
 
 function TimerForm ({ timeEntries, clients, projects, tasks }) {
-  const inputRef = React.useRef<HTMLInputElement>(null);
   const [isDropdownOpen, setIsDropdown] = React.useState(false)
   const [description, setDescription] = React.useState('')
 
@@ -74,9 +73,6 @@ function TimerForm ({ timeEntries, clients, projects, tasks }) {
 
   const startTimer = (e) => {
     e.preventDefault();
-    const description = inputRef && inputRef.current
-      ? inputRef.current.value
-      : '';
     window.PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true });
   };
   const onKeyUp = (e) => {
@@ -85,21 +81,24 @@ function TimerForm ({ timeEntries, clients, projects, tasks }) {
     }
   }
 
-  const onChange = () => {
-    if(inputRef && inputRef.current) {
-      setIsDropdown(!!inputRef.current.value)
-      setDescription(inputRef.current.value)
-    }
+  const onChange = (e) => {
+    setDescription(e.target.value)
+    setIsDropdown(!!description)
+  }
+
+  const onSelectSuggestion = (timeEntry) => {
+    setIsDropdown(false)
+    setDescription(timeEntry.description)
   }
 
   return (
     <React.Fragment>
       <TimerContainer>
-        <TimerInput ref={inputRef} onKeyUp={onKeyUp} onChange={onChange} placeholder='What are you working on?' />
+        <TimerInput value={description} onKeyUp={onKeyUp} onChange={onChange} placeholder='What are you working on?' />
         <TimerButton isRunning={false} onClick={startTimer} />
       </TimerContainer>
       {isDropdownOpen &&
-        <TimerAutoComplete filter={description} timeEntries={timeEntries} clients={clients} tasks={taskList} projects={projects} />
+        <TimerAutoComplete onSelect={onSelectSuggestion} filter={description.trim()} timeEntries={timeEntries} clients={clients} tasks={taskList} projects={projects} />
       }
     </React.Fragment>
   );

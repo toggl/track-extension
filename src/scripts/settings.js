@@ -32,6 +32,10 @@ document.querySelector('#close-review-prompt').addEventListener('click', dismiss
   link.addEventListener('click', changeActiveTab);
 });
 
+const isNotTogglApp = (url) => {
+  return (url || '').match(/toggl\./) === null;
+};
+
 const Settings = {
   $startAutomatically: null,
   $stopAutomatically: null,
@@ -275,7 +279,7 @@ const Settings = {
 
     for (i = 0; i < items.length; i++) {
       current = items[i].getAttribute('data-host');
-      if (current.indexOf('toggl') === -1) {
+      if (isNotTogglApp(current)) {
         if (current.indexOf(',') !== -1) {
           urls = urls.concat(current.split(','));
         } else {
@@ -283,6 +287,7 @@ const Settings = {
         }
       }
     }
+
     return { origins: urls };
   },
   setFromTo: async function () {
@@ -389,10 +394,24 @@ const Settings = {
               checked = 'checked';
 
               if (!Settings.origins[key]) {
+                tmpkey = key;
+
+                // Special case for toggl-button-demo
+                if (key === 'dom-integration') {
+                  tmpkey = TogglOrigins[key].url
+                    .replace('*://*.', '')
+                    .replace('*://', '')
+                    .replace('/*', '');
+                }
+
                 // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
-                tmpkey = key.split('.');
-                tmpkey.shift();
-                tmpkey = tmpkey.join('.');
+                const isWildcardDomainRegex = new RegExp(/\/\/\*\./);
+                if (TogglOrigins[key].url.match(isWildcardDomainRegex)) {
+                  tmpkey = key.split('.');
+                  tmpkey.shift();
+                  tmpkey = tmpkey.join('.');
+                }
+
                 if (!Settings.origins[tmpkey]) {
                   disabled = 'disabled';
                   checked = '';
@@ -411,7 +430,7 @@ const Settings = {
               }
 
               // Don't show toggl.com as it's not optional
-              if (key.indexOf('toggl') === -1 && !!TogglOrigins[key].url) {
+              if (isNotTogglApp(key) && !!TogglOrigins[key].url) {
                 li = document.createElement('li');
                 li.id = key;
                 li.className = disabled;
@@ -595,7 +614,7 @@ const Settings = {
           }
 
           if (
-            result.origins[i].indexOf('toggl') === -1 &&
+            isNotTogglApp(result.origins[i]) &&
             result.origins[i] !== '*://*/*' &&
             !skip
           ) {

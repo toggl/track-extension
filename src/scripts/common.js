@@ -509,7 +509,10 @@ window.togglbutton = {
     }
 
     link.innerHTML = togglButtonSVG;
-    setLinkText(link, 'Start Timer');
+
+    if (params.buttonType !== 'minimal') {
+      setLinkText(link, 'Start Timer');
+    }
 
     link.addEventListener('click', function (e) {
       let opts;

@@ -1,3 +1,10 @@
+## [1.64.7](https://github.com/toggl/toggl-button/compare/1.64.6...1.64.7) (2020-07-31)
+
+
+### Bug Fixes
+
+* **common:** Hide text in minimal button type ([b3b6013](https://github.com/toggl/toggl-button/commit/b3b6013))
+
 ## [1.64.6](https://github.com/toggl/toggl-button/compare/1.64.5...1.64.6) (2020-07-30)
 
 

@@ -1532,3 +1532,25 @@ body.notion-body.dark .toggl-button.notion {
 [data-toggl="loanDrawer"] .toggl-button.brokerengine {
   margin-left: 12px;
 }
+
+/********* Yandex Tracker *********/
+.b-ticket-actions__panel .toggl-button.toggl-button.yandex-tracker {
+  height: 26px;
+
+  color: #000 !important;
+  background-color: #fff;
+
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 4px;
+
+  background-position: 4px center;
+  padding: 0 4px 0 26px;
+
+  line-height: 26px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.b-agile-task__card .toggl-button.yandex-tracker {
+  margin-left: 8px;
+}

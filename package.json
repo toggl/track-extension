@@ -97,6 +97,7 @@
     "lodash.reduce": "4.6.0",
     "moment": "2.24.0",
     "nanoid": "1.2.6",
+    "polished": "3.6.5",
     "prop-types": "15.7.2",
     "raw-loader": "4.0.1",
     "react": "16.8.4",

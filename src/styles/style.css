@@ -232,7 +232,15 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 /********* GITLAB *********/
 .toggl-button.gitlab {
-  margin-top: 7px;
+  margin-top: 0;
+  text-align: center;
+}
+
+.toggl-button.gitlab span {
+    display: block;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 @media (max-width: 991px) {

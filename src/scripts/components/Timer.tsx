@@ -68,6 +68,7 @@ function TimerDuration ({ start }: { start: string }) {
 function TimerForm ({ timeEntries, clients, projects, tasks }) {
   const [isDropdownOpen, setIsDropdown] = React.useState(false)
   const [description, setDescription] = React.useState('')
+  const dropdownRef = React.useRef(null)
 
   const taskList = React.useMemo(() => tasks.flat(), tasks)
 
@@ -78,6 +79,10 @@ function TimerForm ({ timeEntries, clients, projects, tasks }) {
   const onKeyUp = (e) => {
     if (keycode(e.which) === 'enter') {
       startTimer(e);
+    }
+
+    if(isDropdownOpen && keycode(e.which) === 'down') {
+      dropdownRef.current.focus()
     }
   }
 
@@ -98,7 +103,7 @@ function TimerForm ({ timeEntries, clients, projects, tasks }) {
         <TimerButton isRunning={false} onClick={startTimer} />
       </TimerContainer>
       {isDropdownOpen &&
-        <TimerAutoComplete onSelect={onSelectSuggestion} filter={description.trim()} timeEntries={timeEntries} clients={clients} tasks={taskList} projects={projects} />
+        <TimerAutoComplete dropdownRef={dropdownRef} onSelect={onSelectSuggestion} filter={description.trim()} timeEntries={timeEntries} clients={clients} tasks={taskList} projects={projects} />
       }
     </React.Fragment>
   );

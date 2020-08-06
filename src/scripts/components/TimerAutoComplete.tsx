@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import Fuse from 'fuse.js'
 import Highlighter from "react-highlight-words";
 import * as keycode from 'keycode';
 
-import { groupTimeEntriesByDay } from '../lib/groupUtils';
+import { useAutoComplete } from '../lib/timeEntryAutoComplete'
+
 import { label, withDot, withLargeDot } from '../@toggl/style/lib/text';
 import { borderRadius } from '../@toggl/style/lib/variables';
 import { greyish } from '../@toggl/style/lib/color';
@@ -19,39 +19,18 @@ type TimerAutoComplete= {
   dropdownRef: React.RefObject<HTMLDivElement> | null;
 };
 
-type FilterResult<T> = Array<Fuse.FuseResult<T>>
-
-
-const FUSE_OPTIONS = {
-  minMatchCharLength: 2,
-  threshold: 0.0,
-  ignoreLocation: true
-}
-
 export default function TimerAutocomplete ({ filter, onSelect, timeEntries, clients, tasks, projects, dropdownRef}: TimerAutoComplete) {
-  const { listEntries }  = groupTimeEntriesByDay(timeEntries)
-  const uniqueTimeEntries = listEntries.reduce((latestEntries, entries) => {
-    latestEntries.push(entries[0])
-    return latestEntries
-  }, [])
-
   const suggestionsRef = React.useRef<any>([])
-  const [focusedEntry, setFocusedEntry] = React.useState<number>(0)
-  const [filteredProjects, setFilteredProjects] = React.useState<FilterResult<Toggl.Project>>([])
-  const [filteredTasks, setFilteredTasks] = React.useState<FilterResult<Toggl.Task>>([])
-  const [filteredTimeEntries, setFilteredTimeEntries] = React.useState<FilterResult<Toggl.TimeEntry>>([])
+  const [focusedEntry, setFocusedEntry] = React.useState(0)
+
+  const {
+    suggestions,
+    currentDropdown
+  } = useAutoComplete(filter, timeEntries, projects, tasks)
 
   React.useEffect(() => {
-    const fuseTimeEntries = new Fuse(uniqueTimeEntries, { ...FUSE_OPTIONS, keys: ['description'] })
-    const fuseProjects = new Fuse(Object.values(projects), { ...FUSE_OPTIONS, keys: ['name'] })
-    const fuseTasks = new Fuse(tasks, { ...FUSE_OPTIONS, keys: ['name'] })
-
-    setFilteredTimeEntries(fuseTimeEntries.search(filter))
-    setFilteredProjects(fuseProjects.search(filter))
-    setFilteredTasks(fuseTasks.search(filter))
-
-    suggestionsRef.current = (new Array(filteredTimeEntries.length + filteredProjects.length + filteredTasks.length)).fill(0).map(() => React.createRef())
-  }, [filter, projects, tasks, timeEntries])
+    suggestionsRef.current = (new Array(suggestions.timeEntries.length + suggestions.projects.length + suggestions.tasks.length)).fill(0).map(() => React.createRef())
+  }, [filter, suggestions.timeEntries, suggestions.projects, suggestions.tasks])
 
   const onFocus = () => {
     suggestionsRef.current[focusedEntry].current.focus()
@@ -71,18 +50,20 @@ export default function TimerAutocomplete ({ filter, onSelect, timeEntries, clie
     }
 
     if(keycode(e.which) === 'enter') {
-      if(focusedEntry < filteredTimeEntries.length) {
-        onSelect(filteredTimeEntries[focusedEntry].item)
+      if(focusedEntry < suggestions.timeEntries.length) {
+        onSelect(suggestions.timeEntries[focusedEntry].item)
       }
     }
   }
 
-  const hasItems = filteredTimeEntries.length > 0 || filteredProjects.length > 0 || filteredTasks.length > 0
+  const hasItems = suggestions.timeEntries.length > 0 || suggestions.projects.length > 0 || suggestions.tasks.length > 0
 
-  return filter.length >= 2 && hasItems ?
+  return filter.length >= 2 ?
     <Dropdown tabIndex={0} ref={dropdownRef} onFocus={onFocus} onKeyDown={onKeyDown}>
-          <TimeEntrySuggestions suggestionsRef={suggestionsRef} onSelect={onSelect} allProjects={projects} filteredProjects={filteredProjects} filteredTimeEntries={filteredTimeEntries} filteredTasks={filteredTasks} clients={clients} filter={filter}/>
-      </Dropdown>
+        {currentDropdown === 'main' && hasItems && <TimeEntrySuggestions suggestionsRef={suggestionsRef} onSelect={onSelect} allProjects={projects} filteredProjects={suggestions.projects} filteredTimeEntries={suggestions.timeEntries} filteredTasks={suggestions.tasks} clients={clients} filter={filter}/>}
+        {currentDropdown === 'project' && <div>Projects dropdown!</div>}
+        {currentDropdown === 'tag' && <div>Tags dropdown!</div>}
+    </Dropdown>
         : null
 }
 
@@ -219,7 +200,7 @@ const Dropdown = styled.div`
   position: absolute;
   top: 55px;
   z-index: 1000;
-  height: 400px;
+  max-height: 400px;
   width: 440px;
   margin: 0 8px;
   padding: 5px;

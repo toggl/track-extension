@@ -21,6 +21,7 @@ type TimerProps = {
   clients: Array<Toggl.Client> | null;
   tasks: object | null;
   projects: object | null;
+  dropdownRef: React.RefObject<HTMLDivElement>;
 };
 
 function Timer (props: TimerProps) {
@@ -68,7 +69,8 @@ function TimerDuration ({ start }: { start: string }) {
 function TimerForm ({ timeEntries, clients, projects, tasks }) {
   const [isDropdownOpen, setIsDropdown] = React.useState(false)
   const [description, setDescription] = React.useState('')
-  const dropdownRef = React.useRef(null)
+
+  const dropdownRef = React.useRef<HTMLDivElement>(null)
 
   const taskList = React.useMemo(() => tasks.flat(), tasks)
 
@@ -82,7 +84,7 @@ function TimerForm ({ timeEntries, clients, projects, tasks }) {
     }
 
     if(isDropdownOpen && keycode(e.which) === 'down') {
-      dropdownRef.current.focus()
+      dropdownRef.current && dropdownRef.current.focus()
     }
   }
 

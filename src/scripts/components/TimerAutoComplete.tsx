@@ -20,7 +20,7 @@ type TimerAutoComplete= {
 };
 
 export default function TimerAutocomplete ({ filter, onSelect, timeEntries, clients, tasks, projects, dropdownRef}: TimerAutoComplete) {
-  const suggestionsRef = React.useRef<any>([])
+  const suggestionsRef = React.useRef<React.RefObject<HTMLLIElement>[]>([])
   const [focusedEntry, setFocusedEntry] = React.useState(0)
 
   const {
@@ -29,11 +29,15 @@ export default function TimerAutocomplete ({ filter, onSelect, timeEntries, clie
   } = useAutoComplete(filter, timeEntries, projects, tasks)
 
   React.useEffect(() => {
-    suggestionsRef.current = (new Array(suggestions.timeEntries.length + suggestions.projects.length + suggestions.tasks.length)).fill(0).map(() => React.createRef())
+    suggestionsRef.current = Array.from({
+      length: suggestions.timeEntries.length +
+      suggestions.projects.length +
+      suggestions.tasks.length
+    }, () => React.createRef<HTMLLIElement>())
   }, [filter, suggestions.timeEntries, suggestions.projects, suggestions.tasks])
 
   const onFocus = () => {
-    suggestionsRef.current[focusedEntry].current.focus()
+    suggestionsRef.current[focusedEntry].current?.focus()
   }
 
   const onKeyDown = (e) => {
@@ -41,12 +45,12 @@ export default function TimerAutocomplete ({ filter, onSelect, timeEntries, clie
 
     if(keycode(e.which) === 'down') {
       setFocusedEntry(focusedEntry < suggestionsRef.current.length - 1 ? focusedEntry + 1 : 0)
-      suggestionsRef.current[focusedEntry].current.focus()
+      suggestionsRef.current[focusedEntry].current?.focus()
     }
 
     if(keycode(e.which) === 'up') {
       setFocusedEntry(focusedEntry === 0 ? 0 : focusedEntry - 1)
-      suggestionsRef.current[focusedEntry].current.focus()
+      suggestionsRef.current[focusedEntry].current?.focus()
     }
 
     if(keycode(e.which) === 'enter') {
@@ -116,7 +120,7 @@ type TimeEntrySuggestionProps = {
   onSelect: (object) => void;
 }
 
-const TimeEntrySuggestion = React.forwardRef<React.Ref<any>, TimeEntrySuggestionProps>(({ timeEntry, project, filter, client, onSelect }, ref) => {
+const TimeEntrySuggestion = React.forwardRef<HTMLLIElement, TimeEntrySuggestionProps>(({ timeEntry, project, filter, client, onSelect }, ref) => {
     return (
       <Entry tabIndex={0} ref={ref} onClick={() => onSelect(timeEntry)}>
         <Highlighter highlightStyle={{backgroundColor: 'rgba(0,0,0,0.06)'}} searchWords={[filter]} textToHighlight={timeEntry.description} />
@@ -133,7 +137,7 @@ type ProjectSuggestionProps = {
   client: Toggl.Client;
 }
 
-const ProjectSuggestion = React.forwardRef<React.ReactNode, ProjectSuggestionProps>(({ project, filter, client }, ref) => (
+const ProjectSuggestion = React.forwardRef<HTMLLIElement, ProjectSuggestionProps>(({ project, filter, client }, ref) => (
   <Entry tabIndex={0} ref={ref}>
     <Project color={project.hex_color}>
       <Highlighter highlightStyle={{backgroundColor: 'rgba(0,0,0,0.06)'}} searchWords={[filter]} textToHighlight={project.name} />
@@ -149,7 +153,7 @@ type TaskSuggestionProps = {
   filter: string;
 }
 
-const TaskSuggestion = React.forwardRef<React.ReactNode, TaskSuggestionProps>(({ task, project, filter }, ref) => (
+const TaskSuggestion = React.forwardRef<HTMLLIElement, TaskSuggestionProps>(({ task, project, filter }, ref) => (
   <Entry tabIndex={0} ref={ref}>
     <Task>
       <Highlighter highlightStyle={{backgroundColor: 'rgba(0,0,0,0.06)'}} searchWords={[filter]} textToHighlight={task.name} />

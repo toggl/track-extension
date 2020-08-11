@@ -1533,8 +1533,18 @@ body.notion-body.dark .toggl-button.notion {
 }
 
 /********* LiveAgent *********/
-.toggl-button.liveagent{
+.toggl-button.liveagent {
   cursor: pointer;
   margin: 1em;
   text-Align :center;
 }
+
+/********* PLACKER *********/
+.toggl-button.placker {
+  color: rgb(115, 125, 140);
+  left: -5px;
+  font-size: 14px;
+  font-family: "Proxima Nova", sans-serif;
+  font-weight: bold;
+  position: relative;
+  top: -3px;

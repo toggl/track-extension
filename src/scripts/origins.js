@@ -388,6 +388,11 @@ export default {
     url: '*://*.pivotaltracker.com/*',
     name: 'PivotalTracker'
   },
+  'placker.com': {
+    url: '*://*.placker.com/*',
+    name: 'Placker',
+    file: 'placker.js'
+  },
   'planbox.com': {
     url: '*://*.planbox.com/*',
     name: 'Planbox'

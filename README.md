@@ -89,6 +89,7 @@ out of the way and focus on real work.
 - [Phacility](http://phacility.com/)
 - [Pivotal](https://www.pivotaltracker.com/)
 - [Planbox](http://www.planbox.com/)
+- [Placker](http://placker.com/)
 - [Podio](https://podio.com/)
 - [ProcessWire](http://processwire.com/)
 - [Producteev](https://www.producteev.com/)

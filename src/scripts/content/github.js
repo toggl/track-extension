@@ -1,65 +1,39 @@
 'use strict';
 
 // Issue and Pull Request Page
-togglbutton.render('#partial-discussion-sidebar', { observe: true }, function (
-  elem
-) {
-  const numElem = $('.gh-header-number');
-  const titleElem = $('.js-issue-title');
-  const projectElem = $('h1.public strong a, h1.private strong a');
-  const existingTag = $('.discussion-sidebar-item.toggl');
-
-  // Check for existing tag, create a new one if one doesn't exist or is not the first one
-  // We want button to be the first one because it looks different from the other sidebar items
-  // and looks very weird between them.
-
-  if (existingTag) {
-    if (existingTag.parentNode.firstChild.classList.contains('toggl')) {
-      return;
-    }
-    existingTag.parentNode.removeChild(existingTag);
-  }
-
-  let description = titleElem.textContent;
-  if (numElem !== null) {
-    description = numElem.textContent + ' ' + description.trim();
-  }
-
-  const div = document.createElement('div');
-  div.classList.add('discussion-sidebar-item', 'toggl');
-
-  const link = togglbutton.createTimerLink({
+togglbutton.declare({
+  elements: {
+    title: '.js-issue-title',
+    num: '.gh-header-number',
+    project: 'h1 strong a'
+  },
+  link: {
+    observe: '#partial-discussion-sidebar:not(.toggl)',
+    target: '.discussion-sidebar-item',
+    targetInsertion: 'before',
+    linkWrapper: ['div', 'discussion-sidebar-item toggl'],
     className: 'github',
-    description: description,
-    projectName: projectElem && projectElem.textContent
-  });
-
-  div.appendChild(link);
-  elem.prepend(div);
+    largeButton: true,
+    description: '{{#num}}{{num}} {{/num}}{{title}}',
+    projectName: '{{project}}'
+  }
 });
 
 // Project Page
-togglbutton.render('.js-project-card-details .js-comment:not(.toggl)', { observe: true }, function (
-  elem
-) {
-  const titleElem = $('.js-issue-title');
-  const numElem = $('.js-project-card-details .project-comment-title-hover span.text-gray-light');
-  const projectElem = $('h1.public strong a, h1.private strong a');
-
-  let description = titleElem.textContent;
-  if (numElem !== null) {
-    description = numElem.textContent + ' ' + description.trim();
-  }
-
-  const link = togglbutton.createTimerLink({
+togglbutton.declare({
+  elements: {
+    title: '.js-issue-title',
+    num: '.js-project-card-details .project-comment-title-hover span.text-gray-light',
+    project: 'h1 strong a'
+  },
+  link: {
+    observe: '.js-project-card-details .js-comment:not(.toggl)',
+    target: '.discussion-sidebar-item',
+    targetInsertion: 'before',
+    linkWrapper: ['div', 'discussion-sidebar-item js-discussion-sidebar-item'],
     className: 'github',
-    description: description,
-    projectName: projectElem && projectElem.textContent
-  });
-
-  const wrapper = createTag('div', 'discussion-sidebar-item js-discussion-sidebar-item');
-  wrapper.appendChild(link);
-
-  const target = $('.discussion-sidebar-item');
-  target.parentNode.insertBefore(wrapper, target);
+    largeButton: true,
+    description: '{{#num}}{{num}} {{/num}}{{title}}',
+    projectName: '{{project}}'
+  }
 });

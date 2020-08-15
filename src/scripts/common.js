@@ -1,6 +1,7 @@
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 /* eslint-disable-next-line import/no-webpack-loader-syntax */
 import togglButtonSVG from '!!raw-loader!./icons/toggl-button.svg';
+import Mustache from 'mustache';
 const browser = require('webextension-polyfill');
 
 let projectAutocomplete; let tagAutocomplete;
@@ -164,6 +165,41 @@ window.togglbutton = {
           category: 'Content'
         });
       });
+  },
+
+  declare: function ({ elements, link }) {
+    togglbutton.render(link.observe, { observe: true }, function (elem) {
+      const keys = Object.keys(elements);
+      const vars = {};
+      keys.forEach((key) => {
+        const element = $(elements[key]);
+        if (element) {
+          vars[key] = ('' || element.textContent).trim();
+        }
+      });
+
+      let button = togglbutton.createTimerLink({
+        className: link.className,
+        buttonType: link.largeButton ? null : 'minimal',
+        description: Mustache.render(link.description, vars),
+        projectName: Mustache.render(link.projectName, vars)
+      });
+
+      if (link.linkWrapper) {
+        const wrapper = createTag(...link.linkWrapper);
+        wrapper.appendChild(button);
+        button = wrapper;
+      }
+
+      const target = $(link.target);
+      if (link.targetInsertion === 'before') {
+        target.parentNode.insertBefore(button, target);
+      } else if (link.targetInsertion === 'after') {
+        target.parentNode.insertBefore(button, target.nextSibling);
+      } else {
+        target.appendChild(button);
+      }
+    });
   },
 
   renderTo: function (selector, renderer) {

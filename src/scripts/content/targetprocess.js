@@ -1,11 +1,11 @@
 'use strict';
 
 // main entity button
-togglbutton.render('div.general-info:not(.toggl)', { observe: true }, function (
+togglbutton.render('.view-header:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  const titleElement = $('.i-role-title', elem);
-  let entityIdElement = $('.entity-id a', elem);
+  const titleElement = $('.i-role-entity-title', elem);
+  let entityIdElement = $('.entity-id.i-role-entity-id', elem);
 
   const projectFunc = function () {
     const projectItem = $('.tau-linkentity');

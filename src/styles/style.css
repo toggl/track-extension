@@ -1347,6 +1347,8 @@ li .toggl-button.heflo {
   margin-left: 10px;
   color: rgb(102, 102, 102);
   text-decoration: none;
+  position: relative;
+  bottom: 3px;
 }
 
 .ms-CommandBar-primaryCommand .toggl-button.outlook {

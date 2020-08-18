@@ -1,15 +1,13 @@
 'use strict';
 
 // Inbox emails
-togglbutton.render('[aria-label="Content pane"] [role="heading"] span:not(.toggl)', { observe: true }, elem => {
-  const container = elem.parentElement;
-
+togglbutton.render('[aria-label="Content pane"] [role="heading"]:not(.toggl)', { observe: true }, elem => {
   const link = togglbutton.createTimerLink({
     className: 'outlook',
     description: elem.textContent
   });
 
-  container.appendChild(link);
+  elem.appendChild(link);
 });
 
 // Composing emails

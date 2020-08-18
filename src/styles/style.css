@@ -1152,8 +1152,9 @@ a.toggl-button.workfront.min {
 }
 
 /********* TARGETPROCESS *********/
+.view-header__name .toggl-button.targetprocess,
 .tau-list-line .toggl-button.targetprocess {
-  top: 5px;
+  top: -3px;
   position: relative;
 }
 

@@ -2175,14 +2175,8 @@ window.TogglButton = {
   checkLoadedScripts: function (tabId, file) {
     browser.tabs.executeScript(tabId, { code: "(typeof togglbutton === 'undefined')" })
       .then(function (isFirstLoad) {
-        if (FF) {
-          if (isFirstLoad) {
-            TogglButton.loadFiles(tabId, file);
-          }
-        } else {
-          if (!!isFirstLoad && !!isFirstLoad[0]) {
-            TogglButton.loadFiles(tabId, file);
-          }
+        if (!!isFirstLoad && !!isFirstLoad[0]) {
+          TogglButton.loadFiles(tabId, file);
         }
       });
   },

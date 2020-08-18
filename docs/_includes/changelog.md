@@ -1,3 +1,10 @@
+## [1.64.8](https://github.com/toggl/toggl-button/compare/1.64.7...1.64.8) (2020-08-18)
+
+
+### Bug Fixes
+
+* **target-process:** Fix missing button on view ([#1817](https://github.com/toggl/toggl-button/issues/1817)) ([632c4ad](https://github.com/toggl/toggl-button/commit/632c4ad)), closes [#1721](https://github.com/toggl/toggl-button/issues/1721)
+
 ## [1.64.7](https://github.com/toggl/toggl-button/compare/1.64.6...1.64.7) (2020-07-31)
 
 

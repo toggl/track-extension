@@ -1,3 +1,10 @@
+## [1.64.9](https://github.com/toggl/toggl-button/compare/1.64.8...1.64.9) (2020-08-19)
+
+
+### Bug Fixes
+
+* **todoist:** Not showing popup after opening task ([#1819](https://github.com/toggl/toggl-button/issues/1819)) ([340eab5](https://github.com/toggl/toggl-button/commit/340eab5)), closes [#1547](https://github.com/toggl/toggl-button/issues/1547)
+
 ## [1.64.8](https://github.com/toggl/toggl-button/compare/1.64.7...1.64.8) (2020-08-18)
 
 

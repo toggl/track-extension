@@ -150,7 +150,11 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'teamwork',
       buttonType: 'minimal',
-      description: () => getNameHolder().textContent.trim()
+      description: () => getNameHolder().textContent.trim(),
+      projectName: () => {
+        const nameElement = $('.w-header-titles__project-name a');
+        return nameElement ? nameElement.textContent.trim() : '';
+      }
     });
 
     Object.assign(link.style, {

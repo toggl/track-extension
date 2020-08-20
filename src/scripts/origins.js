@@ -299,6 +299,10 @@ export default {
     url: '*://app.liquidplanner.com/*',
     name: 'Liquidplanner'
   },
+  'manageengine.com': {
+    url: '*://*.manageengine.com/*',
+    name: 'ManageEngine'
+  },
   'mantishub.com': {
     url: '*://*.mantishub.com/*',
     name: 'Mantishub'
@@ -370,6 +374,10 @@ export default {
     url: '*://outlook.live.com/*',
     name: 'Outlook',
     clone: true
+  },
+  'overv.io': {
+    url: '*://overv.io/*',
+    name: 'Overv'
   },
   'pagerduty.com': {
     url: '*://*.pagerduty.com/*',
@@ -554,6 +562,14 @@ export default {
     name: 'Microsoft To-Do',
     file: 'microsoft-to-do.js'
   },
+  'sherpadesk.com': {
+    url: '*://*.sherpadesk.com/*',
+    name: 'Sherpadesk'
+  },
+  'app.teamleader.eu': {
+    url: '*://app.teamleader.eu/*',
+    name: 'Teamleader'
+  },
   'todoist.com': {
     url: '*://*.todoist.com/app*',
     name: 'Todoist'
@@ -620,6 +636,11 @@ export default {
     url: '*://*.azure.com/*',
     name: 'VisualStudio'
   },
+  'app.vivifyscrum.com': {
+    url: '*://app.vivifyscrum.com/*',
+    name: 'VivifyScrum',
+    clone: 'true'
+  },
   'waffle.io': {
     url: '*://waffle.io/*',
     name: 'Waffle'
@@ -658,10 +679,6 @@ export default {
     url: '*://*.wrike.com/*',
     name: 'Wrike'
   },
-  'sherpadesk.com': {
-    url: '*://*.sherpadesk.com/*',
-    name: 'Sherpadesk'
-  },
   'wunderlist.com': {
     url: '*://*.wunderlist.com/*',
     name: 'Wunderlist'
@@ -670,9 +687,17 @@ export default {
     url: '*://*.xero.com/*',
     name: 'Xero'
   },
+  'zammad.com': {
+    url: '*://*.zammad.com/*',
+    name: 'Zammad'
+  },
   'zendesk.com': {
     url: '*://*.zendesk.com/*',
     name: 'Zendesk'
+  },
+  'app.zenhub.com': {
+    url: '*://app.zenhub.com/*',
+    name: 'Zenhub'
   },
   'books.zoho.com': {
     url: '*://books.zoho.com/*',
@@ -682,29 +707,4 @@ export default {
     url: '*://zube.io/*',
     name: 'Zube'
   },
-  'overv.io': {
-    url: '*://overv.io/*',
-    name: 'Overv'
-  },
-  'app.teamleader.eu': {
-    url: '*://app.teamleader.eu/*',
-    name: 'Teamleader'
-  },
-  'manageengine.com': {
-    url: '*://*.manageengine.com/*',
-    name: 'ManageEngine'
-  },
-  'app.vivifyscrum.com': {
-    url: '*://app.vivifyscrum.com/*',
-    name: 'VivifyScrum',
-    clone: 'true'
-  },
-  'zammad.com': {
-    url: '*://*.zammad.com/*',
-    name: 'Zammad'
-  },
-  'app.zenhub.com': {
-    url: '*://app.zenhub.com/*',
-    name: 'Zenhub'
-  }
 };

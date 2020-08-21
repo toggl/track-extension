@@ -313,26 +313,17 @@ const Settings = {
     Settings.toggleSetting(null, value, type);
   },
   loadSitesIntoList: async function () {
-    let html;
-    let htmlList;
     let customHtml;
-    let option;
     let li;
-    let input;
     let dom;
     let url;
     let name;
     let i;
     let k;
     let origins;
-    let disabled;
-    let checked;
     let customs;
-    let tmpkey;
 
     try {
-      // Load Custom Permissions list
-
       // Defined custom domain list
       customHtml = document.createElement('ul');
       customHtml.id = 'custom-permissions-list';
@@ -360,8 +351,6 @@ const Settings = {
 
       // Load permissions list
       browser.permissions.getAll().then(function (results) {
-        let key;
-
         try {
           Settings.origins = [];
           origins = results.origins;
@@ -379,83 +368,8 @@ const Settings = {
             };
           }
 
-          // list of enabled/disabled origins
-          htmlList = document.createElement('ul');
-          htmlList.id = 'permissions-list';
-          htmlList.className = 'origin-list';
-
-          // custom permission integration select
-          html = document.createElement('select');
-          html.id = 'origins';
-
-          for (key in TogglOrigins) {
-            if (TogglOrigins.hasOwnProperty(key)) {
-              disabled = '';
-              checked = 'checked';
-
-              if (!Settings.origins[key]) {
-                tmpkey = key;
-
-                // Special case for toggl-button-demo
-                if (key === 'dom-integration') {
-                  tmpkey = TogglOrigins[key].url
-                    .replace('*://*.', '')
-                    .replace('*://', '')
-                    .replace('/*', '');
-                }
-
-                // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
-                const isWildcardDomainRegex = new RegExp(/\/\/\*\./);
-                if (TogglOrigins[key].url.match(isWildcardDomainRegex)) {
-                  tmpkey = key.split('.');
-                  tmpkey.shift();
-                  tmpkey = tmpkey.join('.');
-                }
-
-                if (!Settings.origins[tmpkey]) {
-                  disabled = 'disabled';
-                  checked = '';
-                }
-              }
-
-              // Don't display all different urls for 1 service
-              if (!TogglOrigins[key].clone) {
-                option = document.createElement('option');
-                option.id = 'origin';
-                option.value = key;
-                option.setAttribute('data-id', i);
-                option.textContent = TogglOrigins[key].name;
-
-                html.appendChild(option);
-              }
-
-              // Don't show toggl.com as it's not optional
-              if (isNotTogglApp(key) && !!TogglOrigins[key].url) {
-                li = document.createElement('li');
-                li.id = key;
-                li.className = disabled;
-
-                input = document.createElement('input');
-                input.className = 'toggle';
-                input.setAttribute('type', 'checkbox');
-                input.setAttribute('data-host', TogglOrigins[key].url);
-                if (checked) {
-                  input.setAttribute('checked', 'checked');
-                }
-
-                dom = document.createElement('label');
-                dom.textContent = `${TogglOrigins[key].name} - ${key}`;
-
-                li.appendChild(input);
-                li.appendChild(dom);
-
-                htmlList.appendChild(li);
-              }
-            }
-          }
-
-          replaceContent('#perm-container', htmlList);
-          replaceContent('#origins-container', html);
+          replaceContent('#perm-container', Settings.generateIntegrationsHtml());
+          replaceContent('#origins-container', Settings.generateCustomPermissionsHtml());
 
           Settings.enablePermissionEvents();
         } catch (e) {
@@ -473,6 +387,90 @@ const Settings = {
         category: 'Settings'
       });
     }
+  },
+
+  generateIntegrationsHtml: function () {
+    // list of enabled/disabled origins
+    const htmlList = document.createElement('ul');
+    htmlList.id = 'permissions-list';
+    htmlList.className = 'origin-list';
+
+    for (const key in TogglOrigins) {
+      if (TogglOrigins.hasOwnProperty(key)) {
+        let disabled = '';
+        let checked = 'checked';
+
+        if (!Settings.origins[key]) {
+          let tmpkey = key;
+
+          // Special case for toggl-button-demo
+          if (key === 'dom-integration') {
+            tmpkey = TogglOrigins[key].url
+              .replace('*://*.', '')
+              .replace('*://', '')
+              .replace('/*', '');
+          }
+
+          // Handle cases where subdomain is used (like web.any.do, we remove web from the beginning)
+          const isWildcardDomainRegex = new RegExp(/\/\/\*\./);
+          if (TogglOrigins[key].url.match(isWildcardDomainRegex)) {
+            tmpkey = key.split('.');
+            tmpkey.shift();
+            tmpkey = tmpkey.join('.');
+          }
+
+          if (!Settings.origins[tmpkey]) {
+            disabled = 'disabled';
+            checked = '';
+          }
+        }
+
+        // Don't show toggl.com as it's not optional
+        if (isNotTogglApp(key) && !!TogglOrigins[key].url) {
+          const li = document.createElement('li');
+          li.id = key;
+          li.className = disabled;
+
+          const input = document.createElement('input');
+          input.className = 'toggle';
+          input.setAttribute('type', 'checkbox');
+          input.setAttribute('data-host', TogglOrigins[key].url);
+          if (checked) {
+            input.setAttribute('checked', 'checked');
+          }
+
+          const dom = document.createElement('label');
+          dom.textContent = `${TogglOrigins[key].name} - ${key}`;
+
+          li.appendChild(input);
+          li.appendChild(dom);
+
+          htmlList.appendChild(li);
+        }
+      }
+    }
+
+    return htmlList;
+  },
+
+  generateCustomPermissionsHtml: function (id) {
+    // custom permission integration select
+    const customPermissionsSelectHtml = document.createElement('select');
+    customPermissionsSelectHtml.id = 'origins';
+
+    for (const key in TogglOrigins) {
+      // Don't display all different urls for 1 service
+      if (!TogglOrigins[key].clone) {
+        const option = document.createElement('option');
+        option.id = 'origin';
+        option.value = key;
+        option.setAttribute('data-id', key);
+        option.textContent = TogglOrigins[key].name;
+
+        customPermissionsSelectHtml.appendChild(option);
+      }
+    }
+    return customPermissionsSelectHtml;
   },
 
   addCustomOrigin: function (e) {

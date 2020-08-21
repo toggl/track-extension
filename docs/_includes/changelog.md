@@ -1,3 +1,10 @@
+## [1.64.10](https://github.com/toggl/toggl-button/compare/1.64.9...1.64.10) (2020-08-21)
+
+
+### Bug Fixes
+
+* **teamwork:** Add missing project name ([db9ed7e](https://github.com/toggl/toggl-button/commit/db9ed7e)), closes [#1816](https://github.com/toggl/toggl-button/issues/1816)
+
 ## [1.64.9](https://github.com/toggl/toggl-button/compare/1.64.8...1.64.9) (2020-08-19)
 
 

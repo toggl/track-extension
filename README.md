@@ -71,6 +71,7 @@ out of the way and focus on real work.
 - [Kantree](https://kantree.io/)
 - [KhanAcademy](https://www.khanacademy.org/)
 - [LiquidPlanner](https://www.liquidplanner.com/)
+- [LiveAgent](https://www.liveagent.com/)
 - [ManageEngine](https://www.manageengine.com/)
 - [MantisHub](http://www.mantishub.com/)
 - [MeisterTask](https://meistertask.com/)

@@ -1,3 +1,10 @@
+# [1.65.0](https://github.com/toggl/toggl-button/compare/1.64.10...1.65.0) (2020-08-21)
+
+
+### Features
+
+* **live-agent:** Add LiveAgent integration ([#1738](https://github.com/toggl/toggl-button/issues/1738)) ([b0fd4d1](https://github.com/toggl/toggl-button/commit/b0fd4d1))
+
 ## [1.64.10](https://github.com/toggl/toggl-button/compare/1.64.9...1.64.10) (2020-08-21)
 
 

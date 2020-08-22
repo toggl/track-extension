@@ -50,6 +50,9 @@ const Settings = {
   $permissionsList: document.querySelector('#permissions-list'),
   $newPermission: document.querySelector('#new-permission'),
   $originsSelect: document.querySelector('#origins'),
+  $customDomainForm: document.querySelector('#custom-domain-form'),
+  $customDomainList: document.querySelector('#custom-perm-container'),
+  $customIntegrationForm: document.querySelector('#custom-integration-form'),
   origins: [],
   $pomodoroStopTimeTracking: null,
   $stopAtDayEnd: null,
@@ -331,17 +334,32 @@ const Settings = {
 
       customs = await db.getAllOrigins();
       for (k in customs) {
-        if (customs.hasOwnProperty(k) && !!TogglOrigins[customs[k]]) {
+        if (customs.hasOwnProperty(k) && (!!TogglOrigins[customs[k]] || customs[k].json)) {
+          const isCustomIntegration = customs[k].json;
+          const name = isCustomIntegration
+            ? 'Custom integration'
+            : TogglOrigins[customs[k]].name;
+
           li = document.createElement('li');
 
           dom = document.createElement('div');
-          dom.innerHTML = `<strong>${k}</strong> - ${TogglOrigins[customs[k]].name}`;
+          dom.innerHTML = `<strong>${k}</strong> - ${name}`;
           li.appendChild(dom);
+
+          const span = document.createElement('span');
+          li.appendChild(span);
+
+          if (isCustomIntegration) {
+            dom = document.createElement('a');
+            dom.className = 'edit-custom';
+            dom.textContent = 'edit';
+            span.appendChild(dom);
+          }
 
           dom = document.createElement('a');
           dom.className = 'remove-custom';
           dom.textContent = 'delete';
-          li.appendChild(dom);
+          span.appendChild(dom);
 
           customHtml.appendChild(li);
         }
@@ -368,7 +386,7 @@ const Settings = {
             };
           }
 
-          replaceContent('#perm-container', Settings.generateIntegrationsHtml());
+          replaceContent('#perm-container', Settings.generateIntegrationsHtml(customs));
           replaceContent('#origins-container', Settings.generateCustomPermissionsHtml());
 
           Settings.enablePermissionEvents();
@@ -389,7 +407,7 @@ const Settings = {
     }
   },
 
-  generateIntegrationsHtml: function () {
+  generateIntegrationsHtml: function (customs) {
     // list of enabled/disabled origins
     const htmlList = document.createElement('ul');
     htmlList.id = 'permissions-list';
@@ -397,8 +415,10 @@ const Settings = {
 
     for (const key in TogglOrigins) {
       if (TogglOrigins.hasOwnProperty(key)) {
-        let disabled = '';
+        let className = '';
         let checked = 'checked';
+
+        const isOverwrittenByCustomIntegration = !!(customs[key] && customs[key].json);
 
         if (!Settings.origins[key]) {
           let tmpkey = key;
@@ -420,16 +440,19 @@ const Settings = {
           }
 
           if (!Settings.origins[tmpkey]) {
-            disabled = 'disabled';
+            className = 'disabled';
             checked = '';
           }
         }
 
+        const isExclusiveToCustomDomains = !TogglOrigins[key].url;
+
         // Don't show toggl.com as it's not optional
-        if (isNotTogglApp(key) && !!TogglOrigins[key].url) {
+        const shouldAddToList = isNotTogglApp(key) && !isExclusiveToCustomDomains && !isOverwrittenByCustomIntegration;
+        if (shouldAddToList) {
           const li = document.createElement('li');
           li.id = key;
-          li.className = disabled;
+          li.className = className;
 
           const input = document.createElement('input');
           input.className = 'toggle';
@@ -474,8 +497,96 @@ const Settings = {
   },
 
   addCustomOrigin: function (e) {
+    const parsed = Settings.parseCustomDomainUrl();
+    if (!parsed) return;
+
+    browser.permissions.request(parsed.permission)
+      .then(function (result) {
+        if (result) {
+          db.setOrigin(Settings.$newPermission.value, Settings.$originsSelect.value)
+            .then(() => {
+              Settings.$newPermission.value = '';
+              Settings.loadSitesIntoList();
+              document.location.hash = parsed.domain;
+            });
+        } else {
+          Settings.loadSitesIntoList();
+        }
+      });
+  },
+
+  addCustomIntegration: function (e) {
+    const parsed = Settings.parseCustomDomainUrl();
+    if (!parsed) return;
+
+    browser.permissions.request(parsed.permission)
+      .then(function (result) {
+        if (result) {
+          Settings.showCustomIntegrationForm();
+        } else {
+          Settings.hideCustomIntegrationForm();
+          Settings.loadSitesIntoList();
+        }
+      });
+  },
+
+  editCustomIntegration: async function (domain) {
+    const origin = await db.getOrigin(domain);
+    const $customIntegrationCode = document.querySelector('#custom-integration-code');
+    $customIntegrationCode.value = origin.json;
+
+    Settings.showCustomIntegrationForm();
+
+    Settings.$newPermission.value = domain;
+  },
+
+  showCustomIntegrationForm: function (e) {
+    Settings.$customDomainForm.style.display = 'none';
+    Settings.$customDomainList.style.display = 'none';
+    Settings.$customIntegrationForm.style.display = 'block';
+  },
+
+  hideCustomIntegrationForm: function (e) {
+    Settings.$newPermission.value = '';
+    Settings.loadSitesIntoList();
+    Settings.$customDomainForm.style.display = 'block';
+    Settings.$customDomainList.style.display = 'block';
+    Settings.$customIntegrationForm.style.display = 'none';
+    Settings.$customIntegrationForm.classList.remove('error');
+
+    const $customIntegrationCode = document.querySelector('#custom-integration-code');
+    $customIntegrationCode.value = '';
+  },
+
+  saveCustomIntegration: function (e) {
+    const $customIntegrationCode = document.querySelector('#custom-integration-code');
+    const json = $customIntegrationCode.value;
+
+    Settings.$customIntegrationForm.classList.remove('error');
+    try {
+      const parsed = JSON.parse(json);
+      if (!parsed.link || !parsed.link.observe || !parsed.link.target || !parsed.link.description) {
+        throw new Error('invalid integration json');
+      }
+    } catch (e) {
+      Settings.$customIntegrationForm.classList.add('error');
+      return;
+    }
+
+    db.setOrigin(Settings.$newPermission.value, { json })
+      .then(() => {
+        Settings.hideCustomIntegrationForm();
+      });
+  },
+
+  parseCustomDomainUrl: function () {
     let text = Settings.$newPermission.value;
-    const o = Settings.$originsSelect;
+
+    Settings.$newPermission.classList.remove('error');
+    if (!text.length) {
+      Settings.$newPermission.classList.add('error');
+      return null;
+    }
 
     if (text.indexOf(':') !== -1) {
       text = text.split(':')[0];
@@ -488,33 +599,21 @@ const Settings = {
     const domain = '*://' + Settings.$newPermission.value + '/';
     const permission = { origins: [domain] };
 
-    browser.permissions.request(permission)
-      .then(function (result) {
-        if (result) {
-          db.setOrigin(Settings.$newPermission.value, o.value)
-            .then(() => {
-              Settings.$newPermission.value = '';
-              Settings.loadSitesIntoList();
-              document.location.hash = domain;
-            });
-        } else {
-          Settings.loadSitesIntoList();
-        }
-      });
+    return { domain, permission };
   },
 
-  removeCustomOrigin: function (e) {
-    let custom;
-    let domain;
-    let permission;
-    let parent;
-    let removed = false;
+  customOriginAction: function (e) {
+    const parent = e.target.parentNode.parentNode;
+    const custom = parent.querySelector('strong').textContent;
+
+    if (e.target.className === 'edit-custom') {
+      Settings.editCustomIntegration(custom);
+    }
 
     if (e.target.className === 'remove-custom') {
-      parent = e.target.parentNode;
-      custom = parent.querySelector('strong').textContent;
-      domain = '*://' + custom + '/';
-      permission = { origins: [domain] };
+      const domain = '*://' + custom + '/';
+      const permission = { origins: [domain] };
+      let removed = false;
 
       browser.permissions.contains(permission).then(function (allowed) {
         if (allowed) {
@@ -523,6 +622,7 @@ const Settings = {
               removed = true;
               db.removeOrigin(custom);
               parent.remove();
+              Settings.loadSitesIntoList();
             } else {
               alert('Fail');
             }
@@ -644,10 +744,14 @@ const Settings = {
     $addCustomOrigin.removeEventListener('click', Settings.addCustomOrigin);
     $addCustomOrigin.addEventListener('click', Settings.addCustomOrigin);
 
+    // Add custom integration on a custom domain
+    const $addCustomIntegration = document.querySelector('#add-permission-custom');
+    $addCustomIntegration.removeEventListener('click', Settings.addCustomIntegration);
+    $addCustomIntegration.addEventListener('click', Settings.addCustomIntegration);
+
     // Remove item from custom domain list
-    const $removeCustomOrigin = document.querySelector('#custom-perm-container');
-    $removeCustomOrigin.removeEventListener('click', Settings.removeCustomOrigin);
-    $removeCustomOrigin.addEventListener('click', Settings.removeCustomOrigin);
+    Settings.$customDomainList.removeEventListener('click', Settings.customOriginAction);
+    Settings.$customDomainList.addEventListener('click', Settings.customOriginAction);
 
     Settings.$permissionsList = document.querySelector('#permissions-list');
 
@@ -665,6 +769,16 @@ const Settings = {
     const $disableAllOrigins = document.querySelector('.disable-all');
     $disableAllOrigins.removeEventListener('click', Settings.disableAllOrigins);
     $disableAllOrigins.addEventListener('click', Settings.disableAllOrigins);
+
+    // Save custom integration
+    const $saveCustomIntegration = document.querySelector('#save-custom-integration');
+    $saveCustomIntegration.removeEventListener('click', Settings.saveCustomIntegration);
+    $saveCustomIntegration.addEventListener('click', Settings.saveCustomIntegration);
+
+    // Cancel custom integration
+    const $cancelCustomIntegration = document.querySelector('#cancel-custom-integration');
+    $cancelCustomIntegration.removeEventListener('click', Settings.hideCustomIntegrationForm);
+    $cancelCustomIntegration.addEventListener('click', Settings.hideCustomIntegrationForm);
   }
 };
 

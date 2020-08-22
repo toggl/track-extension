@@ -55,7 +55,7 @@ a {
   color: var(--text-color);
 }
 
-select, input, input[type="number"], input[type="text"] {
+select, input, input[type="number"], input[type="text"], textarea {
   height: var(--input-height);
   margin-top: 5px;
   background: var(--header-bg-color);
@@ -74,7 +74,7 @@ select:-moz-focusring {
     text-shadow: 0 0 0 var(--text-color);
 }
 
-select:hover, select:focus, input:hover, input:focus {
+select:hover, select:focus, input:hover, input:focus, textarea:hover, textarea:focus {
   border-color: var(--border-hover-color) !important;
 }
 
@@ -135,6 +135,15 @@ input[type="checkbox"] + label::after {
 
 input[type="checkbox"]:checked + label::after {
   transform: scale(1);
+}
+
+input.error, input.error:hover, input.error:focus, textarea.error, textarea.error:hover, textarea.error:focus {
+  border-color: var(--danger-color) !important;
+}
+
+textarea {
+  padding: 10px;
+  font-size: 13px;
 }
 
 button, .button {
@@ -207,6 +216,10 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   background: var(--selected-color);
   cursor: pointer;
+}
+
+.horizontal-spacer {
+  padding: 0 20px;
 }
 
 /* sidebar */
@@ -455,16 +468,23 @@ section .field--showDetails .subsettings-details {
   align-items: center;
   justify-content: space-between;
   padding: var(--m-radius);
-  cursor: pointer;
 }
 
-.remove-custom {
+.edit-custom, .remove-custom {
   padding: 5px;
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
-  color: var(--danger-color);
   cursor: pointer;
+}
+
+.remove-custom {
+  color: var(--danger-color);
+}
+
+.edit-custom:hover {
+  background-color: var(--text-color);
+  color: var(--main-bg-color);
 }
 
 /*
@@ -475,11 +495,43 @@ section .field--showDetails .subsettings-details {
 }
 
 #new-permission {
-  width: 397px;
+  width: 604px;
+}
+
+#origins {
+  width: 180px;
 }
 
 #add-permission {
   width: 120px;
+}
+
+#add-permission-custom {
+  width: 240px;
+}
+
+#custom-integration-form {
+  display: none;
+}
+
+#custom-integration-form textarea {
+  font-family: monospace;
+  padding: 10px;
+  height: 250px;
+  width: 605px;
+}
+
+#custom-integration-error {
+  display: none;
+  color: var(--danger-color);
+}
+
+#custom-integration-form.error textarea {
+  border-color: var(--danger-color) !important;
+}
+
+#custom-integration-form.error #custom-integration-error {
+  display: inline;
 }
 
 /*

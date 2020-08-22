@@ -167,7 +167,7 @@ window.togglbutton = {
       });
   },
 
-  declare: function ({ elements, link }) {
+  declare: function ({ elements = {}, link }) {
     togglbutton.render(link.observe, { observe: true }, function (elem) {
       const keys = Object.keys(elements);
       const vars = {};
@@ -704,6 +704,8 @@ window.togglbutton = {
       if ($('#toggl-button-edit-form') !== null) {
         $('#toggl-button-edit-form').remove();
       }
+    } else if (request.type === 'load-integration-json') {
+      togglbutton.declare(JSON.parse(request.json));
     }
     return undefined;
   }

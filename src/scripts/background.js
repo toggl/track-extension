@@ -2154,42 +2154,44 @@ window.TogglButton = {
       const permission = { origins: domain.origins };
 
       if (process.env.DEBUG) {
-        console.log('url: ' + tab.url + ' | domain-file: ' + domain.file);
+        const script = (domain.file || '<json>');
+        console.log('url: ' + tab.url + ' | script: ' + script);
       }
 
       if (FF) {
         if (domain.file) {
-          TogglButton.checkLoadedScripts(tabId, domain.file);
+          TogglButton.checkLoadedScripts(tabId, domain);
         }
       } else {
         browser.permissions.contains(permission)
           .then(function (result) {
-            if (result && !!domain.file) {
-              TogglButton.checkLoadedScripts(tabId, domain.file);
+            if (result && (!!domain.file || !!domain.json)) {
+              TogglButton.checkLoadedScripts(tabId, domain);
             }
           });
       }
     }
   },
 
-  checkLoadedScripts: function (tabId, file) {
+  checkLoadedScripts: function (tabId, domain) {
     browser.tabs.executeScript(tabId, { code: "(typeof togglbutton === 'undefined')" })
       .then(function (isFirstLoad) {
         if (FF) {
           if (isFirstLoad) {
-            TogglButton.loadFiles(tabId, file);
+            TogglButton.loadFiles(tabId, domain);
           }
         } else {
           if (!!isFirstLoad && !!isFirstLoad[0]) {
-            TogglButton.loadFiles(tabId, file);
+            TogglButton.loadFiles(tabId, domain);
           }
         }
       });
   },
 
-  loadFiles: function (tabId, file) {
+  loadFiles: function (tabId, domain) {
     if (process.env.DEBUG) {
-      console.log('Load content script: [' + file + ']');
+      const script = domain.file || '<json>';
+      console.log('Load content script: [' + script + ']');
     }
     browser.tabs.insertCSS(tabId, { file: 'styles/style.css' })
       .then(function () {
@@ -2201,9 +2203,13 @@ window.TogglButton = {
 
     browser.tabs.executeScript(tabId, { file: 'scripts/common.js' })
       .then(function () {
-        browser.tabs.executeScript(tabId, {
-          file: 'scripts/content/' + file
-        });
+        if (domain.file) {
+          browser.tabs.executeScript(tabId, {
+            file: 'scripts/content/' + domain.file
+          });
+        } else {
+          browser.tabs.sendMessage(tabId, { type: 'load-integration-json', json: domain.json });
+        }
       });
   },
 
@@ -2228,9 +2234,9 @@ window.TogglButton = {
     // find & remove port number
     domain = domain.split(':')[0];
 
-    const file = await db.getOriginFileName(domain);
+    const config = await db.getOriginConfig(domain);
     return {
-      file: file,
+      ...config,
       origins: ['*://' + domain + '/*']
     };
   },

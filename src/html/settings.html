@@ -325,13 +325,45 @@
             <h3>Custom URLs for integrations</h3>
           </div>
           <p>If you use a tool hosted on a custom domain, you can enable it here. Enter the domain name in the format "toggl.com" and select the integration from the dropdown. <em>Ports are not supported.</em></p>
-          <input type="text" id="new-permission" placeholder="Custom domain url"/>
-          <div class="button-container">
-            <div id="origins-container"></div>
-            <button id="add-permission" class="button">Add</button>
+          <div id="custom-domain-form">
+            <input type="text" id="new-permission" placeholder="Custom domain url"/>
+            <div class="button-container">
+              <div id="origins-container"></div>
+              <button id="add-permission" class="button">Add</button>
+              <span class="horizontal-spacer">or</span>
+              <button id="add-permission-custom" class="button">Add custom integration</button>
+            </div>
           </div>
           <div class="permissions-toolbar" data-id="custom"></div>
           <div id="custom-perm-container"></div>
+
+          <div id="custom-integration-form">
+            <textarea id="custom-integration-code"></textarea>
+            <div class="button-container">
+              <button id="save-custom-integration" class="button">Save</button>
+              <button id="cancel-custom-integration" class="button">Cancel</button>
+              <span id="custom-integration-error" class="horizontal-spacer">Invalid configuration.</span>
+            </div>
+            <p>Sample custom integration code:</p>
+            <!-- please don't format the code below -->
+<pre id="custom-integration-form-sample">{
+  "elements": {
+    "title": "h2",
+    "num": ".js-ticket-id",
+    "project": ".js-ticket-task"
+  },
+  "link": {
+    "observe": "#element-that-changes-when-ticket-changes:not(.toggl)",
+    "target": ".where-to-put-the-button",
+    "targetInsertion": "before",
+    "linkWrapper": ["div", "toggl some-classname another-classname"],
+    "className": "usually-the-tool-id",
+    "largeButton": true,
+    "description": "{{#num}}{{num}} {{/num}}{{title}}",
+    "projectName": "{{project}}"
+  }
+}</pre>
+          </div>
         </section>
       </div>
       <div class="tab" data-tab="telemetry">

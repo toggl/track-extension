@@ -46,11 +46,16 @@ function isLocalOnly (key) {
   return LOCAL_ONLY[key] || false;
 }
 
-function getFileName (origin) {
-  if (origin.file) {
-    return origin.file;
+function getConfig (origin) {
+  if (origin.json) {
+    return { json: origin.json };
   }
-  return (origin.name || origin).toLowerCase().replace(' ', '-') + '.js';
+
+  let file = origin.file;
+  if (!file) {
+    file = (origin.name || origin).toLowerCase().replace(' ', '-') + '.js';
+  }
+  return { file };
 }
 
 const transformLegacyValue = (value) => {
@@ -71,15 +76,15 @@ export default class Db {
     this.loadAll();
   }
 
-  async getOriginFileName (domain) {
+  async getOriginConfig (domain) {
     if (process.env.DEBUG && domain.endsWith('toggl.space')) {
       domain = 'toggl.com';
     }
     let origin = await this.getOrigin(domain);
     const origins = await this.getAllOrigins();
 
-    if (origin && (origin.name || origin.file)) {
-      return getFileName(origin);
+    if (origin && (origin.name || origin.file || origin.json)) {
+      return getConfig(origin);
     }
 
     if (!origin) {
@@ -98,7 +103,7 @@ export default class Db {
       }
     }
 
-    return getFileName(origins[origin]);
+    return getConfig(origins[origin]);
   }
 
   async getOrigin (origin) {

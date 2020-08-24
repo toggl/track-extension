@@ -28,6 +28,11 @@
   outline: 0;
 }
 
+#project-autocomplete li:not(.ws-row):not(.client-row):hover {
+  background-color: var(--main-bg-color);
+  border-radius:0px;
+}
+
 #project-autocomplete li.selected-project {
   background-color: rgba(74,199,0,.12);
   color: #4bc800!important;

@@ -68,10 +68,6 @@
   vertical-align: middle;
 }
 
-.toggl-button-edit-form-button, #toggl-button-edit-form .toggl-button svg {
-  margin-right: 10px;
-}
-
 .toggl-button {
   display: inline-block !important;
   user-select: none;

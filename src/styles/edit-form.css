@@ -283,7 +283,7 @@
 }
 
 .TB__Button__button {
-  background: #4bc800;
+  background: #DD6FD1;
   color: #fff;
 }
 
@@ -294,7 +294,7 @@
 }
 
 .TB__Button__button:focus, .TB__Button__button:hover {
-  background: #47be00;
+  background: #DD6FD1;
 }
 
 .TB__Secondary__button:focus, .TB__Secondary__button:hover {

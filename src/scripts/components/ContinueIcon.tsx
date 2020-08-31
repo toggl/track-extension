@@ -22,7 +22,7 @@ const Wrapper = styled.span`
   }
 
   &:hover path {
-    fill: var(--green);
+    fill: var(--pink);
     opacity: 1;
   }
 `;

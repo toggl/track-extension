@@ -404,7 +404,7 @@ window.TogglButton = {
         TogglButton.$nannyTimer = null;
       } else {
         browser.browserAction.setIcon({
-          path: { '19': 'images/active-19.png', '38': 'images/active-38.png' }
+          path: { '19': 'images/icon-19.png', '38': 'images/icon-38.png' }
         });
       }
     } else {
@@ -737,8 +737,8 @@ window.TogglButton = {
       let key;
       let img;
       const imagePaths = {
-        '19': 'images/active-19.png',
-        '38': 'images/active-38.png'
+        '19': 'images/icon-19.png',
+        '38': 'images/icon-38.png'
       };
       const imageData = {};
       const circ = Math.PI * 2;
@@ -1191,8 +1191,8 @@ window.TogglButton = {
     }
     if (runningEntry) {
       imagePath = {
-        '19': 'images/active-19.png',
-        '38': 'images/active-38.png'
+        '19': 'images/icon-16.png',
+        '38': 'images/icon-38.png'
       };
       if (!!runningEntry.description && runningEntry.description.length > 0) {
         title = runningEntry.description + ' - Toggl';

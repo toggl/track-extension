@@ -1,10 +1,12 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { addSeconds } from 'date-fns';
+import { addSeconds, subSeconds } from 'date-fns';
 import * as keycode from 'keycode';
 
 import { formatDuration } from '../@toggl/time-format-utils/format-duration';
 
+import BillableIcon from './BillableIcon';
+import ProjectsIcon from './ProjectsIcon';
 import { TimeEntryDescription, TimeEntryProject } from './TimeEntriesList';
 import TimerAutoComplete from './TimerAutoComplete'
 import TagsIcon from './TagsIcon';
@@ -39,21 +41,25 @@ function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | 
   };
 
   return (
-    <TimerContainer onClick={editEntry}>
-      <RunningTimerDescription>
-        <TimeEntryDescription title={`Click to edit ${entry.description || ''}`}>
-          {entry.description || NO_DESCRIPTION}
-        </TimeEntryDescription>
+    <React.Fragment>
+      <TimerContainer onClick={editEntry}>
+        <RunningTimerDescription>
+          <TimeEntryDescription title={`Click to edit ${entry.description || ''}`}>
+            {entry.description || NO_DESCRIPTION}
+          </TimeEntryDescription>
+        </RunningTimerDescription>
+        <div>
+          <TimerDuration start={entry.start} />
+          <TimerButton isRunning onClick={stopTimer} />
+        </div>
+      </TimerContainer>
+      <TimerButtonRowContainer>
         {project &&
           <TimeEntryProject project={project} />
         }
-      </RunningTimerDescription>
-      <div>
         {tags && <TagsIcon title={tags} />}
-        <TimerDuration start={entry.start} />
-        <TimerButton isRunning onClick={stopTimer} />
-      </div>
-    </TimerContainer>
+      </TimerButtonRowContainer>
+    </React.Fragment>
   );
 }
 
@@ -66,9 +72,21 @@ function TimerDuration ({ start }: { start: string }) {
   )
 }
 
+function StoppedTimerDuration ({ secs }: { secs: number }) {
+  return (
+    <Duration isPlaceholder={secs == 0}>
+      {formatDuration(subSeconds(new Date(), secs))}
+    </Duration>
+  )
+}
+
 function TimerForm ({ timeEntries, clients, projects, tasks }) {
   const [isDropdownOpen, setIsDropdown] = React.useState(false)
   const [description, setDescription] = React.useState('')
+  const [duration, setDuration] = React.useState(0)
+  const [selectedProject, setSelectedProject] = React.useState(null)
+  const [selectedTags, setSelectedTags] = React.useState([])
+  const [selectedBillable, setSelectedBillable] = React.useState(false)
 
   const dropdownRef = React.useRef<HTMLDivElement>(null)
 
@@ -102,11 +120,19 @@ function TimerForm ({ timeEntries, clients, projects, tasks }) {
     <React.Fragment>
       <TimerContainer>
         <TimerInput value={description} onKeyUp={onKeyUp} onChange={onChange} placeholder='What are you working on?' />
-        <TimerButton isRunning={false} onClick={startTimer} />
+        <div>
+          <StoppedTimerDuration secs={duration} />
+          <TimerButton isRunning={false} onClick={startTimer} />
+        </div>
       </TimerContainer>
       {isDropdownOpen &&
         <TimerAutoComplete dropdownRef={dropdownRef} onSelect={onSelectSuggestion} filter={description.trim()} timeEntries={timeEntries} clients={clients} tasks={taskList} projects={projects} />
       }
+      <TimerButtonRowContainer>
+        {selectedProject ? <TimeEntryProject project={selectedProject} /> : <SmallTimerButton><ProjectsIcon small /></SmallTimerButton>}
+        <SmallTimerButton><TagsIcon small title={selectedTags.join(', ')} /></SmallTimerButton>
+        <SmallTimerButton><BillableIcon active small /></SmallTimerButton>
+      </TimerButtonRowContainer>
     </React.Fragment>
   );
 }
@@ -122,13 +148,12 @@ const TimerContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 66px;
+  height: 51px;
 
-  padding: .5rem .8rem;
+  padding: 15px 15px 0px 15px;
 
   cursor: pointer;
   font-size: 14px;
-  box-shadow: var(--border-color) 0px -1px 0px 0px inset;
   background: var(--base-color);
 
   > div:first-child {
@@ -144,33 +169,49 @@ const TimerContainer = styled.div`
   }
 `;
 
+const TimerButtonRowContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 45px;
+
+  padding: 10px 15px;
+
+  font-size: 14px;
+  box-shadow: var(--border-color) 0px -1px 0px 0px inset;
+  background: var(--base-color);
+`;
+
 const RunningTimerDescription = styled.div`
   margin-left: 10px;
 `
 
 const TimerInput = styled.input`
   flex: 1;
-  height: 40px;
-  padding: 0 1rem;
+  height: 36px;
   border: none;
 
-  font-size: 14px;
+  font-size: 16px;
   font-family: var(--main-font);
   background: var(--main-bg-color);
   color: var(--font-color);
   margin-right: 10px;
-  border-radius: 20px;
 
   &:hover, &:focus {
     outline: none;
   }
 `;
 
-const Duration = styled.div`
-  padding: 0 .8rem;
-  color: var(--font-color);
-`;
+type DurationProps = {
+  isPlaceholder?: boolean;
+};
 
+const Duration = styled.div`
+  color: ${(props: DurationProps) => props.isPlaceholder ? 'var(--summary-font-color)' : 'var(--font-color)'};
+  font-size: 16px;
+  margin-right: 20px;
+`;
 
 type TimerButtonProps = {
   isRunning: boolean;
@@ -178,13 +219,24 @@ type TimerButtonProps = {
 
 const TimerButton = styled.div`
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background: url(${(props: TimerButtonProps) => props.isRunning ? stop : start}) no-repeat;
   background-position: 55% 50%;
-  background-size: 38px;
+  background-size: 36px;
   border: none;
   cursor: pointer;
 `;
+
+const SmallTimerButton = styled.div`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+  padding-right: 5px;
+`
 
 export default Timer;

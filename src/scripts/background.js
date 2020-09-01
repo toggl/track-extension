@@ -1,8 +1,10 @@
 import browser from 'webextension-polyfill';
 
 import bugsnagClient from './lib/bugsnag';
-import { escapeHtml, isTogglURL, report, secToHHMM } from './lib/utils';
+import { escapeHtml, isTogglURL, report } from './lib/utils';
+import { formatDuration } from './@toggl/time-format-utils/format-duration';
 import { renderTimeEntries } from './lib/actions';
+import { subSeconds } from 'date-fns';
 import Db from './lib/db';
 import Ga from './lib/ga';
 import Sound from './lib/sound';
@@ -1897,7 +1899,6 @@ window.TogglButton = {
 
   calculateSums: function () {
     const now = new Date();
-    let todaySum = 0;
     let weekSum = 0;
     const timeEntries = TogglButton.$user.time_entries || [];
 
@@ -1922,15 +1923,6 @@ window.TogglButton = {
     const weekStart = getWeekStart(now);
 
     timeEntries.forEach(function (entry) {
-      // Calc today total
-      if (new Date(entry.start).getTime() > today.getTime()) {
-        if (entry.duration < 0) {
-          todaySum += (new Date() - new Date(entry.start)) / 1000;
-        } else {
-          todaySum += entry.duration;
-        }
-      }
-
       // Calc week total
       if (new Date(entry.start).getTime() > weekStart.getTime()) {
         if (entry.duration < 0) {
@@ -1941,7 +1933,7 @@ window.TogglButton = {
       }
     });
 
-    return { today: secToHHMM(todaySum), week: secToHHMM(weekSum) };
+    return { week: formatDuration(subSeconds(new Date(), weekSum)) };
   },
 
   contextMenuClick: function (info, tab) {

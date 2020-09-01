@@ -7,27 +7,27 @@ function Summary ({
   totals
 }: {
   totals: {
-    today: string,
     week: string
   }
 }) {
   return (
     <SummaryRow>
-      <div>Today: {totals.today}</div>
-      <div>This week: {totals.week}</div>
+      <div>THIS WEEK: {totals.week}</div>
     </SummaryRow>
   )
 }
 
 const SummaryRow = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
-  padding: 15px 30px;
+  padding: 15px 28px;
 
-  color: var(--font-color);
+  color: var(--summary-font-color);
   font-weight: ${text.bold};
   font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 14px;
 `;
 
 export default Summary;

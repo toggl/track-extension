@@ -10,7 +10,7 @@ html {
   --s-radius: 4px;
 
   --font-size: 14px;
-  --selected-color: var(--green);
+  --selected-color: var(--light-pink);
 
   --main-bg-color: var(--extra-light-grey);
   --text-color: var(--another-black);
@@ -24,9 +24,9 @@ html {
 }
 
 html.dark {
-  --main-bg-color:  var(--dark-grey);
+  --main-bg-color:  var(--dark-purple);
   --text-color: var(--lighter-grey);
-  --header-bg-color: var(--darker-black);
+  --header-bg-color: var(--darker-purple);
   --divider-color: var(--grey);
   --border-color: var(--dark-grey);
   --border-hover-color: var(--grey);

@@ -1,3 +1,10 @@
+# [1.66.0](https://github.com/toggl/toggl-button/compare/1.65.0...1.66.0) (2020-09-07)
+
+
+### Features
+
+* **rebrand:** Change theme colors ([735b975](https://github.com/toggl/toggl-button/commit/735b975))
+
 # [1.65.0](https://github.com/toggl/toggl-button/compare/1.64.10...1.65.0) (2020-08-21)
 
 

@@ -72,8 +72,8 @@ module.exports = config(({ development, bugsnagApiKey, production, release, vers
   },
   plugins: [
     new EnvironmentPlugin({
-      API_URL: 'https://toggl.com/api',
-      TOGGL_WEB_HOST: 'https://toggl.com',
+      API_URL: 'https://track.toggl.com/api',
+      TOGGL_WEB_HOST: 'https://toggl.com/track',
       BUGSNAG_API_KEY: bugsnagApiKey,
       DEBUG: development,
       GA_TRACKING_ID: 'UA-3215787-22',

@@ -227,7 +227,7 @@ const page = css`
   html, body, #app {
     font-family: GTWalsheim,Arial,sans-serif;
     margin: 0;
-    background: #ca9eda;
+    background: #412a4c;
     display: flex;
     flex-direction: column;
   }

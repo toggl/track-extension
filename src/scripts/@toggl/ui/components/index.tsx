@@ -28,10 +28,10 @@ export const Button = styled.button`
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  background-color: #e24f54;
+  background-color: #e57cd8;
   border: 0;
   border-radius: 24px;
-  color: #fff;
+  color: #fce5db;
   cursor: pointer;
   font-size: 14px;
   font-family: GTWalsheim,Arial,sans-serif;
@@ -61,7 +61,7 @@ export const Content = styled.div`
 `;
 
 export const Link = styled.a`
-  color: #282a2d;
+  color: #fefbfa;
   line-height: 36px;
   text-decoration: none;
 `;

@@ -1,6 +1,6 @@
 {
-  "name": "Toggl Track Button: Productivity & Time Tracker",
-  "short_name": "Toggl Track Button",
+  "name": "Toggl Track: Productivity & Time Tracker",
+  "short_name": "Toggl Track",
   "minimum_chrome_version": "63",
   "manifest_version": 2,
   "description":

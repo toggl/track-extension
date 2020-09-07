@@ -5,8 +5,8 @@
       "strict_min_version": "50.0"
     }
   },
-  "name": "Toggl Track Button: Productivity & Time Tracker",
-  "short_name": "Toggl Track Button",
+  "name": "Toggl Track: Productivity & Time Tracker",
+  "short_name": "Toggl Track",
   "manifest_version": 2,
   "description":
     "Puts a timer into any web tool and allows quick real time productivity tracking with all the data stored on your Toggl account",

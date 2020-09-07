@@ -1,3 +1,10 @@
+## [1.66.1](https://github.com/toggl/toggl-button/compare/1.66.0...1.66.1) (2020-09-07)
+
+
+### Bug Fixes
+
+* **link:** Feedback link ([6c606bf](https://github.com/toggl/toggl-button/commit/6c606bf))
+
 # [1.66.0](https://github.com/toggl/toggl-button/compare/1.65.0...1.66.0) (2020-09-07)
 
 

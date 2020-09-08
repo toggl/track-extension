@@ -1,3 +1,10 @@
+## [1.66.3](https://github.com/toggl/toggl-button/compare/1.66.2...1.66.3) (2020-09-08)
+
+
+### Bug Fixes
+
+* **colors:** Contrast for project/tag selection ([83d750e](https://github.com/toggl/toggl-button/commit/83d750e)), closes [#1813](https://github.com/toggl/toggl-button/issues/1813)
+
 ## [1.66.2](https://github.com/toggl/toggl-button/compare/1.66.1...1.66.2) (2020-09-08)
 
 

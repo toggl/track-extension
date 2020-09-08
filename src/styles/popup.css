@@ -12,6 +12,10 @@ body {
   --border-color: var(--extra-light-grey);
   --font-color: var(--another-black);
   --danger-color: var(--red);
+
+  --active-font-color: var(--dark-purple);
+  --hover-selection: var(--dark-purple-10);
+  --active-selection: var(--pink-30);
 }
 
 body.dark {
@@ -21,6 +25,10 @@ body.dark {
   --border-color: var(--dark-grey);
   --font-color: var(--lighter-grey);
   --danger-color: var(--red-on-dark);
+
+  --active-font-color: var(--peach);
+  --hover-selection: var(--dark-purple-60);
+  --active-selection: var(--dark-purple-80);
 }
 
 html, body {

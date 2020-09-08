@@ -29,13 +29,9 @@
 }
 
 #project-autocomplete li:not(.ws-row):not(.client-row):hover {
-  background-color: var(--main-bg-color);
+  color: var(--active-font-color);
+  background-color: var(--hover-selection);
   border-radius:0px;
-}
-
-#project-autocomplete li.selected-project {
-  background-color: rgba(74,199,0,.12);
-  color: #4bc800!important;
 }
 
 #project-autocomplete ul {
@@ -129,6 +125,12 @@
   text-overflow: ellipsis;
   color: var(--font-color);
 }
+li:hover span.item-name,
+li:hover span.task-count,
+li.selected-project span.item-name,
+li.selected-project span.task-count {
+  color: var(--active-font-color) !important;
+}
 
 /* PROJECT BULLETS */
 
@@ -186,13 +188,15 @@
 }
 
 #tag-autocomplete .tag-list li:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--active-font-color);
+  background-color: var(--hover-selection);
   cursor: pointer;
 }
 
+#project-autocomplete li.selected-project,
 #tag-autocomplete .tag-list li.selected-tag {
-  background-color: rgba(75, 200, 0, 0.12);
-  color: #4bc800;
+  background-color: var(--active-selection);
+  color: var(--active-font-color) !important;
 }
 
 .tag-clear {
@@ -283,8 +287,8 @@
 }
 
 .selected-task {
-  background-color: rgba(75, 200, 0, 0.12);
-  color: #4bc800;
+  background-color: var(--active-selection);
+  color: var(--active-font-color);
 }
 
 .filtered .tasklist-opened.filter li.task-item {

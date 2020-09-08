@@ -1,3 +1,10 @@
+## [1.66.2](https://github.com/toggl/toggl-button/compare/1.66.1...1.66.2) (2020-09-08)
+
+
+### Bug Fixes
+
+* **dark-mode:** Dark-Mode project-list improved hover contrast ([f0e076a](https://github.com/toggl/toggl-button/commit/f0e076a)), closes [#1813](https://github.com/toggl/toggl-button/issues/1813)
+
 ## [1.66.1](https://github.com/toggl/toggl-button/compare/1.66.0...1.66.1) (2020-09-07)
 
 

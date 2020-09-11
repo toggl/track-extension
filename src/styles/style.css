@@ -83,6 +83,7 @@
   height: 19px;
   display: inline-block;
   vertical-align: middle;
+  margin-right: 3px;
 }
 
 .toggl-button span {

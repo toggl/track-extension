@@ -757,7 +757,22 @@ window.TogglButton = {
           ctx.closePath();
           ctx.fill();
           ctx.lineWidth = 2.5;
+          // Fill 360 arc with the same background color
           ctx.beginPath();
+          ctx.strokeStyle = '#e57cd8';
+          ctx.arc(
+            this.naturalWidth * 0.5,
+            this.naturalHeight * 0.5,
+            this.naturalWidth * 0.5 - 1,
+            quart * -1,
+            circ - quart,
+            false
+          );
+          ctx.stroke();
+          // Then progressively add the white arc
+          ctx.closePath();
+          ctx.beginPath();
+          ctx.strokeStyle = '#ffffff';
           ctx.arc(
             this.naturalWidth * 0.5,
             this.naturalHeight * 0.5,

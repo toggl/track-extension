@@ -68,13 +68,13 @@ const Clock = styled.svg`
 `;
 
 const ActiveRing = styled.circle`
-  stroke: #e20505;
+  stroke: #e57cd8;
   stroke-dasharray: 892 892;
   animation-iteration-count: 1;
 `;
 
 const Stop = styled.rect`
-  fill: #f41d1d;
+  fill: #ff897a;
   opacity: 0;
   transition: 0.2s opacity ease-in;
   cursor: pointer;

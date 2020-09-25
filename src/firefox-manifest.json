@@ -34,8 +34,7 @@
     "open_in_tab": true
   },
   "permissions": [
-    "*://*.toggl.com/*",
-    "*://toggl.com/*",
+    "*://track.toggl.com/*",
     "webRequest",
     "webRequestBlocking",
     "alarms",

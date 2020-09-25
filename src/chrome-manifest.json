@@ -37,8 +37,7 @@
     "open_in_tab": true
   },
   "permissions": [
-    "*://*.toggl.com/*",
-    "*://toggl.com/*",
+    "*://track.toggl.com/*",
     "webRequest",
     "webRequestBlocking",
     "alarms",
@@ -50,7 +49,7 @@
   ],
   "optional_permissions": ["*://*/"],
   "externally_connectable": {
-    "matches": ["*://*.toggl.com/*", "*://toggl.com/*"]
+    "matches": ["*://track.toggl.com/*"]
   },
   "content_security_policy":
     "script-src 'self'; object-src 'self';",

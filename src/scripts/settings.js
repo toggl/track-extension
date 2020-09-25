@@ -33,7 +33,7 @@ document.querySelector('#close-review-prompt').addEventListener('click', dismiss
 });
 
 const isNotTogglApp = (url) => {
-  return (url || '').match(/toggl\./) === null;
+  return (url || '').match(/track.toggl\./) === null;
 };
 
 const Settings = {

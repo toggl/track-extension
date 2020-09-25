@@ -72,8 +72,8 @@ export default class Db {
   }
 
   async getOriginFileName (domain) {
-    if (process.env.DEBUG && domain.endsWith('toggl.space')) {
-      domain = 'toggl.com';
+    if (process.env.DEBUG && domain.endsWith('track.toggl.space')) {
+      domain = 'track.toggl.com';
     }
     let origin = await this.getOrigin(domain);
     const origins = await this.getAllOrigins();

@@ -1,7 +1,7 @@
 # Site settings
 title: "Toggl Button Chrome extension"
 #email:
-url: http://toggl.com
+url: http://track.toggl.com
 description: "Adds Toggl one-click time tracking to popular web tools."
 
 # Color settings (hex-codes without the leading hash-tag)

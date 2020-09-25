@@ -1736,7 +1736,7 @@ window.TogglButton = {
           TogglButton.createTimeEntry(timeEntry, null);
           buttonName = 'continue';
         } else {
-          browser.tabs.create({ url: 'https://toggl.com/app/' });
+          browser.tabs.create({ url: 'https://track.toggl.com/' });
           buttonName = 'go_to_web';
         }
       }
@@ -2342,7 +2342,7 @@ browser.webRequest.onBeforeSendHeaders.addListener(
     return { requestHeaders: headers };
   },
   {
-    urls: ['https://www.toggl.com/*', 'https://toggl.com/*'],
+    urls: ['https://track.toggl.com/*'],
     types: ['xmlhttprequest']
   },
   ['blocking', 'requestHeaders']

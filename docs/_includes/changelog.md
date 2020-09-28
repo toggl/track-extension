@@ -1,3 +1,10 @@
+## [1.66.4](https://github.com/toggl/toggl-button/compare/1.66.3...1.66.4) (2020-09-28)
+
+
+### Bug Fixes
+
+* **pomodoro:** Improve pomodoro timer sync ([d48b450](https://github.com/toggl/toggl-button/commit/d48b450)), closes [#1801](https://github.com/toggl/toggl-button/issues/1801) [#1768](https://github.com/toggl/toggl-button/issues/1768)
+
 ## [1.66.3](https://github.com/toggl/toggl-button/compare/1.66.2...1.66.3) (2020-09-08)
 
 

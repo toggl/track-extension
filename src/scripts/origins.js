@@ -340,6 +340,10 @@ export default {
     url: '*://app.nozbe.com/*',
     name: 'Nozbe'
   },
+  'odoo.com': {
+    url: '*://*.odoo.com/*',
+    name: 'Odoo'
+  },
   'ongemini.com': {
     url: '*://*.ongemini.com/*',
     name: 'Gemini'

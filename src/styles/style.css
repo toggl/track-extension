@@ -1327,6 +1327,16 @@ li .toggl-button.heflo {
   height: 60px;
 }
 
+/********* Hellonext *********/
+.toggl-button.hellonext {
+  color: #586069;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1em;
+  margin-left: 0.5rem;
+  text-decoration: none;
+  font-weight: 400;
+}
+
 /********* SENTRY *********/
 .toggl-button.sentry {
   margin: 0 auto 20px 10px;

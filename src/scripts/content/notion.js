@@ -35,7 +35,8 @@ togglbutton.render(
     elem.style.position = 'relative';
 
     function getDescription () {
-      const descriptionElem = elem;
+      const descriptionElem = elem ? elem.querySelector('div[data-root="true"]') : '';
+
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }
 

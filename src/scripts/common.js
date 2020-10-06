@@ -543,8 +543,11 @@ window.togglbutton = {
         };
       }
       togglbutton.element = e.currentTarget;
+
       browser.runtime
-        .sendMessage(opts)
+        // Stop current time entry before starting a new one
+        .sendMessage({ type: 'stop' })
+        .then(() => browser.runtime.sendMessage(opts))
         .then(togglbutton.addEditForm);
 
       return false;

@@ -1,3 +1,10 @@
+## [1.66.5](https://github.com/toggl/toggl-button/compare/1.66.4...1.66.5) (2020-10-07)
+
+
+### Bug Fixes
+
+* **notion:** Remove Toggl Button from default description ([7a7ed09](https://github.com/toggl/toggl-button/commit/7a7ed09)), closes [#1845](https://github.com/toggl/toggl-button/issues/1845)
+
 ## [1.66.4](https://github.com/toggl/toggl-button/compare/1.66.3...1.66.4) (2020-09-28)
 
 

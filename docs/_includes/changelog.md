@@ -1,3 +1,10 @@
+## [1.66.6](https://github.com/toggl/toggl-button/compare/1.66.5...1.66.6) (2020-10-08)
+
+
+### Bug Fixes
+
+* **timer:** Stop current time entry before starting ([#1855](https://github.com/toggl/toggl-button/issues/1855)) ([879406b](https://github.com/toggl/toggl-button/commit/879406b)), closes [#1846](https://github.com/toggl/toggl-button/issues/1846)
+
 ## [1.66.5](https://github.com/toggl/toggl-button/compare/1.66.4...1.66.5) (2020-10-07)
 
 

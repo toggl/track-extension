@@ -1,3 +1,10 @@
+## [1.66.7](https://github.com/toggl/toggl-button/compare/1.66.6...1.66.7) (2020-10-08)
+
+
+### Bug Fixes
+
+* **pomodoro:** Stop pomodoro for non button TEs ([81f136d](https://github.com/toggl/toggl-button/commit/81f136d)), closes [#1857](https://github.com/toggl/toggl-button/issues/1857)
+
 ## [1.66.6](https://github.com/toggl/toggl-button/compare/1.66.5...1.66.6) (2020-10-08)
 
 

@@ -399,22 +399,23 @@ window.TogglButton = {
     TogglButton.$curEntry = entry;
 
     if (entry) {
-      TogglButton.checkPomodoroAlarm(entry);
-      clearTimeout(TogglButton.$nannyTimer);
-      TogglButton.$nannyTimer = null;
+      // Start pomodoro timer only if the entry was created using the TogglButton
+      if (update) {
+        TogglButton.checkPomodoroAlarm(entry);
+        clearTimeout(TogglButton.$nannyTimer);
+        TogglButton.$nannyTimer = null;
+      }
 
       if (!update) {
         browser.browserAction.setIcon({
           path: { '19': 'images/icon-19.png', '38': 'images/icon-38.png' }
         });
+
+        TogglButton.clearPomdoroAnimation();
       }
     } else {
       // Clear pomodoro timer
-      TogglButton.stopTicker();
-      clearTimeout(TogglButton.pomodoroAlarm);
-      TogglButton.pomodoroAlarm = null;
-      clearInterval(TogglButton.pomodoroProgressTimer);
-      TogglButton.pomodoroProgressTimer = null;
+      TogglButton.clearPomdoroAnimation();
       browser.browserAction.setIcon({
         path: { '19': 'images/inactive-19.png', '38': 'images/inactive-38.png' }
       });
@@ -863,9 +864,17 @@ window.TogglButton = {
   },
 
   resetPomodoroProgress: function (entry) {
+    TogglButton.clearPomdoroAnimation();
+
+    TogglButton.updateTriggers(entry);
+  },
+
+  clearPomdoroAnimation: function () {
+    TogglButton.stopTicker();
+    clearTimeout(TogglButton.pomodoroAlarm);
+    TogglButton.pomodoroAlarm = null;
     clearInterval(TogglButton.pomodoroProgressTimer);
     TogglButton.pomodoroProgressTimer = null;
-    TogglButton.updateTriggers(entry);
   },
 
   stopTimeEntryPomodoro: function (timeEntry, sendResponse, cb) {

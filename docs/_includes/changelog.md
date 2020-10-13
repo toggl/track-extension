@@ -1,3 +1,10 @@
+## [1.66.8](https://github.com/toggl/toggl-button/compare/1.66.7...1.66.8) (2020-10-13)
+
+
+### Bug Fixes
+
+* **background:** Fix adding custom integrations URLs ([#1861](https://github.com/toggl/toggl-button/issues/1861)) ([b35f36b](https://github.com/toggl/toggl-button/commit/b35f36b))
+
 ## [1.66.7](https://github.com/toggl/toggl-button/compare/1.66.6...1.66.7) (2020-10-08)
 
 

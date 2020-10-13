@@ -487,7 +487,7 @@ const Settings = {
     }
 
     Settings.$newPermission.value = text;
-    const domain = '*://' + Settings.$newPermission.value + '/';
+    const domain = '*://*.' + Settings.$newPermission.value + '/';
     const permission = { origins: [domain] };
 
     browser.permissions.request(permission)

@@ -2227,30 +2227,16 @@ window.TogglButton = {
   },
 
   extractDomain: async function (url, checkLogin = true) {
-    let domain;
     if (checkLogin && !TogglButton.$user) {
       return false;
     }
-    // find & remove protocol (http, ftp, etc.) and get domain
-    if (url.indexOf('://') > -1) {
-      domain = url.split('/')[2];
-    } else {
-      domain = url.split('/')[0];
-    }
 
-    // remove www if needed
-    // domain = domain.replace("www.", "");
+    const hostname = new URL(url).hostname.replace('www.', '');
+    const file = await db.getOriginFileName(hostname);
 
-    // remove /* from the end
-    domain = domain.split('/*')[0];
-
-    // find & remove port number
-    domain = domain.split(':')[0];
-
-    const file = await db.getOriginFileName(domain);
     return {
       file: file,
-      origins: ['*://' + domain + '/*']
+      origins: ['*://' + hostname + '/*']
     };
   },
 

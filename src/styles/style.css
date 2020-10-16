@@ -96,8 +96,12 @@
   overflow: hidden;
 }
 
-.toggl-button.min:not(.active) svg path {
-  fill: grey !important;
+.toggl-button.min:not(.active) svg path.background-circle {
+  fill : grey !important;
+}
+
+.toggl-button.min:not(.active) svg path.play-icon {
+  fill : white !important;
 }
 
 #toggl-button-project-filter,

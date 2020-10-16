@@ -1,3 +1,10 @@
+## [1.66.9](https://github.com/toggl/toggl-button/compare/1.66.8...1.66.9) (2020-10-16)
+
+
+### Bug Fixes
+
+* **styling:** Prevent gray button ([dd78d91](https://github.com/toggl/toggl-button/commit/dd78d91))
+
 ## [1.66.8](https://github.com/toggl/toggl-button/compare/1.66.7...1.66.8) (2020-10-13)
 
 

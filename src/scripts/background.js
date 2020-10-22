@@ -2367,7 +2367,7 @@ browser.webRequest.onBeforeSendHeaders.addListener(
     return { requestHeaders: headers };
   },
   {
-    urls: ['https://www.toggl.com/*', 'https://toggl.com/*'],
+    urls: [process.env.API_URL + '/*'],
     types: ['xmlhttprequest']
   },
   ['blocking', 'requestHeaders']

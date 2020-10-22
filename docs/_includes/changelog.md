@@ -1,3 +1,10 @@
+## [1.66.10](https://github.com/toggl/toggl-button/compare/1.66.9...1.66.10) (2020-10-22)
+
+
+### Bug Fixes
+
+* **background:** Fix setting user-agent for API calls ([#1864](https://github.com/toggl/toggl-button/issues/1864)) ([1e78c20](https://github.com/toggl/toggl-button/commit/1e78c20))
+
 ## [1.66.9](https://github.com/toggl/toggl-button/compare/1.66.8...1.66.9) (2020-10-16)
 
 

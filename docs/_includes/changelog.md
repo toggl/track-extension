@@ -1,3 +1,10 @@
+## [1.66.11](https://github.com/toggl/toggl-button/compare/1.66.10...1.66.11) (2020-10-23)
+
+
+### Bug Fixes
+
+* **visualstudio:** Move button to toolbar container ([58a25ad](https://github.com/toggl/toggl-button/commit/58a25ad)), closes [#1866](https://github.com/toggl/toggl-button/issues/1866)
+
 ## [1.66.10](https://github.com/toggl/toggl-button/compare/1.66.9...1.66.10) (2020-10-22)
 
 

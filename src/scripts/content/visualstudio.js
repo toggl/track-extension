@@ -42,7 +42,7 @@ togglbutton.render(
   '.witform-layout-content-container:not(.toggl)',
   { observe: true },
   function () {
-    const activeButtonContainer = getContainer('.work-item-form-header-controls-container');
+    const activeButtonContainer = getContainer('.work-item-form-toolbar-container ul');
     const activeHeaderContainer = getContainer('.work-item-form-main-header');
     const vsActiveClassElem = $('.commandbar.header-bottom > .commandbar-item > .displayed');
 
@@ -59,7 +59,9 @@ togglbutton.render(
       vsActiveClassElem.textContent === 'Work Items' ||
       vsActiveClassElem.textContent === 'Backlogs'
     ) {
-      activeButtonContainer.appendChild(link);
+      const wrapper = createTag('li', 'menu-item');
+      wrapper.appendChild(link);
+      activeButtonContainer.appendChild(wrapper);
     }
   }
 );

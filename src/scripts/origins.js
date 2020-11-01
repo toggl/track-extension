@@ -201,6 +201,10 @@ export default {
     url: '*://gingkoapp.com/*',
     name: 'Gingkoapp'
   },
+  'gitea.com': {
+    url: '*://gitea.com/*',
+    name: 'Gitea'
+  },
   'github.com': {
     url: '*://github.com/*',
     name: 'Github'

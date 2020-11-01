@@ -48,6 +48,7 @@ out of the way and focus on real work.
 - [FogBugz](http://www.fogcreek.com/fogbugz/)
 - [Freshdesk](https://www.freshdesk.com/)
 - [Ginko App](https://gingkoapp.com/)
+- [Gitea](https://gitea.com/)
 - [GitHub](https://github.com/)
 - [GitLab](https://gitlab.com/)
 - [Gmail](https://mail.google.com)

@@ -70,9 +70,10 @@ export default {
     url: '*://app.brokerengine.com.au/*',
     name: 'BrokerEngine'
   },
-  'www.bugherd.com': {
-    url: '*://www.bugherd.com/*',
-    name: 'BugHerd'
+  'bugherd.com': {
+    url: '*://*.bugherd.com/*',
+    name: 'BugHerd',
+    file: 'bugherd.js'
   },
   'bugzilla.mozilla.org': {
     url: '*://bugzilla.mozilla.org/*',
@@ -232,17 +233,19 @@ export default {
     url: '*://keep.google.com/*',
     name: 'Google Keep'
   },
-  'www.khanacademy.org': {
-    url: '*://www.khanacademy.org/*',
-    name: 'KhanAcademy'
+  'khanacademy.org': {
+    url: '*://*.khanacademy.org/*',
+    name: 'KhanAcademy',
+    file: 'khanacademy.js'
   },
   'mail.google.com': {
     url: '*://mail.google.com/*',
     name: 'Google Mail'
   },
-  'www.gqueues.com': {
-    url: '*://www.gqueues.com/*',
-    name: 'GQueues'
+  'gqueues.com': {
+    url: '*://*.gqueues.com/*',
+    name: 'GQueues',
+    file: 'gqueues.js'
   },
   'habitica.com': {
     url: '*://habitica.com/*',
@@ -504,9 +507,10 @@ export default {
     url: '*://*.smartboard.cl/*',
     name: 'Smartboard'
   },
-  'www.sourcelair.com': {
-    url: '*://www.sourcelair.com/*',
-    name: 'Sourcelair'
+  'sourcelair.com': {
+    url: '*://*.sourcelair.com/*',
+    name: 'Sourcelair',
+    file: 'sourcelair.js'
   },
   'spidergap.com': {
     url: '*://*.spidergap.com/*',

@@ -313,9 +313,10 @@ export default {
     name: 'Mantishub',
     clone: 'true'
   },
-  'www.meistertask.com': {
-    url: '*://www.meistertask.com/*',
-    name: 'MeisterTask'
+  'meistertask.com': {
+    url: '*://*.meistertask.com/*',
+    name: 'MeisterTask',
+    file: 'meistertask.js'
   },
   'minicrm.pl': {
     url: '*://*.minicrm.pl/*',

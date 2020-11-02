@@ -1,3 +1,11 @@
+## [1.66.12](https://github.com/toggl/toggl-button/compare/1.66.11...1.66.12) (2020-11-02)
+
+
+### Bug Fixes
+
+* **integrations:** Fix meistertask integration ([#1873](https://github.com/toggl/toggl-button/issues/1873)) ([8bbe682](https://github.com/toggl/toggl-button/commit/8bbe682))
+* **integrations:** Switch to wildcards instead of www ([f7a011d](https://github.com/toggl/toggl-button/commit/f7a011d))
+
 ## [1.66.11](https://github.com/toggl/toggl-button/compare/1.66.10...1.66.11) (2020-10-23)
 
 

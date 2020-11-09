@@ -86,21 +86,17 @@ function getProjectSelector () {
 }
 
 function tagsSelector () {
-  const $tagList = $('div[data-qa-selector="labels_block"]');
+  // GitLab 13.5
+  const nodeList = document.querySelectorAll('div.labels span[data-qa-label-name]');
 
-  if (!$tagList) {
+  if (!nodeList) {
     return [];
   }
 
-  const tagItems = $tagList.children;
   const tags = [];
 
-  for (const node of Object.values(tagItems)) {
-    const tagName = node.textContent.trim();
-    // Skip no labels: <span className="no-value">None</span>
-    if (tagName === 'None') {
-      continue;
-    }
+  for (const node of Object.values(nodeList)) {
+    const tagName = node.getAttribute('data-qa-label-name');
     tags.push(tagName);
   }
 

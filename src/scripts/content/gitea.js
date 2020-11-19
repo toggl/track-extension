@@ -7,6 +7,7 @@ togglbutton.render('.time-desc:not(.toggl)',
     const link = togglbutton.createTimerLink({
       className: 'gitea',
       description: descriptionSelector,
+      tags: tagsSelector,
       projectName: projectSelector,
     });
     $container.appendChild(link);

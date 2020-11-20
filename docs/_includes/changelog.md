@@ -1,3 +1,10 @@
+# [1.67.0](https://github.com/toggl/toggl-button/compare/1.66.12...1.67.0) (2020-11-20)
+
+
+### Features
+
+* **gitea:** Implement Gitea integration ([020aa0b](https://github.com/toggl/toggl-button/commit/020aa0b))
+
 ## [1.66.12](https://github.com/toggl/toggl-button/compare/1.66.11...1.66.12) (2020-11-02)
 
 

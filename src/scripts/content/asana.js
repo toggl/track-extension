@@ -90,10 +90,10 @@ togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
     // assume first pill is a project and any others are tags
     // misses tags which are in the "..." overflow, and if there is a tag without a project
     const pillSelector = (type) => {
-      const pills = [...elem.querySelectorAll('.NavigationLink')]
+      const pills = [...elem.querySelectorAll('.Pill')]
         .map(pill => pill.textContent.trim());
       if (type === 'project') {
-        return pills.length ? pills[0] : '';
+        return pills.length ? pills : '';
       } else if (type === 'tags') {
         return pills.length > 1 ? pills.slice(1) : [];
       }

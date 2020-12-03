@@ -1,3 +1,10 @@
+## [1.67.1](https://github.com/toggl/toggl-button/compare/1.67.0...1.67.1) (2020-12-03)
+
+
+### Bug Fixes
+
+* **gitlab:** Update label selector for GitLab 13.5 ([#1878](https://github.com/toggl/toggl-button/issues/1878)) ([8a2859d](https://github.com/toggl/toggl-button/commit/8a2859d8cfd215ec3bf45e260010cab0d1f89e5d))
+
 # [1.67.0](https://github.com/toggl/toggl-button/compare/1.66.12...1.67.0) (2020-11-20)
 
 

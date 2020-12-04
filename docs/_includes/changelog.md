@@ -1,3 +1,10 @@
+## [1.67.2](https://github.com/toggl/toggl-button/compare/1.67.1...1.67.2) (2020-12-04)
+
+
+### Bug Fixes
+
+* **integrations:** Fix Asana project selection ([#1890](https://github.com/toggl/toggl-button/issues/1890)) ([930ec89](https://github.com/toggl/toggl-button/commit/930ec89279e0235b7d88bd23a97326fc6c00d013))
+
 ## [1.67.1](https://github.com/toggl/toggl-button/compare/1.67.0...1.67.1) (2020-12-03)
 
 

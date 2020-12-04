@@ -2,7 +2,7 @@
 
 // Changed from teamweek to Toggl-Plan
 // Version active on July 2020
-togglbutton.render('.task-form:not(.toggl)',
+togglbutton.render('.task-form[data-track-inject-button]:not(.toggl)',
   { observe: true },
   element => {
     const container = element.querySelector('[data-hook=actions-menu]');

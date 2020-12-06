@@ -3,9 +3,9 @@
 
 // any.do Q4 2018: task card
 togglbutton.render('.CardScrollView:not(.toggl)', { observe: true }, elem => {
-  const descriptionSelector = () => elem.querySelector('textarea').value;
+  const descriptionSelector = () => $('textarea', elem).value;
 
-  const projectSelector = () => document.querySelector('.TasksToolBarCategoryTitle').textContent;
+  const projectSelector = () => $('.TasksToolBarCategoryTitle').textContent;
 
   const link = togglbutton.createTimerLink({
     buttonType: 'minimal',
@@ -14,7 +14,7 @@ togglbutton.render('.CardScrollView:not(.toggl)', { observe: true }, elem => {
     projectName: projectSelector
   });
 
-  elem.querySelector('textarea').before(link);
+  $('textarea', elem).before(link);
 });
 
 // Any.do Q4 2018: tasks lists
@@ -22,8 +22,8 @@ togglbutton.render(
   '.TaskListRow[draggable=true]:not(.toggl)',
   { observe: true },
   elem => {
-    const descriptionSelector = () => elem.querySelector('.TaskItem__label__text__title').textContent;
-    const projectSelector = () => document.querySelector('.TasksToolBarCategoryTitle').textContent;
+    const descriptionSelector = () => $('.TaskItem__label__text__title', elem).textContent;
+    const projectSelector = () => $('.TasksToolBarCategoryTitle').textContent;
 
     const link = togglbutton.createTimerLink({
       buttonType: 'minimal',
@@ -32,6 +32,6 @@ togglbutton.render(
       projectName: projectSelector
     });
 
-    elem.querySelector('.TaskItem').appendChild(link);
+    $('.TaskItem', elem).appendChild(link);
   }
 );

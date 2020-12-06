@@ -28,9 +28,7 @@ togglbutton.render(
   function (elem) {
     const wrap = document.createElement('li', 'phabricator-action-view');
     const container = $('.phabricator-action-list-view', elem);
-    const desc = elem.querySelector(
-      '.phui-two-column-header .phui-header-view .phui-header-header'
-    );
+    const desc = $('.phui-two-column-header .phui-header-view .phui-header-header', elem);
     let number = $('.phabricator-last-crumb .phui-crumb-name') || '';
     let projectName = $('.phabricator-handle-tag-list-item > a');
 

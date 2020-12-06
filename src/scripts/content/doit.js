@@ -57,7 +57,7 @@ togglbutton.render('li.task:not(.toggl)', { observe: true }, function (elem) {
   let project;
 
   if (projectHeader) {
-    project = document.querySelector('#project_info span.title').textContent;
+    project = $('#project_info span.title').textContent;
   } else {
     project = projectElem ? projectElem.textContent : '';
     if (project !== '') {

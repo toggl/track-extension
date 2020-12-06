@@ -7,8 +7,8 @@ togglbutton.render(
   '.details__attributes-right:not(.toggl)',
   { observe: true },
   function renderNozbeDetailView (elem) {
-    const description = document.querySelector('.details .details__title-name').innerText.trim();
-    const project = document.querySelector('.details .details__attribute-name').innerText.trim();
+    const description = $('.details .details__title-name').innerText.trim();
+    const project = $('.details .details__attribute-name').innerText.trim();
 
     const link = togglbutton.createTimerLink({
       className: 'nozbe',
@@ -30,8 +30,8 @@ togglbutton.render(
   '.item.task:not(.toggl)',
   { observe: true },
   function renderNozbeList (elem) {
-    const description = elem.querySelector('.task__name').innerText.trim();
-    const projectName = elem.querySelector('.task__project-name').innerText.trim();
+    const description = $('.task__name', elem).innerText.trim();
+    const projectName = $('.task__project-name', elem).innerText.trim();
 
     const link = togglbutton.createTimerLink({
       className: 'nozbe-list',
@@ -40,8 +40,8 @@ togglbutton.render(
       projectName
     });
 
-    const container = elem.querySelector('.task__icons-right');
-    const starIcon = container.querySelector('.task__star');
+    const container = $('.task__icons-right', elem);
+    const starIcon = $('.task__star', container);
     container.insertBefore(link, starIcon);
   }
 );

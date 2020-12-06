@@ -43,7 +43,7 @@ togglbutton.render('a.task-list__item:not(.toggl)', { observe: true }, function 
       for (
         let i = 0;
         typeof elements[i] !== 'undefined';
-        tags.push(elements[i++].querySelector('.item-name').textContent)
+        tags.push($('.item-name', elements[i++]).textContent)
       );
     } else {
       const elements = elem.getElementsByClassName('item__meta--tag');

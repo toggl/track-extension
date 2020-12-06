@@ -114,8 +114,10 @@ togglbutton.render(
 
       if (project) {
         // We must try to go deep, since .textContent doesn't work at all on some components.
-        let innerEl = project.nextSibling.querySelector('a');
-        if (!innerEl) innerEl = project.nextSibling.querySelector('lightning-formatted-text');
+        let innerEl = $('a', project.nextSibling);
+        if (!innerEl) {
+          innerEl = $('lightning-formatted-text', project.nextSibling);
+        }
         return innerEl ? innerEl.textContent.trim() : '';
       }
       return getDescription();

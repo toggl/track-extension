@@ -27,18 +27,19 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
   });
 
   // Check for strange duplicate buttons. Don't know why this happens in Zendesk.
-  if (elem.querySelector('.toggl-button')) {
-    elem.removeChild(elem.querySelector('.toggl-button'));
+  const $toggl = $('.toggl-button', elem);
+  if ($toggl) {
+    elem.removeChild($toggl);
   }
 
-  elem.insertBefore(link, elem.querySelector('.btn-group'));
+  elem.insertBefore(link, $('.btn-group', elem));
 });
 
 togglbutton.render('[data-test-id="customer-context-tab-navigation"]', { observe: true }, function (
   elem
 ) {
   // Manual check for existence in this SPA.
-  if (elem.querySelector('.toggl-button')) return;
+  if ($('.toggl-button', elem)) return;
 
   const titleFunc = function () {
     let description;
@@ -47,7 +48,7 @@ togglbutton.render('[data-test-id="customer-context-tab-navigation"]', { observe
 
     if (ticketNum) {
       const id = ticketNum[1].trim();
-      const titleElem = document.querySelector(`[data-side-conversations-anchor-id="${id}"] [data-test-id="ticket-pane-subject"]`);
+      const titleElem = $(`[data-side-conversations-anchor-id="${id}"] [data-test-id="ticket-pane-subject"]`, document);
 
       if (titleElem !== null) {
         description = titleElem.value.trim();

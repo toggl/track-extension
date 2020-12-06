@@ -2,9 +2,9 @@
 
 // WP 4.9
 togglbutton.render('#poststuff:not(.toggl)', { observe: true }, function (elem) {
-  const heading = document.querySelector('.wp-heading-inline');
+  const heading = $('.wp-heading-inline');
   const description = function () {
-    return elem.querySelector('#title').value;
+    return $('#title', elem).value;
   };
 
   const link = togglbutton.createTimerLink({
@@ -19,7 +19,7 @@ togglbutton.render('#poststuff:not(.toggl)', { observe: true }, function (elem) 
 togglbutton.render('.edit-post-header:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  const targetElement = elem.querySelector('.edit-post-header__settings');
+  const targetElement = $('.edit-post-header__settings', elem);
   const description = function () {
     const titleInput = document.getElementById('post-title-0');
     return titleInput ? titleInput.value : '';

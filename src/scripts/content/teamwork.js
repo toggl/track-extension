@@ -80,7 +80,7 @@ togglbutton.render(
       // can't just use "unused icons" container as the layout has changed
       container.insertBefore(
         spanTag,
-        container.parentElement.querySelector('.task-options > a:not(.active)')
+        $('.task-options > a:not(.active)', container.parentElement)
       );
     } else {
       container.insertBefore(spanTag, container.lastChild);
@@ -143,7 +143,7 @@ togglbutton.render(
   '.task-groupHold-wrapper .task-row .row-content-holder:not(.toggl), .s-project-task__tasklist .row-content-holder:not(.toggl)',
   { observe: true },
   function (root) {
-    const getNameHolder = () => root.querySelector('.w-task-row__name > a');
+    const getNameHolder = () => $('.w-task-row__name > a', root);
 
     if (!getNameHolder()) { return; }
 

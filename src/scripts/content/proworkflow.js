@@ -4,7 +4,7 @@ togglbutton.render(
   '#viewTask-infoSummary:not(.toggl)',
   { observe: true },
   function (elem) {
-    const projectNr = elem.querySelector('dd').textContent;
+    const projectNr = $('dd', elem).textContent;
     const project = $('#viewTask-projectName', elem).textContent;
     const title = $('h2', elem).textContent;
     const description = projectNr + ' - ' + project + ' : ' + title;

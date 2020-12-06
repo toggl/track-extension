@@ -2,7 +2,7 @@
 
 togglbutton.render(
   '.action:not(.toggl)', { observe: true }, function (elem) {
-    let name = elem.querySelector('.action__title');
+    let name = $('.action__title', elem);
 
     if (name == null) name = '';
     const link = togglbutton.createTimerLink({
@@ -14,6 +14,6 @@ togglbutton.render(
     linkContainer.className = 'meta-item is-active';
     linkContainer.append(link);
 
-    elem.querySelector('.meta-list').prepend(linkContainer);
+    $('.meta-list', elem).prepend(linkContainer);
   }
 );

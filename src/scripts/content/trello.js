@@ -77,7 +77,7 @@ togglbutton.render(
     wrapper.style.alignItems = 'center';
     wrapper.style.marginRight = '4px';
     wrapper.appendChild(link);
-    elem.querySelector('.checklist-item-controls').appendChild(wrapper);
+    $('.checklist-item-controls', elem).appendChild(wrapper);
   },
   '.checklist-items-list, .window-wrapper'
 );

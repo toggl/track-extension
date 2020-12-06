@@ -46,7 +46,7 @@ togglbutton.render(
 
     const link = togglbutton.createTimerLink({
       className: 'basecamphq',
-      description: elem.querySelector('span.content > span').textContent.trim(),
+      description: $('span.content > span', elem).textContent.trim(),
       projectName: $('.project')
         ? ($('.project > title') || $('.project > header > h1 > a')).textContent
         : ''

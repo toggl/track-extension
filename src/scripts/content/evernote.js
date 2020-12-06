@@ -1,7 +1,7 @@
 'use strict';
 
 togglbutton.render('#qa-NOTE_HEADER:not(.toggl)', { observe: true }, function (elem) {
-  if (elem.querySelector('.toggl-button')) {
+  if ($('.toggl-button', elem)) {
     // Check for existence in case it's there from previous render (SPA)
     return;
   }
@@ -26,8 +26,7 @@ togglbutton.render('#qa-NOTE_HEADER:not(.toggl)', { observe: true }, function (e
   });
 
   // Insert at the start of the same header segment as the share button
-  elem
-    .querySelector('#qa-SHARE_BUTTON')
+  $('#qa-SHARE_BUTTON', elem)
     .parentNode
     .prepend(link);
 });

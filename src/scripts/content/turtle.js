@@ -10,22 +10,22 @@ const join = (elements) => {
 const getDescription = (element) => {
   const currentTitleNodes = $$('.title-text', element);
 
-  if (!element.closest('.card-node').parentElement.closest('.card-node')) {
+  const $cardNode = element
+    .closest('.card-node')
+    .parentElement
+    .closest('.card-node');
+  if (!$cardNode) {
     return join(currentTitleNodes);
   }
 
-  const sectionTitleNodes = element
-    .closest('.card-node')
-    .parentElement
-    .closest('.card-node')
-    .querySelector('a:first-child .wrap-with-text')
-    .querySelectorAll('.title-text');
+  const $textNode = $('a:first-child .wrap-with-text', $cardNode);
+  const sectionTitleNodes = $$('.title-text', $textNode);
 
   return `${join(sectionTitleNodes)} – ${join(currentTitleNodes)}`;
 };
 
 const getProject = () => {
-  return document.querySelector('.project-selector-caret').textContent;
+  return $('.project-selector-caret').textContent;
 };
 
 togglbutton.render('.card-list-wrapper .card-node:not([data-toggl])', { observe: true }, (element) => {
@@ -48,5 +48,5 @@ togglbutton.render('.card-list-wrapper .card-node:not([data-toggl])', { observe:
 
   wrapper.appendChild(link);
   element.setAttribute('data-toggl', true);
-  element.querySelector('.inline-actions').insertBefore(wrapper, element.querySelector('.more-actions-btn'));
+  $('.inline-actions', element).insertBefore(wrapper, $('.more-actions-btn', element));
 });

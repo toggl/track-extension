@@ -5,8 +5,8 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const description = function () {
-      let first = document.querySelector('.pcs-template-body .pcs-label b');
-      let second = document.querySelector('.pcs-template-body #tmp_ref_number');
+      let first = $('.pcs-template-body .pcs-label b');
+      let second = $('.pcs-template-body #tmp_ref_number');
 
       first = first ? first.textContent.trim() + ' ' : '';
       second = second ? second.textContent.trim() : '';
@@ -14,9 +14,7 @@ togglbutton.render(
     };
 
     const project = function () {
-      let p = document.querySelector(
-        '.pcs-template-body .pcs-customer-name a'
-      );
+      let p = $('.pcs-template-body .pcs-customer-name a');
       p = p ? p.textContent.trim() : '';
       return p;
     };

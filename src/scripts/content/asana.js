@@ -3,10 +3,10 @@
 // Board view. Inserts button next to assignee/due date.
 togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true },
   boadCardElem => {
-    const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-name').textContent.trim();
+    const descriptionSelector = () => $('.BoardCard-name', boadCardElem).textContent.trim();
 
     const projectSelector = () => {
-      const projectElement = document.querySelector('.TopbarPageHeaderStructure-titleRow > h1');
+      const projectElement = $('.TopbarPageHeaderStructure-titleRow > h1');
       if (!projectElement) return '';
 
       return projectElement.textContent.trim();
@@ -20,7 +20,7 @@ togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true
       // N.B. tags cannot be supported on board view as the information is not available.
     });
 
-    const injectContainer = boadCardElem.querySelector('.BoardCard-rightMetadata');
+    const injectContainer = $('.BoardCard-rightMetadata', boadCardElem);
     if (injectContainer) {
       injectContainer.insertAdjacentElement('afterbegin', link);
     }
@@ -32,15 +32,15 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
   function (taskNameCell) {
     const container = taskNameCell.closest('.SpreadsheetRow');
 
-    if (container.querySelector('.toggl-button')) {
+    if ($('.toggl-button', container)) {
       // Due to the way this UI is rendered, we must check for existence of old buttons manually.
       return;
     }
 
-    const descriptionSelector = () => taskNameCell.querySelector('textarea').textContent.trim();
+    const descriptionSelector = () => $('textarea', taskNameCell).textContent.trim();
     const projectHeaderSelector = () => {
       // Try to look for for page project title instead.
-      const projectHeader = document.querySelector('.TopbarPageHeaderStructure.ProjectPageHeader .TopbarPageHeaderStructure-title');
+      const projectHeader = $('.TopbarPageHeaderStructure.ProjectPageHeader .TopbarPageHeaderStructure-title');
       if (!projectHeader) {
         return '';
       }
@@ -49,14 +49,14 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
         .trim();
     };
     const projectSelector = () => {
-      const projectCell = container.querySelector('.SpreadsheetTaskRow-projectsCell');
+      const projectCell = $('.SpreadsheetTaskRow-projectsCell', container);
       if (!projectCell) {
         // Try to look for for page project title instead.
         return projectHeaderSelector();
       }
 
       // There can be multiple projects, but we can't support trying to match multiple yet.
-      const firstProject = projectCell.querySelector('.Pill');
+      const firstProject = $('.Pill', projectCell);
       return firstProject ? firstProject.textContent.trim() : projectHeaderSelector();
     };
 
@@ -80,11 +80,11 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
 // 2020 My Tasks view, possibly other similar views.
 togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
   function (elem) {
-    if (elem.querySelector('.toggl-button')) {
+    if ($('.toggl-button', elem)) {
       // Due to the way this UI is rendered, we must check for existence of old buttons manually.
       return;
     }
-    const descriptionSelector = () => elem.querySelector('.TaskName textarea').textContent;
+    const descriptionSelector = () => $('.TaskName textarea', elem).textContent;
 
     // attempt at separating projects and tags, which are not differentiated in the dom
     // assume first pill is a project and any others are tags
@@ -156,7 +156,7 @@ togglbutton.render(
 
     link.style.margin = '0 5px';
 
-    const firstButton = elem.querySelector('.SingleTaskPaneToolbar-button');
+    const firstButton = $('.SingleTaskPaneToolbar-button', elem);
     firstButton.parentNode.insertBefore(link, firstButton);
   }
 );

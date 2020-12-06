@@ -11,6 +11,6 @@ togglbutton.render('.entryHeader:not(.toggl)', { observe: true }, function (
     description: description
   });
 
-  elem.querySelector('.entryHeader > .metadata').appendChild(textnode);
-  elem.querySelector('.entryHeader > .metadata').appendChild(link);
+  $('.entryHeader > .metadata', elem).appendChild(textnode);
+  $('.entryHeader > .metadata', elem).appendChild(link);
 });

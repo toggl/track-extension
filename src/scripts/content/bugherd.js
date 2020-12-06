@@ -3,15 +3,15 @@
 togglbutton.render('#detailBar > div:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  const container = document.querySelector(
+  const container = $(
     '#detailBar > div > div.taskDetails.panelContent.flexHeight.flexScroller > div.taskDetailMain > div.taskDetailMeta'
   );
 
-  const description = document.querySelector(
+  const description = $(
     '#detailBar > div > div.taskDetails.panelContent.flexHeight.flexScroller > div.taskDetailMain > div.taskDetailMeta > span > span'
   );
 
-  const project = document.querySelector('#settingsBar > div.panelHead > div');
+  const project = $('#settingsBar > div.panelHead > div');
 
   const descFunc = function () {
     return description ? 'Task ' + description.textContent : '';

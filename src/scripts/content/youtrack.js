@@ -33,7 +33,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const parent = elem.closest('.yt-issue-view');
-    const issueId = parent.querySelector('.js-issue-id').textContent;
+    const issueId = $('.js-issue-id', parent).textContent;
     const link = togglbutton.createTimerLink({
       className: 'youtrack-new',
       description: issueId + ' ' + $('h1').textContent.trim(),

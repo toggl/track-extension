@@ -52,7 +52,7 @@ togglbutton.render(
     liTag.appendChild(link);
     lastEl.insertBefore(
       liTag,
-      lastEl.querySelector('.navbar-save-button').nextSibling
+      $('.navbar-save-button', lastEl).nextSibling
     );
   }
 );

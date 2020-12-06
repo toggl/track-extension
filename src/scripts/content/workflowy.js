@@ -13,7 +13,7 @@ togglbutton.render(
   '.header:not(.toggl)',
   { observe: true },
   $container => {
-    if ($container.querySelector('.toggl-button')) {
+    if ($('.toggl-button', $container)) {
       // Check for existence in case it's there from a previous render
       return;
     }

@@ -7,7 +7,7 @@
 //   projectName
 // </div>
 function getProjectName () {
-  const printHeaderElem = document.querySelector('#header_print');
+  const printHeaderElem = $('#header_print');
 
   return printHeaderElem && printHeaderElem.lastChild && printHeaderElem.lastChild.nodeValue
     ? printHeaderElem.lastChild.nodeValue.trim()
@@ -18,11 +18,11 @@ function getProjectName () {
 togglbutton.render('.task:not(.toggl)', { observe: true }, function (elem) {
   function getDescription () {
     // Task details view
-    const descriptionElem = elem.querySelector('h1 > a');
+    const descriptionElem = $('h1 > a', elem);
     if (descriptionElem) return descriptionElem.textContent.trim();
 
     // Task modal view
-    const descriptionModalElem = document.querySelector('#TB_title .name a');
+    const descriptionModalElem = $('#TB_title .name a');
     return descriptionModalElem ? descriptionModalElem.textContent.trim() : '';
   }
 
@@ -32,7 +32,7 @@ togglbutton.render('.task:not(.toggl)', { observe: true }, function (elem) {
     projectName: getProjectName
   });
 
-  const root = document.querySelector('.buts_menu');
+  const root = $('.buts_menu');
   if (root) {
     root.appendChild(link);
   }
@@ -41,7 +41,7 @@ togglbutton.render('.task:not(.toggl)', { observe: true }, function (elem) {
 // Tasks list
 togglbutton.render('#tasks_images .item:not(.toggl)', { observe: true }, function (elem) {
   function getDescription () {
-    const descriptionElem = elem.querySelector('.name > a');
+    const descriptionElem = $('.name > a', elem);
     return descriptionElem ? descriptionElem.textContent.trim() : '';
   }
 
@@ -52,7 +52,7 @@ togglbutton.render('#tasks_images .item:not(.toggl)', { observe: true }, functio
     projectName: getProjectName
   });
 
-  const root = elem.querySelector('.td_actions > span');
+  const root = $('.td_actions > span', elem);
   if (root) {
     root.appendChild(link);
   }

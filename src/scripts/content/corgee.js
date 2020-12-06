@@ -5,10 +5,10 @@ togglbutton.render(
   '.liConversationCard:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = elem.querySelector('.card-header-right-section');
-    const descriptionElem = elem.querySelector('.task-title');
-    const projectElem = elem.querySelector('.card-header-project-name');
-    const togglButtonLoc = elem.querySelector('.card-header-visible-icons');
+    const container = $('.card-header-right-section', elem);
+    const descriptionElem = $('.task-title', elem);
+    const projectElem = $('.card-header-project-name', elem);
+    const togglButtonLoc = $('.card-header-visible-icons', elem);
 
     const link = togglbutton.createTimerLink({
       className: 'corgee',
@@ -26,9 +26,9 @@ togglbutton.render(
   '.liConversationTitle:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = elem.querySelector('.task-name-widget');
-    const descriptionElem = elem.querySelector('.task-list .task-title');
-    const projectElem = document.querySelector('.project-details-name .click-to-edit .lbl-editable-input');
+    const container = $('.task-name-widget', elem);
+    const descriptionElem = $('.task-list .task-title', elem);
+    const projectElem = $('.project-details-name .click-to-edit .lbl-editable-input');
 
     const link = togglbutton.createTimerLink({
       className: 'corgee-tasks',

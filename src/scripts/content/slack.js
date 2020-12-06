@@ -26,7 +26,7 @@ togglbutton.render('.p-ia__view_header:not(.toggl)', { observe: true }, (elem) =
 
 togglbutton.render('.c-message_kit__hover:not(.toggl)', { observe: true }, elem => {
   const placeholder = $('.c-message_actions__button:last-child');
-  const description = elem.closest('.c-message_kit__message').querySelector('.c-message_kit__blocks--rich_text');
+  const description = $('.c-message_kit__blocks--rich_text', elem.closest('.c-message_kit__message'));
   const isRendered = $('.toggl-button', placeholder.parentNode) != null;
 
   if (isRendered) {

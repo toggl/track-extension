@@ -6,10 +6,7 @@ togglbutton.render(
   function (elem) {
     // Get task's description.
     const getDescription = function () {
-      return elem
-        .querySelector(
-          "div[role='listbox'] [role='option'] span[style*='user-select: text']"
-        )
+      return $("div[role='listbox'] [role='option'] span[style*='user-select: text']", elem)
         .textContent.trim();
     };
 
@@ -22,10 +19,7 @@ togglbutton.render(
       return p.textContent;
     };
 
-    const task = elem
-      .querySelector(
-        "div[role='listbox'] [role='option'] span[style*='user-select: text']"
-      );
+    const task = $("div[role='listbox'] [role='option'] span[style*='user-select: text']", elem);
 
     if (task) {
       const link = togglbutton.createTimerLink({

@@ -4,8 +4,8 @@ togglbutton.render(
   '.page-content .widget-toolbox .pull-left:not(.toggl)',
   { observe: true },
   function (elem) {
-    const description = document.querySelector('td.bug-summary').textContent;
-    const project = document.querySelector('td.bug-project').textContent;
+    const description = $('td.bug-summary').textContent;
+    const project = $('td.bug-project').textContent;
 
     const link = togglbutton.createTimerLink({
       className: 'mantishub',

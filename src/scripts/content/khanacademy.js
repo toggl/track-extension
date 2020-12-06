@@ -16,9 +16,7 @@ togglbutton.render(
     }
 
     const topic = cloneText(elem).textContent.trim();
-    const project = elem
-      .querySelector('[role="navigation"] span:first-child a')
-      .textContent.trim();
+    const project = $('[role="navigation"] span:first-child a', elem).textContent.trim();
 
     const link = togglbutton.createTimerLink({
       className: 'khanacademy',

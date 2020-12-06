@@ -7,8 +7,7 @@ togglbutton.render(
     const container = createTag('li', 'toggle-container');
 
     const descFunc = function () {
-      return document
-        .querySelector('#copyButton1')
+      return $('#copyButton1')
         .getAttribute('data-clipboard-text');
     };
 

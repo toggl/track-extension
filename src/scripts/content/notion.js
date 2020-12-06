@@ -7,7 +7,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     function getDescription () {
-      const descriptionElem = elem.querySelector('.notion-scroller .notion-selectable div[contenteditable="true"]');
+      const descriptionElem = $('.notion-scroller .notion-selectable div[contenteditable="true"]', elem);
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }
 
@@ -20,7 +20,7 @@ togglbutton.render(
     wrapper.classList.add('toggl-button-notion-wrapper');
     wrapper.appendChild(link);
 
-    const root = elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)');
+    const root = $('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)', elem);
     if (root) {
       root.prepend(wrapper);
     }
@@ -35,7 +35,7 @@ togglbutton.render(
     elem.style.position = 'relative';
 
     function getDescription () {
-      const descriptionElem = elem ? elem.querySelector('div[data-root="true"]') : '';
+      const descriptionElem = elem ? $('div[data-root="true"]', elem) : '';
 
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }

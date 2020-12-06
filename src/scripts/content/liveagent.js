@@ -14,8 +14,8 @@ const button = (link, elem) => {
 // ticket
 const descriptionSelector = () => {
   try {
-    const ticketCode = document.querySelector('.CodeLabel').textContent.trim();
-    const ticketSubject = document.querySelector('.ConversationHeaderSubject').textContent.trim();
+    const ticketCode = $('.CodeLabel').textContent.trim();
+    const ticketSubject = $('.ConversationHeaderSubject').textContent.trim();
     return '[' + ticketCode + '] ' + ticketSubject;
   } catch (e) {
     return '';
@@ -36,7 +36,7 @@ togglbutton.render(
 // knowledgebase article dialog
 const knowledgeBaseName = () => {
   try {
-    return document.querySelector('.ArticleContentView .DialogTitle').textContent.trim();
+    return $('.ArticleContentView .DialogTitle').textContent.trim();
   } catch (e) {
     return '';
   }

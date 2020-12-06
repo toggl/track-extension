@@ -6,7 +6,7 @@ togglbutton.render(
   { observe: true },
   $container => {
     const descriptionSelector = () => {
-      const $description = $container.closest('.line').querySelector('.text');
+      const $description = $('.text', $container.closest('.line'));
       return $description.textContent.trim();
     };
 

@@ -52,7 +52,7 @@ togglbutton.render('.page-actions__left:not(.toggl)', { observe: true }, elem =>
 
       return [...$$('li', tagList)]
         .map(listItem => {
-          const content = listItem.querySelector('.tag-options');
+          const content = $('.tag-options', listItem);
           const tag = content ? content.textContent : '';
           return tag.trim().replace(/[\r\n\t]/ig, ''); /* UI has strange characters in the markup, let's avoid it */
         });

@@ -5,15 +5,15 @@
 togglbutton.render('.task-form[data-track-inject-button]:not(.toggl)',
   { observe: true },
   element => {
-    const container = element.querySelector('[data-hook=actions-menu]');
+    const container = $('[data-hook=actions-menu]', element);
 
     const getDescriptionText = () => {
-      const titleElement = element.querySelector('[data-hook=name-editor] textarea');
+      const titleElement = $('[data-hook=name-editor] textarea', element);
       return titleElement ? titleElement.textContent.trim() : '';
     };
 
     const getProjectText = () => {
-      const planElement = element.querySelector('[data-hook=plan-editor] [data-hook=input-value]');
+      const planElement = $('[data-hook=plan-editor] [data-hook=input-value]', element);
 
       return planElement
         ? planElement.textContent.trim()

@@ -24,19 +24,20 @@ togglbutton.render('#layout-container:not(.toggl)', { observe: true }, function 
   tContainer.appendChild(link);
 
   // Add container to navbar
-  const navgroup = document.querySelector('.navbar-item-group.right');
+  const navgroup = $('.navbar-item-group.right');
   navgroup.insertBefore(tContainer, navgroup.children[0]);
 });
 
 // Multiple tasks in project view
-const t = document.querySelector('#minified-scripts').innerHTML;
+const t = $('#minified-scripts').innerHTML;
 const userName = /\/user\/view.*?label:"(.*?)"/.exec(t)[1];
 const myTasks = $$('td[data-workvalue*="' + userName + '"]');
 
 myTasks.forEach(function (e) {
-  const objid = e.parentElement.getAttribute('objid');
-  let taskName = e.parentElement.querySelector('td[valuefield=name]');
-  let l = taskName.querySelector('.objectlink');
+  const parentElement = e.parentElement;
+  const objid = parentElement.getAttribute('objid');
+  let taskName = $('td[valuefield=name]', parentElement);
+  let l = $('.objectlink', taskName);
   let url;
   let name;
 
@@ -48,8 +49,8 @@ myTasks.forEach(function (e) {
       '[objid="' + objid + '"]:not(.toggl)',
       { observe: true },
       function (elem) {
-        taskName = elem.querySelector('td[valuefield=name]');
-        l = taskName.querySelector('.objectlink');
+        taskName = $('td[valuefield=name]', elem);
+        l = $('.objectlink', taskName);
         url = l.href;
         name = l.innerText;
         const description = function () {
@@ -63,8 +64,8 @@ myTasks.forEach(function (e) {
         });
 
         // Add Toggl button to container
-        const nameDiv = taskName.querySelector('div');
-        const nameDivSpan = nameDiv.querySelector('span');
+        const nameDiv = $('div', taskName);
+        const nameDivSpan = $('span', nameDiv);
         nameDiv.insertBefore(link, nameDivSpan);
       }
     );

@@ -3,7 +3,7 @@
 togglbutton.render('.conversation__card__content-expanded__controls .inbox__conversation-controls__pane-selector:not(.toggl)',
   { observe: true },
   function (elem) {
-    if (elem.querySelector('.toggl-button')) {
+    if ($('.toggl-button', elem)) {
       // With the way this UI renders, we must check for existence of the button.
       return;
     }

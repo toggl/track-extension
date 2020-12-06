@@ -4,11 +4,11 @@ togglbutton.render(
   '.case .content-top-toolbar .controls ul:not(.toggl)',
   { observe: true },
   function (elem) {
-    const projectName = document.querySelector('title').textContent;
+    const projectName = $('title').textContent;
     const liTag = document.createElement('li');
 
     const titleFunc = function () {
-      const titleElem = document.querySelector('.content h1.title');
+      const titleElem = $('.content h1.title');
       const ticketNum = location.href.match(/case\/(\d+)/);
       let description;
 
@@ -33,7 +33,7 @@ togglbutton.render(
     liTag.appendChild(link);
     elem.insertBefore(
       liTag,
-      elem.querySelector('.case .controls.pull-right li.actions')
+      $('.case .controls.pull-right li.actions', elem)
     );
   }
 );

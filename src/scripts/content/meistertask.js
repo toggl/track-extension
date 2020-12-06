@@ -43,7 +43,7 @@ togglbutton.render('.js-box-wrapper:not(.toggl)', { observe: true }, function (
 /** MeisterTask 2.0 **/
 
 const getDataContainer = function () {
-  return document.querySelector('#mt-toggl-data');
+  return $('#mt-toggl-data');
 };
 
 const getApplicationData = function ($dataElement) {

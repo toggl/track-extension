@@ -20,7 +20,7 @@ togglbutton.render(
         return '';
       }
 
-      const textList = folder.querySelectorAll('.hp-breadcrumbs-text');
+      const textList = $$('.hp-breadcrumbs-text', folder);
 
       return textList.length === 0 ? '' : textList[textList.length - 1].textContent;
     };

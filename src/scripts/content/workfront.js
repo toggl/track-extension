@@ -31,9 +31,7 @@ togglbutton.render('#layout-container:not(.toggl)', { observe: true }, function 
 // Multiple tasks in project view
 const t = document.querySelector('#minified-scripts').innerHTML;
 const userName = /\/user\/view.*?label:"(.*?)"/.exec(t)[1];
-const myTasks = document.querySelectorAll(
-  'td[data-workvalue*="' + userName + '"]'
-);
+const myTasks = $$('td[data-workvalue*="' + userName + '"]');
 
 myTasks.forEach(function (e) {
   const objid = e.parentElement.getAttribute('objid');

@@ -8,7 +8,7 @@
 
 function getContainer (selector) {
   const visibleContainers = Array
-    .from(document.querySelectorAll(selector))
+    .from($$(selector))
     .filter(isElementVisible);
 
   return visibleContainers.length > 0 && visibleContainers[0];

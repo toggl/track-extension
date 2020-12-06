@@ -8,8 +8,7 @@ const join = (elements) => {
 };
 
 const getDescription = (element) => {
-  const currentTitleNodes = element
-    .querySelectorAll('.title-text');
+  const currentTitleNodes = $$('.title-text', element);
 
   if (!element.closest('.card-node').parentElement.closest('.card-node')) {
     return join(currentTitleNodes);

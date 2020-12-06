@@ -42,8 +42,8 @@ function descriptionSelector () {
  * @returns {string}
  */
 function projectSelector () {
-  const client = document.querySelectorAll('[data-tab="customer"] [title="Name"]');
-  const organization = document.querySelectorAll('[data-tab="organization"] [title="Name"]');
+  const client = $$('[data-tab="customer"] [title="Name"]');
+  const organization = $$('[data-tab="organization"] [title="Name"]');
   let clientName = '';
   if (client.length === 1) {
     clientName = client[0].textContent.trim();
@@ -55,7 +55,7 @@ function projectSelector () {
 }
 
 function tagsSelector () {
-  let tags = document.querySelectorAll('.tags .list-item-name');
+  let tags = $$('.tags .list-item-name');
   tags = tags ? Array.from(tags).map(tag => tag.textContent.trim()) : null;
   return tags;
 }

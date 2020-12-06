@@ -61,7 +61,7 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
     };
 
     const tagsSelector = () => {
-      const tags = container.querySelectorAll('.SpreadsheetTaskRow-tagsCell .Pill');
+      const tags = $$('.SpreadsheetTaskRow-tagsCell .Pill', container);
       return [...tags].map(tag => tag.textContent.trim());
     };
 
@@ -90,7 +90,7 @@ togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
     // assume first pill is a project and any others are tags
     // misses tags which are in the "..." overflow, and if there is a tag without a project
     const pillSelector = (type) => {
-      const pills = [...elem.querySelectorAll('.Pill')]
+      const pills = [...$$('.Pill'), elem]
         .map(pill => pill.textContent.trim());
       if (type === 'project') {
         return pills.length ? pills : '';
@@ -137,12 +137,12 @@ togglbutton.render(
     };
 
     const projectSelector = () => {
-      const projectEl = elem.querySelectorAll('.TaskProjectToken-potTokenizerPill');
+      const projectEl = $$('.TaskProjectToken-potTokenizerPill', elem);
       return [...projectEl].map(el => el.textContent.trim());
     };
 
     const tagsSelector = () => {
-      const tags = elem.querySelectorAll('.TaskTagTokenPills .Pill');
+      const tags = $$('.TaskTagTokenPills .Pill', elem);
       return [...tags].map(tag => tag.textContent.trim());
     };
 

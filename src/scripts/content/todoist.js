@@ -8,7 +8,7 @@ const todoistEditor = document.getElementById('content');
 togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)', { observe: true }, elem => {
   const description = () => elem.dataset.itemContent || '';
   const project = () => elem.dataset.itemProjectName || '';
-  const tags = () => Array.from(elem.querySelectorAll('[data-item-label-name]'))
+  const tags = () => Array.from($$('[data-item-label-name]', elem))
     .map(el => el.dataset.itemLabelName)
     .filter(Boolean);
 
@@ -67,7 +67,7 @@ togglbutton.render(
     }
 
     const tagsSelector = () => {
-      const tags = content.querySelectorAll('.task_list_item__info_tags__label');
+      const tags = $$('.task_list_item__info_tags__label', content);
 
       return [...tags].map(tag => tag.textContent);
     };

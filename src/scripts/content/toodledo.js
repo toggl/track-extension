@@ -4,7 +4,7 @@ togglbutton.render(
   '.row:not(.toggl), .taskRow:not(.toggl)',
   { observe: true },
   function (elem) {
-    if (elem.querySelectorAll('.toggl-button').length) {
+    if ($$('.toggl-button', elem).length) {
       return;
     }
 

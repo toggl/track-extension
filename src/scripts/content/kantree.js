@@ -36,7 +36,7 @@ togglbutton.render(
 
     const getTags = () => {
       const tags = [];
-      const tagItems = document.querySelectorAll('.attribute-type-group-type .group', elem);
+      const tagItems = $$('.attribute-type-group-type .group', elem);
 
       if (!tagItems) {
         return tags;

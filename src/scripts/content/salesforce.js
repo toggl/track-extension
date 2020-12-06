@@ -7,9 +7,7 @@ togglbutton.render(
   '.bMyTask .list tr.dataRow:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = elem.querySelectorAll(
-      '.bMyTask .list tr.dataRow .dataCell a'
-    )[0];
+    const container = $$('.bMyTask .list tr.dataRow .dataCell a', elem)[0];
     if (container === null) {
       return;
     }

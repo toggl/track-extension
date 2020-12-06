@@ -48,7 +48,7 @@ togglbutton.render(
         // Run through and hide all others
         let i;
         let len;
-        const elems = document.querySelectorAll('.toggl-button');
+        const elems = $$('.toggl-button');
         for (i = 0, len = elems.length; i < len; i += 1) {
           elems[i].classList.add('huh');
         }

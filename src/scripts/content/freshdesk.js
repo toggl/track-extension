@@ -50,7 +50,7 @@ togglbutton.render('.page-actions__left:not(.toggl)', { observe: true }, elem =>
         !tagList.children ||
         !tagList.children.length) { return []; }
 
-      return [...tagList.querySelectorAll('li')]
+      return [...$$('li', tagList)]
         .map(listItem => {
           const content = listItem.querySelector('.tag-options');
           const tag = content ? content.textContent : '';

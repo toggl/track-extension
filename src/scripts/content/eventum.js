@@ -41,7 +41,7 @@ function getTags () {
  */
 function getCustomFields () {
   const fields = {};
-  const $rows = document.querySelectorAll('div.issue_section#custom_fields>div.content>table>tbody>tr');
+  const $rows = $$('div.issue_section#custom_fields>div.content>table>tbody>tr');
 
   if (!$rows) {
     return fields;

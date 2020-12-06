@@ -87,7 +87,7 @@ function getProjectSelector () {
 
 function tagsSelector () {
   // GitLab 13.5
-  const nodeList = document.querySelectorAll('div.labels span[data-qa-label-name]');
+  const nodeList = $$('div.labels span[data-qa-label-name]');
 
   if (!nodeList) {
     return [];

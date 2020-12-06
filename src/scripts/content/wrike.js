@@ -7,7 +7,7 @@ togglbutton.render(
     const container = $('.wrike-panel-header-toolbar', elem);
 
     const getTitleElement = function () {
-      const wsTaskTitle = document.querySelectorAll('ws-task-title');
+      const wsTaskTitle = $$('ws-task-title');
       if (wsTaskTitle.length === 1 && wsTaskTitle[0].textContent !== '') {
         return wsTaskTitle[0];
       }

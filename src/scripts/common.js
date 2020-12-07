@@ -10,6 +10,11 @@ window.$ = (s, elem) => {
   return elem.querySelector(s);
 };
 
+window.$$ = (s, elem) => {
+  elem = elem || document;
+  return elem.querySelectorAll(s);
+};
+
 window.createTag = (name, className, textContent) => {
   const tag = document.createElement(name);
   tag.className = className;

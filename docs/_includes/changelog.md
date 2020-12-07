@@ -1,3 +1,10 @@
+# [1.68.0](https://github.com/toggl/toggl-button/compare/1.67.2...1.68.0) (2020-12-07)
+
+
+### Features
+
+* **common:** Add $$ method for querySelectorAll helper ([#1879](https://github.com/toggl/toggl-button/issues/1879)) ([e9f1210](https://github.com/toggl/toggl-button/commit/e9f121042524b37f3922e3d7d25c6c3cc0d1ab9e))
+
 ## [1.67.2](https://github.com/toggl/toggl-button/compare/1.67.1...1.67.2) (2020-12-04)
 
 

@@ -15,11 +15,17 @@ togglbutton.render('.taskItem-body:not(.toggl)', { observe: true }, function (
       ? activeListTitle.textContent
       : '';
 
+  const tagsSelector = () => {
+    const tags = elem.querySelectorAll('a.link[href^="/search/%23"]');
+    return [...tags].map(tag => tag.textContent.trim().substring(1));
+  };
+
   const link = togglbutton.createTimerLink({
     className: 'microsoft-todo',
     buttonType: 'minimal',
     description: titleElem.textContent,
-    projectName: projectTitle
+    projectName: projectTitle,
+    tags: tagsSelector
   });
 
   container.appendChild(link);

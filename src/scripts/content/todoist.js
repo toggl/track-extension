@@ -8,7 +8,8 @@ const todoistEditor = document.getElementById('content');
 togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)', { observe: true }, elem => {
   const description = () => elem.dataset.itemContent || '';
   const project = () => elem.dataset.itemProjectName || '';
-  const tags = () => Array.from(elem.querySelectorAll('[data-item-label-name]'))
+  const rootEl = elem.closest('.item_overview_main');
+  const tags = () => Array.from(rootEl.querySelectorAll('[data-item-label-name]'))
     .map(el => el.dataset.itemLabelName)
     .filter(Boolean);
 
@@ -61,6 +62,8 @@ togglbutton.render(
     } else if (rootEl.querySelector('.task_list_item__project')) {
       // Project name shown alongside the task in UI
       project = rootEl.querySelector('.task_list_item__project').textContent.trim();
+    } else if (document.querySelector('[data-project-id] .simple_content')) {
+      project = document.querySelector('[data-project-id] .simple_content').textContent;
     } else {
       // Try to look for a parent item with a known project
       project = getParentIfProject(elem.closest('.item_detail'));

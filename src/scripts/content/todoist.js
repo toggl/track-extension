@@ -52,7 +52,9 @@ togglbutton.render(
     let project = '';
     const projectId = rootEl.getAttribute('data-item-id');
 
-    if (document.getElementById(`item_${projectId}`)) {
+    if (document.querySelector('.project_view h1 span.simple_content')) {
+      project = document.querySelector('.project_view h1 span.simple_content').textContent.trim();
+    } else if (document.getElementById(`item_${projectId}`)) {
       // (legacy?) project ID element
       const projectContent = document.getElementById(`item_${projectId}`).querySelector('.content');
       project = getProjectNames(projectContent);

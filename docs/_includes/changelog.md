@@ -1,3 +1,10 @@
+## [1.68.1](https://github.com/toggl/toggl-button/compare/1.68.0...1.68.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **todoist:** Fix todoist project population ([924a400](https://github.com/toggl/toggl-button/commit/924a4000638cacdb4775d39796f8c304cb55b960))
+
 # [1.68.0](https://github.com/toggl/toggl-button/compare/1.67.2...1.68.0) (2020-12-07)
 
 

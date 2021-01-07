@@ -1089,6 +1089,7 @@ li > .toggl-button.phabricator {
 /********* OPENPROJECT *********/
 .work-packages--show-view .toggl-button.openproject {
   margin: 0.4rem;
+  margin-right: 10px;
 }
 
 /********* ZUBE *********/

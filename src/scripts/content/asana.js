@@ -142,8 +142,9 @@ togglbutton.render(
     };
 
     const projectSelector = () => {
+      const ancestorProjects = elem.querySelectorAll('.TaskAncestry-ancestorProject');
       const projectEl = elem.querySelectorAll('.TaskProjectToken-potTokenizerPill');
-      return [...projectEl].map(el => el.textContent.trim());
+      return [...ancestorProjects, ...projectEl].map(el => el.textContent.trim());
     };
 
     const tagsSelector = () => {

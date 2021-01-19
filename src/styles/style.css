@@ -1086,6 +1086,12 @@ li > .toggl-button.phabricator {
   margin-right: 18px;
 }
 
+/********* ODOO *********/
+.toggl-button.odoo {
+  align-self: center;
+  margin-left: 0.4rem;
+}
+
 /********* OPENPROJECT *********/
 .work-packages--show-view .toggl-button.openproject {
   margin: 0.4rem;

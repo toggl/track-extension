@@ -81,6 +81,7 @@ out of the way and focus on real work.
 - [Newsletter2Go](http://www.newsletter2go.com/)
 - [Notion](https://www.notion.so/)
 - [Nozbe](https://nozbe.com/)
+- [Odoo](https://www.odoo.com/)
 - [ONLYOFFICE](https://www.onlyoffice.com/)
 - [Onshape](https://onshape.com/)
 - [OpenProject](https://openproject.com/)

@@ -6,7 +6,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const workPackageId = $('.work-packages--info-row > span:first-of-type').textContent.trim();
-    const container = $('.attributes-group--header', elem);
+    const container = $('.toolbar-items', elem);
     const description = '[OP' + workPackageId + '] ' + $('.subject').textContent.trim();
     const projectName = $('#projects-menu').title.trim();
 
@@ -16,6 +16,6 @@ togglbutton.render(
       projectName: projectName
     });
 
-    container.appendChild(link);
+    container.prepend(link);
   }
 );

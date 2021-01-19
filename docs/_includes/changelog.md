@@ -1,3 +1,10 @@
+# [1.69.0](https://github.com/toggl/toggl-button/compare/1.68.1...1.69.0) (2021-01-19)
+
+
+### Features
+
+* **odoo:** Add Odoo integration ([#1852](https://github.com/toggl/toggl-button/issues/1852)) ([d2265bb](https://github.com/toggl/toggl-button/commit/d2265bb7e5e2f9991c4ac259ac1ae8444e48eaaf))
+
 ## [1.68.1](https://github.com/toggl/toggl-button/compare/1.68.0...1.68.1) (2021-01-05)
 
 

@@ -138,7 +138,10 @@ togglbutton.render(
     }
 
     const descriptionSelector = () => {
-      return $('.SingleTaskPaneSpreadsheet-titleRow textarea', elem).textContent.trim();
+      return [
+        ...elem.querySelectorAll('.TaskAncestry-ancestor'),
+        $('.SingleTaskPaneSpreadsheet-titleRow textarea', elem)
+      ].map(el => el.textContent.trim()).join(' > ');
     };
 
     const projectSelector = () => {

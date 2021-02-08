@@ -37,8 +37,17 @@ togglbutton.render(
   '#jira-issue-header:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = elem.querySelector('[class^=BreadcrumbsContainer]');
-    const issueNumberElement = container.lastElementChild;
+    const issueWrapper = elem.querySelector('.issue_view_permalink_button_wrapper');
+    let issueNumberElement;
+    let container;
+
+    if (issueWrapper) {
+      issueNumberElement = issueWrapper.previousElementSibling;
+      container = issueWrapper.parentElement.parentElement;
+    } else {
+      container = elem.querySelector('[class^=BreadcrumbsContainer]');
+      issueNumberElement = container.lastElementChild;
+    }
 
     if (container.querySelector('.toggl-button')) {
       // We're checking for existence of the button as re-rendering in Jira SPA is not reliable for our uses.
@@ -87,7 +96,7 @@ const getDescription = (issueNumberElement) => () => {
 };
 
 function getProject () {
-  let project = '';
+  const project = '';
   let projectElement;
 
   // Best effort to find the "Project switcher" found in the sidebar of most pages, and extract
@@ -97,7 +106,14 @@ function getProject () {
   if (!projectElement) projectElement = $('a[href^="/browse/"][target=_self]');
 
   if (projectElement) {
-    project = projectElement.textContent.trim();
+    return projectElement.textContent.trim();
+  }
+
+  projectElement = $('[data-test-id="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]');
+
+  if (projectElement) {
+    const projectWrapper = projectElement.previousElementSibling;
+    return projectWrapper.querySelector('a > span:last-child').textContent.trim();
   }
 
   return project;

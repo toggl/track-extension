@@ -1,3 +1,10 @@
+## [1.69.1](https://github.com/toggl/toggl-button/compare/1.69.0...1.69.1) (2021-02-09)
+
+
+### Bug Fixes
+
+* **jira:** Make button ready for new issue view ([#1914](https://github.com/toggl/toggl-button/issues/1914)) ([e027963](https://github.com/toggl/toggl-button/commit/e02796384f4f341e976b26517f40e2f1fa5a09f4)), closes [#1913](https://github.com/toggl/toggl-button/issues/1913)
+
 # [1.69.0](https://github.com/toggl/toggl-button/compare/1.68.1...1.69.0) (2021-01-19)
 
 

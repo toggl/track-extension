@@ -37,12 +37,12 @@ togglbutton.render(
   '#jira-issue-header:not(.toggl)',
   { observe: true },
   function (elem) {
-    const issueWrapper = elem.querySelector('.issue_view_permalink_button_wrapper');
+    const issueWrapper = elem.querySelector('[data-test-id="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]');
     let issueNumberElement;
     let container;
 
     if (issueWrapper) {
-      issueNumberElement = issueWrapper.previousElementSibling;
+      issueNumberElement = issueWrapper.previousElementSibling || issueWrapper.querySelector('.issue_view_permalink_button_wrapper').previousElementSibling;
       container = issueWrapper.parentElement.parentElement;
     } else {
       container = elem.querySelector('[class^=BreadcrumbsContainer]');
@@ -61,14 +61,18 @@ togglbutton.render(
       console.info('🏃 "Jira 2020-01 issue detail" rendering');
     }
 
-    const link = togglbutton.createTimerLink({
-      className: 'jira2018',
-      description: getDescription(issueNumberElement),
-      projectName: getProject,
-      container: '#jira-issue-header'
-    });
+    try {
+      const link = togglbutton.createTimerLink({
+        className: 'jira2018',
+        description: getDescription(issueNumberElement),
+        projectName: getProject,
+        container: '#jira-issue-header'
+      });
 
-    container.appendChild(link);
+      container.appendChild(link);
+    } catch (e) {
+      console.log(e);
+    }
   }
 );
 
@@ -109,11 +113,21 @@ function getProject () {
     return projectElement.textContent.trim();
   }
 
+  projectElement = $('[data-testid="rapidboard-breadcrumbs"]') || $('[data-test-id="rapidboard-breadcrumbs"]');
+
+  if (projectElement) {
+    try {
+      return projectElement.children[0].firstElementChild.children[1].querySelector('span').textContent.trim();
+    } catch (e) {
+      return '';
+    }
+  }
+
   projectElement = $('[data-test-id="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]');
 
   if (projectElement) {
-    const projectWrapper = projectElement.previousElementSibling;
-    return projectWrapper.querySelector('a > span:last-child').textContent.trim();
+    const projectWrapper = projectElement.parentElement.querySelector('a[href*="browse"] span + span');
+    return projectWrapper ? projectWrapper.textContent.trim() : '';
   }
 
   return project;

@@ -1,3 +1,10 @@
+## [1.69.2](https://github.com/toggl/toggl-button/compare/1.69.1...1.69.2) (2021-02-10)
+
+
+### Bug Fixes
+
+* **jira:** Fix button not showing on dialog view ([#1915](https://github.com/toggl/toggl-button/issues/1915)) ([3a2987f](https://github.com/toggl/toggl-button/commit/3a2987f3bb6568a8763cbe64128cc100f64328d2)), closes [#1913](https://github.com/toggl/toggl-button/issues/1913)
+
 ## [1.69.1](https://github.com/toggl/toggl-button/compare/1.69.0...1.69.1) (2021-02-09)
 
 

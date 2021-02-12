@@ -133,7 +133,7 @@ togglbutton.render(
     }
 
     const descriptionSelector = () => {
-      return $('.SingleTaskTitleInput-taskName textarea', elem).textContent.trim();
+      return $('.SingleTaskPaneSpreadsheet-titleRow textarea', elem).textContent.trim();
     };
 
     const projectSelector = () => {

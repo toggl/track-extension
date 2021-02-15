@@ -1,3 +1,11 @@
+## [1.69.3](https://github.com/toggl/toggl-button/compare/1.69.2...1.69.3) (2021-02-15)
+
+
+### Bug Fixes
+
+* **jira:** Getting Issue and Project name from new view  ([#1920](https://github.com/toggl/toggl-button/issues/1920)) ([9e14a23](https://github.com/toggl/toggl-button/commit/9e14a23e27ec8576533924ca2e1d3a19dd866f2c)), closes [#1918](https://github.com/toggl/toggl-button/issues/1918) [#1918](https://github.com/toggl/toggl-button/issues/1918)
+* **youtrack:** Fix task description from agile board ([#1908](https://github.com/toggl/toggl-button/issues/1908)) ([8e053a7](https://github.com/toggl/toggl-button/commit/8e053a78535bacf1f97cb578d79296d4aa97b6ac)), closes [#1797](https://github.com/toggl/toggl-button/issues/1797)
+
 ## [1.69.2](https://github.com/toggl/toggl-button/compare/1.69.1...1.69.2) (2021-02-10)
 
 

@@ -258,7 +258,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   margin-left: 8px;
   margin-top: 0;
   position: relative; /* margin interferes with Jira layout, using relative pos instead */
-  top: 2px;
+  top: 0;
   cursor: pointer;
 }
 

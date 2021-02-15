@@ -42,7 +42,7 @@ togglbutton.render(
     let container;
 
     if (issueWrapper) {
-      issueNumberElement = issueWrapper.previousElementSibling || issueWrapper.querySelector('.issue_view_permalink_button_wrapper').previousElementSibling;
+      issueNumberElement = issueWrapper.querySelector('.issue_view_permalink_button_wrapper').previousElementSibling;
       container = issueWrapper.parentElement.parentElement;
     } else {
       container = elem.querySelector('[class^=BreadcrumbsContainer]');
@@ -113,11 +113,11 @@ function getProject () {
     return projectElement.textContent.trim();
   }
 
-  projectElement = $('[data-testid="rapidboard-breadcrumbs"]') || $('[data-test-id="rapidboard-breadcrumbs"]');
+  projectElement = $('[data-testid="rapidboard-breadcrumbs"] a[href*="browse"] span') || $('[data-test-id="rapidboard-breadcrumbs"] a[href*="browse"] span');
 
   if (projectElement) {
     try {
-      return projectElement.children[0].firstElementChild.children[1].querySelector('span').textContent.trim();
+      return projectElement.textContent.trim();
     } catch (e) {
       return '';
     }

@@ -52,8 +52,8 @@ togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function (
   const projectName = $('.yt-issue-id').textContent.split('-');
 
   const description = function () {
-    const text = $('.yt-agile-card__summary', elem).textContent;
-    const id = $('.yt-agile-card__id ', elem).textContent;
+    const text = $('.yt-agile-card__summary', elem).children[1].textContent;
+    const id = $('.yt-agile-card__id', elem).textContent;
     return (id ? id + ' ' : '') + (text ? text.trim() : '');
   };
 

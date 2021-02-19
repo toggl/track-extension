@@ -1,9 +1,9 @@
 'use strict';
 
 // Board view. Inserts button next to assignee/due date.
-togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true },
+togglbutton.render('.BaseCard .BoardCardLayout:not(.toggl)', { observe: true },
   boadCardElem => {
-    const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-name').textContent.trim();
+    const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-taskName').textContent.trim();
 
     const projectSelector = () => {
       const projectElement = document.querySelector('.TopbarPageHeaderStructure-titleRow > h1');
@@ -20,7 +20,7 @@ togglbutton.render('.BoardCard .BoardCard-contents:not(.toggl)', { observe: true
       // N.B. tags cannot be supported on board view as the information is not available.
     });
 
-    const injectContainer = boadCardElem.querySelector('.BoardCard-rightMetadata');
+    const injectContainer = boadCardElem.querySelector('.BoardCardLayout-actionButtons');
     if (injectContainer) {
       injectContainer.insertAdjacentElement('afterbegin', link);
     }
@@ -133,7 +133,7 @@ togglbutton.render(
     }
 
     const descriptionSelector = () => {
-      return $('.SingleTaskTitleInput-taskName textarea', elem).textContent.trim();
+      return $('.SingleTaskPaneSpreadsheet-titleRow textarea', elem).textContent.trim();
     };
 
     const projectSelector = () => {

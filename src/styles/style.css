@@ -220,7 +220,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   opacity: 0;
 }
 
-.BoardCard--hover .toggl-button.asana-board-view {
+.BaseCard:hover .toggl-button.asana-board-view {
   opacity: 1;
 }
 

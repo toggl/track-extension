@@ -1,3 +1,10 @@
+## [1.69.4](https://github.com/toggl/toggl-button/compare/1.69.3...1.69.4) (2021-02-19)
+
+
+### Bug Fixes
+
+* **asana:** Fix button not showing on task view ([#1921](https://github.com/toggl/toggl-button/issues/1921)) ([9141de1](https://github.com/toggl/toggl-button/commit/9141de191bdbbbae11357a1a63faae7adb53eef9)), closes [#1916](https://github.com/toggl/toggl-button/issues/1916)
+
 ## [1.69.3](https://github.com/toggl/toggl-button/compare/1.69.2...1.69.3) (2021-02-15)
 
 

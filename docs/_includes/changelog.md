@@ -1,3 +1,10 @@
+## [1.69.5](https://github.com/toggl/toggl-button/compare/1.69.4...1.69.5) (2021-03-03)
+
+
+### Bug Fixes
+
+* **common:** Update button state when closing the form ([b2dadf8](https://github.com/toggl/toggl-button/commit/b2dadf846d24643f71eedfdbf6c2d327e5a34560)), closes [#1904](https://github.com/toggl/toggl-button/issues/1904)
+
 ## [1.69.4](https://github.com/toggl/toggl-button/compare/1.69.3...1.69.4) (2021-02-19)
 
 

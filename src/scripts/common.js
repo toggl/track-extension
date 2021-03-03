@@ -358,6 +358,7 @@ window.togglbutton = {
       projectAutocomplete.closeDropdown();
       tagAutocomplete.closeDropdown();
       editForm.style.display = 'none';
+      togglbutton.queryAndUpdateTimerLink();
     };
 
     const submitForm = function (that) {

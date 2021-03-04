@@ -12,7 +12,7 @@ togglbutton.render(
     const rootElem = $('#ghx-detail-view');
     const container = createTag('div', 'jira-ghx-toggl-button');
     const titleElem = $('[spacing] h1', rootElem);
-    const numElem = $('[spacing] a', rootElem);
+    const numElem = $('[spacing]:eq(0) a:last', rootElem);
     const projectElem = $('.bgdPDV');
     let description = titleElem.textContent;
     if (numElem !== null) {

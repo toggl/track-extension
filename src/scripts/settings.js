@@ -31,7 +31,6 @@ document.querySelector('#close-review-prompt').addEventListener('click', dismiss
 [...document.querySelectorAll('.nav-link')].forEach(link => {
   link.addEventListener('click', changeActiveTab);
 });
-
 const isNotTogglApp = (url) => {
   return (url || '').match(/toggl\./) === null;
 };
@@ -686,6 +685,8 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$nanny = document.querySelector('#nag-nanny');
     Settings.$idleDetection = document.querySelector('#idle-detection');
     Settings.$pomodoroMode = document.querySelector('#pomodoro-mode');
+    Settings.$pomodoroBreakInput = document.querySelector('#pomodoro-break--short');
+    Settings.$pomodoroShortBreakDatalist = document.querySelector('#datalist--short-break');
     Settings.$pomodoroFocusMode = document.querySelector('#pomodoro-focus-mode');
     Settings.$pomodoroSound = document.querySelector('#enable-sound-signal');
     Settings.$pomodoroStopTimeTracking = document.querySelector(
@@ -801,6 +802,51 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       Settings.toggleSetting(e.target, !pomodoroModeEnabled, 'toggle-pomodoro');
       document.querySelector('.field.pomodoro-mode').classList.toggle('field--showDetails', !pomodoroModeEnabled);
     });
+    /* Get all the inputs that come with a datalist. Attach a "focus" event listener to each input that will display the datalist
+    underneath the input when the input gets focus.
+    */
+    const datalistInputs = document.getElementsByClassName('input-with-datalist');
+    for (let i = 0; i < datalistInputs.length; i++) {
+      const input = datalistInputs[i];
+      const datalist = input.nextElementSibling;
+      /* The input doesn't contain a "list" attribute that specifies the associated datalist id, in order to stop the inconsistent
+      browser-specific display of the datalist from kicking in. Instead, implement a custom Javascript solution to display and hide
+      datalist and setting the selected <datalist> value in the <input>.
+      */
+      input.addEventListener('focus', function (e) {
+        datalist.style.display = 'block';
+        datalist.style.width = this.offsetWidth + 'px';
+        datalist.style.left = this.offsetLeft + 'px';
+        datalist.style.top = this.offsetTop + this.offsetHeight + 'px';
+      });
+      // Hide the datalist when the input loses focus. Comment out because if this is triggered, it will interfere with the "click" event for datalist options.
+      // input.addEventListener('blur', function (e) {
+      //   datalist.style.display = 'none';
+      // });
+      // Hide the datalist when the input element has finished changing. The event occurs when user has entered something in the input field, then presses Enter or click somewhere else.
+      input.addEventListener('change', function (e) {
+        datalist.style.display = 'none';
+        const { value } = e.target;
+        if (this.type === 'number') {
+          // If user enters a negative number, default it to 0.
+          if (value < 0) {
+            this.value = 0;
+          }
+          // Make sure that the number entered is an integer
+          this.value = parseInt(value, 10);
+          // Settings.saveSetting()
+        }
+      });
+      /* Attach a click event to each option of the datalist following the input. When user clicks on any option, the input value is
+      set to the option value and the datalist is disappeared.
+      */
+      for (const option of datalist.options) {
+        option.addEventListener('click', function (e) {
+          input.value = this.value;
+          datalist.style.display = 'none';
+        });
+      }
+    }
     Settings.$pomodoroFocusMode.addEventListener('click', async function (e) {
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
       Settings.toggleSetting(e.target, !pomodoroFocusMode, 'toggle-pomodoro-focus-mode');

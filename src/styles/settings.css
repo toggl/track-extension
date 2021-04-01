@@ -404,6 +404,9 @@ section .field--showDetails .subsettings-details {
   height: auto;
   padding-top: var(--m-radius);
 }
+.subsetting:not(:last-child) {
+  margin-bottom: calc(var(--input-height) / 4)
+}
 
 .expand {
   margin-left: 30px;
@@ -588,7 +591,20 @@ section .field--showDetails .subsettings-details {
 }
 
 /* Pomodoro tab */
-
+.datalist {
+  position: absolute;
+  background-color: var(--grey); /* This serves as the bottom border for each option. It'd be better if there is another shade of grey between greyish and grey. Greyish is too bright, and grey is too dark against the dark-grey background  */
+  color: var(--text-color);
+  z-index: 1;
+}
+.datalist option {
+  padding: 4px 0 4px 4px;
+  cursor: pointer;
+  background-color: var(--dark-grey); /* Choose this shade of grey because it's the background color for other drop-down lists in the Settings page, such as the Project setttings, Integration section*/
+}
+.datalist option:not(:last-child) {
+  margin-bottom: 1px;
+}
 #ticker-sound-volume,
 #sound-volume {
   width: 80px;

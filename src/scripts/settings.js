@@ -90,6 +90,9 @@ const Settings = {
       const nannyCheckEnabled = await db.get('nannyCheckEnabled');
       const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
       const pomodoroInterval = await db.get('pomodoroInterval');
+      console.log({ pomodoroInterval });
+      const pomodoroShortBreakInterval = await db.get('pomodoroShortBreakInterval');
+      console.log({ pomodoroShortBreakInterval });
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
       const pomodoroSoundEnabled = await db.get('pomodoroSoundEnabled');
       const pomodoroStopTimeTrackingWhenTimerEnds = await db.get('pomodoroStopTimeTrackingWhenTimerEnds');
@@ -808,6 +811,9 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     const datalistInputs = document.getElementsByClassName('input-with-datalist');
     for (let i = 0; i < datalistInputs.length; i++) {
       const input = datalistInputs[i];
+      const inputId = input.getAttribute('id');
+      const inputKey = `toggle-${inputId}`;
+      console.log(inputId);
       const datalist = input.nextElementSibling;
       /* The input doesn't contain a "list" attribute that specifies the associated datalist id, in order to stop the inconsistent
       browser-specific display of the datalist from kicking in. Instead, implement a custom Javascript solution to display and hide
@@ -832,9 +838,8 @@ document.addEventListener('DOMContentLoaded', async function (e) {
           if (value < 0) {
             this.value = 0;
           }
-          // Make sure that the number entered is an integer
-          this.value = parseInt(value, 10);
-          // Settings.saveSetting()
+          // Use unary plus to convert the input field to a number.
+          Settings.saveSetting(+this.value, inputKey);
         }
       });
       /* Attach a click event to each option of the datalist following the input. When user clicks on any option, the input value is
@@ -844,6 +849,7 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         option.addEventListener('click', function (e) {
           input.value = this.value;
           datalist.style.display = 'none';
+          Settings.saveSetting(+this.value, inputKey);
         });
       }
     }

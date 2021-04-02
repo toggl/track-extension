@@ -2024,6 +2024,8 @@ window.TogglButton = {
           db.set('pomodoroSoundEnabled', request.state);
         } else if (request.type === 'toggle-pomodoro-interval') {
           db.updateSetting('pomodoroInterval', request.state);
+        } else if (request.type === 'toggle-pomodoro-short-break') {
+          db.updateSetting('pomodoroShortBreakInterval', request.state);
         } else if (request.type === 'toggle-pomodoro-stop-time') {
           db.set('pomodoroStopTimeTrackingWhenTimerEnds', request.state);
         } else if (request.type === 'update-pomodoro-sound-volume') {

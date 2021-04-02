@@ -90,7 +90,6 @@ const Settings = {
       const nannyCheckEnabled = await db.get('nannyCheckEnabled');
       const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
       const pomodoroInterval = await db.get('pomodoroInterval');
-      console.log({ pomodoroInterval });
       const pomodoroShortBreakInterval = await db.get('pomodoroShortBreakInterval');
       console.log({ pomodoroShortBreakInterval });
       const pomodoroFocusMode = await db.get('pomodoroFocusMode');
@@ -194,6 +193,7 @@ const Settings = {
       });
 
       document.querySelector('#pomodoro-interval').value = pomodoroInterval;
+      document.querySelector('#pomodoro-short-break').value = pomodoroShortBreakInterval;
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;

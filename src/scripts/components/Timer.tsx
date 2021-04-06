@@ -103,13 +103,6 @@ const TimerContainer = styled.div`
   box-shadow: var(--border-color) 0px -1px 0px 0px inset;
   background: var(--base-color);
 
-  > div:first-child {
-    flex: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
   > div:last-child {
     display: flex;
     align-items: center;
@@ -118,6 +111,10 @@ const TimerContainer = styled.div`
 
 const RunningTimerDescription = styled.div`
   margin-left: 10px;
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
 
 const TimerInput = styled.input`

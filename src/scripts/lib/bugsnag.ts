@@ -1,13 +1,27 @@
-import bugsnag from '@bugsnag/js';
+import Bugsnag from '@bugsnag/js';
+import { Error } from '@bugsnag/core/types/event';
 import * as browser from 'webextension-polyfill';
 
-function noop (fnName: string) {
+function noop(fnName: string) {
   return function () {
     console.warn(`In bugsnag.${fnName} BUGSNAG_API_KEY is undefined`);
   };
-};
+}
 
-function getBugsnagClient () {
+function processError(err: Error) {
+  err.stacktrace = err.stacktrace.map(function (frame) {
+    frame.file = frame.file.replace(/chrome-extension:/g, 'chrome_extension:');
+    // Create consistent file paths for source mapping / error reporting.
+    frame.file = frame.file.replace(
+      /.*(moz-extension|chrome_extension|chrome-extension|file):\/\/.*\/scripts\/(.*)/gi,
+      'togglbutton://scripts/$2'
+    );
+    return frame;
+  });
+  return err;
+}
+
+function getBugsnagClient() {
   if (!process.env.BUGSNAG_API_KEY) {
     return {
       leaveBreadcrumb: noop('leaveBreadcrumb'),
@@ -15,31 +29,23 @@ function getBugsnagClient () {
     };
   }
 
-  const bugsnagClient = bugsnag({
+  const bugsnagClient = Bugsnag.start({
     apiKey: process.env.BUGSNAG_API_KEY,
     appVersion: process.env.VERSION,
     releaseStage: process.env.NODE_ENV,
-    notifyReleaseStages: ['production', 'development'],
-    autoBreadcrumbs: false,
-    autoCaptureSessions: false,
+    enabledReleaseStages: ['production', 'development'],
+    enabledBreadcrumbTypes: [],
+    autoTrackSessions: false,
     collectUserIp: false,
-    beforeSend: async function (report) {
+    onError: async function (errEvt) {
       const db = browser.extension.getBackgroundPage().db;
       const sendErrorReports = await db.get('sendErrorReports');
       if (!sendErrorReports) {
-        report.ignore();
+        return false;
       }
 
-      report.stacktrace = report.stacktrace.map(function (frame) {
-        frame.file = frame.file.replace(/chrome-extension:/g, 'chrome_extension:');
-        // Create consistent file paths for source mapping / error reporting.
-        frame.file = frame.file.replace(
-          /.*(moz-extension|chrome_extension|chrome-extension|file):\/\/.*\/scripts\/(.*)/ig,
-          'togglbutton://scripts/$2'
-        );
-        return frame;
-      });
-    }
+      errEvt.errors.map(processError);
+    },
   });
 
   return bugsnagClient;

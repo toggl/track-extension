@@ -87,7 +87,7 @@
     "webpack-log": "2.0.0"
   },
   "dependencies": {
-    "@bugsnag/js": "6.0.0",
+    "@bugsnag/js": "7.9.2",
     "@emotion/core": "10.0.10",
     "@emotion/styled": "10.0.10",
     "date-fns": "1.30.1",

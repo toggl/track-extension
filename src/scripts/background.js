@@ -246,12 +246,14 @@ window.TogglButton = {
               TogglButton.setCanSeeBillable();
               ga.reportOs();
             } else {
-              bugsnagClient.notify(new Error(`Fetch user failed ${xhr.status}`), evt => {
-                evt.addMetadata('general', {
-                  status: xhr.status,
-                  responseText: xhr.responseText
+              if (xhr.status !== 403) {
+                bugsnagClient.notify(new Error(`Fetch user failed ${xhr.status}`), evt => {
+                  evt.addMetadata('general', {
+                    status: xhr.status,
+                    responseText: xhr.responseText
+                  });
                 });
-              });
+              }
               TogglButton.setBrowserActionBadge();
               resolve({
                 success: false,

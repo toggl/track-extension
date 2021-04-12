@@ -566,22 +566,25 @@ document.addEventListener('DOMContentLoaded', function () {
         PopUp.sendMessage(request);
       });
 
-    document
-      .querySelector('#toggl-button-duration')
-      .addEventListener('keydown', function (event) {
-        // Doesn't cover all cases; can't really do it without introducing more state.
-        // Need a refactor.
-        if (event.code !== 'Enter' && event.code !== 'Tab') {
-          PopUp.durationChanged = true;
-        }
-      });
-    document
-      .querySelector('#toggl-button-duration')
-      .addEventListener('blur', function (event) {
-        const value = event.target.value || '';
-        const parsedInput = parseDuration(value).asSeconds();
-        event.target.value = secToHhmmImproved(parsedInput, { html: false });
-      });
+    // TODO: Properly fix this
+    // Bugsnag error 5dde294cb118e1001ae5a1d7
+    const durationElement = document.querySelector('#toggl-button-duration');
+    if (durationElement) {
+      durationElement
+        .addEventListener('keydown', function (event) {
+          // Doesn't cover all cases; can't really do it without introducing more state.
+          // Need a refactor.
+          if (event.code !== 'Enter' && event.code !== 'Tab') {
+            PopUp.durationChanged = true;
+          }
+        });
+      durationElement
+        .addEventListener('blur', function (event) {
+          const value = event.target.value || '';
+          const parsedInput = parseDuration(value).asSeconds();
+          event.target.value = secToHhmmImproved(parsedInput, { html: false });
+        });
+    }
 
     PopUp.$entries.addEventListener('click', function (e) {
       if (!e.target.dataset.continueId) {

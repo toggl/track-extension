@@ -246,11 +246,11 @@ window.TogglButton = {
               TogglButton.setCanSeeBillable();
               ga.reportOs();
             } else {
-              bugsnagClient.notify(new Error(`Fetch user failed ${xhr.status}`), {
-                metaData: {
+              bugsnagClient.notify(new Error(`Fetch user failed ${xhr.status}`), evt => {
+                evt.addMetadata('general', {
                   status: xhr.status,
                   responseText: xhr.responseText
-                }
+                });
               });
               TogglButton.setBrowserActionBadge();
               resolve({
@@ -283,9 +283,9 @@ window.TogglButton = {
 
   updateBugsnag: function () {
     // Set user data
-    bugsnagClient.user = {
+    bugsnagClient.setUser({
       id: TogglButton.$user.id
-    };
+    });
   },
 
   setCanSeeBillable: function () {
@@ -316,7 +316,7 @@ window.TogglButton = {
     try {
       TogglButton.websocket.socket = new WebSocket('wss://stream.toggl.com/ws');
     } catch (error) {
-      bugsnagClient.notify(error, { context: 'websocket' });
+      bugsnagClient.notify(error, evt => { evt.context = 'websocket'; });
       TogglButton.retryWebsocketConnection();
       return;
     }
@@ -336,7 +336,7 @@ window.TogglButton = {
         return TogglButton.websocket.socket.send(data);
       } catch (error) {
         if (process.env.DEBUG) console.log(error);
-        bugsnagClient.notify(error, { context: 'websocket' });
+        bugsnagClient.notify(error, evt => { evt.context = 'websocket'; });
       }
     };
 
@@ -365,7 +365,7 @@ window.TogglButton = {
           TogglButton.websocket.socket.send(pingResponse);
         } catch (error) {
           if (process.env.DEBUG) console.log(error);
-          bugsnagClient.notify(error, { context: 'websocket' });
+          bugsnagClient.notify(error, evt => { evt.context = 'websocket'; });
         }
       }
     };
@@ -1236,8 +1236,8 @@ window.TogglButton = {
       const { api_token: apiToken } = parsedResponse.data;
       localStorage.setItem('userToken', apiToken);
     } catch (err) {
-      bugsnagClient.notify(new Error('Login token-parse failed'), {
-        metaData: { response }
+      bugsnagClient.notify(new Error('Login token-parse failed'), evt => {
+        evt.addMetadata({ general: { response } });
       });
     }
   },
@@ -1260,11 +1260,13 @@ window.TogglButton = {
             if (xhr.status === 403) {
               error = 'Wrong Email or Password!';
             }
-            bugsnagClient.notify(new Error(`Login failed (${xhr.status})`), {
-              metaData: {
-                status: xhr.status,
-                responseText: xhr.responseText
-              }
+            bugsnagClient.notify(new Error(`Login failed (${xhr.status})`), evt => {
+              evt.addMetadata({
+                general: {
+                  status: xhr.status,
+                  responseText: xhr.responseText
+                }
+              });
             });
             resolve({ success: false, error: error });
           }

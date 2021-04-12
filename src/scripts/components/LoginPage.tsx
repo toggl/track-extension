@@ -57,7 +57,7 @@ export default function LoginPage ({ source, isLoggedIn, isPopup }: LoginProps) 
 
   React.useEffect(() => {
     if (error) {
-      bugsnagClient.notify(new Error(error), { context: 'login-page' });
+      bugsnagClient.notify(new Error(error), evt => { evt.context = 'login-page'; });
     }
   }, [error]);
 

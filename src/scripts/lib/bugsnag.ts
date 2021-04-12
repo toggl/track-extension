@@ -16,6 +16,8 @@ function processError(err: Error) {
       /.*(moz-extension|chrome_extension|chrome-extension|file):\/\/.*\/scripts\/(.*)/gi,
       'togglbutton://scripts/$2'
     );
+    // Normalize path separators across OSs
+    frame.file = frame.file.replace(/\\/g, '/');
     return frame;
   });
   return err;

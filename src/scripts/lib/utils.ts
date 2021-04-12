@@ -1,4 +1,5 @@
 import bugsnagClient from './bugsnag';
+import { Event } from "@bugsnag/core/types";
 
 const togglUrlRegex = /^(\w+\.)?toggl\.(space|com)$/
 
@@ -41,7 +42,9 @@ export function isTogglURL (url: string) {
   try {
     return togglUrlRegex.test(new URL(url).hostname);
   } catch (err) {
-    bugsnagClient.notify(err);
+    bugsnagClient.notify(err, (evt: Event) => {
+      evt.addMetadata('general', { url })
+    });
     return false;
   }
 }

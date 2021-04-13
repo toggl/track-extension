@@ -927,7 +927,7 @@ window.TogglButton = {
     });
   },
 
-  stopTimeEntry: function (timeEntry, sendResponse, cb) {
+  stopTimeEntry: function (timeEntry) {
     return new Promise((resolve) => {
       if (!TogglButton.$curEntry) {
         resolve();
@@ -1068,7 +1068,7 @@ window.TogglButton = {
     return undefined;
   },
 
-  updateTimeEntry: function (timeEntry, sendResponse) {
+  updateTimeEntry: function (timeEntry) {
     let entry;
     let error = '';
     let project;
@@ -1154,7 +1154,7 @@ window.TogglButton = {
     });
   },
 
-  deleteTimeEntry: function (timeEntry, sendResponse) {
+  deleteTimeEntry: function (timeEntry) {
     return new Promise(function (resolve, reject) {
       TogglButton.ajax(
         `/time_entries/${timeEntry.id}`,
@@ -1755,14 +1755,14 @@ window.TogglButton = {
       type = 'dropdown-reminder';
       if (buttonID === 0) {
         // start timer
-        TogglButton.createTimeEntry({ type: 'timeEntry', service: type }, null);
+        TogglButton.createTimeEntry({ type: 'timeEntry', service: type });
       } else {
         timeEntry = TogglButton.$latestStoppedEntry;
         if (!!timeEntry && !!timeEntry.description) {
           timeEntry.type = 'timeEntry';
           timeEntry.service = type;
           // continue timer
-          TogglButton.createTimeEntry(timeEntry, null);
+          TogglButton.createTimeEntry(timeEntry);
           buttonName = 'continue';
         } else {
           browser.tabs.create({ url: 'https://toggl.com/app/' });
@@ -1796,11 +1796,11 @@ window.TogglButton = {
           timeEntry = { type: 'timeEntry', service: type };
         }
         // continue timer
-        TogglButton.createTimeEntry(timeEntry, null);
+        TogglButton.createTimeEntry(timeEntry);
         buttonName = 'continue';
       } else {
         // start timer
-        TogglButton.createTimeEntry({ type: 'timeEntry', service: type }, null);
+        TogglButton.createTimeEntry({ type: 'timeEntry', service: type });
       }
       eventType = 'pomodoro';
     } else if (notificationId === 'workday-ended-notification') {
@@ -1813,7 +1813,7 @@ window.TogglButton = {
           timeEntry = { type: 'timeEntry', service: type };
         }
         // continue timer
-        TogglButton.createTimeEntry(timeEntry, null);
+        TogglButton.createTimeEntry(timeEntry);
         buttonName = 'continue';
       }
       eventType = 'workday-end';
@@ -1821,7 +1821,7 @@ window.TogglButton = {
       if (buttonID === 0) {
         TogglButton.stopTimeEntry(TogglButton.$curEntry);
       } else {
-        TogglButton.createTimeEntry({ type: 'timeEntry', service: type }, null);
+        TogglButton.createTimeEntry({ type: 'timeEntry', service: type });
       }
       eventType = 'pomodoro';
     }
@@ -1979,12 +1979,11 @@ window.TogglButton = {
         type: 'timeEntry',
         service: 'contextMenu',
         description: info.selectionText || tab.title
-      },
-      null
+      }
     );
   },
 
-  newMessage: function (request, sender, sendResponse) {
+  newMessage: function (request) {
     return new Promise(async (resolve) => {
       let error;
       let errorSource;
@@ -2106,19 +2105,18 @@ window.TogglButton = {
           TogglButton.hideNotification('remind-to-track-time');
         } else if (request.type === 'resume') {
           TogglButton.createTimeEntry(
-            { ...TogglButton.$latestStoppedEntry, type: 'resume' },
-            sendResponse
-          );
+            { ...TogglButton.$latestStoppedEntry, type: 'resume' }
+          ).then(resolve);
           TogglButton.hideNotification('remind-to-track-time');
         } else if (request.type === 'delete') {
-          TogglButton.deleteTimeEntry(request, sendResponse)
+          TogglButton.deleteTimeEntry(request)
             .then(resolve);
         } else if (request.type === 'update') {
-          TogglButton.updateTimeEntry(request, sendResponse)
+          TogglButton.updateTimeEntry(request)
             .then(resolve);
         } else if (request.type === 'stop') {
           TogglButton
-            .stopTimeEntry(request, sendResponse)
+            .stopTimeEntry(request)
             .then(resolve);
         } else if (request.type === 'userToken') {
           if (!TogglButton.$user) {
@@ -2156,7 +2154,7 @@ window.TogglButton = {
         } else if (request.type === 'options') {
           browser.runtime.openOptionsPage();
         } else if (request.type === 'create-workspace') {
-          TogglButton.createWorkspace(request, sendResponse);
+          TogglButton.createWorkspace(request).then(resolve);
         } else {
           resolve(undefined);
         }
@@ -2275,7 +2273,7 @@ window.TogglButton = {
     ) {
       TogglButton.$latestStoppedEntry = TogglButton.latestEntry();
       if (TogglButton.$latestStoppedEntry) {
-        TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry, null);
+        TogglButton.createTimeEntry(TogglButton.$latestStoppedEntry);
         TogglButton.hideNotification('remind-to-track-time');
       }
     }
@@ -2297,24 +2295,26 @@ window.TogglButton = {
     return workspaces.length === 0;
   },
 
-  createWorkspace: function (request, sendResponse) {
-    const { workspace } = request;
-    const payload = {
-      name: workspace,
-      only_admins_see_team_dashboard: false,
-      ical_url: ''
-    };
+  createWorkspace: function (request) {
+    return new Promise((resolve, reject) => {
+      const { workspace } = request;
+      const payload = {
+        name: workspace,
+        only_admins_see_team_dashboard: false,
+        ical_url: ''
+      };
 
-    TogglButton.ajax('', {
-      method: 'POST',
-      baseUrl: TogglButton.$ApiV9Url,
-      payload,
-      onLoad: xhr => {
-        sendResponse({ type: 'create-workspace', success: xhr.status === 200 });
-      },
-      onError: xhr => {
-        sendResponse({ type: 'create-workspace', success: false });
-      }
+      TogglButton.ajax('', {
+        method: 'POST',
+        baseUrl: TogglButton.$ApiV9Url,
+        payload,
+        onLoad: xhr => {
+          resolve({ type: 'create-workspace', success: xhr.status === 200 });
+        },
+        onError: xhr => {
+          resolve({ type: 'create-workspace', success: false });
+        }
+      });
     });
   },
 
@@ -2433,7 +2433,7 @@ if (browser.commands) {
       if (TogglButton.$curEntry !== null) {
         TogglButton.stopTimeEntry(TogglButton.$curEntry);
       } else {
-        TogglButton.createTimeEntry(entry, null);
+        TogglButton.createTimeEntry(entry);
       }
     }
   });

@@ -667,18 +667,20 @@ window.togglbutton = {
     return undefined;
   },
 
-  newMessage: function (request, sender, sendResponse) {
-    if (request.type === 'stop-entry') {
-      togglbutton.updateTimerLink();
-      togglbutton.entries = request.user.time_entries;
-      togglbutton.projects = request.user.projectMap;
-      togglbutton.updateTrackedTimerLink();
-    } else if (request.type === 'sync') {
-      if ($('#toggl-button-edit-form') !== null) {
-        $('#toggl-button-edit-form').remove();
+  newMessage: function (request) {
+    return new Promise(resolve => {
+      if (request.type === 'stop-entry') {
+        togglbutton.updateTimerLink();
+        togglbutton.entries = request.user.time_entries;
+        togglbutton.projects = request.user.projectMap;
+        togglbutton.updateTrackedTimerLink();
+      } else if (request.type === 'sync') {
+        if ($('#toggl-button-edit-form') !== null) {
+          $('#toggl-button-edit-form').remove();
+        }
       }
-    }
-    return undefined;
+      resolve(undefined);
+    });
   }
 };
 

@@ -47,7 +47,7 @@ togglbutton.render('[data-test-id="customer-context-tab-navigation"]', { observe
 
     if (ticketNum) {
       const id = ticketNum[1].trim();
-      const titleElem = document.querySelector(`[data-side-conversations-anchor-id="${id}"] [data-test-id="ticket-pane-subject"]`);
+      const titleElem = document.querySelector(`[data-side-conversations-anchor-id="${id}"] input[aria-label="Subject"]`);
 
       if (titleElem !== null) {
         description = titleElem.value.trim();

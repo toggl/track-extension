@@ -1,3 +1,11 @@
+## [1.69.7](https://github.com/toggl/toggl-button/compare/1.69.6...1.69.7) (2021-04-16)
+
+
+### Bug Fixes
+
+* **bugsnag:** Await for fetchUser ([ba3572a](https://github.com/toggl/toggl-button/commit/ba3572a9c52e326b704f19908208ebf6703fa275)), closes [#1880](https://github.com/toggl/toggl-button/issues/1880)
+* **bugsnag:** Correct usage of onMessage listener ([5b3d204](https://github.com/toggl/toggl-button/commit/5b3d20410697dc7fae2041d0e44a267de4fb8db9)), closes [#1942](https://github.com/toggl/toggl-button/issues/1942)
+
 ## [1.69.6](https://github.com/toggl/toggl-button/compare/1.69.5...1.69.6) (2021-04-16)
 
 

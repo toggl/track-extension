@@ -2089,7 +2089,7 @@ window.TogglButton = {
         } else if (request.type === 'logout') {
           TogglButton.logoutUser().then(resolve);
         } else if (request.type === 'sync') {
-          const res = TogglButton.fetchUser();
+          const res = await TogglButton.fetchUser();
           if (request.respond) {
             resolve(res);
           }

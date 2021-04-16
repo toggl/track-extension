@@ -2169,7 +2169,7 @@ window.TogglButton = {
   },
 
   tabUpdated: async function (tabId, changeInfo, tab) {
-    if (!TogglButton.$user && !isTogglURL(tab.url)) {
+    if (!TogglButton.$user && tab.url !== '' && !isTogglURL(tab.url)) {
       TogglButton.setBrowserActionBadge();
       return;
     }

@@ -1,3 +1,10 @@
+## [1.69.6](https://github.com/toggl/toggl-button/compare/1.69.5...1.69.6) (2021-04-16)
+
+
+### Bug Fixes
+
+* **zendesk:** Fix Agent workspace TE description ([b36f028](https://github.com/toggl/toggl-button/commit/b36f0284045bee1036b328a3bce5ede9df2bc234)), closes [#1880](https://github.com/toggl/toggl-button/issues/1880)
+
 ## [1.69.5](https://github.com/toggl/toggl-button/compare/1.69.4...1.69.5) (2021-03-03)
 
 

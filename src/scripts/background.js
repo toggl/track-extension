@@ -2203,6 +2203,12 @@ window.TogglButton = {
         if (!!isFirstLoad && !!isFirstLoad[0]) {
           TogglButton.loadFiles(tabId, file);
         }
+      }).catch(err => {
+        // if the user hasn't yet interacted with the tab, we get this permission error
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/permissions#activetab_permission
+        if (err.message !== 'Missing host permission for the tab') {
+          throw err;
+        }
       });
   },
 

@@ -181,7 +181,11 @@ window.TogglButton = {
             if (xhr.status === 200) {
               browser.tabs.query({ active: true, currentWindow: true })
                 .then(filterTabs(function (tabs) {
-                  browser.tabs.sendMessage(tabs[0].id, { type: 'sync' });
+                  browser.tabs.sendMessage(tabs[0].id, { type: 'sync' }).catch(err => {
+                    if (err.message !== 'Could not establish connection. Receiving end does not exist.') {
+                      throw err;
+                    }
+                  });
                 }));
               resp = JSON.parse(xhr.responseText);
               if (resp.data.projects) {
@@ -909,7 +913,11 @@ window.TogglButton = {
               resolve({ success: true, type: 'Stop' });
               browser.tabs.query({ active: true, currentWindow: true })
                 .then(filterTabs(function (tabs) {
-                  browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user });
+                  browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user }).catch(err => {
+                    if (err.message !== 'Could not establish connection. Receiving end does not exist.') {
+                      throw err;
+                    }
+                  });
                 }));
             }
             if (xhr.status === 400 && xhr.response && xhr.response.includes('please add a')) {
@@ -955,11 +963,15 @@ window.TogglButton = {
               TogglButton.setNannyTimer();
               ga.reportEvent(timeEntry.type, timeEntry.service);
 
-              resolve({ success: true, type: 'Stop' });
               browser.tabs.query({ active: true, currentWindow: true })
                 .then(filterTabs(function (tabs) {
-                  browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user });
+                  browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user }).catch(err => {
+                    if (err.message !== 'Could not establish connection. Receiving end does not exist.') {
+                      throw err;
+                    }
+                  });
                 }));
+              resolve({ success: true, type: 'Stop' });
             }
             if (xhr.status === 400 && xhr.response && xhr.response.includes('please add a')) {
               TogglButton.showUnmetConstraintsNotification(xhr.response);

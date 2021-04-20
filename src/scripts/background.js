@@ -2090,9 +2090,7 @@ window.TogglButton = {
           TogglButton.logoutUser().then(resolve);
         } else if (request.type === 'sync') {
           const res = await TogglButton.fetchUser();
-          if (request.respond) {
-            resolve(res);
-          }
+          resolve(request.respond ? res : undefined);
         } else if (request.type === 'timeEntry') {
           TogglButton.createTimeEntry(request)
             .then((response) => {

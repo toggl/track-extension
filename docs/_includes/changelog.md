@@ -1,3 +1,13 @@
+## [1.69.8](https://github.com/toggl/toggl-button/compare/1.69.7...1.69.8) (2021-04-20)
+
+
+### Bug Fixes
+
+* **bugsnag:** 5de0b5e4f79de300196e4f1b ([f3f4681](https://github.com/toggl/toggl-button/commit/f3f46817ead06294aec15346a9e5865233562238))
+* **bugsnag:** Fix "Missing host permission for the tab" ([9614b55](https://github.com/toggl/toggl-button/commit/9614b55781cb534fa22d97336a0f318508eb25e1))
+* **bugsnag:** Fixes 6079b3d1d7635b0008abd5c3 ([8fb27e4](https://github.com/toggl/toggl-button/commit/8fb27e44eae5001236a86a3c86003c70963a2dba))
+* **url:** Treat empty URLs ([ecaa634](https://github.com/toggl/toggl-button/commit/ecaa634feacb4f1254a89be565d3a56eba11587d)), closes [#1944](https://github.com/toggl/toggl-button/issues/1944)
+
 ## [1.69.7](https://github.com/toggl/toggl-button/compare/1.69.6...1.69.7) (2021-04-16)
 
 

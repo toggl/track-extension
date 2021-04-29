@@ -179,9 +179,13 @@ function TimeEntryRow ({
   const tags = (timeEntry.tags && timeEntry.tags.length > 0)
     ? timeEntry.tags.join(', ')
     : '';
-
+  /* Check if the entry description contains the word 'Pomodoro Break' or 'pomodoro break'. If it does, it is a Pomodoro break. Otherwise,
+  it is a work session. Then add a data attribute to the element accordingly.
+  */
+  const pomodoroBreakPattern = /[Pp]omodoro\s[Br]reak/g
+  const pomodoroSession = pomodoroBreakPattern.test(description) ? 'break' : 'work'
   return (
-    <EntryItem onClick={onRowClick} indent={indent}>
+    <EntryItem data-pomodoro-session={pomodoroSession} onClick={onRowClick} indent={indent}>
       {renderHeader && entriesCount && earliestStartTime &&
         <GroupedEntryIcon>
           <GroupedEntryCounter title={`${entriesCount} entries since ${earliestStartTime}`}>{entriesCount}</GroupedEntryCounter>

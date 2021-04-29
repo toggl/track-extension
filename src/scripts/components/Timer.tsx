@@ -27,7 +27,6 @@ function Timer (props: TimerProps) {
 function RunningTimer(props: { entry: Toggl.TimeEntry, project: Toggl.Project | null }) {
   const { entry, project } = props;
   const tags = (entry.tags || []).join(', ');
-
   const editEntry = () => {
     window.PopUp.renderEditForm(entry);
   };
@@ -67,7 +66,7 @@ function TimerForm () {
     const description = inputRef && inputRef.current
       ? inputRef.current.value
       : '';
-    window.PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true });
+    window.PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true, pomodoroSession: 'work' });
   };
   const onKeyUp = (e) => {
     if (keycode(e.which) === 'enter') {

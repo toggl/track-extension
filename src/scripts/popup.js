@@ -43,6 +43,30 @@ const Popup = {
   $revokedWorkspaceView: document.querySelector('#revoked-workspace'),
   $entries: document.querySelector('.entries-list'),
   defaultErrorMessage: 'Error connecting to server',
+  getClosest: function (elem, selector) {
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+      Element.prototype.matches =
+        Element.prototype.matchesSelector ||
+        Element.prototype.mozMatchesSelector ||
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector ||
+        Element.webkitMatchesSelector ||
+        function (s) {
+          const matches = (
+            this.document || this.ownerDocument
+          ).querySelectorAll(s);
+          let i = matches.length;
+          while (--i >= 0 && matches.item(i) !== this) {
+            return i > -1;
+          }
+        };
+    }
+    for (; elem && elem !== document; elem = elem.parentNode) {
+      if (elem.matches(selector)) return elem;
+    }
+    return null;
+  },
   showPage: function () {
     let dom;
     if (!TogglButton) {
@@ -589,13 +613,22 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       e.stopPropagation();
       const id = e.target.dataset.continueId;
-      const timeEntry = TogglButton.$user.time_entries.find((entry) => entry.id === +id);
+      const eventTarget = e.target;
+      const entryRowElement = Popup.getClosest(
+        eventTarget,
+        '[data-pomodoro-session]'
+      );
+      const { pomodoroSession } = entryRowElement.dataset || 'work';
+      const timeEntry = TogglButton.$user.time_entries.find(
+        (entry) => entry.id === +id
+      );
 
       const request = {
         type: 'list-continue',
         respond: true,
         service: 'dropdown-list',
-        data: timeEntry
+        data: timeEntry,
+        pomodoroSession
       };
 
       PopUp.sendMessage(request);

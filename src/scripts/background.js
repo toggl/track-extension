@@ -2252,6 +2252,10 @@ window.TogglButton = {
     const hostname = new URL(url).hostname.replace('www.', '');
     const file = await db.getOriginFileName(hostname);
 
+    if (!hostname) {
+      return false;
+    }
+
     return {
       file: file,
       origins: ['*://' + hostname + '/*']

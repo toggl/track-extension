@@ -1,6 +1,8 @@
 import { ProjectAutoComplete, TagAutoComplete } from './lib/autocomplete';
 /* eslint-disable-next-line import/no-webpack-loader-syntax */
 import togglButtonSVG from '!!raw-loader!./icons/toggl-button.svg';
+/* eslint-disable-next-line import/no-webpack-loader-syntax */
+import style from '!!raw-loader!../styles/style.css';
 const browser = require('webextension-polyfill');
 
 let projectAutocomplete; let tagAutocomplete;
@@ -143,16 +145,28 @@ window.togglbutton = {
                     clearTimeout(debouncer);
                   }
                   debouncer = setTimeout(function () {
-                    togglbutton.renderTo(selector, renderer);
+                    if (opts.iframeSelector) {
+                      togglbutton.renderToIframe(opts.iframeSelector, selector, renderer);
+                    } else {
+                      togglbutton.renderTo(selector, renderer);
+                    }
                   }, opts.debounceInterval);
                 } else {
-                  togglbutton.renderTo(selector, renderer);
+                  if (opts.iframeSelector) {
+                    togglbutton.renderToIframe(opts.iframeSelector, selector, renderer);
+                  } else {
+                    togglbutton.renderTo(selector, renderer);
+                  }
                 }
               });
               const observeTarget = opts.observeTarget || document;
               observer.observe(observeTarget, { childList: true, subtree: true });
             }
-            togglbutton.renderTo(selector, renderer);
+            if (opts.iframeSelector) {
+              togglbutton.renderToIframe(opts.iframeSelector, selector, renderer);
+            } else {
+              togglbutton.renderTo(selector, renderer);
+            }
           } catch (e) {
             browser.runtime.sendMessage({
               type: 'error',
@@ -170,19 +184,36 @@ window.togglbutton = {
         });
       });
   },
-
-  renderTo: function (selector, renderer) {
+  renderToIframe: function (iframeSelector, selector, renderer) {
+    const iframe = document.querySelector(iframeSelector);
+    if (!iframe) return;
+    const iframeDocument = iframe.contentDocument;
+    if (iframeDocument.readyState === 'complete') {
+      return togglbutton.renderTo(selector, renderer, iframeDocument);
+    }
+    iframe.addEventListener('load', () => togglbutton.renderTo(selector, renderer, iframeDocument));
+  },
+  renderTo: function (selector, renderer, parentElement = document) {
     let i;
 
     let len;
 
-    const elems = document.querySelectorAll(selector);
+    const elems = parentElement.querySelectorAll(selector);
     if (!elems.length) {
       return;
     }
 
     for (i = 0, len = elems.length; i < len; i += 1) {
       elems[i].classList.add('toggl');
+    }
+
+    if (parentElement !== document) {
+      const head = parentElement.querySelector('head');
+      if (head) {
+        const styleEl = document.createElement('style');
+        styleEl.innerHTML = style;
+        head.appendChild(styleEl);
+      }
     }
 
     // Catch content errors here as well as render() in case of async rendering
@@ -493,8 +524,21 @@ window.togglbutton = {
     });
   },
 
-  createTimerLink: function (params) {
+  createTimerLink: function (params, iframeSelector) {
     let link = createLink('toggl-button');
+
+    const iframeDocument = iframeSelector
+      ? document.querySelector(iframeSelector).contentDocumen
+      : null;
+
+    if (iframeDocument) {
+      // eslint-disable-next-line no-unused-vars
+      const $ = (selector) => {
+        console.log('this is a bound selector');
+        return window.$(selector, iframeDocument);
+      };
+      console.log('bound to iframe');
+    }
 
     const project = invokeIfFunction(params.projectName);
     const description = invokeIfFunction(params.description);

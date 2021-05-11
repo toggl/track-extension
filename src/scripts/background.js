@@ -320,7 +320,7 @@ window.TogglButton = {
     }
 
     try {
-      TogglButton.websocket.socket = new WebSocket('wss://stream.toggl.com/ws');
+      TogglButton.websocket.socket = new WebSocket(Object.assign(new URL('/stream', process.env.API_URL), { protocol: 'wss:' }).href);
     } catch (error) {
       bugsnagClient.notify(error, evt => { evt.context = 'websocket'; });
       TogglButton.retryWebsocketConnection();

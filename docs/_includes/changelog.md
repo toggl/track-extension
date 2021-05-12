@@ -1,3 +1,10 @@
+## [1.70.1](https://github.com/toggl/toggl-button/compare/1.70.0...1.70.1) (2021-05-12)
+
+
+### Bug Fixes
+
+* **background:** Update websocket url ([1e83023](https://github.com/toggl/toggl-button/commit/1e83023e58b45fbaba07c2313df17ef1acd92eaf))
+
 # [1.70.0](https://github.com/toggl/toggl-button/compare/1.69.8...1.70.0) (2021-05-12)
 
 

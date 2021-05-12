@@ -1,3 +1,17 @@
+# [1.70.0](https://github.com/toggl/toggl-button/compare/1.69.8...1.70.0) (2021-05-12)
+
+
+### Bug Fixes
+
+* **bitrix:** Fix Bitrix iframes ([55c03be](https://github.com/toggl/toggl-button/commit/55c03befeace0457e565f5a78e414cf80a761401)), closes [#1883](https://github.com/toggl/toggl-button/issues/1883)
+* **bugsnag:** Treat empty hostnames ([b5e67d9](https://github.com/toggl/toggl-button/commit/b5e67d9af13b58ddcc4a7ff1a37131fcbeb7ec8a))
+* **style:** Add closing braces ([fd6c9c7](https://github.com/toggl/toggl-button/commit/fd6c9c71eb8cf23e3b9217f1f81675bc73358bb0))
+
+
+### Features
+
+* **core:** Handle iframes ([216d0be](https://github.com/toggl/toggl-button/commit/216d0bed6ae9b62be1e77e9dbfde6ab75e7e863d))
+
 ## [1.69.8](https://github.com/toggl/toggl-button/compare/1.69.7...1.69.8) (2021-04-20)
 
 

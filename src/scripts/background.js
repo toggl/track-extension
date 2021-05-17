@@ -706,9 +706,16 @@ window.TogglButton = {
       TogglButton.pomodoroAlarm = null;
       clearInterval(TogglButton.pomodoroProgressTimer);
     }
-
+    const currentPomodoroSession = TogglButton.$curPomodoroSession;
     const pomodoroModeEnabled = await db.get('pomodoroModeEnabled');
-    const intervalSetting = await db.get('pomodoroInterval');
+    let intervalSetting;
+    if (currentPomodoroSession === 'break') {
+      intervalSetting = await db.get('pomodoroShortBreakInterval');
+      TogglButton.$isBreakNext = false;
+    } else {
+      intervalSetting = await db.get('pomodoroInterval');
+      TogglButton.$isBreakNext = true;
+    }
 
     if (pomodoroModeEnabled) {
       let updateProgress;

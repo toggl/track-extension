@@ -570,6 +570,7 @@ window.TogglButton = {
   createTimeEntry: async function (timeEntry) {
     const type = timeEntry.type;
     const container = timeEntry.container;
+    const { pomodoroSession } = timeEntry;
     const start = new Date();
     let defaultProject;
     const rememberProjectPer = await db.get('rememberProjectPer');
@@ -648,6 +649,7 @@ window.TogglButton = {
             if (success) {
               entry = JSON.parse(xhr.responseText);
               TogglButton.localEntry = entry;
+              TogglButton.$curPomodoroSession = pomodoroSession;
               TogglButton.updateTriggers(entry);
               ga.reportEvent(timeEntry.type, timeEntry.service);
               db.bumpTrackedCount();

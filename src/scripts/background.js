@@ -65,6 +65,8 @@ function filterTabs (handler) {
 window.TogglButton = {
   $user: null,
   $curEntry: null,
+  $curPomodoroSession: null,
+  $isBreakNext: null,
   $latestStoppedEntry: null,
   $ApiUrl: process.env.API_URL,
   $ApiV8Url: `${process.env.API_URL}/v8`,
@@ -86,6 +88,7 @@ window.TogglButton = {
   pomodoroProgressTimer: null,
   $ticker: null,
   pomodoroInterval: null,
+  pomodoroShortBreakInterval: null,
   pomodoroFocusMode: null,
   localEntry: null,
   $userState: 'active',

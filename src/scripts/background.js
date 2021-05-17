@@ -744,10 +744,25 @@ window.TogglButton = {
           steps,
           elapsedTime
         );
-        TogglButton.pomodoroAlarm = setTimeout(
-          TogglButton.pomodoroAlarmStop,
-          interval
-        );
+        const stopPomodoro = new Promise((resolve) => {
+          TogglButton.pomodoroAlarm = setTimeout(() => {
+            resolve(TogglButton.pomodoroAlarmStop());
+          }, interval);
+        });
+        if (currentPomodoroSession === 'work') {
+          stopPomodoro.then((res) => {
+            const breakEntry = {
+              description: 'Pomodoro Break',
+              tags: ['pomodoro break', 'short break']
+            };
+            return TogglButton.createTimeEntry({
+              ...breakEntry,
+              pomodoroSession: 'break',
+              respond: true,
+              type: 'timeEntry'
+            }).catch((e) => console.error(e));
+          });
+        }
         TogglButton.pomodoroProgressTimer = setInterval(
           updateProgress,
           pomodoroInterval / steps

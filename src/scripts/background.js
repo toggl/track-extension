@@ -2131,8 +2131,12 @@ window.TogglButton = {
               resolve(response);
             });
         } else if (request.type === 'list-continue') {
-          TogglButton.createTimeEntry({ ...request.data, respond: request.respond, type: request.type })
-            .then(resolve);
+          TogglButton.createTimeEntry({
+            ...request.data,
+            pomodoroSession: request.pomodoroSession,
+            respond: request.respond,
+            type: request.type
+          }).then(resolve);
           TogglButton.hideNotification('remind-to-track-time');
         } else if (request.type === 'resume') {
           TogglButton.createTimeEntry(

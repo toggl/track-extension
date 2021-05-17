@@ -926,7 +926,12 @@ window.TogglButton = {
           baseUrl: TogglButton.$ApiV9Url,
           onLoad: function (xhr) {
             if (xhr.status === 200) {
-              TogglButton.$latestStoppedEntry = JSON.parse(xhr.responseText);
+              const stoppedEntry = JSON.parse(xhr.responseText);
+              TogglButton.$latestStoppedEntry = stoppedEntry;
+              const { $curPomodoroSession } = TogglButton;
+              if ($curPomodoroSession === 'work') {
+                TogglButton.$latestWorkEntry = stoppedEntry;
+              }
               TogglButton.updateEntriesDb();
               TogglButton.resetPomodoroProgress(null);
               TogglButton.setNannyTimer();

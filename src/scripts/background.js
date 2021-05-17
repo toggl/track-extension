@@ -604,7 +604,8 @@ window.TogglButton = {
       enableAutoTagging || // Auto-add tags found in integration script
       type === 'list-continue' || // Include tags when using Continue in the UI
       type === 'resume' || // Include tags when continuing latest entry in reminder notification
-      type === 'idle-detection-notification-continue' // Include tags when using Continue-and-discard in idle detection
+      type === 'idle-detection-notification-continue' || // Include tags when using Continue-and-discard in idle detection
+      type === 'break-entry' // Include tags when automatically start a Pomodoro break entry after a work entry
     );
 
     entry = {

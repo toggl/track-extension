@@ -156,6 +156,9 @@ const Popup = {
         ) {
           PopUp.showError(response.error || PopUp.defaultErrorMessage);
         }
+      })
+      .catch(e => {
+        throw new Error(e);
       });
   },
 
@@ -535,7 +538,9 @@ document.addEventListener('DOMContentLoaded', function () {
       .querySelector('.header .sync-data')
       .addEventListener('click', function () {
         const request = { type: 'sync' };
-        browser.runtime.sendMessage(request);
+        browser.runtime.sendMessage(request).catch(e => {
+          throw new Error(e);
+        });
         browser.extension.getBackgroundPage().ga.report('sync', 'sync-toolbar-popup');
       });
 
@@ -547,7 +552,9 @@ document.addEventListener('DOMContentLoaded', function () {
           respond: false
         };
 
-        browser.runtime.sendMessage(request);
+        browser.runtime.sendMessage(request).catch(e => {
+          throw new Error(e);
+        });
       });
 
     document

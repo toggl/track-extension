@@ -409,7 +409,9 @@ window.togglbutton = {
         billable: billable,
         service: togglbutton.serviceName
       };
-      browser.runtime.sendMessage(request);
+      browser.runtime.sendMessage(request).catch(e => {
+        throw new Error(e);
+      });
       closeForm();
     };
 
@@ -465,7 +467,10 @@ window.togglbutton = {
       }
       browser.runtime
         .sendMessage({ type: 'stop' })
-        .then(togglbutton.addEditForm);
+        .then(togglbutton.addEditForm)
+        .catch(e => {
+          throw new Error(e);
+        });
 
       closeForm();
       return false;
@@ -598,7 +603,10 @@ window.togglbutton = {
         // Stop current time entry before starting a new one
         .sendMessage({ type: 'stop' })
         .then(() => browser.runtime.sendMessage(opts))
-        .then(togglbutton.addEditForm);
+        .then(togglbutton.addEditForm)
+        .catch(e => {
+          throw new Error(e);
+        });
 
       return false;
     });
@@ -612,6 +620,9 @@ window.togglbutton = {
     browser.runtime.sendMessage({ type: 'currentEntry' })
       .then(function (response) {
         togglbutton.updateTimerLink(response.currentEntry);
+      })
+      .catch(e => {
+        throw new Error(e);
       });
   },
 

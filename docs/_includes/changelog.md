@@ -1,3 +1,11 @@
+## [1.70.2](https://github.com/toggl/toggl-button/compare/1.70.1...1.70.2) (2021-05-20)
+
+
+### Bug Fixes
+
+* **sendMessage:** Assert errors being thrown ([9ae9a81](https://github.com/toggl/toggl-button/commit/9ae9a81d92aff4d12c97d6547e2ff8e784c0a720))
+* **zendesk:** Fix stop not working ([0f8fba6](https://github.com/toggl/toggl-button/commit/0f8fba68a71bcc91e30b633b54a3a2dd80134589))
+
 ## [1.70.1](https://github.com/toggl/toggl-button/compare/1.70.0...1.70.1) (2021-05-12)
 
 

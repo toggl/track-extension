@@ -34,34 +34,28 @@ togglbutton.render('.pane_header:not(.toggl)', { observe: true }, function (
   elem.insertBefore(link, elem.querySelector('.btn-group'));
 });
 
+const getDescription = () => {
+  const ticketNum = location.href.match(/tickets\/(\d+)/);
+
+  if (!ticketNum) return null;
+  const id = ticketNum[1].trim();
+  const titleElem = document.querySelector(`[data-side-conversations-anchor-id="${id}"] input[aria-label="Subject"]`);
+  if (!titleElem) return null;
+
+  return '#' + id + ' ' + titleElem.value.trim();
+};
+
 togglbutton.render('[data-test-id="customer-context-tab-navigation"]', { observe: true }, function (
   elem
 ) {
   // Manual check for existence in this SPA.
   if (elem.querySelector('.toggl-button')) return;
-
-  const titleFunc = function () {
-    let description;
-
-    const ticketNum = location.href.match(/tickets\/(\d+)/);
-
-    if (ticketNum) {
-      const id = ticketNum[1].trim();
-      const titleElem = document.querySelector(`[data-side-conversations-anchor-id="${id}"] input[aria-label="Subject"]`);
-
-      if (titleElem !== null) {
-        description = titleElem.value.trim();
-      }
-
-      description = '#' + id + ' ' + description;
-    }
-
-    return description;
-  };
+  // If we can't get the description on this pass, let's skip and wait for the next one
+  if (!getDescription()) return;
 
   const link = togglbutton.createTimerLink({
     className: 'zendesk-agent-ws',
-    description: titleFunc
+    description: getDescription
   });
 
   elem.prepend(link);

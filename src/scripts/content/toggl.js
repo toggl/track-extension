@@ -10,6 +10,8 @@ if (offlineUser) {
     browser.runtime.sendMessage({
       type: 'userToken',
       apiToken: userData.offlineData.api_token
+    }).catch(e => {
+      throw new Error(e);
     });
   }
 }
@@ -24,11 +26,15 @@ if (offlineUser) {
 
 document.addEventListener('webkitvisibilitychange', function () {
   if (!document.webkitHidden) {
-    browser.runtime.sendMessage({ type: 'sync' });
+    browser.runtime.sendMessage({ type: 'sync' }).catch(e => {
+      throw new Error(e);
+    });
   }
 });
 
-browser.runtime.sendMessage({ type: 'sync' });
+browser.runtime.sendMessage({ type: 'sync' }).catch(e => {
+  throw new Error(e);
+});
 
 function completeLogin () {
   location.href = browser.runtime.getURL('html/login.html?source=web-login');

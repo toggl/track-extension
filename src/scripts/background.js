@@ -183,7 +183,7 @@ window.TogglButton = {
                 .then(filterTabs(function (tabs) {
                   browser.tabs.sendMessage(tabs[0].id, { type: 'sync' }).catch(err => {
                     if (err.message !== 'Could not establish connection. Receiving end does not exist.') {
-                      throw err;
+                      throw new Error(err);
                     }
                   });
                 }));
@@ -748,7 +748,10 @@ window.TogglButton = {
         );
       }
 
-      browser.runtime.sendMessage(renderTimeEntries());
+      browser.runtime.sendMessage(renderTimeEntries())
+        .catch(e => {
+          throw new Error(e);
+        });
       updateProgress();
     }
   },
@@ -915,7 +918,7 @@ window.TogglButton = {
                 .then(filterTabs(function (tabs) {
                   browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user }).catch(err => {
                     if (err.message !== 'Could not establish connection. Receiving end does not exist.') {
-                      throw err;
+                      throw new Error(err);
                     }
                   });
                 }));
@@ -967,7 +970,7 @@ window.TogglButton = {
                 .then(filterTabs(function (tabs) {
                   browser.tabs.sendMessage(tabs[0].id, { type: 'stop-entry', user: TogglButton.$user }).catch(err => {
                     if (err.message !== 'Could not establish connection. Receiving end does not exist.') {
-                      throw err;
+                      throw new Error(err);
                     }
                   });
                 }));

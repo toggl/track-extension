@@ -307,7 +307,13 @@ const Settings = {
     if (elem !== null) {
       Settings.toggleState(elem, state);
     }
-    browser.runtime.sendMessage(request);
+    browser.runtime.sendMessage(request).catch(e => {
+      browser.runtime.sendMessage({
+        type: 'error',
+        stack: e.stack || null,
+        category: 'Settings'
+      });
+    });
   },
   saveSetting: function (value, type) {
     Settings.toggleSetting(null, value, type);
@@ -997,6 +1003,13 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         .sendMessage({ type: 'logout' })
         .then(() => {
           window.close();
+        })
+        .catch(e => {
+          browser.runtime.sendMessage({
+            type: 'error',
+            stack: e.stack || null,
+            category: 'Settings'
+          });
         });
     });
 
@@ -1007,6 +1020,13 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         .then(() => {
           // TODO: This promise does not respond.
           window.close();
+        })
+        .catch(e => {
+          browser.runtime.sendMessage({
+            type: 'error',
+            stack: e.stack || null,
+            category: 'Settings'
+          });
         });
     });
 

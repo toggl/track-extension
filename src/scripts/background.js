@@ -2181,6 +2181,19 @@ window.TogglButton = {
     });
   },
 
+  blockSite: function (tabId, changeInfo, tab) {
+    const url = changeInfo.pendingUrl || changeInfo.url;
+    if (!url || !url.startsWith('http')) {
+      return;
+    }
+
+    const hostname = new URL(url).hostname;
+
+    if (hostname.includes('youtube.com') && TogglButton.$curEntry) {
+      chrome.tabs.remove(tabId);
+    }
+  },
+
   tabUpdated: async function (tabId, changeInfo, tab) {
     if (!TogglButton.$user && tab.url !== '' && !isTogglURL(tab.url)) {
       TogglButton.setBrowserActionBadge();
@@ -2398,6 +2411,7 @@ TogglButton.fetchUser();
 TogglButton.setNannyTimer();
 TogglButton.startCheckingUserState();
 browser.tabs.onUpdated.addListener(TogglButton.tabUpdated);
+browser.tabs.onUpdated.addListener(TogglButton.blockSite);
 browser.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 db.get('stopAtDayEnd').then(TogglButton.startCheckingDayEnd);
 browser.runtime.onMessage.addListener(TogglButton.newMessage);

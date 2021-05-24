@@ -94,6 +94,7 @@ textarea, textarea:hover {
   border: 1px solid var(--border-color);
   border-radius: var(--m-radius);
   color: var(--text-color) !important;
+  background: var(--header-bg-color);
 }
 
 input[type="checkbox"] {
@@ -555,7 +556,7 @@ section .field--showDetails .subsettings-details {
 
 .remove-custom:hover {
   color: #ffffff;
-  background-color: #ef2d2d;
+  background-color: var(--danger-color);
 }
 
 .guide-container {
@@ -684,4 +685,17 @@ section .field--showDetails .subsettings-details {
 
 body[data-show-review-banner="true"] #review-prompt {
   transform: translateY(0);
+}
+
+
+.error-message {
+  color: var(--danger-color);
+}
+
+.has-error {
+  border-color: var(--danger-color)
+}
+
+.hidden {
+  display: none !important;
 }

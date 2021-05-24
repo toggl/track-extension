@@ -322,7 +322,9 @@ window.TogglButton = {
     try {
       TogglButton.websocket.socket = new WebSocket(Object.assign(new URL('/stream', process.env.API_URL), { protocol: 'wss:' }).href);
     } catch (error) {
-      bugsnagClient.notify(error, evt => { evt.context = 'websocket'; });
+      bugsnagClient.notify(error, evt => {
+        evt.context = 'websocket';
+      });
       TogglButton.retryWebsocketConnection();
       return;
     }
@@ -342,7 +344,9 @@ window.TogglButton = {
         return TogglButton.websocket.socket.send(data);
       } catch (error) {
         if (process.env.DEBUG) console.log(error);
-        bugsnagClient.notify(error, evt => { evt.context = 'websocket'; });
+        bugsnagClient.notify(error, evt => {
+          evt.context = 'websocket';
+        });
       }
     };
 
@@ -371,7 +375,9 @@ window.TogglButton = {
           TogglButton.websocket.socket.send(pingResponse);
         } catch (error) {
           if (process.env.DEBUG) console.log(error);
-          bugsnagClient.notify(error, evt => { evt.context = 'websocket'; });
+          bugsnagClient.notify(error, evt => {
+            evt.context = 'websocket';
+          });
         }
       }
     };
@@ -692,7 +698,7 @@ window.TogglButton = {
   },
 
   latestEntry: function () {
-    const timeEntries = TogglButton.$user.time_entries || [ null ];
+    const timeEntries = TogglButton.$user.time_entries || [null];
     return timeEntries[timeEntries.length - 1];
   },
 
@@ -834,9 +840,9 @@ window.TogglButton = {
     const baseUrl = opts.baseUrl || TogglButton.$ApiV8Url;
     const resolvedUrl = baseUrl + url;
     const token =
-        opts.token ||
-        (TogglButton.$user && TogglButton.$user.api_token) ||
-        localStorage.getItem('userToken');
+      opts.token ||
+      (TogglButton.$user && TogglButton.$user.api_token) ||
+      localStorage.getItem('userToken');
     const credentials = opts.credentials || null;
 
     xhr.open(method, resolvedUrl, true);
@@ -1026,9 +1032,9 @@ window.TogglButton = {
     let notificationId = 'pomodoro-time-is-up';
     let stopSound;
     const description =
-        TogglButton.$curEntry && TogglButton.$curEntry.description
-          ? TogglButton.$curEntry.description
-          : '';
+      TogglButton.$curEntry && TogglButton.$curEntry.description
+        ? TogglButton.$curEntry.description
+        : '';
     let truncatedDescription = description.slice(0, 30);
     if (truncatedDescription.length < description.length) truncatedDescription += '.. ';
 
@@ -1346,7 +1352,7 @@ window.TogglButton = {
 
   fillProjects: function () {
     let html =
-        '<p class="project-row" data-pid="0"><span class="tb-project-bullet tb-project-color tb-no-color">No project</span></p>';
+      '<p class="project-row" data-pid="0"><span class="tb-project-bullet tb-project-color tb-no-color">No project</span></p>';
     const projects = TogglButton.$user.projectMap;
     const clients = TogglButton.$user.clientMap;
     const clientNames = TogglButton.$user.clientNameMap;
@@ -1443,20 +1449,20 @@ window.TogglButton = {
     let tasksCount;
     const hasTasks = tasks ? 'has-tasks' : '';
     let html =
-        '<li class="project-row" title="' +
-        escapeHtml(project.name) +
-        '" data-pid="' +
-        project.id +
-        '"><span class="tb-project-bullet tb-project-color" style="color: ' +
-        project.hex_color +
-        '">' +
-        '<span class="item-name ' +
-        hasTasks +
-        '" title="' +
-        escapeHtml(project.name) +
-        '">' +
-        escapeHtml(project.name) +
-        '</span></span>';
+      '<li class="project-row" title="' +
+      escapeHtml(project.name) +
+      '" data-pid="' +
+      project.id +
+      '"><span class="tb-project-bullet tb-project-color" style="color: ' +
+      project.hex_color +
+      '">' +
+      '<span class="item-name ' +
+      hasTasks +
+      '" title="' +
+      escapeHtml(project.name) +
+      '">' +
+      escapeHtml(project.name) +
+      '</span></span>';
 
     if (tasks) {
       tasksCount = tasks.length + ' task';
@@ -1526,7 +1532,7 @@ window.TogglButton = {
         browser.tabs.executeScript(
           tabs[0].id,
           {
-            code: "!!document.querySelector('.toggl-button')"
+            code: '!!document.querySelector(\'.toggl-button\')'
           }).then(
           function (reload) {
             if (!!reload && !!reload[0]) {
@@ -1587,17 +1593,17 @@ window.TogglButton = {
   showIdleDetectionNotification: function (seconds) {
     const timeString = TogglButton.timeStringFromSeconds(seconds);
     const entryDescription =
-        TogglButton.$curEntry.description || '(no description)';
+      TogglButton.$curEntry.description || '(no description)';
     const options = {
       type: 'basic',
       iconUrl: 'images/icon-128.png',
       title: 'Toggl Button',
       message:
-          "You've been idle for " +
-          timeString +
-          ' while tracking "' +
-          entryDescription +
-          '"'
+        'You\'ve been idle for ' +
+        timeString +
+        ' while tracking "' +
+        entryDescription +
+        '"'
     };
 
     if (!FF) {
@@ -1683,7 +1689,7 @@ window.TogglButton = {
         type: 'basic',
         iconUrl: 'images/icon-128.png',
         title: 'Toggl Button',
-        message: "Don't forget to track your time!"
+        message: 'Don\'t forget to track your time!'
       };
 
       if (!FF) {
@@ -2076,6 +2082,10 @@ window.TogglButton = {
           request.type === 'update-send-error-reports'
         ) {
           db.updateSetting('sendErrorReports', request.state);
+        } else if (request.type === 'update-enable-website-blocking') {
+          db.updateSetting('enableWebsiteBlocking', request.state);
+        } else if (request.type === 'update-website-blocking-list') {
+          db.updateSetting('websiteBlockingList', request.state);
         } else if (
           request.type === 'update-enable-auto-tagging'
         ) {
@@ -2181,15 +2191,22 @@ window.TogglButton = {
     });
   },
 
-  blockSite: function (tabId, changeInfo, tab) {
+  blockSite: async function (tabId, changeInfo, tab) {
     const url = changeInfo.pendingUrl || changeInfo.url;
     if (!url || !url.startsWith('http')) {
       return;
     }
 
-    const hostname = new URL(url).hostname;
+    let hostname = new URL(url).hostname;
+    if (hostname.startsWith('www.')) {
+      hostname = hostname.replace('www.', '');
+    }
 
-    if (hostname.includes('youtube.com') && TogglButton.$curEntry) {
+    const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
+    const websiteBlockingList = await db.get('websiteBlockingList');
+
+    const shouldBlock = websiteBlockingEnabled && websiteBlockingList.split('\n').includes(hostname);
+    if (shouldBlock && TogglButton.$curEntry) {
       chrome.tabs.remove(tabId);
     }
   },
@@ -2226,14 +2243,14 @@ window.TogglButton = {
   },
 
   checkLoadedScripts: function (tabId, file) {
-    browser.tabs.executeScript(tabId, { code: "(typeof togglbutton === 'undefined')" })
+    browser.tabs.executeScript(tabId, { code: '(typeof togglbutton === \'undefined\')' })
       .then(function (isFirstLoad) {
         if (!!isFirstLoad && !!isFirstLoad[0]) {
           TogglButton.loadFiles(tabId, file);
         }
       }).catch(err => {
-        // if the user hasn't yet interacted with the tab, we get this permission error
-        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/permissions#activetab_permission
+      // if the user hasn't yet interacted with the tab, we get this permission error
+      // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/permissions#activetab_permission
         if (err.message !== 'Missing host permission for the tab') {
           throw err;
         }
@@ -2291,7 +2308,7 @@ window.TogglButton = {
         onclick: TogglButton.contextMenuClick
       });
       browser.contextMenus.create({
-        title: "Start timer with description '%s'",
+        title: 'Start timer with description \'%s\'',
         contexts: ['selection'],
         onclick: TogglButton.contextMenuClick
       });
@@ -2451,8 +2468,8 @@ browser.runtime.onInstalled.addListener(function (details) {
     }
   } else if (details.reason === 'update') {
     console.info(`Updated from ${details.previousVersion} to ${process.env.VERSION}.`);
-    const [ prevMajor, prevMinor ] = details.previousVersion.split('.').map(Number);
-    const [ nextMajor, nextMinor ] = process.env.VERSION.split('.').map(Number);
+    const [prevMajor, prevMinor] = details.previousVersion.split('.').map(Number);
+    const [nextMajor, nextMinor] = process.env.VERSION.split('.').map(Number);
     if (prevMajor === 1 && prevMinor <= 22 && nextMajor === 1 && nextMinor >= 23) {
       // Attempt to migrate legacy localstorage settings to storage.sync settings
       db._migrateToStorageSync();

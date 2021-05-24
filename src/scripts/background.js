@@ -2189,7 +2189,7 @@ window.TogglButton = {
 
     const hostname = new URL(url).hostname;
 
-    if (hostname.includes('youtube.com')) {
+    if (hostname.includes('youtube.com') && TogglButton.$curEntry) {
       chrome.tabs.remove(tabId);
     }
   },

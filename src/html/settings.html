@@ -53,6 +53,14 @@
             </div>
             <span>Pomodoro</span>
           </li>
+          <li class="nav-link" data-tab="website-blocking">
+            <div class="nav-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <path fill="#fff" d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0ZM7.28,4.85a8.55,8.55,0,0,1,9.44,0L4.85,16.72A8.56,8.56,0,0,1,7.28,4.85Zm9.44,14.3a8.55,8.55,0,0,1-9.44,0L19.15,7.28A8.56,8.56,0,0,1,16.72,19.15Z" />
+              </svg>
+            </div>
+            <span>Website blocking</span>
+          </li>
           <li class="nav-link" data-tab="telemetry">
             <div class="nav-icon">
               <svg width="16" height="16" viewBox="0 0 24 24">
@@ -303,6 +311,28 @@
               <span id="ticker-volume-label">100%</span>
               <button id="ticker-sound-test" class="test">Test</button>
             </div>
+          </div>
+        </section>
+      </div>
+      <div class="tab" data-tab="website-blocking">
+        <section>
+          <div class="headline">
+            <h3>Website blocking</h3>
+          </div>
+          <p>To avoid distractions, you can specify a list of websites to block when time-tracking is on.</p>
+          <div class="checkbox field enable-website-blocking">
+            <input type="checkbox" id="enable-website-blocking">
+            <label for="enable-website-blocking">
+              <span class="setting">Enable website blocking</span>
+              <span class="description">If enabled, visiting websites from the website blocking list will be disallowed while you're tracking time</span>
+            </label>
+          </div>
+          <div class="textarea field">
+            <label for="website-blocking-list">
+              <span class="setting">Website blocking list</span>
+              <span class="description">Enter the list of domains you would like to block, each one on a new line</span>
+            </label>
+            <textarea id="website-blocking-list" rows="3"></textarea>
           </div>
         </section>
       </div>

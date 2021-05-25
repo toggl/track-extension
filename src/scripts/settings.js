@@ -1,9 +1,14 @@
 import browser from 'webextension-polyfill';
-import isValidDomain from 'is-valid-domain';
 
 import TogglOrigins from './origins';
 import bugsnagClient from './lib/bugsnag';
 import { getStoreLink, getUrlParam, isActiveUser } from './lib/utils';
+import {
+  validateWebsiteBlockingListInput,
+  processWebsiteBlockingListInput,
+  setWebsiteBlockingError,
+  blockRecordsStringToString
+} from './lib/websiteBlockingUtils';
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const ga = browser.extension.getBackgroundPage().ga;
@@ -200,7 +205,7 @@ const Settings = {
       const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
       const websiteBlockingList = await db.get('websiteBlockingList');
       Settings.toggleState(Settings.$websiteBlockingEnabled, websiteBlockingEnabled);
-      Settings.$websiteBlockingList.value = websiteBlockingList;
+      Settings.$websiteBlockingList.value = blockRecordsStringToString(websiteBlockingList);
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -796,17 +801,16 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     });
     Settings.$websiteBlockingList.addEventListener('blur', function (e) {
       const error = validateWebsiteBlockingListInput(e.target.value);
-      const errorElement = Settings.$websiteBlockingList.parentElement.querySelector('.error-message');
+      setWebsiteBlockingError(Settings.$websiteBlockingList, error);
       if (error) {
-        errorElement.innerHTML = error;
-        errorElement.classList.remove('hidden');
         return;
-      } else {
-        errorElement.classList.add('hidden');
-        errorElement.innerHTML = '';
       }
-      const websiteBlockingList = processWebsiteBlockingListInput(e.target.value);
-      Settings.saveSetting(websiteBlockingList, 'update-website-blocking-list');
+      const { asString, asBlockRecordsString } = processWebsiteBlockingListInput(e.target.value);
+
+      // ToDo: save payload to API here.
+
+      Settings.saveSetting(asBlockRecordsString, 'update-website-blocking-list');
+      Settings.$websiteBlockingList.value = asString;
     });
 
     Settings.$enableAutoTagging.addEventListener('click', async function (e) {
@@ -936,9 +940,9 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         return;
       }
       const fromTo =
-          document.querySelector('#nag-nanny-from').value +
-          '-' +
-          document.querySelector('#nag-nanny-to').value;
+        document.querySelector('#nag-nanny-from').value +
+        '-' +
+        document.querySelector('#nag-nanny-to').value;
       Settings.saveSetting(fromTo, 'toggle-nanny-from-to');
     };
 
@@ -1101,23 +1105,6 @@ function changeActiveTab (tab) {
   if (tabEls.length === 0) {
     console.error(new Error(`changeActiveTab: Invalid tab name: ${name}`));
   }
-}
-
-function validateWebsiteBlockingListInput (rawInput) {
-  const hostnames = rawInput.split('\n').map(hostname => hostname.trim());
-  const uniqueDomains = [...new Set(hostnames)];
-  if (hostnames.length !== uniqueDomains.length) {
-    return 'Duplicates are found. Please, make sure that each hostname is unique.';
-  }
-  const invalidDomains = hostnames.filter(hostname => !isValidDomain(hostname));
-  if (invalidDomains.length) {
-    return `Invalid hostnames found: ${invalidDomains.join(', ')}.`;
-  }
-  return false;
-}
-
-function processWebsiteBlockingListInput (rawInput) {
-  return rawInput.split('\n').map(hostname => hostname.trim()).filter(Boolean).join('\n');
 }
 
 async function showReviewPrompt () {

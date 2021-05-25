@@ -795,6 +795,16 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       Settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
     });
     Settings.$websiteBlockingList.addEventListener('blur', function (e) {
+      const error = validateWebsiteBlockingListInput(e.target.value);
+      const errorElement = Settings.$websiteBlockingList.parentElement.querySelector('.error-message');
+      if (error) {
+        errorElement.innerHTML = error;
+        errorElement.classList.remove('hidden');
+        return;
+      } else {
+        errorElement.classList.add('hidden');
+        errorElement.innerHTML = '';
+      }
       const websiteBlockingList = processWebsiteBlockingListInput(e.target.value);
       Settings.saveSetting(websiteBlockingList, 'update-website-blocking-list');
     });
@@ -1093,15 +1103,21 @@ function changeActiveTab (tab) {
   }
 }
 
+function validateWebsiteBlockingListInput (rawInput) {
+  const hostnames = rawInput.split('\n').map(hostname => hostname.trim());
+  const uniqueDomains = [...new Set(hostnames)];
+  if (hostnames.length !== uniqueDomains.length) {
+    return 'Duplicates are found. Please, make sure that each hostname is unique.';
+  }
+  const invalidDomains = hostnames.filter(hostname => !isValidDomain(hostname));
+  if (invalidDomains.length) {
+    return `Invalid hostnames found: ${invalidDomains.join(', ')}.`;
+  }
+  return false;
+}
+
 function processWebsiteBlockingListInput (rawInput) {
-  return rawInput.split('\n').map(hostname => {
-    const trimmedHostname = hostname.trim();
-    // @ToDo - show error below the textarea that some of the lines are invalid?
-    if (isValidDomain(trimmedHostname)) {
-      return trimmedHostname;
-    }
-    return false;
-  }).filter(Boolean).join('\n');
+  return rawInput.split('\n').map(hostname => hostname.trim()).filter(Boolean).join('\n');
 }
 
 async function showReviewPrompt () {

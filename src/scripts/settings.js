@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill';
+import isValidDomain from 'is-valid-domain';
 
 import TogglOrigins from './origins';
 import bugsnagClient from './lib/bugsnag';
@@ -62,6 +63,9 @@ const Settings = {
   $pomodoroTickerSound: null,
   $pomodoroTickerVolume: null,
   $pomodoroTickerVolumeLabel: null,
+
+  $websiteBlockingEnabled: null,
+  $websiteBlockingList: null,
 
   $sendUsageStatistics: null,
   $sendErrorReports: null,
@@ -192,6 +196,11 @@ const Settings = {
       });
 
       document.querySelector('#pomodoro-interval').value = pomodoroInterval;
+
+      const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
+      const websiteBlockingList = await db.get('websiteBlockingList');
+      Settings.toggleState(Settings.$websiteBlockingEnabled, websiteBlockingEnabled);
+      Settings.$websiteBlockingList.value = websiteBlockingList;
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -716,6 +725,9 @@ document.addEventListener('DOMContentLoaded', async function (e) {
     Settings.$pomodoroTickerVolume = document.querySelector('#ticker-sound-volume');
     Settings.$pomodoroTickerVolumeLabel = document.querySelector('#ticker-volume-label');
 
+    Settings.$websiteBlockingEnabled = document.querySelector('#enable-website-blocking');
+    Settings.$websiteBlockingList = document.querySelector('#website-blocking-list');
+
     // Change active tab if present in search param
     const activeTabParam = getUrlParam(document.location, 'tab');
     changeActiveTab(activeTabParam || DEFAULT_TAB);
@@ -777,6 +789,16 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       }
       localStorage.setItem('darkMode', next);
     });
+
+    Settings.$websiteBlockingEnabled.addEventListener('click', async function (e) {
+      const enableWebsiteBlocking = await db.get('enableWebsiteBlocking');
+      Settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
+    });
+    Settings.$websiteBlockingList.addEventListener('blur', function (e) {
+      const websiteBlockingList = processWebsiteBlockingListInput(e.target.value);
+      Settings.saveSetting(websiteBlockingList, 'update-website-blocking-list');
+    });
+
     Settings.$enableAutoTagging.addEventListener('click', async function (e) {
       const enableAutoTagging = await db.get('enableAutoTagging');
       Settings.toggleSetting(e.target, !enableAutoTagging, 'update-enable-auto-tagging');
@@ -1069,6 +1091,17 @@ function changeActiveTab (tab) {
   if (tabEls.length === 0) {
     console.error(new Error(`changeActiveTab: Invalid tab name: ${name}`));
   }
+}
+
+function processWebsiteBlockingListInput (rawInput) {
+  return rawInput.split('\n').map(hostname => {
+    const trimmedHostname = hostname.trim();
+    // @ToDo - show error below the textarea that some of the lines are invalid?
+    if (isValidDomain(trimmedHostname)) {
+      return trimmedHostname;
+    }
+    return false;
+  }).filter(Boolean).join('\n');
 }
 
 async function showReviewPrompt () {

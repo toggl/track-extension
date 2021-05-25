@@ -74,7 +74,7 @@ select:-moz-focusring {
     text-shadow: 0 0 0 var(--text-color);
 }
 
-select:hover, select:focus, input:hover, input:focus {
+select:hover, select:focus, input:hover, input:focus, textarea:hover, textarea:focus {
   border-color: var(--border-hover-color) !important;
 }
 
@@ -86,6 +86,15 @@ select, select:hover {
   appearance: none;
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA3IDQiPjxwYXRoIGZpbGw9IiM3QjdCN0IiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTMuNSAyLjc5M0w2LjE0Ni4xNDZhLjUuNSAwIDEgMSAuNzA4LjcwOGwtMyAzYS41LjUgMCAwIDEtLjcwOCAwbC0zLTNBLjUuNSAwIDAgMSAuODU0LjE0NkwzLjUgMi43OTN6Ii8+PC9zdmc+") 96% no-repeat var(--header-bg-color) !important;
   color: var(--text-color) !important;
+}
+
+textarea, textarea:hover {
+  width: 300px;
+  margin-top: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--m-radius);
+  color: var(--text-color) !important;
+  background: var(--header-bg-color);
 }
 
 input[type="checkbox"] {
@@ -547,7 +556,7 @@ section .field--showDetails .subsettings-details {
 
 .remove-custom:hover {
   color: #ffffff;
-  background-color: #ef2d2d;
+  background-color: var(--danger-color);
 }
 
 .guide-container {
@@ -676,4 +685,17 @@ section .field--showDetails .subsettings-details {
 
 body[data-show-review-banner="true"] #review-prompt {
   transform: translateY(0);
+}
+
+
+.error-message {
+  color: var(--danger-color);
+}
+
+.has-error {
+  border-color: var(--danger-color)
+}
+
+.hidden {
+  display: none !important;
 }

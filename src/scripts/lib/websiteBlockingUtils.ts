@@ -39,10 +39,12 @@ export function setWebsiteBlockingError(textArea: HTMLElement, error: string | n
   }
 }
 
-// Formats:
-// String: domain1.com\ndomain2.com - to be used or taken from textarea value
-// BlockRecordsString: stringified JSON of WebsiteBlockRecord[] - to be used in API and stored in DB
-// BlockRecords - array of WebsiteBlockRecord[]
+/*
+* Formats:
+* String: domain1.com\ndomain2.com - to be used or taken from textarea value
+* BlockRecordsString: stringified JSON of WebsiteBlockRecord[] - to be used in API and stored in DB
+* BlockRecords - array of WebsiteBlockRecord[]
+*/
 
 export function blockRecordsToString(records: WebsiteBlockRecord[]) {
   return records.map(record => record.url).join('\n')
@@ -83,10 +85,26 @@ export function processWebsiteBlockingListInput (rawInput: string) {
   };
 }
 
-export function getRecordsFromApi() {
-  // ToDo.
+export async function getWebsiteBlockingRecordsFromApi() {
+  const token = localStorage.getItem('userToken') || '';
+  const response = await fetch(`${process.env.API_URL}/v9/me/blocked_sites`, {
+    headers: {
+      Authorization: `Basic ${btoa(token + ':api_token')}`,
+      IsTogglButton: 'true',
+    }
+  })
+  return await response.json()
 }
 
-export function saveRecordsToApi() {
-  // ToDo.
+export async function saveWebsiteBlockingRecordsToApi(body) {
+  const token = localStorage.getItem('userToken') || '';
+  const response = await fetch(`${process.env.API_URL}/v9/me/blocked_sites`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${btoa(token + ':api_token')}`,
+      IsTogglButton: 'true',
+    },
+    body
+  })
+  return await response.json()
 }

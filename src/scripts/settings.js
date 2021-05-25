@@ -7,7 +7,10 @@ import {
   validateWebsiteBlockingListInput,
   processWebsiteBlockingListInput,
   setWebsiteBlockingError,
-  blockRecordsStringToString
+  blockRecordsStringToString,
+  getWebsiteBlockingRecordsFromApi,
+  blockRecordsToString,
+  saveWebsiteBlockingRecordsToApi
 } from './lib/websiteBlockingUtils';
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
@@ -206,6 +209,17 @@ const Settings = {
       const websiteBlockingList = await db.get('websiteBlockingList');
       Settings.toggleState(Settings.$websiteBlockingEnabled, websiteBlockingEnabled);
       Settings.$websiteBlockingList.value = blockRecordsStringToString(websiteBlockingList);
+
+      getWebsiteBlockingRecordsFromApi().then(records => {
+        Settings.$websiteBlockingList.value = blockRecordsToString(records);
+        Settings.saveSetting(JSON.stringify(records), 'update-website-blocking-list');
+      }).catch(e => {
+        browser.runtime.sendMessage({
+          type: 'error',
+          stack: e.stack,
+          category: 'Settings'
+        });
+      });
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -799,15 +813,27 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       const enableWebsiteBlocking = await db.get('enableWebsiteBlocking');
       Settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
     });
-    Settings.$websiteBlockingList.addEventListener('blur', function (e) {
+    Settings.$websiteBlockingList.addEventListener('blur', async function (e) {
       const error = validateWebsiteBlockingListInput(e.target.value);
       setWebsiteBlockingError(Settings.$websiteBlockingList, error);
       if (error) {
         return;
       }
+
+      const currentValue = await db.get('websiteBlockingList');
       const { asString, asBlockRecordsString } = processWebsiteBlockingListInput(e.target.value);
 
-      // ToDo: save payload to API here.
+      if (currentValue === asBlockRecordsString) {
+        return;
+      }
+
+      saveWebsiteBlockingRecordsToApi(asBlockRecordsString).catch(e => {
+        browser.runtime.sendMessage({
+          type: 'error',
+          stack: e.stack || null,
+          category: 'Settings'
+        });
+      });
 
       Settings.saveSetting(asBlockRecordsString, 'update-website-blocking-list');
       Settings.$websiteBlockingList.value = asString;

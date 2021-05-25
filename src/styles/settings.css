@@ -74,7 +74,7 @@ select:-moz-focusring {
     text-shadow: 0 0 0 var(--text-color);
 }
 
-select:hover, select:focus, input:hover, input:focus {
+select:hover, select:focus, input:hover, input:focus, textarea:hover, textarea:focus {
   border-color: var(--border-hover-color) !important;
 }
 

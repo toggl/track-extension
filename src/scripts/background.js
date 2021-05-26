@@ -580,6 +580,7 @@ window.TogglButton = {
   },
 
   createTimeEntry: async function (timeEntry) {
+    distractionBlocker.closeOnStart();
     const type = timeEntry.type;
     const container = timeEntry.container;
     const start = new Date();

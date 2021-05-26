@@ -3,7 +3,11 @@ import browser from 'webextension-polyfill';
 
 export default function DistractionBlocker () {
   const closeOnStart = async () => {
-    const blockedTabs = await browser.tabs.query({ url: 'https://www.youtube.com/' });
+    const websiteBlockingList = JSON.parse(await db.get('websiteBlockingList') || '[]');
+
+    const blockedSites = websiteBlockingList.map(entry => entry.url);
+
+    const blockedTabs = await browser.tabs.query({ url: blockedSites });
     blockedTabs.forEach(tab => browser.tabs.remove(tab.id));
   };
 

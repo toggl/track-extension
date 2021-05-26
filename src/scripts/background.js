@@ -2203,9 +2203,9 @@ window.TogglButton = {
     }
 
     const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
-    const websiteBlockingList = await db.get('websiteBlockingList');
+    const websiteBlockingList = JSON.parse(await db.get('websiteBlockingList') || '[]');
 
-    const shouldBlock = websiteBlockingEnabled && websiteBlockingList.split('\n').includes(hostname);
+    const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === hostname));
     if (shouldBlock && TogglButton.$curEntry) {
       chrome.tabs.remove(tabId);
     }

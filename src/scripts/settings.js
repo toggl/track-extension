@@ -3,15 +3,8 @@ import browser from 'webextension-polyfill';
 import TogglOrigins from './origins';
 import bugsnagClient from './lib/bugsnag';
 import { getStoreLink, getUrlParam, isActiveUser } from './lib/utils';
-import {
-  validateWebsiteBlockingListInput,
-  processWebsiteBlockingListInput,
-  setWebsiteBlockingError,
-  blockRecordsStringToString,
-  getWebsiteBlockingRecordsFromApi,
-  blockRecordsToString,
-  saveWebsiteBlockingRecordsToApi
-} from './lib/websiteBlockingUtils';
+
+import WebsiteBlocking from './website-blocking/WebsiteBlocking';
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const ga = browser.extension.getBackgroundPage().ga;
@@ -205,21 +198,17 @@ const Settings = {
 
       document.querySelector('#pomodoro-interval').value = pomodoroInterval;
 
-      const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
-      const websiteBlockingList = await db.get('websiteBlockingList');
-      Settings.toggleState(Settings.$websiteBlockingEnabled, websiteBlockingEnabled);
-      Settings.$websiteBlockingList.value = blockRecordsStringToString(websiteBlockingList);
-
-      getWebsiteBlockingRecordsFromApi().then(records => {
-        Settings.$websiteBlockingList.value = blockRecordsToString(records);
-        Settings.saveSetting(JSON.stringify(records), 'update-website-blocking-list');
-      }).catch(e => {
-        browser.runtime.sendMessage({
-          type: 'error',
-          stack: e.stack,
-          category: 'Settings'
-        });
-      });
+      Settings.websiteBlocker = new WebsiteBlocking(
+        Settings,
+        db,
+        e => {
+          browser.runtime.sendMessage({
+            type: 'error',
+            stack: e.stack,
+            category: 'Settings'
+          });
+        }
+      );
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -807,36 +796,6 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         document.documentElement.classList.add('dark');
       }
       localStorage.setItem('darkMode', next);
-    });
-
-    Settings.$websiteBlockingEnabled.addEventListener('click', async function (e) {
-      const enableWebsiteBlocking = await db.get('enableWebsiteBlocking');
-      Settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
-    });
-    Settings.$websiteBlockingList.addEventListener('blur', async function (e) {
-      const error = validateWebsiteBlockingListInput(e.target.value);
-      setWebsiteBlockingError(Settings.$websiteBlockingList, error);
-      if (error) {
-        return;
-      }
-
-      const currentValue = await db.get('websiteBlockingList');
-      const { asString, asBlockRecordsString } = processWebsiteBlockingListInput(e.target.value);
-
-      if (currentValue === asBlockRecordsString) {
-        return;
-      }
-
-      saveWebsiteBlockingRecordsToApi(asBlockRecordsString).catch(e => {
-        browser.runtime.sendMessage({
-          type: 'error',
-          stack: e.stack || null,
-          category: 'Settings'
-        });
-      });
-
-      Settings.saveSetting(asBlockRecordsString, 'update-website-blocking-list');
-      Settings.$websiteBlockingList.value = asString;
     });
 
     Settings.$enableAutoTagging.addEventListener('click', async function (e) {

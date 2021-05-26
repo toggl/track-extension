@@ -218,3 +218,10 @@ interface FailureResponse {
 }
 
 type ButtonResponse = SuccessResponse | FailureResponse;
+
+type WebsiteBlockRecord = {
+  name: string;
+  url: string;
+  androidPackageName?: string;
+  device: 'all' | 'web' | 'android'
+}

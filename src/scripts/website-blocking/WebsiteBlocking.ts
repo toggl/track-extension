@@ -53,7 +53,7 @@ class WebsiteBlocking {
       return;
     }
 
-    const currentBlockRecords = JSON.parse(currentValue);
+    const currentBlockRecords = JSON.parse(currentValue) || [];
 
     const entriesToAdd = blockRecords.filter(newRecord => {
       return !Boolean(currentBlockRecords.find(currentRecord => currentRecord.name === newRecord.name))

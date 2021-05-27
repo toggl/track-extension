@@ -30,6 +30,7 @@ class WebsiteBlocking {
 
     this.enabledCheckbox.addEventListener('click', this.onEnabledCheckboxClick)
     this.blockingListTextarea.addEventListener('blur', this.onBlockingListTextareaBlur)
+    this.currentlyBlockingListController.render().catch(this.onError)
   }
 
    onEnabledCheckboxClick = async (e) => {
@@ -38,37 +39,33 @@ class WebsiteBlocking {
   }
 
   onBlockingListTextareaBlur = async (e) => {
-    const error = WebsiteBlocking.validateWebsiteBlockingListInput(e.target.value);
+    const error = await WebsiteBlocking.validateWebsiteBlockingListInput(e.target.value);
     this.setWebsiteBlockingError(error);
-    if (error) {
+    if (error || !e.target.value) {
       return;
     }
 
-    const currentValue = await WebsiteBlocking.db().get('websiteBlockingList');
-    const { string, blockRecordsString, blockRecords } = WebsiteBlockingConverter.processWebsiteBlockingListInput(e.target.value);
+    const currentBlockRecords = await WebsiteBlocking.db().get('websiteBlockingList');
+    const { blockRecordsString, blockRecords } = WebsiteBlockingConverter.processWebsiteBlockingListInput(e.target.value);
 
-    if (currentValue === blockRecordsString) {
+    if (JSON.stringify(currentBlockRecords) === blockRecordsString) {
       return;
     }
 
-    const currentBlockRecords = JSON.parse(currentValue) || [];
-
-    const entriesToAdd = blockRecords.filter(newRecord => {
+    const blockRecordsToAdd = blockRecords.filter(newRecord => {
       return !Boolean(currentBlockRecords.find(currentRecord => currentRecord.name === newRecord.name))
     })
-    if (entriesToAdd.length) {
-      WebsiteBlockingApi.saveWebsiteBlockingRecordsToApi(entriesToAdd).catch(this.onError);
+    if (blockRecordsToAdd.length) {
+      WebsiteBlockingApi.saveWebsiteBlockingRecordsToApi(blockRecordsToAdd).catch(this.onError);
     }
 
-    const entriesToRemove = currentBlockRecords.filter(currentRecord => {
-      return !Boolean(blockRecords.find(newRecord => newRecord.name === currentRecord.name))
-    })
-    if (entriesToRemove.length) {
-      WebsiteBlockingApi.deleteWebsiteBlockingRecords(entriesToRemove).catch(this.onError);
-    }
+    const allBlockRecords = [
+      ...currentBlockRecords,
+      ...blockRecords,
+    ];
 
-    this.settings.saveSetting(blockRecordsString, 'update-website-blocking-list');
-    this.blockingListTextarea.value = string;
+    this.settings.saveSetting(allBlockRecords, 'update-website-blocking-list');
+    this.blockingListTextarea.value = '';
   }
 
   setWebsiteBlockingError(error: string | null) {
@@ -95,16 +92,12 @@ class WebsiteBlocking {
     });
   }
 
-  static youShallNotPass(tabId) {
-    browser.tabs.update(tabId, {url: browser.runtime.getURL('html/website-blocking.html')})
-  }
-
-  static db () {
-    return browser.extension.getBackgroundPage().db;
-  }
-
-  static validateWebsiteBlockingListInput (rawInput: string) {
-    const urls = rawInput.split('\n').map(url => url.trim()).filter(Boolean);
+  static async validateWebsiteBlockingListInput(rawInput: string) {
+    const currentBlockRecords = await db.get('websiteBlockingList');
+    const urls = [
+      ...currentBlockRecords.map(record => record.url),
+      ...rawInput.split('\n').map(url => url.trim()).filter(Boolean)
+    ];
     const uniqueUrls = [...new Set(urls)];
     if (urls.length !== uniqueUrls.length) {
       return 'Duplicates are found. Please, make sure that each URL is unique.';
@@ -125,11 +118,8 @@ class WebsiteBlocking {
   }
 
   static async closeOnStart() {
-    
     const websiteBlockingList = JSON.parse(await WebsiteBlocking.db().get('websiteBlockingList') || '[]');
-
     const blockedSites = websiteBlockingList.map(entry => entry.url);
-
     if (blockedSites.length > 0) {
       const blockedTabs = await browser.tabs.query({ url: blockedSites });
       blockedTabs.forEach(tab => WebsiteBlocking.youShallNotPass(tab.id));
@@ -141,8 +131,8 @@ class WebsiteBlocking {
     if (!url) {
       return;
     }
-    
-  
+
+
     const websiteBlockingEnabled = await WebsiteBlocking.db().get('enableWebsiteBlocking');
     const websiteBlockingList = JSON.parse(await WebsiteBlocking.db().get('websiteBlockingList') || '[]');
 
@@ -152,6 +142,14 @@ class WebsiteBlocking {
       WebsiteBlocking.youShallNotPass(tabId);
     }
   };
+
+  static youShallNotPass(tabId) {
+    browser.tabs.update(tabId, {url: browser.runtime.getURL('html/website-blocking.html')})
+  }
+
+  static db () {
+    return browser.extension.getBackgroundPage().db;
+  }
 }
 
 export default WebsiteBlocking;

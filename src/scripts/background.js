@@ -2088,6 +2088,7 @@ window.TogglButton = {
           db.updateSetting('enableWebsiteBlocking', request.state);
         } else if (request.type === 'update-website-blocking-list') {
           db.updateSetting('websiteBlockingList', request.state);
+          browser.runtime.sendMessage({ type: 'website-blocking-list-updated' });
         } else if (
           request.type === 'update-enable-auto-tagging'
         ) {

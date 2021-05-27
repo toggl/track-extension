@@ -32,6 +32,9 @@ const DEFAULT_SETTINGS = {
   rememberProjectPer: 'false',
   enableAutoTagging: false,
 
+  enableWebsiteBlocking: false,
+  websiteBlockingList: [],
+
   sendErrorReports: true,
   sendUsageStatistics: true
 };

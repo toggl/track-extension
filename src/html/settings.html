@@ -324,12 +324,18 @@
             <input type="checkbox" id="enable-website-blocking">
             <label for="enable-website-blocking">
               <span class="setting">Enable website blocking</span>
-              <span class="description">If enabled, visiting websites from the website blocking list will be disallowed while you're tracking time</span>
+              <span class="description">If enabled, visiting websites from the blocking list will be disallowed while you're tracking time</span>
             </label>
           </div>
+
+          <div id="website-blocking-list-section" class="field website-blocking-list-section">
+            <div class="text-bold">Website blocking list</div>
+            <div id="website-blocking-list-section-currently-blocking"></div>
+          </div>
+
           <div class="textarea field">
             <label for="website-blocking-list">
-              <span class="setting">Website blocking list</span>
+              <span class="setting">Add websites to block</span>
               <span class="description">Enter the list of domains you would like to block, each one on a new line</span>
             </label>
             <textarea id="website-blocking-list" rows="3"></textarea>

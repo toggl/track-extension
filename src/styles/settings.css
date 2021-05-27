@@ -175,6 +175,30 @@ button.danger:hover, button.danger:enabled:hover {
   background: var(--main-bg-color);
 }
 
+button.inline-danger {
+  margin-top: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  color: var(--danger-color);
+  background: var(--header-bg-color);
+  min-height: initial;
+  height: 22px;
+  text-shadow: none;
+}
+
+button.inline-danger:hover {
+  color: var(--danger-color) !important;
+  background: var(--header-bg-color);
+  background-image: none !important;
+  box-shadow: none !important;
+  text-decoration: underline;
+}
+
+button.inline-danger:disabled {
+  background: var(--header-bg-color);
+}
+
 input[type="time"] {
   -moz-appearance: textfield;
 }
@@ -687,9 +711,33 @@ body[data-show-review-banner="true"] #review-prompt {
   transform: translateY(0);
 }
 
+#website-blocking-list-section-currently-blocking {
+  margin-top: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+  max-width: 445px;
+}
+
+.website-blocking-list-section-currently-blocking-record {
+  display: flex;
+  align-items: center;
+}
+
+.website-blocking-list-section-url {
+  flex: 1;
+  max-width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 20px;
+}
 
 .error-message {
   color: var(--danger-color);
+}
+
+.text-bold {
+  font-weight: 500;
 }
 
 .has-error {
@@ -698,4 +746,8 @@ body[data-show-review-banner="true"] #review-prompt {
 
 .hidden {
   display: none !important;
+}
+
+.disabled {
+  opacity: 0.6;
 }

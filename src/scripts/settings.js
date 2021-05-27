@@ -200,7 +200,6 @@ const Settings = {
 
       Settings.websiteBlocker = new WebsiteBlocking(
         Settings,
-        db,
         e => {
           browser.runtime.sendMessage({
             type: 'error',

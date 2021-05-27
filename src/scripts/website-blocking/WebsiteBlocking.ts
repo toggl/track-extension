@@ -4,15 +4,16 @@ import browser from 'webextension-polyfill';
 import WebsiteBlockingApi from "./WebsiteBlockingApi";
 import WebsiteBlockingConverter from "./WebsiteBlockingConverter";
 
+const db = browser.extension.getBackgroundPage().db;
+
 class WebsiteBlocking {
   settings: any
   db: {get: Function, set: Function}
   enabledCheckbox: HTMLElement
   blockingListTextarea: HTMLTextAreaElement
 
-  constructor(Settings, db) {
+  constructor(Settings) {
     this.settings = Settings;
-    this.db = db;
 
     this.enabledCheckbox = Settings.$websiteBlockingEnabled;
     this.blockingListTextarea = Settings.$websiteBlockingList;
@@ -20,13 +21,13 @@ class WebsiteBlocking {
   }
 
   async init() {
-    const websiteBlockingEnabled = await this.db.get('enableWebsiteBlocking');
-    const websiteBlockingList = await this.db.get('websiteBlockingList');
+    const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
+    const websiteBlockingList = await db.get('websiteBlockingList');
     this.settings.toggleState(this.enabledCheckbox, websiteBlockingEnabled);
     this.blockingListTextarea.value = WebsiteBlockingConverter.blockRecordsStringToString(websiteBlockingList);
 
     WebsiteBlockingApi.getWebsiteBlockingRecordsFromApi().then(records => {
-      this.settings.$websiteBlockingList.value = WebsiteBlockingConverter.blockRecordsToString(records);
+      this.blockingListTextarea.value = WebsiteBlockingConverter.blockRecordsToString(records);
       this.settings.saveSetting(JSON.stringify(records), 'update-website-blocking-list');
     }).catch(this.onError);
 
@@ -35,7 +36,7 @@ class WebsiteBlocking {
   }
 
    onEnabledCheckboxClick = async (e) => {
-    const enableWebsiteBlocking = await this.db.get('enableWebsiteBlocking');
+    const enableWebsiteBlocking = await db.get('enableWebsiteBlocking');
     this.settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
   }
 
@@ -46,7 +47,7 @@ class WebsiteBlocking {
       return;
     }
 
-    const currentValue = await this.db.get('websiteBlockingList');
+    const currentValue = await db.get('websiteBlockingList');
     const { string, blockRecordsString, blockRecords } = WebsiteBlockingConverter.processWebsiteBlockingListInput(e.target.value);
 
     if (currentValue === blockRecordsString) {

@@ -7,6 +7,7 @@ interface Process {
   env: {
     NODE_ENV?: 'PRODUCTION';
     DEBUG?: string;
+    API_URL: string;
     BUGSNAG_API_KEY?: string;
     VERSION: string;
     TOGGL_WEB_HOST: string;
@@ -217,3 +218,10 @@ interface FailureResponse {
 }
 
 type ButtonResponse = SuccessResponse | FailureResponse;
+
+type WebsiteBlockRecord = {
+  name: string;
+  url: string;
+  androidPackageName?: string;
+  device: 'all' | 'web' | 'android'
+}

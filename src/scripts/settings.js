@@ -1,9 +1,10 @@
 import browser from 'webextension-polyfill';
-import isValidDomain from 'is-valid-domain';
 
 import TogglOrigins from './origins';
 import bugsnagClient from './lib/bugsnag';
 import { getStoreLink, getUrlParam, isActiveUser } from './lib/utils';
+
+import WebsiteBlocking from './website-blocking/WebsiteBlocking';
 
 let TogglButton = browser.extension.getBackgroundPage().TogglButton;
 const ga = browser.extension.getBackgroundPage().ga;
@@ -197,10 +198,16 @@ const Settings = {
 
       document.querySelector('#pomodoro-interval').value = pomodoroInterval;
 
-      const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
-      const websiteBlockingList = await db.get('websiteBlockingList');
-      Settings.toggleState(Settings.$websiteBlockingEnabled, websiteBlockingEnabled);
-      Settings.$websiteBlockingList.value = websiteBlockingList;
+      Settings.websiteBlocker = new WebsiteBlocking(
+        Settings,
+        e => {
+          browser.runtime.sendMessage({
+            type: 'error',
+            stack: e.stack,
+            category: 'Settings'
+          });
+        }
+      );
 
       Settings.toggleState(Settings.$stopAtDayEnd, stopAtDayEnd);
       document.querySelector('#day-end-time').value = dayEndTime;
@@ -790,15 +797,6 @@ document.addEventListener('DOMContentLoaded', async function (e) {
       localStorage.setItem('darkMode', next);
     });
 
-    Settings.$websiteBlockingEnabled.addEventListener('click', async function (e) {
-      const enableWebsiteBlocking = await db.get('enableWebsiteBlocking');
-      Settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
-    });
-    Settings.$websiteBlockingList.addEventListener('blur', function (e) {
-      const websiteBlockingList = processWebsiteBlockingListInput(e.target.value);
-      Settings.saveSetting(websiteBlockingList, 'update-website-blocking-list');
-    });
-
     Settings.$enableAutoTagging.addEventListener('click', async function (e) {
       const enableAutoTagging = await db.get('enableAutoTagging');
       Settings.toggleSetting(e.target, !enableAutoTagging, 'update-enable-auto-tagging');
@@ -926,9 +924,9 @@ document.addEventListener('DOMContentLoaded', async function (e) {
         return;
       }
       const fromTo =
-          document.querySelector('#nag-nanny-from').value +
-          '-' +
-          document.querySelector('#nag-nanny-to').value;
+        document.querySelector('#nag-nanny-from').value +
+        '-' +
+        document.querySelector('#nag-nanny-to').value;
       Settings.saveSetting(fromTo, 'toggle-nanny-from-to');
     };
 
@@ -1091,17 +1089,6 @@ function changeActiveTab (tab) {
   if (tabEls.length === 0) {
     console.error(new Error(`changeActiveTab: Invalid tab name: ${name}`));
   }
-}
-
-function processWebsiteBlockingListInput (rawInput) {
-  return rawInput.split('\n').map(hostname => {
-    const trimmedHostname = hostname.trim();
-    // @ToDo - show error below the textarea that some of the lines are invalid?
-    if (isValidDomain(trimmedHostname)) {
-      return trimmedHostname;
-    }
-    return false;
-  }).filter(Boolean).join('\n');
 }
 
 async function showReviewPrompt () {

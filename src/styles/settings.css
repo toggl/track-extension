@@ -556,7 +556,7 @@ section .field--showDetails .subsettings-details {
 
 .remove-custom:hover {
   color: #ffffff;
-  background-color: var(--danger-color);
+  background-color: #ef2d2d;
 }
 
 .guide-container {

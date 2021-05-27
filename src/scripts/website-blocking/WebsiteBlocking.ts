@@ -138,19 +138,11 @@ class WebsiteBlocking {
   static async blockSite(tabId, changeInfo) {
     const url = changeInfo.pendingUrl || changeInfo.url;
     
-    if (!url || !url.startsWith('http')) {
-      return;
-    }
-
-    let hostname = new URL(url).hostname;
-    if (hostname.startsWith('www.')) {
-      hostname = hostname.replace('www.', '');
-    }
-
+  
     const websiteBlockingEnabled = await db().get('enableWebsiteBlocking');
     const websiteBlockingList = JSON.parse(await db().get('websiteBlockingList') || '[]');
 
-    const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === hostname));
+    const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === url));
     let TogglButton = browser.extension.getBackgroundPage().TogglButton;
     if (shouldBlock && TogglButton.$curEntry) {
       youShallNotPass(tabId)

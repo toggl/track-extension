@@ -37,7 +37,7 @@ module.exports = config(({ development, bugsnagApiKey, production, release, vers
     ...entry('background'),
     ...entry('common'),
     ...entry('login', 'ts'),
-    ...entry('website-blocking/index', 'ts'),
+    ...entry('website-blocking/index'),
     ...entry('popup'),
     ...entry('settings'),
     ...entry('settings-theme'),

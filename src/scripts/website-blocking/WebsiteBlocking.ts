@@ -3,7 +3,7 @@ import browser from 'webextension-polyfill';
 import WebsiteBlockingApi from "./WebsiteBlockingApi";
 import WebsiteBlockingConverter from "./WebsiteBlockingConverter";
 
-const db = browser.extension.getBackgroundPage().db;
+const db = () => browser.extension.getBackgroundPage().db;
 
 class WebsiteBlocking {
   settings: any
@@ -20,8 +20,8 @@ class WebsiteBlocking {
   }
 
   async init() {
-    const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
-    const websiteBlockingList = await db.get('websiteBlockingList');
+    const websiteBlockingEnabled = await db().get('enableWebsiteBlocking');
+    const websiteBlockingList = await db().get('websiteBlockingList');
     this.settings.toggleState(this.enabledCheckbox, websiteBlockingEnabled);
     this.blockingListTextarea.value = WebsiteBlockingConverter.blockRecordsStringToString(websiteBlockingList);
 
@@ -35,7 +35,7 @@ class WebsiteBlocking {
   }
 
    onEnabledCheckboxClick = async (e) => {
-    const enableWebsiteBlocking = await db.get('enableWebsiteBlocking');
+    const enableWebsiteBlocking = await db().get('enableWebsiteBlocking');
     this.settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
   }
 
@@ -46,7 +46,7 @@ class WebsiteBlocking {
       return;
     }
 
-    const currentValue = await db.get('websiteBlockingList');
+    const currentValue = await db().get('websiteBlockingList');
     const { string, blockRecordsString, blockRecords } = WebsiteBlockingConverter.processWebsiteBlockingListInput(e.target.value);
 
     if (currentValue === blockRecordsString) {
@@ -117,8 +117,42 @@ class WebsiteBlocking {
     }
     return null;
   }
+
+  static async closeOnStart() {
+    
+    const websiteBlockingList = JSON.parse(await db().get('websiteBlockingList') || '[]');
+
+    const blockedSites = websiteBlockingList.map(entry => entry.url);
+
+    console.log(blockedSites)
+    if (blockedSites.length > 0) {
+      const blockedTabs = await browser.tabs.query({ url: blockedSites });
+      blockedTabs.forEach(tab => browser.tabs.remove(tab.id));
+    }
+    
+  };
+
+  static async blockSite(tabId, changeInfo) {
+    const url = changeInfo.pendingUrl || changeInfo.url;
+    
+    if (!url || !url.startsWith('http')) {
+      return;
+    }
+
+    let hostname = new URL(url).hostname;
+    if (hostname.startsWith('www.')) {
+      hostname = hostname.replace('www.', '');
+    }
+
+    const websiteBlockingEnabled = await db().get('enableWebsiteBlocking');
+    const websiteBlockingList = JSON.parse(await db().get('websiteBlockingList') || '[]');
+
+    const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === hostname));
+    let TogglButton = browser.extension.getBackgroundPage().TogglButton;
+    if (shouldBlock && TogglButton.$curEntry) {
+      browser.tabs.remove(tabId);
+    }
+  };
 }
 
 export default WebsiteBlocking;
-
-

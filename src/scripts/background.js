@@ -8,7 +8,7 @@ import Ga from './lib/ga';
 import Sound from './lib/sound';
 /* eslint-disable-next-line import/no-webpack-loader-syntax */
 import togglButtonSVG from '!!raw-loader!./icons/toggl-button.svg';
-import DistractionBlocker from './lib/DistractionBlocker';
+import WebsiteBlocking from './website-blocking/WebsiteBlocking';
 
 const FIVE_MINUTES = 5 * 60;
 const ONE_HOUR = 60 * 60;
@@ -17,8 +17,6 @@ const RETRY_INTERVAL = 15;
 let openWindowsCount = 0;
 
 const FF = navigator.userAgent.indexOf('Chrome') === -1;
-
-const distractionBlocker = DistractionBlocker();
 
 const shouldTriggerNotification = (state, seconds) => {
   return (
@@ -580,7 +578,7 @@ window.TogglButton = {
   },
 
   createTimeEntry: async function (timeEntry) {
-    distractionBlocker.closeOnStart();
+    WebsiteBlocking.closeOnStart();
     const type = timeEntry.type;
     const container = timeEntry.container;
     const start = new Date();
@@ -2412,7 +2410,7 @@ TogglButton.fetchUser();
 TogglButton.setNannyTimer();
 TogglButton.startCheckingUserState();
 browser.tabs.onUpdated.addListener(TogglButton.tabUpdated);
-browser.tabs.onUpdated.addListener(distractionBlocker.blockSite);
+browser.tabs.onUpdated.addListener(WebsiteBlocking.blockSite);
 browser.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 db.get('stopAtDayEnd').then(TogglButton.startCheckingDayEnd);
 browser.runtime.onMessage.addListener(TogglButton.newMessage);

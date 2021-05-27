@@ -1,4 +1,3 @@
-import isValidDomain from 'is-valid-domain';
 import browser from 'webextension-polyfill';
 
 import WebsiteBlockingApi from "./WebsiteBlockingApi";
@@ -99,14 +98,22 @@ class WebsiteBlocking {
   }
 
   static validateWebsiteBlockingListInput (rawInput: string) {
-    const hostnames = rawInput.split('\n').map(hostname => hostname.trim()).filter(Boolean);
-    const uniqueDomains = [...new Set(hostnames)];
-    if (hostnames.length !== uniqueDomains.length) {
-      return 'Duplicates are found. Please, make sure that each hostname is unique.';
+    const urls = rawInput.split('\n').map(url => url.trim()).filter(Boolean);
+    const uniqueUrls = [...new Set(urls)];
+    if (urls.length !== uniqueUrls.length) {
+      return 'Duplicates are found. Please, make sure that each URL is unique.';
     }
-    const invalidDomains = hostnames.filter(hostname => !isValidDomain(hostname));
-    if (invalidDomains.length) {
-      return `Invalid hostnames found: ${invalidDomains.join(', ')}.`;
+    const invalidUrls = urls.filter(url => {
+      try {
+        new URL(url);
+        return false;
+      } catch {
+        return true;
+      }
+    });
+    if (invalidUrls.length) {
+      return `Invalid URL(s) found: ${invalidUrls.join(', ')}. <br />
+      Make sure all your URLs are formatted like "https://example.com"`;
     }
     return null;
   }

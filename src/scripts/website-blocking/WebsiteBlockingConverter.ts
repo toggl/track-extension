@@ -1,7 +1,7 @@
 export default class WebsiteBlockingConverter {
 
   static formatRawInput(rawInput: string) {
-    return rawInput.split('\n').map(hostname => hostname.trim()).filter(Boolean).join('\n')
+    return rawInput.split('\n').map(url => url.trim()).filter(Boolean).join('\n')
   }
 
   static (records: WebsiteBlockRecord[]) {
@@ -9,11 +9,11 @@ export default class WebsiteBlockingConverter {
   }
 
   static stringToBlockRecords(rawInput: string) {
-    const hostnames = rawInput.split('\n').map(hostname => hostname.trim()).filter(Boolean);
-    return hostnames.reduce((acc: WebsiteBlockRecord[], hostname) => {
+    const urls = rawInput.split('\n').map(url => url.trim()).filter(Boolean);
+    return urls.reduce((acc: WebsiteBlockRecord[], url) => {
       acc.push({
-        name: hostname,
-        url: hostname,
+        name: url,
+        url: url,
         device: 'all'
       });
       return acc;

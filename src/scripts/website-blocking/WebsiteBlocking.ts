@@ -5,6 +5,10 @@ import WebsiteBlockingConverter from "./WebsiteBlockingConverter";
 
 const db = () => browser.extension.getBackgroundPage().db;
 
+function youShallNotPass(tabId) {
+  browser.tabs.update(tabId, {url: browser.runtime.getURL('html/website-blocking.html')})
+}
+
 class WebsiteBlocking {
   settings: any
   db: {get: Function, set: Function}
@@ -127,9 +131,8 @@ class WebsiteBlocking {
     console.log(blockedSites)
     if (blockedSites.length > 0) {
       const blockedTabs = await browser.tabs.query({ url: blockedSites });
-      blockedTabs.forEach(tab => browser.tabs.remove(tab.id));
+      blockedTabs.forEach(tab => youShallNotPass(tab.id));
     }
-    
   };
 
   static async blockSite(tabId, changeInfo) {
@@ -150,7 +153,7 @@ class WebsiteBlocking {
     const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === hostname));
     let TogglButton = browser.extension.getBackgroundPage().TogglButton;
     if (shouldBlock && TogglButton.$curEntry) {
-      browser.tabs.remove(tabId);
+      youShallNotPass(tabId)
     }
   };
 }

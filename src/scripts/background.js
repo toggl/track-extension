@@ -8,6 +8,7 @@ import Ga from './lib/ga';
 import Sound from './lib/sound';
 /* eslint-disable-next-line import/no-webpack-loader-syntax */
 import togglButtonSVG from '!!raw-loader!./icons/toggl-button.svg';
+import WebsiteBlocking from './website-blocking/WebsiteBlocking';
 
 const FIVE_MINUTES = 5 * 60;
 const ONE_HOUR = 60 * 60;
@@ -577,6 +578,7 @@ window.TogglButton = {
   },
 
   createTimeEntry: async function (timeEntry) {
+    WebsiteBlocking.closeOnStart();
     const type = timeEntry.type;
     const container = timeEntry.container;
     const start = new Date();
@@ -2191,26 +2193,6 @@ window.TogglButton = {
     });
   },
 
-  blockSite: async function (tabId, changeInfo, tab) {
-    const url = changeInfo.pendingUrl || changeInfo.url;
-    if (!url || !url.startsWith('http')) {
-      return;
-    }
-
-    let hostname = new URL(url).hostname;
-    if (hostname.startsWith('www.')) {
-      hostname = hostname.replace('www.', '');
-    }
-
-    const websiteBlockingEnabled = await db.get('enableWebsiteBlocking');
-    const websiteBlockingList = JSON.parse(await db.get('websiteBlockingList') || '[]');
-
-    const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === hostname));
-    if (shouldBlock && TogglButton.$curEntry) {
-      chrome.tabs.remove(tabId);
-    }
-  },
-
   tabUpdated: async function (tabId, changeInfo, tab) {
     if (!TogglButton.$user && tab.url !== '' && !isTogglURL(tab.url)) {
       TogglButton.setBrowserActionBadge();
@@ -2428,7 +2410,7 @@ TogglButton.fetchUser();
 TogglButton.setNannyTimer();
 TogglButton.startCheckingUserState();
 browser.tabs.onUpdated.addListener(TogglButton.tabUpdated);
-browser.tabs.onUpdated.addListener(TogglButton.blockSite);
+browser.tabs.onUpdated.addListener(WebsiteBlocking.blockSite);
 browser.alarms.onAlarm.addListener(TogglButton.pomodoroAlarmStop);
 db.get('stopAtDayEnd').then(TogglButton.startCheckingDayEnd);
 browser.runtime.onMessage.addListener(TogglButton.newMessage);

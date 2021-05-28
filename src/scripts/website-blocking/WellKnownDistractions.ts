@@ -1,7 +1,7 @@
 export default [
   {
     "name": "Instagram",
-    "url": "https://instagram.com/",
+    "url": "https://www.instagram.com/",
     "androidAppId": "com.instagram.android",
     "device": "all"
   },

@@ -3,8 +3,8 @@ export default class WebsiteBlockingConverter {
   static parseRawInput(rawInput: string) {
     return rawInput.split('\n')
       .map(url => url.trim())
-      .map(url => !url.endsWith('/') ? url + '/' : url)
       .filter(Boolean)
+      .map(url => !url.endsWith('/') ? url + '/' : url)
   }
 
   static (records: WebsiteBlockRecord[]) {

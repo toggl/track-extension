@@ -3,7 +3,7 @@ import WebsiteBlockingApi from "../WebsiteBlockingApi";
 import WebsiteBlocking from "../WebsiteBlocking";
 import WebsiteBlockingConverter from "../WebsiteBlockingConverter";
 
-import {findArrayDuplicates, findArrayIntersection} from '../../lib/utils'
+import {findArrayDuplicates, findArrayIntersection, isValidUrl} from '../../lib/utils'
 
 const db = browser.extension.getBackgroundPage().db;
 
@@ -64,8 +64,6 @@ export default class ManuallyAddDistractionsController {
     }
   }
 
-
-  // @ts-ignore
   static async validateWebsiteBlockingListInput(rawInput: string) {
     const currentBlockRecords = await db.get('websiteBlockingList');
     const enteredUrls = WebsiteBlockingConverter.parseRawInput(rawInput);
@@ -82,16 +80,9 @@ export default class ManuallyAddDistractionsController {
               Please remove them before saving.`;
     }
 
-    const invalidUrls = enteredUrls.filter(url => {
-      try {
-        new URL(url);
-        return false;
-      } catch {
-        return true;
-      }
-    });
+    const invalidUrls = enteredUrls.filter(url => !isValidUrl(url));
     if (invalidUrls.length) {
-      return `Invalid URL(s) found: ${invalidUrls.join(', ')}. <br />
+      return `Invalid URL(s) found: <strong>${invalidUrls.join(', ')}</strong>. <br />
       Make sure all your URLs are formatted like "https://example.com"`;
     }
     return null;

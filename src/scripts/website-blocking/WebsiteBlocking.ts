@@ -2,42 +2,34 @@ import browser from 'webextension-polyfill';
 
 import WebsiteBlockingApi from "./WebsiteBlockingApi";
 
+import BlockingEnabledController from "./ui/BlockingEnabledController";
 import CurrentlyBlockingListController from "./ui/CurrentlyBlockingListController";
 import WellKnownDistractionsController from "./ui/WellKnownDistractionsController";
 import ManuallyAddDistractionsController from "./ui/ManuallyAddDistractionsController";
 
 class WebsiteBlocking {
   settings: any
-  enabledCheckbox: HTMLElement
+  blockingEnabledController: BlockingEnabledController
   currentlyBlockingListController: CurrentlyBlockingListController
   wellKnownDistractionsController: WellKnownDistractionsController
   manuallyAddDistractionsController: ManuallyAddDistractionsController
 
   constructor(settings) {
     this.settings = settings;
-    this.enabledCheckbox = settings.$websiteBlockingEnabled;
-    this.init().catch(WebsiteBlocking.onError);
+    this.blockingEnabledController = new BlockingEnabledController(settings)
     this.currentlyBlockingListController = new CurrentlyBlockingListController(settings)
     this.wellKnownDistractionsController = new WellKnownDistractionsController(settings)
     this.manuallyAddDistractionsController = new ManuallyAddDistractionsController(settings)
+    this.init().catch(WebsiteBlocking.onError);
   }
 
   async init() {
-    const websiteBlockingEnabled = await WebsiteBlocking.db().get('enableWebsiteBlocking');
-    this.settings.toggleState(this.enabledCheckbox, websiteBlockingEnabled);
-
     WebsiteBlockingApi.getWebsiteBlockingRecordsFromApi().then(records => {
       this.settings.saveSetting({records}, 'update-website-blocking-list');
     }).catch(WebsiteBlocking.onError);
 
-    this.enabledCheckbox.addEventListener('click', this.onEnabledCheckboxClick)
     this.currentlyBlockingListController.render().catch(WebsiteBlocking.onError)
     this.wellKnownDistractionsController.render().catch(WebsiteBlocking.onError)
-  }
-
-  onEnabledCheckboxClick = async (e) => {
-    const enableWebsiteBlocking = await WebsiteBlocking.db().get('enableWebsiteBlocking');
-    this.settings.toggleSetting(e.target, !enableWebsiteBlocking, 'update-enable-website-blocking');
   }
 
   static onError = (e) => {
@@ -57,7 +49,7 @@ class WebsiteBlocking {
   }
 
   static async closeOnStart() {
-    const websiteBlockingList = JSON.parse(await WebsiteBlocking.db().get('websiteBlockingList') || '[]');
+    const websiteBlockingList = await WebsiteBlocking.db().get('websiteBlockingList') ;
     const blockedSites = websiteBlockingList.map(entry => entry.url);
 
     if (blockedSites.length > 0) {
@@ -73,7 +65,7 @@ class WebsiteBlocking {
     }
 
     const websiteBlockingEnabled = await WebsiteBlocking.db().get('enableWebsiteBlocking');
-    const websiteBlockingList = JSON.parse(await WebsiteBlocking.db().get('websiteBlockingList') || '[]');
+    const websiteBlockingList = await WebsiteBlocking.db().get('websiteBlockingList');
 
     const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === url));
     let TogglButton = browser.extension.getBackgroundPage().TogglButton;

@@ -18,6 +18,9 @@ export default class CurrentlyBlockingListController {
   onMessage = (request) => {
     if (request.type === 'website-blocking-list-updated') {
       this.render()
+      if (request.payload && request.payload.scrollListToBottom) {
+        setTimeout(() => this.listContainer.scrollTop = this.listContainer.scrollHeight)
+      }
     }
   }
 
@@ -25,19 +28,20 @@ export default class CurrentlyBlockingListController {
     const name = e.target.dataset.blockingRecordDeleteName;
     const currentRecords = await db.get('websiteBlockingList') || [];
     const url = currentRecords.find(record => record.name === name).url;
-    const isSure = window.confirm(`Are you sure you would like to remove ${url} from the blocking list?`);
+    const isSure = window.confirm(`Are you sure you want to unblock ${url}?`);
     if (isSure) {
-      e.target.setAttribute('disabled', 'disabled')
-      e.target.classList.add('disabled')
       try {
+        e.target.setAttribute('disabled', 'disabled')
+        e.target.classList.add('disabled')
         await WebsiteBlockingApi.deleteWebsiteBlockingRecord(name)
       } catch (e) {
+        return;
+      } finally {
         e.target.removeAttribute('disabled')
         e.target.classList.remove('disabled')
-        return;
       }
       const newRecords = currentRecords.filter(record => record.name !== name);
-      this.settings.saveSetting(newRecords, 'update-website-blocking-list');
+      this.settings.saveSetting({records: newRecords}, 'update-website-blocking-list');
     }
   }
 
@@ -65,7 +69,7 @@ export default class CurrentlyBlockingListController {
       <div class="website-blocking-list-section-currently-blocking-record">
         <div class="website-blocking-list-section-url">${url}</div>
         <div class="website-blocking-list-section-delete">
-          <button data-blocking-record-delete-name="${name}" class="inline-danger">Delete</button>
+          <button data-blocking-record-delete-name="${name}" class="inline-danger">Unblock</button>
         </div>
       </div>
     `

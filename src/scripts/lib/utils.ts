@@ -66,3 +66,24 @@ export async function isActiveUser (db: TogglDB) {
   const timeEntriesTracked = await db.get<number>('timeEntriesTracked') || 0;
   return (timeEntriesTracked >= ACTIVE_USER_TRESHOLD);
 }
+
+export function findArrayDuplicates(arr, unique = false) {
+  let sortedArray = arr.slice().sort();
+  let duplicates: string[] = [];
+  for (let i = 0; i < sortedArray.length - 1; i++) {
+    if (sortedArray[i + 1] == sortedArray[i]) {
+      duplicates.push(sortedArray[i]);
+    }
+  }
+  if (unique) {
+    return [...new Set(duplicates)]
+  } else {
+    return duplicates;
+  }
+}
+
+export function findArrayIntersection(array1, array2) {
+  return array1.filter((n) =>{
+    return array2.includes(n);
+  });
+}

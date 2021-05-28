@@ -1,18 +1,18 @@
-[
+export default [
   {
     "name": "Instagram",
-    "url": "https://instagram.com",
+    "url": "https://instagram.com/",
     "androidAppId": "com.instagram.android",
     "device": "all"
   },
   {
     "name": "Facebook",
-    "url": "https://www.facebook.com",
+    "url": "https://www.facebook.com/",
     "androidAppId": "com.facebook.katana"
   },
   {
     "name": "YouTube",
-    "url": "https://www.youtube.com",
+    "url": "https://www.youtube.com/",
     "androidAppId": "com.google.android.youtube",
     "device": "all"
   },
@@ -24,31 +24,31 @@
   },
   {
     "name": "Reddit",
-    "url": "https://www.reddit.com",
+    "url": "https://www.reddit.com/",
     "androidAppId": "com.reddit.frontpage",
     "device": "all"
   },
   {
     "name": "Twitch",
-    "url": "https://www.twitch.tv",
+    "url": "https://www.twitch.tv/",
     "androidAppId": "tv.twitch.android.app",
     "device": "all"
   },
   {
     "name": "LinkedIn",
-    "url": "https://www.linkedin.com",
+    "url": "https://www.linkedin.com/",
     "androidAppId": "com.linkedin.android",
     "device": "all"
   },
   {
     "name": "Netflix",
-    "url": "https://www.netflix.com",
+    "url": "https://www.netflix.com/",
     "androidAppId": "com.netflix.mediaclient",
     "device": "all"
   },
   {
     "name": "TikTok",
-    "url": "https://www.tiktok.com",
+    "url": "https://www.tiktok.com/",
     "androidAppId": "com.zhiliaoapp.musically",
     "device": "all"
   }

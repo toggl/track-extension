@@ -1,7 +1,10 @@
 export default class WebsiteBlockingConverter {
 
-  static formatRawInput(rawInput: string) {
-    return rawInput.split('\n').map(url => url.trim()).filter(Boolean).join('\n')
+  static parseRawInput(rawInput: string) {
+    return rawInput.split('\n')
+      .map(url => url.trim())
+      .map(url => !url.endsWith('/') ? url + '/' : url)
+      .filter(Boolean)
   }
 
   static (records: WebsiteBlockRecord[]) {
@@ -9,7 +12,7 @@ export default class WebsiteBlockingConverter {
   }
 
   static stringToBlockRecords(rawInput: string) {
-    const urls = rawInput.split('\n').map(url => url.trim()).filter(Boolean);
+    const urls = WebsiteBlockingConverter.parseRawInput(rawInput);
     return urls.reduce((acc: WebsiteBlockRecord[], url) => {
       acc.push({
         name: `${url.replace(/[\W]+/g,"_")}_${Date.now()}`,
@@ -23,10 +26,6 @@ export default class WebsiteBlockingConverter {
   static stringToBlockRecordsString(rawInput: string) {
     const records = WebsiteBlockingConverter.stringToBlockRecords(rawInput);
     return JSON.stringify(records);
-  }
-
-  static blockRecordsToString(records: WebsiteBlockRecord[]) {
-    return records.map(record => record.url).join('\n')
   }
 
   static processWebsiteBlockingListInput (rawInput: string) {

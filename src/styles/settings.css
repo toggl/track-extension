@@ -715,7 +715,7 @@ body[data-show-review-banner="true"] #review-prompt {
   margin-top: 10px;
   max-height: 150px;
   overflow-y: auto;
-  max-width: 445px;
+  max-width: 388px;
 }
 
 .website-blocking-list-section-currently-blocking-record {
@@ -732,8 +732,22 @@ body[data-show-review-banner="true"] #review-prompt {
   margin-right: 20px;
 }
 
+#block-well-known-distraction-container {
+  display: inline;
+}
+
+#website-blocking-list-container {
+  display: flex;
+}
+
+.website-blocking-list-textarea-wrapper {
+  width: 300px;
+  margin-right: 4px;
+}
+
 .error-message {
   color: var(--danger-color);
+  word-break: break-word;
 }
 
 .text-bold {

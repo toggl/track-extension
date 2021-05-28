@@ -138,6 +138,9 @@ class WebsiteBlocking {
 
   static async blockSite(tabId, changeInfo) {
     const url = changeInfo.pendingUrl || changeInfo.url;
+    if (!url) {
+      return;
+    }
     
   
     const websiteBlockingEnabled = await WebsiteBlocking.db().get('enableWebsiteBlocking');
@@ -146,7 +149,7 @@ class WebsiteBlocking {
     const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === url));
     let TogglButton = browser.extension.getBackgroundPage().TogglButton;
     if (shouldBlock && TogglButton.$curEntry) {
-      WebsiteBlocking.youShallNotPass(tabId)
+      WebsiteBlocking.youShallNotPass(tabId);
     }
   };
 }

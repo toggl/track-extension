@@ -43,7 +43,7 @@ class WebsiteBlocking {
   static youShallNotPass({ id, url }: { id: number, url?: string }) {
     let TogglButton = browser.extension.getBackgroundPage().TogglButton;
     TogglButton.blockedSites[id] = url;
-    browser.tabs.update(id, { url: browser.runtime.getURL('html/website-blocking.html') })
+    browser.tabs.update(id, { url: browser.runtime.getURL(`html/website-blocking.html?from=${new URL(url || '').hostname}`) })
   }
 
   static db () {

@@ -64,6 +64,7 @@ function filterTabs (handler) {
 }
 
 window.TogglButton = {
+  blockedSites: {},
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,
@@ -2145,6 +2146,7 @@ window.TogglButton = {
           TogglButton
             .stopTimeEntry(request)
             .then(resolve);
+          browser.runtime.sendMessage({ type: 'stopped' });
         } else if (request.type === 'userToken') {
           if (!TogglButton.$user) {
             TogglButton.fetchUser(request.apiToken);

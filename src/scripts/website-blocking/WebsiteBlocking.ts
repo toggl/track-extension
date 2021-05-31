@@ -40,8 +40,10 @@ class WebsiteBlocking {
     });
   }
 
-  static youShallNotPass(tabId) {
-    browser.tabs.update(tabId, {url: browser.runtime.getURL('html/website-blocking.html')})
+  static youShallNotPass({ id, url }: { id: number, url?: string }) {
+    let TogglButton = browser.extension.getBackgroundPage().TogglButton;
+    TogglButton.blockedSites[id] = url;
+    browser.tabs.update(id, { url: browser.runtime.getURL(`html/website-blocking.html?from=${new URL(url || '').hostname}`) })
   }
 
   static db () {
@@ -49,12 +51,12 @@ class WebsiteBlocking {
   }
 
   static async closeOnStart() {
-    const websiteBlockingList = await WebsiteBlocking.db().get('websiteBlockingList') ;
+    const websiteBlockingList = await WebsiteBlocking.db().get('websiteBlockingList');
     const blockedSites = websiteBlockingList.map(entry => entry.url);
 
     if (blockedSites.length > 0) {
       const blockedTabs = await browser.tabs.query({ url: blockedSites });
-      blockedTabs.forEach(tab => WebsiteBlocking.youShallNotPass(tab.id));
+      blockedTabs.forEach(tab => WebsiteBlocking.youShallNotPass(tab));
     }
   };
 
@@ -73,9 +75,11 @@ class WebsiteBlocking {
       return hostname === WebsiteBlocking.getHostnameFromUrl(record.url)
     }));
     let TogglButton = browser.extension.getBackgroundPage().TogglButton;
-    if (shouldBlock && TogglButton.$curEntry) {
-      WebsiteBlocking.youShallNotPass(tabId);
-    }
+    setTimeout(() => {
+      if (shouldBlock && TogglButton.$curEntry) {
+        WebsiteBlocking.youShallNotPass({ id: tabId, url });
+      }
+    }, 300)
   };
 
   static getHostnameFromUrl(url: string) {

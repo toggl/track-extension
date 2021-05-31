@@ -9,8 +9,7 @@ export default function TimerBlockPage({ TogglButton }: { TogglButton: any }) {
 
     React.useEffect(() => {
         browser.runtime.onMessage.addListener(async (message) => {
-            debugger
-            if (message.type === 'stop') {
+            if (message.type === 'stopped') {
                 let queryOptions = { active: true, currentWindow: true };
                 let [tab] = await browser.tabs.query(queryOptions);
                 browser.tabs.update(tab.id, { url: TogglButton.blockedSites[tab.id] })

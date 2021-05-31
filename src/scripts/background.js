@@ -2146,6 +2146,7 @@ window.TogglButton = {
           TogglButton
             .stopTimeEntry(request)
             .then(resolve);
+          browser.runtime.sendMessage({ type: 'stopped' });
         } else if (request.type === 'userToken') {
           if (!TogglButton.$user) {
             TogglButton.fetchUser(request.apiToken);

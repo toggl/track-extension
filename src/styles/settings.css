@@ -51,6 +51,10 @@ body {
   align-items: stretch;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   color: var(--text-color);
 }
@@ -95,6 +99,7 @@ textarea, textarea:hover {
   border-radius: var(--m-radius);
   color: var(--text-color) !important;
   background: var(--header-bg-color);
+  font-family: Roboto, Helvetica, sans-serif;
 }
 
 input[type="checkbox"] {

@@ -64,6 +64,7 @@ function filterTabs (handler) {
 }
 
 window.TogglButton = {
+  blockedSites: {},
   $user: null,
   $curEntry: null,
   $latestStoppedEntry: null,

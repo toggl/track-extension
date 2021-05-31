@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { addSeconds } from 'date-fns';
 import * as keycode from 'keycode';
+import browser from 'webextension-polyfill';
 
 import { formatDuration } from '../@toggl/time-format-utils/format-duration';
 
@@ -67,7 +68,9 @@ function TimerForm () {
     const description = inputRef && inputRef.current
       ? inputRef.current.value
       : '';
-    window.PopUp.sendMessage({ type: 'timeEntry', description, service: 'dropdown', respond: true });
+    const request = { type: 'timeEntry', description, service: 'dropdown', respond: true }
+    window.PopUp ?
+      window.PopUp.sendMessage(request) : browser.runtime.sendMessage(request)
   };
   const onKeyUp = (e) => {
     if (keycode(e.which) === 'enter') {
@@ -86,7 +89,9 @@ function TimerForm () {
 const stopTimer = (e: React.MouseEvent) => {
   e.preventDefault();
   e.stopPropagation();
-  window.PopUp.sendMessage({ type: 'stop', service: 'dropdown', respond: true });
+  const request = { type: 'stop', service: 'dropdown', respond: true };
+  window.PopUp ?
+    window.PopUp.sendMessage(request) : browser.runtime.sendMessage(request)
 };
 
 const TimerContainer = styled.div`

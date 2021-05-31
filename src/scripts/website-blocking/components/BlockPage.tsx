@@ -1,10 +1,23 @@
 import * as React from "react";
 import Timer from '../../components/Timer';
 import styled from '@emotion/styled'
+import browser from 'webextension-polyfill';
 
-export default function Pomodoro({ TogglButton }: { TogglButton: any }) {
-    const entry = TogglButton.$curEntry;
+export default function TimerBlockPage({ TogglButton }: { TogglButton: any }) {
+    const [entry] = React.useState(TogglButton.$curEntry)
     const project = entry && TogglButton.findProjectByPid(entry.pid) || null;
+
+    React.useEffect(() => {
+        browser.runtime.onMessage.addListener(async (message) => {
+            debugger
+            if (message.type === 'stop') {
+                let queryOptions = { active: true, currentWindow: true };
+                let [tab] = await browser.tabs.query(queryOptions);
+                browser.tabs.update(tab.id, { url: TogglButton.blockedSites[tab.id] })
+            }
+        })
+    }, [])
+
     return <Root>
         <TextWrapper>
             <Title>You shall not pass!</Title>

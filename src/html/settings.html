@@ -324,16 +324,35 @@
             <input type="checkbox" id="enable-website-blocking">
             <label for="enable-website-blocking">
               <span class="setting">Enable website blocking</span>
-              <span class="description">If enabled, visiting websites from the website blocking list will be disallowed while you're tracking time</span>
+              <span class="description">If enabled, visiting websites from the blocking list will be disallowed while you're tracking time</span>
             </label>
           </div>
+
+          <div id="website-blocking-list-section" class="field">
+            <div class="text-bold">Website blocking list</div>
+            <div id="website-blocking-list-section-currently-blocking"></div>
+          </div>
+
+          <div id="website-blocking-known-distractions-section" class="field">
+            <label for="well-known-distractions"><span class="setting">Block well-known distractions</span></label>
+            <div id="block-well-known-distraction-container">
+              <select id="well-known-distractions"></select>
+              <button id="block-well-known-distraction-button" class="button">Block</button>
+            </div>
+          </div>
+
           <div class="textarea field">
             <label for="website-blocking-list">
-              <span class="setting">Website blocking list</span>
-              <span class="description">Enter the list of domains you would like to block, each one on a new line</span>
+              <span class="setting">Add websites to block manually</span>
+              <span class="description">Enter the list of URLs you would like to block, each one on a new line</span>
             </label>
-            <textarea id="website-blocking-list" rows="3"></textarea>
-            <div class="hidden error-message"></div>
+            <div id="website-blocking-list-container">
+              <div class="website-blocking-list-textarea-wrapper">
+                <textarea id="website-blocking-list" rows="3"></textarea>
+                <div class="hidden error-message"></div>
+              </div>
+              <button id="website-blocking-list-button" class="button">Block</button>
+            </div>
           </div>
         </section>
       </div>

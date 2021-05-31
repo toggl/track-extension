@@ -1,7 +1,10 @@
 export default class WebsiteBlockingConverter {
 
-  static formatRawInput(rawInput: string) {
-    return rawInput.split('\n').map(url => url.trim()).filter(Boolean).join('\n')
+  static parseRawInput(rawInput: string) {
+    return rawInput.split('\n')
+      .map(url => url.trim())
+      .filter(Boolean)
+      .map(url => !url.endsWith('/') ? url + '/' : url)
   }
 
   static (records: WebsiteBlockRecord[]) {
@@ -9,10 +12,10 @@ export default class WebsiteBlockingConverter {
   }
 
   static stringToBlockRecords(rawInput: string) {
-    const urls = rawInput.split('\n').map(url => url.trim()).filter(Boolean);
+    const urls = WebsiteBlockingConverter.parseRawInput(rawInput);
     return urls.reduce((acc: WebsiteBlockRecord[], url) => {
       acc.push({
-        name: url,
+        name: `${url.replace(/[\W]+/g,"_")}_${Date.now()}`,
         url: url,
         device: 'all'
       });
@@ -25,22 +28,8 @@ export default class WebsiteBlockingConverter {
     return JSON.stringify(records);
   }
 
-  static blockRecordsStringToString(blockRecordsString: string) {
-    try {
-      const records = JSON.parse(blockRecordsString);
-      return WebsiteBlockingConverter.blockRecordsToString(records);
-    } catch (e) {
-      return '';
-    }
-  }
-
-  static blockRecordsToString(records: WebsiteBlockRecord[]) {
-    return records.map(record => record.url).join('\n')
-  }
-
   static processWebsiteBlockingListInput (rawInput: string) {
     return {
-      string: WebsiteBlockingConverter.formatRawInput(rawInput),
       blockRecordsString: WebsiteBlockingConverter.stringToBlockRecordsString(rawInput),
       blockRecords: WebsiteBlockingConverter.stringToBlockRecords(rawInput)
     };

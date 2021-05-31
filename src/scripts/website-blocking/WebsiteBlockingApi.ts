@@ -16,7 +16,14 @@ export default class WebsiteBlockingApi {
     return await response.json()
   }
 
-  static async deleteWebsiteBlockingRecords(entries: WebsiteBlockRecord[]) {
+  static async deleteWebsiteBlockingRecord(name: string) {
+    return fetch(`${process.env.API_URL}/v9/me/blocked_sites/${name}`, {
+      method: 'DELETE',
+      headers: WebsiteBlockingApi._getHeaders(),
+    })
+  }
+
+  static async deleteMultipleWebsiteBlockingRecords(entries: WebsiteBlockRecord[]) {
     return await Promise.all(entries.map(({name}) => {
       return fetch(`${process.env.API_URL}/v9/me/blocked_sites/${name}`, {
         method: 'DELETE',

@@ -64,15 +64,28 @@ class WebsiteBlocking {
       return;
     }
 
+    const hostname = WebsiteBlocking.getHostnameFromUrl(url);
+
     const websiteBlockingEnabled = await WebsiteBlocking.db().get('enableWebsiteBlocking');
     const websiteBlockingList = await WebsiteBlocking.db().get('websiteBlockingList');
 
-    const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => record.url === url));
+    const shouldBlock = websiteBlockingEnabled && !!(websiteBlockingList.find(record => {
+      return hostname === WebsiteBlocking.getHostnameFromUrl(record.url)
+    }));
     let TogglButton = browser.extension.getBackgroundPage().TogglButton;
     if (shouldBlock && TogglButton.$curEntry) {
       WebsiteBlocking.youShallNotPass(tabId);
     }
   };
+
+  static getHostnameFromUrl(url: string) {
+    const hostname = new URL(url).hostname;
+    if (hostname.startsWith('www.')) {
+      return hostname.replace('www.', '');
+    }
+    return hostname;
+  }
+
 }
 
 export default WebsiteBlocking;

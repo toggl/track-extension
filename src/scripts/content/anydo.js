@@ -32,6 +32,6 @@ togglbutton.render(
       projectName: projectSelector
     });
 
-  elem.querySelector('.TaskItem__mainContent').after(link);
+    elem.querySelector('.TaskItem__mainContent').after(link);
   }
 );

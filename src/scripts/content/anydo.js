@@ -17,21 +17,21 @@ togglbutton.render('.CardScrollView:not(.toggl)', { observe: true }, elem => {
   elem.querySelector('textarea').before(link);
 });
 
-// Any.do Q4 2018: tasks lists
+// Any.do 06 2021: tasks lists
 togglbutton.render(
-  '.TaskListRow[draggable=true]:not(.toggl)',
+  '.TaskList__taskContainer:not(.toggl)',
   { observe: true },
   elem => {
-    const descriptionSelector = () => elem.querySelector('.TaskItem__label__text__title').textContent;
-    const projectSelector = () => document.querySelector('.TasksToolBarCategoryTitle').textContent;
+    const descriptionSelector = () => elem.querySelector('.TaskItem__title').textContent;
+    const projectSelector = () => elem.querySelector('.TaskItemIndicators').textContent || document.querySelector('.TasksToolBar__title').textContent;
 
     const link = togglbutton.createTimerLink({
       buttonType: 'minimal',
-      className: 'anydo--2018__taskItem',
+      className: 'anydo--2021__taskItem',
       description: descriptionSelector,
       projectName: projectSelector
     });
 
-    elem.querySelector('.TaskItem').appendChild(link);
+  elem.querySelector('.TaskItem__mainContent').after(link);
   }
 );

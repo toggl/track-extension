@@ -1,10 +1,10 @@
 'use strict';
 
 togglbutton.render(
-  '.wspace-task-view:not(.toggl)',
+  '.task-view-header__main:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = $('.wrike-panel-header-toolbar', elem);
+    const container = $('.task-view-header__actions', elem);
 
     const getTitleElement = function () {
       const wsTaskTitle = document.querySelectorAll('ws-task-title');

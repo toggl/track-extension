@@ -871,7 +871,7 @@ a.toggl-button.toggl-plan {
 .toggl-button.wrike {
   text-decoration: none;
   color: rgb(80, 79, 79);
-  margin: 10px 15px 10px 0;
+  margin: 0px 15px 10px 0;
 }
 
 /********* ASSEMBLA *********/

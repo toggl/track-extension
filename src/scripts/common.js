@@ -583,7 +583,6 @@ window.togglbutton = {
           service: togglbutton.serviceName
         };
       } else {
-        togglbutton.activateTimerLink(link);
         opts = {
           type: 'timeEntry',
           respond: true,
@@ -596,6 +595,8 @@ window.togglbutton = {
           url: window.location.href,
           container: params.container || ''
         };
+        link.title = opts.description + (opts.projectName ? ' - ' + opts.projectName : '');
+        togglbutton.activateTimerLink(link);
       }
       togglbutton.element = e.currentTarget;
 

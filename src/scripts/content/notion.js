@@ -1,13 +1,13 @@
 'use strict';
 
-// Selectors here are madness, it works for as of Dec 4th 2019
+// Selectors here are madness, it works for as of Jul 16th 2021
 // Button renders in popup/dialog view
 togglbutton.render(
   '.notion-peek-renderer:not(.toggl)',
   { observe: true },
   function (elem) {
     function getDescription () {
-      const descriptionElem = elem.querySelector('.notion-scroller .notion-selectable div[contenteditable="true"]');
+      const descriptionElem = elem.querySelector('.notion-page-block div[contenteditable]');
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }
 
@@ -35,7 +35,7 @@ togglbutton.render(
     elem.style.position = 'relative';
 
     function getDescription () {
-      const descriptionElem = elem ? elem.querySelector('div[data-root="true"]') : '';
+      const descriptionElem = elem ? elem.querySelector('div[contenteditable]') : '';
 
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }

@@ -169,7 +169,7 @@ window.TogglButton = {
       TogglButton.ajax('/me?with_related_data=true', {
         token: token,
         baseUrl: TogglButton.$ApiV8Url,
-        onLoad: function (xhr) {
+        onLoad: async function (xhr) {
           let resp;
           const projectMap = {};
           const clientMap = {};
@@ -221,8 +221,10 @@ window.TogglButton = {
               }
 
               TogglButton.updateTriggers(entry);
-              localStorage.setItem('projects', JSON.stringify(projectMap));
-              localStorage.setItem('clients', JSON.stringify(clientMap));
+              await Promise.all([
+                db.setLocal('projects', projectMap),
+                db.setLocal('clients', clientMap)
+              ]);
               TogglButton.$user = resp.data;
               TogglButton.$user.time_entries = (TogglButton.$user.time_entries || [])
                 .map((te) => {
@@ -1306,9 +1308,10 @@ window.TogglButton = {
     return new Promise((resolve) => {
       TogglButton.ajax('/sessions?created_with=' + TogglButton.$fullVersion, {
         method: 'DELETE',
-        onLoad: function (xhr) {
+        onLoad: async function (xhr) {
           TogglButton.$user = null;
           TogglButton.updateTriggers(null);
+          await db.clearLocal();
           localStorage.removeItem('userToken');
           resolve({ success: xhr.status === 200, xhr: xhr });
           if (xhr.status === 200) {

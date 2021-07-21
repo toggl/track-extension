@@ -211,12 +211,12 @@ const Settings = {
     }
   },
   fillDefaultProject: async function () {
-    const projects = db.getLocal('projects') || {};
+    const projects = await db.getLocal('projects') || {};
     const hasProjects = Object.keys(projects).length > 0;
 
     if (hasProjects && !!TogglButton.$user) {
       const defaultProject = await db.getDefaultProject();
-      const clients = db.getLocal('clients') || {};
+      const clients = await db.getLocal('clients') || {};
 
       const html = document.createElement('select');
       html.id = 'default-project';

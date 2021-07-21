@@ -1,37 +1,40 @@
 'use strict';
 /* global togglbutton, $ */
 
-// any.do Q4 2018: task card
-togglbutton.render('.CardScrollView:not(.toggl)', { observe: true }, elem => {
-  const descriptionSelector = () => elem.querySelector('textarea').value;
-
-  const projectSelector = () => document.querySelector('.TasksToolBarCategoryTitle').textContent;
-
-  const link = togglbutton.createTimerLink({
-    buttonType: 'minimal',
-    className: 'anydo--2018',
-    description: descriptionSelector,
-    projectName: projectSelector
-  });
-
-  elem.querySelector('textarea').before(link);
-});
-
-// Any.do Q4 2018: tasks lists
+// Any.do Q3 2021: task card
 togglbutton.render(
-  '.TaskListRow[draggable=true]:not(.toggl)',
+  '.TaskEditPaneDetails:not(.toggl)',
   { observe: true },
   elem => {
-    const descriptionSelector = () => elem.querySelector('.TaskItem__label__text__title').textContent;
-    const projectSelector = () => document.querySelector('.TasksToolBarCategoryTitle').textContent;
+    const descriptionSelector = () => elem.querySelector('.TaskEditPaneDetails__taskTitle textarea').value;
+    const projectSelector = () => elem.querySelector('.TaskCategoryPickerButton__text').textContent;
 
     const link = togglbutton.createTimerLink({
       buttonType: 'minimal',
-      className: 'anydo--2018__taskItem',
+      className: 'anydo--2021',
       description: descriptionSelector,
       projectName: projectSelector
     });
 
-    elem.querySelector('.TaskItem').appendChild(link);
+    elem.querySelector('.TaskEditPaneDetails__taskLabels').after(link);
+  }
+);
+
+// Any.do Q3 2021: tasks lists
+togglbutton.render(
+  '.TaskList__taskContainer:not(.toggl)',
+  { observe: true },
+  elem => {
+    const descriptionSelector = () => elem.querySelector('.TaskItem__title').textContent;
+    const projectSelector = () => elem.querySelector('.TaskItemIndicators').textContent || document.querySelector('.TasksToolBar__title').textContent;
+
+    const link = togglbutton.createTimerLink({
+      buttonType: 'minimal',
+      className: 'anydo--2021__taskItem',
+      description: descriptionSelector,
+      projectName: projectSelector
+    });
+
+    elem.querySelector('.TaskItem__mainContent').after(link);
   }
 );

@@ -266,14 +266,16 @@ export default class Db {
 
   async getLocal (key) {
     const localStorageData = localStorage.getItem(key);
+    const idbData = await localForage.getItem(key);
     if (localStorageData) {
+      localStorage.removeItem(key);
+    }
+    if (localStorageData && !idbData) {
       const parsedData = JSON.parse(localStorageData);
       await this.setLocal(key, parsedData);
-      localStorage.removeItem(key);
-      return localStorageData;
+      return parsedData;
     }
-
-    return localForage.getItem(key);
+    return idbData;
   }
 
   clearLocal () {

@@ -2,11 +2,7 @@ import browser from 'webextension-polyfill';
 import bugsnagClient from './bugsnag';
 import storedOrigins from '../origins';
 
-import localForage from 'localforage';
-
-localForage.config({
-  storeName: 'TogglExtension'
-});
+import { getIDBItem, setIDBItem, clearIDBAll } from './dbUtils';
 
 const ORIGINS_KEY = 'TogglButton-origins';
 
@@ -248,7 +244,7 @@ export default class Db {
   }
 
   setLocal (key, value) {
-    return localForage.setItem(key, value);
+    return setIDBItem(key, value);
   }
 
   setMultiple (settings) {
@@ -266,7 +262,7 @@ export default class Db {
 
   async getLocal (key) {
     const localStorageData = localStorage.getItem(key);
-    const idbData = await localForage.getItem(key);
+    const idbData = await getIDBItem(key);
     if (localStorageData) {
       localStorage.removeItem(key);
     }
@@ -279,7 +275,7 @@ export default class Db {
   }
 
   clearLocal () {
-    return localForage.clear();
+    return clearIDBAll();
   }
 
   load (setting, defaultValue) {

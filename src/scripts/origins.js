@@ -272,8 +272,8 @@ export default {
     name: 'Husky Marketing Planner',
     file: 'husky-marketing-planner.js'
   },
-  'intercom.io': {
-    url: '*://*.intercom.io/*',
+  'intercom.com': {
+    url: '*://*.intercom.com/*',
     name: 'Intercom'
   },
   'jira.com': {

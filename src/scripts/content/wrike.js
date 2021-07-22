@@ -13,21 +13,32 @@ togglbutton.render(
       }
       return $('title');
     };
-
-    const descriptionText = function () {
+    
+    const getTaskId = function () {
       const urlString = window.location.href;
-      const url = new URL(urlString);
-      // We have to look for the param in a custom hash
+      const url = new URL(urlString); // We have to look for the param in a custom hash
+
       const hash = url.hash.substr(1);
-      const hashParts = hash.split('&');
-      let taskId = null;
-      for (let i = 0; i < hashParts.length; i++) {
-        const partSplit = hashParts[i].split('=');
-        if (partSplit[0] === 'ot') {
-          taskId = partSplit[1];
+      let indexBeginIdPart = hash.indexOf('?id=');
+      if (indexBeginIdPart === -1){
+        indexBeginIdPart = hash.indexOf('&id=');
+      }
+      if (indexBeginIdPart === -1){
+        return null;
+      } else {
+        indexBeginIdPart = indexBeginIdPart + 4;
+        const indexEndIdPart = hash.indexOf('&', indexBeginIdPart);
+        if (indexEndIdPart === -1){
+          return hash.slice(indexBeginIdPart);
+        } else {
+          return hash.slice(indexBeginIdPart, indexEndIdPart - 1); 
         }
       }
+    };  
 
+    const descriptionText = function () {
+
+      const taskId = getTaskId();
       const titleElem = getTitleElement();
       const titleElemText = titleElem ? titleElem.textContent : 'not found';
       return `${taskId ? '#' + taskId : ''} ${titleElemText.trim().replace(' - Wrike', '')}`.trim();

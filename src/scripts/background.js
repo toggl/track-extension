@@ -259,6 +259,8 @@ window.TogglButton = {
                     responseText: xhr.responseText
                   });
                 });
+              } else {
+                await db.clearLocal();
               }
               TogglButton.setBrowserActionBadge();
               resolve({

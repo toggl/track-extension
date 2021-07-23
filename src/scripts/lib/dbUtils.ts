@@ -15,7 +15,7 @@ export const getIDBItem = (key) => {
     const open = indexedDB.open(DB_NAME, DB_VERSION)
     open.onsuccess = () => {
       const db = open.result;
-      const transaction = db.transaction("LocalData", "readwrite");
+      const transaction = db.transaction("LocalData", "readonly");
       const store = transaction.objectStore("LocalData");
       const query = store.get(key);
       query.onsuccess = () => resolve(query.result && query.result.value);

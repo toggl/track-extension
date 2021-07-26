@@ -6,42 +6,33 @@ togglbutton.render(
   function (elem) {
     const container = $('.task-view-header__actions', elem);
 
-    const getTitleElement = function () {
-      const wsTaskTitle = document.querySelectorAll('ws-task-title');
+    const getTitle = function () {
+      const wsTaskTitle = document.querySelectorAll('div.title__ghost');
+
       if (wsTaskTitle.length === 1 && wsTaskTitle[0].textContent !== '') {
-        return wsTaskTitle[0];
+        return wsTaskTitle[0].textContent.trim();
+      } else {
+        const wsDocumentTitles = $('title');
+        if (wsDocumentTitles.length >= 1 && wsDocumentTitles[0].textContent !== '') {
+          return wsDocumentTitles[0].textContent.trim().replace(' - Wrike', '');
+        }
       }
-      return $('title');
+      return 'not found';
     };
     
     const getTaskId = function () {
-      const urlString = window.location.href;
-      const url = new URL(urlString); // We have to look for the param in a custom hash
+      const wsTaskId = document.querySelectorAll('div.task-author__task-id');
 
-      const hash = url.hash.substr(1);
-      let indexBeginIdPart = hash.indexOf('?id=');
-      if (indexBeginIdPart === -1){
-        indexBeginIdPart = hash.indexOf('&id=');
+      if (wsTaskId.length === 1 && wsTaskId[0].textContent !== '') {
+        return wsTaskId[0].textContent;
       }
-      if (indexBeginIdPart === -1){
-        return null;
-      } else {
-        indexBeginIdPart = indexBeginIdPart + 4;
-        const indexEndIdPart = hash.indexOf('&', indexBeginIdPart);
-        if (indexEndIdPart === -1){
-          return hash.slice(indexBeginIdPart);
-        } else {
-          return hash.slice(indexBeginIdPart, indexEndIdPart - 1); 
-        }
-      }
+      return '';
     };  
 
     const descriptionText = function () {
-
       const taskId = getTaskId();
-      const titleElem = getTitleElement();
-      const titleElemText = titleElem ? titleElem.textContent : 'not found';
-      return `${taskId ? '#' + taskId : ''} ${titleElemText.trim().replace(' - Wrike', '')}`.trim();
+      const titleText = getTitle();
+      return `${taskId} ${titleText}`.trim();
     };
 
     const projectText = function () {

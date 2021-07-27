@@ -221,10 +221,6 @@ window.TogglButton = {
               }
 
               TogglButton.updateTriggers(entry);
-              await Promise.all([
-                db.setLocal('projects', projectMap),
-                db.setLocal('clients', clientMap)
-              ]);
               TogglButton.$user = resp.data;
               TogglButton.$user.time_entries = (TogglButton.$user.time_entries || [])
                 .map((te) => {
@@ -235,6 +231,10 @@ window.TogglButton = {
                     tid: te.tid || null
                   };
                 });
+              await Promise.all([
+                db.setLocal('projects', projectMap),
+                db.setLocal('clients', clientMap)
+              ]);
               TogglButton.$user.projectMap = projectMap;
               TogglButton.$user.clientMap = clientMap;
               TogglButton.$user.clientNameMap = clientNameMap;
@@ -259,8 +259,6 @@ window.TogglButton = {
                     responseText: xhr.responseText
                   });
                 });
-              } else {
-                await db.clearLocal();
               }
               TogglButton.setBrowserActionBadge();
               resolve({

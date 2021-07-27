@@ -244,7 +244,7 @@ export default class Db {
   }
 
   setLocal (key, value) {
-    return setIDBItem(`${TogglButton.$user.id}.${key}`, value);
+    return setIDBItem(key, value);
   }
 
   setMultiple (settings) {
@@ -262,7 +262,7 @@ export default class Db {
 
   async getLocal (key) {
     const localStorageData = localStorage.getItem(key);
-    const idbData = await getIDBItem(`${TogglButton.$user.id}.${key}`);
+    const idbData = await getIDBItem(key);
     if (localStorageData) {
       localStorage.removeItem(key);
     }

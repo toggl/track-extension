@@ -232,8 +232,8 @@ window.TogglButton = {
                   };
                 });
               await Promise.all([
-                db.setLocal('projects', projectMap),
-                db.setLocal('clients', clientMap)
+                db.setLocal(`${TogglButton.$user.id}-projects`, projectMap),
+                db.setLocal(`${TogglButton.$user.id}-clients`, clientMap)
               ]);
               TogglButton.$user.projectMap = projectMap;
               TogglButton.$user.clientMap = clientMap;

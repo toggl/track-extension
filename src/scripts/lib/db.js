@@ -2,6 +2,8 @@ import browser from 'webextension-polyfill';
 import bugsnagClient from './bugsnag';
 import storedOrigins from '../origins';
 
+import { getIDBItem, setIDBItem, clearIDBAll } from './dbUtils';
+
 const ORIGINS_KEY = 'TogglButton-origins';
 
 // settings: key, default value
@@ -226,8 +228,7 @@ export default class Db {
 
   set (setting, value) {
     if (isLocalOnly(setting)) {
-      this.setLocal(setting, value);
-      return;
+      return this.setLocal(setting, value);
     }
 
     return browser.storage.sync
@@ -243,7 +244,7 @@ export default class Db {
   }
 
   setLocal (key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    return setIDBItem(key, value);
   }
 
   setMultiple (settings) {
@@ -259,12 +260,22 @@ export default class Db {
       });
   }
 
-  getLocal (key) {
-    const collection = localStorage.getItem(key);
-    if (!collection) {
-      return null;
+  async getLocal (key) {
+    const localStorageData = localStorage.getItem(key);
+    const idbData = await getIDBItem(key);
+    if (localStorageData) {
+      localStorage.removeItem(key);
     }
-    return JSON.parse(collection);
+    if (localStorageData && !idbData) {
+      const parsedData = JSON.parse(localStorageData);
+      await this.setLocal(key, parsedData);
+      return parsedData;
+    }
+    return idbData;
+  }
+
+  clearLocal () {
+    return clearIDBAll();
   }
 
   load (setting, defaultValue) {

@@ -1,3 +1,11 @@
+## [1.70.3](https://github.com/toggl/toggl-button/compare/1.70.2...1.70.3) (2021-07-28)
+
+
+### Bug Fixes
+
+* **intercom:** Handle Intercom in 2021 ([#1977](https://github.com/toggl/toggl-button/issues/1977)) ([5dfa113](https://github.com/toggl/toggl-button/commit/5dfa1132f4c5c8a565b739f766e6c59b9344418c))
+* **zendesk:** Add support for new Zendesk UI ([#1985](https://github.com/toggl/toggl-button/issues/1985)) ([b8c2f3f](https://github.com/toggl/toggl-button/commit/b8c2f3febafefde75d3bc9dca792b088586488df)), closes [#1979](https://github.com/toggl/toggl-button/issues/1979)
+
 ## [1.70.2](https://github.com/toggl/toggl-button/compare/1.70.1...1.70.2) (2021-05-20)
 
 

@@ -1,3 +1,5 @@
+os: linux
+dist: xenial
 language: node_js
 node_js:
   - 10.18.0
@@ -5,11 +7,11 @@ node_js:
 jobs:
   include:
     - stage: build
-      script: npm run lint:ci
-      script: npm run build
+      script:
+        - npm run lint:ci
+        - npm run build
     - stage: release
       deploy:
         provider: script
-        skip_cleanup: true
         script:
           - npx semantic-release

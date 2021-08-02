@@ -452,6 +452,15 @@ a.toggl-button.toggl-plan {
 }
 /********* ZENDESK *********/
 .toggl-button.zendesk:not(.toggl-button-edit-form-button) {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0 30px 25px 24px;
+
+  font-weight: initial;
+}
+
+.toggl-button.zendesk--2021:not(.toggl-button-edit-form-button) {
   margin: 10px 10px 0 0;
 }
 

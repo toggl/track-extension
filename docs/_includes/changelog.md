@@ -1,3 +1,10 @@
+## [1.70.4](https://github.com/toggl/toggl-button/compare/1.70.3...1.70.4) (2021-08-10)
+
+
+### Bug Fixes
+
+* **zendesk:** Restore previous Zendesk integrations ([#1994](https://github.com/toggl/toggl-button/issues/1994)) ([cf68456](https://github.com/toggl/toggl-button/commit/cf68456b9aef8784dc0b306541d7ac5b0f50025a)), closes [#1992](https://github.com/toggl/toggl-button/issues/1992)
+
 ## [1.70.3](https://github.com/toggl/toggl-button/compare/1.70.2...1.70.3) (2021-07-28)
 
 

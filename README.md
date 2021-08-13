@@ -21,6 +21,7 @@ out of the way and focus on real work.
 - [Breeze](http://www.breeze.pm/)
 - [BrokerEngine](https://www.brokerengine.com.au/)
 - [Bugherd](https://www.bugherd.com/)
+- [Bugsnag](https://www.bugsnag.com/)
 - [Bugzilla](https://bugzilla.mozilla.org/)
 - [CapsuleCRM](http://www.capsulecrm.com/)
 - [ClickUp](https://clickup.com/)

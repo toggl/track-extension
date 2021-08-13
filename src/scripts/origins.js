@@ -75,6 +75,10 @@ export default {
     name: 'BugHerd',
     file: 'bugherd.js'
   },
+  'app.bugsnag.com': {
+    url: '*://app.bugsnag.com/*',
+    name: 'Bugsnag'
+  },
   'bugzilla.mozilla.org': {
     url: '*://bugzilla.mozilla.org/*',
     name: 'Bugzilla'

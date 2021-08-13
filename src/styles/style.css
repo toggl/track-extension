@@ -1562,3 +1562,8 @@ body.notion-body.dark .toggl-button.notion {
   position: relative;
   top: -3px;
 }
+
+/********* Bugsnag *********/
+.toggl-button.bugsnag {
+  margin-left: 1rem;
+}

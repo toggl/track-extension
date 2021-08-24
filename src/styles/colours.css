@@ -1,4 +1,6 @@
 :root {
+  color-scheme: light dark;
+
   --white: #fff;
   --extra-light-grey: #f3f3f3;
   --lighter-grey: #e3e4e4;

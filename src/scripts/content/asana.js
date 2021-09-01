@@ -3,6 +3,11 @@
 // Board view. Inserts button next to assignee/due date.
 togglbutton.render('.BaseCard .BoardCardLayout:not(.toggl)', { observe: true },
   boadCardElem => {
+    if (boadCardElem.querySelector('.toggl-button')) {
+      // Due to the way this UI is rendered, we must check for existence of old buttons manually.
+      return;
+    }
+
     const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-taskName').textContent.trim();
 
     const projectSelector = () => {

@@ -1,3 +1,10 @@
+## [1.70.5](https://github.com/toggl/toggl-button/compare/1.70.4...1.70.5) (2021-09-06)
+
+
+### Bug Fixes
+
+* **asana:** Prevent multiple buttons on board view ([c21df5f](https://github.com/toggl/toggl-button/commit/c21df5f6175b38023b14454e3a1f6c3b60657151)), closes [#1958](https://github.com/toggl/toggl-button/issues/1958)
+
 ## [1.70.4](https://github.com/toggl/toggl-button/compare/1.70.3...1.70.4) (2021-08-10)
 
 

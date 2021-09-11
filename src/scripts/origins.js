@@ -503,6 +503,10 @@ export default {
     url: '*://*.sentry.io/*',
     name: 'Sentry'
   },
+  'app.shortcut.com': {
+    url: '*://app.shortcut.com/*',
+    name: 'Shortcut'
+  },
   'sifterapp.com': {
     url: '*://*.sifterapp.com/*',
     name: 'Sifterapp'

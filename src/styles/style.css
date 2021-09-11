@@ -1180,6 +1180,29 @@ a.toggl-button.workfront.min {
   padding-left: 27px;
 }
 
+/********* SHORTCUT *********/
+.toggl-button.toggl-shortcut:not(.toggl-button-edit-form-button) {
+  width: 100%;
+  margin: 6px;
+  height: 23px;
+}
+
+.toggl-button.toggl-shortcut svg {
+  height: 24px;
+  width: 24px;
+  margin-left: 1px;
+}
+
+.toggl-button.toggl-shortcut span {
+  padding-left: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.toggl-button-shortcut-wrapper {
+  padding: 0 !important;
+}
+
 /********* TEAMLEADER *********/
 .toggl-button.teamleader {
   background: none;

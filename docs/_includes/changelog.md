@@ -1,3 +1,10 @@
+## [1.70.6](https://github.com/toggl/toggl-button/compare/1.70.5...1.70.6) (2021-09-17)
+
+
+### Bug Fixes
+
+* **to-do:** Fix project selector for MS To-Do ([#2001](https://github.com/toggl/toggl-button/issues/2001)) ([6c9b288](https://github.com/toggl/toggl-button/commit/6c9b288da974867da2b5b12a20bb632822515331)), closes [#1976](https://github.com/toggl/toggl-button/issues/1976)
+
 ## [1.70.5](https://github.com/toggl/toggl-button/compare/1.70.4...1.70.5) (2021-09-06)
 
 

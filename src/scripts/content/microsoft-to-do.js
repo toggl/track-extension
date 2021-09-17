@@ -5,8 +5,8 @@ togglbutton.render('.taskItem-body:not(.toggl)', { observe: true }, function (
 ) {
   const container = createTag('a', 'taskItem-toggl');
   const titleElem = $('.taskItem-title', elem);
-  const projectTitleElem = $('.taskItemInfo-title', elem);
-  const activeList = $('ul.lists .listItem.active');
+  const projectTitleElem = $('.listTitle');
+  const activeList = $('.listItem-container.active');
   const activeListTitle = $('.listItem-title', activeList);
 
   const projectTitle = projectTitleElem

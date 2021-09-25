@@ -138,12 +138,16 @@ togglbutton.render(
     }
 
     const descriptionSelector = () => {
-      return $('.SingleTaskPaneSpreadsheet-titleRow textarea', elem).textContent.trim();
+      return [
+        ...elem.querySelectorAll('.TaskAncestry-ancestor'),
+        $('.SingleTaskPaneSpreadsheet-titleRow textarea', elem)
+      ].map(el => el.textContent.trim()).join(' > ');
     };
 
     const projectSelector = () => {
+      const ancestorProjects = elem.querySelectorAll('.TaskAncestry-ancestorProject');
       const projectEl = elem.querySelectorAll('.TaskProjectToken-potTokenizerPill');
-      return [...projectEl].map(el => el.textContent.trim());
+      return [...ancestorProjects, ...projectEl].map(el => el.textContent.trim()).reduce((selectors, selector) => [...selectors, ...selector.split(/\s+/)], []);
     };
 
     const tagsSelector = () => {

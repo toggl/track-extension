@@ -1,3 +1,10 @@
+## [1.70.7](https://github.com/toggl/toggl-button/compare/1.70.6...1.70.7) (2021-09-28)
+
+
+### Bug Fixes
+
+* **idb:** Fix IDB initialization ([#2013](https://github.com/toggl/toggl-button/issues/2013)) ([9d5cdf1](https://github.com/toggl/toggl-button/commit/9d5cdf178cb3f062023edf57034fc0a5b3df2cb0)), closes [#2004](https://github.com/toggl/toggl-button/issues/2004)
+
 ## [1.70.6](https://github.com/toggl/toggl-button/compare/1.70.5...1.70.6) (2021-09-17)
 
 

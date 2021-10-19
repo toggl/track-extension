@@ -1,5 +1,13 @@
 'use strict';
 
+function createWrapper (link) {
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('toggl-button-notion-wrapper');
+  wrapper.appendChild(link);
+
+  return wrapper;
+}
+
 // Selectors here are madness, it works for as of Dec 4th 2019
 // Button renders in popup/dialog view
 togglbutton.render(
@@ -16,9 +24,7 @@ togglbutton.render(
       description: getDescription
     });
 
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('toggl-button-notion-wrapper');
-    wrapper.appendChild(link);
+    const wrapper = createWrapper(link);
 
     const root = elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)');
     if (root) {
@@ -27,25 +33,40 @@ togglbutton.render(
   }
 );
 
-// Button renders left of page title - hidden on popups with css
 togglbutton.render(
-  '.notion-page-controls + div:not(.toggl)',
+  '.notion-topbar-action-buttons:not(.toggl)',
   { observe: true },
   function (elem) {
+    if (!elem) return;
+
     elem.style.position = 'relative';
 
     function getDescription () {
-      const descriptionElem = elem ? elem.querySelector('div[data-root="true"]') : '';
+      const controls = document.querySelector('.notion-page-controls');
+      if (!controls) return '';
 
-      return descriptionElem ? descriptionElem.textContent.trim() : '';
+      let title = '';
+
+      if (controls.nextElementSibling) {
+        title = controls.nextElementSibling;
+      } else {
+        const parent = controls.parentElement;
+
+        if (!parent) return '';
+
+        title = parent ? parent.nextElementSibling : '';
+      }
+
+      return title ? title.textContent.trim() : '';
     }
 
     const link = togglbutton.createTimerLink({
       className: 'notion',
-      buttonType: 'minimal',
       description: getDescription
     });
 
-    elem.prepend(link);
+    const wrapper = createWrapper(link);
+
+    elem.prepend(wrapper);
   }
 );

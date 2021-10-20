@@ -1,3 +1,10 @@
+## [1.70.8](https://github.com/toggl/toggl-button/compare/1.70.7...1.70.8) (2021-10-20)
+
+
+### Bug Fixes
+
+* **notion:** Move button to top of the page on all cases ([82b3445](https://github.com/toggl/toggl-button/commit/82b34450cbdfb80306545a4f768b6419580375cc)), closes [#2012](https://github.com/toggl/toggl-button/issues/2012)
+
 ## [1.70.7](https://github.com/toggl/toggl-button/compare/1.70.6...1.70.7) (2021-09-28)
 
 

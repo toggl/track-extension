@@ -1,3 +1,10 @@
+# [1.71.0](https://github.com/toggl/toggl-button/compare/1.70.8...1.71.0) (2021-11-03)
+
+
+### Features
+
+* Add Bugsnag integration ([bb4634c](https://github.com/toggl/toggl-button/commit/bb4634cc002a82c67be0d94ecbb57bb06c143948))
+
 ## [1.70.8](https://github.com/toggl/toggl-button/compare/1.70.7...1.70.8) (2021-10-20)
 
 

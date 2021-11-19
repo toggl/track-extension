@@ -133,6 +133,9 @@ AutoComplete.prototype.closeDropdown = function (t) {
   if (that.addLink) that.addLink.parentNode.classList.remove('add-allowed');
   that.clearFilters();
 
+  // Make sure focus does not remain in a now hidden input
+  that.filter.blur();
+
   // Delay enabling of tabbing again to avoid trapping focus inside this dropdown
   // completely when using SHIFT+TAB.
   setTimeout(() => that.field.setAttribute('tabindex', '0'));

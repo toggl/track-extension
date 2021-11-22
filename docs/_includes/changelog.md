@@ -1,3 +1,10 @@
+# [1.72.0](https://github.com/toggl/toggl-button/compare/1.71.0...1.72.0) (2021-11-22)
+
+
+### Features
+
+* Add support for shortuct (previously clubhouse) ([#2006](https://github.com/toggl/toggl-button/issues/2006)) ([208fe9c](https://github.com/toggl/toggl-button/commit/208fe9c3a54c4a24cc51d22a05ed78f96b47920f))
+
 # [1.71.0](https://github.com/toggl/toggl-button/compare/1.70.8...1.71.0) (2021-11-03)
 
 

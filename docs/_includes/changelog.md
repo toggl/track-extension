@@ -1,3 +1,11 @@
+## [1.72.2](https://github.com/toggl/toggl-button/compare/1.72.1...1.72.2) (2021-11-23)
+
+
+### Bug Fixes
+
+* **github:** Fix projects page numElem not passing ([#1998](https://github.com/toggl/toggl-button/issues/1998)) ([36d68cc](https://github.com/toggl/toggl-button/commit/36d68ccc38f98723fa23fe71bc08eb98002985a6))
+* **zendesk:** Include ticket id in description ([#1996](https://github.com/toggl/toggl-button/issues/1996)) ([c28f1f3](https://github.com/toggl/toggl-button/commit/c28f1f338def941f4670304f9aa769ae8c21c7f7)), closes [#1995](https://github.com/toggl/toggl-button/issues/1995)
+
 ## [1.72.1](https://github.com/toggl/toggl-button/compare/1.72.0...1.72.1) (2021-11-23)
 
 

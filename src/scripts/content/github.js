@@ -43,7 +43,7 @@ togglbutton.render('.js-project-card-details .js-comment:not(.toggl)', { observe
   elem
 ) {
   const titleElem = $('.js-issue-title');
-  const numElem = $('.js-project-card-details .project-comment-title-hover span.text-gray-light');
+  const numElem = $('.js-project-card-details .project-comment-title-hover span.color-text-tertiary');
   const projectElem = $('h1.public strong a, h1.private strong a');
 
   let description = titleElem.textContent;

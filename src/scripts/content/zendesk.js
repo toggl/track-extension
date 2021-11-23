@@ -11,8 +11,20 @@ togglbutton.render(
     };
 
     const getDescription = () => {
+      // what a monster
+      // TODO: include?.optional?.chaining?.asap
+      const ticketId =
+        elem.parentElement &&
+        elem.parentElement.parentElement &&
+        elem.parentElement.parentElement.dataset &&
+        elem.parentElement.parentElement.dataset.ticketId
+          ? `# ${elem.parentElement.parentElement.dataset.ticketId}`
+          : '';
+
       const input = elem.querySelector('[class^=styles__Left] input');
-      return (input ? input.value : '').trim();
+      const title = (input ? input.value : '').trim();
+
+      return [ticketId, title].filter(Boolean).join(' ');
     };
 
     const link = togglbutton.createTimerLink({

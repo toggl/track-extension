@@ -1,3 +1,10 @@
+## [1.72.1](https://github.com/toggl/toggl-button/compare/1.72.0...1.72.1) (2021-11-23)
+
+
+### Bug Fixes
+
+* **any.do:** Any.do integration ([#1987](https://github.com/toggl/toggl-button/issues/1987)) ([1b7a885](https://github.com/toggl/toggl-button/commit/1b7a8850b58217b634212680bf3f6e8e6682d6fc)), closes [#1799](https://github.com/toggl/toggl-button/issues/1799) [#1799](https://github.com/toggl/toggl-button/issues/1799)
+
 # [1.72.0](https://github.com/toggl/toggl-button/compare/1.71.0...1.72.0) (2021-11-22)
 
 

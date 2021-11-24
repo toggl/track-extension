@@ -211,7 +211,7 @@ export default {
   },
   'github.com': {
     url: '*://github.com/*',
-    name: 'Github'
+    name: 'GitHub'
   },
   'gitlab.com': {
     url: '*://*.gitlab.com/*',

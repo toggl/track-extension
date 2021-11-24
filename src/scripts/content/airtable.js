@@ -1,13 +1,13 @@
 'use strict';
 
 togglbutton.render(
-  '.detailViewWithActivityFeedBase .dialog > .header > .flex-auto:not(.toggl)',
+  '.DetailViewWithActivityFeed .detailView .body:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = $('.justify-center.relative > .items-center', elem);
+    const container = $('.recordTitle > .relative', elem);
 
     const getDescription = () => {
-      const description = $('.truncate.line-height-3', elem);
+      const description = $('.detailCell .contentEditableTextbox', elem);
       return description ? description.innerText : '';
     };
 

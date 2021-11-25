@@ -1,3 +1,10 @@
+## [1.72.3](https://github.com/toggl/toggl-button/compare/1.72.2...1.72.3) (2021-11-25)
+
+
+### Bug Fixes
+
+* **Airtable:** Fix showing Toggl Button in Airtable ([#2023](https://github.com/toggl/toggl-button/issues/2023)) ([897d060](https://github.com/toggl/toggl-button/commit/897d0607f0433b580e6fe9e5cbfbb0f4c0ff26fa))
+
 ## [1.72.2](https://github.com/toggl/toggl-button/compare/1.72.1...1.72.2) (2021-11-23)
 
 

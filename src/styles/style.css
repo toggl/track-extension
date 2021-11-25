@@ -1316,6 +1316,8 @@ a.toggl-button.workfront.min {
 /********* AIRTABLE ********/
 .toggl-button.airtable {
   margin-left: 30px;
+  position: relative;
+  bottom: 5px;
 }
 
 /********* PROTONMAIL *********/

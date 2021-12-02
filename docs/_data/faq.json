@@ -1,12 +1,12 @@
 {
     "faq": [{
-      "question": "Is it possible to use Toggl Button without Chrome WebStore?",
+      "question": "Is it possible to use Toggl Track browser extension without Chrome WebStore?",
       "answer":
       [
           "Only other possible way to get the extension is to get the source from github ",
-          "(<a href='https://github.com/toggl/toggl-button/'>Toggl Button at Github</a>') ",
+          "(<a href='https://github.com/toggl/track-extension/'>Toggl Track browser extension at Github</a>') ",
           "and then use the “Load unpacked extension…” button in the Chrome extension ",
-          "settings view and select the `src` directory inside the toggl-button directory."
+          "settings view and select the `src` directory inside the track-extension directory."
       ]
     }]
 }

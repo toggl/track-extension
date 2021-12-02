@@ -1,0 +1,19 @@
+name: origins
+on: [push]
+jobs:
+  update-origins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      - run: node .github/workflows/update-origins.js
+      - uses: EndBug/add-and-commit@v5
+        with:
+          add: "src/origins.js"
+          message: 'Update origins.js'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

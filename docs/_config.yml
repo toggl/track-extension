@@ -1,21 +1,21 @@
 # Site settings
-title: "Toggl Button Chrome extension"
+title: "Toggl Track browser extension"
 #email:
-url: http://toggl.com
-description: "Adds Toggl one-click time tracking to popular web tools."
+url: http://toggl.com/track
 
+description: "Adds Toggl Track one-click time tracking to popular web tools."
 # Color settings (hex-codes without the leading hash-tag)
 color:
   primary-dark: '#000000'
   links: '#219ab3'
 
 # Footer settings
-footer: "Toggl"
+footer: "Toggl Track"
 
 # Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
 social:
   - title: twitter
-    url: https://twitter.com/toggl
+    url: https://twitter.com/toggltrack
   - title: facebook
     url: toggl
   - title: github

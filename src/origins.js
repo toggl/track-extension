@@ -540,6 +540,7 @@ export default {
   'sherpadesk.com': {
     url: '*://*.sherpadesk.com/*',
     name: 'Sherpadesk'
+  },
   'app.shortcut.com': {
     url: '*://app.shortcut.com/*',
     name: 'Shortcut'

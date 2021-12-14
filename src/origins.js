@@ -185,6 +185,11 @@ export default {
     url: '*://*.fogbugz.com/*',
     name: 'Fogbugz'
   },
+  'force.com': {
+    url: '*://*.force.com/*,*://*.lightning.force.com/*',
+    name: 'Salesforce Lightning',
+    file: 'force.js'
+  },
   'freshdesk.com': {
     url: '*://*.freshdesk.com/*',
     name: 'Freshdesk'
@@ -519,15 +524,6 @@ export default {
   'rollbar.com': {
     url: '*://*.rollbar.com/*',
     name: 'Rollbar'
-  },
-  'salesforce.com': {
-    url: '*://*.salesforce.com/*,*://*.my.salesforce.com/*',
-    name: 'Salesforce'
-  },
-  'force.com': {
-    url: '*://*.force.com/*,*://*.lightning.force.com/*',
-    name: 'Salesforce Lightning',
-    file: 'salesforce.js'
   },
   'scrapbox.io': {
     url: '*://scrapbox.io/*',

@@ -1,7 +1,7 @@
 /**
- * @name Salesforce
- * @urlAlias salesforce.com
- * @urlRegex *://*.salesforce.com/*,*://*.my.salesforce.com/*
+ * @name Salesforce Lightning
+ * @urlAlias force.com
+ * @urlRegex *://*.force.com/*,*://*.lightning.force.com/*
  */
 'use strict';
 

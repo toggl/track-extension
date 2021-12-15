@@ -185,11 +185,6 @@ export default {
     url: '*://*.fogbugz.com/*',
     name: 'Fogbugz'
   },
-  'force.com': {
-    url: '*://*.force.com/*,*://*.lightning.force.com/*',
-    name: 'Salesforce Lightning',
-    file: 'force.js'
-  },
   'freshdesk.com': {
     url: '*://*.freshdesk.com/*',
     name: 'Freshdesk'
@@ -241,11 +236,6 @@ export default {
   'keep.google.com': {
     url: '*://keep.google.com/*',
     name: 'Google Keep'
-  },
-  'khanacademy.org': {
-    url: '*://*.khanacademy.org/*',
-    name: 'KhanAcademy',
-    file: 'khanacademy.js'
   },
   'mail.google.com': {
     url: '*://mail.google.com/*',
@@ -306,6 +296,11 @@ export default {
   'kantree.io': {
     url: '*://*.kantree.io/*',
     name: 'Kantree'
+  },
+  'khanacademy.org': {
+    url: '*://*.khanacademy.org/*',
+    name: 'KhanAcademy',
+    file: 'khanacademy.js'
   },
   'www.khanacademy.org': {
     url: '*://www.khanacademy.org/*',
@@ -378,14 +373,6 @@ export default {
   'odoo.com': {
     url: '*://*.odoo.com/*',
     name: 'Odoo'
-  },
-  'ongemini.com': {
-    url: '*://*.ongemini.com/*',
-    name: 'Gemini'
-  },
-  'openproject.com': {
-    url: '*://*.openproject.com/*',
-    name: 'Openproject'
   },
   'onlyoffice.com': {
     url: '*://*.onlyoffice.com/*',
@@ -524,6 +511,16 @@ export default {
   'rollbar.com': {
     url: '*://*.rollbar.com/*',
     name: 'Rollbar'
+  },
+  'salesforce.com': {
+    url: '*://*.salesforce.com/*,*://*.my.salesforce.com/*',
+    name: 'Salesforce',
+    file: 'salesforce.js'
+  },
+  'force.com': {
+    url: '*://*.force.com/*,*://*.lightning.force.com/*',
+    name: 'Salesforce Lightning',
+    file: 'force.js'
   },
   'scrapbox.io': {
     url: '*://scrapbox.io/*',

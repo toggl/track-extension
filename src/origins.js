@@ -237,11 +237,6 @@ export default {
     url: '*://keep.google.com/*',
     name: 'Google Keep'
   },
-  'khanacademy.org': {
-    url: '*://*.khanacademy.org/*',
-    name: 'KhanAcademy',
-    file: 'khanacademy.js'
-  },
   'mail.google.com': {
     url: '*://mail.google.com/*',
     name: 'Google Mail'
@@ -301,6 +296,11 @@ export default {
   'kantree.io': {
     url: '*://*.kantree.io/*',
     name: 'Kantree'
+  },
+  'khanacademy.org': {
+    url: '*://*.khanacademy.org/*',
+    name: 'KhanAcademy',
+    file: 'khanacademy.js'
   },
   'www.khanacademy.org': {
     url: '*://www.khanacademy.org/*',
@@ -373,14 +373,6 @@ export default {
   'odoo.com': {
     url: '*://*.odoo.com/*',
     name: 'Odoo'
-  },
-  'ongemini.com': {
-    url: '*://*.ongemini.com/*',
-    name: 'Gemini'
-  },
-  'openproject.com': {
-    url: '*://*.openproject.com/*',
-    name: 'Openproject'
   },
   'onlyoffice.com': {
     url: '*://*.onlyoffice.com/*',
@@ -522,12 +514,13 @@ export default {
   },
   'salesforce.com': {
     url: '*://*.salesforce.com/*,*://*.my.salesforce.com/*',
-    name: 'Salesforce'
+    name: 'Salesforce',
+    file: 'salesforce.js'
   },
   'force.com': {
     url: '*://*.force.com/*,*://*.lightning.force.com/*',
     name: 'Salesforce Lightning',
-    file: 'salesforce.js'
+    file: 'force.js'
   },
   'scrapbox.io': {
     url: '*://scrapbox.io/*',

@@ -115,6 +115,10 @@ export default {
     url: '*://devdocs.io/*',
     name: 'Devdocs.io'
   },
+  'dixa.com': {
+    url: '*://*.dixa.com/*',
+    name: 'Dixa'
+  },
   'dobambam.com': {
     url: '*://*.dobambam.com/*',
     name: 'Dobambam'

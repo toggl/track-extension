@@ -1,4 +1,4 @@
-Please remember the [Contributing Guidelines](https://github.com/toggl/toggl-button/blob/master/.github/CONTRIBUTING.md) :heart:
+Please remember the [Contributing Guidelines](https://github.com/toggl/track-extension/blob/master/docs/CONTRIBUTING.md) :heart:
 
 ## :star2: What does this PR do?
 

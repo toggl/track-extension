@@ -6,7 +6,8 @@ export default {
   },
   'airtable.com': {
     url: '*://airtable.com/*',
-    name: 'Airtable'
+    name: 'Airtable',
+    file: 'airtable.js'
   },
   'any.do': {
     url: '*://*.any.do/*',

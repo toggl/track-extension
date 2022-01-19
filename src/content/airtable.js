@@ -1,3 +1,8 @@
+/**
+ * @name Airtable
+ * @urlAlias airtable.com
+ * @urlRegex *://airtable.com/*
+ */
 'use strict';
 
 togglbutton.render(
@@ -7,7 +12,7 @@ togglbutton.render(
     const container = $('.recordTitle > .relative', elem);
 
     const getDescription = () => {
-      const description = $('.detailCell .contentEditableTextbox', elem);
+      const description = $('h3.recordTitle', elem);
       return description ? description.innerText : '';
     };
 

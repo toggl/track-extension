@@ -569,7 +569,8 @@ export default {
   },
   'taiga.io': {
     url: '*://*.taiga.io/*',
-    name: 'Taiga'
+    name: 'Taiga',
+    file: 'taiga.js'
   },
   'targetprocess.com': {
     url: '*://*.targetprocess.com/*',

@@ -1,3 +1,8 @@
+/**
+ * @name Taiga
+ * @urlAlias taiga.io
+ * @urlRegex *://*.taiga.io/*
+ */
 'use strict';
 
 /* Epic/User story/Task/Issue details button */
@@ -5,9 +10,9 @@ togglbutton.render(
   '.detail-title-wrapper:not(.toggl)',
   { observe: true },
   function (elem) {
-    const projectElem = $('.us-detail .project-name');
-    const refElem = $('.detail-number', elem);
-    const titleElem = $('.detail-subject', elem);
+    const projectElem = $('tg-legacy-loader').shadowRoot.querySelector('.menu-option-text.project-name');
+    const refElem = $('.detail-ref', elem);
+    const titleElem = $('.detail-title-text > span', elem);
 
     const link = togglbutton.createTimerLink({
       className: 'taiga',
@@ -88,7 +93,7 @@ togglbutton.render(
       className: 'taiga',
       buttonType: 'minimal',
       description: refElem.textContent.trim() + ' ' + titleElem.textContent,
-      projectName: projectElem.textContent
+      projectName: projectElem ? projectElem.textContent : 'kva'
     });
 
     elem.insertBefore(link, $('a', elem));
@@ -107,7 +112,7 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'taiga',
       buttonType: 'minimal',
-      projectName: projectElem.textContent,
+      projectName: projectElem ? projectElem.textContent : 'kva',
       description: refElem.textContent.trim() + ' ' + taskElem.textContent
     });
 

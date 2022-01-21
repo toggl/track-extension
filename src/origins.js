@@ -231,7 +231,7 @@ export default {
   },
   'docs.google.com': {
     url: '*://docs.google.com/*',
-    name: 'Google Docs'
+    name: "Google Docs, Sheets, Slides",
   },
   'inbox.google.com': {
     url: '*://inbox.google.com/*',

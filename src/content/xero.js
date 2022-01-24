@@ -1,7 +1,12 @@
+/**
+ * @name Xero
+ * @urlAlias xero.com
+ * @urlRegex '*://*.xero.com/*'
+ */
 'use strict';
 
-togglbutton.render('.xrh-header--main:not(.toggl)', {}, function (elem) {
-  const container = $('.xrh-addons');
+togglbutton.render('.xnav-header--main:not(.toggl)', {}, function (elem) {
+  const container = $('.xnav-addons');
   let descriptionNode;
 
   if ($('#page_title h1')) {
@@ -50,7 +55,7 @@ togglbutton.render('.xrh-header--main:not(.toggl)', {}, function (elem) {
   const div = createTag('div', 'xrh-focusable--child xrh-iconwrapper');
   div.appendChild(link);
 
-  const button = createTag('button', 'xrh-button xrh-addon--iconbutton xrh-header--iconbutton xrh-focusable--parent');
+  const button = createTag('button', 'xnav-header-button xnav-addon--iconbutton xnav-header--iconbutton xnav-focusable--parent');
   button.type = 'button';
 
   button.addEventListener('click', function (e) {
@@ -60,11 +65,11 @@ togglbutton.render('.xrh-header--main:not(.toggl)', {}, function (elem) {
 
   button.appendChild(div);
 
-  const liTag = createTag('li', 'xrh-addon');
+  const liTag = createTag('li', 'xnav-addon');
   liTag.appendChild(button);
 
   if (container) {
-    const userIcon = $('[data-automationid="xrh-addon-user"]', container);
+    const userIcon = $('[data-automationid="xnav-addon-user"]', container);
     container.insertBefore(liTag, userIcon);
   }
 });

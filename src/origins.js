@@ -720,8 +720,9 @@ export default {
     name: 'Wunderlist'
   },
   'xero.com': {
-    url: '*://*.xero.com/*',
-    name: 'Xero'
+    url: ''*://*.xero.com/*'',
+    name: 'Xero',
+    file: 'xero.js'
   },
   'myjetbrains.com': {
     url: '*://*.myjetbrains.com/*',

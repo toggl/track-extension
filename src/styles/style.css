@@ -604,17 +604,26 @@ a.toggl-button.toggl-plan {
   flex-grow: 0;
 }
 
-.backlog-table-body .user-story-name a.toggl-button.taiga {
+.backlog-table-body .user-story-link a.toggl-button.taiga {
   margin-top: 0;
   margin-right: 0.5rem;
   text-decoration: none;
   flex-grow: 0;
+  position: relative;
+  top: 4px;
 }
 
 .detail-title-wrapper a.toggl-button.taiga {
   margin: 8px 5px 0px 4px;
   text-decoration: none;
   flex-grow: 0;
+}
+
+.card .card-title a.toggl-button.taiga + a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 13px;
 }
 
 .epic-row a.toggl-button,
@@ -631,7 +640,6 @@ a.toggl-button.toggl-plan {
 
 .issues-table .row a.toggl-button.taiga {
   margin-top: 0;
-  margin-right: 0.5rem;
   text-decoration: none;
   flex-grow: 0;
 }

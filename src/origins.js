@@ -737,7 +737,8 @@ export default {
   },
   'zendesk.com': {
     url: '*://*.zendesk.com/*',
-    name: 'Zendesk'
+    name: 'Zendesk',
+    file: 'zendesk.js'
   },
   'app.zenhub.com': {
     url: '*://app.zenhub.com/*',

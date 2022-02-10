@@ -1,8 +1,14 @@
+/**
+ * @name Zendesk
+ * @urlAlias zendesk.com
+ * @urlRegex *://*.zendesk.com/*
+ */
+
 'use strict';
 
 // Zendesk new UI Jul 2021
 togglbutton.render(
-  '.omni-conversation-pane [class^=styles__Header]:not(.toggl)',
+  '.omni-conversation-pane [class^=Header]:not(.toggl)',
   { observe: true },
   (elem) => {
     const getProject = () => {
@@ -11,20 +17,12 @@ togglbutton.render(
     };
 
     const getDescription = () => {
-      // what a monster
-      // TODO: include?.optional?.chaining?.asap
-      const ticketId =
-        elem.parentElement &&
-        elem.parentElement.parentElement &&
-        elem.parentElement.parentElement.dataset &&
-        elem.parentElement.parentElement.dataset.ticketId
-          ? `# ${elem.parentElement.parentElement.dataset.ticketId}`
-          : '';
+      const ticketId = document.querySelector('header div[data-selected=true]').attributes['data-entity-id'].value || ''
 
-      const input = elem.querySelector('[class^=styles__Left] input');
+      const input = elem.querySelector('[class^=Left] input');
       const title = (input ? input.value : '').trim();
 
-      return [ticketId, title].filter(Boolean).join(' ');
+      return [`#${ticketId}`, title].filter(Boolean).join(' ');
     };
 
     const link = togglbutton.createTimerLink({
@@ -34,7 +32,7 @@ togglbutton.render(
       projectName: getProject
     });
 
-    elem.insertBefore(link, elem.querySelector('[class^=styles__Right]'));
+    elem.querySelector('div[class^=Right]').appendChild(link);
   }
 );
 

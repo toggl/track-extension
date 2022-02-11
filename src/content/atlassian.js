@@ -43,7 +43,7 @@ togglbutton.render(
 
     if (issueWrapper) {
       issueNumberElement = issueWrapper.querySelector('.issue_view_permalink_button_wrapper').previousElementSibling;
-      container = issueWrapper.parentElement.parentElement;
+      container = issueWrapper.parentElement;
     } else {
       container = elem.querySelector('[class^=BreadcrumbsContainer]');
       issueNumberElement = container.lastElementChild;

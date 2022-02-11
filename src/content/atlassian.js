@@ -1,3 +1,8 @@
+/**
+ * @name Atlassian / Jira
+ * @urlAlias atlassian.com
+ * @urlRegex *://*.atlassian.com/*
+ */
 'use strict';
 
 // Jira 2017 board sidebar

@@ -614,23 +614,21 @@ a.toggl-button.toggl-plan {
 }
 
 .detail-title-wrapper a.toggl-button.taiga {
-  margin: 8px 5px 0px 4px;
+  margin: 8px 5px 0 4px;
   text-decoration: none;
   flex-grow: 0;
 }
 
-.card .card-title a.toggl-button.taiga + a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 13px;
+.card .card-title.toggl {
+  display: flex;
 }
 
 .epic-row a.toggl-button,
 .card-title a.toggl-button {
-  margin: 0 0.25rem 0 0;
+  margin: 0 0.3rem 0 0;
   position: relative;
-  top: 3px;
+  top: -1px;
+  min-width: 19px;
 }
 
 .column-fold .card-title a.toggl-button.taiga.active {

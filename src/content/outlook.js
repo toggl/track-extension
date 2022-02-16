@@ -1,3 +1,9 @@
+/**
+ * @name Outlook
+ * @urlAlias outlook.office.com
+ * @urlRegex *://outlook.office.com/*
+ */
+ 
 "use strict";
 
 // Inbox emails

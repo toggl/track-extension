@@ -588,7 +588,8 @@ export default {
   },
   'teamwork.com': {
     url: '*://*.teamwork.com/*',
-    name: 'Teamwork'
+    name: 'Teamwork',
+    file: 'teamwork.js'
   },
   'teamworkpm.net': {
     url: '*://*.teamworkpm.net/*',

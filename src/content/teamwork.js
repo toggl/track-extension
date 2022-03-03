@@ -174,3 +174,29 @@ togglbutton.render(
     root.appendChild(link);
   }
 );
+
+// Teamwork Desk - new design (March 2022)
+togglbutton.render(
+  '.ticket-view-page--container:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    // ticket view
+    const container = $('.title-container', elem);
+    const id = $('.ticket-id', elem).textContent;
+    const description = $('.title__subject', elem).textContent;
+
+    const descFunc = function () {
+      return id.trim() + ' ' + description.trim();
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'teamwork',
+      buttonType: 'minimal',
+      description: descFunc
+    });
+
+    link.style.margin = '3px 0 0 7px';
+
+    container.appendChild(link);
+  }
+);

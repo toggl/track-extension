@@ -1,3 +1,9 @@
+/**
+ * @name Teamwork
+ * @urlAlias teamwork.com
+ * @urlRegex *://*.teamwork.com/*
+ */
+
 'use strict';
 
 // Tasks listing page in project

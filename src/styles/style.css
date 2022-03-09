@@ -583,6 +583,13 @@ a.toggl-button.toggl-plan {
   text-decoration: none;
 }
 
+.toggl-button.teamwork.min {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px !important;
+}
+
 /********* GOOGLE MAIL *********/
 .toggl-button.google-mail:not(.toggl-button-edit-form-button) {
   margin-left: 15px;

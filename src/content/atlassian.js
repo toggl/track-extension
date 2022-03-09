@@ -47,7 +47,7 @@ togglbutton.render(
     let container;
 
     if (issueWrapper) {
-      issueNumberElement = issueWrapper.querySelector('.issue_view_permalink_button_wrapper').previousElementSibling;
+      issueNumberElement = issueWrapper.querySelector('div[role=presentation] > li');
       container = issueWrapper.parentElement;
     } else {
       container = elem.querySelector('[class^=BreadcrumbsContainer]');

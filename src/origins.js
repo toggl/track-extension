@@ -174,6 +174,10 @@ export default {
     url: '*://*.evernote.com/*',
     name: 'Evernote'
   },
+  'fastmail.com': {
+    url: '*://*.fastmail.com/*',
+    name: 'Fastmail',
+  },
   'feedly.com': {
     url: '*://*.feedly.com/*',
     name: 'Feedly'

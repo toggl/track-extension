@@ -1,3 +1,8 @@
+/**
+ * @name Todoist
+ * @urlAlias todoist.com
+ * @urlRegex *://*.todoist.com/app*
+ */
 'use strict';
 /* global togglbutton, $ */
 

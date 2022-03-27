@@ -3,6 +3,43 @@
 
 const todoistEditor = document.getElementById('content');
 
+// New task detail UI
+togglbutton.render(
+  "[data-item-detail-root]:not(.toggl)",
+  { observe: true },
+  (elem) => {
+    const actionsNode = elem.querySelector("[data-item-actions-root]");
+    if (actionsNode) return;
+
+    const description = () => elem.dataset.itemContent || "";
+    const project = () => elem.dataset.itemProjectName || "";
+    const rootEl = elem.closest("[role=dialog]");
+
+    const tags = () =>
+      Array.from(rootEl.querySelectorAll("[data-item-label-name]"))
+        .map((el) => el.dataset.itemLabelName)
+        .filter(Boolean);
+
+    const link = togglbutton.createTimerLink({
+      className: "todoist-detail",
+      description: description,
+      projectName: project,
+      buttonType: "minimal",
+      tags: tags,
+    });
+
+    const wrapper = document.createElement("div");
+    wrapper.style.display = "flex";
+    wrapper.style.alignItems = "center";
+    wrapper.style.justifyContent = "center";
+    wrapper.style.width = "32px";
+    wrapper.appendChild(link);
+
+    const header = rootEl.querySelector("header");
+    header.firstChild.lastChild.firstChild.prepend(wrapper);
+  }
+);
+
 // task view
 // First example of data-attribute integration ✨
 togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)', { observe: true }, elem => {

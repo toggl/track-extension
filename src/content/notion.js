@@ -1,3 +1,8 @@
+/**
+ * @name Notion
+ * @urlAlias notion.so
+ * @urlRegex *://*.notion.so/*
+ */
 'use strict';
 
 function createWrapper (link) {
@@ -43,18 +48,24 @@ togglbutton.render(
 
     function getDescription () {
       const controls = document.querySelector('.notion-page-controls');
-      if (!controls) return '';
-
+      const topBar = document.querySelector('.notion-topbar');
       let title = '';
 
-      if (controls.nextElementSibling) {
-        title = controls.nextElementSibling;
-      } else {
-        const parent = controls.parentElement;
+      if (controls) {
+        if (controls.nextElementSibling) {
+          title = controls.nextElementSibling;
+        } else {
+          const parent = controls.parentElement;
 
-        if (!parent) return '';
+          if (!parent) return '';
 
-        title = parent ? parent.nextElementSibling : '';
+          title = parent ? parent.nextElementSibling : '';
+        }
+      } else if (topBar) {
+        const breadcrumbs = topBar.querySelector('div > .notranslate')
+        if (breadcrumbs) {
+          title = breadcrumbs.childNodes[breadcrumbs.childNodes.length - 1].querySelector('.notranslate:last-child')
+        }
       }
 
       return title ? title.textContent.trim() : '';

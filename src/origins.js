@@ -611,7 +611,8 @@ export default {
   },
   'todoist.com': {
     url: '*://*.todoist.com/app*',
-    name: 'Todoist'
+    name: 'Todoist',
+    file: 'todoist.js'
   },
   'toggl.com': {
     url: '*://toggl.com/*',

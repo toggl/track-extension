@@ -13,7 +13,7 @@ togglbutton.render(
   (elem) => {
     const link = togglbutton.createTimerLink({
       className: "outlook",
-      description: elem.textContent,
+      description: () => document.querySelector('div[role="heading"]').textContent
     });
 
     elem.childNodes[0].appendChild(link);

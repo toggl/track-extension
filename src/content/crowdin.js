@@ -9,7 +9,7 @@ togglbutton.render('#panes-controller:not(.toggl)', { observe: true }, function 
     function getProjectName() {
         let titleParts = document.title.split('-');
 
-        if(titleParts.length == 3) {
+        if (titleParts.length == 3) {
             return titleParts[1].trim();
         }
 

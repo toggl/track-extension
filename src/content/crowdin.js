@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @name Crowdin.com / Crowdin Enterprise
+ * @name Crowdin
  * @urlAlias crowdin.com
  * @urlRegex *://*.crowdin.com/*
  */

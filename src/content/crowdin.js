@@ -7,10 +7,10 @@
  */
 togglbutton.render('#panes-controller:not(.toggl)', { observe: true }, function () {
     function getProjectName() {
-        let titleParts = document.title.split('-')
+        let titleParts = document.title.split('-');
 
         if(titleParts.length == 3) {
-            return titleParts[1].trim()
+            return titleParts[1].trim();
         }
 
         return undefined;
@@ -21,12 +21,12 @@ togglbutton.render('#panes-controller:not(.toggl)', { observe: true }, function 
     const workflowStep = document.querySelector('.workflow-name-wrapper');
     const projectName = getProjectName();
 
-    let descriptionParts = []
+    let descriptionParts = [];
 
-    projectName && descriptionParts.push(projectName)
-    fileName && descriptionParts.push(fileName.textContent.trim())
-    languageName && descriptionParts.push(languageName.textContent.trim())
-    workflowStep && descriptionParts.push(workflowStep.textContent.trim())
+    projectName && descriptionParts.push(projectName);
+    fileName && descriptionParts.push(fileName.textContent.trim());
+    languageName && descriptionParts.push(languageName.textContent.trim());
+    workflowStep && descriptionParts.push(workflowStep.textContent.trim());
 
     const link = togglbutton.createTimerLink({
         className: 'crowdin',
@@ -36,9 +36,9 @@ togglbutton.render('#panes-controller:not(.toggl)', { observe: true }, function 
     });
 
     const trackingButton = document.createElement('button');
-    trackingButton.classList.add('btn', 'btn-icon', 'pane-toggler', 'pane-toggler-right')
-    trackingButton.style.width = '34px'
-    trackingButton.style.height = '34px'
+    trackingButton.classList.add('btn', 'btn-icon', 'pane-toggler', 'pane-toggler-right');
+    trackingButton.style.width = '34px';
+    trackingButton.style.height = '34px';
     trackingButton.appendChild(link);
 
     $('#panes-controller').prepend(trackingButton);

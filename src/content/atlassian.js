@@ -83,9 +83,6 @@ togglbutton.render(
 
 const getDescription = (issueNumberElement) => () => {
   let description = '';
-  // Title/summary of the issue - we use the hidden "edit" button that's there for a11y
-  // in order to avoid picking up actual page title in the case of issue-list-pages.
-  const titleElement = document.querySelector('h1 ~ button[aria-label]');
 
   if (issueNumberElement) {
     // Inspect deeper to avoid other hidden elements which can contain text
@@ -96,9 +93,10 @@ const getDescription = (issueNumberElement) => () => {
     }
   }
 
-  if (titleElement && titleElement.previousSibling) {
+  const titleElement = document.querySelector('h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]');
+  if (titleElement) {
     if (description) description += ' ';
-    description += titleElement.previousSibling.textContent.trim();
+    description += titleElement.textContent.trim();
   }
 
   return description;

@@ -8,7 +8,7 @@
 
 // Zendesk new UI Jul 2021
 togglbutton.render(
-  '.omni-conversation-pane [class^=Header]:not(.toggl)',
+  '.omni-conversation-pane>div>div:not(.toggl)',
   { observe: true },
   (elem) => {
     const getProject = () => {
@@ -19,7 +19,7 @@ togglbutton.render(
     const getDescription = () => {
       const ticketId = document.querySelector('header div[data-selected=true]').attributes['data-entity-id'].value || ''
 
-      const input = elem.querySelector('[class^=Left] input');
+      const input = elem.querySelector('input[aria-label=Subject]');
       const title = (input ? input.value : '').trim();
 
       return [`#${ticketId}`, title].filter(Boolean).join(' ');
@@ -32,7 +32,7 @@ togglbutton.render(
       projectName: getProject
     });
 
-    elem.querySelector('div[class^=Right]').appendChild(link);
+    elem.appendChild(link);
   }
 );
 

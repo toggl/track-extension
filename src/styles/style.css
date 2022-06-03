@@ -346,6 +346,10 @@ a.toggl-button.toggl-plan {
   font-weight: initial;
 }
 
+.toggl-button.zendesk--2021 {
+  align-self: center;
+}
+
 /********* ANYDO *********/
 .toggl-button.anydo {
   color: #099acb;

@@ -14,7 +14,8 @@ togglbutton.render(
   { observe: true },
   (elem) => {
     const actionsNode = elem.querySelector("[data-item-actions-root]");
-    if (actionsNode) return;
+
+    if (actionsNode && actionsNode.children.length) return;
 
     const description = () => elem.dataset.itemContent || "";
     const project = () => elem.dataset.itemProjectName || "";

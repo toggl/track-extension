@@ -31,9 +31,11 @@ togglbutton.render(
 
     const wrapper = createWrapper(link);
 
-    const root = elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)');
+    const root = elem.querySelector('.notion-topbar-share-menu');
     if (root) {
-      root.prepend(wrapper);
+      root.parentElement.prepend(wrapper);
+    } else {
+      elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)').prepend(wrapper)
     }
   }
 );

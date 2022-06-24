@@ -1,4 +1,22 @@
+/**
+ * @name Github
+ * @urlAlias github.com
+ * @urlRegex *://github.com/*
+ */
 'use strict';
+
+// We need it to get the issue name, the tag value is being changed dynamically
+const getPaneTitle = async (elem) => {
+  return new Promise(resolve => {
+    const title = setInterval(() => {
+      const titleElem = elem.querySelector('#__primerPortalRoot__ header h2 span')
+      if (!!titleElem.textContent) {
+        clearInterval(title)
+        resolve(titleElem.textContent)
+      }
+    }, 100)
+  })
+} 
 
 // Issue and Pull Request Page
 togglbutton.render('#partial-discussion-sidebar', { observe: true }, function (
@@ -36,6 +54,38 @@ togglbutton.render('#partial-discussion-sidebar', { observe: true }, function (
 
   div.appendChild(link);
   elem.prepend(div);
+});
+
+// Project Page side pane
+togglbutton.render('div[role="dialog"]:not(.toggl)', { observe: true }, async function (
+  elem
+) {
+  const numElem = elem.querySelector('#__primerPortalRoot__ header a')
+  const projectElem = document.querySelector('#memexTitleInput')
+
+  const parent = document.querySelector('dl')
+  const title = await getPaneTitle(elem)
+
+  let description = title;
+  if (numElem !== null) {
+    description = numElem.textContent + ' ' + description.trim();
+  }
+
+  const div = document.createElement('div');
+  div.classList = parent.children[0].classList.value;
+  div.style.paddingLeft = '16px'
+  
+  let projectName = ''
+  if (projectElem) projectName = projectElem.value
+
+  const link = togglbutton.createTimerLink({
+    className: 'github',
+    description: description,
+    projectName: projectName
+  });
+
+  div.appendChild(link);
+  parent.prepend(div)
 });
 
 // Project Page

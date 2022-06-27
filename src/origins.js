@@ -212,7 +212,8 @@ export default {
   },
   'github.com': {
     url: '*://github.com/*',
-    name: 'Github'
+    name: 'Github',
+    file: 'github.js'
   },
   'gitlab.com': {
     url: '*://*.gitlab.com/*',

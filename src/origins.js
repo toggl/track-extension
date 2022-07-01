@@ -1,9 +1,4 @@
 export default {
-  'agenocrm.com': {
-    url: '*://*.agenocrm.com/*',
-    name: 'AgenoCRM',
-    file: 'minicrm.js'
-  },
   'airtable.com': {
     url: '*://airtable.com/*',
     name: 'Airtable',
@@ -287,10 +282,6 @@ export default {
     name: 'Jquery Bugs',
     file: 'trac.js'
   },
-  'kanbanery.com': {
-    url: '*://*.kanbanery.com/*',
-    name: 'Kanbanery'
-  },
   'kanban.ist': {
     url: '*://*.kanban.ist/*',
     name: 'Kanbanist'
@@ -384,11 +375,6 @@ export default {
     url: '*://*.onlyoffice.com/*',
     name: 'OnlyOffice'
   },
-  'onlyoffice.eu': {
-    url: '*://*.onlyoffice.eu/*',
-    name: 'OnlyOffice',
-    clone: 'true'
-  },
   'onshape.com': {
     url: '*://*.onshape.com/*',
     name: 'Onshape'
@@ -412,21 +398,9 @@ export default {
     name: 'Outlook',
     clone: 'true'
   },
-  'overv.io': {
-    url: '*://overv.io/*',
-    name: 'Overv'
-  },
   'pagerduty.com': {
     url: '*://*.pagerduty.com/*',
     name: 'PagerDuty'
-  },
-  'exana.io': {
-    url: '*://*.exana.io/*',
-    name: 'Phabricator'
-  },
-  'phacility.com': {
-    url: '*://*.phacility.com/*',
-    name: 'Phabricator'
   },
   'pivotaltracker.com': {
     url: '*://*.pivotaltracker.com/*',
@@ -453,42 +427,13 @@ export default {
     url: '*://*.produck.io/*',
     name: 'Produck'
   },
-  'producteev.com': {
-    url: '*://*.producteev.com/*',
-    name: 'Producteev'
-  },
   'protonmail.com': {
     url: '*://*.protonmail.com/*',
     name: 'Protonmail'
   },
-  'proworkflow.net': {
-    url: '*://*.proworkflow.net/*',
+  'proworkflow.com': {
+    url: '*://*.proworkflow.com/*',
     name: 'Proworkflow'
-  },
-  'proworkflow2.net': {
-    url: '*://*.proworkflow2.net/*',
-    name: 'Proworkflow',
-    clone: 'true'
-  },
-  'proworkflow3.net': {
-    url: '*://*.proworkflow3.net/*',
-    name: 'Proworkflow',
-    clone: 'true'
-  },
-  'proworkflow4.net': {
-    url: '*://*.proworkflow4.net/*',
-    name: 'Proworkflow',
-    clone: 'true'
-  },
-  'proworkflow5.net': {
-    url: '*://*.proworkflow5.net/*',
-    name: 'Proworkflow',
-    clone: 'true'
-  },
-  'proworkflow6.net': {
-    url: '*://*.proworkflow6.net/*',
-    name: 'Proworkflow',
-    clone: 'true'
   },
   'rally1.rallydev.com': {
     url: '*://rally1.rallydev.com/*',
@@ -552,10 +497,6 @@ export default {
     url: '*://*.slack.com/*',
     name: 'Slack'
   },
-  'smartboard.cl': {
-    url: '*://*.smartboard.cl/*',
-    name: 'Smartboard'
-  },
   'sourcelair.com': {
     url: '*://*.sourcelair.com/*',
     name: 'Sourcelair',
@@ -595,15 +536,6 @@ export default {
   'teamworkpm.net': {
     url: '*://*.teamworkpm.net/*',
     name: 'Teamwork',
-    clone: 'true'
-  },
-  'testrail.com': {
-    url: '*://*.testrail.com/*',
-    name: 'Testrail'
-  },
-  'testrail.net': {
-    url: '*://*.testrail.net/*',
-    name: 'Testrail',
     clone: 'true'
   },
   'ticktick.com': {
@@ -652,10 +584,6 @@ export default {
     url: '*://*.trello.com/*',
     name: 'Trello'
   },
-  'turtle.ai': {
-    url: '*://*.turtle.ai/*',
-    name: 'Turtle'
-  },
   'unfuddle.com': {
     url: '*://*.unfuddle.com/*',
     name: 'Unfuddle'
@@ -676,10 +604,6 @@ export default {
     url: '*://app.vivifyscrum.com/*',
     name: 'VivifyScrum',
     clone: 'true'
-  },
-  'waffle.io': {
-    url: '*://waffle.io/*',
-    name: 'Waffle'
   },
   'wordpress.com': {
     url: '*://wordpress.com/*',
@@ -719,10 +643,6 @@ export default {
   'wrike.com': {
     url: '*://*.wrike.com/*',
     name: 'Wrike'
-  },
-  'wunderlist.com': {
-    url: '*://*.wunderlist.com/*',
-    name: 'Wunderlist'
   },
   'xero.com': {
     url: '*://*.xero.com/*',

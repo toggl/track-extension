@@ -49,9 +49,9 @@ function insertButton ($el, description, prepend = false) {
 }
 
 function getTitle (parent) {
-  const $el = $('.title', parent);
+  const el = parent.querySelector('.title');
 
-  return $el ? $el.textContent.trim() : '';
+  return el ? el.textContent.trim() : '';
 }
 
 function getId () {

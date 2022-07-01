@@ -4,18 +4,10 @@ togglbutton.render(
   '.issue-details .detail-page-description:not(.toggl)',
   { observe: true },
   function (elem) {
-    const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-
-    let description = getTitle(elem);
-    if (breadcrumbsSubTitle) {
-      description =
-        breadcrumbsSubTitle
-          .split(' ')
-          .pop()
-          .trim() +
-        ' ' +
-        description;
-    }
+    const prefix = [getId()].filter(Boolean)
+      .map(function(id) { return "#" + id;})
+      .join('');
+    const description = [prefix, getTitle(elem)].filter(Boolean).join(' ');
 
     insertButton($('.detail-page-header-actions'), description, true);
     insertButton($('.time_tracker'), description);
@@ -26,20 +18,10 @@ togglbutton.render(
   '.merge-request-details > .detail-page-description:not(.toggl)',
   { observe: true },
   function (elem) {
-    const breadcrumbsSubTitle = getBreadcrumbsSubTitle();
-
-    let description = getTitle(elem);
-    if (breadcrumbsSubTitle) {
-      description =
-        'MR' +
-        breadcrumbsSubTitle
-          .split(' ')
-          .pop()
-          .trim()
-          .replace('!', '') +
-        '::' +
-        description;
-    }
+    const prefix = [getId()].filter(Boolean)
+      .map(function(id) { return "MR" + id + "::";})
+      .join('');
+    const description = [prefix, getTitle(elem)].filter(Boolean).join(' ');
 
     insertButton($('.detail-page-header-actions'), description, true);
     insertButton($('.time_tracker'), description);
@@ -72,12 +54,15 @@ function getTitle (parent) {
   return $el ? $el.textContent.trim() : '';
 }
 
-function getBreadcrumbsSubTitle () {
-  const $el =
-    $('.identifier') ||
-    $('.breadcrumbs-list li:last-child .breadcrumbs-sub-title');
+function getId () {
+  const pathname = window.location.pathname;
+  const pattern = /-\/(issues|merge_requests)\/(?<id>\d+)/;
+  const result = pattern.test(pathname)
+    ? pathname.match(pattern)
+    : {groups: {id: ''}};
+  const id = result.groups.id;
 
-  return $el ? $el.textContent.trim() : '';
+  return id;
 }
 
 function getProjectSelector () {

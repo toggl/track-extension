@@ -753,5 +753,10 @@ export default {
   'zube.io': {
     url: '*://zube.io/*',
     name: 'Zube'
-  }
+  },
+  'crowdin.com': {
+    url: '*://*.crowdin.com/*',
+    name: 'Crowdin',
+    file: 'crowdin.js'
+  },
 };

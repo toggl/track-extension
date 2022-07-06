@@ -1,0 +1,32 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure release version
+        run: |
+          echo "VERSION=$(echo ${{ github.ref }} | sed -e 's/^refs\/tags\///')" >> $GITHUB_ENV
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+      - name: Sync core repo dependency version
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: toggl/track-extension-core
+          event-type: bump-button-version

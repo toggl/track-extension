@@ -13,4 +13,6 @@ jobs:
       - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
       - run: git config user.name "$GITHUB_ACTOR"
       - run: VERSION=$(npm version patch -m "v%s")
+      - run: git tag ${VERSION}
+      - run: git push --follow-tags
       - run: git push --tags

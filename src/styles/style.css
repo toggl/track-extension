@@ -761,9 +761,14 @@ a.toggl-button.toggl-plan {
 
 /********* WRIKE *********/
 .toggl-button.wrike {
+  display: flex !important;
+  height: 24px;
+  align-items: center;
+  font-size: 12px;
+  gap: 4px;
   text-decoration: none;
   color: rgb(80, 79, 79);
-  margin: 10px 15px 10px 0;
+  padding: 0 0 0 16px;
 }
 
 /********* ASSEMBLA *********/

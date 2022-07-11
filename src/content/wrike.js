@@ -1,13 +1,20 @@
+/**
+ * @name Wrike
+ * @urlAlias wrike.com
+ * @urlRegex *://*.wrike.com/*
+ */
+
 'use strict';
 
 togglbutton.render(
-  '.wspace-task-view:not(.toggl)',
+  'task-title:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = $('.wrike-panel-header-toolbar', elem);
+    const container = document.querySelector('settings-bar-content')
+    const viewContainer = document.querySelector('entity-view')
 
     const getTitleElement = function () {
-      const wsTaskTitle = document.querySelectorAll('ws-task-title');
+      const wsTaskTitle = document.querySelectorAll('task-title');
       if (wsTaskTitle.length === 1 && wsTaskTitle[0].textContent !== '') {
         return wsTaskTitle[0];
       }
@@ -15,26 +22,14 @@ togglbutton.render(
     };
 
     const descriptionText = function () {
-      const urlString = window.location.href;
-      const url = new URL(urlString);
-      // We have to look for the param in a custom hash
-      const hash = url.hash.substr(1);
-      const hashParts = hash.split('&');
-      let taskId = null;
-      for (let i = 0; i < hashParts.length; i++) {
-        const partSplit = hashParts[i].split('=');
-        if (partSplit[0] === 'ot') {
-          taskId = partSplit[1];
-        }
-      }
-
       const titleElem = getTitleElement();
       const titleElemText = titleElem ? titleElem.textContent : 'not found';
-      return `${taskId ? '#' + taskId : ''} ${titleElemText.trim().replace(' - Wrike', '')}`.trim();
+    
+      return `${viewContainer.querySelector('author').firstChild.textContent} ${titleElemText.trim().replace(' - Wrike', '')}`.trim();
     };
 
     const projectText = function () {
-      const projectElem = $('.wspace-tag-simple', elem);
+      const projectElem = viewContainer.querySelector('wrike-tag');
       // We process the project element text content.
       return projectElem ? projectElem.textContent : '';
     };
@@ -45,6 +40,6 @@ togglbutton.render(
       projectName: projectText
     });
 
-    container.insertBefore(link, container.firstChild);
+    container.append(link);
   }
 );

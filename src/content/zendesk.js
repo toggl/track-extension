@@ -8,7 +8,7 @@
 
 // Zendesk new UI Jul 2021
 togglbutton.render(
-  '.omni-conversation-pane>div>div:not(.toggl)',
+  '.omni-conversation-pane>div>div:first-child:not(.toggl)',
   { observe: true },
   (elem) => {
     const getProject = () => {

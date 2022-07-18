@@ -108,6 +108,11 @@ export default {
     url: '*://*.corgee.com/*',
     name: 'Corgee'
   },
+  'crowdin.com': {
+    url: '*://*.crowdin.com/*',
+    name: 'Crowdin',
+    file: 'crowdin.js'
+  },
   'desk.com': {
     url: '*://*.desk.com/web/agent/*',
     name: 'Desk.com'
@@ -176,7 +181,7 @@ export default {
   },
   'fastmail.com': {
     url: '*://*.fastmail.com/*',
-    name: 'Fastmail',
+    name: 'Fastmail'
   },
   'feedly.com': {
     url: '*://*.feedly.com/*',
@@ -758,10 +763,5 @@ export default {
   'zube.io': {
     url: '*://zube.io/*',
     name: 'Zube'
-  },
-  'crowdin.com': {
-    url: '*://*.crowdin.com/*',
-    name: 'Crowdin',
-    file: 'crowdin.js'
-  },
+  }
 };

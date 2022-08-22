@@ -104,6 +104,10 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   opacity: 1;
 }
 
+.BoardCardLayout.toggl:hover .toggl-button.asana-board-view {
+  opacity: 1;
+}
+
 /********* PODIO *********/
 .toggl-button.podio {
   width: 100px;

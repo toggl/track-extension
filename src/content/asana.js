@@ -5,8 +5,9 @@
  */
 'use strict';
 
+
 // Board view. Inserts button next to assignee/due date.
-togglbutton.render('.BaseCard .BoardCardLayout:not(.toggl)', { observe: true },
+togglbutton.render('.BoardCardLayout:not(.toggl)', { observe: true },
   boadCardElem => {
     if (boadCardElem.querySelector('.toggl-button')) {
       // Due to the way this UI is rendered, we must check for existence of old buttons manually.
@@ -15,19 +16,11 @@ togglbutton.render('.BaseCard .BoardCardLayout:not(.toggl)', { observe: true },
 
     const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-taskName').textContent.trim();
 
-    const projectSelector = () => {
-      const projectElement = document.querySelector('.TopbarPageHeaderStructure-titleRow > h1');
-      if (!projectElement) return '';
-
-      return projectElement.textContent.trim();
-    };
-
     const link = togglbutton.createTimerLink({
       className: 'asana-board-view',
       description: descriptionSelector,
-      projectName: projectSelector,
-      buttonType: 'minimal'
-      // N.B. tags cannot be supported on board view as the information is not available.
+      buttonType: 'minimal',
+      // N.B. Tags and ProjectName cannot be supported on board view as the information is not available.
     });
 
     const injectContainer = boadCardElem.querySelector('.BoardCardLayout-actionButtons');
@@ -134,39 +127,39 @@ togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
 );
 
 // Task detail. My Tasks, Spreadsheet, Board, ...
-togglbutton.render(
-  '.SingleTaskPaneSpreadsheet:not(.toggl)',
-  { observe: true },
-  function (elem) {
-    if ($('.toggl-button', elem)) {
+togglbutton.render('.TaskPane:not(.toggl)', { observe: true },
+  taskPaneEl => {
+    if (taskPaneEl.querySelector('.toggl-button')) {
+      // Due to the way this UI is rendered, we must check for existence of old buttons manually.
       return;
     }
 
-    const descriptionSelector = () => {
-      return $('.SingleTaskPaneSpreadsheet-titleRow textarea', elem).textContent.trim();
-    };
+    const descriptionSelector = () => taskPaneEl.querySelector('[aria-label="Task Name"]').textContent.trim();
 
     const projectSelector = () => {
-      const projectEl = elem.querySelectorAll('.TaskProjectToken-potTokenizerPill');
-      return [...projectEl].map(el => el.textContent.trim());
+      const projectElement = taskPaneEl.querySelector('.TokenizerPillBase-name');
+      if (!projectElement) return '';
+
+      return projectElement.textContent.trim();
     };
 
     const tagsSelector = () => {
-      const tags = elem.querySelectorAll('.TaskTagTokenPills .Pill');
+      const tags = taskPaneEl.querySelectorAll('.TokenizerPillBase-name');
       return [...tags].map(tag => tag.textContent.trim());
-    };
+    }
 
     const link = togglbutton.createTimerLink({
-      className: 'asana-board',
+      className: 'TaskPaneToolbar-button',
       description: descriptionSelector,
       projectName: projectSelector,
-      tags: tagsSelector,
-      buttonType: 'minimal'
+      buttonType: 'minimal',
+      tags: tagsSelector
     });
 
-    link.style.margin = '0 5px';
+    const injectContainer = taskPaneEl.querySelector('.TaskPaneExtraActionsButton');
 
-    const firstButton = elem.querySelector('.SingleTaskPaneToolbar-button');
-    firstButton.parentNode.insertBefore(link, firstButton);
+    if (injectContainer) {
+      injectContainer.parentNode.insertBefore(link, injectContainer.nextSibling);
+    }
   }
 );

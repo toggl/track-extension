@@ -134,7 +134,7 @@ togglbutton.render('.TaskPane:not(.toggl)', { observe: true },
       return;
     }
 
-    const descriptionSelector = () => taskPaneEl.querySelector('[aria-label="Task Name"]').textContent.trim();
+    const descriptionSelector = () => taskPaneEl.querySelector('.TaskPane-titleRow textarea').textContent.trim();
 
     const projectSelector = () => {
       const projectElement = taskPaneEl.querySelector('.TokenizerPillBase-name');

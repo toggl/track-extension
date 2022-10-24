@@ -1205,6 +1205,7 @@ a.toggl-button.workfront.min {
 
 /********* AIRTABLE ********/
 .toggl-button.airtable {
+  align-self: center;
   margin-top: 5px;
   margin-left: 30px;
   position: relative;

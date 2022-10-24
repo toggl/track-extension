@@ -6,14 +6,14 @@
 'use strict';
 
 togglbutton.render(
-  '.DetailViewWithActivityFeed .detailView .body:not(.toggl)',
+  '.DetailViewWithActivityFeed:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = $('.recordTitle > .relative', elem);
+    const container = elem.querySelector('div[role="button"]:nth-of-type(5)');
 
     const getDescription = () => {
-      const description = $('h3.recordTitle', elem);
-      return description ? description.innerText : '';
+      const description = elem.querySelector('.detailView .cellContainer textarea')
+      return description ? description.value : '';
     };
 
     const link = togglbutton.createTimerLink({
@@ -21,6 +21,6 @@ togglbutton.render(
       description: getDescription
     });
 
-    container.appendChild(link);
+    container.after(link);
   }
 );

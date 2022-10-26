@@ -17,6 +17,11 @@ export default {
     url: '*://*.assembla.com/*',
     name: 'Assembla'
   },
+  'atcoder.jp': {
+    url: '*://*.atcoder.jp/*',
+    name: 'AtCoder',
+    file: 'atcoder.js'
+  },
   'atlassian.com': {
     url: '*://*.atlassian.com/*',
     name: 'Atlassian / Jira',

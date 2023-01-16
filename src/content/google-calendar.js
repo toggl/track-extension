@@ -38,13 +38,13 @@ togglbutton.render(rootLevelSelectors, { observe: true }, elem => {
       return;
     }
 
-    const closeButton = $('[aria-label]:last-child', elem);
+    const closeButton = $('[aria-label]:first-child', elem);
 
     getDescription = () => {
       const titleSpan = $('span[role="heading"]', elem);
       return titleSpan ? titleSpan.textContent.trim() : '';
     };
-    target = closeButton.parentElement.nextSibling; // Left of the left-most action
+    target = closeButton.parentElement.parentElement.nextSibling; // Left of the left-most action
   } else if (elemIsDetail) {
     const closeButton = $('div[aria-label]', elem);
 

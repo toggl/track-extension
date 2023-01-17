@@ -35,7 +35,7 @@ out of the way and focus on real work.
 
 
 <p align="left">
-<a href="https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Toggl Track for Firefox" height="58">
+<a href="https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Toggl Track for Firefox" height="58"></a>
 <a href="https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png" alt="Get Toggl Track for Chromium"></a>
 </p>
 

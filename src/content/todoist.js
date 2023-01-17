@@ -88,6 +88,11 @@ togglbutton.render(
     const rootEl = elem.closest('.task_list_item');
     const content = rootEl.querySelector('.task_list_item__content');
 
+    const projects = [];
+    for (const [key, value] of Object.entries(togglbutton.projects)) {
+      projects.push(value.name);
+    }
+
     const descriptionSelector = () => {
       const text = content.querySelector('.task_content');
       return text ? text.textContent.trim() : '';
@@ -98,6 +103,10 @@ togglbutton.render(
 
     if (document.querySelector('.project_view h1 span.simple_content')) {
       project = document.querySelector('.project_view h1 span.simple_content').textContent.trim();
+      const section = $('.section_head__title .simple_content', elem.closest('section:not(.section__default)')).textContent.trim();
+      if (! isExist(project, projects) && isExist(section, projects)) {
+        project = section;
+      }
     } else if (document.getElementById(`item_${projectId}`)) {
       // (legacy?) project ID element
       const projectContent = document.getElementById(`item_${projectId}`).querySelector('.content');
@@ -105,6 +114,7 @@ togglbutton.render(
     } else if (rootEl.querySelector('.task_list_item__project')) {
       // Project name shown alongside the task in UI
       project = rootEl.querySelector('.task_list_item__project').textContent.trim();
+      project = separateAndCheck(project, projects);
     } else if (document.querySelector('[data-project-id] .simple_content')) {
       project = document.querySelector('[data-project-id] .simple_content').textContent;
     } else {
@@ -254,4 +264,23 @@ function getParentIfProject (elem) {
   }
 
   return project;
+}
+
+function separateAndCheck (str, projects) {
+  const words = str.split('/');
+  if (words.length < 2) {
+    return str;
+  }
+  const project = words[0].trim();
+  const section = words[1].trim();
+  if (isExist(project, projects)) {
+    return project;
+  } else if (isExist(section, projects)) {
+    return section;
+  }
+  return str;
+}
+
+function isExist(str, arr) {
+  return arr.some((p) => p === str);
 }

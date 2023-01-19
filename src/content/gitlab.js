@@ -1,5 +1,6 @@
 'use strict';
 
+// Render on issue page
 togglbutton.render(
   '.issue-details .detail-page-description:not(.toggl)',
   { observe: true },
@@ -14,6 +15,7 @@ togglbutton.render(
   }
 );
 
+// Render on merge request page
 togglbutton.render(
   '.merge-request > .detail-page-header:not(.toggl)',
   { observe: true },

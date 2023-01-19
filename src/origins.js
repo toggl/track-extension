@@ -221,7 +221,8 @@ export default {
   },
   'gitlab.com': {
     url: '*://*.gitlab.com/*',
-    name: 'Gitlab'
+    name: 'Gitlab',
+    file: 'gitlab.js'
   },
   'gogs.io': {
     url: '*://*.gogs.io/*',

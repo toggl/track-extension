@@ -1,3 +1,8 @@
+/**
+ * @name Gitlab
+ * @urlAlias gitlab.com
+ * @urlRegex *://*.gitlab.com/*
+ */
 'use strict';
 
 togglbutton.render(

@@ -45,13 +45,13 @@ exec(`git diff --name-only HEAD^ HEAD`, (_, out) => {
     console.log(`::No files to process`);
     process.exit(0);
   }
-  const infos = files
+  const info = files
     .map((file) => ({
       ...getFileInfo(readFileSync(file).toString()),
       file: path.basename(file),
     }))
     .filter((info) => info !== null);
-  if (infos.length === 0 || !infos[0].urlAlias) {
+  if (info.length === 0 || !info[0].urlAlias) {
     console.log(`All files ${files.join(', ')}`)
     console.log(
       `::error ::File ${files[0]} has a faulty header. Check CONTRIBUTING.md`
@@ -59,7 +59,7 @@ exec(`git diff --name-only HEAD^ HEAD`, (_, out) => {
     process.exit(1);
   }
   const origins = getOrigins();
-  const newOrigins = infos.reduce(
+  const newOrigins = info.reduce(
     (_origins, { name, urlAlias, urlRegex, file }) => ({
       ...origins,
       [urlAlias]: { url: urlRegex, name, file },

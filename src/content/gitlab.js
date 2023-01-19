@@ -11,7 +11,7 @@ togglbutton.render(
     const description = [prefix, getTitle(elem)].filter(Boolean).join(' ');
 
     insertButton($('.detail-page-header-actions'), description, true);
-    insertButton($('.time_tracker'), description);
+    insertButton($('.time-tracker'), description);
   }
 );
 
@@ -26,7 +26,7 @@ togglbutton.render(
     const description = [prefix, getTitle(elem)].filter(Boolean).join(' ');
 
     insertButton($('.detail-page-header-actions'), description, true);
-    insertButton($('.time_tracker'), description);
+    insertButton($('.time-tracker'), description);
   }
 );
 

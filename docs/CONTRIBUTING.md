@@ -15,7 +15,7 @@ This guide aims to make the process for contributing clear and hopefully answers
 
 ## Enabling development mode
 
-The tools that allows you to edit and create integrations are defined under the `Development mode` settings.
+The tools that allow you to edit and create integrations are defined under the `Development mode` settings.
 
 Go to Settings > Integrations
 
@@ -25,7 +25,7 @@ Toggle checkbox to enable or disable development mode.
 
 ## Editing built-in integration
 
-Editing the built-in integrations allows you to fix some potential problems in an existing integration, or configure it even furter to suit your use-case and necessities.
+Editing the built-in integrations allows you to fix some potential problems in an existing integration, or configure it even further to suit your use-case and necessities.
 
 With development mode enabled, pick up the built-in integration you want to edit. There should be a little `edit` button in the `Custom Integrations` list's entries
 
@@ -38,7 +38,7 @@ Click it and the `Edit Integration` dialog should show up. Make some changes and
 (Make sure to grant permissions if necessary).
 
 From now on, edited integration should always be executed instead built-in one.
-Let's verify it by navigating to Github.com, since it is the example we used.
+Let's verify it by navigating to github.com, since it is the example we used.
 
 Timer button should stay in the same place, and since we only changed description to be static this is exactly what we wanted.
 

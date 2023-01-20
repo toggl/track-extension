@@ -104,7 +104,7 @@ togglbutton.render(
     if (document.querySelector('.project_view h1 span.simple_content')) {
       project = document.querySelector('.project_view h1 span.simple_content').textContent.trim();
       const section = $('.section_head__title .simple_content', elem.closest('section:not(.section__default)')).textContent.trim();
-      if (! isExist(project, projects) && isExist(section, projects)) {
+      if (! projects.includes(project) && projects.includes(section)) {
         project = section;
       }
     } else if (document.getElementById(`item_${projectId}`)) {
@@ -273,14 +273,10 @@ function separateAndCheck (str, projects) {
   }
   const project = words[0].trim();
   const section = words[1].trim();
-  if (isExist(project, projects)) {
+  if (projects.includes(project)) {
     return project;
-  } else if (isExist(section, projects)) {
+  } else if (projects.includes(section)) {
     return section;
   }
   return str;
-}
-
-function isExist(str, arr) {
-  return arr.some((p) => p === str);
 }

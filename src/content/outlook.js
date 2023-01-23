@@ -8,28 +8,35 @@
 
 // Inbox emails
 togglbutton.render(
-  '[aria-label="Message actions"]:not(.toggl)',
+  'div[role="tabpanel"]:not(.toggl)',
   { observe: true },
   (elem) => {
-    const link = togglbutton.createTimerLink({
-      className: "outlook",
-      description: () => document.querySelector('div[role="heading"]').textContent
-    });
+    setTimeout(() => {
+      const container = document.querySelectorAll(
+        'div[role="tabpanel"] div[role="group"]'
+      )[1];
 
-    elem.childNodes[0].appendChild(link);
+      const link = togglbutton.createTimerLink({
+        className: `outlook`,
+        description: () =>
+          document.querySelector('div[role="heading"][title]')?.textContent
+      });
+
+      container.appendChild(link);
+    }, 500);
   }
 );
 
 // Composing emails
 togglbutton.render(
-  '[aria-label="Command toolbar"] .ms-CommandBar-primaryCommand:not(.toggl)',
+  '[role="menubar"] .ms-CommandBar-primaryCommand:not(.toggl)',
   { observe: true },
   (elem) => {
-    const isComposingEmail = elem.querySelector('button[name="Send"]');
+    const isComposingEmail = document.querySelector('div[data-testid="ComposeSendButton"]');
 
     if (isComposingEmail) {
       const subject = () =>
-        document.querySelector('[aria-label="Add a subject"]').value;
+        document.querySelector('input.ms-TextField-field').value;
 
       const link = togglbutton.createTimerLink({
         className: "outlook",

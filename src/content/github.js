@@ -9,12 +9,8 @@
 const getPaneDescription = async (elem) => {
   return new Promise((resolve) => {
     const description = setInterval(() => {
-      const titleElem = elem.querySelector(
-        "#__primerPortalRoot__ header h2 span"
-      );
-      const numElem = elem.querySelector(
-        "#__primerPortalRoot__ header a span:last-child"
-      );
+      const titleElem = elem.querySelector("#__primerPortalRoot__ bdi");
+      const numElem = titleElem.parentElement.lastChild;
 
       if (!!titleElem.textContent) {
         clearInterval(description);

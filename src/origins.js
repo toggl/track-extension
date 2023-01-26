@@ -33,7 +33,7 @@ export default {
     name: 'Axosoft'
   },
   'backlog.jp': {
-    url: '*://*.backlog.jp/*',
+    url: '*://*.backlog.jp/*,*://*.backlog.com/*',
     name: 'Backlog'
   },
   'basecamp.com': {

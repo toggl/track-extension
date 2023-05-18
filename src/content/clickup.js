@@ -6,9 +6,18 @@ togglbutton.render('#timeTrackingItem:not(.toggl)', { observe: true }, function 
   const description = $('.task-name', elem).textContent;
   const project = $('.space-name', elem).textContent;
 
+  const descriptionParts = description?.split('#')
+
+  const formattedDescription = descriptionParts?.reduce((acc, value, index) => {
+    if (index === descriptionParts.length - 1)
+      return acc += `#${value.trim()}`
+    else
+      return acc += `#${value}`
+  }, '')
+
   const link = togglbutton.createTimerLink({
     className: 'clickup',
-    description: description,
+    description: formattedDescription,
     projectName: project,
     buttonType: 'minimal'
   });

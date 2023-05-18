@@ -2,7 +2,7 @@
 /* global createTag */
 
 const getProject = () => {
-  const project = $('.board-header-btn-text');
+  const project = document.querySelector('.board-header [data-testid="board-name-display"]')
   return project ? project.textContent.trim() : '';
 };
 

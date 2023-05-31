@@ -316,6 +316,10 @@ export default {
     url: '*://app.liquidplanner.com/*',
     name: 'Liquidplanner'
   },
+  'next.liquidplanner.com': {
+    url: '*://next.liquidplanner.com/*',
+    name: 'Liquidplanner Next'
+  },
   'ladesk.com': {
     url: '*://*.ladesk.com/*',
     name: 'LiveAgent',

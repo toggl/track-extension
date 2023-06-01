@@ -20,14 +20,14 @@ setTimeout(() => {
       const getDescription = () => {
         const ticketId = document.querySelector('header div[data-selected=true]').attributes['data-entity-id'].value || ''
 
-		const language = document.querySelector("html").lang || 'en'
+        const language = document.querySelector("html").lang || 'en'
 
-		const translations = {
-			'en': 'Subject',
-			'de': "Betreff"
-		}
+        const translations = {
+          'en': 'Subject',
+          'de': "Betreff"
+        }
 
-		const elementName = translations[language] || 'Subject'
+        const elementName = translations[language] || 'Subject'
         const input = elem.querySelector('input[aria-label='+elementName+']');
         const title = (input ? input.value : '').trim();
 

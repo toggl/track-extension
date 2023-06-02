@@ -16,7 +16,7 @@ togglbutton.render('.time-desc:not(.toggl)',
 
 function descriptionSelector () {
   const description = document.getElementById('issue-title');
-  const issueId = description.previousElementSibling;
+  const issueId = description.nextElementSibling;
   return `${issueId.textContent} ${description.textContent}`;
 }
 
@@ -28,10 +28,10 @@ function projectSelector () {
 function tagsSelector () {
   const $tags = document.getElementsByClassName('labels')[0].children;
   var $result = [];
-  $tags.forEach(element => {
+  for (element of $tags) {
     if (element.children.length > 0 && !element.children[0].classList.contains("hide")) {
       $result.push(element.children[0].textContent);
     }
-  });
+  }
   return $result;
 }

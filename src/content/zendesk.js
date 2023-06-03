@@ -20,15 +20,7 @@ setTimeout(() => {
       const getDescription = () => {
         const ticketId = document.querySelector('header div[data-selected=true]').attributes['data-entity-id'].value || ''
 
-        const language = document.querySelector("html").lang || 'en'
-
-        const translations = {
-          'en': 'Subject',
-          'de': "Betreff"
-        }
-
-        const elementName = translations[language] || 'Subject'
-        const input = elem.querySelector('input[aria-label='+elementName+']');
+        const input = elem.querySelector('input[data-test-id=omni-header-subject]')
         const title = (input ? input.value : '').trim();
 
         return [`#${ticketId}`, title].filter(Boolean).join(' ');
@@ -97,7 +89,6 @@ setTimeout(() => {
     function (elem) {
       let description;
       const projectName = $('title').textContent;
-
       const titleFunc = function () {
         const titleElem = $('.editable .ember-view input', elem);
         const ticketNum = location.href.match(/tickets\/(\d+)/);

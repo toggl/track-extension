@@ -89,6 +89,7 @@ setTimeout(() => {
     function (elem) {
       let description;
       const projectName = $('title').textContent;
+
       const titleFunc = function () {
         const titleElem = $('.editable .ember-view input', elem);
         const ticketNum = location.href.match(/tickets\/(\d+)/);

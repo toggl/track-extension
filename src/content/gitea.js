@@ -26,9 +26,9 @@ function projectSelector () {
 }
 
 function tagsSelector () {
-  const $tags = document.getElementsByClassName('labels')[0].children;
+  const $tags = document.getElementsByClassName('labels-list')[0].children;
   var $result = [];
-  for (element of $tags) {
+  for (var element of $tags) {
     if (element.children.length > 0 && !element.children[0].classList.contains("hide")) {
       $result.push(element.children[0].textContent);
     }

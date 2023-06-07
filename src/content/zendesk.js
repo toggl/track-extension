@@ -20,7 +20,7 @@ setTimeout(() => {
       const getDescription = () => {
         const ticketId = document.querySelector('header div[data-selected=true]').attributes['data-entity-id'].value || ''
 
-        const input = elem.querySelector('input[aria-label=Subject]');
+        const input = elem.querySelector('input[data-test-id=omni-header-subject]')
         const title = (input ? input.value : '').trim();
 
         return [`#${ticketId}`, title].filter(Boolean).join(' ');
@@ -142,13 +142,13 @@ setTimeout(() => {
       if (elem.querySelector('.toggl-button')) return;
       // If we can't get the description on this pass, let's skip and wait for the next one
       if (!getDescription()) return;
-  
+
       const link = togglbutton.createTimerLink({
         className: 'zendesk-agent-ws',
         description: getDescription
       });
-  
+
       elem.prepend(link);
     }
-  );  
+  );
 }, 1000);

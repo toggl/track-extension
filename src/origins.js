@@ -611,7 +611,8 @@ export default {
   },
   'azure.com': {
     url: '*://*.azure.com/*',
-    name: 'VisualStudio / Azure DevOps'
+    name: 'VisualStudio / Azure DevOps',
+    file: 'visualstudio.js'
   },
   'app.vivifyscrum.com': {
     url: '*://app.vivifyscrum.com/*',

@@ -164,7 +164,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 .toggl-button.trello {
   text-decoration: none;
   cursor: pointer;
-  color: #737373;
+  color: var(--ds-text) !important;
 }
 
 .toggl-button.trello:not(.toggl-button-edit-form-button) svg {

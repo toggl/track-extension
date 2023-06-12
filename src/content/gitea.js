@@ -17,7 +17,7 @@ togglbutton.render('.time-desc:not(.toggl)',
 function descriptionSelector () {
   const description = document.getElementById('issue-title');
   const issueId = description.nextElementSibling;
-  return `${issueId.textContent} ${description.textContent}`;
+  return `${issueId.textContent.trim()} ${description.textContent.trim()}`;
 }
 
 function projectSelector () {
@@ -30,7 +30,7 @@ function tagsSelector () {
   var $result = [];
   for (var element of $tags) {
     if (element.children.length > 0 && !element.children[0].classList.contains("hide")) {
-      $result.push(element.children[0].textContent);
+      $result.push(element.children[0].textContent.trim());
     }
   }
   return $result;

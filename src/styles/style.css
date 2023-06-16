@@ -852,14 +852,10 @@ li > .toggl-button.phabricator {
 /********* REMEMEBER THE MILK *********/
 .toggl-button.rememberthemilk {
   margin-left: 5px;
-  position: absolute;
-}
-.toggl-button.rememberthemilk:not(.active) {
-  display: none !important;
 }
 
-*:hover > .toggl-button.rememberthemilk {
-  display: inline-block !important;
+.toggl-button:has(.toggl-button.rememberthemilk) {
+  position: absolute;
 }
 
 /********* FRESHDESK *********/

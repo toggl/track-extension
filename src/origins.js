@@ -689,5 +689,10 @@ export default {
   'zube.io': {
     url: '*://zube.io/*',
     name: 'Zube'
+  },
+  'freshservice.com': {
+    url: '*://*.freshservice.com/*',
+    name: 'Freshservice',
+    file: 'freshservice.js'
   }
 };

@@ -65,3 +65,24 @@ togglbutton.render(
     }
   }
 );
+
+togglbutton.render(
+  '.work-item-form-header:not(.toggl)',
+  { observe: true },
+  function () {
+    const activeButtonContainer = $('.work-item-header-command-bar')?.firstChild;
+    const description = $('.work-item-title-textfield input')?.value
+    const itemId = $('.work-item-form-header')?.children[1]?.textContent
+
+    const link = togglbutton.createTimerLink({
+      className: 'visual-studio-online',
+      description: `${itemId ? itemId + ' ' : ''}${description}`,
+      projectName: projectSelector,
+      container: '.work-item-header-command-bar'
+    });
+
+    const wrapper = createTag('menu-item');
+    wrapper.appendChild(link);
+    activeButtonContainer.prepend(wrapper);
+  }
+);

@@ -15,7 +15,7 @@ togglbutton.render('.story-state:not(.toggl)', { observe: true }, function (
   };
 
   const getProject = function () {
-    return $('.story-project .value', elem).textContent;
+    return $('.story-project .value', elem)?.textContent;
   };
 
   const link = togglbutton.createTimerLink({

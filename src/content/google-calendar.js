@@ -34,7 +34,7 @@ togglbutton.render(rootLevelSelectors, { observe: true }, elem => {
   if (elemIsPopup) {
     // Popup selector reaches here repeatedly, so we need to prevent the
     // creation of more than one Toggl button for a popup view.
-    if ($('.toggl-button', elem)) {
+    if (elem.querySelector('.toggl-button')) {
       return;
     }
 
@@ -62,13 +62,15 @@ togglbutton.render(rootLevelSelectors, { observe: true }, elem => {
     return;
   }
 
+  const container = createTag('view', 'toggl-container');
   const link = togglbutton.createTimerLink({
     className: 'google-calendar-modern',
     description: getDescription
   });
 
   if (elemIsPopup) {
-    target.prepend(link);
+    container.appendChild(link);
+    target.prepend(container);
   } else if (elemIsDetail) {
     target.appendChild(link);
   }

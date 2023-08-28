@@ -3,21 +3,15 @@
 togglbutton.render('#timeTrackingItem:not(.toggl)', { observe: true }, function (
   elem
 ) {
-  const description = $('.task-name', elem).textContent;
-  const project = $('.space-name', elem).textContent;
 
-  const descriptionParts = description?.split('#')
+  const description = document.querySelector('title').textContent.split('|')[0];
+  const taskID = document.querySelector('div[role="dialog"]').getAttribute('data-task-id');
 
-  const formattedDescription = descriptionParts?.reduce((acc, value, index) => {
-    if (index === descriptionParts.length - 1)
-      return acc += `#${value.trim()}`
-    else
-      return acc += `#${value}`
-  }, '')
+  const project = elem.querySelector('.space-name').textContent;
 
   const link = togglbutton.createTimerLink({
     className: 'clickup',
-    description: formattedDescription,
+    description: `${description} - #${taskID}`,
     projectName: project,
     buttonType: 'minimal'
   });

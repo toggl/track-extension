@@ -32,6 +32,7 @@ togglbutton.render(
       projectName: project,
       buttonType: "minimal",
       tags: tags,
+      container: '[data-testid="button-container"]'
     });
 
     const wrapper = document.createElement("div");

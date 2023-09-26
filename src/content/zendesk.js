@@ -39,13 +39,13 @@ setTimeout(() => {
 }, 1000);
 
 
-// Zendesk new UI Apr 2023
+// Zendesk new UI Sept 2023
 setTimeout(() => {
   togglbutton.render(
-    '[data-garden-id="pane"]:not(.toggl)',
+    '.ticket-panes-grid-layout.active',
     { observe: true },
     function (elem) {
-      if (elem.id === ':r1:--primary-pane') return
+      if (elem.querySelector('.toggl-button')) return
       let description;
       const projectName = $('title').textContent;
 
@@ -64,19 +64,13 @@ setTimeout(() => {
       };
 
       const link = togglbutton.createTimerLink({
-        className: 'zendesk',
+        className: 'zendesk-button',
         description: titleFunc,
-        projectName: projectName && projectName.split(' - ').shift()
+        projectName: projectName && projectName.split(' – ').shift()
       });
 
-      // Check for strange duplicate buttons. Don't know why this happens in Zendesk.
-      if (document.querySelector('.toggl-button')) {
-        document.removeChild(elem.querySelector('.toggl-button'));
-      }
-      elem.querySelector('[data-side-conversations-anchor-id="1"]').firstChild
-                                                                   .firstChild
-                                                                   .firstChild
-                                                                   .appendChild(link);
+
+      elem.querySelector('[data-support-suite-trial-onboarding-id="conversationPane"] > div:nth-child(1)').lastChild.prepend(link);
     }
   );
 }, 1000);

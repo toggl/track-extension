@@ -43,7 +43,10 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
     const descriptionSelector = () => taskNameCell.querySelector('textarea').textContent.trim();
     const projectHeaderSelector = () => {
       // Try to look for for page project title instead.
-      const projectHeader = document.querySelector('.TopbarPageHeaderStructure.ProjectPageHeader .TopbarPageHeaderStructure-title');
+      const projectHeader = document.querySelector(
+        '.TopbarPageHeaderStructure.ProjectPageHeader .ProjectPageHeaderProjectTitle-shadow',
+      );
+
       if (!projectHeader) {
         return '';
       }

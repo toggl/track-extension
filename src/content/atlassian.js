@@ -42,7 +42,7 @@ togglbutton.render(
   '#jira-issue-header:not(.toggl)',
   { observe: true },
   function (elem) {
-    const issueWrapper = elem.querySelector('[data-test-id="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]');
+    const issueWrapper = elem.querySelector('[data-testid="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]');
     let issueNumberElement;
     let container;
 
@@ -93,7 +93,7 @@ const getDescription = (issueNumberElement) => () => {
     }
   }
 
-  const titleElement = document.querySelector('h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]');
+  const titleElement = document.querySelector('h1[data-testid="issue.views.issue-base.foundation.summary.heading"]');
   if (titleElement) {
     if (description) description += ' ';
     description += titleElement.textContent.trim();

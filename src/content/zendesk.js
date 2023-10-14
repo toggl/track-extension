@@ -39,6 +39,48 @@ setTimeout(() => {
 }, 1000);
 
 
+// Zendesk new UI Apr 2023
+setTimeout(() => {
+  togglbutton.render(
+    '[data-garden-id="pane"]:not(.toggl)',
+    { observe: true },
+    function (elem) {
+      if (elem.id === ':r1:--primary-pane') return
+      let description;
+      const projectName = $('title').textContent;
+
+      const titleFunc = function () {
+        const titleElem = $('[data-test-id="omni-header-subject"]', elem);
+        const ticketNum = location.href.match(/tickets\/(\d+)/);
+
+        if (titleElem !== null) {
+          description = titleElem.value.trim();
+        }
+
+        if (ticketNum) {
+          description = '#' + ticketNum[1].trim() + ' ' + description;
+        }
+        return description;
+      };
+
+      const link = togglbutton.createTimerLink({
+        className: 'zendesk',
+        description: titleFunc,
+        projectName: projectName && projectName.split(' - ').shift()
+      });
+
+      // Check for strange duplicate buttons. Don't know why this happens in Zendesk.
+      if (document.querySelector('.toggl-button')) {
+        document.removeChild(elem.querySelector('.toggl-button'));
+      }
+      elem.querySelector('[data-side-conversations-anchor-id="1"]').firstChild
+                                                                   .firstChild
+                                                                   .firstChild
+                                                                   .appendChild(link);
+    }
+  );
+}, 1000);
+
 // Zendesk new UI Sept 2023
 setTimeout(() => {
   togglbutton.render(

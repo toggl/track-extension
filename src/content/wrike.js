@@ -6,15 +6,16 @@
 
 'use strict';
 
+
 togglbutton.render(
-  'task-title:not(.toggl)',
+  'work-item-title:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = document.querySelector('settings-bar-content')
+    const container = document.querySelector('action-panel')
     const viewContainer = document.querySelector('entity-view')
 
     const getTitleElement = function () {
-      const wsTaskTitle = document.querySelectorAll('task-title');
+      const wsTaskTitle = elem.querySelectorAll('task-title');
       if (wsTaskTitle.length === 1 && wsTaskTitle[0].textContent !== '') {
         return wsTaskTitle[0];
       }
@@ -25,7 +26,7 @@ togglbutton.render(
       const titleElem = getTitleElement();
       const titleElemText = titleElem ? titleElem.textContent : 'not found';
     
-      return `${viewContainer.querySelector('author').firstChild.textContent} ${titleElemText.trim().replace(' - Wrike', '')}`.trim();
+      return `${titleElemText.trim().replace(' - Wrike', '')}`.trim();
     };
 
     const projectText = function () {
@@ -40,6 +41,6 @@ togglbutton.render(
       projectName: projectText
     });
 
-    container.append(link);
+    container.prepend(link);
   }
 );

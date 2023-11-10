@@ -766,13 +766,14 @@ a.toggl-button.toggl-plan {
 /********* WRIKE *********/
 .toggl-button.wrike {
   display: flex !important;
-  height: 24px;
+  height: 100%;
   align-items: center;
   font-size: 12px;
   gap: 4px;
   text-decoration: none;
   color: rgb(80, 79, 79);
-  padding: 0 0 0 16px;
+  padding: 0 16px 0 0;
+  text-wrap: nowrap;
 }
 
 /********* ASSEMBLA *********/

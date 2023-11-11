@@ -67,23 +67,39 @@ togglbutton.render(
 );
 
 // Basecamp 3
-togglbutton.render('.todos li.todo:not(.toggl)', { observe: true }, function (
+togglbutton.render('article.todolist .todos li.todo:not(.toggl)', { observe: true }, function (
   elem
 ) {
   const parent = $('.checkbox__content', elem);
   const description = parent.childNodes[1].textContent.trim();
-  let project = $('#a-breadcrumb-menu-button');
-  project = project ? project.textContent : '';
+  const project = document.querySelector('meta[name="current-page-subtitle"]').getAttribute('content');
 
   const metadata = $('.metadata', parent);
 
   const link = togglbutton.createTimerLink({
     buttonType: metadata ? null : 'minimal',
-    className: 'basecamp3',
+    className: 'basecamp3-todos',
     description: description,
     projectName: project
   });
 
   const container = metadata || parent;
+  container.appendChild(link);
+});
+
+// Basecamp 3 - Card table
+togglbutton.render('header.todo__header:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const container = elem.querySelector('h1');
+  const description = elem.querySelector('h1 > a').textContent.trim();
+  const project = document.querySelector('meta[name="current-page-subtitle"]').getAttribute('content');
+
+  const link = togglbutton.createTimerLink({
+    buttonType: 'minimal',
+    description: description,
+    projectName: project
+  });
+
   container.appendChild(link);
 });

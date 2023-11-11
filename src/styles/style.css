@@ -219,32 +219,31 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* BASECAMP 3 *********/
-.todo .toggl-button.basecamp3 {
+.todo .toggl-button.basecamp3-todos{
   transition: opacity 150ms ease;
   display: inline;
-  position: absolute;
   opacity: 0;
-  margin-top: 2px;
-  margin-left: 150px;
+  margin-left: 125px;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
-.todo:not(.selected):hover .toggl-button.basecamp3,
-.todo:not(.selected) .toggl-button.basecamp3.active,
-.todo:not(.selected) .metadata .toggl-button.basecamp3 {
+.todo:not(.selected):hover .toggl-button.basecamp3-todos,
+.todo:not(.selected) .toggl-button.basecamp3-todos.active,
+.todo:not(.selected) .metadata .toggl-button.basecamp3-todos{
   opacity: 1;
 }
-.todo:not(.selected).completed .toggl-button.basecamp3 {
+.todo:not(.selected).completed .toggl-button.basecamp3-todos{
   margin-left: 6px;
   transform: scale(0.8) translateY(-3px);
 }
-.todo:not(.selected) .metadata .toggl-button.basecamp3 {
+.todo:not(.selected) .metadata .toggl-button.basecamp3-todos{
   margin-left: 6px;
   transform: scale(0.9) translateY(-2px);
 }
 
 
-.card-grid .toggl-button.basecamp3 {
+.card-grid .toggl-button.basecamp3-todos {
   opacity: 0 !important;
 }
 

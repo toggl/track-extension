@@ -20,7 +20,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     function getDescription () {
-      const descriptionElem = elem.querySelector('.notion-scroller .notion-selectable div[contenteditable="true"]');
+      const descriptionElem = elem.querySelector('.notion-peek-renderer .notion-scroller h1[contenteditable]');
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }
 

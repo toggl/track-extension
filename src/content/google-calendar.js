@@ -39,9 +39,15 @@ togglbutton.render(rootLevelSelectors, { observe: true }, elem => {
     }
 
     const closeButton = $('[aria-label]:first-child', elem);
+    const titleSpan = $('span[role="heading"]', elem);
+
+    const isCreateEventDialog = titleSpan === null;
+    if (isCreateEventDialog) {
+      // We shouldn't add Toggl button for "Create Event" dialog.
+      return;
+    }
 
     getDescription = () => {
-      const titleSpan = $('span[role="heading"]', elem);
       return titleSpan ? titleSpan.textContent.trim() : '';
     };
     target = closeButton.parentElement.parentElement.nextSibling; // Left of the left-most action

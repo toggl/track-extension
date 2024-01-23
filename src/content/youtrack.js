@@ -44,6 +44,32 @@ togglbutton.render(
   }
 );
 
+/* new view for single issues — since YouTrack 2023.3 */
+togglbutton.render(
+  'div[data-test="issue-container"]:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const reporterInfo = elem.querySelector('span[data-test="reporter-info"]');
+    if (reporterInfo === null) {
+      return;
+    }
+    const reporterInfoContainer = reporterInfo.parentElement;
+
+    const issueIdElem = reporterInfoContainer.querySelector('a[href*="issue/"] > span');
+    const issueId = issueIdElem ? issueIdElem.textContent.trim() : "";
+
+    const issueTitleElem = elem.querySelector('h1');
+    const issueTitle = issueTitleElem ? issueTitleElem.textContent.trim() : "";
+
+    const link = togglbutton.createTimerLink({
+      description: issueId + ' ' + issueTitle,
+      projectName: issueId.split('-')[0]
+    });
+
+    reporterInfoContainer.insertBefore(link, reporterInfo);
+  }
+);
+
 // Agile board
 togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function (
   elem

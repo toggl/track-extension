@@ -1321,6 +1321,11 @@ body.notion-body.dark .toggl-button.notion {
   display: none !important;
 }
 
+/********* NOTION CALENDAR *********/
+.toggl-button.notion-calendar {
+  padding: 12px;
+}
+
 /********* TURTLE *********/
 .turtle-toggl-wrapper {
   display: inline-block;

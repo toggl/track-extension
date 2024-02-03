@@ -65,26 +65,28 @@ togglbutton.render(
   'div[role="dialog"]:not(.toggl)',
   { observe: true },
   async function (elem) {
-    const projectElem = document.querySelector("#memexTitleInput");
+    const projectElem = document.querySelector("div[role='navigation'] h1");
 
-    const parent = document.querySelector("dl");
     const description = await getPaneDescription(elem);
+    const targetParent = document.querySelector("div[data-testid='issue-viewer-metadata-container']");
+    const targetChildSection = targetParent && targetParent.querySelector("div[data-testid='sidebar-section']");
+
+    if (targetChildSection === null) {
+      return;
+    }
 
     const div = document.createElement("div");
-    div.classList = parent.children[0].classList.value;
-    div.style.paddingLeft = "16px";
-
-    let projectName = "";
-    if (projectElem) projectName = projectElem.value;
+    div.className = targetChildSection.className;
+    div.style.paddingLeft = "8px";
 
     const link = togglbutton.createTimerLink({
       className: "github",
       description: description,
-      projectName: projectName,
+      projectName: projectElem ? projectElem.textContent.trim() : "",
     });
 
     div.appendChild(link);
-    parent.prepend(div);
+    targetParent.prepend(div);
   }
 );
 

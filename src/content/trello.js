@@ -6,9 +6,11 @@ const getProject = () => {
   return project ? project.textContent.trim() : '';
 };
 
+const cardContainerSelector = '.window-overlay .window-wrapper'
+
 togglbutton.render(
   '.window-header:not(.toggl)',
-  { observe: true },
+  { observe: true, debounceInterval: 300 },
   (elem) => {
     const actionButton =
       $('.js-move-card') ||
@@ -30,7 +32,7 @@ togglbutton.render(
       className: 'trello',
       description: getDescription,
       projectName: getProject,
-      container: '.window-wrapper'
+      container: cardContainerSelector
     });
 
     // Pass through click on Trello button to the timer link
@@ -42,7 +44,7 @@ togglbutton.render(
     container.appendChild(link);
     actionButton.parentNode.insertBefore(container, actionButton);
   },
-  '.window-wrapper'
+  cardContainerSelector
 );
 
 /* Checklist buttons */
@@ -69,15 +71,14 @@ togglbutton.render(
       buttonType: 'minimal',
       projectName: getProject,
       description: getDescription,
-      container: '.window-wrapper'
+      container: cardContainerSelector
     });
     const wrapper = document.createElement('span');
     wrapper.classList.add('checklist-item-menu');
     wrapper.style.display = 'flex';
     wrapper.style.alignItems = 'center';
-    wrapper.style.marginRight = '4px';
     wrapper.appendChild(link);
     elem.querySelector('.checklist-item-controls').appendChild(wrapper);
   },
-  '.checklist-items-list, .window-wrapper'
+  `.checklist-items-list, ${cardContainerSelector}`
 );

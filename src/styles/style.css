@@ -175,6 +175,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 .toggl-button.trello-list:not(.toggl-button-edit-form-button) {
   visibility: hidden;
   pointer-events: none;
+  margin-top: 6px;
+  margin-left: 1px;
 }
 .checklist-item-details:hover .toggl-button.trello-list, .toggl-button.trello-list.active:not(.toggl-button-edit-form-button) {
   visibility: visible;

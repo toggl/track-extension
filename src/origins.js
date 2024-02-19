@@ -594,8 +594,9 @@ export default {
     clone: 'true'
   },
   'trello.com': {
-    url: '*://*.trello.com/*',
-    name: 'Trello'
+    url: '*://trello.com/*',
+    name: 'Trello',
+    file: 'trello.js'
   },
   'unfuddle.com': {
     url: '*://*.unfuddle.com/*',

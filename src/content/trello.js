@@ -1,3 +1,8 @@
+/**
+ * @name Trello
+ * @urlAlias trello.com 
+ * @urlRegex *://trello.com/*
+ */
 'use strict';
 /* global createTag */
 

@@ -2,7 +2,7 @@ name: origins
 on: [push]
 jobs:
   update-origins:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud
     steps:
       - uses: actions/checkout@v2
         with:

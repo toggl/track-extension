@@ -1306,6 +1306,7 @@ body.notion-body.dark .toggl-button-notion-wrapper:hover {
 .toggl-button.notion {
   color: rgb(55, 53, 47);
   text-decoration: none;
+  padding-top: 5px;
 }
 
 body.notion-body.dark .toggl-button.notion {

@@ -16,14 +16,16 @@ jobs:
           echo "VERSION=$(echo ${{ github.ref }} | sed -e 's/^refs\/tags\///')" >> $GITHUB_ENV
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
+          generate_release_notes: true
       - name: Sync core repo dependency version
         uses: peter-evans/repository-dispatch@v2
         with:

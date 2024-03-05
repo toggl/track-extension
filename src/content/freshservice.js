@@ -1,4 +1,9 @@
 'use strict';
+/**
+ * @name FreshService
+ * @urlAlias freshservice.com
+ * @urlRegex *://*.freshservice.com/*
+ */
 
 // Main function
 togglbutton.render('.tkt-quick-action:not(.toggl)', { observe: true }, function (elem) {
@@ -11,9 +16,8 @@ togglbutton.render('.tkt-quick-action:not(.toggl)', { observe: true }, function 
     className: 'freshservice',
     description: description,
     projectname: '',
-    calculateTotal: true
   });
 	
-  	elem.appendChild(link);
+  	elem.prepend(link);
   }
 );

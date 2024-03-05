@@ -869,6 +869,13 @@ li > .toggl-button.phabricator {
   left: 5px;
 }
 
+
+/********* FRESHSERVICE *********/
+.toggl-button.freshservice {
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
 /********* Clickup *********/
 .toggl-button.clickup.min svg,
 .toggl-button.clickup.min span {

@@ -198,6 +198,11 @@ export default {
     url: '*://*.freshdesk.com/*',
     name: 'Freshdesk'
   },
+  'freshservice.com': {
+    url: '*://*.freshservice.com/*',
+    name: 'Freshservice',
+    file: 'freshservice.js'
+  },
   'ongemini.com': {
     url: '*://*.ongemini.com/*',
     name: 'Gemini'
@@ -260,11 +265,6 @@ export default {
     url: '*://habitica.com/*',
     name: 'Habitica'
   },
-  'hubspot.com': {
-    url: '*://app.hubspot.com/*',
-    name: 'Hubspot',
-    file: 'hubspot.js'
-  },
   'app.heflo.com': {
     url: '*://app.heflo.com/*',
     name: 'HEFLO'
@@ -276,6 +276,11 @@ export default {
   'secure.helpscout.net': {
     url: '*://secure.helpscout.net/*',
     name: 'Helpscout'
+  },
+  'hubspot.com': {
+    url: '*://*.atlassian.com/*',
+    name: 'Hubspot',
+    file: 'hubspot.js'
   },
   'app.huskymarketingplanner.com': {
     url: '*://app.huskymarketingplanner.com/*',
@@ -695,10 +700,5 @@ export default {
   'zube.io': {
     url: '*://zube.io/*',
     name: 'Zube'
-  },
-  'freshservice.com': {
-    url: '*://*.freshservice.com/*',
-    name: 'Freshservice',
-    file: 'freshservice.js'
   }
 };

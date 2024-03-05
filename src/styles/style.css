@@ -1429,6 +1429,11 @@ body.notion-body.dark .toggl-button.notion {
   margin-top: -7px;
 }
 
+/******** HUBSPOT ********/
+.toggl-button.hubspot {
+  margin-top: 10px;
+}
+
 /********* ZENHUB *********/
 .toggl-button.zenhub {
   padding-left: 25px;

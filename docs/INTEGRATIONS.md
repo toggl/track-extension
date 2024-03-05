@@ -71,7 +71,6 @@
 - [miniCRM](https://minicrm.pl/)
 - [Newsletter2Go](http://www.newsletter2go.com/)
 - [Notion](https://www.notion.so/)
-- [Notion Calendar](https://calendar.notion.so/)
 - [Nozbe](https://nozbe.com/)
 - [ONLYOFFICE](https://www.onlyoffice.com/)
 - [Onshape](https://onshape.com/)

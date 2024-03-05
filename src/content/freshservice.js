@@ -11,9 +11,8 @@ togglbutton.render('.tkt-quick-action:not(.toggl)', { observe: true }, function 
     className: 'freshservice',
     description: description,
     projectname: '',
-    calculateTotal: true
   });
 	
-  	elem.appendChild(link);
+  	elem.prepend(link);
   }
 );

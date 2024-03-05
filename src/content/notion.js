@@ -94,7 +94,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     function getDescription () {
-      const descriptionElem = elem.querySelector('div[contenteditable="true"]');
+      const descriptionElem = elem.querySelector('div[contenteditable]');
       return descriptionElem ? descriptionElem.textContent.trim() : '';
     }
     if(!window.location.hostname.includes('calendar.notion.so')) return;

@@ -680,8 +680,8 @@ export default {
     name: 'Xero',
     file: 'xero.js'
   },
-  'jetbrains.com': {
-    url: '*://*.jetbrains.com/*',
+  'youtrack.cloud': {
+    url: '*://*.youtrack.cloud/*',
     name: 'YouTrack',
     file: 'youtrack.js'
   },

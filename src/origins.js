@@ -260,6 +260,11 @@ export default {
     url: '*://habitica.com/*',
     name: 'Habitica'
   },
+  'hubspot.com': {
+    url: '*://app.hubspot.com/*',
+    name: 'Hubspot',
+    file: 'hubspot.js'
+  },
   'app.heflo.com': {
     url: '*://app.heflo.com/*',
     name: 'HEFLO'

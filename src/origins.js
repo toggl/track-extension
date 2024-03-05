@@ -322,6 +322,11 @@ export default {
     url: '*://www.khanacademy.org/*',
     name: 'KhanAcademy'
   },
+  'linear.app': {
+    url: '*://linear.app/*',
+    name: 'Linear',
+    file: 'linear.js'
+  },
   'app.liquidplanner.com': {
     url: '*://app.liquidplanner.com/*',
     name: 'Liquidplanner'

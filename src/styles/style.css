@@ -1501,3 +1501,9 @@ body.notion-body.dark .toggl-button.notion {
 .toggl-button.bugsnag {
   margin-left: 1rem;
 }
+
+
+/********* Linear *********/
+.toggl-button.linear-table {
+  margin-top: 5px;
+}

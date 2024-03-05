@@ -35,7 +35,16 @@ togglbutton.render(
       container: '[data-testid="button-container"]'
     });
 
+    const existingTogglWrapper = $('.toggl-button-todoist-wrapper');
+    if (existingTogglWrapper) {
+      // we need to remove any existing toggl buttons
+      existingTogglWrapper.replaceChildren(link);
+
+      return;
+    }
+
     const wrapper = document.createElement("div");
+    wrapper.classList.add('toggl-button-todoist-wrapper');
     wrapper.style.display = "flex";
     wrapper.style.alignItems = "center";
     wrapper.style.justifyContent = "center";

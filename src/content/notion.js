@@ -83,3 +83,27 @@ togglbutton.render(
     elem.prepend(wrapper);
   }
 );
+
+/**
+ * @name Notion Calendar
+ * @urlAlias calendar.notion.so
+ * @urlRegex *://calendar.notion.so/*
+ */
+togglbutton.render(
+  'div[data-context-panel-root]:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    function getDescription () {
+      const descriptionElem = elem.querySelector('div[contenteditable="true"]');
+      return descriptionElem ? descriptionElem.textContent.trim() : '';
+    }
+    if(!window.location.hostname.includes('calendar.notion.so')) return;
+    const link = togglbutton.createTimerLink({
+      className: 'notion-calendar',
+      description: getDescription
+    });
+
+    elem.firstChild.prepend(link);
+  }
+);
+

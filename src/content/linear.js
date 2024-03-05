@@ -5,9 +5,36 @@
  * @urlRegex *://linear.app/*
  */
 
+// Add linear integration in table view only
+togglbutton.render(
+  'a[data-dnd-dragging]:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const idElem = elem.querySelector('span[data-column-id="issueId"]');
+    const id = idElem ? idElem.textContent : '';
+    const titleElem = idElem.parentElement.nextSibling;
+    const title = titleElem ? titleElem.textContent : '';
+
+    const link = togglbutton.createTimerLink({
+      description: title,
+      className: 'linear-table',
+      buttonType: 'minimal', // button type, if skipped will render full size
+    });
+    const existingTogglButton = elem.querySelector('.toggl-button');
+    if (existingTogglButton) {
+      // we need to remove any existing toggl buttons
+      existingTogglButton.replaceChildren(link);
+
+      return;
+    }
+    titleElem.parentElement.insertBefore(link, titleElem.nextSibling);
+  }
+);
+
+
 // Add linear integration in board view only
 togglbutton.render(
-  'a[data-rbd-draggable-id]:not(.toggl)',
+  'a[data-board-item]:not(.toggl)',
   { observe: true },
   function (elem) {
     const id = elem.querySelector('div:first-child>div:first-child>div:first-child>span:first-child')?.textContent?.split('›')[0];
@@ -26,9 +53,10 @@ togglbutton.render(
       // For some reason, tag selection isn't working even if the like-named tags have already been created in Toggl
       tags: [id, ...labels],
     });
+    elem.style.position = 'relative';
+    link.style.bottom = '13px';
     link.style.right = '13px';
-    link.style.position = 'fixed';
+    link.style.position = 'absolute';
     elem.appendChild(link);
   }
 );
-

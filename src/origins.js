@@ -376,11 +376,6 @@ export default {
     name: 'Notion',
     file: 'notion.js'
   },
-  'calendar.notion.so': {
-    url: '*://calendar.notion.so/*',
-    name: 'Notion Calendar',
-    file: 'notion-calendar.js'
-  },
   'app.nozbe.com': {
     url: '*://app.nozbe.com/*',
     name: 'Nozbe'

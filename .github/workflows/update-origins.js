@@ -27,7 +27,9 @@ const getOrigins = () => {
 };
 
 const formatOriginsFile = (origins) =>
-  `export default {\n${Object.entries(origins)
+  `export { CustomScripts } from './custom-scripts'
+
+export default {\n${Object.entries(origins)
     .sort((a, b) =>
       a[1].name.toLowerCase() < b[1].name.toLowerCase() ? -1 : 1
     )
@@ -40,11 +42,12 @@ const formatOriginsFile = (origins) =>
     .join(",\n")}\n};\n`;
 
 exec(`git diff --name-only HEAD^ HEAD`, (_, out) => {
-  const files = out.split(/[\r\n]+/).filter((name) => !!name && name.startsWith('src/content/'));
+  const files = out.split(/[\r\n]+/).filter((name) => !!name && name.startsWith('src/content/') && !path.basename(name).startsWith("_custom_"));
   if (files.length === 0) {
     console.log(`::No files to process`);
     process.exit(0);
   }
+
   const infos = files
     .map((file) => ({
       ...getFileInfo(readFileSync(file).toString()),

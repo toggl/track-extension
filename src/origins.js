@@ -1,3 +1,5 @@
+export { CustomScripts } from './custom-scripts'
+
 export default {
   'airtable.com': {
     url: '*://airtable.com/*',
@@ -707,3 +709,4 @@ export default {
     name: 'Zube'
   }
 };
+

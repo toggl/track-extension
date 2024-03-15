@@ -188,6 +188,10 @@ export default {
     url: '*://*.fibery.io/*',
     name: 'Fibery'
   },
+  'figma.com': {
+    url: '*://*.figma.io/*',
+    name: 'Figma'
+  },
   'focuster.com': {
     url: '*://*.focuster.com/*',
     name: 'Focuster'

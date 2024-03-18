@@ -1507,3 +1507,10 @@ body.notion-body.dark .toggl-button.notion {
 .toggl-button.linear-table {
   margin-top: 5px;
 }
+
+
+/********* Figma *********/
+.toggl-button.figma {
+  margin-top: 5px;
+  z-index: 9999;
+}

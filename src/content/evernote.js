@@ -26,8 +26,9 @@ togglbutton.render('#qa-NOTE_HEADER:not(.toggl)', { observe: true }, function (e
   });
 
   // Insert at the start of the same header segment as the share button
-  elem
-    .querySelector('#qa-SHARE_BUTTON')
-    .parentNode
-    .prepend(link);
+  const shareButton = elem.querySelector('#qa-SHARE_BUTTON');
+  if (shareButton) {
+      const shareButtonParent = shareButton.parentNode;
+      shareButtonParent.parentNode.prepend(link);
+  }
 });

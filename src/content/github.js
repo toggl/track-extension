@@ -95,20 +95,28 @@ togglbutton.render(
   ".js-project-card-details .js-comment:not(.toggl)",
   { observe: true },
   function (elem) {
-    const titleElem = $(".js-issue-title");
-    const numElem = $(
-      ".js-project-card-details .project-comment-title-hover span.color-text-tertiary"
-    );
-    const projectElem = $("h1.public strong a, h1.private strong a");
+    const getDescription = () => {
+      const titleElem = $(".js-issue-title");
 
-    let description = titleElem.textContent;
-    if (numElem !== null) {
-      description = numElem.textContent + " " + description.trim();
-    }
+      if (!titleElem) {
+        return "";
+      }
+      const issueNumberElem = $(".js-issue-title + span");
+      const issueTitle = titleElem.textContent.trim();
+
+      // Check if the text starts with a '#' followed by digits, indicating an issue number
+      if (issueNumberElem && /^#\d+/.test(issueNumberElem.textContent)) {
+        return issueNumberElem.textContent.trim() + " " + issueTitle;
+      }
+
+      return issueTitle;
+    };
+
+    const projectElem = $("h1.public strong a, h1.private strong a");
 
     const link = togglbutton.createTimerLink({
       className: "github",
-      description: description,
+      description: getDescription,
       projectName: projectElem && projectElem.textContent,
     });
 

@@ -1275,16 +1275,17 @@ li .toggl-button.heflo {
 }
 
 /********* OUTLOOK *********/
-.toggl-button.outlook {
-  margin-left: 10px;
-  color: rgb(102, 102, 102);
+.toggl-button.outlook-panel {
+  margin: 0 5px;
   text-decoration: none;
-  position: relative;
-  bottom: 3px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.ms-CommandBar-primaryCommand .toggl-button.outlook {
-  align-self: center;
+.toggl-button.outlook {
+  margin: 0 10px;
 }
 
 /********* NOTION *********/

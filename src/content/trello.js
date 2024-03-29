@@ -11,8 +11,7 @@ const getProject = () => {
   return project ? project.textContent.trim() : '';
 };
 
-const cardContainerSelector = '.window-overlay .window-wrapper'
-
+const cardContainerSelector = '.card-detail-window';
 togglbutton.render(
   '.window-header:not(.toggl)',
   { observe: true, debounceInterval: 300 },

@@ -527,7 +527,8 @@ export default {
   },
   'app.shortcut.com': {
     url: '*://app.shortcut.com/*',
-    name: 'Shortcut'
+    name: 'Shortcut',
+    file: 'shortcut.js'
   },
   'sifterapp.com': {
     url: '*://*.sifterapp.com/*',

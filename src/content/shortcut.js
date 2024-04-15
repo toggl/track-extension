@@ -1,6 +1,11 @@
+/**
+ * @name Shortcut
+ * @urlAlias app.shortcut.com
+ * @urlRegex *://app.shortcut.com/*
+ */
 'use strict';
 
-togglbutton.render('.story-state:not(.toggl)', { observe: true }, function (
+togglbutton.render('#story-dialog-state-dropdown:not(.toggl)', { observe: true }, function (
   elem
 ) {
   const wrap = createTag('div');
@@ -15,7 +20,7 @@ togglbutton.render('.story-state:not(.toggl)', { observe: true }, function (
   };
 
   const getProject = function () {
-    return $('.story-project .value', elem)?.textContent;
+    return $('.story-epic .value', elem)?.textContent;
   };
 
   const link = togglbutton.createTimerLink({

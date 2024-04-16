@@ -5,6 +5,19 @@
  */
 'use strict';
 
+const projectHeaderSelector = () => {
+  // Try to look for for page project title instead.
+  const projectHeader = document.querySelector(
+    '.ProjectPageHeaderProjectTitle-container',
+  );
+
+  if (!projectHeader) {
+    return '';
+  }
+  return projectHeader.textContent
+    .replace(/\u00a0/g, ' ') // There can be &nbsp; in Asana header content
+    .trim();
+};
 
 // Board view. Inserts button next to assignee/due date.
 togglbutton.render('.BoardCardLayout:not(.toggl)', { observe: true },
@@ -15,12 +28,14 @@ togglbutton.render('.BoardCardLayout:not(.toggl)', { observe: true },
     }
 
     const descriptionSelector = () => boadCardElem.querySelector('.BoardCard-taskName').textContent.trim();
+    
 
     const link = togglbutton.createTimerLink({
       className: 'asana-board-view',
       description: descriptionSelector,
       buttonType: 'minimal',
-      // N.B. Tags and ProjectName cannot be supported on board view as the information is not available.
+      projectName: projectHeaderSelector,
+      // N.B. Tags cannot be supported on board view as the information is not available.
     });
 
     const injectContainer = boadCardElem.querySelector('.BoardCardLayout-actionButtons');
@@ -41,19 +56,7 @@ togglbutton.render('.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)', { observe
     }
 
     const descriptionSelector = () => taskNameCell.querySelector('textarea').textContent.trim();
-    const projectHeaderSelector = () => {
-      // Try to look for for page project title instead.
-      const projectHeader = document.querySelector(
-        '.TopbarPageHeaderStructure.ProjectPageHeader .ProjectPageHeaderProjectTitle-shadow',
-      );
 
-      if (!projectHeader) {
-        return '';
-      }
-      return projectHeader.textContent
-        .replace(/\u00a0/g, ' ') // There can be &nbsp; in Asana header content
-        .trim();
-    };
     const projectSelector = () => {
       const projectCell = container.querySelector('.SpreadsheetTaskRow-projectsCell');
       if (!projectCell) {

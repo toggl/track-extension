@@ -5,13 +5,13 @@ togglbutton.render('#timeTrackingItem:not(.toggl)', { observe: true }, function 
 ) {
 
   const description = document.querySelector('title').textContent.split('|')[0];
-  const taskID = document.querySelector('div[role="dialog"]').getAttribute('data-task-id');
+  const taskID = document.querySelector('title').textContent.split('|')[1];
 
   const project = elem.querySelector('.space-name').textContent;
 
   const link = togglbutton.createTimerLink({
     className: 'clickup',
-    description: `${description} - #${taskID}`,
+    description: `${description}-#${taskID}`,
     projectName: project,
     buttonType: 'minimal'
   });

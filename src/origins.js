@@ -83,7 +83,8 @@ export default {
   },
   'clickup.com': {
     url: '*://*.clickup.com/*',
-    name: 'ClickUp'
+    name: 'ClickUp',
+    file: 'clickup.js'
   },
   'cloudes.me': {
     url: '*://*.cloudes.me/*',

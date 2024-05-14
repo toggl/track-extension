@@ -32,3 +32,4 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           repository: toggl/track-extension-core
           event-type: bump-button-version
+          client-payload: '{"release_id": "${{ steps.create_release.outputs.id }}" }'

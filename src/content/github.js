@@ -53,6 +53,7 @@ togglbutton.render(
       className: "github",
       description: description,
       projectName: projectElem && projectElem.textContent,
+      autoTrackerKey: "pull-issue"
     });
 
     div.appendChild(link);
@@ -83,6 +84,7 @@ togglbutton.render(
       className: "github",
       description: description,
       projectName: projectElem ? projectElem.textContent.trim() : "",
+      autoTrackerKey: "peek"
     });
 
     div.appendChild(link);
@@ -118,6 +120,7 @@ togglbutton.render(
       className: "github",
       description: getDescription,
       projectName: projectElem && projectElem.textContent,
+      autoTrackable: true
     });
 
     const wrapper = createTag(

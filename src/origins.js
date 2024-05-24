@@ -537,7 +537,8 @@ export default {
   },
   'slack.com': {
     url: '*://*.slack.com/*',
-    name: 'Slack'
+    name: 'Slack',
+    file: 'slack.js'
   },
   'sourcelair.com': {
     url: '*://*.sourcelair.com/*',

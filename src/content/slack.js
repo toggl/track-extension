@@ -1,11 +1,15 @@
+/**
+ * @name Slack
+ * @urlAlias slack.com
+ * @urlRegex *://*.slack.com/*
+ */
 'use strict';
-/* global togglbutton, $ */
 
 const getTextContent = (element) => element ? element.textContent.trim() : '';
 
 const getWorkspaceName = () => getTextContent($('.p-ia__sidebar_header__team_name_text'));
 
-togglbutton.render('.p-ia__view_header:not(.toggl)', { observe: true }, (elem) => {
+togglbutton.render('.p-view_header:not(.toggl)', { observe: true }, (elem) => {
   const description = $('[data-qa="channel_name"]');
   const isRendered = $('.toggl-button', elem) != null;
 

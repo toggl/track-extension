@@ -1,11 +1,15 @@
+/**
+ * @name Slack
+ * @urlAlias slack.com
+ * @urlRegex *://*.slack.com/*
+ */
 'use strict';
-/* global togglbutton, $ */
 
 const getTextContent = (element) => element ? element.textContent.trim() : '';
 
-const getWorkspaceName = () => getTextContent($('.p-ia__sidebar_header__team_name_text'));
+const getWorkspaceName = () => getTextContent($('.p-ia4_home_header_menu__team_name'));
 
-togglbutton.render('.p-ia__view_header:not(.toggl)', { observe: true }, (elem) => {
+togglbutton.render('.p-view_header__actions:not(.toggl)', { observe: true }, (elem) => {
   const description = $('[data-qa="channel_name"]');
   const isRendered = $('.toggl-button', elem) != null;
 
@@ -21,7 +25,12 @@ togglbutton.render('.p-ia__view_header:not(.toggl)', { observe: true }, (elem) =
     buttonType: 'minimal'
   });
 
-  elem.insertBefore(link, elem.lastChild);
+  const button = document.createElement('button');
+
+  button.className = 'c-button-unstyled c-icon_button c-icon_button--size_medium p-toggle_channel_space_action_button display_flex align_items_center p-toggle_channel_space_action_button--text p-toggle_channel_space_action--overlay c-icon_button--default';
+  button.appendChild(link);
+
+  elem.insertBefore(button, elem.firstChild);
 });
 
 togglbutton.render('.c-message_kit__hover:not(.toggl)', { observe: true }, elem => {
@@ -43,8 +52,6 @@ togglbutton.render('.c-message_kit__hover:not(.toggl)', { observe: true }, elem 
   });
 
   const button = document.createElement('button');
-  const buttonContainer = document.createElement('span');
-  buttonContainer.className = 'slack-message-container';
 
   button.className = 'c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_small c-message_actions__button';
   button.setAttribute('type', 'button');

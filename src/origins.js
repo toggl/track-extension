@@ -291,7 +291,7 @@ export default {
     name: 'Helpscout'
   },
   'hubspot.com': {
-    url: '*://*.atlassian.com/*',
+    url: '*://app.hubspot.com/*',
     name: 'Hubspot',
     file: 'hubspot.js'
   },
@@ -537,7 +537,8 @@ export default {
   },
   'slack.com': {
     url: '*://*.slack.com/*',
-    name: 'Slack'
+    name: 'Slack',
+    file: 'slack.js'
   },
   'sourcelair.com': {
     url: '*://*.sourcelair.com/*',

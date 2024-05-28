@@ -920,12 +920,22 @@ li > .toggl-button.phabricator {
 /********* SLACK *********/
 .toggl-button.slack-message:not(.toggl-button-edit-form-button) {
   position: relative;
-  top: 2px;
+  top: 1px;
   width: 16px;
-  height: 16px;
+  height: 17px;
   padding-left: 0;
   background-size: 100%;
   background-position: center bottom;
+}
+
+.toggl .p-toggle_channel_space_action_button {
+  margin-right: 8px;
+}
+
+.toggl-button.slack.min {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
 }
 
 .slack-message-container {

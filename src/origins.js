@@ -291,7 +291,7 @@ export default {
     name: 'Helpscout'
   },
   'hubspot.com': {
-    url: '*://*.atlassian.com/*',
+    url: '*://*.hubspot.com/*',
     name: 'Hubspot',
     file: 'hubspot.js'
   },

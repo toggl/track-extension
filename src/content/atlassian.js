@@ -126,8 +126,7 @@ function getProject () {
     }
   }
 
-  projectElement = $('[data-test-id="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]');
-
+  projectElement = $('[data-test-id="issue.views.issue-base.foundation.breadcrumbs.breadcrumb-current-issue-container"]') || $('[data-testid="issue.views.issue-base.foundation.breadcrumbs.project.container"]')
   if (projectElement) {
     const projectWrapper = projectElement.parentElement.querySelector('a[href*="browse"] span + span');
     return projectWrapper ? projectWrapper.textContent.trim() : '';

@@ -14,8 +14,12 @@ function getContainer (selector) {
   return visibleContainers.length > 0 && visibleContainers[0];
 }
 
-// We need to find proper project element, which differs between old and new layout
 function projectSelector () {
+  // Look for project input field in work item layout and use if it exists
+  const projectInputElement = $('input[aria-label="Project"]');
+  if (projectInputElement) return projectInputElement.value;
+
+  // Otherwise need to find proper project element, which differs between old and new layout
   const oldLayoutProjectElement = $('.tfs-selector span');
   const newLayoutProjectElement = $('.fontWeightHeavy.flex-grow.commandbar-item-text');
   const projectElement = oldLayoutProjectElement || newLayoutProjectElement;

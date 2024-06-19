@@ -26,7 +26,8 @@ togglbutton.render(
 
     const link = togglbutton.createTimerLink({
       className: 'notion',
-      description: getDescription
+      description: getDescription,
+      autoTrackerKey: "side_peek"
     });
 
     const wrapper = createWrapper(link);
@@ -75,7 +76,8 @@ togglbutton.render(
 
     const link = togglbutton.createTimerLink({
       className: 'notion',
-      description: getDescription
+      description: getDescription,
+      autoTrackerKey: "document"
     });
 
     const wrapper = createWrapper(link);

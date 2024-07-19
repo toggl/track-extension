@@ -1,6 +1,6 @@
 /**
  * @name Trello
- * @urlAlias trello.com 
+ * @urlAlias trello.com
  * @urlRegex *://trello.com/*
  */
 'use strict';
@@ -41,7 +41,6 @@ togglbutton.render(
 
     // Pass through click on Trello button to the timer link
     container.addEventListener('click', (e) => {
-      e.preventDefault();
       link.click();
     });
 

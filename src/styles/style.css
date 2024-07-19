@@ -174,8 +174,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 .toggl-button.trello-list:not(.toggl-button-edit-form-button) {
   pointer-events: none;
-  margin-top: 6px;
-  margin-left: 1px;
+  margin-top: 3px !important;
 }
 .checklist-item-details:hover .toggl-button.trello-list, .toggl-button.trello-list.active:not(.toggl-button-edit-form-button) {
   pointer-events: all;
@@ -184,6 +183,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   background-position: center !important;
 }
 .trello-tb-wrapper .toggl-button {
+  pointer-events: all;
   color: #444;
 }
 
@@ -877,6 +877,12 @@ li > .toggl-button.phabricator {
 }
 
 /********* Clickup *********/
+.toggl-button:before {
+  content: unset !important;
+}
+.toggl-button.clickup svg {
+  visibility: visible !important;
+}
 .toggl-button.clickup.min svg,
 .toggl-button.clickup.min span {
   visibility: hidden;

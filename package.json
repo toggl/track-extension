@@ -5,5 +5,10 @@
   "description": "Add Toggl Track one-click time tracking to popular web tools.",
   "license": "Apache-2.0",
   "main": "src/origins.js",
-  "types": "src/index.d.ts"
+  "types": "src/index.d.ts",
+  "devDependencies": {
+    "@toggl/prettier": "^1.1.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-jsdoc": "^1.3.0"
+  }
 }

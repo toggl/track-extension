@@ -74,7 +74,9 @@ togglbutton.render(
       }
 
       // There can be multiple projects, but we can't support trying to match multiple yet.
-      const firstProject = projectCell.querySelector('.Pill')
+      const firstProject = projectCell.querySelector(
+        '.SpreadsheetPotsCell-potPill',
+      )
       return firstProject
         ? firstProject.textContent.trim()
         : projectHeaderSelector()
@@ -82,7 +84,7 @@ togglbutton.render(
 
     const tagsSelector = () => {
       const tags = container.querySelectorAll(
-        '.SpreadsheetTaskRow-tagsCell .Pill',
+        '.SpreadsheetTaskRow-tagsCell .SpreadsheetPotsCell-potPill',
       )
       return [...tags].map((tag) => tag.textContent.trim())
     }

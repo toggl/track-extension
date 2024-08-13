@@ -162,14 +162,16 @@ togglbutton.render('.TaskPane:not(.toggl)', { observe: true }, (taskPaneEl) => {
     taskPaneEl.querySelector('.TaskPaneTitle textarea').textContent.trim()
 
   const projectSelector = () => {
-    const projectElement = taskPaneEl.querySelector('.TokenizerPillBase-name')
+    const projectElement = taskPaneEl.querySelector(
+      '.TaskProjectTokenPill-tokenPillWrapper .TaskProjects-projectTokenPill span',
+    )
     if (!projectElement) return ''
 
     return projectElement.textContent.trim()
   }
 
   const tagsSelector = () => {
-    const tags = taskPaneEl.querySelectorAll('.TokenizerPillBase-name')
+    const tags = taskPaneEl.querySelectorAll('.TaskTagTokenPills-potPill span')
     return [...tags].map((tag) => tag.textContent.trim())
   }
 

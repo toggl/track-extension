@@ -11,7 +11,7 @@ togglbutton.render(
   { observe: true },
   function (elem) {
     const container = document.querySelector('action-panel')
-    const viewContainer = document.querySelector('entity-view')
+    const viewContainer = document.querySelector('work-item-location')
 
     const getTitleElement = function () {
       const wsTaskTitle = elem.querySelectorAll('task-title')

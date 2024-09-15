@@ -1,16 +1,21 @@
 'use strict';
 
-togglbutton.render('.group-detail:not(.toggl)', { observe: true }, function () {
-  const errType = $('h3 > span > span').textContent.trim();
-  const detail = $('.message').textContent.trim();
-  const project = $('.project-select').textContent.trim();
-  const description = errType + ': ' + detail;
+togglbutton.render('.group-detail:not(.toggl)', { observe: true }, function (elem) {
+  const pageTitle = $('title').textContent.trim();
 
+  // Extract the project name from the page title, assuming it's the last part after ' — '
+  const pageTitleParts = pageTitle.split(' — ');
+  const projectName = pageTitleParts.length > 1 ? pageTitleParts[pageTitleParts.length - 1] : '';
+  
   const link = togglbutton.createTimerLink({
     className: 'sentry',
-    description: description,
-    projectName: project
+    description: pageTitle,
+    projectName: projectName
   });
 
-  $('.group-detail .nav-tabs').appendChild(link);
+  const tabListElement = elem.querySelector('ul[role="tablist"]');
+  if (tabListElement) {
+    tabListElement.appendChild(link);
+  }
 });
+

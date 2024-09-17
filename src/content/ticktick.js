@@ -7,7 +7,7 @@ togglbutton.render('#task-detail-view:not(.toggl)', { observe: true }, function 
   }
 
   function getDescription () {
-    const descriptionEl = elem.querySelector('.task-title');
+    const descriptionEl = elem.querySelector('.task-title .CodeMirror-code');
     return descriptionEl ? descriptionEl.textContent.trim() : '';
   }
 

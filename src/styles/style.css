@@ -53,6 +53,10 @@
   margin-right: 30px;
 }
 
+.toggl-button.youtrack-modal {
+  padding: 6px 12px;
+}
+
 /********* ASANA *********/
 .toggl-button.asana,
 .toggl-button.asana-new {

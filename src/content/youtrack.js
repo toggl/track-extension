@@ -98,3 +98,25 @@ togglbutton.render('.yt-agile-card:not(.toggl)', { observe: true }, function (
 
   container.appendChild(link);
 });
+
+// Agile board - issue modal
+togglbutton.render('div[role="dialog"] div[data-test="fields-sidebar"]:not(.toggl)', { observe: true }, function (
+  elem
+) {
+  const dialog = elem.closest('div[role="dialog"]');
+
+  const issueIdElem = dialog.querySelector('a[href*="issue/"]');
+  const issueId = issueIdElem ? issueIdElem.textContent.trim() : "";
+
+  const issueTitleElem = dialog.querySelector('h1');
+  const issueTitle = issueTitleElem ? issueTitleElem.textContent.trim() : "";
+
+  const link = togglbutton.createTimerLink({
+    className: 'youtrack-modal',
+    description: issueId + ' ' + issueTitle,
+    projectName: issueId.split('-')[0]
+  });
+
+  const container = elem.lastChild;
+  container.insertBefore(link, container.firstChild);
+});

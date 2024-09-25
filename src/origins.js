@@ -288,7 +288,8 @@ export default {
   },
   'secure.helpscout.net': {
     url: '*://secure.helpscout.net/*',
-    name: 'Helpscout'
+    name: 'Helpscout',
+    file: 'helpscout.js'
   },
   'hubspot.com': {
     url: '*://app.hubspot.com/*',

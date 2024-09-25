@@ -1,22 +1,21 @@
-'use strict';
+'use strict'
 
-togglbutton.render('.convo-actions:not(.toggl)', { observe: true }, function () {
-  const description =
-      '#' +
-      $('#tkHeader strong').textContent +
-      ' ' +
-      $('#subjectLine').textContent;
+togglbutton.render(
+  '[data-cy="ConversationHeader.Actions"]:not(.toggl)',
+  { observe: true },
+  function () {
+    const id = $('[data-cy="Text"]').textContent
+    const content = $('[data-cy="EditableTextarea"]').textContent
+    const description = [id, content].join(' ')
 
-  const link = togglbutton.createTimerLink({
-    className: 'helpscout',
-    description: description,
-    buttonType: 'minimal'
-  });
+    const link = togglbutton.createTimerLink({
+      className: 'helpscout',
+      description: description,
+      buttonType: 'minimal',
+    })
 
-  link.setAttribute('style', 'margin-top: 10px');
+    link.setAttribute('style', 'margin-top: 10px')
 
-  const listItem = document.createElement('li');
-  listItem.appendChild(link);
-
-  $('.convo-actions').appendChild(listItem);
-});
+    $('[data-cy="ConversationHeader.Actions"]').appendChild(link)
+  },
+)

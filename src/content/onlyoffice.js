@@ -14,7 +14,8 @@ togglbutton.render(
       className: 'onlyoffice',
       description: description,
       projectName: project,
-      buttonType: 'minimal'
+      buttonType: 'minimal',
+      autoTrackable: true
     });
     $('.project-title').appendChild(link);
   }
@@ -62,7 +63,8 @@ togglbutton.render(
       className: 'onlyoffice',
       description: description,
       projectName: project,
-      buttonType: 'minimal'
+      buttonType: 'minimal',
+      autoTrackable: true
     });
     elem.insertBefore(link, $('.check', elem));
     const button = $('.toggl-button.onlyoffice', elem);

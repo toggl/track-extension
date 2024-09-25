@@ -39,6 +39,7 @@ togglbutton.render(
       description: getDescription,
       projectName: getProject,
       container: '[data-testid="card-back-name"]',
+      autoTrackable: true,
     })
 
     // Pass through click on Trello button to the timer link

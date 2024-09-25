@@ -1,3 +1,9 @@
+/**
+ * @name Helpscout
+ * @urlAlias secure.helpscout.net
+ * @urlRegex *://secure.helpscout.net/*
+ */
+
 'use strict'
 
 togglbutton.render(

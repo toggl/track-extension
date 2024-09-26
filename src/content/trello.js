@@ -13,27 +13,29 @@ const getProject = () => {
   return project ? project.textContent.trim() : ''
 }
 
-const cardContainerSelector = '.card-detail-window'
-togglbutton.render(
-  '.window-header:not(.toggl)',
-  { observe: true, debounceInterval: 300 },
-  (elem) => {
-    const actionButton =
-      $('.js-move-card') ||
-      $('.js-copy-card') ||
-      $('.js-archive-card') ||
-      $('.js-more-menu')
+const cardContainerSelector = '.window-wrapper'
 
-    if (!actionButton) {
+togglbutton.render(
+  '#card-back-name:not(.toggl)',
+  { observe: true, debounceInterval: 1000 },
+  (elem) => {
+    const actionsWrapper = $(
+      '#layer-manager-card-back section:nth-child(4) > ul',
+    )
+
+    console.log('NewActionButton:', actionsWrapper)
+
+    if (!actionsWrapper) {
       return
     }
 
     const getDescription = () => {
-      const description = $('.window-title h2', elem)
+      const description = $('#card-back-name')
       return description ? description.textContent.trim() : ''
     }
 
     const container = createTag('div', 'button-link trello-tb-wrapper')
+
     const link = togglbutton.createTimerLink({
       className: 'trello',
       description: getDescription,
@@ -47,7 +49,8 @@ togglbutton.render(
     })
 
     container.appendChild(link)
-    actionButton.parentNode.insertBefore(container, actionButton)
+
+    actionsWrapper.prepend(container)
   },
   cardContainerSelector,
 )

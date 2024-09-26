@@ -3,15 +3,17 @@
  * @urlAlias trello.com
  * @urlRegex *://trello.com/*
  */
-'use strict';
+'use strict'
 /* global createTag */
 
 const getProject = () => {
-  const project = document.querySelector('.board-header [data-testid="board-name-display"]')
-  return project ? project.textContent.trim() : '';
-};
+  const project = document.querySelector(
+    '.board-header [data-testid="board-name-display"]',
+  )
+  return project ? project.textContent.trim() : ''
+}
 
-const cardContainerSelector = '.card-detail-window';
+const cardContainerSelector = '.card-detail-window'
 togglbutton.render(
   '.window-header:not(.toggl)',
   { observe: true, debounceInterval: 300 },
@@ -20,35 +22,35 @@ togglbutton.render(
       $('.js-move-card') ||
       $('.js-copy-card') ||
       $('.js-archive-card') ||
-      $('.js-more-menu');
+      $('.js-more-menu')
 
     if (!actionButton) {
-      return;
+      return
     }
 
     const getDescription = () => {
-      const description = $('.window-title h2', elem);
-      return description ? description.textContent.trim() : '';
-    };
+      const description = $('.window-title h2', elem)
+      return description ? description.textContent.trim() : ''
+    }
 
-    const container = createTag('div', 'button-link trello-tb-wrapper');
+    const container = createTag('div', 'button-link trello-tb-wrapper')
     const link = togglbutton.createTimerLink({
       className: 'trello',
       description: getDescription,
       projectName: getProject,
-      container: cardContainerSelector
-    });
+      container: cardContainerSelector,
+    })
 
     // Pass through click on Trello button to the timer link
     container.addEventListener('click', (e) => {
-      link.click();
-    });
+      link.click()
+    })
 
-    container.appendChild(link);
-    actionButton.parentNode.insertBefore(container, actionButton);
+    container.appendChild(link)
+    actionButton.parentNode.insertBefore(container, actionButton)
   },
-  cardContainerSelector
-);
+  cardContainerSelector,
+)
 
 /* Checklist buttons */
 togglbutton.render(
@@ -56,32 +58,32 @@ togglbutton.render(
   { observe: true },
   (elem) => {
     const getTitleText = () => {
-      const title = $('.window-title h2');
-      return title ? title.textContent.trim() : '';
-    };
+      const title = $('.window-title h2')
+      return title ? title.textContent.trim() : ''
+    }
 
     const getTaskText = () => {
-      const task = $('.checklist-item-details-text', elem);
-      return task ? task.textContent.trim() : '';
-    };
+      const task = $('.checklist-item-details-text', elem)
+      return task ? task.textContent.trim() : ''
+    }
 
     const getDescription = () => {
-      return `${getTitleText()} - ${getTaskText()}`;
-    };
+      return `${getTitleText()} - ${getTaskText()}`
+    }
 
     const link = togglbutton.createTimerLink({
       className: 'trello-list',
       buttonType: 'minimal',
       projectName: getProject,
       description: getDescription,
-      container: cardContainerSelector
-    });
-    const wrapper = document.createElement('span');
-    wrapper.classList.add('checklist-item-menu');
-    wrapper.style.display = 'flex';
-    wrapper.style.alignItems = 'center';
-    wrapper.appendChild(link);
-    elem.querySelector('.checklist-item-controls').appendChild(wrapper);
+      container: cardContainerSelector,
+    })
+    const wrapper = document.createElement('span')
+    wrapper.classList.add('checklist-item-menu')
+    wrapper.style.display = 'flex'
+    wrapper.style.alignItems = 'center'
+    wrapper.appendChild(link)
+    elem.querySelector('.checklist-item-controls').appendChild(wrapper)
   },
-  `.checklist-items-list, ${cardContainerSelector}`
-);
+  `.checklist-items-list, ${cardContainerSelector}`,
+)

@@ -11,7 +11,7 @@ togglbutton.render(
   $container => {
     try {
       function descriptionSelector() {
-        const $description = $('div[data-selenium-test$="-highlight-details"] h3') ?? $('div[data-selenium-test$="highlightTitle"]');
+        const $description = $('div[data-selenium-test$="-highlight-details"] h3') ?? $('[data-selenium-test="highlightTitle"]');
         return $description.textContent.trim();
       }
 

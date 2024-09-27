@@ -23,8 +23,6 @@ togglbutton.render(
       '#layer-manager-card-back section:nth-child(4) > ul',
     )
 
-    console.log('NewActionButton:', actionsWrapper)
-
     if (!actionsWrapper) {
       return
     }

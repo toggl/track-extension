@@ -40,7 +40,7 @@ togglbutton.render(
       className: 'trello',
       description: getDescription,
       projectName: getProject,
-      container: cardContainerSelector,
+      container: '[data-testid="card-back-name"]',
     })
 
     // Pass through click on Trello button to the timer link
@@ -57,16 +57,16 @@ togglbutton.render(
 
 /* Checklist buttons */
 togglbutton.render(
-  '.checklist-item-details:not(.toggl)',
-  { observe: true },
+  '[data-testid="check-item-container"]:not(.toggl)',
+  { observe: true, debounceInterval: 1000 },
   (elem) => {
     const getTitleText = () => {
-      const title = $('.window-title h2')
-      return title ? title.textContent.trim() : ''
+      const description = $('#card-back-name')
+      return description ? description.textContent.trim() : ''
     }
 
     const getTaskText = () => {
-      const task = $('.checklist-item-details-text', elem)
+      const task = $('.ak-renderer-wrapper', elem)
       return task ? task.textContent.trim() : ''
     }
 
@@ -79,14 +79,27 @@ togglbutton.render(
       buttonType: 'minimal',
       projectName: getProject,
       description: getDescription,
-      container: cardContainerSelector,
+      container: '[data-testid="card-back-name"]',
     })
     const wrapper = document.createElement('span')
     wrapper.classList.add('checklist-item-menu')
     wrapper.style.display = 'flex'
     wrapper.style.alignItems = 'center'
+    wrapper.style.marginLeft = '4px'
     wrapper.appendChild(link)
-    elem.querySelector('.checklist-item-controls').appendChild(wrapper)
+
+    // Add StopPropagation to prevent the card from closing.
+    wrapper.addEventListener('click', (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      // Click on the Toggl button
+      link.querySelector('button').click()
+    })
+
+    elem
+      .querySelector('[data-testid="check-item-hover-buttons"]')
+      .appendChild(wrapper)
   },
-  `.checklist-items-list, ${cardContainerSelector}`,
+  cardContainerSelector,
 )

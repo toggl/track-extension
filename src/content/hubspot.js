@@ -5,8 +5,9 @@
  */
 'use strict';
 
+// This generic implementation works for most objects details page
 togglbutton.render(
-  'div[data-selenium-test$="-highlight-details"]:not(.toggl)',
+  'div[data-selenium-component="ProfileHighlightContainer"] [data-selenium-test="highlightTitle"]:not(.toggl)',
   { observe: true },
   $container => {
     try {
@@ -15,22 +16,15 @@ togglbutton.render(
         return $description.textContent.trim();
       }
 
-      function tagsSelector() {
-        const pipeline = $('div#pipeline-select') ? $('div#pipeline-select').textContent.trim() : '';
-        const stage = $('div#stage-select') ? $('div#stage-select').textContent.trim() : '';
-
-        return [pipeline, stage];
-      }
-
       const link = togglbutton.createTimerLink({
         className: 'hubspot',
         description: descriptionSelector,
-        tags: tagsSelector
       });
       const rowContainer = document.createElement('div');
       rowContainer.setAttribute('class', 'flex-row align-center');
       rowContainer.appendChild(link);
-      $container.parentNode.appendChild(rowContainer);
+      const cardContainer = $('[data-selenium-test="highlightTitle"]')
+      cardContainer.parentNode.parentNode.appendChild(rowContainer);
     } catch (e) {
       console.error(e)
     }

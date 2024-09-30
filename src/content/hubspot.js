@@ -19,6 +19,7 @@ togglbutton.render(
       const link = togglbutton.createTimerLink({
         className: 'hubspot',
         description: descriptionSelector,
+        autoTrackable: true,
       });
       const rowContainer = document.createElement('div');
       rowContainer.setAttribute('class', 'flex-row align-center');

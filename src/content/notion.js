@@ -19,6 +19,7 @@ togglbutton.render(
   '.notion-peek-renderer:not(.toggl)',
   { observe: true },
   function (elem) {
+    if (!elem) return;
     function getDescription () {
       const descriptionElem = elem.querySelector('.notion-peek-renderer .notion-scroller h1[contenteditable]');
       return descriptionElem ? descriptionElem.textContent.trim() : '';
@@ -36,54 +37,63 @@ togglbutton.render(
     if (root) {
       root.parentElement.prepend(wrapper);
     } else {
-      elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)').prepend(wrapper)
+      const selector = elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)')
+      if (!selector) return;
+      selector.prepend(wrapper)
     }
   }
 );
 
-togglbutton.render(
-  '.notion-topbar-action-buttons:not(.toggl)',
-  { observe: true },
-  function (elem) {
-    if (!elem) return;
-
-    elem.style.position = 'relative';
-
-    function getDescription () {
-      const controls = document.querySelector('.notion-page-controls');
-      const topBar = document.querySelector('.notion-topbar');
-      let title = '';
-
-      if (controls) {
-        if (controls.nextElementSibling) {
-          title = controls.nextElementSibling;
-        } else {
-          const parent = controls.parentElement;
-
-          if (!parent) return '';
-
-          title = parent ? parent.nextElementSibling : '';
-        }
-      } else if (topBar) {
-        const breadcrumbs = topBar.querySelector('div > .notranslate')
-        if (breadcrumbs) {
-          title = breadcrumbs.childNodes[breadcrumbs.childNodes.length - 1].querySelector('.notranslate:last-child')
-        }
+setTimeout(() => {
+  togglbutton.render(
+    '.notion-topbar-action-buttons',
+    { observe: true, debounceInterval: 1000 },
+    function (elem) {
+      if (!elem) return;
+      const elements = document.querySelectorAll('.notion-topbar-action-buttons .toggl-button-notion-wrapper')
+      if(elements.length > 0) {
+        elements.forEach(element => element.remove())
       }
 
-      return title ? title.textContent.trim() : '';
-    }
+      elem.style.position = 'relative';
 
-    const link = togglbutton.createTimerLink({
-      className: 'notion',
-      description: getDescription,
-    });
+      function getDescription () {
+        const controls = document.querySelector('.notion-page-controls');
+        const topBar = document.querySelector('.notion-topbar');
+        let title = '';
 
-    const wrapper = createWrapper(link);
+        if (controls) {
+          if (controls.nextElementSibling) {
+            title = controls.nextElementSibling;
+          } else {
+            const parent = controls.parentElement;
 
-    elem.prepend(wrapper);
-  }
-);
+            if (!parent) return '';
+
+            title = parent ? parent.nextElementSibling : '';
+          }
+        } else if (topBar) {
+          const breadcrumbs = topBar.querySelector('div > .notranslate')
+          if (breadcrumbs) {
+            title = breadcrumbs.childNodes[breadcrumbs.childNodes.length - 1].querySelector('.notranslate:last-child')
+          }
+        }
+
+        return title ? title.textContent.trim() : '';
+      }
+
+      const link = togglbutton.createTimerLink({
+        className: 'notion',
+        description: getDescription,
+      });
+
+      const wrapper = createWrapper(link);
+
+      elem.prepend(wrapper);
+    },
+    '.notion-topbar .shadow-cursor-breadcrumb *,title'
+  );
+}, 2000)
 
 /**
  * @name Notion Calendar
@@ -94,6 +104,7 @@ togglbutton.render(
   'div[data-context-panel-root]:not(.toggl)',
   { observe: true },
   function (elem) {
+    if (!elem) return;
     function getDescription () {
       const descriptionElem = elem.querySelector('div[contenteditable="true"]');
       return descriptionElem ? descriptionElem.textContent.trim() : '';

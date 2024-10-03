@@ -67,12 +67,10 @@ setTimeout(() => {
             title = controls.nextElementSibling;
           } else {
             const parent = controls.parentElement;
-
-            if (!parent) return '';
-
             title = parent ? parent.nextElementSibling : '';
           }
-        } else if (topBar) {
+        }
+        if (!title && topBar) {
           const breadcrumbs = topBar.querySelector('div > .notranslate')
           if (breadcrumbs) {
             title = breadcrumbs.childNodes[breadcrumbs.childNodes.length - 1].querySelector('.notranslate:last-child')

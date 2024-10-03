@@ -372,6 +372,11 @@ export default {
     name: 'MeisterTask',
     file: 'meistertask.js'
   },
+  'planner.cloud.microsoft': {
+    url: '*://planner.cloud.microsoft/*',
+    name: 'Microsoft Planner',
+    file: 'microsoft-planner.js'
+  },
   'tasks.office.com': {
     url: '*://tasks.office.com/*',
     name: 'Microsoft Planner'
@@ -429,6 +434,11 @@ export default {
     url: '*://*.supportsystem.com/*',
     name: 'osTicket',
     file: 'osticket.js'
+  },
+  'outlook.cloud.microsoft': {
+    url: '*://outlook.cloud.microsoft/*',
+    name: 'Outlook',
+    file: 'outlook.js'
   },
   'outlook.office.com': {
     url: '*://outlook.office.com/*',

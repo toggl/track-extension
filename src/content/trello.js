@@ -16,8 +16,8 @@ const getProject = () => {
 const cardContainerSelector = '.window-wrapper'
 
 togglbutton.render(
-  '#card-back-name:not(.toggl)',
-  { observe: true, debounceInterval: 1000 },
+  '[data-testid="card-back-make-template-button"]:not(.toggl)',
+  { observe: true, debounceInterval: 2000 },
   (elem) => {
     const actionsWrapper = $(
       '#layer-manager-card-back section:nth-child(4) > ul',

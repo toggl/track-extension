@@ -13,92 +13,84 @@ const getProject = () => {
   return project ? project.textContent.trim() : ''
 }
 
-const cardContainerSelector = '.window-wrapper'
+const getCardName = () => {
+  return document.querySelector('#card-back-name')?.textContent.trim()
+}
 
-togglbutton.render(
-  '[data-testid="card-back-make-template-button"]:not(.toggl)',
-  { observe: true, debounceInterval: 2000 },
-  (elem) => {
-    const actionsWrapper = $(
-      '#layer-manager-card-back section:nth-child(4) > ul',
-    )
+togglbutton.inject(
+  {
+    node: '[data-testid="card-back-move-card-button"]:not(.toggl)',
+    renderer: (element) => {
+      const container = createTag('li', 'button-link trello-tb-wrapper')
 
-    if (!actionsWrapper) {
-      return
-    }
+      const link = togglbutton.createTimerLink({
+        className: 'trello',
+        description: getCardName,
+        projectName: getProject,
+        container: '[data-testid="card-back-name"]',
+        autoTrackable: true,
+      })
 
-    const getDescription = () => {
-      const description = $('#card-back-name')
-      return description ? description.textContent.trim() : ''
-    }
+      // Pass through click on Trello button to the timer link
+      container.addEventListener('click', (e) => {
+        link.click()
+      })
 
-    const container = createTag('div', 'button-link trello-tb-wrapper')
+      container.appendChild(link)
 
-    const link = togglbutton.createTimerLink({
-      className: 'trello',
-      description: getDescription,
-      projectName: getProject,
-      container: '[data-testid="card-back-name"]',
-      autoTrackable: true,
-    })
-
-    // Pass through click on Trello button to the timer link
-    container.addEventListener('click', (e) => {
-      link.click()
-    })
-
-    container.appendChild(link)
-
-    actionsWrapper.prepend(container)
+      element.parentNode.parentNode.prepend(container, element)
+    },
   },
-  cardContainerSelector,
+  { observe: true },
 )
 
 /* Checklist buttons */
-togglbutton.render(
-  '[data-testid="check-item-container"]:not(.toggl)',
-  { observe: true, debounceInterval: 1000 },
-  (elem) => {
-    const getTitleText = () => {
-      const description = $('#card-back-name')
-      return description ? description.textContent.trim() : ''
-    }
 
-    const getTaskText = () => {
-      const task = $('.ak-renderer-wrapper', elem)
-      return task ? task.textContent.trim() : ''
-    }
+togglbutton.injectMany(
+  {
+    node: '[data-testid="check-item-hover-buttons"]:not(.toggl)',
+    renderer: (elements) => {
+      // Loop through all the checklist items.
+      for (const element of elements) {
+        const getTaskText = () => {
+          return (
+            element.parentNode
+              .querySelector('.ak-renderer-wrapper')
+              ?.textContent.trim() ?? ''
+          )
+        }
 
-    const getDescription = () => {
-      return `${getTitleText()} - ${getTaskText()}`
-    }
+        const getDescription = () => {
+          return `${getCardName()} - ${getTaskText()}`
+        }
 
-    const link = togglbutton.createTimerLink({
-      className: 'trello-list',
-      buttonType: 'minimal',
-      projectName: getProject,
-      description: getDescription,
-      container: '[data-testid="card-back-name"]',
-    })
-    const wrapper = document.createElement('span')
-    wrapper.classList.add('checklist-item-menu')
-    wrapper.style.display = 'flex'
-    wrapper.style.alignItems = 'center'
-    wrapper.style.marginLeft = '4px'
-    wrapper.appendChild(link)
+        const link = togglbutton.createTimerLink({
+          className: 'trello-list',
+          buttonType: 'minimal',
+          projectName: getProject,
+          description: getDescription,
+          container: '[data-testid="card-back-name"]',
+        })
 
-    // Add StopPropagation to prevent the card from closing.
-    wrapper.addEventListener('click', (e) => {
-      e.preventDefault()
-      e.stopPropagation()
+        const wrapper = document.createElement('span')
+        wrapper.classList.add('checklist-item-menu')
+        wrapper.style.display = 'flex'
+        wrapper.style.alignItems = 'center'
+        wrapper.style.marginLeft = '4px'
+        wrapper.appendChild(link)
 
-      // Click on the Toggl button
-      link.querySelector('button').click()
-    })
+        // Add StopPropagation to prevent the card from closing.
+        wrapper.addEventListener('click', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
 
-    elem
-      .querySelector('[data-testid="check-item-hover-buttons"]')
-      .appendChild(wrapper)
+          // Click on the Toggl button
+          link.querySelector('button').click()
+        })
+
+        element.appendChild(wrapper)
+      }
+    },
   },
-  cardContainerSelector,
+  { observe: true },
 )

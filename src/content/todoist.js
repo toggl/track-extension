@@ -32,7 +32,8 @@ togglbutton.render(
       projectName: project,
       buttonType: "minimal",
       tags: tags,
-      container: '[data-testid="button-container"]'
+      container: '[data-testid="button-container"]',
+      autoTrackable: true
     });
 
     const existingTogglWrapper = $('.toggl-button-todoist-wrapper');
@@ -71,7 +72,8 @@ togglbutton.render('[data-item-detail-root] [data-item-actions-root]:not(.toggl)
     description: description,
     projectName: project,
     tags: tags,
-    buttonType: 'minimal'
+    buttonType: 'minimal',
+    autoTrackable: true
   });
 
   const wrapper = document.createElement('div');

@@ -357,6 +357,10 @@ a.toggl-button.toggl-plan {
   align-self: center;
 }
 
+.toggl.button.zendesk-button {
+  margin-top: 5px;
+}
+
 /********* ANYDO *********/
 .toggl-button.anydo {
   color: #099acb;

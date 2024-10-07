@@ -87,7 +87,13 @@ setTimeout(() => {
     '.ticket-panes-grid-layout.active',
     { observe: true },
     function (elem) {
-      if (elem.querySelector('.toggl-button')) return
+      const elements = document.querySelectorAll('.ticket-panes-grid-layout:not(.active) .toggl-button')
+      if(elements.length > 0) {
+        elements.forEach(element => element.remove())
+      }
+      const activeButtonExists = document.querySelector('.ticket-panes-grid-layout.active .toggl-button')
+      if(activeButtonExists) return
+
       let description;
       const projectName = $('title').textContent;
 
@@ -108,12 +114,14 @@ setTimeout(() => {
       const link = togglbutton.createTimerLink({
         className: 'zendesk-button',
         description: titleFunc,
-        projectName: projectName && projectName.split(' – ').shift()
+        projectName: projectName && projectName.split(' – ').shift(),
+        buttonType: 'minimal'
       });
 
 
       elem.querySelector('[data-support-suite-trial-onboarding-id="conversationPane"] > div:nth-child(1)').lastChild.prepend(link);
-    }
+    },
+    ''
   );
 }, 1000);
 

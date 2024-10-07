@@ -181,6 +181,7 @@ togglbutton.render('.TaskPane:not(.toggl)', { observe: true }, (taskPaneEl) => {
     projectName: projectSelector,
     buttonType: 'minimal',
     tags: tagsSelector,
+    autoTrackable: true,
   })
 
   const injectContainer = taskPaneEl.querySelector(

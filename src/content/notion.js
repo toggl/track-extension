@@ -50,7 +50,7 @@ togglbutton.render(
 
 togglbutton.inject(
   {
-    node: '.notion-topbar-action-buttons',
+    node: 'main.notion-frame .notion-scroller:not(.toggl)',
     renderer: function (elem) {
       const elements = document.querySelectorAll(
         '.notion-topbar-action-buttons .toggl-button-notion-wrapper',
@@ -59,8 +59,6 @@ togglbutton.inject(
       if (elements.length > 0) {
         elements.forEach((element) => element.remove())
       }
-
-      elem.style.position = 'relative'
 
       function getDescription() {
         const controls = document.querySelector('.notion-page-controls')
@@ -94,7 +92,7 @@ togglbutton.inject(
 
       const wrapper = createWrapper(link)
 
-      elem.prepend(wrapper)
+      document.querySelector('.notion-topbar-action-buttons').prepend(wrapper)
     },
   },
   { observe: true },

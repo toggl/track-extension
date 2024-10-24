@@ -73,10 +73,14 @@ setTimeout(() => {
       if (document.querySelector('.toggl-button')) {
         document.removeChild(elem.querySelector('.toggl-button'));
       }
-      elem.querySelector('[data-side-conversations-anchor-id="1"]').firstChild
-                                                                   .firstChild
-                                                                   .firstChild
-                                                                   .appendChild(link);
+      try {
+        elem.querySelector('[data-side-conversations-anchor-id="1"]').firstChild
+          .firstChild
+          .firstChild
+          .appendChild(link);
+      } catch (error) {
+        console.error('Toggl Button: Error in rendering', error);
+      }
     }
   );
 }, 1000);
@@ -84,14 +88,14 @@ setTimeout(() => {
 // Zendesk new UI Sept 2023
 setTimeout(() => {
   togglbutton.render(
-    '.ticket-panes-grid-layout.active',
+    '.ticket-panes-grid-layout[data-is-active="true"]',
     { observe: true },
     function (elem) {
-      const elements = document.querySelectorAll('.ticket-panes-grid-layout:not(.active) .toggl-button')
+      const elements = document.querySelectorAll('.ticket-panes-grid-layout:not([data-is-active="true"]) .toggl-button')
       if(elements.length > 0) {
         elements.forEach(element => element.remove())
       }
-      const activeButtonExists = document.querySelector('.ticket-panes-grid-layout.active .toggl-button')
+      const activeButtonExists = document.querySelector('.ticket-panes-grid-layout[data-is-active="true"] .toggl-button')
       if(activeButtonExists) return
 
       let description;

@@ -49,21 +49,17 @@ togglbutton.render(
   'div[data-test="issue-container"]:not(.toggl)',
   { observe: true },
   function (elem) {
-    console.log('Toggl Button: Reporter info not found.')
-    const reporterInfo = elem.querySelector('span[data-test="reporter-info"]')
+    const reporterInfo = elem.querySelector('[data-test="reporter-info"]')
+
     if (reporterInfo === null) {
       console.log('Toggl Button: Reporter info not found.')
       return
     }
+
     const reporterInfoContainer = reporterInfo.parentElement
 
-    const issueIdElem = reporterInfoContainer.querySelector(
-      'a[href*="issue/"] > span',
-    )
-    const issueId = issueIdElem ? issueIdElem.textContent.trim() : ''
-
-    const issueTitleElem = elem.querySelector('h1')
-    const issueTitle = issueTitleElem ? issueTitleElem.textContent.trim() : ''
+    const issueId = $('.idLink__ee62').textContent.trim()
+    const issueTitle = $('h1').textContent.trim()
 
     const link = togglbutton.createTimerLink({
       description: issueId + ' ' + issueTitle,

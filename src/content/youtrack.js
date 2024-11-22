@@ -1,3 +1,9 @@
+/**
+ * @name YouTrack
+ * @urlAlias youtrack.cloud
+ * @urlRegex *://*.youtrack.cloud/*
+ */
+
 'use strict'
 
 /* the first selector is required for youtrack-5 and the second for youtrack-6 */

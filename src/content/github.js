@@ -60,6 +60,53 @@ togglbutton.render(
   },
 )
 
+// Issue Beta
+togglbutton.render(
+  '[data-testid="issue-viewer-metadata-pane"]',
+  { observe: true },
+  function (elem) {
+    const titleElem = $('[data-testid="issue-title"]')
+    const projectElem = $('[data-testid="project-title"]')
+    const existingTag = $('.discussion-sidebar-item.toggl')
+
+    const numElem = titleElem.parentElement.querySelector('span')
+
+    if (existingTag) {
+      if (existingTag.parentNode.firstChild.classList.contains('toggl')) {
+        return
+      }
+      existingTag.parentNode.removeChild(existingTag)
+    }
+
+    let description = titleElem.textContent
+
+    if (numElem !== null) {
+      description = numElem.textContent + ' ' + description.trim()
+    }
+
+    const elementOfBase = document.querySelector(
+      '[data-testid="sidebar-section"]',
+    )
+
+    const div = document.createElement('div')
+    div.className = elementOfBase.className
+    div.classList.add('discussion-sidebar-item', 'toggl')
+    div.style.paddingLeft = '8px'
+    div.style.paddingRight = '8px'
+
+    console.log(projectElem?.textContent)
+
+    const link = togglbutton.createTimerLink({
+      className: 'github',
+      description: description,
+      projectName: projectElem && projectElem.textContent,
+    })
+
+    div.appendChild(link)
+    elem.prepend(div)
+  },
+)
+
 // Project Page side pane
 togglbutton.render(
   'div[role="dialog"]:not(.toggl)',

@@ -22,7 +22,7 @@ const getPaneDescription = async (elem) => {
 
 // Issue and Pull Request Page
 togglbutton.render(
-  '#partial-discussion-sidebar',
+  '#partial-discussion-sidebar:not(.toggl)',
   { observe: true },
   function (elem) {
     const numElem = $('.gh-header-number')
@@ -62,7 +62,7 @@ togglbutton.render(
 
 // Issue Beta
 togglbutton.render(
-  '[data-testid="issue-viewer-metadata-pane"]',
+  '[data-testid="issue-viewer-metadata-pane"]:not(.toggl)',
   { observe: true },
   function (elem) {
     const titleElem = $('[data-testid="issue-title"]')

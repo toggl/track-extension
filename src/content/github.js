@@ -62,9 +62,14 @@ togglbutton.render(
 
 // Issue Beta
 togglbutton.render(
-  '[data-testid="issue-viewer-metadata-pane"]:not(.toggl)',
+  '[data-testid="issue-viewer-metadata-container"]:not(.toggl)',
   { observe: true },
   function (elem) {
+    // This is needed as for this case it will enter in the "Project Page side pane" case.
+    if ($('[data-testid="side-panel-focus-target"]')) {
+      return
+    }
+
     const titleElem = $('[data-testid="issue-title"]')
     const projectElem = $('[data-testid="project-title"]')
     const existingTag = $('.discussion-sidebar-item.toggl')
@@ -93,8 +98,6 @@ togglbutton.render(
     div.classList.add('discussion-sidebar-item', 'toggl')
     div.style.paddingLeft = '8px'
     div.style.paddingRight = '8px'
-
-    console.log(projectElem?.textContent)
 
     const link = togglbutton.createTimerLink({
       className: 'github',

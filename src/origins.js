@@ -38,6 +38,11 @@ export default {
     url: '*://*.backlog.jp/*',
     name: 'Backlog'
   },
+  'backlog.com': {
+    url: '*://*.backlog.com/*',
+    name: 'Backlog',
+    file: 'backlog.js'
+  },
   'basecamp.com': {
     url: '*://*.basecamp.com/*',
     name: 'Basecamp'

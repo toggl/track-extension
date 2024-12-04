@@ -1,3 +1,9 @@
+/**
+ * @name Backlog
+ * @urlAlias backlog.com
+ * @urlRegex *://*.backlog.com/*
+ */
+
 'use strict'
 
 togglbutton.render(

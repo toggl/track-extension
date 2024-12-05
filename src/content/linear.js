@@ -1,9 +1,10 @@
-'use strict'
 /**
  * @name Linear
  * @urlAlias linear.app
  * @urlRegex *://linear.app/*
  */
+
+'use strict'
 
 // Add linear integration in table view only
 togglbutton.render(

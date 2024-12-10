@@ -38,23 +38,31 @@ togglbutton.render(rootLevelSelectors, { observe: true }, elem => {
       return;
     }
 
-    const closeButton = $('[aria-label]:first-child', elem);
+    const closeButton = $('[aria-label="Close"]:first-child', elem);
 
     getDescription = () => {
       const titleSpan = $('span[role="heading"]', elem);
       return titleSpan ? titleSpan.textContent.trim() : '';
     };
     target = closeButton.parentElement.parentElement.nextSibling; // Left of the left-most action
+    if(target.hasAttribute('data-dragsource-type')) {
+      // This happens for event creation
+      target = null
+    }
   } else if (elemIsDetail) {
-    const closeButton = $('div[aria-label]', elem);
+    const closeButton = $('[aria-label^="Cancel event"]', elem);
 
     getDescription = () => {
       const titleInput = $('input[data-initial-value]', elem);
       return titleInput ? titleInput.value.trim() : '';
     };
     target =
-      closeButton.parentElement.nextElementSibling.lastElementChild
-        .lastElementChild; // Date(s)/All day section
+      closeButton
+        .parentElement
+        .parentElement
+        .parentElement
+        .parentElement
+        .nextElementSibling.lastElementChild.lastElementChild; // Date(s)/All day section
   }
 
   if (!target || target.tagName.toLowerCase() !== 'div') {

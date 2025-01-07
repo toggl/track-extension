@@ -10,7 +10,7 @@ togglbutton.render('#story-dialog-state-dropdown:not(.toggl)', { observe: true }
 ) {
   const wrap = createTag('div');
   const element = elem;
-  elem = elem.parentNode.parentNode.parentNode;
+  elem = elem.parentNode.parentNode.parentNode.parentNode;
 
   const getDescription = function () {
     const storyId = $('.story-id input', elem).value;

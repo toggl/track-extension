@@ -16,10 +16,16 @@ togglbutton.render(
     const titleElem = idElem.parentElement.nextSibling
     const title = titleElem ? titleElem.textContent : ''
 
+    const project = elem
+      .querySelector('svg[aria-label="Project"]')
+      ?.closest('div')
+      ?.nextElementSibling?.textContent?.trim()
+
     const link = togglbutton.createTimerLink({
       description: title,
       className: 'linear-table',
       buttonType: 'minimal', // button type, if skipped will render full size
+      projectName: project,
     })
     const existingTogglButton = elem.querySelector('.toggl-button')
     if (existingTogglButton) {

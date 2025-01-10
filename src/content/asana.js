@@ -49,57 +49,126 @@ togglbutton.render(
   },
 )
 
-// Spreadsheet view. Inserts button next to to the task name.
+// SpreadSheet View V2
 togglbutton.render(
   '.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)',
   { observe: true },
-  function (taskNameCell) {
-    const container = taskNameCell.closest('.SpreadsheetRow')
+  (element) => {
+    console.debug('DEBUG: Entering in SpreadsheetRow')
 
-    if (container.querySelector('.toggl-button')) {
-      // Due to the way this UI is rendered, we must check for existence of old buttons manually.
-      return
+    const getDescription = () => {
+      return element.querySelector('textarea').textContent.trim()
     }
 
-    const descriptionSelector = () =>
-      taskNameCell.querySelector('textarea').textContent.trim()
+    console.debug('DEBUG: Getting description:', getDescription())
 
-    const projectSelector = () => {
-      const projectCell = container.querySelector(
-        '.SpreadsheetTaskRow-projectsCell',
-      )
-      if (!projectCell) {
-        // Try to look for for page project title instead.
-        return projectHeaderSelector()
+    const getProject = () => {
+      const isMyTasksPage = document.querySelector('.MyTasksPage')
+      const isProjectPage = document.querySelector('.ProjectPage')
+
+      if (isProjectPage) {
+        return document
+          .querySelector('.ProjectPageHeaderProjectTitle-input')
+          .value.trim()
       }
 
-      // There can be multiple projects, but we can't support trying to match multiple yet.
-      const firstProject = projectCell.querySelector(
-        '.SpreadsheetPotsCell-potPill',
-      )
-      return firstProject
-        ? firstProject.textContent.trim()
-        : projectHeaderSelector()
+      if (isMyTasksPage) {
+        return element
+          .closest('.SpreadsheetRow')
+          .querySelector(
+            '.SpreadsheetTaskRow-projectsCell .SpreadsheetPotsCell-potPill',
+          )
+          ?.textContent.trim()
+      }
+
+      return null
     }
 
-    const tagsSelector = () => {
-      const tags = container.querySelectorAll(
-        '.SpreadsheetTaskRow-tagsCell .SpreadsheetPotsCell-potPill',
-      )
+    console.debug('DEBUG: Getting the Project:', getProject())
+
+    const getTags = () => {
+      const tags = element
+        .closest('.SpreadsheetRow')
+        .querySelectorAll(
+          '.SpreadsheetTaskRow-tagsCell .SpreadsheetPotsCell-potPill',
+        )
+
       return [...tags].map((tag) => tag.textContent.trim())
     }
 
+    console.debug('DEBUG: Getting the Tags:', getTags())
+
     const link = togglbutton.createTimerLink({
       className: 'asana-spreadsheet',
-      description: descriptionSelector,
-      projectName: projectSelector,
-      tags: tagsSelector,
+      description: getDescription,
+      projectName: getProject,
+      tags: getTags,
       buttonType: 'minimal',
     })
 
-    taskNameCell.insertAdjacentElement('afterend', link)
+    element.insertAdjacentElement('afterend', link)
   },
 )
+
+// Spreadsheet view V1 Inserts button next to to the task name.
+// togglbutton.render(
+//   '.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)',
+//   { observe: true },
+//   function (taskNameCell) {
+//     console.log('Entri in SpreadsheetView')
+//     const container = taskNameCell.closest('.SpreadsheetRow')
+
+//     if (container.querySelector('.toggl-button')) {
+//       // Due to the way this UI is rendered, we must check for existence of old buttons manually.
+//       return
+//     }
+
+//     const descriptionSelector = () =>
+//       taskNameCell.querySelector('textarea').textContent.trim()
+
+//     const projectSelector = () => {
+//       const projectCell = container.querySelector(
+//         '.SpreadsheetTaskRow-projectsCell',
+//       )
+
+//       console.log('XX_projectCell', projectCell)
+
+//       if (!projectCell) {
+//         // Try to look for for page project title instead.
+//         const projectHeader = projectHeaderSelector()
+//         console.log('XX_projectHeader', projectHeader)
+//         return projectHeader
+//       }
+
+//       // There can be multiple projects, but we can't support trying to match multiple yet.
+//       const firstProject = projectCell.querySelector(
+//         '.SpreadsheetPotsCell-potPill',
+//       )
+//       console.log('XX_firstProject', firstProject)
+
+//       return firstProject
+//         ? firstProject.textContent.trim()
+//         : projectHeaderSelector()
+//     }
+
+//     const tagsSelector = () => {
+//       const tags = container.querySelectorAll(
+//         '.SpreadsheetTaskRow-tagsCell .SpreadsheetPotsCell-potPill',
+//       )
+//       return [...tags].map((tag) => tag.textContent.trim())
+//     }
+
+//     const link = togglbutton.createTimerLink({
+//       className: 'asana-spreadsheet',
+//       description: descriptionSelector,
+//       projectName: projectSelector,
+//       tags: tagsSelector,
+//       buttonType: 'minimal',
+//     })
+
+//     taskNameCell.insertAdjacentElement('afterend', link)
+//   },
+// )
 
 // 2020 My Tasks view, possibly other similar views.
 togglbutton.render(

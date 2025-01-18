@@ -386,6 +386,10 @@ export default {
     url: '*://tasks.office.com/*',
     name: 'Microsoft Planner'
   },
+  'tasks.office365.com': {
+    url: '*://tasks.office365.com/*',
+    name: 'Microsoft Planner'
+  },
   'to-do.live.com': {
     url: '*://*.to-do.live.com/*',
     name: 'Microsoft To-Do',
@@ -398,6 +402,11 @@ export default {
   },
   'to-do.office.com': {
     url: '*://*.to-do.office.com/*',
+    name: 'Microsoft To-Do',
+    file: 'microsoft-to-do.js'
+  },
+  'to-do.office365.com': {
+    url: '*://*.to-do.office365.com/*',
     name: 'Microsoft To-Do',
     file: 'microsoft-to-do.js'
   },
@@ -447,6 +456,11 @@ export default {
   },
   'outlook.office.com': {
     url: '*://outlook.office.com/*',
+    name: 'Outlook',
+    file: 'outlook.js'
+  },
+  'outlook.office365.com': {
+    url: '*://outlook.office365.com/*',
     name: 'Outlook',
     file: 'outlook.js'
   },

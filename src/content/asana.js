@@ -56,6 +56,11 @@ togglbutton.render(
   (element) => {
     console.debug('DEBUG: Entering in SpreadsheetRow')
 
+    // Due to the way this UI is rendered, we must check for existence of old buttons manually.
+    if (element.parentNode.querySelector('.toggl-button')) {
+      return
+    }
+
     const getDescription = () => {
       return element.querySelector('textarea').textContent.trim()
     }

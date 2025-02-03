@@ -64,7 +64,7 @@ togglbutton.render(
 
     const reporterInfoContainer = reporterInfo.parentElement
 
-    const issueId = $('.idLink__ee62').textContent.trim()
+    const issueId = reporterInfoContainer.querySelector('a[href*="issue/"]').textContent.trim()
     const issueTitle = $('h1').textContent.trim()
 
     const link = togglbutton.createTimerLink({

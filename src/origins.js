@@ -511,8 +511,9 @@ export default {
     name: 'RallyDev'
   },
   'redbooth.com': {
-    url: '*://*.redbooth.com/*',
-    name: 'Redbooth'
+    url: '*://redbooth.com/*',
+    name: 'Redbooth',
+    file: 'redbooth.js'
   },
   'redmine.org': {
     url: '*://*.redmine.org/*',

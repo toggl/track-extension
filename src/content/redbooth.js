@@ -1,8 +1,13 @@
-'use strict';
+/**
+ * @name Redbooth
+ * @urlAlias redbooth.com
+ * @urlRegex *://redbooth.com/*
+ */
+'use strict'
 
 // Right side panel
 togglbutton.render(
-  '.js-right-pane .tb-element-big:not(.toggl)',
+  '.l-panes-content--full-expanded .tb-element-big:not(.toggl)',
   { observe: true },
   function (elem) {
     const container = $('.tb-element-title', elem);

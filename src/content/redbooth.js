@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * @name Redbooth
+ * @urlAlias redbooth.com
+ * @urlRegex *://redbooth.com/*
+ */
+'use strict'
 
 // Right side panel
 togglbutton.render(

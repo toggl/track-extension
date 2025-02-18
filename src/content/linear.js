@@ -8,7 +8,7 @@
 
 // Add linear integration in table view only
 togglbutton.render(
-  'a[data-dnd-dragging]:not(.toggl)',
+  'a[data-list-key]:not(.toggl)',
   { observe: true },
   function (elem) {
     const idElem = elem.querySelector('span[data-column-id="issueId"]')

@@ -1,3 +1,8 @@
+/**
+ * @name Google Calendar Modern
+ * @urlAlias calendar.google.com
+ * @urlRegex *://calendar.google.com/*
+ */
 'use strict'
 /* global $, togglbutton */
 

@@ -20,11 +20,12 @@
  *   component pointerdown event which is closing google calendar popup view.
  */
 
+const notTogglPseudoClass = ':not(.toggl)'
 const popupDialogSelector = 'div[data-chips-dialog="true"]'
 const detailContainerSelector = 'div[data-is-create="false"]'
 const rootLevelSelectors = [
   `${popupDialogSelector}`,
-  `${detailContainerSelector}:not(.toggl)`,
+  `${detailContainerSelector}${notTogglPseudoClass}`,
 ].join(',')
 
 // Function to intercept pointerdown events inside the form component

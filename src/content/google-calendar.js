@@ -34,7 +34,6 @@ function interceptPointerdownEvents(form) {
 
     if (e.target.focus) {
       e.target.focus()
-      console.log(`Focused on`, e.target)
     }
   }
 
@@ -56,7 +55,6 @@ function initializeObserver(popupElement) {
 
       // Disconnect observer when the popup element is removed
       mutation.removedNodes.forEach((node) => {
-        console.log('Removed node:', node)
         if (node.contains(popupElement)) {
           observer.disconnect()
         }
@@ -66,7 +64,6 @@ function initializeObserver(popupElement) {
 
   // Observe the entire document body for changes, the time entry edit component is a child of the body
   observer.observe(document.body, { childList: true, subtree: true })
-  console.log('MutationObserver initialized on document body')
 }
 
 function initializePopup(elem) {
@@ -90,7 +87,6 @@ function initializePopup(elem) {
 
 function initializeDetailView(elem) {
   const closeButton = $('button[data-use-native-focus-logic]', elem)
-  console.log('closeButton', closeButton)
   const getDescription = () => {
     const titleInput = $('input[data-initial-value]', elem)
     return titleInput ? titleInput.value.trim() : ''
@@ -118,8 +114,6 @@ function addTogglButton(target, getDescription, context) {
 togglbutton.render(rootLevelSelectors, { observe: true }, function (elem) {
   const elemIsPopup = elem.closest(popupDialogSelector)
   const elemIsDetail = elem.closest(detailContainerSelector)
-  console.log('elemIsPopup', elemIsPopup)
-  console.log('elemIsDetail', elemIsDetail)
   if (elemIsPopup) {
     initializePopup(elem)
   } else if (elemIsDetail) {

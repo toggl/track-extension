@@ -252,7 +252,8 @@ export default {
   },
   'calendar.google.com': {
     url: '*://calendar.google.com/*',
-    name: 'Google Calendar'
+    name: 'Google Calendar Modern',
+    file: 'google-calendar.js'
   },
   'classroom.google.com': {
     url: '*://classroom.google.com/*',

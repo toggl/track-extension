@@ -1,5 +1,5 @@
 /**
- * @name Google Calendar Modern
+ * @name Google Calendar
  * @urlAlias calendar.google.com
  * @urlRegex *://calendar.google.com/*
  */

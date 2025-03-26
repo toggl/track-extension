@@ -221,6 +221,11 @@ export default {
     name: 'Freshservice',
     file: 'freshservice.js'
   },
+  'freshservice': {
+    url: '^https?://.*\.freshservice\.com',
+    name: 'Freshservice',
+    file: 'freshservice.js'
+  },
   'ongemini.com': {
     url: '*://*.ongemini.com/*',
     name: 'Gemini'

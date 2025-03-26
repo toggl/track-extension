@@ -1,8 +1,7 @@
-'use strict'
 /**
- * @name FreshService
- * @urlAlias freshservice.com
- * @urlRegex *://*.freshservice.com/*
+ * @name Freshservice
+ * @urlAlias freshservice
+ * @urlRegex ^https?://.*\.freshservice\.com
  */
 
 // Main function

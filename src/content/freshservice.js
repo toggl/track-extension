@@ -1,6 +1,6 @@
 /**
  * @name Freshservice
- * @urlAlias freshservice
+ * @urlAlias freshservice.com
  * @urlRegex ^https?://.*\.freshservice\.com
  */
 

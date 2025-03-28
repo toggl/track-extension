@@ -217,7 +217,7 @@ export default {
     name: 'Freshdesk'
   },
   'freshservice.com': {
-    url: '*://*.freshservice.com/*',
+    url: '^https?://.*\.freshservice\.com',
     name: 'Freshservice',
     file: 'freshservice.js'
   },

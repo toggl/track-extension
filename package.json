@@ -1,7 +1,7 @@
 {
   "name": "@toggl/track-extension",
   "private": true,
-  "version": "2.0.52",
+  "version": "2.0.53",
   "description": "Add Toggl Track one-click time tracking to popular web tools.",
   "license": "Apache-2.0",
   "main": "src/origins.js",

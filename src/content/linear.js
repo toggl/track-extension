@@ -38,31 +38,30 @@ togglbutton.render(
   },
 )
 
-// Add linear integration issue view
+// Add linear integration for issue view
 togglbutton.render(
   'div[data-view-id="issue-view"]:not(.toggl)',
   { observe: true },
   function (elem) {
-    const title = elem.querySelector('[aria-label="Issue title"]')?.textContent
+    if (elem.querySelector('.toggl-button')) {
+      return
+    }
 
-    const project = elem.parentElement.parentElement
-      .querySelector('svg[aria-label="Project"]')
-      ?.nextElementSibling?.textContent?.trim()
+    const title = elem.querySelector('[aria-label="Issue title"]')?.textContent
+    const projectElem = elem.parentElement.parentElement.querySelector(
+      'svg[aria-label="Project"]',
+    )
+    const project = projectElem?.nextElementSibling?.textContent?.trim()
 
     const link = togglbutton.createTimerLink({
       description: title,
       className: 'linear-issue-view',
-      buttonType: 'minimal', // button type, if skipped will render full size
       projectName: project,
     })
-    const existingTogglButton = elem.querySelector('.toggl-button')
-    if (existingTogglButton) {
-      // we need to remove any existing toggl buttons
-      existingTogglButton.replaceChildren(link)
 
-      return
-    }
-    elem.previousSibling.firstElementChild.firstElementChild.appendChild(link)
+    const sidebar =
+      elem.parentElement.parentElement.lastElementChild.firstElementChild
+    sidebar.lastElementChild.prepend(link)
   },
 )
 

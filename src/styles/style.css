@@ -41,7 +41,8 @@
 .yt-agile-card__summary .toggl-button.youtrack:not(.active) {
   display: none !important;
 }
-.yt-agile-card__summary:hover .toggl-button.youtrack, .yt-agile-card:hover .toggl-button.youtrack {
+.yt-agile-card__summary:hover .toggl-button.youtrack,
+.yt-agile-card:hover .toggl-button.youtrack {
   display: block !important;
 }
 
@@ -180,7 +181,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   pointer-events: none;
   margin-top: 3px !important;
 }
-.checklist-item-details:hover .toggl-button.trello-list, .toggl-button.trello-list.active:not(.toggl-button-edit-form-button) {
+.checklist-item-details:hover .toggl-button.trello-list,
+.toggl-button.trello-list.active:not(.toggl-button-edit-form-button) {
   pointer-events: all;
   height: 100%;
   width: 100%;
@@ -223,7 +225,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* BASECAMP 3 *********/
-.todo .toggl-button.basecamp3-todos{
+.todo .toggl-button.basecamp3-todos {
   transition: opacity 150ms ease;
   display: inline;
   opacity: 0;
@@ -234,18 +236,17 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 .todo:not(.selected):hover .toggl-button.basecamp3-todos,
 .todo:not(.selected) .toggl-button.basecamp3-todos.active,
-.todo:not(.selected) .metadata .toggl-button.basecamp3-todos{
+.todo:not(.selected) .metadata .toggl-button.basecamp3-todos {
   opacity: 1;
 }
-.todo:not(.selected).completed .toggl-button.basecamp3-todos{
+.todo:not(.selected).completed .toggl-button.basecamp3-todos {
   margin-left: 6px;
   transform: scale(0.8) translateY(-3px);
 }
-.todo:not(.selected) .metadata .toggl-button.basecamp3-todos{
+.todo:not(.selected) .metadata .toggl-button.basecamp3-todos {
   margin-left: 6px;
   transform: scale(0.9) translateY(-2px);
 }
-
 
 .card-grid .toggl-button.basecamp3-todos {
   opacity: 0 !important;
@@ -342,7 +343,8 @@ a.toggl-button.toggl-plan {
   margin: 10px 10px 0 0;
 }
 
-[data-test-id="customer-context-tab-navigation"] .toggl-button.toggl-button.zendesk-agent-ws {
+[data-test-id='customer-context-tab-navigation']
+  .toggl-button.toggl-button.zendesk-agent-ws {
   margin-left: 10px;
   margin-top: 2px;
 }
@@ -441,11 +443,11 @@ a.toggl-button.toggl-plan {
   visibility: hidden;
 }
 
-.toggl-button.todoist-detail-subtask.active  {
+.toggl-button.todoist-detail-subtask.active {
   visibility: visible;
 }
 
-.task_list_item:hover .toggl-button.todoist-detail-subtask  {
+.task_list_item:hover .toggl-button.todoist-detail-subtask {
   visibility: visible;
 }
 
@@ -877,7 +879,6 @@ li > .toggl-button.phabricator {
   left: 5px;
 }
 
-
 /********* FRESHSERVICE *********/
 .toggl-button.freshservice {
   margin-top: 5px;
@@ -999,7 +1000,12 @@ li > .toggl-button.phabricator {
 /********* PLANBOX *********/
 .toggl-button.planbox {
   color: black;
-  font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Open Sans,
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 12px;
   margin-left: -5px;
 }
@@ -1329,7 +1335,7 @@ body.notion-body.dark .toggl-button-notion-wrapper:hover {
   background: rgb(71, 76, 80);
 }
 
-.toggl-button-notion-wrapper + *:not(*[role=button]) {
+.toggl-button-notion-wrapper + *:not(*[role='button']) {
   margin-left: 8px;
 }
 
@@ -1481,24 +1487,24 @@ body.notion-body.dark .toggl-button.notion {
 }
 
 /********* BROKERENGINE *********/
-[data-toggl="taskRow"] .toggl-button.brokerengine {
+[data-toggl='taskRow'] .toggl-button.brokerengine {
   background-color: #fff !important;
   border-radius: 10px;
   margin-left: 12px;
   transition: opacity 100ms ease-out;
 }
 
-[data-toggl="taskRow"] .toggl-button.brokerengine:not(.active) {
+[data-toggl='taskRow'] .toggl-button.brokerengine:not(.active) {
   opacity: 0;
   visibility: hidden;
 }
 
-[data-toggl="taskRow"]:hover .toggl-button.brokerengine {
+[data-toggl='taskRow']:hover .toggl-button.brokerengine {
   opacity: 1;
   visibility: visible;
 }
 
-[data-toggl="loanDrawer"] .toggl-button.brokerengine {
+[data-toggl='loanDrawer'] .toggl-button.brokerengine {
   margin-left: 12px;
 }
 
@@ -1506,7 +1512,7 @@ body.notion-body.dark .toggl-button.notion {
 .toggl-button.liveagent {
   cursor: pointer;
   margin: 1em;
-  text-Align :center;
+  text-align: center;
 }
 
 /********* PLACKER *********/
@@ -1514,7 +1520,7 @@ body.notion-body.dark .toggl-button.notion {
   color: rgb(115, 125, 140);
   left: -5px;
   font-size: 14px;
-  font-family: "Proxima Nova", sans-serif;
+  font-family: 'Proxima Nova', sans-serif;
   font-weight: bold;
   position: relative;
   top: -3px;
@@ -1525,12 +1531,26 @@ body.notion-body.dark .toggl-button.notion {
   margin-left: 1rem;
 }
 
-
 /********* Linear *********/
 .toggl-button.linear-table {
   margin-top: 5px;
 }
 
+.toggl-button.linear-issue-view {
+  padding-bottom: 12px;
+  color: lch(19.446 1 282.863);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.toggl-button.linear-issue-view div {
+  gap: 10px;
+}
+
+.toggl-button.linear-issue-view svg {
+  width: 14px;
+  height: 14px;
+}
 
 /********* Figma *********/
 .toggl-button.figma {

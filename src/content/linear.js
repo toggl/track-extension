@@ -13,7 +13,7 @@ togglbutton.render(
   function (elem) {
     const idElem = elem.querySelector('span[data-column-id="issueId"]')
     const id = idElem ? idElem.textContent : ''
-    const titleElem = idElem.parentElement.nextSibling
+    const titleElem = idElem?.nextSibling?.nextSibling
     const title = titleElem ? titleElem.textContent : ''
 
     const project = elem
@@ -35,6 +35,33 @@ togglbutton.render(
       return
     }
     titleElem.parentElement.insertBefore(link, titleElem.nextSibling)
+  },
+)
+
+// Add linear integration for issue view
+togglbutton.render(
+  'div[data-view-id="issue-view"]:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    if (elem.querySelector('.toggl-button')) {
+      return
+    }
+
+    const title = elem.querySelector('[aria-label="Issue title"]')?.textContent
+    const projectElem = elem.parentElement.parentElement.querySelector(
+      'svg[aria-label="Project"]',
+    )
+    const project = projectElem?.nextElementSibling?.textContent?.trim()
+
+    const link = togglbutton.createTimerLink({
+      description: title,
+      className: 'linear-issue-view',
+      projectName: project,
+    })
+
+    const sidebar =
+      elem.parentElement.parentElement.lastElementChild.firstElementChild
+    sidebar.lastElementChild.prepend(link)
   },
 )
 

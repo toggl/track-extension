@@ -62,34 +62,36 @@ togglbutton.render(
     }
 
     const getDescription = () => {
-      return element.querySelector('textarea').textContent.trim()
+      const textarea = element.querySelector('textarea')
+      return textarea ? textarea.textContent.trim() : ''
     }
-
-    console.debug('DEBUG: Getting description:', getDescription())
 
     const getProject = () => {
       const isMyTasksPage = document.querySelector('.MyTasksPage')
       const isProjectPage = document.querySelector('.ProjectPage')
 
       if (isProjectPage) {
-        return document
-          .querySelector('.ProjectPageHeaderProjectTitle-input')
-          .value.trim()
+        const projectTitleInput = document.querySelector(
+          '.PageHeaderEditableTitle-input',
+        )
+        if (projectTitleInput) {
+          console.debug('DEBUG: isProjectPage', projectTitleInput)
+          return projectTitleInput.value.trim()
+        }
+        return ''
       }
 
       if (isMyTasksPage) {
-        return element
+        const projectPill = element
           .closest('.SpreadsheetRow')
           .querySelector(
             '.SpreadsheetTaskRow-projectsCell .SpreadsheetPotsCell-potPill',
           )
-          ?.textContent.trim()
+        return projectPill ? projectPill.textContent.trim() : ''
       }
 
-      return null
+      return ''
     }
-
-    console.debug('DEBUG: Getting the Project:', getProject())
 
     const getTags = () => {
       const tags = element
@@ -98,9 +100,18 @@ togglbutton.render(
           '.SpreadsheetTaskRow-tagsCell .SpreadsheetPotsCell-potPill',
         )
 
-      return [...tags].map((tag) => tag.textContent.trim())
+      return tags?.length > 0
+        ? [...tags].map((tag) => tag.textContent.trim())
+        : []
     }
 
+    const description = getDescription()
+    if (!description) {
+      return
+    }
+
+    console.debug('DEBUG: Getting description:', description)
+    console.debug('DEBUG: Getting the Project:', getProject())
     console.debug('DEBUG: Getting the Tags:', getTags())
 
     const link = togglbutton.createTimerLink({

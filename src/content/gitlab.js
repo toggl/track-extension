@@ -1,3 +1,8 @@
+/**
+ * @name Gitlab
+ * @urlAlias gitlab.com
+ * @urlRegex *://gitlab.com/*
+ */
 'use strict'
 
 // Render on issue page

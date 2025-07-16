@@ -243,8 +243,9 @@ export default {
     file: 'github.js'
   },
   'gitlab.com': {
-    url: '*://*.gitlab.com/*',
-    name: 'Gitlab'
+    url: '*://gitlab.com/*',
+    name: 'Gitlab',
+    file: 'gitlab.js'
   },
   'gogs.io': {
     url: '*://*.gogs.io/*',

@@ -1,91 +1,102 @@
-'use strict';
+/**
+ * @name Gitlab
+ * @urlAlias gitlab.com
+ * @urlRegex *://gitlab.com/*
+ */
+'use strict'
 
 // Render on issue page
 togglbutton.render(
-  '.issue-details .detail-page-description:not(.toggl)',
+  'span[data-testid="work-item-created"]:not(.toggl)',
   { observe: true },
   function (elem) {
-    const prefix = [getId()].filter(Boolean)
-      .map(function(id) { return "#" + id;})
-      .join('');
-    const description = [prefix, getTitle(elem)].filter(Boolean).join(' ');
+    const prefix = [getId()]
+      .filter(Boolean)
+      .map(function (id) {
+        return '#' + id
+      })
+      .join('')
 
-    insertButton($('.detail-page-header-actions'), description, true);
-    insertButton($('.time-tracker'), description);
-  }
-);
+    const title = document
+      .querySelector('[data-testid="work-item-title"]')
+      .textContent.trim()
+
+    const description = [prefix, title].filter(Boolean).join(' ')
+
+    if (elem) {
+      const link = togglbutton.createTimerLink({
+        className: 'gitlab',
+        description: description,
+        tags: tagsSelector,
+        projectName: getProjectSelector,
+      })
+
+      elem.parentElement.appendChild(link)
+    }
+  },
+)
 
 // Render on merge request page
 togglbutton.render(
-  '.merge-request > .detail-page-header:not(.toggl)',
+  '.detail-page-description:not(.toggl)',
   { observe: true },
   function (elem) {
-    const prefix = [getId()].filter(Boolean)
-      .map(function(id) { return "MR" + id + "::";})
-      .join('');
-    const description = [prefix, getTitle(elem)].filter(Boolean).join(' ');
+    console.log('elem', elem)
+    const prefix = [getId()]
+      .filter(Boolean)
+      .map(function (id) {
+        return 'MR' + id + '::'
+      })
+      .join('')
 
-    insertButton($('.detail-page-header-actions'), description, true);
-    insertButton($('.time-tracker'), description);
-  }
-);
+    const title = document
+      .querySelector('[data-testid="title-content"]')
+      .textContent.trim()
 
-/**
- * @param $el
- * @param {String} description
- * @param {boolean} prepend
- */
-function insertButton ($el, description, prepend = false) {
-  const link = togglbutton.createTimerLink({
-    className: 'gitlab',
-    description: description,
-    tags: tagsSelector,
-    projectName: getProjectSelector
-  });
+    const description = [prefix, title].filter(Boolean).join(' ')
 
-  if (prepend) {
-    $el.parentElement.insertBefore(link, $el);
-  } else {
-    $el.parentElement.appendChild(link, $el);
-  }
+    if (elem) {
+      const link = togglbutton.createTimerLink({
+        className: 'gitlab',
+        description: description,
+        tags: tagsSelector,
+        projectName: getProjectSelector,
+      })
+
+      elem.appendChild(link)
+    }
+  },
+)
+
+function getId() {
+  return document.querySelector('body').getAttribute('data-page-type-id')
 }
 
-function getTitle (parent) {
-  const el = parent.querySelector('.title');
-
-  return el ? el.textContent.trim() : '';
+function getProjectSelector() {
+  const el = document.querySelector(
+    'a[data-track-label="project_overview"] div[data-testid="nav-item-link-label"]',
+  )
+  return el ? el.textContent.trim() : ''
 }
 
-function getId () {
-  const pathname = window.location.pathname;
-  const pattern = /-\/(issues|merge_requests)\/(?<id>\d+)/;
-  const result = pattern.test(pathname)
-    ? pathname.match(pattern)
-    : {groups: {id: ''}};
-  const id = result.groups.id;
-
-  return id;
-}
-
-function getProjectSelector () {
-  const $el = $('.title .project-item-select-holder') || $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
-  return $el ? $el.textContent.trim() : '';
-}
-
-function tagsSelector () {
-  // GitLab 13.5
-  const nodeList = document.querySelectorAll('div.labels span[data-qa-label-name]');
+function tagsSelector() {
+  const nodeList = document.querySelectorAll(
+    '[data-testid="selected-label-content"] span.gl-label-text',
+  )
 
   if (!nodeList) {
-    return [];
+    return []
   }
 
-  const tags = [];
+  const tags = []
 
   for (const node of Object.values(nodeList)) {
-    const tagName = node.getAttribute('data-qa-label-name');
-    tags.push(tagName);
+    const tagName = node.textContent.trim()
+
+    if (!tags.includes(tagName)) {
+      tags.push(tagName)
+    }
   }
 
-  return tags;
+  return tags
 }

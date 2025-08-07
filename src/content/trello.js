@@ -7,9 +7,7 @@
 /* global createTag */
 
 const getProject = () => {
-  const project = document.querySelector(
-    '.board-header [data-testid="board-name-display"]',
-  )
+  const project = document.querySelector('[data-testid="board-name-display"]')
   return project ? project.textContent.trim() : ''
 }
 
@@ -19,9 +17,9 @@ const getCardName = () => {
 
 togglbutton.inject(
   {
-    node: '[data-testid="card-back-move-card-button"]:not(.toggl)',
+    node: '[data-testid="card-back-add-to-card-button"]:not(.toggl)',
     renderer: (element) => {
-      const container = createTag('li', 'button-link trello-tb-wrapper')
+      const container = createTag('div', element.classList.toString())
 
       const link = togglbutton.createTimerLink({
         className: 'trello',
@@ -38,7 +36,7 @@ togglbutton.inject(
 
       container.appendChild(link)
 
-      element.parentNode.parentNode.prepend(container, element)
+      element.parentNode.prepend(container, element)
     },
   },
   { observe: true },

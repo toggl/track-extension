@@ -7,9 +7,7 @@
 /* global createTag */
 
 const getProject = () => {
-  const project = document.querySelector(
-    '[data-testid="board-name-displaedwy"]',
-  )
+  const project = document.querySelector('[data-testid="board-name-display"]')
   return project ? project.textContent.trim() : ''
 }
 

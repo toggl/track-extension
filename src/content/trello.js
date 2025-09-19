@@ -19,6 +19,10 @@ togglbutton.inject(
   {
     node: '[data-testid="card-back-add-to-card-button"]:not(.toggl)',
     renderer: (element) => {
+      if (element.parentNode.querySelector('.toggl-button.trello')) {
+        return
+      }
+
       const container = createTag('div', element.classList.toString())
 
       const link = togglbutton.createTimerLink({
@@ -50,6 +54,10 @@ togglbutton.injectMany(
     renderer: (elements) => {
       // Loop through all the checklist items.
       for (const element of elements) {
+        if (element.querySelector('.checklist-item-menu .toggl-button')) {
+          continue
+        }
+
         const getTaskText = () => {
           return (
             element.parentNode

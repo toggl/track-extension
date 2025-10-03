@@ -432,7 +432,8 @@ export default {
   },
   'odoo.com': {
     url: '*://*.odoo.com/*',
-    name: 'Odoo'
+    name: 'Odoo',
+    file: 'odoo.js'
   },
   'onlyoffice.com': {
     url: '*://*.onlyoffice.com/*',

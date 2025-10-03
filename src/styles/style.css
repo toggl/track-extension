@@ -1563,3 +1563,8 @@ body.notion-body.dark .toggl-button.notion {
 .toggl-button.freedcamp {
   margin-top: 5px;
 }
+
+/********* ODOO *********/
+.toggl-button.odoo {
+  margin-left: 10px;
+}

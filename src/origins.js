@@ -217,7 +217,7 @@ export default {
     name: 'Freshdesk'
   },
   'freshservice.com': {
-    url: '^https?://.*\.freshservice\.com',
+    url: '^https?://.*.freshservice.com',
     name: 'Freshservice',
     file: 'freshservice.js'
   },
@@ -235,7 +235,8 @@ export default {
   },
   'gitea.com': {
     url: '*://gitea.com/*',
-    name: 'Gitea'
+    name: 'Gitea',
+    file: 'gitea.js'
   },
   'github.com': {
     url: '*://github.com/*',

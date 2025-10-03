@@ -1,20 +1,20 @@
-'use strict';
+'use strict'
 
 togglbutton.render(
   '.o_control_panel .breadcrumb:not(.toggl)',
   { observe: true },
 
-  $container => {
+  ($container) => {
     const descriptionSelector = () => {
-      const $description = $('.breadcrumb-item.active', $container);
-      return $description.textContent.trim();
-    };
+      const $description = $('.o_last_breadcrumb_item.active .text-truncate')
+      return $description.textContent.trim()
+    }
 
     const link = togglbutton.createTimerLink({
       className: 'odoo',
-      description: descriptionSelector
-    });
+      description: descriptionSelector,
+    })
 
-    $container.appendChild(link);
-  }
-);
+    $container.appendChild(link)
+  },
+)

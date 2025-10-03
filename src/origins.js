@@ -4,754 +4,755 @@ export default {
   'airtable.com': {
     url: '*://airtable.com/*',
     name: 'Airtable',
-    file: 'airtable.js'
+    file: 'airtable.js',
   },
   'any.do': {
     url: '*://*.any.do/*',
-    name: 'Anydo'
+    name: 'Anydo',
   },
   'app.asana.com': {
     url: '*://app.asana.com/*',
     name: 'Asana',
-    file: 'asana.js'
+    file: 'asana.js',
   },
   'assembla.com': {
     url: '*://*.assembla.com/*',
-    name: 'Assembla'
+    name: 'Assembla',
   },
   'atlassian.com': {
     url: '*://*.atlassian.com/*',
     name: 'Atlassian / Jira',
-    file: 'atlassian.js'
+    file: 'atlassian.js',
   },
   'atlassian.net': {
     url: '*://*.atlassian.net/*',
     name: 'Atlassian / Jira',
     clone: 'true',
-    file: 'atlassian.js'
+    file: 'atlassian.js',
   },
   'axosoft.com': {
     url: '*://*.axosoft.com/*',
-    name: 'Axosoft'
+    name: 'Axosoft',
   },
   'backlog.jp': {
     url: '*://*.backlog.jp/*',
-    name: 'Backlog'
+    name: 'Backlog',
   },
   'backlog.com': {
     url: '*://*.backlog.com/*',
     name: 'Backlog',
-    file: 'backlog.js'
+    file: 'backlog.js',
   },
   'basecamp.com': {
     url: '*://*.basecamp.com/*',
-    name: 'Basecamp'
+    name: 'Basecamp',
   },
   'basecamphq.com': {
     url: '*://*.basecamphq.com/*',
     name: 'BasecampHQ',
     clone: 'true',
-    file: 'basecamp.js'
+    file: 'basecamp.js',
   },
   'bitbucket.org': {
     url: '*://*.bitbucket.org/*',
-    name: 'Bitbucket'
+    name: 'Bitbucket',
   },
   'bitrix24.com': {
     url: '*://*.bitrix24.com/*',
-    name: 'Bitrix24'
+    name: 'Bitrix24',
   },
   'app.breeze.pm': {
     url: '*://app.breeze.pm/*',
-    name: 'Breeze'
+    name: 'Breeze',
   },
   'app.brokerengine.com.au': {
     url: '*://app.brokerengine.com.au/*',
-    name: 'BrokerEngine'
+    name: 'BrokerEngine',
   },
   'bugherd.com': {
     url: '*://*.bugherd.com/*',
     name: 'BugHerd',
-    file: 'bugherd.js'
+    file: 'bugherd.js',
   },
   'app.bugsnag.com': {
     url: '*://app.bugsnag.com/*',
-    name: 'Bugsnag'
+    name: 'Bugsnag',
   },
   'bugzilla.mozilla.org': {
     url: '*://bugzilla.mozilla.org/*',
-    name: 'Bugzilla'
+    name: 'Bugzilla',
   },
   'capsulecrm.com': {
     url: '*://*.capsulecrm.com/*',
-    name: 'CapsuleCRM'
+    name: 'CapsuleCRM',
   },
   'clickup.com': {
     url: '*://*.clickup.com/*',
     name: 'ClickUp',
-    file: 'clickup.js'
+    file: 'clickup.js',
   },
   'cloudes.me': {
     url: '*://*.cloudes.me/*',
-    name: 'Cloudes.me'
+    name: 'Cloudes.me',
   },
   'app.clubhouse.io': {
     url: '*://app.clubhouse.io/*',
-    name: 'Clubhouse'
+    name: 'Clubhouse',
   },
   'app.codeable.io': {
     url: '*://app.codeable.io/*',
-    name: 'Codeable'
+    name: 'Codeable',
   },
   'codebasehq.com': {
     url: '*://*.codebasehq.com/*',
-    name: 'Codebase'
+    name: 'Codebase',
   },
   'corgee.com': {
     url: '*://*.corgee.com/*',
-    name: 'Corgee'
+    name: 'Corgee',
   },
   'crowdin.com': {
     url: '*://*.crowdin.com/*',
     name: 'Crowdin',
-    file: 'crowdin.js'
+    file: 'crowdin.js',
   },
   'desk.com': {
     url: '*://*.desk.com/web/agent/*',
-    name: 'Desk.com'
+    name: 'Desk.com',
   },
   'devdocs.io': {
     url: '*://devdocs.io/*',
-    name: 'Devdocs.io'
+    name: 'Devdocs.io',
   },
   'dixa.com': {
     url: '*://*.dixa.com/*',
-    name: 'Dixa'
+    name: 'Dixa',
   },
   'dobambam.com': {
     url: '*://*.dobambam.com/*',
-    name: 'Dobambam'
+    name: 'Dobambam',
   },
   'doit.im': {
     url: '*://*.doit.im/*',
-    name: 'Doit'
+    name: 'Doit',
   },
   'doitim.com': {
     url: '*://*.doitim.com/*',
     name: 'Doit',
-    clone: 'true'
+    clone: 'true',
   },
   'dokuwiki.org': {
     url: '*://*.dokuwiki.org/*',
     name: 'DokuWiki',
-    file: 'dokuwiki.js'
+    file: 'dokuwiki.js',
   },
   'dom-integration': {
     url: '*://toggl-button-dom-demo.now.sh/*',
-    name: 'DOM Integration'
+    name: 'DOM Integration',
   },
   'draftin.com': {
     url: '*://*.draftin.com/*',
-    name: 'Draftin'
+    name: 'Draftin',
   },
   'paper.dropbox.com': {
     url: '*://paper.dropbox.com/*',
-    name: 'Dropbox Paper'
+    name: 'Dropbox Paper',
   },
   'drupal.org': {
     url: '*://*.drupal.org/*',
-    name: 'Drupal'
+    name: 'Drupal',
   },
   'dynamics.com': {
     url: '*://*.dynamics.com/*',
-    name: 'Dynamics 365'
+    name: 'Dynamics 365',
   },
   'eproject.me': {
     url: '*://*.eproject.me/*',
-    name: 'Eproject.me'
+    name: 'Eproject.me',
   },
   'esa.io': {
     url: '*://*.esa.io/*',
-    name: 'Esa.io'
+    name: 'Esa.io',
   },
-  'eventum': {
+  eventum: {
     url: '',
-    name: 'Eventum'
+    name: 'Eventum',
   },
   'evernote.com': {
     url: '*://*.evernote.com/*',
-    name: 'Evernote'
+    name: 'Evernote',
   },
   'fastmail.com': {
     url: '*://*.fastmail.com/*',
-    name: 'Fastmail'
+    name: 'Fastmail',
   },
   'feedly.com': {
     url: '*://*.feedly.com/*',
-    name: 'Feedly'
+    name: 'Feedly',
   },
   'fibery.io': {
     url: '*://*.fibery.io/*',
-    name: 'Fibery'
+    name: 'Fibery',
   },
   'figma.com': {
     url: '*://*.figma.com/*',
     name: 'Figma',
-    file: 'figma.js'
+    file: 'figma.js',
   },
   'focuster.com': {
     url: '*://*.focuster.com/*',
-    name: 'Focuster'
+    name: 'Focuster',
   },
   'fogbugz.com': {
     url: '*://*.fogbugz.com/*',
-    name: 'Fogbugz'
+    name: 'Fogbugz',
   },
   'freedcamp.com': {
     url: '*://*.freedcamp.com/*',
     name: 'Freedcamp',
-    file: 'freedcamp.js'
+    file: 'freedcamp.js',
   },
   'freshdesk.com': {
     url: '*://*.freshdesk.com/*',
-    name: 'Freshdesk'
+    name: 'Freshdesk',
   },
   'freshservice.com': {
-    url: '^https?://.*\.freshservice\.com',
+    url: '^https?://.*.freshservice.com',
     name: 'Freshservice',
-    file: 'freshservice.js'
+    file: 'freshservice.js',
   },
   'ongemini.com': {
     url: '*://*.ongemini.com/*',
-    name: 'Gemini'
+    name: 'Gemini',
   },
   'getflow.com': {
     url: '*://*.getflow.com/*',
-    name: 'Getflow'
+    name: 'Getflow',
   },
   'gingkoapp.com': {
     url: '*://gingkoapp.com/*',
-    name: 'Gingkoapp'
+    name: 'Gingkoapp',
   },
   'gitea.com': {
     url: '*://gitea.com/*',
-    name: 'Gitea'
+    name: 'Gitea',
+    file: 'gitea.js',
   },
   'github.com': {
     url: '*://github.com/*',
     name: 'Github',
-    file: 'github.js'
+    file: 'github.js',
   },
   'gitlab.com': {
     url: '*://gitlab.com/*',
     name: 'Gitlab',
-    file: 'gitlab.js'
+    file: 'gitlab.js',
   },
   'gogs.io': {
     url: '*://*.gogs.io/*',
-    name: 'Gogs'
+    name: 'Gogs',
   },
   'calendar.google.com': {
     url: '*://calendar.google.com/*',
     name: 'Google Calendar',
-    file: 'google-calendar.js'
+    file: 'google-calendar.js',
   },
   'classroom.google.com': {
     url: '*://classroom.google.com/*',
-    name: 'Google Classroom'
+    name: 'Google Classroom',
   },
   'docs.google.com': {
     url: '*://docs.google.com/*',
-    name: 'Google Docs'
+    name: 'Google Docs',
   },
   'inbox.google.com': {
     url: '*://inbox.google.com/*',
-    name: 'Google Inbox'
+    name: 'Google Inbox',
   },
   'keep.google.com': {
     url: '*://keep.google.com/*',
-    name: 'Google Keep'
+    name: 'Google Keep',
   },
   'mail.google.com': {
     url: '*://mail.google.com/*',
-    name: 'Google Mail'
+    name: 'Google Mail',
   },
   'gqueues.com': {
     url: '*://*.gqueues.com/*',
     name: 'GQueues',
-    file: 'gqueues.js'
+    file: 'gqueues.js',
   },
   'habitica.com': {
     url: '*://habitica.com/*',
-    name: 'Habitica'
+    name: 'Habitica',
   },
   'app.heflo.com': {
     url: '*://app.heflo.com/*',
-    name: 'HEFLO'
+    name: 'HEFLO',
   },
   'helprace.com': {
     url: '*://*.helprace.com/*',
-    name: 'Helprace'
+    name: 'Helprace',
   },
   'secure.helpscout.net': {
     url: '*://secure.helpscout.net/*',
     name: 'Helpscout',
-    file: 'helpscout.js'
+    file: 'helpscout.js',
   },
   'hubspot.com': {
     url: '*://app.hubspot.com/*',
     name: 'Hubspot',
-    file: 'hubspot.js'
+    file: 'hubspot.js',
   },
   'app.huskymarketingplanner.com': {
     url: '*://app.huskymarketingplanner.com/*',
     name: 'Husky Marketing Planner',
-    file: 'husky-marketing-planner.js'
+    file: 'husky-marketing-planner.js',
   },
   'intercom.com': {
     url: '*://*.intercom.com/*',
-    name: 'Intercom'
+    name: 'Intercom',
   },
   'jira.com': {
     url: '*://*.jira.com/*',
     name: 'Jira',
-    file: 'atlassian.js'
+    file: 'atlassian.js',
   },
   'bugs.jquery.com': {
     url: '*://bugs.jquery.com/*',
     name: 'Jquery Bugs',
-    file: 'trac.js'
+    file: 'trac.js',
   },
   'kanban.ist': {
     url: '*://*.kanban.ist/*',
-    name: 'Kanbanist'
+    name: 'Kanbanist',
   },
   'kanboard.net': {
     url: '',
-    name: 'Kanboard'
+    name: 'Kanboard',
   },
   'kantree.io': {
     url: '*://*.kantree.io/*',
-    name: 'Kantree'
+    name: 'Kantree',
   },
   'khanacademy.org': {
     url: '*://*.khanacademy.org/*',
     name: 'KhanAcademy',
-    file: 'khanacademy.js'
+    file: 'khanacademy.js',
   },
   'www.khanacademy.org': {
     url: '*://www.khanacademy.org/*',
-    name: 'KhanAcademy'
+    name: 'KhanAcademy',
   },
   'linear.app': {
     url: '*://linear.app/*',
     name: 'Linear',
-    file: 'linear.js'
+    file: 'linear.js',
   },
   'app.liquidplanner.com': {
     url: '*://app.liquidplanner.com/*',
-    name: 'Liquidplanner'
+    name: 'Liquidplanner',
   },
   'next.liquidplanner.com': {
     url: '*://next.liquidplanner.com/*',
-    name: 'Liquidplanner Next'
+    name: 'Liquidplanner Next',
   },
   'ladesk.com': {
     url: '*://*.ladesk.com/*',
     name: 'LiveAgent',
-    file: 'liveagent.js'
+    file: 'liveagent.js',
   },
   'manageengine.com': {
     url: '*://*.manageengine.com/*',
-    name: 'ManageEngine'
+    name: 'ManageEngine',
   },
   'mantishub.com': {
     url: '*://*.mantishub.com/*',
-    name: 'Mantishub'
+    name: 'Mantishub',
   },
   'mantishub.io': {
     url: '*://*.mantishub.io/*',
     name: 'Mantishub',
-    clone: 'true'
+    clone: 'true',
   },
   'meistertask.com': {
     url: '*://*.meistertask.com/*',
     name: 'MeisterTask',
-    file: 'meistertask.js'
+    file: 'meistertask.js',
   },
   'planner.cloud.microsoft': {
     url: '*://planner.cloud.microsoft/*',
     name: 'Microsoft Planner',
-    file: 'microsoft-planner.js'
+    file: 'microsoft-planner.js',
   },
   'tasks.office.com': {
     url: '*://tasks.office.com/*',
-    name: 'Microsoft Planner'
+    name: 'Microsoft Planner',
   },
   'tasks.office365.com': {
     url: '*://tasks.office365.com/*',
-    name: 'Microsoft Planner'
+    name: 'Microsoft Planner',
   },
   'to-do.live.com': {
     url: '*://*.to-do.live.com/*',
     name: 'Microsoft To-Do',
-    file: 'microsoft-to-do.js'
+    file: 'microsoft-to-do.js',
   },
   'to-do.microsoft.com': {
     url: '*://*.to-do.microsoft.com/*',
     name: 'Microsoft To-Do',
-    file: 'microsoft-to-do.js'
+    file: 'microsoft-to-do.js',
   },
   'to-do.office.com': {
     url: '*://*.to-do.office.com/*',
     name: 'Microsoft To-Do',
-    file: 'microsoft-to-do.js'
+    file: 'microsoft-to-do.js',
   },
   'to-do.office365.com': {
     url: '*://*.to-do.office365.com/*',
     name: 'Microsoft To-Do',
-    file: 'microsoft-to-do.js'
+    file: 'microsoft-to-do.js',
   },
   'minicrm.pl': {
     url: '*://*.minicrm.pl/*',
     name: 'Minicrm',
-    clone: 'true'
+    clone: 'true',
   },
   'newsletter2go.com': {
     url: '*://*.newsletter2go.com/*',
-    name: 'Newsletter2go'
+    name: 'Newsletter2go',
   },
   'notion.so': {
     url: '*://*.notion.so/*',
     name: 'Notion',
-    file: 'notion.js'
+    file: 'notion.js',
   },
   'app.nozbe.com': {
     url: '*://app.nozbe.com/*',
-    name: 'Nozbe'
+    name: 'Nozbe',
   },
   'odoo.com': {
     url: '*://*.odoo.com/*',
-    name: 'Odoo'
+    name: 'Odoo',
   },
   'onlyoffice.com': {
     url: '*://*.onlyoffice.com/*',
-    name: 'OnlyOffice'
+    name: 'OnlyOffice',
   },
   'onshape.com': {
     url: '*://*.onshape.com/*',
-    name: 'Onshape'
+    name: 'Onshape',
   },
   'openproject.com': {
     url: '*://*.openproject.com/*',
-    name: 'Openproject'
+    name: 'Openproject',
   },
   'supportsystem.com': {
     url: '*://*.supportsystem.com/*',
     name: 'osTicket',
-    file: 'osticket.js'
+    file: 'osticket.js',
   },
   'outlook.cloud.microsoft': {
     url: '*://outlook.cloud.microsoft/*',
     name: 'Outlook',
-    file: 'outlook.js'
+    file: 'outlook.js',
   },
   'outlook.office.com': {
     url: '*://outlook.office.com/*',
     name: 'Outlook',
-    file: 'outlook.js'
+    file: 'outlook.js',
   },
   'outlook.office365.com': {
     url: '*://outlook.office365.com/*',
     name: 'Outlook',
-    file: 'outlook.js'
+    file: 'outlook.js',
   },
   'outlook.live.com': {
     url: '*://outlook.live.com/*',
     name: 'Outlook',
-    clone: 'true'
+    clone: 'true',
   },
   'pagerduty.com': {
     url: '*://*.pagerduty.com/*',
-    name: 'PagerDuty'
+    name: 'PagerDuty',
   },
   'pivotaltracker.com': {
     url: '*://*.pivotaltracker.com/*',
-    name: 'PivotalTracker'
+    name: 'PivotalTracker',
   },
   'placker.com': {
     url: '*://*.placker.com/*',
     name: 'Placker',
-    file: 'placker.js'
+    file: 'placker.js',
   },
   'planbox.com': {
     url: '*://*.planbox.com/*',
-    name: 'Planbox'
+    name: 'Planbox',
   },
   'podio.com': {
     url: '*://*.podio.com/*',
-    name: 'Podio'
+    name: 'Podio',
   },
-  'processwire': {
+  processwire: {
     url: '',
-    name: 'ProcessWire'
+    name: 'ProcessWire',
   },
   'produck.io': {
     url: '*://*.produck.io/*',
-    name: 'Produck'
+    name: 'Produck',
   },
   'protonmail.com': {
     url: '*://*.protonmail.com/*',
-    name: 'Protonmail'
+    name: 'Protonmail',
   },
   'proworkflow.com': {
     url: '*://*.proworkflow.com/*',
-    name: 'Proworkflow'
+    name: 'Proworkflow',
   },
   'rally1.rallydev.com': {
     url: '*://rally1.rallydev.com/*',
-    name: 'RallyDev'
+    name: 'RallyDev',
   },
   'redbooth.com': {
     url: '*://redbooth.com/*',
     name: 'Redbooth',
-    file: 'redbooth.js'
+    file: 'redbooth.js',
   },
   'redmine.org': {
     url: '*://*.redmine.org/*',
-    name: 'Redmine'
+    name: 'Redmine',
   },
   'rememberthemilk.com': {
     url: '*://*.rememberthemilk.com/*',
-    name: 'RememberTheMilk'
+    name: 'RememberTheMilk',
   },
   'rbcommons.com': {
     url: '*://*.rbcommons.com/*',
-    name: 'Reviewboard'
+    name: 'Reviewboard',
   },
   'rindle.com': {
     url: '*://*.rindle.com/*',
-    name: 'Rindle'
+    name: 'Rindle',
   },
   'rollbar.com': {
     url: '*://*.rollbar.com/*',
-    name: 'Rollbar'
+    name: 'Rollbar',
   },
   'salesforce.com': {
     url: '*://*.salesforce.com/*,*://*.my.salesforce.com/*',
     name: 'Salesforce',
-    file: 'salesforce.js'
+    file: 'salesforce.js',
   },
   'force.com': {
     url: '*://*.force.com/*,*://*.lightning.force.com/*',
     name: 'Salesforce Lightning',
-    file: 'force.js'
+    file: 'force.js',
   },
   'scrapbox.io': {
     url: '*://scrapbox.io/*',
-    name: 'Scrapbox'
+    name: 'Scrapbox',
   },
   'sentry.io': {
     url: '*://*.sentry.io/*',
-    name: 'Sentry'
+    name: 'Sentry',
   },
   'sherpadesk.com': {
     url: '*://*.sherpadesk.com/*',
-    name: 'Sherpadesk'
+    name: 'Sherpadesk',
   },
   'app.shortcut.com': {
     url: '*://app.shortcut.com/*',
     name: 'Shortcut',
-    file: 'shortcut.js'
+    file: 'shortcut.js',
   },
   'sifterapp.com': {
     url: '*://*.sifterapp.com/*',
-    name: 'Sifterapp'
+    name: 'Sifterapp',
   },
   'slack.com': {
     url: '*://*.slack.com/*',
     name: 'Slack',
-    file: 'slack.js'
+    file: 'slack.js',
   },
   'sourcelair.com': {
     url: '*://*.sourcelair.com/*',
     name: 'Sourcelair',
-    file: 'sourcelair.js'
+    file: 'sourcelair.js',
   },
   'spidergap.com': {
     url: '*://*.spidergap.com/*',
-    name: 'Spidergap'
+    name: 'Spidergap',
   },
   'sprint.ly': {
     url: '*://sprint.ly/*',
-    name: 'Sprintly'
+    name: 'Sprintly',
   },
   'taiga.io': {
     url: '*://*.taiga.io/*',
     name: 'Taiga',
-    file: 'taiga.js'
+    file: 'taiga.js',
   },
   'targetprocess.com': {
     url: '*://*.targetprocess.com/*',
-    name: 'Targetprocess'
+    name: 'Targetprocess',
   },
   'tpondemand.com': {
     url: '*://*.tpondemand.com/*',
     name: 'Targetprocess',
-    clone: 'true'
+    clone: 'true',
   },
   'app.teamleader.eu': {
     url: '*://app.teamleader.eu/*',
-    name: 'Teamleader'
+    name: 'Teamleader',
   },
   'teamwork.com': {
     url: '*://*.teamwork.com/*',
     name: 'Teamwork',
-    file: 'teamwork.js'
+    file: 'teamwork.js',
   },
   'teamworkpm.net': {
     url: '*://*.teamworkpm.net/*',
     name: 'Teamwork',
-    clone: 'true'
+    clone: 'true',
   },
   'ticktick.com': {
     url: '*://ticktick.com/*,*://*.ticktick.com/*',
-    name: 'TickTick'
+    name: 'TickTick',
   },
   'todoist.com': {
     url: '*://*.todoist.com/app*',
     name: 'Todoist',
-    file: 'todoist.js'
+    file: 'todoist.js',
   },
   'toggl.com': {
     url: '*://toggl.com/*',
     name: 'Toggl',
-    clone: 'true'
+    clone: 'true',
   },
   'www.toggl.com': {
     url: '*://www.toggl.com/*',
     name: 'Toggl',
-    clone: 'true'
+    clone: 'true',
   },
   'plan.toggl.com': {
     url: '*://plan.toggl.com/*',
     name: 'Toggl Plan',
-    file: 'toggl-plan.js'
+    file: 'toggl-plan.js',
   },
   'toodledo.com': {
     url: '*://*.toodledo.com/*',
-    name: 'Toodledo'
+    name: 'Toodledo',
   },
   'trac-hacks.org': {
     url: '*://trac-hacks.org/*',
-    name: 'Trac'
+    name: 'Trac',
   },
   'trac.edgewall.org': {
     url: '*://trac.edgewall.org/*',
     name: 'Trac',
-    clone: 'true'
+    clone: 'true',
   },
   'trac.wordpress.org': {
     url: '*://*.trac.wordpress.org/*',
     name: 'Trac',
-    clone: 'true'
+    clone: 'true',
   },
   'trello.com': {
     url: '*://trello.com/*',
     name: 'Trello',
-    file: 'trello.js'
+    file: 'trello.js',
   },
   'unfuddle.com': {
     url: '*://*.unfuddle.com/*',
-    name: 'Unfuddle'
+    name: 'Unfuddle',
   },
   'v1host.com': {
     url: '*://*.v1host.com/*',
-    name: 'VersionOne'
+    name: 'VersionOne',
   },
   'visualstudio.com': {
     url: '*://*.visualstudio.com/*',
-    name: 'VisualStudio'
+    name: 'VisualStudio',
   },
   'azure.com': {
     url: '*://*.azure.com/*',
     name: 'VisualStudio / Azure DevOps',
-    file: 'visualstudio.js'
+    file: 'visualstudio.js',
   },
   'app.vivifyscrum.com': {
     url: '*://app.vivifyscrum.com/*',
     name: 'VivifyScrum',
-    clone: 'true'
+    clone: 'true',
   },
   'wordpress.com': {
     url: '*://wordpress.com/*',
-    name: 'Wordpress'
+    name: 'Wordpress',
   },
   'workast.io': {
     url: '*://*.workast.io/*',
-    name: 'Workast'
+    name: 'Workast',
   },
   'workflowy.com': {
     url: '*://workflowy.com/*',
-    name: 'Workflowy'
+    name: 'Workflowy',
   },
   'attask-ondemand.com': {
     url: '*://*.attask-ondemand.com/*',
     name: 'Workfront',
-    clone: 'true'
+    clone: 'true',
   },
   'my.workfront.com': {
     url: '*://*.my.workfront.com/*',
-    name: 'Workfront'
+    name: 'Workfront',
   },
   'worksection.com': {
     url: '*://*.worksection.com/*',
-    name: 'Worksection'
+    name: 'Worksection',
   },
   'worksection.eu': {
     url: '*://*.worksection.eu/*',
     name: 'Worksection',
-    clone: 'true'
+    clone: 'true',
   },
   'worksection.net': {
     url: '*://*.worksection.net/*',
     name: 'Worksection',
-    clone: 'true'
+    clone: 'true',
   },
   'wrike.com': {
     url: '*://*.wrike.com/*',
     name: 'Wrike',
-    file: 'wrike.js'
+    file: 'wrike.js',
   },
   'xero.com': {
     url: '*://*.xero.com/*',
     name: 'Xero',
-    file: 'xero.js'
+    file: 'xero.js',
   },
   'youtrack.cloud': {
     url: '*://*.youtrack.cloud/*',
     name: 'YouTrack',
-    file: 'youtrack.js'
+    file: 'youtrack.js',
   },
   'zammad.com': {
     url: '*://*.zammad.com/*',
-    name: 'Zammad'
+    name: 'Zammad',
   },
   'zendesk.com': {
     url: '*://*.zendesk.com/*',
     name: 'Zendesk',
-    file: 'zendesk.js'
+    file: 'zendesk.js',
   },
   'app.zenhub.com': {
     url: '*://app.zenhub.com/*',
-    name: 'Zenhub'
+    name: 'Zenhub',
   },
   'books.zoho.com': {
     url: '*://books.zoho.com/*',
-    name: 'Zoho Books'
+    name: 'Zoho Books',
   },
   'zube.io': {
     url: '*://zube.io/*',
-    name: 'Zube'
-  }
-};
+    name: 'Zube',
+  },
+}

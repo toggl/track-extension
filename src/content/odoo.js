@@ -1,3 +1,8 @@
+/**
+ * @name Odoo
+ * @urlAlias odoo.com
+ * @urlRegex *://*.odoo.com/*
+ */
 'use strict'
 
 togglbutton.render(

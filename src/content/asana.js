@@ -6,17 +6,11 @@
 'use strict'
 
 const projectHeaderSelector = () => {
-  // Try to look for for page project title instead.
-  const projectHeader = document.querySelector(
-    '.ProjectPageHeaderProjectTitle-container',
-  )
-
+  const projectHeader = document.querySelector('.PageHeaderEditableTitle-input')
   if (!projectHeader) {
     return ''
   }
-  return projectHeader.textContent
-    .replace(/\u00a0/g, ' ') // There can be &nbsp; in Asana header content
-    .trim()
+  return projectHeader.value.trim()
 }
 
 // Board view. Inserts button next to assignee/due date.

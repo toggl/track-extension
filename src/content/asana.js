@@ -6,11 +6,28 @@
 'use strict'
 
 const projectHeaderSelector = () => {
-  const projectHeader = document.querySelector('.PageHeaderEditableTitle-input')
-  if (!projectHeader) {
-    return ''
+  // Try to look for for page project title instead.
+  const projectHeader = document.querySelector(
+    '.ProjectPageHeaderProjectTitle-container',
+  )
+
+  if (projectHeader) {
+  return projectHeader.textContent
+    .replace(/\u00a0/g, ' ') // There can be &nbsp; in Asana header content
+    .trim()
   }
-  return projectHeader.value.trim()
+
+  const isProjectPage = document.querySelector('.ProjectPage')
+  if (isProjectPage) {
+    const projectTitleInput = document.querySelector(
+      '.PageHeaderEditableTitle-input',
+    )
+    if (projectTitleInput) {
+      return projectTitleInput.value.trim()
+    }
+  }
+
+  return ''
 }
 
 // Board view. Inserts button next to assignee/due date.
@@ -26,11 +43,27 @@ togglbutton.render(
     const descriptionSelector = () =>
       boadCardElem.querySelector('.BoardCard-taskName').textContent.trim()
 
+    const projectSelector = () => {
+      const projectHeader = projectHeaderSelector()
+      if (projectHeader) {
+        return projectHeader
+      }
+
+      const projectPill = boadCardElem.querySelector(
+        '.BoardCardPotPills-potPill[aria-label]',
+      )
+      if (projectPill) {
+        return projectPill.getAttribute('aria-label').trim()
+      }
+
+      return ''
+    }
+
     const link = togglbutton.createTimerLink({
       className: 'asana-board-view',
       description: descriptionSelector,
       buttonType: 'minimal',
-      projectName: projectHeaderSelector,
+      projectName: projectSelector,
       // N.B. Tags cannot be supported on board view as the information is not available.
     })
 
@@ -48,8 +81,6 @@ togglbutton.render(
   '.SpreadsheetRow .SpreadsheetTaskName:not(.toggl)',
   { observe: true },
   (element) => {
-    console.debug('DEBUG: Entering in SpreadsheetRow')
-
     // Due to the way this UI is rendered, we must check for existence of old buttons manually.
     if (element.parentNode.querySelector('.toggl-button')) {
       return
@@ -69,7 +100,6 @@ togglbutton.render(
           '.PageHeaderEditableTitle-input',
         )
         if (projectTitleInput) {
-          console.debug('DEBUG: isProjectPage', projectTitleInput)
           return projectTitleInput.value.trim()
         }
         return ''
@@ -103,10 +133,6 @@ togglbutton.render(
     if (!description) {
       return
     }
-
-    console.debug('DEBUG: Getting description:', description)
-    console.debug('DEBUG: Getting the Project:', getProject())
-    console.debug('DEBUG: Getting the Tags:', getTags())
 
     const link = togglbutton.createTimerLink({
       className: 'asana-spreadsheet',

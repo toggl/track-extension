@@ -2,6 +2,9 @@
 
 # Toggl Track browser extension integrations
 
+[![Badge Mozilla]][Mozilla]
+[![Badge Chrome]][Chrome]
+
 ## 📣 Toggl Button is now the Toggl Track browser extension!
 We not only renamed the extension, but we also made several changes to Track Extension's codebase to build a better foundation for the future and make it easier to contribute new integrations.
 
@@ -29,11 +32,13 @@ out of the way and focus on real work.
 
 ### Installing the extension
 
-__Chrome__
-https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn
 
-__Firefox__
-https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
+
+<p align="left">
+<a href="https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Toggl Track for Firefox" height="58"></a>
+<a href="https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png" alt="Get Toggl Track for Chromium"></a>
+</p>
+
 
 ### Using the extension
 
@@ -75,3 +80,10 @@ It explains in detail how to create, edit, debug and publish a new integration t
 
 ## License
 The Toggl Track browser extension extension is [Apache License 2.0](LICENSE)
+
+
+[Mozilla]: https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
+[Badge Mozilla]: https://img.shields.io/amo/rating/toggl-button-time-tracker?label=Firefox
+
+[Chrome]: https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn
+[Badge Chrome]: https://img.shields.io/chrome-web-store/rating/oejgccbfbmkkpaidnkphaiaecficdnfn?label=Chrome

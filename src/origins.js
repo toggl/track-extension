@@ -313,6 +313,10 @@ export default {
     url: '*://*.intercom.com/*',
     name: 'Intercom'
   },
+  'combodo.com': {
+    url: '*://*.combodo.com/*',
+    name: 'iTop'
+  },
   'jira.com': {
     url: '*://*.jira.com/*',
     name: 'Jira',

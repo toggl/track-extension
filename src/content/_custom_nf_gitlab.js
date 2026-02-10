@@ -1,142 +1,145 @@
-//// START GITLAB
+/**
+ * @name Custom Gitlab Script (N4)
+ * @urlAlias nfGitlabScript
+ * @urlRegex gitlab.com
+ */
+'use strict'
+
+// ---------------------------
+// Issues (new GitLab UI)
+// ---------------------------
 togglbutton.render(
-  '.issue-details .detail-page-description:not(.toggl)',
-  { observe: !0 },
-  function (t) {
-    const n = [
-      [a()]
-        .filter(Boolean)
-        .map(function (r) {
-          return '#' + r;
-        })
-        .join(''),
-      i(t),
-    ]
-      .filter(Boolean)
-      .join(' ');
-    o($('.detail-page-header-actions'), n, !0), o($('.time-tracker'), n);
-  }
-);
+  'span[data-testid="work-item-created"]:not(.toggl)',
+  { observe: true },
+  function (createdSpan) {
+    if (!createdSpan) return
+    createdSpan.classList.add('toggl')
+
+    const id = getIdFromBody()
+    const prefix = id ? `#${id}` : ''
+
+    const titleEl = document.querySelector('[data-testid="work-item-title"]')
+    const title = titleEl ? titleEl.textContent.trim() : ''
+
+    const description = [prefix, title].filter(Boolean).join(' ')
+
+    const link = togglbutton.createTimerLink({
+      className: 'gitlab',
+      description,
+      tags: tagsSelector,
+      taskId: (projects, tasks) => extractTaskId(projects, tasks),
+      projectName: (projects, tasks) => extractProjectName(projects, tasks),
+    })
+
+    createdSpan.insertAdjacentElement('afterend', link)
+  },
+)
+
+// ---------------------------
+// Merge Requests (new GitLab UI)
+// ---------------------------
 togglbutton.render(
-  '.merge-request > .detail-page-header:not(.toggl)',
-  { observe: !0 },
-  function (t) {
-    const n = [
-      [a()]
-        .filter(Boolean)
-        .map(function (r) {
-          return 'MR' + r + '::';
-        })
-        .join(''),
-      i(t),
-    ]
-      .filter(Boolean)
-      .join(' ');
-    o($('.detail-page-header-actions'), n, !0), o($('.time-tracker'), n);
-  }
-);
-function o(t, e, n = !1) {
-  const r = togglbutton.createTimerLink({
-    className: 'gitlab',
-    description: e,
-    tags: l,
-    taskId: (o, i) => {
-      return extractTaskId(o, i);
-    },
-    projectName: (o, i) => {
-      return extractProjectName(o, i);
-    },
-  });
-  n ? t.parentElement.insertBefore(r, t) : t.parentElement.appendChild(r, t);
-}
-function i(t) {
-  const e = t.querySelector('.title');
-  return e ? e.textContent.trim() : '';
-}
-function a() {
-  const t = window.location.pathname,
-    e = /-\/(issues|merge_requests)\/(?<id>\d+)/;
-  return (e.test(t) ? t.match(e) : { groups: { id: '' } }).groups.id;
-}
-function s() {
-  const t =
-    $('.title .project-item-select-holder') ||
-    $('.breadcrumbs-list li:nth-last-child(3) .breadcrumb-item-text');
-  return t ? t.textContent.trim() : '';
-}
-function l() {
-  const t = document.querySelectorAll('div.labels span[data-qa-label-name]');
-  if (!t) return [];
-  const e = [];
-  for (const n of Object.values(t)) {
-    const r = n.getAttribute('data-qa-label-name');
-    e.push(r);
-  }
-  return e;
+  '.detail-page-description:not(.toggl)',
+  { observe: true },
+  function (descBlock) {
+    if (!descBlock) return
+    descBlock.classList.add('toggl')
+
+    const id = getIdFromBody()
+    const prefix = id ? `MR${id}::` : ''
+
+    const titleEl = document.querySelector('[data-testid="title-content"]')
+    const title = titleEl ? titleEl.textContent.trim() : ''
+
+    const description = [prefix, title].filter(Boolean).join(' ')
+
+    const link = togglbutton.createTimerLink({
+      className: 'gitlab',
+      description,
+      tags: tagsSelector,
+      taskId: (projects, tasks) => extractTaskId(projects, tasks),
+      projectName: (projects, tasks) => extractProjectName(projects, tasks),
+    })
+
+    descBlock.insertAdjacentElement('afterbegin', link)
+  },
+)
+
+// ---------------------------
+// Shared helpers
+// ---------------------------
+function getIdFromBody() {
+  const body = document.querySelector('body')
+  return body ? body.getAttribute('data-page-type-id') : ''
 }
 
-////END GITLAB
+function getProjectSelector() {
+  const el = document.querySelector(
+    'a[data-track-label="project_overview"] div[data-testid="nav-item-link-label"]',
+  )
+  return el ? el.textContent.trim() : ''
+}
 
-////START HELPER
-const ExtractNFGitlabTogglTaskId = () => {
-  debugger;
-  let togglTaskId = null;
-  let tags = l();
-  const GITLAB_LABEL_REGEX = /togg(e|)l(::|:)/gim;
-  const REMOVE_TRALING_LABEL_DESCRIPTION = / .*/;
+function tagsSelector() {
+  const nodeList = document.querySelectorAll(
+    '[data-testid="selected-label-content"] span.gl-label-text',
+  )
 
-  debugger;
-  if (Array.isArray(tags)) {
-    tags.forEach((element) => {
-      if (element.match(GITLAB_LABEL_REGEX)) {
-        togglTaskId = element
-          .replace(GITLAB_LABEL_REGEX, '')
-          .toUpperCase()
-          .replace(REMOVE_TRALING_LABEL_DESCRIPTION, '');
-        return;
-      }
-    });
+  const tags = []
+  for (const node of Object.values(nodeList || {})) {
+    const tagName = (node.textContent || '').trim()
+    if (tagName && !tags.includes(tagName)) tags.push(tagName)
   }
-  return togglTaskId;
-};
+  return tags
+}
+
+function extractN4GitlabTogglTaskCode() {
+  const tags = tagsSelector()
+  if (!Array.isArray(tags) || tags.length === 0) return null
+
+  const GITLAB_LABEL_REGEX = /togg(e|)l(::|:)/gim
+  const REMOVE_TRAILING_DESCRIPTION = / .*/
+
+  for (const tag of tags) {
+    if (GITLAB_LABEL_REGEX.test(tag)) {
+      // Reset regex lastIndex since we use 'g' flag
+      GITLAB_LABEL_REGEX.lastIndex = 0
+      return tag
+        .replace(GITLAB_LABEL_REGEX, '')
+        .toUpperCase()
+        .replace(REMOVE_TRAILING_DESCRIPTION, '')
+        .trim()
+    }
+  }
+  return null
+}
 
 function extractTaskId(projects, tasks) {
-  debugger;
-  let nfTogglTask = ExtractNFGitlabTogglTaskId();
-  if (nfTogglTask === null) {
-    return {};
-  }
+  const code = extractN4GitlabTogglTaskCode()
+  if (!code) return {}
 
-  const n = Object.keys(tasks).filter((o) =>
-      tasks[o].name.startsWith(nfTogglTask)
-    ),
-    s = n.length > 0 ? tasks[n[0]].id : {};
-  return s;
+  const keys = Object.keys(tasks || {})
+  const matchKey = keys.find((k) => (tasks[k]?.name || '').startsWith(code))
+  return matchKey ? tasks[matchKey].id : {}
 }
 
-function extractTaskProjectId(nfTogglTask, projects, tasks) {
-  if (nfTogglTask === null) {
-    return null;
-  }
+function extractTaskProjectId(code, projects, tasks) {
+  if (!code) return null
 
-  const n = Object.keys(tasks).filter((o) =>
-      tasks[o].name.startsWith(nfTogglTask)
-    ),
-    s = n.length > 0 ? tasks[n[0]].project_id : null;
-  console.log(s);
-  return s;
+  const keys = Object.keys(tasks || {})
+  const matchKey = keys.find((k) => (tasks[k]?.name || '').startsWith(code))
+  return matchKey ? tasks[matchKey].project_id : null
 }
 
 function extractProjectName(projects, tasks) {
-  debugger;
-  let nfTogglTask = ExtractNFGitlabTogglTaskId();
-  if (nfTogglTask === null) {
-    return null;
-  }
+  const code = extractN4GitlabTogglTaskCode()
 
-  let projectID = extractTaskProjectId(nfTogglTask, projects, tasks);
-  const n = Object.keys(projects).filter((o) => projects[o].id === projectID),
-    s = n.length > 0 ? projects[n[0]].name : null;
-  console.log(s);
-  return s;
+  if (!code) return getProjectSelector() || null
+
+  const projectId = extractTaskProjectId(code, projects, tasks)
+  if (!projectId) return getProjectSelector() || null
+
+  const keys = Object.keys(projects || {})
+  const matchKey = keys.find((k) => projects[k]?.id === projectId)
+  return matchKey ? projects[matchKey].name : getProjectSelector() || null
 }

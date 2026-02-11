@@ -35,7 +35,7 @@ export default {
     name: 'Axosoft'
   },
   'backlog.jp': {
-    url: '*://*.backlog.jp/*',
+    url: '*://*.backlog.jp/*,*://*.backlogtool.com/*,*://*.backlog.com/*',
     name: 'Backlog'
   },
   'backlog.com': {

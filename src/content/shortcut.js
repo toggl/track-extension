@@ -6,21 +6,20 @@
 'use strict';
 
 togglbutton.render('#story-dialog-state-dropdown:not(.toggl)', { observe: true }, function (
-  elem
+  element
 ) {
   const wrap = createTag('div');
-  const element = elem;
-  elem = elem.parentNode.parentNode.parentNode.parentNode;
+  const context = $('#story-dialog-parent');
 
   const getDescription = function () {
-    const storyId = $('.story-id input', elem).value;
-    const title = $('h2.story-name', elem).textContent;
+    const storyId = $('.story-id input', context).value;
+    const title = $('h2.story-name', context).textContent;
 
     return `#${storyId} - ${title}`;
   };
 
   const getProject = function () {
-    return $('.story-epic .value', elem)?.textContent;
+    return $('.story-epic .value', context)?.textContent;
   };
 
   const link = togglbutton.createTimerLink({

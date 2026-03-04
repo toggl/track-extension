@@ -66,7 +66,7 @@ Do you want to create a new custom integration, and maybe share it with the rest
 
 ## Changelog
 
-A list of all the changes and added features can be found at http://toggl.github.io/track-extension.
+A list of all the changes and added features can be found at https://toggl.github.io/track-extension.
 
 ## Contributing
 

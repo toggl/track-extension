@@ -30,7 +30,7 @@ out of the way and focus on real work.
 ### Installing the extension
 
 __Chrome__
-https://chrome.google.com/webstore/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn
+https://chromewebstore.google.com/detail/toggl-button/oejgccbfbmkkpaidnkphaiaecficdnfn
 
 __Firefox__
 https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/

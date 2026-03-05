@@ -7,32 +7,32 @@
 'use strict'
 
 togglbutton.render(
-  'work-item-title:not(.toggl)',
+  '.work-item-header:not(.toggl)',
   { observe: true },
   function (elem) {
-    const container = document.querySelector('action-panel')
-    const viewContainer = document.querySelector('work-item-location')
-
-    const getTitleElement = function () {
-      const wsTaskTitle = elem.querySelectorAll('task-title')
-      if (wsTaskTitle.length === 1 && wsTaskTitle[0].textContent !== '') {
-        return wsTaskTitle[0]
-      }
-      return $('title')
-    }
-
     const descriptionText = function () {
-      const titleElem = getTitleElement()
-      const titleElemText = titleElem ? titleElem.textContent : 'not found'
-
-      return `${titleElemText.trim().replace(' - Wrike', '')}`.trim()
+      const titleTextarea = elem.querySelector(
+        '[data-application="work-item-title"] textarea',
+      )
+      if (titleTextarea && titleTextarea.value) {
+        return titleTextarea.value.trim()
+      }
+      const titleElem = elem.querySelector('.work-item-title')
+      if (titleElem) {
+        return titleElem.textContent.trim()
+      }
+      return document.title.replace(' - Wrike', '').trim()
     }
 
     const projectText = function () {
-      const projectElem = viewContainer.querySelector('wrike-tag')
-      // We process the project element text content.
-      return projectElem ? projectElem.textContent : ''
+      const projectElem =
+        elem.querySelector('.chip__content') ||
+        document.querySelector('.work-item-location .chip__content')
+      return projectElem ? projectElem.textContent.trim() : ''
     }
+
+    const actionPanel = elem.querySelector('.action-panel')
+    if (!actionPanel) return
 
     const link = togglbutton.createTimerLink({
       className: 'wrike',
@@ -40,6 +40,6 @@ togglbutton.render(
       projectName: projectText,
     })
 
-    container.prepend(link)
+    actionPanel.prepend(link)
   },
 )

@@ -11,6 +11,8 @@ togglbutton.render(
   { observe: true },
   ($container) => {
     try {
+      if ($container.querySelector('.toggl-button')) return;
+
       function descriptionSelector() {
         const $description =
           $('div[data-selenium-test$="-highlight-details"] h3') ??
@@ -41,6 +43,8 @@ togglbutton.render(
   { observe: true },
   ($container) => {
     try {
+      if ($container.querySelector('.toggl-button')) return;
+
       function descriptionSelector() {
         return $(
           '[data-test-id="truncated-object-label"]',

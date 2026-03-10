@@ -167,31 +167,27 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /********* TRELLO *********/
+.trello-tb-wrapper {
+  padding: 4px 0 4px 5px;
+  margin: 0;
+}
+
 .toggl-button.trello {
   text-decoration: none;
   cursor: pointer;
-  color: var(--ds-text) !important;
+  color: var(--ds-text-subtle, #44546f) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0;
+  font-size: 12px;
+  background: none;
+  white-space: nowrap;
 }
 
-.toggl-button.trello:not(.toggl-button-edit-form-button) svg {
-  margin-left: -5px;
-  margin-right: 2px;
-}
-
-.toggl-button.trello-list:not(.toggl-button-edit-form-button) {
-  pointer-events: none;
-  margin-top: 3px !important;
-}
-.checklist-item-details:hover .toggl-button.trello-list,
-.toggl-button.trello-list.active:not(.toggl-button-edit-form-button) {
-  pointer-events: all;
-  height: 100%;
-  width: 100%;
-  background-position: center !important;
-}
-.trello-tb-wrapper .toggl-button {
-  pointer-events: all;
-  color: #444;
+.toggl-button.trello:hover {
+  color: var(--ds-text, #172b4d) !important;
 }
 
 /********* BASECAMP *********/

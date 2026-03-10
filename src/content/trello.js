@@ -12,35 +12,62 @@ const getProject = () => {
 }
 
 const getCardName = () => {
-  return document.querySelector('#card-back-name')?.textContent.trim()
+  return (
+    document.querySelector('[data-testid="card-back-title-input"]')?.value?.trim() ?? ''
+  )
 }
+
+// Intercept pointerdown events on the Toggl edit form to prevent
+// Trello's card dialog from closing (same approach as Google Calendar).
+function initializeObserver() {
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType !== Node.ELEMENT_NODE) continue
+        const homeRoot = node.querySelector('#homeRoot')
+        if (homeRoot) {
+          homeRoot.addEventListener(
+            'pointerdown',
+            (e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              if (e.target.focus) e.target.focus()
+            },
+            true,
+          )
+        }
+      }
+    }
+  })
+
+  observer.observe(document.body, { childList: true, subtree: true })
+}
+
+initializeObserver()
+
+/* Card back timer button */
 
 togglbutton.inject(
   {
-    node: '[data-testid="card-back-add-to-card-button"]:not(.toggl)',
-    renderer: (element) => {
-      if (element.parentNode.querySelector('.toggl-button.trello')) {
-        return
-      }
-
-      const container = createTag('div', element.classList.toString())
+    node: '[data-testid="card-back-title-input"]:not(.toggl)',
+    renderer: (elem) => {
+      const existing = document.querySelector('.trello-tb-wrapper')
+      if (existing) existing.remove()
 
       const link = togglbutton.createTimerLink({
         className: 'trello',
         description: getCardName,
         projectName: getProject,
-        container: '[data-testid="card-back-name"]',
         autoTrackable: true,
       })
 
-      // Pass through click on Trello button to the timer link
-      container.addEventListener('click', (e) => {
-        link.click()
-      })
-
-      container.appendChild(link)
-
-      element.parentNode.prepend(container, element)
+      const wrapper = createTag('div', 'trello-tb-wrapper')
+      wrapper.addEventListener('pointerdown', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }, true)
+      wrapper.appendChild(link)
+      elem.after(wrapper)
     },
   },
   { observe: true },
@@ -52,7 +79,6 @@ togglbutton.injectMany(
   {
     node: '[data-testid="check-item-hover-buttons"]:not(.toggl)',
     renderer: (elements) => {
-      // Loop through all the checklist items.
       for (const element of elements) {
         if (element.querySelector('.checklist-item-menu .toggl-button')) {
           continue
@@ -66,16 +92,11 @@ togglbutton.injectMany(
           )
         }
 
-        const getDescription = () => {
-          return `${getCardName()} - ${getTaskText()}`
-        }
-
         const link = togglbutton.createTimerLink({
           className: 'trello-list',
           buttonType: 'minimal',
           projectName: getProject,
-          description: getDescription,
-          container: '[data-testid="card-back-name"]',
+          description: () => `${getCardName()} - ${getTaskText()}`,
         })
 
         const wrapper = document.createElement('span')
@@ -85,12 +106,9 @@ togglbutton.injectMany(
         wrapper.style.marginLeft = '4px'
         wrapper.appendChild(link)
 
-        // Add StopPropagation to prevent the card from closing.
         wrapper.addEventListener('click', (e) => {
           e.preventDefault()
           e.stopPropagation()
-
-          // Click on the Toggl button
           link.querySelector('button').click()
         })
 

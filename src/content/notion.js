@@ -13,17 +13,24 @@ function createWrapper(link) {
   return wrapper
 }
 
-// Selectors here are madness, it works for as of Dec 4th 2019
-// Button renders in popup/dialog view
+// Button renders in popup/dialog (side-peek) view.
+// Target the share menu inside the peek renderer so that when React
+// re-renders and recreates the share button, the observer re-triggers.
 togglbutton.render(
-  '.notion-peek-renderer:not(.toggl)',
+  '.notion-peek-renderer .notion-topbar-share-menu:not(.toggl)',
   { observe: true },
   function (elem) {
     if (!elem) return
+
+    const peekRenderer = elem.closest('.notion-peek-renderer')
+
     function getDescription() {
-      const descriptionElem = elem.querySelector(
-        '.notion-peek-renderer .notion-scroller h1[contenteditable]',
-      )
+      const descriptionElem = peekRenderer
+        ? peekRenderer.querySelector('h1[contenteditable]') ||
+          peekRenderer.querySelector(
+            'h1[aria-roledescription="page title"]',
+          )
+        : null
       return descriptionElem ? descriptionElem.textContent.trim() : ''
     }
 
@@ -35,16 +42,7 @@ togglbutton.render(
 
     const wrapper = createWrapper(link)
 
-    const root = elem.querySelector('.notion-topbar-share-menu')
-    if (root) {
-      root.parentElement.prepend(wrapper)
-    } else {
-      const selector = elem.querySelector(
-        'div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)',
-      )
-      if (!selector) return
-      selector.prepend(wrapper)
-    }
+    elem.parentElement.prepend(wrapper)
   },
 )
 

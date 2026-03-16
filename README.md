@@ -70,8 +70,8 @@ A list of all the changes and added features can be found at http://toggl.github
 
 ## Contributing
 
-Want to contribute? Great! Read up our guide for [contributing](docs/CONTRIBUTING.md).
-It explains in detail how to create, edit, debug and publish a new integration to the Toggl Track browser extension.
+Want to contribute? Great! Read up our guide for [creating integrations](docs/CREATING_INTEGRATIONS.md).
+It explains in detail how to create, debug, and test a new integration for the Toggl Track browser extension.
 
 ## License
 The Toggl Track browser extension extension is [Apache License 2.0](LICENSE)

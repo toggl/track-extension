@@ -11,7 +11,11 @@ togglbutton.render(
   { observe: true },
   ($container) => {
     try {
-      if ($container.querySelector('.toggl-button')) return;
+      const cardContainer = $('[data-selenium-test="highlightTitle"]')
+      if (!cardContainer) return;
+      const parent = cardContainer.parentNode.parentNode.parentNode
+      // Check for existing button at the actual insertion point, not inside $container
+      if (parent.parentNode.querySelector('.toggl-button')) return;
 
       function descriptionSelector() {
         const $description =
@@ -28,8 +32,6 @@ togglbutton.render(
       const rowContainer = document.createElement('div')
       rowContainer.setAttribute('class', 'flex-row align-center')
       rowContainer.appendChild(link)
-      const cardContainer = $('[data-selenium-test="highlightTitle"]')
-      const parent = cardContainer.parentNode.parentNode.parentNode
       parent.insertAdjacentElement('afterend', rowContainer)
     } catch (e) {
       console.error(e)

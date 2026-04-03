@@ -25,9 +25,19 @@ togglbutton.render(
   '#partial-discussion-sidebar:not(.toggl)',
   { observe: true },
   function (elem) {
-    const numElem = $('.gh-header-number')
-    const titleElem = $('.js-issue-title')
+    // Try new React-based PR/Issue page selectors first, then fall back to legacy
+    const numElem =
+      $('h1[data-component="PH_Title"] .fgColor-muted.f1-light') ||
+      $('.gh-header-number')
+    const titleElem =
+      $('h1[data-component="PH_Title"] .markdown-title') ||
+      $('.js-issue-title')
+    // New GitHub PR pages no longer have a repo name element in the header;
+    // extract from the URL path instead (e.g. /owner/repo/...)
     const projectElem = $('h1.public strong a, h1.private strong a')
+    const projectName = projectElem
+      ? projectElem.textContent
+      : (window.location.pathname.split('/')[2] || null)
     const existingTag = $('.discussion-sidebar-item.toggl')
 
     // Check for existing tag, create a new one if one doesn't exist or is not the first one
@@ -41,6 +51,10 @@ togglbutton.render(
       existingTag.parentNode.removeChild(existingTag)
     }
 
+    if (!titleElem) {
+      return
+    }
+
     let description = titleElem.textContent
     if (numElem !== null) {
       description = numElem.textContent + ' ' + description.trim()
@@ -52,7 +66,7 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: 'github',
       description: description,
-      projectName: projectElem && projectElem.textContent,
+      projectName: projectName,
     })
 
     div.appendChild(link)

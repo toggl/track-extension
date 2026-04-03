@@ -267,9 +267,9 @@ togglbutton.render('.TaskPane:not(.toggl)', { observe: true }, (taskPaneEl) => {
     taskPaneEl.querySelector('.TaskPaneTitle textarea').textContent.trim()
 
   const projectSelector = () => {
-    const projectElement = taskPaneEl.querySelector(
-      '.TaskProjectTokenPill-tokenPillWrapper .TaskProjects-projectTokenPill span',
-    )
+    const projectElement =
+      taskPaneEl.querySelector('.TaskPaneFields-projectHeader a.HiddenNavigationLink') ||
+      taskPaneEl.querySelector('.TaskProjectTokenPill-tokenPillWrapper .TaskProjects-projectTokenPill span')
     if (!projectElement) return ''
 
     return projectElement.textContent.trim()

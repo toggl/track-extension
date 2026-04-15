@@ -168,8 +168,53 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 /********* TRELLO *********/
 .trello-tb-wrapper {
-  padding: 4px 0 4px 5px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0 0 5px;
+  margin: 0 0 0 8px;
+}
+
+.trello-tb-wrapper .toggl-button,
+.trello-tb-wrapper .toggl-button > div {
+  display: inline-flex !important;
+  align-items: center;
+}
+
+.trello-tb-wrapper .toggl-button button {
+  margin-top: 5px !important;
+}
+
+/* Checklist-item hover button — match Trello's other action icons */
+[data-testid="check-item-hover-buttons"] .checklist-item-menu {
+  display: inline-flex !important;
+  align-items: center;
+  margin-left: 4px;
+}
+
+[data-testid="check-item-hover-buttons"] .checklist-item-menu .toggl-button,
+[data-testid="check-item-hover-buttons"] .checklist-item-menu .toggl-button > div {
+  display: inline-flex !important;
+  align-items: center;
+}
+
+.toggl-button.trello-list {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
   margin: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ds-text-subtle, #44546f);
+}
+
+.toggl-button.trello-list:hover {
+  background-color: var(--ds-background-neutral-hovered, rgba(9, 30, 66, 0.14));
+  color: var(--ds-text, #172b4d);
 }
 
 .toggl-button.trello {

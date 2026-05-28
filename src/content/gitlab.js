@@ -69,7 +69,14 @@ togglbutton.render(
 )
 
 function getId() {
-  return document.querySelector('body').getAttribute('data-page-type-id')
+  // GitLab's work-items rollout serves issue pages via WorkItemsController,
+  // whose route param is :iid (not :id), so the body's data-page-type-id is
+  // empty and the issue number disappears from the description.
+  const match = window.location.pathname.match(
+    /\/-\/(issues|work_items|merge_requests)\/(\d+)/,
+  )
+  if (match) return match[2]
+  return document.querySelector('body')?.getAttribute('data-page-type-id') ?? ''
 }
 
 function getProjectSelector() {

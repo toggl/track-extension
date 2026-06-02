@@ -228,10 +228,13 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  box-sizing: border-box;
   height: 28px;
+  min-height: 0 !important;
   padding: 0 10px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
+  line-height: 1;
   border-radius: 3px;
   color: var(--ds-text, #172b4d) !important;
   background-color: var(
@@ -241,8 +244,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 .toggl-button.trello svg {
-  width: 16px;
-  height: 16px;
+  width: 14px !important;
+  height: 14px !important;
 }
 
 .toggl-button.trello:hover {

@@ -238,22 +238,28 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   color: var(--ds-text, #172b4d) !important;
 }
 
-/* Card has a cover image: the button overlays it, so give it a solid pill */
+/* Card has a cover image: the button overlays it, so render it as a solid
+   Trello-style button (like the list dropdown) instead of bare text. */
 .trello-tb-wrapper--on-cover {
-  padding: 2px 8px;
+  padding: 0;
   margin-left: 8px;
-  background-color: var(--ds-surface-overlay, #ffffff);
-  border-radius: 8px;
+}
+
+.trello-tb-wrapper--on-cover .toggl-button.trello {
+  height: 32px;
+  padding: 0 12px;
+  gap: 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  margin-top: 0 !important;
+  color: var(--ds-text, #172b4d) !important;
+  background-color: var(--ds-surface-overlay, #ffffff) !important;
   box-shadow: var(--ds-shadow-overlay, 0 1px 3px rgba(9, 30, 66, 0.25));
 }
 
-.trello-tb-wrapper--on-cover .toggl-button.trello,
 .trello-tb-wrapper--on-cover .toggl-button.trello:hover {
   color: var(--ds-text, #172b4d) !important;
-}
-
-.trello-tb-wrapper--on-cover .toggl-button button {
-  margin-top: 0 !important;
+  background-color: var(--ds-surface-overlay-hovered, #f7f8f9) !important;
 }
 
 /********* BASECAMP *********/

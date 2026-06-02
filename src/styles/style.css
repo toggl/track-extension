@@ -239,7 +239,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
-  border-radius: 3px;
+  border-radius: 8px;
   color: var(--ds-text, #172b4d) !important;
   background-color: var(
     --ds-background-accent-gray-subtler,

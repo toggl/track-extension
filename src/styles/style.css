@@ -228,8 +228,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 32px;
-  padding: 0 12px;
+  height: 28px;
+  padding: 0 10px;
   font-size: 14px;
   font-weight: 500;
   border-radius: 3px;
@@ -238,6 +238,11 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
     --ds-background-accent-gray-subtler,
     rgba(9, 30, 66, 0.08)
   ) !important;
+}
+
+.toggl-button.trello svg {
+  width: 16px;
+  height: 16px;
 }
 
 .toggl-button.trello:hover {

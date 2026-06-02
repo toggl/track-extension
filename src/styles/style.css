@@ -185,14 +185,17 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 /* Checklist-item hover button — match Trello's other action icons */
-[data-testid="check-item-hover-buttons"] .checklist-item-menu {
+[data-testid='check-item-hover-buttons'] .checklist-item-menu {
   display: inline-flex !important;
   align-items: center;
   margin-left: 4px;
 }
 
-[data-testid="check-item-hover-buttons"] .checklist-item-menu .toggl-button,
-[data-testid="check-item-hover-buttons"] .checklist-item-menu .toggl-button > div {
+[data-testid='check-item-hover-buttons'] .checklist-item-menu .toggl-button,
+[data-testid='check-item-hover-buttons']
+  .checklist-item-menu
+  .toggl-button
+  > div {
   display: inline-flex !important;
   align-items: center;
 }
@@ -233,6 +236,24 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 
 .toggl-button.trello:hover {
   color: var(--ds-text, #172b4d) !important;
+}
+
+/* Card has a cover image: the button overlays it, so give it a solid pill */
+.trello-tb-wrapper--on-cover {
+  padding: 2px 8px;
+  margin-left: 8px;
+  background-color: var(--ds-surface-overlay, #ffffff);
+  border-radius: 8px;
+  box-shadow: var(--ds-shadow-overlay, 0 1px 3px rgba(9, 30, 66, 0.25));
+}
+
+.trello-tb-wrapper--on-cover .toggl-button.trello,
+.trello-tb-wrapper--on-cover .toggl-button.trello:hover {
+  color: var(--ds-text, #172b4d) !important;
+}
+
+.trello-tb-wrapper--on-cover .toggl-button button {
+  margin-top: 0 !important;
 }
 
 /********* BASECAMP *********/

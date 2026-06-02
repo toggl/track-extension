@@ -230,6 +230,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  position: relative;
+  top: 2px; /* match the list dropdown's 2px internal text offset */
   box-sizing: border-box;
   height: 24px;
   min-height: 0 !important;

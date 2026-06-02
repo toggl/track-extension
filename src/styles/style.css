@@ -170,7 +170,8 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 .trello-tb-wrapper {
   display: inline-flex;
   align-items: center;
-  padding: 0 0 0 5px;
+  align-self: center;
+  padding: 0;
   margin: 0 0 0 8px;
 }
 
@@ -178,21 +179,25 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 .trello-tb-wrapper .toggl-button > div {
   display: inline-flex !important;
   align-items: center;
+  margin: 0 !important;
 }
 
 .trello-tb-wrapper .toggl-button button {
-  margin-top: 5px !important;
+  margin: 0 !important;
 }
 
 /* Checklist-item hover button — match Trello's other action icons */
-[data-testid="check-item-hover-buttons"] .checklist-item-menu {
+[data-testid='check-item-hover-buttons'] .checklist-item-menu {
   display: inline-flex !important;
   align-items: center;
   margin-left: 4px;
 }
 
-[data-testid="check-item-hover-buttons"] .checklist-item-menu .toggl-button,
-[data-testid="check-item-hover-buttons"] .checklist-item-menu .toggl-button > div {
+[data-testid='check-item-hover-buttons'] .checklist-item-menu .toggl-button,
+[data-testid='check-item-hover-buttons']
+  .checklist-item-menu
+  .toggl-button
+  > div {
   display: inline-flex !important;
   align-items: center;
 }
@@ -217,22 +222,42 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   color: var(--ds-text, #172b4d);
 }
 
+/* Render as a flat Trello-style button matching the list dropdown. */
 .toggl-button.trello {
   text-decoration: none;
   cursor: pointer;
-  color: var(--ds-text-subtle, #44546f) !important;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  position: relative;
+  top: 2px; /* match the list dropdown's 2px internal text offset */
+  box-sizing: border-box;
   height: 24px;
-  padding: 0;
-  font-size: 12px;
-  background: none;
-  white-space: nowrap;
+  min-height: 0 !important;
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: var(--ds-radius-small, 3px);
+  color: var(--ds-text, #172b4d) !important;
+  background-color: var(
+    --ds-background-accent-gray-subtler,
+    rgba(9, 30, 66, 0.08)
+  ) !important;
+}
+
+.toggl-button.trello svg {
+  width: 14px !important;
+  height: 14px !important;
 }
 
 .toggl-button.trello:hover {
   color: var(--ds-text, #172b4d) !important;
+  background-color: var(
+    --ds-background-accent-gray-subtler-hovered,
+    rgba(9, 30, 66, 0.14)
+  ) !important;
 }
 
 /********* BASECAMP *********/

@@ -13,7 +13,9 @@ const getProject = () => {
 
 const getCardName = () => {
   return (
-    document.querySelector('[data-testid="card-back-title-input"]')?.value?.trim() ?? ''
+    document
+      .querySelector('[data-testid="card-back-title-input"]')
+      ?.value?.trim() ?? ''
   )
 }
 
@@ -65,9 +67,17 @@ togglbutton.inject(
       if (existing) existing.remove()
 
       const dialog = elem.closest('[data-testid="card-back-name"]')
-      const listNameContainer = dialog?.querySelector(
-        'header > div > div:first-child',
-      )
+      const header = dialog?.querySelector('header')
+      if (!header) return
+
+      // Anchor on the always-present actions ("…") button to reach the
+      // controls bar, then take its first child (the list-name dropdown).
+      // The card cover lives in a separate header child, so this never
+      // selects the cover — flexing the cover used to collapse its image.
+      const controlsBar = header
+        .querySelector('[data-testid="card-back-actions-button"]')
+        ?.closest('ul')?.parentElement
+      const listNameContainer = controlsBar?.firstElementChild
       if (!listNameContainer) return
 
       // Lay out the list-name container as a centered flex row so our

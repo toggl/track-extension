@@ -96,11 +96,6 @@ togglbutton.inject(
       })
 
       const wrapper = createTag('div', 'trello-tb-wrapper')
-      // Covers render behind the header controls, so the transparent button
-      // is invisible on top of them — give it a solid pill when one exists.
-      if (header.querySelector('[data-testid="card-cover"]')) {
-        wrapper.classList.add('trello-tb-wrapper--on-cover')
-      }
       wrapper.addEventListener(
         'pointerdown',
         (e) => {

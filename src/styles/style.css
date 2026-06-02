@@ -181,7 +181,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
 }
 
 .trello-tb-wrapper .toggl-button button {
-  margin-top: 5px !important;
+  margin-top: 0 !important;
 }
 
 /* Checklist-item hover button — match Trello's other action icons */
@@ -220,38 +220,19 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   color: var(--ds-text, #172b4d);
 }
 
+/* Render as a flat Trello-style button matching the list dropdown. */
 .toggl-button.trello {
   text-decoration: none;
   cursor: pointer;
-  color: var(--ds-text-subtle, #44546f) !important;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 24px;
-  padding: 0;
-  font-size: 12px;
-  background: none;
-  white-space: nowrap;
-}
-
-.toggl-button.trello:hover {
-  color: var(--ds-text, #172b4d) !important;
-}
-
-/* Card has a cover image: the button overlays it, so render it as a flat
-   Trello-style button matching the list dropdown instead of bare text. */
-.trello-tb-wrapper--on-cover {
-  padding: 0;
-  margin-left: 8px;
-}
-
-.trello-tb-wrapper--on-cover .toggl-button.trello {
+  gap: 6px;
   height: 32px;
   padding: 0 12px;
-  gap: 6px;
-  border-radius: 3px;
+  font-size: 14px;
   font-weight: 500;
-  margin-top: 0 !important;
+  border-radius: 3px;
   color: var(--ds-text, #172b4d) !important;
   background-color: var(
     --ds-background-accent-gray-subtler,
@@ -259,7 +240,7 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   ) !important;
 }
 
-.trello-tb-wrapper--on-cover .toggl-button.trello:hover {
+.toggl-button.trello:hover {
   color: var(--ds-text, #172b4d) !important;
   background-color: var(
     --ds-background-accent-gray-subtler-hovered,

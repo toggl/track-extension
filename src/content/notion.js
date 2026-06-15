@@ -58,16 +58,32 @@ function getShareRowChild(shareButton) {
   return child
 }
 
-// Button renders in popup/dialog (side-peek) view.
-// Target the share menu inside the peek topbar so that when React re-renders
-// and recreates the share button, the observer re-triggers. Notion's peek
-// topbar markup changes often; match both the legacy `.notion-peek-renderer`
-// shell and the newer `.peek-top-hover-area` one.
+// Walk up from the share button to the peek topbar that owns it. The topbar is
+// identified by the close button (`.notion-peek-close`), which only exists in a
+// peek — the full-page topbar has none — so this also tells a peek share menu
+// apart from the full-page one rendered behind it.
+function getPeekTopbar(shareButton) {
+  let topbar = shareButton.parentElement
+  while (topbar && topbar !== document.body) {
+    if (topbar.querySelector('.notion-peek-close')) return topbar
+    topbar = topbar.parentElement
+  }
+  return null
+}
+
+// Button renders in popup/dialog (side-peek) view. Notion keeps reshuffling the
+// peek shell class (legacy `.notion-peek-renderer`, then `.peek-top-hover-area`,
+// now neither wraps the share button), so anchor on the share menu directly and
+// gate to peeks via the close button instead of chasing the shell class.
 togglbutton.render(
-  '.notion-peek-renderer .notion-topbar-share-menu:not(.toggl), .peek-top-hover-area .notion-topbar-share-menu:not(.toggl)',
+  '.notion-topbar-share-menu:not(.toggl)',
   { observe: true },
   function (elem) {
     if (!elem) return
+
+    const topbar = getPeekTopbar(elem)
+    if (!topbar) return
+    if (topbar.querySelector('.toggl-button-notion-wrapper')) return
 
     const peekRoot = findPeekRoot(elem)
 

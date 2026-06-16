@@ -2,6 +2,8 @@
  * @name Notion
  * @urlAlias notion.so
  * @urlRegex *://*.notion.so/*
+ * @urlAlias notion.com
+ * @urlRegex *://*.notion.com/*
  */
 'use strict'
 

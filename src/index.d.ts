@@ -5,6 +5,7 @@ declare const _default = origins as {
     name: string;
     url: string;
     file?: string;
+    aliasOf?: string;
   };
 };
 

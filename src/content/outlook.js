@@ -72,12 +72,20 @@ togglbutton.render(
   '[role="toolbar"][data-app-section="Toolbar"]:not(:has(.toggl-button))',
   { observe: true },
   (toolbar) => {
-    const dialog = toolbar.closest(".ms-Modal-scrollableContent") || document;
+    // The toolbar must live inside an event modal. Without this guard a non-modal
+    // Outlook toolbar would fall back to a document-wide lookup and could match a
+    // CalendarCompose subject from a different editor — injecting a calendar
+    // button (and the wrong event title) onto an unrelated toolbar.
+    const dialog = toolbar.closest(".ms-Modal-scrollableContent");
+    if (!dialog) {
+      return;
+    }
+
+    // Scope the subject lookup to this modal; only the calendar event editor has
+    // a CalendarCompose subject block.
     const subjectBlock = dialog.querySelector(
       '[id*="CalendarCompose"][id$="_SUBJECT"]'
     );
-
-    // Only the calendar event editor has a CalendarCompose subject block.
     if (!subjectBlock) {
       return;
     }
@@ -87,6 +95,12 @@ togglbutton.render(
       return;
     }
 
+    // Tag this specific modal (the subject id is unique per editor instance) so
+    // the post-start popup portals into *this* editor, not the first modal on
+    // the page when several editors are open.
+    const popupHostId = subjectBlock.id;
+    dialog.setAttribute("data-toggl-popup-host", popupHostId);
+
     function getDescription() {
       const titleInput = subjectBlock.querySelector("input");
       return titleInput ? titleInput.value.trim() : "";
@@ -95,9 +109,9 @@ togglbutton.render(
     const link = togglbutton.createTimerLink({
       className: "outlook-calendar",
       description: getDescription,
-      // Portal the post-start edit popup into the event modal; on document.body
+      // Portal the post-start edit popup into this event modal; on document.body
       // it renders behind Outlook's modal (z-index + focus trap) and is invisible.
-      container: ".ms-Modal-scrollableContent",
+      container: `[data-toggl-popup-host="${popupHostId}"]`,
     });
 
     target.appendChild(link);

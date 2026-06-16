@@ -65,7 +65,9 @@ exec(`git diff --name-only HEAD^ HEAD`, (_, out) => {
   const newOrigins = infos.reduce(
     (_origins, { name, urlAlias, urlRegex, file }) => ({
       ...origins,
-      [urlAlias]: { url: urlRegex, name, file },
+      // Preserve manually-maintained fields on an existing entry (e.g.
+      // `aliasOf`) instead of overwriting it with only url/name/file.
+      [urlAlias]: { ...origins[urlAlias], url: urlRegex, name, file },
     }),
     origins
   );

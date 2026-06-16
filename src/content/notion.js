@@ -2,6 +2,8 @@
  * @name Notion
  * @urlAlias notion.so
  * @urlRegex *://*.notion.so/*
+ * @urlAlias notion.com
+ * @urlRegex *://*.notion.com/*
  */
 'use strict'
 
@@ -58,16 +60,42 @@ function getShareRowChild(shareButton) {
   return child
 }
 
-// Button renders in popup/dialog (side-peek) view.
-// Target the share menu inside the peek topbar so that when React re-renders
-// and recreates the share button, the observer re-triggers. Notion's peek
-// topbar markup changes often; match both the legacy `.notion-peek-renderer`
-// shell and the newer `.peek-top-hover-area` one.
+// Resolve the peek topbar that owns this share button, bounded so a full-page
+// share button can't match a peek open elsewhere in the document. The topbar is
+// the container of the action-button group (the group holding more/comments);
+// its other side holds the peek close button (`.notion-peek-close`), which only
+// exists in a peek. The close lookup is scoped to that bounded topbar rather
+// than searching broad ancestors' whole subtrees.
+function getPeekTopbar(shareButton) {
+  let group = shareButton.parentElement
+  while (
+    group &&
+    group !== document.body &&
+    !group.querySelector(
+      '.notion-topbar-more-button, .notion-topbar-comments-button',
+    )
+  ) {
+    group = group.parentElement
+  }
+  if (!group || group === document.body) return null
+
+  const topbar = group.parentElement
+  return topbar && topbar.querySelector('.notion-peek-close') ? topbar : null
+}
+
+// Button renders in popup/dialog (side-peek) view. Notion keeps reshuffling the
+// peek shell class (legacy `.notion-peek-renderer`, then `.peek-top-hover-area`,
+// now neither wraps the share button), so anchor on the share menu directly and
+// gate to peeks via the close button instead of chasing the shell class.
 togglbutton.render(
-  '.notion-peek-renderer .notion-topbar-share-menu:not(.toggl), .peek-top-hover-area .notion-topbar-share-menu:not(.toggl)',
+  '.notion-topbar-share-menu:not(.toggl)',
   { observe: true },
   function (elem) {
     if (!elem) return
+
+    const topbar = getPeekTopbar(elem)
+    if (!topbar) return
+    if (topbar.querySelector('.toggl-button-notion-wrapper')) return
 
     const peekRoot = findPeekRoot(elem)
 

@@ -1,3 +1,9 @@
+/**
+ * @name Microsoft Planner
+ * @urlAlias planner.cloud.microsoft
+ * @urlRegex *://planner.cloud.microsoft/*
+ */
+
 'use strict';
 
 togglbutton.render('.taskCard:not(.toggl)', { observe: true }, function (elem) {

@@ -49,11 +49,20 @@ togglbutton.render(
         return projectHeader
       }
 
-      const projectPill = boadCardElem.querySelector(
-        '.BoardCardPotPills-potPill[aria-label]',
-      )
+      // Asana renamed the card project pill: the current markup is
+      // `.BoardCardProjectPills-potPillButton .PotTokenizerPill` with the name
+      // in `title` (no `aria-label`); the legacy selector is kept as a fallback.
+      const projectPill =
+        boadCardElem.querySelector(
+          '.BoardCardProjectPills-potPillButton .PotTokenizerPill',
+        ) || boadCardElem.querySelector('.BoardCardPotPills-potPill[aria-label]')
       if (projectPill) {
-        return projectPill.getAttribute('aria-label').trim()
+        return (
+          projectPill.getAttribute('title') ||
+          projectPill.getAttribute('aria-label') ||
+          projectPill.textContent ||
+          ''
+        ).trim()
       }
 
       return ''

@@ -62,6 +62,48 @@ togglbutton.render(
   }
 );
 
+// Calendar event editor (create / edit an event). Anchor on the event command
+// toolbar and re-add the button whenever it's missing (`:not(:has(.toggl-button))`)
+// so it survives Outlook re-rendering the toolbar after the timer starts.
+// The subject block (id carries `CalendarCompose` — stable, not localised, and
+// unique to the event form) confirms we're in the event editor and supplies the
+// title used as the timer description.
+togglbutton.render(
+  '[role="toolbar"][data-app-section="Toolbar"]:not(:has(.toggl-button))',
+  { observe: true },
+  (toolbar) => {
+    const dialog = toolbar.closest(".ms-Modal-scrollableContent") || document;
+    const subjectBlock = dialog.querySelector(
+      '[id*="CalendarCompose"][id$="_SUBJECT"]'
+    );
+
+    // Only the calendar event editor has a CalendarCompose subject block.
+    if (!subjectBlock) {
+      return;
+    }
+
+    const target = toolbar.querySelector(".fui-ToolbarGroup") || toolbar;
+    if (target.querySelector(".toggl-button")) {
+      return;
+    }
+
+    function getDescription() {
+      const titleInput = subjectBlock.querySelector("input");
+      return titleInput ? titleInput.value.trim() : "";
+    }
+
+    const link = togglbutton.createTimerLink({
+      className: "outlook-calendar",
+      description: getDescription,
+      // Portal the post-start edit popup into the event modal; on document.body
+      // it renders behind Outlook's modal (z-index + focus trap) and is invisible.
+      container: ".ms-Modal-scrollableContent",
+    });
+
+    target.appendChild(link);
+  }
+);
+
 function getOpenedEmailSubject() {
   const emailSubjectElement = document.querySelector('div[role="heading"][title]');
 

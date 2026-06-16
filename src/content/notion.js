@@ -60,17 +60,27 @@ function getShareRowChild(shareButton) {
   return child
 }
 
-// Walk up from the share button to the peek topbar that owns it. The topbar is
-// identified by the close button (`.notion-peek-close`), which only exists in a
-// peek — the full-page topbar has none — so this also tells a peek share menu
-// apart from the full-page one rendered behind it.
+// Resolve the peek topbar that owns this share button, bounded so a full-page
+// share button can't match a peek open elsewhere in the document. The topbar is
+// the container of the action-button group (the group holding more/comments);
+// its other side holds the peek close button (`.notion-peek-close`), which only
+// exists in a peek. The close lookup is scoped to that bounded topbar rather
+// than searching broad ancestors' whole subtrees.
 function getPeekTopbar(shareButton) {
-  let topbar = shareButton.parentElement
-  while (topbar && topbar !== document.body) {
-    if (topbar.querySelector('.notion-peek-close')) return topbar
-    topbar = topbar.parentElement
+  let group = shareButton.parentElement
+  while (
+    group &&
+    group !== document.body &&
+    !group.querySelector(
+      '.notion-topbar-more-button, .notion-topbar-comments-button',
+    )
+  ) {
+    group = group.parentElement
   }
-  return null
+  if (!group || group === document.body) return null
+
+  const topbar = group.parentElement
+  return topbar && topbar.querySelector('.notion-peek-close') ? topbar : null
 }
 
 // Button renders in popup/dialog (side-peek) view. Notion keeps reshuffling the

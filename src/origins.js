@@ -430,7 +430,8 @@ export default {
   'notion.com': {
     url: '*://*.notion.com/*',
     name: 'Notion',
-    file: 'notion.js'
+    file: 'notion.js',
+    aliasOf: 'notion.so'
   },
   'app.nozbe.com': {
     url: '*://app.nozbe.com/*',

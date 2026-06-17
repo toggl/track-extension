@@ -22,12 +22,12 @@ export default {
   'atlassian.com': {
     url: '*://*.atlassian.com/*',
     name: 'Atlassian / Jira',
+    aliasOf: 'atlassian.net',
     file: 'atlassian.js'
   },
   'atlassian.net': {
     url: '*://*.atlassian.net/*',
     name: 'Atlassian / Jira',
-    clone: 'true',
     file: 'atlassian.js'
   },
   'axosoft.com': {

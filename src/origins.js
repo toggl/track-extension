@@ -51,7 +51,6 @@ export default {
   'basecamphq.com': {
     url: '*://*.basecamphq.com/*',
     name: 'BasecampHQ',
-    clone: 'true',
     file: 'basecamp.js'
   },
   'bitbucket.org': {
@@ -422,8 +421,7 @@ export default {
   },
   'minicrm.pl': {
     url: '*://*.minicrm.pl/*',
-    name: 'Minicrm',
-    clone: 'true'
+    name: 'Minicrm'
   },
   'newsletter2go.com': {
     url: '*://*.newsletter2go.com/*',
@@ -696,8 +694,7 @@ export default {
   },
   'app.vivifyscrum.com': {
     url: '*://app.vivifyscrum.com/*',
-    name: 'VivifyScrum',
-    clone: 'true'
+    name: 'VivifyScrum'
   },
   'wordpress.com': {
     url: '*://wordpress.com/*',

@@ -22,12 +22,12 @@ export default {
   'atlassian.com': {
     url: '*://*.atlassian.com/*',
     name: 'Atlassian / Jira',
+    aliasOf: 'atlassian.net',
     file: 'atlassian.js'
   },
   'atlassian.net': {
     url: '*://*.atlassian.net/*',
     name: 'Atlassian / Jira',
-    clone: 'true',
     file: 'atlassian.js'
   },
   'axosoft.com': {
@@ -36,7 +36,8 @@ export default {
   },
   'backlog.jp': {
     url: '*://*.backlog.jp/*',
-    name: 'Backlog'
+    name: 'Backlog',
+    aliasOf: 'backlog.com'
   },
   'backlog.com': {
     url: '*://*.backlog.com/*',
@@ -50,7 +51,6 @@ export default {
   'basecamphq.com': {
     url: '*://*.basecamphq.com/*',
     name: 'BasecampHQ',
-    clone: 'true',
     file: 'basecamp.js'
   },
   'bitbucket.org': {
@@ -139,7 +139,7 @@ export default {
   'doitim.com': {
     url: '*://*.doitim.com/*',
     name: 'Doit',
-    clone: 'true'
+    aliasOf: 'doit.im'
   },
   'dokuwiki.org': {
     url: '*://*.dokuwiki.org/*',
@@ -342,7 +342,8 @@ export default {
   },
   'www.khanacademy.org': {
     url: '*://www.khanacademy.org/*',
-    name: 'KhanAcademy'
+    name: 'KhanAcademy',
+    aliasOf: 'khanacademy.org'
   },
   'linear.app': {
     url: '*://linear.app/*',
@@ -373,7 +374,7 @@ export default {
   'mantishub.io': {
     url: '*://*.mantishub.io/*',
     name: 'Mantishub',
-    clone: 'true'
+    aliasOf: 'mantishub.com'
   },
   'meistertask.com': {
     url: '*://*.meistertask.com/*',
@@ -387,11 +388,13 @@ export default {
   },
   'tasks.office.com': {
     url: '*://tasks.office.com/*',
-    name: 'Microsoft Planner'
+    name: 'Microsoft Planner',
+    aliasOf: 'planner.cloud.microsoft'
   },
   'tasks.office365.com': {
     url: '*://tasks.office365.com/*',
-    name: 'Microsoft Planner'
+    name: 'Microsoft Planner',
+    aliasOf: 'planner.cloud.microsoft'
   },
   'to-do.live.com': {
     url: '*://*.to-do.live.com/*',
@@ -401,22 +404,24 @@ export default {
   'to-do.microsoft.com': {
     url: '*://*.to-do.microsoft.com/*',
     name: 'Microsoft To-Do',
-    file: 'microsoft-to-do.js'
+    file: 'microsoft-to-do.js',
+    aliasOf: 'to-do.live.com'
   },
   'to-do.office.com': {
     url: '*://*.to-do.office.com/*',
     name: 'Microsoft To-Do',
-    file: 'microsoft-to-do.js'
+    file: 'microsoft-to-do.js',
+    aliasOf: 'to-do.live.com'
   },
   'to-do.office365.com': {
     url: '*://*.to-do.office365.com/*',
     name: 'Microsoft To-Do',
-    file: 'microsoft-to-do.js'
+    file: 'microsoft-to-do.js',
+    aliasOf: 'to-do.live.com'
   },
   'minicrm.pl': {
     url: '*://*.minicrm.pl/*',
-    name: 'Minicrm',
-    clone: 'true'
+    name: 'Minicrm'
   },
   'newsletter2go.com': {
     url: '*://*.newsletter2go.com/*',
@@ -467,17 +472,19 @@ export default {
   'outlook.office.com': {
     url: '*://outlook.office.com/*',
     name: 'Outlook',
-    file: 'outlook.js'
+    file: 'outlook.js',
+    aliasOf: 'outlook.cloud.microsoft'
   },
   'outlook.office365.com': {
     url: '*://outlook.office365.com/*',
     name: 'Outlook',
-    file: 'outlook.js'
+    file: 'outlook.js',
+    aliasOf: 'outlook.cloud.microsoft'
   },
   'outlook.live.com': {
     url: '*://outlook.live.com/*',
     name: 'Outlook',
-    clone: 'true'
+    aliasOf: 'outlook.cloud.microsoft'
   },
   'pagerduty.com': {
     url: '*://*.pagerduty.com/*',
@@ -606,7 +613,7 @@ export default {
   'tpondemand.com': {
     url: '*://*.tpondemand.com/*',
     name: 'Targetprocess',
-    clone: 'true'
+    aliasOf: 'targetprocess.com'
   },
   'app.teamleader.eu': {
     url: '*://app.teamleader.eu/*',
@@ -620,7 +627,7 @@ export default {
   'teamworkpm.net': {
     url: '*://*.teamworkpm.net/*',
     name: 'Teamwork',
-    clone: 'true'
+    aliasOf: 'teamwork.com'
   },
   'ticktick.com': {
     url: '*://ticktick.com/*,*://*.ticktick.com/*',
@@ -633,13 +640,12 @@ export default {
   },
   'toggl.com': {
     url: '*://toggl.com/*',
-    name: 'Toggl',
-    clone: 'true'
+    name: 'Toggl'
   },
   'www.toggl.com': {
     url: '*://www.toggl.com/*',
     name: 'Toggl',
-    clone: 'true'
+    aliasOf: 'toggl.com'
   },
   'plan.toggl.com': {
     url: '*://plan.toggl.com/*',
@@ -657,12 +663,12 @@ export default {
   'trac.edgewall.org': {
     url: '*://trac.edgewall.org/*',
     name: 'Trac',
-    clone: 'true'
+    aliasOf: 'trac-hacks.org'
   },
   'trac.wordpress.org': {
     url: '*://*.trac.wordpress.org/*',
     name: 'Trac',
-    clone: 'true'
+    aliasOf: 'trac-hacks.org'
   },
   'trello.com': {
     url: '*://trello.com/*',
@@ -688,8 +694,7 @@ export default {
   },
   'app.vivifyscrum.com': {
     url: '*://app.vivifyscrum.com/*',
-    name: 'VivifyScrum',
-    clone: 'true'
+    name: 'VivifyScrum'
   },
   'wordpress.com': {
     url: '*://wordpress.com/*',
@@ -706,7 +711,7 @@ export default {
   'attask-ondemand.com': {
     url: '*://*.attask-ondemand.com/*',
     name: 'Workfront',
-    clone: 'true'
+    aliasOf: 'my.workfront.com'
   },
   'my.workfront.com': {
     url: '*://*.my.workfront.com/*',
@@ -719,12 +724,12 @@ export default {
   'worksection.eu': {
     url: '*://*.worksection.eu/*',
     name: 'Worksection',
-    clone: 'true'
+    aliasOf: 'worksection.com'
   },
   'worksection.net': {
     url: '*://*.worksection.net/*',
     name: 'Worksection',
-    clone: 'true'
+    aliasOf: 'worksection.com'
   },
   'wrike.com': {
     url: '*://*.wrike.com/*',

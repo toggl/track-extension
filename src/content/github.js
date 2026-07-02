@@ -5,6 +5,54 @@
  */
 'use strict'
 
+// For users with write access, GitHub renders an inline "Edit issue title"
+// button inside the title element. Its (visually hidden) label leaks into
+// `textContent` and gets prepended to the tracked description (see #2438).
+// Read the title from the dedicated markdown-title/bdi node instead, falling
+// back to a copy of the element with interactive/hidden nodes stripped out.
+const getIssueTitleText = (titleElem) => {
+  if (!titleElem) {
+    return ''
+  }
+
+  const titleNode = titleElem.matches('.markdown-title, bdi')
+    ? titleElem
+    : titleElem.querySelector('.markdown-title, bdi')
+
+  if (titleNode) {
+    return titleNode.textContent.trim()
+  }
+
+  const clone = titleElem.cloneNode(true)
+  clone
+    .querySelectorAll(
+      'button, [role="button"], [class*="VisuallyHidden"], .sr-only',
+    )
+    .forEach((node) => node.remove())
+
+  return clone.textContent.trim()
+}
+
+// The issue/PR number lives in a sibling span (e.g. "#2438"). Match it by
+// shape instead of DOM position so the inline edit wrapper span (which carries
+// the leaked "Edit issue title" label) isn't picked up instead (see #2438).
+const getIssueNumberText = (titleElem) => {
+  const scope =
+    (titleElem && titleElem.closest('h1')) ||
+    (titleElem && titleElem.parentElement)
+
+  if (!scope) {
+    return ''
+  }
+
+  const numElem = Array.prototype.find.call(
+    scope.querySelectorAll('span'),
+    (span) => /^#\d+$/.test(span.textContent.trim()),
+  )
+
+  return numElem ? numElem.textContent.trim() : ''
+}
+
 // We need it to get the issue name, the tag value is being changed dynamically
 const getPaneDescription = async (elem) => {
   return new Promise((resolve) => {
@@ -55,9 +103,9 @@ togglbutton.render(
       return
     }
 
-    let description = titleElem.textContent
+    let description = getIssueTitleText(titleElem)
     if (numElem !== null) {
-      description = numElem.textContent + ' ' + description.trim()
+      description = numElem.textContent.trim() + ' ' + description
     }
 
     const div = document.createElement('div')
@@ -88,8 +136,6 @@ togglbutton.render(
     const projectElem = $('[data-testid="project-title"]')
     const existingTag = $('.discussion-sidebar-item.toggl')
 
-    const numElem = titleElem.parentElement.querySelector('span')
-
     if (existingTag) {
       if (existingTag.parentNode.firstChild.classList.contains('toggl')) {
         return
@@ -97,10 +143,11 @@ togglbutton.render(
       existingTag.parentNode.removeChild(existingTag)
     }
 
-    let description = titleElem.textContent
+    let description = getIssueTitleText(titleElem)
+    const numText = getIssueNumberText(titleElem)
 
-    if (numElem !== null) {
-      description = numElem.textContent + ' ' + description.trim()
+    if (numText) {
+      description = numText + ' ' + description
     }
 
     const elementOfBase = document.querySelector(

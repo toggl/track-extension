@@ -10,6 +10,17 @@
 // `textContent` and gets prepended to the tracked description (see #2438).
 // Read the title from the dedicated markdown-title/bdi node instead, falling
 // back to a copy of the element with interactive/hidden nodes stripped out.
+const readClean = (node) => {
+  const clone = node.cloneNode(true)
+  clone
+    .querySelectorAll(
+      'button, [role="button"], [class*="VisuallyHidden"], .sr-only',
+    )
+    .forEach((n) => n.remove())
+
+  return clone.textContent.trim()
+}
+
 const getIssueTitleText = (titleElem) => {
   if (!titleElem) {
     return ''
@@ -19,18 +30,7 @@ const getIssueTitleText = (titleElem) => {
     ? titleElem
     : titleElem.querySelector('.markdown-title, bdi')
 
-  if (titleNode) {
-    return titleNode.textContent.trim()
-  }
-
-  const clone = titleElem.cloneNode(true)
-  clone
-    .querySelectorAll(
-      'button, [role="button"], [class*="VisuallyHidden"], .sr-only',
-    )
-    .forEach((node) => node.remove())
-
-  return clone.textContent.trim()
+  return readClean(titleNode || titleElem)
 }
 
 // The issue/PR number lives in a sibling span (e.g. "#2438"). Match it by

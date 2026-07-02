@@ -5,11 +5,8 @@
  */
 'use strict'
 
-// For users with write access, GitHub renders an inline "Edit issue title"
-// button inside the title element. Its (visually hidden) label leaks into
-// `textContent` and gets prepended to the tracked description (see #2438).
-// Read the title from the dedicated markdown-title/bdi node instead, falling
-// back to a copy of the element with interactive/hidden nodes stripped out.
+// Strip GitHub's injected "Edit issue title" label (a visually-hidden node)
+// out of the tracked title so it isn't prepended to the description (see #2438).
 const readClean = (node) => {
   const clone = node.cloneNode(true)
   clone
@@ -33,9 +30,8 @@ const getIssueTitleText = (titleElem) => {
   return readClean(titleNode || titleElem)
 }
 
-// The issue/PR number lives in a sibling span (e.g. "#2438"). Match it by
-// shape instead of DOM position so the inline edit wrapper span (which carries
-// the leaked "Edit issue title" label) isn't picked up instead (see #2438).
+// Match the number span (e.g. "#2438") by shape, not DOM position, so the
+// inline-edit wrapper span isn't picked up instead (see #2438).
 const getIssueNumberText = (titleElem) => {
   const scope =
     (titleElem && titleElem.closest('h1')) ||

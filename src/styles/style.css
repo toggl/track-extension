@@ -319,6 +319,22 @@ SingleTaskPaneToolbar .toggl-button.asana-board, /* new ui v1 */
   opacity: 0 !important;
 }
 
+/********* BASECAMP 5 *********/
+/* Basecamp gives row children chip styling (gray pill); strip it from both
+   the wrapper div returned by createTimerLink and the button inside it. */
+.todo .todo__content .toggl-button {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.todo .todo__content > .toggl-button {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
 /********* TOGGL-PLAN *********/
 a.toggl-button.toggl-plan {
   margin-top: -1px;

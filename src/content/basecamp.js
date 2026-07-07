@@ -1,3 +1,9 @@
+/**
+ * @name Basecamp
+ * @urlAlias basecamp.com
+ * @urlRegex *://*.basecamp.com/*
+ */
+
 'use strict';
 
 // Basecamp Next
@@ -103,3 +109,42 @@ togglbutton.render('header.todo__header:not(.toggl)', { observe: true }, functio
 
   container.appendChild(link);
 });
+
+// Basecamp 5. The todo list container is a div (was article.todolist) and the
+// row content moved to .todo__content; the project name is only available in
+// the breadcrumb. Rows are re-rendered by Turbo, so guard against duplicates.
+togglbutton.render(
+  '.todolist ul.todos li.todo:not(.toggl)',
+  { observe: true },
+  function (elem) {
+    const content = elem.querySelector('.todo__content');
+    if (!content || content.querySelector('.toggl-button')) {
+      return;
+    }
+
+    const titleLink = content.querySelector('a[href*="/todos/"]');
+    if (!titleLink) {
+      return;
+    }
+
+    function getProject () {
+      const breadcrumb = document.querySelector(
+        '.perma-toolbar__breadcrumb--bucket strong'
+      );
+      if (breadcrumb) {
+        return breadcrumb.textContent.trim();
+      }
+      const subtitle = document.querySelector('meta[name="current-page-subtitle"]');
+      return subtitle ? subtitle.getAttribute('content') : '';
+    }
+
+    const link = togglbutton.createTimerLink({
+      className: 'basecamp5-todos',
+      buttonType: 'minimal',
+      description: titleLink.textContent.trim(),
+      projectName: getProject
+    });
+
+    content.appendChild(link);
+  }
+);

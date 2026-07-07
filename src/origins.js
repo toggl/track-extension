@@ -46,7 +46,8 @@ export default {
   },
   'basecamp.com': {
     url: '*://*.basecamp.com/*',
-    name: 'Basecamp'
+    name: 'Basecamp',
+    file: 'basecamp.js'
   },
   'basecamphq.com': {
     url: '*://*.basecamphq.com/*',

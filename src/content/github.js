@@ -99,8 +99,11 @@ togglbutton.render(
 
     let description = titleElem.textContent
 
-    if (numElem !== null) {
-      description = numElem.textContent + ' ' + description.trim()
+    // The span also contains the "Edit issue title" button for users with
+    // write access, so extract only the issue number from it
+    const issueNumber = numElem && numElem.textContent.match(/#\d+/)
+    if (issueNumber) {
+      description = issueNumber[0] + ' ' + description.trim()
     }
 
     const elementOfBase = document.querySelector(

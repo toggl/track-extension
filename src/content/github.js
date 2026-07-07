@@ -10,11 +10,12 @@ const getPaneDescription = async (elem) => {
   return new Promise((resolve) => {
     const description = setInterval(() => {
       const titleElem = elem.querySelector('#__primerPortalRoot__ bdi')
-      const numElem = titleElem.parentElement.lastChild
 
-      if (!!titleElem.textContent) {
+      if (titleElem && titleElem.textContent) {
+        const numElem = titleElem.parentElement ? titleElem.parentElement.lastChild : null
+        const prefix = numElem && numElem.textContent ? numElem.textContent + ' ' : ''
         clearInterval(description)
-        resolve(`${numElem.textContent} ${titleElem.textContent.trim()}`)
+        resolve(`${prefix}${titleElem.textContent.trim()}`)
       }
     }, 1000)
   })
@@ -201,3 +202,7 @@ togglbutton.render(
     target.parentNode.insertBefore(wrapper, target)
   },
 )
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { getPaneDescription }
+}

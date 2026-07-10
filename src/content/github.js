@@ -5,10 +5,22 @@
  */
 'use strict'
 
-// Expose the owner/repo as a tag
-const getRepoTags = () => {
-  const [, owner, repo] = window.location.pathname.split('/')
-  return owner && repo ? [`${owner}/${repo}`] : []
+// Build an owner/repo tag from a GitHub path like /owner/repo/issues/1.
+// Project boards live at /orgs|users/... and don't map to a single repo.
+const repoTag = (pathname) => {
+  const [, owner, repo] = pathname.split('/')
+  return owner && repo && owner !== 'orgs' && owner !== 'users'
+    ? [`${owner}/${repo}`]
+    : []
+}
+
+// Issue and PR pages live at /owner/repo/...
+const getRepoTags = () => repoTag(window.location.pathname)
+
+// Project cards can hold issues from any repo, so read it from the card's issue link
+const getCardRepoTags = (scope) => {
+  const link = scope.querySelector('a[href*="/issues/"], a[href*="/pull/"]')
+  return link ? repoTag(new URL(link.href).pathname) : []
 }
 
 // We need it to get the issue name, the tag value is being changed dynamically
@@ -162,7 +174,7 @@ togglbutton.render(
       className: 'github',
       description: description,
       projectName: projectElem ? projectElem.textContent.trim() : '',
-      tags: getRepoTags,
+      tags: getCardRepoTags(elem),
     })
 
     div.appendChild(link)
@@ -198,7 +210,7 @@ togglbutton.render(
       className: 'github',
       description: getDescription,
       projectName: projectElem && projectElem.textContent,
-      tags: getRepoTags,
+      tags: getCardRepoTags(elem),
     })
 
     const wrapper = createTag(

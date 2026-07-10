@@ -5,6 +5,12 @@
  */
 'use strict'
 
+// Expose the owner/repo as a tag
+const getRepoTags = () => {
+  const [, owner, repo] = window.location.pathname.split('/')
+  return owner && repo ? [`${owner}/${repo}`] : []
+}
+
 // We need it to get the issue name, the tag value is being changed dynamically
 const getPaneDescription = async (elem) => {
   return new Promise((resolve) => {
@@ -67,6 +73,7 @@ togglbutton.render(
       className: 'github',
       description: description,
       projectName: projectName,
+      tags: getRepoTags,
     })
 
     div.appendChild(link)
@@ -120,6 +127,7 @@ togglbutton.render(
       className: 'github',
       description: description,
       projectName: projectElem && projectElem.textContent,
+      tags: getRepoTags,
     })
 
     div.appendChild(link)
@@ -154,6 +162,7 @@ togglbutton.render(
       className: 'github',
       description: description,
       projectName: projectElem ? projectElem.textContent.trim() : '',
+      tags: getRepoTags,
     })
 
     div.appendChild(link)
@@ -189,6 +198,7 @@ togglbutton.render(
       className: 'github',
       description: getDescription,
       projectName: projectElem && projectElem.textContent,
+      tags: getRepoTags,
     })
 
     const wrapper = createTag(

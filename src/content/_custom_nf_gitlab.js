@@ -16,12 +16,14 @@ togglbutton.render(
                               addTimeButton.closest('[data-testid="work-item-container"]') ||
                               addTimeButton.closest('.work-item-page')
 
+    const scopeEl = workItemContainer || document
+
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
-      description: () => getDescription(workItemContainer || document),
-      tags: () => tagsSelector(document),
-      taskId: (projects, tasks) => extractTaskId(projects, tasks),
-      projectName: (projects, tasks) => extractProjectName(projects, tasks, workItemContainer || document),
+      description: () => getDescription(scopeEl),
+      tags: () => tagsSelector(scopeEl),
+      taskId: (projects, tasks) => extractTaskId(projects, tasks, scopeEl),
+      projectName: (projects, tasks) => extractProjectName(projects, tasks, scopeEl),
     })
 
     link.style.whiteSpace = 'nowrap'
@@ -30,13 +32,7 @@ togglbutton.render(
     link.style.alignItems = 'center'
     link.style.marginRight = '8px'
 
-    const wrapper = document.createElement('div')
-    wrapper.style.display = 'flex'
-    wrapper.style.alignItems = 'center'
-
-    addTimeButton.parentNode.insertBefore(wrapper, addTimeButton)
-    wrapper.appendChild(link)
-    wrapper.appendChild(addTimeButton)
+    addTimeButton.insertAdjacentElement('beforebegin', link)
   }
 )
 
@@ -47,12 +43,16 @@ togglbutton.render(
     if (!addTimeButton) return
     addTimeButton.classList.add('toggl-mr-ready')
 
+    const mrContainer = addTimeButton.closest('[data-testid="merge-request-details"]') ||
+                        addTimeButton.closest('.detail-page-description') ||
+                        document
+
     const link = togglbutton.createTimerLink({
       className: 'gitlab',
       description: getMrDescription,
-      tags: () => tagsSelector(document),
-      taskId: (projects, tasks) => extractTaskId(projects, tasks),
-      projectName: (projects, tasks) => extractProjectName(projects, tasks, document),
+      tags: () => tagsSelector(mrContainer),
+      taskId: (projects, tasks) => extractTaskId(projects, tasks, mrContainer),
+      projectName: (projects, tasks) => extractProjectName(projects, tasks, mrContainer),
     })
 
     link.style.whiteSpace = 'nowrap'
@@ -165,8 +165,8 @@ function tagsSelector(context = document) {
   return tags
 }
 
-function extractN4GitlabTogglTaskCode() {
-  const tags = tagsSelector(document)
+function extractN4GitlabTogglTaskCode(context = document) {
+  const tags = tagsSelector(context)
   if (!Array.isArray(tags) || tags.length === 0) return null
 
   const GITLAB_LABEL_REGEX = /togge?l::?/im
@@ -184,8 +184,8 @@ function extractN4GitlabTogglTaskCode() {
   return null
 }
 
-function extractTaskId(projects, tasks) {
-  const code = extractN4GitlabTogglTaskCode()
+function extractTaskId(projects, tasks, context = document) {
+  const code = extractN4GitlabTogglTaskCode(context)
   if (!code) return null
 
   const keys = Object.keys(tasks || {})
@@ -202,7 +202,7 @@ function extractTaskProjectId(code, projects, tasks) {
 }
 
 function extractProjectName(projects, tasks, context = document) {
-  const code = extractN4GitlabTogglTaskCode()
+  const code = extractN4GitlabTogglTaskCode(context)
 
   if (!code) return getProjectSelector(context) || null
 

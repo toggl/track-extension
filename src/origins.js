@@ -314,6 +314,11 @@ export default {
     url: '*://*.intercom.com/*',
     name: 'Intercom'
   },
+  'issuetrak.com': {
+    url: '*://*.issuetrak.com/*',
+    name: 'Issuetrak',
+    file: 'issuetrak.js'
+  },
   'jira.com': {
     url: '*://*.jira.com/*',
     name: 'Jira',

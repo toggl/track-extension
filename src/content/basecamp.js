@@ -72,8 +72,9 @@ togglbutton.render(
   }
 );
 
-// Basecamp 3
-togglbutton.render('article.todolist .todos li.todo:not(.toggl)', { observe: true }, function (
+// Basecamp 3. The :has(.checkbox__content) guard keeps this from also matching
+// Basecamp 5 named lists (also article.todolist) and stamping .toggl before BC5 runs.
+togglbutton.render('article.todolist .todos li.todo:not(.toggl):has(.checkbox__content)', { observe: true }, function (
   elem
 ) {
   const parent = $('.checkbox__content', elem);

@@ -6,28 +6,25 @@
 'use strict'
 
 const projectHeaderSelector = () => {
-  // Try to look for for page project title instead.
-  const projectHeader = document.querySelector(
-    '.ProjectPageHeaderProjectTitle-container',
-  )
+  if (!document.querySelector('.ProjectPage')) {
+    return ''
+  }
 
-  if (projectHeader) {
-  return projectHeader.textContent
+  // Asana moved the title input to a hashed CSS-module class
+  // (`PageHeaderEditableTitle_<hash>_input`), so match on the stable prefix.
+  const projectTitleInput = document.querySelector(
+    'input[class*="PageHeaderEditableTitle"]',
+  )
+  const projectTitle = projectTitleInput?.value
     .replace(/\u00a0/g, ' ') // There can be &nbsp; in Asana header content
     .trim()
+  if (projectTitle) {
+    return projectTitle
   }
 
-  const isProjectPage = document.querySelector('.ProjectPage')
-  if (isProjectPage) {
-    const projectTitleInput = document.querySelector(
-      '.PageHeaderEditableTitle-input',
-    )
-    if (projectTitleInput) {
-      return projectTitleInput.value.trim()
-    }
-  }
-
-  return ''
+  // Header class names change often; the document title does not depend on them.
+  const titleMatch = document.title.match(/^(.*\S)\s+-\s+Asana$/)
+  return titleMatch ? titleMatch[1] : ''
 }
 
 // Board view. Inserts button next to assignee/due date.
@@ -101,20 +98,12 @@ togglbutton.render(
     }
 
     const getProject = () => {
-      const isMyTasksPage = document.querySelector('.MyTasksPage')
-      const isProjectPage = document.querySelector('.ProjectPage')
-
-      if (isProjectPage) {
-        const projectTitleInput = document.querySelector(
-          '.PageHeaderEditableTitle-input',
-        )
-        if (projectTitleInput) {
-          return projectTitleInput.value.trim()
-        }
-        return ''
+      const projectHeader = projectHeaderSelector()
+      if (projectHeader) {
+        return projectHeader
       }
 
-      if (isMyTasksPage) {
+      if (document.querySelector('.MyTasksPage')) {
         const projectPill = element
           .closest('.SpreadsheetRow')
           .querySelector(

@@ -7,6 +7,8 @@
 /* global togglbutton, $ */
 
 const todoistEditor = document.getElementById('content')
+const projectLinkSpanSelector =
+  'a[href^="/app/project/"][href*="#task-"] span, a[href^="/app/inbox#task-"] span'
 
 // New task detail UI
 togglbutton.render(
@@ -112,6 +114,7 @@ togglbutton.render(
 
     let project = ''
     const projectId = rootEl.getAttribute('data-item-id')
+    const projectLinkSpan = rootEl.querySelector(projectLinkSpanSelector)
 
     if (document.querySelector('.project_view header h1')) {
       project = document
@@ -123,11 +126,9 @@ togglbutton.render(
         .getElementById(`item_${projectId}`)
         .querySelector('.content')
       project = getProjectNames(projectContent)
-    } else if (rootEl.querySelector('.task_list_item__project')) {
-      // Project name shown alongside the task in UI
-      project = rootEl
-        .querySelector('.task_list_item__project')
-        .textContent.trim()
+    } else if (projectLinkSpan) {
+      // First span is the project; a section, if any, follows after "/"
+      project = projectLinkSpan.textContent.trim()
     } else if (document.querySelector('[data-project-id] .simple_content')) {
       project = document.querySelector(
         '[data-project-id] .simple_content',
@@ -176,10 +177,11 @@ E.g.
 function getProjectNameFromLabel(elem) {
   let projectLabel = ''
   const projectLabelEle = $('.project_item__name', elem.parentNode.parentNode)
+  const projectLinkSpan = $(projectLinkSpanSelector, elem.parentNode.parentNode)
   if (projectLabelEle) {
     projectLabel = projectLabelEle.textContent.trim()
-  } else if ($('.task_list_item__project', elem.parentNode.parentNode)) {
-    projectLabel = $('.task_list_item__project', elem).textContent.trim()
+  } else if (projectLinkSpan) {
+    projectLabel = projectLinkSpan.textContent.trim()
   }
   return projectLabel
 }

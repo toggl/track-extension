@@ -177,10 +177,11 @@ E.g.
 function getProjectNameFromLabel(elem) {
   let projectLabel = ''
   const projectLabelEle = $('.project_item__name', elem.parentNode.parentNode)
+  const projectLinkSpan = $(projectLinkSpanSelector, elem.parentNode.parentNode)
   if (projectLabelEle) {
     projectLabel = projectLabelEle.textContent.trim()
-  } else if ($('.task_list_item__project', elem.parentNode.parentNode)) {
-    projectLabel = $('.task_list_item__project', elem).textContent.trim()
+  } else if (projectLinkSpan) {
+    projectLabel = projectLinkSpan.textContent.trim()
   }
   return projectLabel
 }

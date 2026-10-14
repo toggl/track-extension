@@ -114,6 +114,7 @@ togglbutton.render(
 
     let project = ''
     const projectId = rootEl.getAttribute('data-item-id')
+    const projectLinkSpan = rootEl.querySelector(projectLinkSpanSelector)
 
     if (document.querySelector('.project_view header h1')) {
       project = document
@@ -125,9 +126,9 @@ togglbutton.render(
         .getElementById(`item_${projectId}`)
         .querySelector('.content')
       project = getProjectNames(projectContent)
-    } else if (rootEl.querySelector(projectLinkSpanSelector)) {
+    } else if (projectLinkSpan) {
       // First span is the project; a section, if any, follows after "/"
-      project = rootEl.querySelector(projectLinkSpanSelector).textContent.trim()
+      project = projectLinkSpan.textContent.trim()
     } else if (document.querySelector('[data-project-id] .simple_content')) {
       project = document.querySelector(
         '[data-project-id] .simple_content',

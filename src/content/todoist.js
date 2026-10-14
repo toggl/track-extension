@@ -7,6 +7,8 @@
 /* global togglbutton, $ */
 
 const todoistEditor = document.getElementById('content')
+const projectLinkSpanSelector =
+  'a[href^="/app/project/"][href*="#task-"] span, a[href^="/app/inbox#task-"] span'
 
 // New task detail UI
 togglbutton.render(
@@ -123,11 +125,9 @@ togglbutton.render(
         .getElementById(`item_${projectId}`)
         .querySelector('.content')
       project = getProjectNames(projectContent)
-    } else if (rootEl.querySelector('.task_list_item__project')) {
-      // Project name shown alongside the task in UI
-      project = rootEl
-        .querySelector('.task_list_item__project')
-        .textContent.trim()
+    } else if (rootEl.querySelector(projectLinkSpanSelector)) {
+      // First span is the project; a section, if any, follows after "/"
+      project = rootEl.querySelector(projectLinkSpanSelector).textContent.trim()
     } else if (document.querySelector('[data-project-id] .simple_content')) {
       project = document.querySelector(
         '[data-project-id] .simple_content',

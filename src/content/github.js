@@ -43,11 +43,13 @@ togglbutton.render(
   '#partial-discussion-sidebar:not(.toggl)',
   { observe: true },
   function (elem) {
-    // Try new React-based PR/Issue page selectors first, then fall back to legacy
+    // Avoid data-component selectors; GitHub keeps renaming them (PH_Title -> Heading)
     const numElem =
+      $('h1 [class*="titleSuffix"] .fgColor-muted') ||
       $('h1[data-component="PH_Title"] .fgColor-muted.f1-light') ||
       $('.gh-header-number')
     const titleElem =
+      $('h1 .markdown-title') ||
       $('h1[data-component="PH_Title"] .markdown-title') ||
       $('.js-issue-title')
     // New GitHub PR pages no longer have a repo name element in the header;
@@ -73,9 +75,10 @@ togglbutton.render(
       return
     }
 
-    let description = titleElem.textContent
-    if (numElem !== null) {
-      description = numElem.textContent + ' ' + description.trim()
+    let description = titleElem.textContent.trim()
+    const prNumber = numElem && numElem.textContent.match(/#\d+/)
+    if (prNumber) {
+      description = prNumber[0] + ' ' + description
     }
 
     const div = document.createElement('div')

@@ -45,7 +45,7 @@ togglbutton.render(
   function (elem) {
     // Avoid data-component selectors; GitHub keeps renaming them (PH_Title -> Heading)
     const numElem =
-      $('h1 [class*="titleSuffix"] .fgColor-muted') ||
+      $('[class*="titleSuffix"] .fgColor-muted') ||
       $('h1[data-component="PH_Title"] .fgColor-muted.f1-light') ||
       $('.gh-header-number')
     const titleElem =

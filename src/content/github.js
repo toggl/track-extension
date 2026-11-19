@@ -49,6 +49,7 @@ togglbutton.render(
       $('h1[data-component="PH_Title"] .fgColor-muted.f1-light') ||
       $('.gh-header-number')
     const titleElem =
+      $('h1 [class*="markdownTitle"]') ||
       $('h1 .markdown-title') ||
       $('h1[data-component="PH_Title"] .markdown-title') ||
       $('.js-issue-title')
